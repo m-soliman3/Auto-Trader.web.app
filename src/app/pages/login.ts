@@ -29,6 +29,7 @@ export class Login {
   @ViewChildren('digitInput') digitInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
   // ── Login fields ─────────────────────────────────────────
+  // stored email/password for the login form (not persisted anywhere)
   email         = '';
   password      = '';
   loading       = signal(false);
