@@ -1,0 +1,187 @@
+<!-- Backdrop -->
+<div class="modal-backdrop" (click)="close()"></div>
+
+<!-- Single modal shell -->
+<div class="modal" role="dialog" aria-modal="true">
+
+  <!-- ── LIST VIEW ── -->
+  @if (!detail()) {
+
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-title-row">
+        <div>
+          <h2>📊 Browse Strategies</h2>
+          <p>{{ results().length }} strategies available — pick one to run as a bot</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="close()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Filters bar -->
+    <div class="filters-bar">
+      <div class="search-wrap">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search strategies…"
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+        />
+      </div>
+      <div class="chip-row">
+        @for (m of markets; track m.value) {
+          <button class="chip" [class.active]="activeMarket() === m.value" (click)="activeMarket.set(m.value)">{{ m.label }}</button>
+        }
+      </div>
+      <div class="chip-row">
+        @for (r of risks; track r.value) {
+          <button class="chip" [class.active]="activeRisk() === r.value" (click)="activeRisk.set(r.value)">{{ r.label }}</button>
+        }
+      </div>
+      <div class="chip-row">
+        @for (c of categories; track c.value) {
+          <button class="chip" [class.active]="activeCategory() === c.value" (click)="activeCategory.set(c.value)">{{ c.label }}</button>
+        }
+      </div>
+    </div>
+
+    <!-- Scrollable list -->
+    <div class="modal-body">
+      @if (results().length === 0) {
+        <div class="empty-state">
+          <span class="empty-icon">🔍</span>
+          <p>No strategies match your filters.</p>
+          <button class="chip active" (click)="searchQuery.set(''); activeMarket.set('all'); activeRisk.set('all'); activeCategory.set('all')">Clear Filters</button>
+        </div>
+      }
+      <div class="strategy-list">
+        @for (s of results(); track s.id) {
+          <div class="strategy-card" (click)="openDetail(s)">
+            <div class="card-left">
+              <div class="card-icon-wrap" [style.background]="riskColor(s.risk) + '18'">
+                <span class="card-icon">{{ s.icon }}</span>
+              </div>
+              <div class="card-info">
+                <div class="card-name-row">
+                  <span class="card-name">{{ s.name }}</span>
+                  @if (s.isPopular) { <span class="badge-popular">🔥 Popular</span> }
+                  @if (s.isNew)     { <span class="badge-new">✨ New</span> }
+                </div>
+                <p class="card-desc">{{ s.shortDesc }}</p>
+                <div class="card-tags">
+                  @for (tag of s.tags.slice(0,3); track tag) { <span class="tag">{{ tag }}</span> }
+                  <span class="risk-badge" [style.background]="riskColor(s.risk) + '22'" [style.color]="riskColor(s.risk)">{{ s.risk }}</span>
+                  <span class="diff-badge">{{ s.difficulty }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-right">
+              <div class="card-stats">
+                <div class="cstat">
+                  <div class="cstat-val positive">{{ s.winRate }}%</div>
+                  <div class="cstat-lbl">Win Rate</div>
+                </div>
+                <div class="cstat">
+                  <div class="cstat-val positive">+{{ s.avgReturn }}%</div>
+                  <div class="cstat-lbl">Avg/mo</div>
+                </div>
+                <div class="cstat">
+                  <div class="cstat-val">{{ s.users | number }}</div>
+                  <div class="cstat-lbl">Users</div>
+                </div>
+              </div>
+              <div class="card-actions">
+                <button class="btn-bookmark" [class.saved]="isSaved(s.id)"
+                  (click)="toggleSave($event, s.id)" [title]="isSaved(s.id) ? 'Unsave' : 'Save'">
+                  🔖 <span [style.opacity]="isSaved(s.id) ? '1' : '0.4'">{{ isSaved(s.id) ? 'Saved' : 'Save' }}</span>
+                </button>
+                <button class="btn-use-sm" (click)="useStrategy(s); $event.stopPropagation()">Use →</button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+  }
+
+  <!-- ── DETAIL VIEW ── -->
+  @if (detail()) {
+
+    <div class="modal-header">
+      <div class="modal-title-row">
+        <button class="back-btn" (click)="closeDetail()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+        <div>
+          <h2>{{ detail()!.icon }} {{ detail()!.name }}</h2>
+          <p>Strategy details &amp; performance</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="close()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="detail-body">
+        <div class="detail-badges">
+          <span class="risk-badge" [style.background]="riskColor(detail()!.risk) + '22'" [style.color]="riskColor(detail()!.risk)">{{ detail()!.risk }} Risk</span>
+          <span class="diff-badge">{{ detail()!.difficulty }}</span>
+          @for (m of detail()!.markets; track m) {
+            <span class="market-badge">{{ marketLabel(m) }}</span>
+          }
+        </div>
+
+        <p class="detail-desc">{{ detail()!.longDesc }}</p>
+
+        <div class="detail-stats">
+          <div class="dstat">
+            <div class="dstat-value positive">{{ detail()!.winRate }}%</div>
+            <div class="dstat-label">Win Rate</div>
+          </div>
+          <div class="dstat">
+            <div class="dstat-value positive">+{{ detail()!.avgReturn }}%</div>
+            <div class="dstat-label">Avg Monthly</div>
+          </div>
+          <div class="dstat">
+            <div class="dstat-value negative">-{{ detail()!.maxDrawdown }}%</div>
+            <div class="dstat-label">Max Drawdown</div>
+          </div>
+          <div class="dstat">
+            <div class="dstat-value">{{ detail()!.users | number }}</div>
+            <div class="dstat-label">Active Users</div>
+          </div>
+        </div>
+
+        <div class="detail-tags">
+          @for (tag of detail()!.tags; track tag) { <span class="tag">{{ tag }}</span> }
+        </div>
+
+        <div class="detail-meta">
+          <div class="meta-row">
+            <span class="meta-label">Supported Timeframes</span>
+            <span class="meta-value mono">{{ detail()!.timeframes.join(', ') }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Min. Investment</span>
+            <span class="meta-value">${{ detail()!.minInvestment | number }}</span>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <button class="btn-save-detail" [class.saved]="isSaved(detail()!.id)" (click)="toggleSave($event, detail()!.id)">
+            🔖 {{ isSaved(detail()!.id) ? 'Saved' : 'Save Strategy' }}
+          </button>
+          <button class="btn-use" (click)="useStrategy(detail()!)">Use This Strategy →</button>
+        </div>
+      </div>
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,143 @@
+<!-- ───── HERO ───── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container">
+    <div class="hero-badge">🚀 Now live — AI v3 signals engine</div>
+    <h1 class="hero-title">
+      Automate Your<br />
+      <span class="gradient-text">Trading Strategy.</span><br />
+      Trade Smarter.
+    </h1>
+    <p class="hero-sub">
+      AutoTrader connects to 30+ exchanges and runs your bots 24/7 — powered by
+      machine-learning signals, rock-solid risk management, and zero emotion.
+    </p>
+    <div class="hero-cta">
+      <button (click)="goToCta()" class="btn-accent">Start for Free →</button>
+      <a href="#how-it-works" class="btn-outline">See How It Works</a>
+    </div>
+    <div class="hero-chart" aria-hidden="true">
+      <svg viewBox="0 0 700 200" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00d17a" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#00d17a" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,160 C50,150 80,140 120,130 C160,120 180,135 220,110 C260,85 280,95 320,70 C360,45 380,60 420,40 C460,20 490,30 540,15 C580,5 640,20 700,10 L700,200 L0,200 Z" fill="url(#chartGrad)"/>
+        <path d="M0,160 C50,150 80,140 120,130 C160,120 180,135 220,110 C260,85 280,95 320,70 C360,45 380,60 420,40 C460,20 490,30 540,15 C580,5 640,20 700,10" fill="none" stroke="#00d17a" stroke-width="2.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ───── STATS ───── -->
+<section class="stats-bar">
+  <div class="container stats-grid">
+    @for (s of stats; track s.label) {
+      <div class="stat">
+        <span class="stat-value">{{ s.value }}</span>
+        <span class="stat-label">{{ s.label }}</span>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ───── FEATURES ───── -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">Features</p>
+      <h2>Everything you need to trade on autopilot</h2>
+      <p class="section-sub">From AI signals to risk controls — AutoTrader covers the full lifecycle of automated trading.</p>
+    </div>
+    <div class="features-grid">
+      @for (f of features; track f.title) {
+        <div class="feature-card">
+          <div class="feature-icon">{{ f.icon }}</div>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ───── HOW IT WORKS ───── -->
+<section class="section section-alt" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">How It Works</p>
+      <h2>Up and running in minutes</h2>
+    </div>
+    <div class="steps-grid">
+      @for (s of steps; track s.num) {
+        <div class="step-card">
+          <div class="step-num">{{ s.num }}</div>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ───── PRICING ───── -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">Pricing</p>
+      <h2>Simple, transparent pricing</h2>
+      <p class="section-sub">No hidden fees, no profit-sharing. Pay a flat monthly rate and keep every dollar you earn.</p>
+    </div>
+    <div class="pricing-grid">
+      @for (p of plans; track p.name) {
+        <div class="plan-card" [class.highlighted]="p.highlight">
+          @if (p.highlight) {
+            <div class="plan-badge">Most Popular</div>
+          }
+          <h3 class="plan-name">{{ p.name }}</h3>
+          <div class="plan-price">
+            <span class="price-value">{{ p.price }}</span>
+            <span class="price-period">/{{ p.period }}</span>
+          </div>
+          <ul class="plan-features">
+            @for (feat of p.features; track feat) {
+              <li><span class="check">✓</span> {{ feat }}</li>
+            }
+          </ul>
+          <button (click)="goToCta()" class="plan-cta" [class.plan-cta-primary]="p.highlight">{{ p.cta }}</button>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ───── CTA BANNER ───── -->
+<section class="cta-banner">
+  <div class="container cta-inner">
+    <h2>Ready to trade on autopilot?</h2>
+    <p>Join 125,000+ traders who have automated their strategy with AutoTrader. Start free — no credit card required.</p>
+    <button (click)="goToCta()" class="btn-accent">Create Free Account →</button>
+  </div>
+</section>
+
+<!-- ───── FOOTER ───── -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#00d17a"/>
+        <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span>AutoTrader</span>
+    </div>
+    <p class="footer-copy">© 2026 AutoTrader. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a routerLink="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
+

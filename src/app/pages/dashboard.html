@@ -1,0 +1,244 @@
+<!-- Modals -->
+@if (showExchangeModal()) {
+  <app-connect-exchange-modal
+    (closed)="showExchangeModal.set(false)"
+    (connected)="onConnected($event)"
+  />
+}
+@if (showBotModal()) {
+  <app-create-bot-modal
+    (closed)="showBotModal.set(false)"
+    (created)="onBotCreated($event)"
+  />
+}
+@if (showStrategiesModal()) {
+  <app-browse-strategies-modal
+    (closed)="showStrategiesModal.set(false)"
+    (selected)="onStrategySelected($event)"
+  />
+}
+
+<!-- Toast -->
+@if (toastMsg()) {
+  <div class="toast">{{ toastMsg() }}</div>
+}
+
+<div class="dashboard">
+  <div class="container">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h1>Welcome, {{ auth.currentUser()?.name }}! 👋</h1>
+        <p>{{ exchangeService.hasExchange() ? 'Your exchanges are connected and ready to trade.' : 'Connect an exchange to start trading automatically.' }}</p>
+      </div>
+      <div class="welcome-badge">
+        <span class="badge-dot"></span>
+        <span>Account Active</span>
+      </div>
+    </div>
+
+    <!-- Portfolio Cards -->
+    <div class="cards-grid">
+      @for (card of portfolioCards; track card.label) {
+        <div class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon">{{ card.icon }}</span>
+            <span class="stat-label">{{ card.label }}</span>
+          </div>
+          <div class="stat-value">{{ card.value }}</div>
+          <div class="stat-change" [class.positive]="card.positive" [class.negative]="!card.positive">{{ card.change }}</div>
+        </div>
+      }
+    </div>
+
+    <!-- Connected Exchanges -->
+    @if (exchangeService.hasExchange()) {
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Connected Exchanges</h2>
+          <button class="btn-add-exchange" (click)="showExchangeModal.set(true)">+ Add Exchange</button>
+        </div>
+        <div class="exchange-list">
+          @for (conn of exchangeService.connections(); track conn.label) {
+            <div class="exchange-row">
+              <div class="exrow-left">
+                <span class="exrow-logo">{{ exchangeLogo(conn.exchangeId) }}</span>
+                <div>
+                  <div class="exrow-label">
+                    {{ conn.label }}
+                    @if (isPaperExchange(conn.exchangeId)) {
+                      <span class="paper-tag">Paper</span>
+                    }
+                  </div>
+                  <div class="exrow-sub">{{ exchangeName(conn.exchangeId) }} · Connected {{ conn.connectedAt | date:'mediumDate' }}</div>
+                </div>
+              </div>
+              <div class="exrow-right">
+                <span class="exrow-status">🟢 Live</span>
+                <button class="exrow-remove" (click)="removeExchange(conn.label)" title="Disconnect">✕</button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Bots Table -->
+    @if (botService.bots().length > 0) {
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">My Bots</h2>
+          <button class="btn-add-exchange" (click)="showBotModal.set(true)">+ New Bot</button>
+        </div>
+        <div class="bots-table-wrap">
+          <table class="bots-table">
+            <thead>
+              <tr>
+                <th>Bot</th>
+                <th>Strategy</th>
+                <th>Pair</th>
+                <th>Exchange</th>
+                <th>TF</th>
+                <th>Investment</th>
+                <th>P&amp;L</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (bot of botService.bots(); track bot.id) {
+                <tr>
+                  <td class="bot-name">{{ bot.name }}</td>
+                  <td>{{ bot.strategyName }}</td>
+                  <td class="mono">{{ bot.symbol }}</td>
+                  <td>{{ bot.exchangeLabel }}</td>
+                  <td class="mono">{{ bot.timeframe }}</td>
+                  <td class="mono">${{ bot.investment | number:'1.0-0' }}</td>
+                  <td [class.pnl-pos]="bot.pnl >= 0" [class.pnl-neg]="bot.pnl < 0">
+                    {{ bot.pnl >= 0 ? '+' : '' }}${{ bot.pnl | number:'1.2-2' }}
+                  </td>
+                  <td>
+                    <span class="status-badge" [class.status-active]="bot.status === 'active'" [class.status-paused]="bot.status === 'paused'">
+                      {{ bot.status === 'active' ? '🟢 Active' : '⏸ Paused' }}
+                    </span>
+                  </td>
+                  <td class="bot-actions">
+                    <button class="bot-btn" (click)="toggleBotStatus(bot)" [title]="bot.status === 'active' ? 'Pause' : 'Resume'">
+                      {{ bot.status === 'active' ? '⏸' : '▶' }}
+                    </button>
+                    <button class="bot-btn bot-btn-del" (click)="removeBot(bot)" title="Delete">🗑</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- Main Content -->
+    <div class="main-grid">
+
+      <!-- Quick Actions -->
+      <div class="panel">
+        <h2 class="panel-title">Quick Actions</h2>
+        <div class="actions-grid">
+          @for (action of quickActions; track action.label) {
+            <button class="action-card" (click)="handleAction(action.action)">
+              <span class="action-icon">{{ action.icon }}</span>
+              <div>
+                <div class="action-label">{{ action.label }}</div>
+                <div class="action-desc">{{ action.desc }}</div>
+              </div>
+              <svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Getting Started Checklist -->
+      <div class="panel">
+        <h2 class="panel-title">Getting Started</h2>
+        <ul class="checklist">
+          <li class="check-item done">
+            <span class="check-icon check-done">✓</span>
+            <div>
+              <div class="check-title">Create your account</div>
+              <div class="check-sub">Account created and verified</div>
+            </div>
+          </li>
+          <li class="check-item" [class.done]="exchangeService.hasExchange()">
+            <span class="check-icon" [class.check-done]="exchangeService.hasExchange()" [class.check-todo]="!exchangeService.hasExchange()">
+              {{ exchangeService.hasExchange() ? '✓' : '2' }}
+            </span>
+            <div>
+              <div class="check-title">Connect an exchange</div>
+              <div class="check-sub">
+                @if (exchangeService.hasExchange()) { {{ exchangeService.connections().length }} exchange(s) connected }
+                @else { <button class="inline-link" (click)="showExchangeModal.set(true)">Link Binance, Coinbase, or Kraken →</button> }
+              </div>
+            </div>
+          </li>
+          <li class="check-item" [class.done]="botService.bots().length > 0">
+            <span class="check-icon" [class.check-done]="botService.bots().length > 0" [class.check-todo]="botService.bots().length === 0">
+              {{ botService.bots().length > 0 ? '✓' : '3' }}
+            </span>
+            <div>
+              <div class="check-title">Create your first bot</div>
+              <div class="check-sub">
+                @if (botService.bots().length > 0) { {{ botService.bots().length }} bot(s) created }
+                @else { <button class="inline-link" (click)="showBotModal.set(true)">Build your first trading bot →</button> }
+              </div>
+            </div>
+          </li>
+          <li class="check-item" [class.done]="botService.activeBots().length > 0">
+            <span class="check-icon" [class.check-done]="botService.activeBots().length > 0" [class.check-todo]="botService.activeBots().length === 0">
+              {{ botService.activeBots().length > 0 ? '✓' : '4' }}
+            </span>
+            <div>
+              <div class="check-title">Go live</div>
+              <div class="check-sub">
+                @if (botService.activeBots().length > 0) { {{ botService.activeBots().length }} bot(s) running }
+                @else { Activate a bot to start trading }
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Chart Placeholder / CTA -->
+    <div class="panel chart-placeholder">
+      <div class="panel-header">
+        <h2 class="panel-title">Portfolio Performance</h2>
+        <span class="empty-tag">No data yet</span>
+      </div>
+      <div class="chart-empty">
+        <svg viewBox="0 0 600 160" preserveAspectRatio="none" class="chart-ghost">
+          <defs>
+            <linearGradient id="ghostGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,100 Q100,80 150,90 Q220,105 280,80 Q340,55 400,70 Q460,85 520,55 Q560,38 600,50 L600,160 L0,160Z" fill="url(#ghostGrad)"/>
+          <path d="M0,100 Q100,80 150,90 Q220,105 280,80 Q340,55 400,70 Q460,85 520,55 Q560,38 600,50" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" opacity="0.4"/>
+        </svg>
+        @if (!exchangeService.hasExchange()) {
+          <p>Connect an exchange to start tracking real performance</p>
+          <button class="btn-connect" (click)="showExchangeModal.set(true)">+ Connect Exchange</button>
+        } @else if (botService.bots().length === 0) {
+          <p>Exchange connected! Create a bot to start generating performance data.</p>
+          <button class="btn-connect" (click)="showBotModal.set(true)">+ Create Your First Bot</button>
+        } @else {
+          <p>Bots are live! Performance data will appear here once trades execute.</p>
+          <button class="btn-connect" (click)="showBotModal.set(true)">+ Add Another Bot</button>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>
+

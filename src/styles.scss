@@ -1,0 +1,48 @@
+/* ── Global styles & CSS variables ── */
+
+/* === Dark theme (default) === */
+:root, [data-theme="dark"] {
+  --bg:             #0d0f14;
+  --surface:        #161a24;
+  --surface-raised: #1e2330;
+  --border:         rgba(255,255,255,0.08);
+  --text-primary:   #f0f2f7;
+  --text-secondary: #8b95a9;
+  --text-muted:     #5a6278;
+  --accent:         #00d17a;
+}
+
+/* === Light theme === */
+[data-theme="light"] {
+  --bg:             #f4f6fb;
+  --surface:        #ffffff;
+  --surface-raised: #f0f2f7;
+  --border:         rgba(0,0,0,0.08);
+  --text-primary:   #0d0f14;
+  --text-secondary: #4a5468;
+  --text-muted:     #9aa0b2;
+  --accent:         #00a85a;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
+}
+
+a { color: inherit; }
+
+img { max-width: 100%; }
+
+/* Smooth anchor scroll offset for fixed navbar */
+section[id] { scroll-margin-top: 80px; }

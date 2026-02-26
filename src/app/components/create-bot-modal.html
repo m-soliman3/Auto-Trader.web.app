@@ -1,0 +1,171 @@
+<!-- Backdrop -->
+<div class="modal-backdrop" (click)="close()"></div>
+
+<!-- Modal -->
+<div class="modal" role="dialog" aria-modal="true">
+
+  <!-- Header -->
+  <div class="modal-header">
+    <div class="modal-title-row">
+      @if (step() > 1) {
+        <button class="back-btn" (click)="back()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+      }
+      <div>
+        <h2>{{ stepTitle }}</h2>
+        <p>{{ stepSub }}</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="step-dots">
+        <span class="dot" [class.active]="step() >= 1" [class.done]="step() > 1"></span>
+        <span class="dot" [class.active]="step() >= 2" [class.done]="step() > 2"></span>
+        <span class="dot" [class.active]="step() >= 3"></span>
+      </div>
+      <button class="close-btn" (click)="close()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── STEP 1: Strategy Picker ── -->
+  @if (step() === 1) {
+    <div class="strategy-grid">
+      @for (s of strategies; track s.id) {
+        <button class="strategy-tile" (click)="selectStrategy(s)">
+          <div class="tile-top">
+            <span class="tile-icon">{{ s.icon }}</span>
+            <span class="risk-badge" [style.background]="s.riskColor + '22'" [style.color]="s.riskColor">{{ s.risk }} Risk</span>
+          </div>
+          <div class="tile-name">{{ s.name }}</div>
+          <div class="tile-desc">{{ s.desc }}</div>
+        </button>
+      }
+    </div>
+  }
+
+  <!-- ── STEP 2: Configuration Form ── -->
+  @if (step() === 2) {
+    <form class="config-form" (ngSubmit)="toReview()" novalidate>
+
+      @if (error()) {
+        <div class="alert-error">{{ error() }}</div>
+      }
+
+      <!-- Strategy reminder chip -->
+      <div class="strat-chip">
+        <span>{{ selectedStrategy()?.icon }}</span>
+        <span>{{ selectedStrategy()?.name }}</span>
+        <span class="chip-detail">{{ selectedStrategy()?.detail }}</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Bot Name</label>
+          <input type="text" [(ngModel)]="botName" name="botName" placeholder="My BTC Bot" />
+        </div>
+        <div class="form-group">
+          <label>Exchange</label>
+          @if (exchanges().length > 0) {
+            <select [(ngModel)]="exchangeLabel" name="exchangeLabel">
+              @for (ex of exchanges(); track ex.label) {
+                <option [value]="ex.label">{{ ex.label }}</option>
+              }
+            </select>
+          } @else {
+            <div class="no-exchange-warn">⚠️ No exchange connected yet</div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Trading Pair</label>
+          <select [(ngModel)]="symbol" name="symbol">
+            @for (sym of symbols; track sym) {
+              <option [value]="sym">{{ sym }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Timeframe</label>
+          <div class="tf-group">
+            @for (tf of timeframes; track tf) {
+              <button type="button" class="tf-btn" [class.active]="timeframe === tf" (click)="timeframe = tf">{{ tf }}</button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Investment Amount (USD)</label>
+          <div class="input-prefix">
+            <span class="prefix">$</span>
+            <input type="number" [(ngModel)]="investment" name="investment" min="10" step="10" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Stop-Loss <span class="field-sub">% below entry</span></label>
+          <div class="input-suffix">
+            <input type="number" [(ngModel)]="stopLoss" name="stopLoss" min="0.1" max="50" step="0.5" />
+            <span class="suffix">%</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Take-Profit <span class="field-sub">% above entry</span></label>
+          <div class="input-suffix">
+            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="500" step="0.5" />
+            <span class="suffix">%</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-next">Review → </button>
+    </form>
+  }
+
+  <!-- ── STEP 3: Review & Launch ── -->
+  @if (step() === 3) {
+    <div class="review">
+
+      @if (error()) {
+        <div class="alert-error">{{ error() }}</div>
+      }
+
+      <div class="review-grid">
+        <div class="rv-row"><span class="rv-label">Bot Name</span><span class="rv-val">{{ botName }}</span></div>
+        <div class="rv-row"><span class="rv-label">Strategy</span><span class="rv-val">{{ selectedStrategy()?.icon }} {{ selectedStrategy()?.name }}</span></div>
+        <div class="rv-row"><span class="rv-label">Exchange</span><span class="rv-val">{{ exchangeLabel }}</span></div>
+        <div class="rv-row"><span class="rv-label">Pair</span><span class="rv-val">{{ symbol }}</span></div>
+        <div class="rv-row"><span class="rv-label">Timeframe</span><span class="rv-val">{{ timeframe }}</span></div>
+        <div class="rv-row"><span class="rv-label">Investment</span><span class="rv-val accent">${{ investment | number:'1.2-2' }}</span></div>
+        <div class="rv-row"><span class="rv-label">Stop-Loss</span><span class="rv-val loss">{{ stopLoss }}%</span></div>
+        <div class="rv-row"><span class="rv-label">Take-Profit</span><span class="rv-val profit">{{ takeProfit }}%</span></div>
+      </div>
+
+      <div class="risk-bar">
+        <div class="risk-label">Risk/Reward Ratio</div>
+        <div class="rr-visual">
+          <div class="rr-loss" [style.flex]="stopLoss">-{{ stopLoss }}%</div>
+          <div class="rr-profit" [style.flex]="takeProfit">+{{ takeProfit }}%</div>
+        </div>
+      </div>
+
+      <div class="review-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        This is a demo environment. No real funds will be traded. The bot will begin monitoring the market immediately after launch.
+      </div>
+
+      <button class="btn-launch" (click)="launch()" [disabled]="saving()">
+        @if (saving()) { <span class="spinner"></span> Launching… }
+        @else { 🚀 Launch Bot }
+      </button>
+    </div>
+  }
+
+</div>

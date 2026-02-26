@@ -1,0 +1,264 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <a routerLink="/">
+        <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="#00d17a"/>
+          <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </a>
+    </div>
+
+    <h1>Welcome back</h1>
+    <p class="auth-sub">Log in to your AutoTrader account</p>
+
+    @if (error()) {
+      <div class="alert-error">{{ error() }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+          (blur)="emailTouched.set(true)"
+          [class.input-error]="emailTouched() && !isValidEmail(email)"
+        />
+        @if (emailTouched() && !isValidEmail(email)) {
+          <span class="field-error">Please enter a valid email address (e.g. you@example.com)</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="password">Password</label>
+          <button type="button" class="forgot" (click)="openForgot()">Forgot password?</button>
+        </div>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loading()">
+        @if (loading()) { <span class="spinner"></span> Logging in… }
+        @else { Log In }
+      </button>
+    </form>
+
+    <div class="social-divider"><span>or continue with</span></div>
+
+    <div class="social-buttons">
+      <button class="btn-social" (click)="loginWithGoogle()" [disabled]="socialLoading() !== ''">
+        @if (socialLoading() === 'google') {
+          <span class="spinner spinner-dark"></span> Connecting…
+        } @else {
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
+            <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" fill="#FFC107"/>
+            <path d="M6.3 14.7l7 5.1C15.2 16.1 19.3 13 24 13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 16.3 2 9.7 7.4 6.3 14.7z" fill="#FF3D00"/>
+            <path d="M24 46c5.5 0 10.5-1.9 14.3-5.1l-6.6-5.6C29.7 36.9 27 37.9 24 37.9c-6 0-10.6-3.5-11.7-8.5l-7 5.4C8.5 41.6 15.7 46 24 46z" fill="#4CAF50"/>
+            <path d="M44.5 20H24v8.5h11.8c-.6 2.7-2.1 5-4.2 6.7l6.6 5.6C41.8 37.2 45 31.1 45 24c0-1.3-.2-2.7-.5-4z" fill="#1976D2"/>
+          </svg>
+          Continue with Google
+        }
+      </button>
+
+    </div>
+
+    <p class="auth-alt">Don't have an account? <a routerLink="/signup">Sign up free</a></p>
+  </div>
+</div>
+
+<!-- ── Forgot Password Modal ─────────────────────────────── -->
+@if (forgotOpen()) {
+  <div class="fp-backdrop" (click)="closeForgot()"></div>
+  <div class="fp-modal" role="dialog" aria-modal="true" aria-label="Reset your password">
+
+    <!-- Header -->
+    <div class="fp-header">
+      <div class="fp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div>
+        <h2 class="fp-title">
+          @if (forgotStep() === 'email')   { Find your account }
+          @if (forgotStep() === 'code')    { Check your email }
+          @if (forgotStep() === 'newpass') { Set a new password }
+          @if (forgotStep() === 'done')    { Password reset! }
+        </h2>
+        <p class="fp-sub">
+          @if (forgotStep() === 'email')   { Enter your registered email address }
+          @if (forgotStep() === 'code')    { We sent a 6-digit code to <strong>{{ forgotEmail }}</strong> }
+          @if (forgotStep() === 'newpass') { Choose a strong new password for <strong>{{ forgotEmail }}</strong> }
+          @if (forgotStep() === 'done')    { Your password has been updated }
+        </p>
+      </div>
+      <button class="fp-close" (click)="closeForgot()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Step indicators -->
+    <div class="fp-steps">
+      <span class="fp-step" [class.active]="forgotStep() === 'email'" [class.done]="forgotStep() === 'code' || forgotStep() === 'newpass' || forgotStep() === 'done'">1</span>
+      <span class="fp-step-line" [class.active]="forgotStep() === 'code' || forgotStep() === 'newpass' || forgotStep() === 'done'"></span>
+      <span class="fp-step" [class.active]="forgotStep() === 'code'" [class.done]="forgotStep() === 'newpass' || forgotStep() === 'done'">2</span>
+      <span class="fp-step-line" [class.active]="forgotStep() === 'newpass' || forgotStep() === 'done'"></span>
+      <span class="fp-step" [class.active]="forgotStep() === 'newpass'" [class.done]="forgotStep() === 'done'">3</span>
+      <span class="fp-step-line" [class.active]="forgotStep() === 'done'"></span>
+      <span class="fp-step" [class.active]="forgotStep() === 'done'">4</span>
+    </div>
+
+    <!-- Error banner -->
+    @if (forgotError()) {
+      <div class="fp-error">{{ forgotError() }}</div>
+    }
+
+    <!-- Step 1: Email -->
+    @if (forgotStep() === 'email') {
+      <div class="fp-body">
+        <div class="form-group">
+          <label for="fp-email">Email address</label>
+          <input id="fp-email" type="email" [(ngModel)]="forgotEmail" name="fp-email"
+            placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <button class="btn-fp" (click)="onForgotSubmitEmail()" [disabled]="forgotLoading()">
+          @if (forgotLoading()) { <span class="spinner"></span> Searching… }
+          @else { Continue }
+        </button>
+      </div>
+    }
+
+    <!-- Step 2: Code verification -->
+    @if (forgotStep() === 'code') {
+      <div class="fp-body">
+
+        <!-- 6-digit OTP boxes -->
+        <div class="otp-group" (paste)="onDigitPaste($event)">
+          @for (digit of codeDigits; track $index) {
+            <input
+              #digitInput
+              class="otp-box"
+              type="text"
+              inputmode="numeric"
+              maxlength="1"
+              [value]="digit"
+              [class.filled]="digit !== ''"
+              (input)="onDigitInput($index, $event)"
+              (keydown)="onDigitKeydown($index, $event)"
+              autocomplete="one-time-code"
+              aria-label="Digit {{ $index + 1 }}"
+            />
+          }
+        </div>
+
+        <!-- Timer + resend -->
+        <div class="code-meta">
+          @if (codeExpiry() > 0) {
+            <span class="code-timer">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Expires in {{ formatTimer(codeExpiry()) }}
+            </span>
+          } @else {
+            <span class="code-expired">Code expired</span>
+          }
+          <button type="button" class="resend-btn" (click)="dispatchCode()">
+            Resend code
+          </button>
+        </div>
+
+        <button class="btn-fp" (click)="onVerifyCode()" [disabled]="forgotLoading() || enteredCode.length < 6">
+          @if (forgotLoading()) { <span class="spinner"></span> Verifying&hellip; }
+          @else { Verify Code }
+        </button>
+      </div>
+    }
+
+    <!-- Step 3: New password -->
+    @if (forgotStep() === 'newpass') {
+      <div class="fp-body">
+        <div class="form-group">
+          <label for="fp-newpass">New password</label>
+          <div class="pass-wrap">
+            <input id="fp-newpass"
+              [type]="showNewPass() ? 'text' : 'password'"
+              [(ngModel)]="newPassword" name="fp-newpass"
+              placeholder="Min. 6 characters" required />
+            <button type="button" class="pass-eye" (click)="showNewPass.set(!showNewPass())" aria-label="Toggle visibility">
+              @if (showNewPass()) {
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              } @else {
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              }
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fp-confirm">Confirm password</label>
+          <div class="pass-wrap">
+            <input id="fp-confirm"
+              [type]="showConfirm() ? 'text' : 'password'"
+              [(ngModel)]="confirmPass" name="fp-confirm"
+              placeholder="Repeat your new password" required />
+            <button type="button" class="pass-eye" (click)="showConfirm.set(!showConfirm())" aria-label="Toggle visibility">
+              @if (showConfirm()) {
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              } @else {
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              }
+            </button>
+          </div>
+        </div>
+        <!-- Strength indicator -->
+        <div class="pass-strength">
+          <div class="strength-bar">
+            <span [class.filled]="newPassword.length >= 1"></span>
+            <span [class.filled]="newPassword.length >= 4"></span>
+            <span [class.filled]="newPassword.length >= 8"></span>
+            <span [class.filled]="newPassword.length >= 12"></span>
+          </div>
+          <span class="strength-label">
+            @if (newPassword.length === 0) { &nbsp; }
+            @else if (newPassword.length < 4) { Weak }
+            @else if (newPassword.length < 8) { Fair }
+            @else if (newPassword.length < 12) { Good }
+            @else { Strong }
+          </span>
+        </div>
+        <button class="btn-fp" (click)="onForgotSetPassword()" [disabled]="forgotLoading()">
+          @if (forgotLoading()) { <span class="spinner"></span> Updating… }
+          @else { Reset Password }
+        </button>
+      </div>
+    }
+
+    <!-- Step 3: Done -->
+    @if (forgotStep() === 'done') {
+      <div class="fp-body fp-done">
+        <div class="done-circle">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d17a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <p class="done-msg">Your password has been successfully reset. You can now log in with your new password.</p>
+        <button class="btn-fp" (click)="finishReset()">Back to Log In</button>
+      </div>
+    }
+
+  </div>
+}
+

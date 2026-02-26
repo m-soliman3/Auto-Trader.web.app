@@ -1,0 +1,111 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <a routerLink="/">
+        <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="#00d17a"/>
+          <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </a>
+    </div>
+
+    <h1>Create your account</h1>
+    <p class="auth-sub">Start automating your trades in minutes — it's free</p>
+
+    @if (error()) {
+      <div class="alert-error">{{ error() }}</div>
+    }
+
+    <form (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="name">Full name</label>
+        <input
+          id="name"
+          type="text"
+          [(ngModel)]="name"
+          name="name"
+          placeholder="John Doe"
+          autocomplete="name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+          (blur)="emailTouched.set(true)"
+          [class.input-error]="emailTouched() && !isValidEmail(email)"
+        />
+        @if (emailTouched() && !isValidEmail(email)) {
+          <span class="field-error">Please enter a valid email address (e.g. you@example.com)</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Min. 8 characters"
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="confirm">Confirm password</label>
+        <input
+          id="confirm"
+          type="password"
+          [(ngModel)]="confirm"
+          name="confirm"
+          placeholder="••••••••"
+          autocomplete="new-password"
+          required
+        />
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" id="agree" [(ngModel)]="agree" name="agree" />
+        <label for="agree">
+          I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loading()">
+        @if (loading()) { <span class="spinner"></span> Creating account… }
+        @else { Create Free Account }
+      </button>
+    </form>
+
+    <div class="social-divider"><span>or sign up with</span></div>
+
+    <div class="social-buttons">
+      <button class="btn-social" (click)="loginWithGoogle()" [disabled]="socialLoading() !== ''">
+        @if (socialLoading() === 'google') {
+          <span class="spinner spinner-dark"></span> Connecting…
+        } @else {
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
+            <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" fill="#FFC107"/>
+            <path d="M6.3 14.7l7 5.1C15.2 16.1 19.3 13 24 13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 16.3 2 9.7 7.4 6.3 14.7z" fill="#FF3D00"/>
+            <path d="M24 46c5.5 0 10.5-1.9 14.3-5.1l-6.6-5.6C29.7 36.9 27 37.9 24 37.9c-6 0-10.6-3.5-11.7-8.5l-7 5.4C8.5 41.6 15.7 46 24 46z" fill="#4CAF50"/>
+            <path d="M44.5 20H24v8.5h11.8c-.6 2.7-2.1 5-4.2 6.7l6.6 5.6C41.8 37.2 45 31.1 45 24c0-1.3-.2-2.7-.5-4z" fill="#1976D2"/>
+          </svg>
+          Sign up with Google
+        }
+      </button>
+
+    </div>
+
+    <p class="auth-alt">Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</div>
