@@ -1,4 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject, effect } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
 
 export interface Exchange {
   id: string;
@@ -22,61 +24,140 @@ export interface ConnectedExchange {
 }
 
 export const SUPPORTED_EXCHANGES: Exchange[] = [
-  // ── Crypto ────────────────────────────────────────────────────────────────
-  { id: 'binance',      name: 'Binance',              logo: '𝗕',  color: '#F0B90B', hasPassphrase: false, category: 'crypto',  apiDocsUrl: 'https://www.binance.com/en/my/settings/api-management' },
-  { id: 'coinbase',     name: 'Coinbase',              logo: '🔵', color: '#0052FF', hasPassphrase: true,  category: 'crypto',  apiDocsUrl: 'https://www.coinbase.com/settings/api' },
-  { id: 'kraken',       name: 'Kraken',                logo: '🐙', color: '#5741D9', hasPassphrase: false, category: 'crypto',  apiDocsUrl: 'https://www.kraken.com/u/security/api' },
-  { id: 'bybit',        name: 'Bybit',                 logo: '🟡', color: '#F7A600', hasPassphrase: false, category: 'crypto',  apiDocsUrl: 'https://www.bybit.com/app/user/api-management' },
-  { id: 'okx',          name: 'OKX',                   logo: '⬛', color: '#FFFFFF', hasPassphrase: true,  category: 'crypto',  apiDocsUrl: 'https://www.okx.com/account/my-api' },
-  { id: 'kucoin',       name: 'KuCoin',                logo: '🟢', color: '#00A650', hasPassphrase: true,  category: 'crypto',  apiDocsUrl: 'https://www.kucoin.com/account/api' },
-  { id: 'alpaca-live',  name: 'Alpaca Markets',        logo: '🦙', color: '#FFCD00', hasPassphrase: false, category: 'stocks',  isPaper: false, description: 'Live trading — real funds',      apiDocsUrl: 'https://app.alpaca.markets/paper/dashboard/overview' },
-  { id: 'alpaca-paper', name: 'Alpaca Markets',        logo: '🦙', color: '#FFCD00', hasPassphrase: false, category: 'stocks',  isPaper: true,  description: 'Paper trading — simulated funds', apiDocsUrl: 'https://app.alpaca.markets/paper/dashboard/overview' },
-  // ── Stocks & Multi-Asset ──────────────────────────────────────────────────
-  { id: 'ibkr',         name: 'Interactive Brokers',   logo: '🏦', color: '#E8001C', hasPassphrase: false, category: 'stocks',  description: 'Stocks, options, forex, futures', apiDocsUrl: 'https://www.interactivebrokers.com/en/trading/ib-api.php' },
-  { id: 'tdameritrade',  name: 'TD Ameritrade',        logo: '📈', color: '#00A651', hasPassphrase: false, category: 'stocks',  description: 'US stocks & options',             apiDocsUrl: 'https://developer.tdameritrade.com/apis' },
-  { id: 'tradier',      name: 'Tradier',               logo: '🔷', color: '#E8652A', hasPassphrase: false, category: 'stocks',  description: 'US stocks & options',             apiDocsUrl: 'https://documentation.tradier.com/brokerage-api' },
-  { id: 'oanda',        name: 'OANDA',                 logo: '💱', color: '#E4002B', hasPassphrase: false, category: 'stocks',  description: 'Forex & CFDs',                    apiDocsUrl: 'https://www.oanda.com/us-en/trading/platforms/oanda-api/' },
-  { id: 'fxcm',         name: 'FXCM',                  logo: '💹', color: '#E31837', hasPassphrase: false, category: 'stocks',  description: 'Forex & CFDs',                    apiDocsUrl: 'https://www.fxcm.com/markets/algorithmic-trading/api-trading/' },
-  { id: 'saxo',         name: 'Saxo Bank',             logo: '🌐', color: '#003DA5', hasPassphrase: false, category: 'stocks',  description: 'Multi-asset OpenAPI',             apiDocsUrl: 'https://www.developer.saxo/openapi/learn' },
-  { id: 'schwab',       name: 'Charles Schwab',        logo: '🔵', color: '#00A9CE', hasPassphrase: false, category: 'stocks',  description: 'US stocks & options',             apiDocsUrl: 'https://developer.schwab.com/' },
-  { id: 'robinhood',    name: 'Robinhood',             logo: '🪶', color: '#00C805', hasPassphrase: false, category: 'stocks',  description: 'Commission-free US stocks',        apiDocsUrl: 'https://docs.robinhood.com/' },
-  { id: 'webull',       name: 'Webull',                logo: '📊', color: '#1A75FF', hasPassphrase: false, category: 'stocks',  description: 'Commission-free US stocks & ETFs', apiDocsUrl: 'https://app.webull.com/openapi' },
-  { id: 'tastytrade',   name: 'Tastytrade',            logo: '🌶️', color: '#E8003D', hasPassphrase: false, category: 'stocks',  description: 'Options & futures focused',        apiDocsUrl: 'https://developer.tastytrade.com/' },
-  { id: 'igmarkets',    name: 'IG Markets',            logo: '🔶', color: '#FF6900', hasPassphrase: false, category: 'stocks',  description: 'Forex, CFDs & spread betting',     apiDocsUrl: 'https://labs.ig.com/rest-trading-api-reference' },
-  { id: 'capitalcom',   name: 'Capital.com',           logo: '💠', color: '#0066FF', hasPassphrase: false, category: 'stocks',  description: 'Forex & CFDs REST/WebSocket API',  apiDocsUrl: 'https://open-api.capital.com/' },
-  { id: 'deriv',        name: 'Deriv',                 logo: '🔴', color: '#FF444F', hasPassphrase: false, category: 'stocks',  description: 'Forex, synthetics & CFDs',         apiDocsUrl: 'https://api.deriv.com/' },
-  { id: 'exante',       name: 'Exante',                logo: '🌍', color: '#1E3A5F', hasPassphrase: false, category: 'stocks',  description: 'Multi-asset European broker',      apiDocsUrl: 'https://exante.eu/api-trading/' },
+  // Crypto Exchanges
+  {
+    id: 'binance',
+    name: 'Binance',
+    logo: '📊',
+    color: '#F3BA2F',
+    hasPassphrase: false,
+    category: 'crypto',
+    description: 'World\'s largest crypto exchange by volume',
+    apiDocsUrl: 'https://binance-docs.github.io/apidocs/',
+  },
+  {
+    id: 'coinbase',
+    name: 'Coinbase Pro',
+    logo: '💙',
+    color: '#0052FF',
+    hasPassphrase: true,
+    category: 'crypto',
+    description: 'Secure US-based crypto trading platform',
+    apiDocsUrl: 'https://docs.cloud.coinbase.com/',
+  },
+  {
+    id: 'kraken',
+    name: 'Kraken',
+    logo: '🐙',
+    color: '#564098',
+    hasPassphrase: false,
+    category: 'crypto',
+    description: 'Regulated cryptocurrency exchange',
+    apiDocsUrl: 'https://docs.kraken.com/rest/',
+  },
+  {
+    id: 'bybit',
+    name: 'Bybit',
+    logo: '⚡',
+    color: '#F7931A',
+    hasPassphrase: false,
+    category: 'crypto',
+    description: 'Derivatives and spot trading platform',
+    apiDocsUrl: 'https://bybit-exchange.github.io/docs/',
+  },
+  // Stock Exchanges
+  {
+    id: 'alpaca',
+    name: 'Alpaca',
+    logo: '🦙',
+    color: '#FF6A00',
+    hasPassphrase: false,
+    category: 'stocks',
+    description: 'Commission-free stock trading API',
+    apiDocsUrl: 'https://alpaca.markets/docs/',
+  },
+  {
+    id: 'interactive-brokers',
+    name: 'Interactive Brokers',
+    logo: '🏦',
+    color: '#0066CC',
+    hasPassphrase: false,
+    isPaper: true,
+    category: 'stocks',
+    description: 'Professional trading platform',
+    apiDocsUrl: 'https://www.interactivebrokers.com/en/index.php?f=1286',
+  },
 ];
 
 @Injectable({ providedIn: 'root' })
 export class ExchangeService {
-  private readonly KEY = 'at_exchanges';
+  private auth = inject(AuthService);
+  private firestore = inject(Firestore);
 
-  connections = signal<ConnectedExchange[]>(this.load());
+  connections = signal<ConnectedExchange[]>([]);
 
   hasExchange = computed(() => this.connections().length > 0);
 
-  add(conn: ConnectedExchange) {
-    this.connections.update(list => {
-      const updated = [...list, conn];
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      return updated;
+  constructor() {
+    // react to currentUser signal changes
+    effect(() => {
+      const user = this.auth.currentUser();
+      if (user) this.loadFromFirestore(user.id);
+      else this.connections.set([]);
     });
   }
 
-  remove(label: string) {
-    this.connections.update(list => {
-      const updated = list.filter(c => c.label !== label);
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      return updated;
-    });
-  }
-
-  private load(): ConnectedExchange[] {
+  private async loadFromFirestore(uid: string) {
     try {
-      return JSON.parse(localStorage.getItem(this.KEY) ?? '[]');
-    } catch {
-      return [];
+      const col = collection(this.firestore, 'users', uid, 'exchanges');
+      const snap = await getDocs(col);
+      const list = snap.docs.map(d => d.data() as ConnectedExchange);
+      this.connections.set(list);
+    } catch (err) {
+      console.error('failed to load exchanges from firestore', err);
+      this.connections.set([]);
+    }
+  }
+
+  async add(conn: ConnectedExchange) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      const msg = 'Cannot save exchange: user not authenticated';
+      console.warn(msg);
+      throw new Error(msg);
+    }
+    try {
+      // Remove undefined fields before saving to Firestore
+      const dataToSave = {
+        exchangeId: conn.exchangeId,
+        label: conn.label,
+        apiKey: conn.apiKey,
+        secret: conn.secret,
+        ...(conn.passphrase && { passphrase: conn.passphrase }),
+        connectedAt: conn.connectedAt,
+      };
+      const docRef = doc(this.firestore, 'users', uid, 'exchanges', conn.label);
+      await setDoc(docRef, dataToSave);
+      this.connections.update(list => [conn, ...list]);
+    } catch (err: any) {
+      console.error('failed to add exchange', err);
+      throw new Error(`Failed to save exchange: ${err?.message || 'Unknown error'}`);
+    }
+  }
+
+  async remove(label: string) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('remove called without user');
+      return;
+    }
+    try {
+      const docRef = doc(this.firestore, 'users', uid, 'exchanges', label);
+      await deleteDoc(docRef);
+      this.connections.update(list => list.filter(c => c.label !== label));
+    } catch (err) {
+      console.error('failed to remove exchange', err);
+      throw err;
     }
   }
 }

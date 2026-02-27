@@ -1,4 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject, effect } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
 
 export type BotStatus = 'active' | 'paused' | 'stopped';
 
@@ -97,41 +99,79 @@ export const TIMEFRAMES = ['1m', '5m', '15m', '1h', '4h', '1d'];
 
 @Injectable({ providedIn: 'root' })
 export class BotService {
-  private readonly KEY = 'at_bots';
+  private auth = inject(AuthService);
+  private firestore = inject(Firestore);
 
-  bots = signal<Bot[]>(this.load());
-
+  bots = signal<Bot[]>([]);
   activeBots = computed(() => this.bots().filter(b => b.status === 'active'));
 
-  add(bot: Bot) {
-    this.bots.update(list => {
-      const updated = [bot, ...list];
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      return updated;
+  constructor() {
+    effect(() => {
+      const user = this.auth.currentUser();
+      if (user) this.loadFromFirestore(user.id);
+      else this.bots.set([]);
     });
   }
 
-  setStatus(id: string, status: BotStatus) {
-    this.bots.update(list => {
-      const updated = list.map(b => b.id === id ? { ...b, status } : b);
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      return updated;
-    });
-  }
-
-  remove(id: string) {
-    this.bots.update(list => {
-      const updated = list.filter(b => b.id !== id);
-      localStorage.setItem(this.KEY, JSON.stringify(updated));
-      return updated;
-    });
-  }
-
-  private load(): Bot[] {
+  private async loadFromFirestore(uid: string) {
     try {
-      return JSON.parse(localStorage.getItem(this.KEY) ?? '[]');
-    } catch {
-      return [];
+      const col = collection(this.firestore, 'users', uid, 'bots');
+      const snap = await getDocs(col);
+      this.bots.set(snap.docs.map(d => d.data() as Bot));
+    } catch (err) {
+      console.error('failed to load bots from firestore', err);
+      this.bots.set([]);
+    }
+  }
+
+  async add(bot: Bot) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('add bot called without user');
+      return;
+    }
+    try {
+      const docRef = doc(this.firestore, 'users', uid, 'bots', bot.id);
+      await setDoc(docRef, bot);
+      this.bots.update(list => [bot, ...list]);
+    } catch (err) {
+      console.error('failed to add bot', err);
+      throw err;
+    }
+  }
+
+  async setStatus(id: string, status: BotStatus) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('setStatus called without user');
+      return;
+    }
+    const existing = this.bots().find(b => b.id === id);
+    if (!existing) return;
+    const updatedBot = { ...existing, status };
+    try {
+      const docRef = doc(this.firestore, 'users', uid, 'bots', id);
+      await setDoc(docRef, updatedBot);
+      this.bots.update(list => list.map(b => b.id === id ? updatedBot : b));
+    } catch (err) {
+      console.error('failed to update bot status', err);
+      throw err;
+    }
+  }
+
+  async remove(id: string) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('remove bot called without user');
+      return;
+    }
+    try {
+      const docRef = doc(this.firestore, 'users', uid, 'bots', id);
+      await deleteDoc(docRef);
+      this.bots.update(list => list.filter(b => b.id !== id));
+    } catch (err) {
+      console.error('failed to remove bot', err);
+      throw err;
     }
   }
 }

@@ -7,6 +7,7 @@ import {
   Exchange,
   ConnectedExchange,
 } from '../services/exchange.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-connect-exchange-modal',
@@ -17,6 +18,7 @@ import {
 })
 export class ConnectExchangeModal {
   private exchangeService = inject(ExchangeService);
+  private authService = inject(AuthService);
 
   closed = output<void>();
   connected = output<ConnectedExchange>();
@@ -56,6 +58,12 @@ export class ConnectExchangeModal {
     const ex = this.selected();
     if (!ex) return;
 
+    // Check if user is logged in
+    if (!this.authService.currentUser()) {
+      this.error.set('You must be logged in to connect an exchange.');
+      return;
+    }
+
     if (!this.label.trim()) { this.error.set('Please enter a label.'); return; }
     if (!this.apiKey.trim()) { this.error.set('API Key is required.'); return; }
     if (!this.secret.trim()) { this.error.set('API Secret is required.'); return; }
@@ -68,19 +76,26 @@ export class ConnectExchangeModal {
     this.saving.set(true);
 
     // Simulate a brief validation delay
-    setTimeout(() => {
+    setTimeout(async () => {
       const conn: ConnectedExchange = {
         exchangeId: ex.id,
         label: this.label.trim(),
         apiKey: this.apiKey.trim(),
         secret: this.secret.trim(),
-        passphrase: this.passphrase.trim() || undefined,
+        ...(this.passphrase.trim() && { passphrase: this.passphrase.trim() }),
         connectedAt: new Date().toISOString(),
       };
-      this.exchangeService.add(conn);
-      this.saving.set(false);
-      this.connected.emit(conn);
-      this.close();
+      try {
+        await this.exchangeService.add(conn);
+        this.saving.set(false);
+        this.connected.emit(conn);
+        this.close();
+      } catch (err: any) {
+        console.error('failed to save exchange', err);
+        const errorMsg = err?.message || 'Failed to save exchange connection. Please try again.';
+        this.error.set(errorMsg);
+        this.saving.set(false);
+      }
     }, 800);
   }
 

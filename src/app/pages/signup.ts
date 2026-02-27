@@ -66,15 +66,15 @@ export class Signup {
     this.error.set('');
     this.loading.set(true);
 
-    // Small delay to show loading state, then register
-    setTimeout(() => {
-      const err = this.auth.register(this.name, this.email, this.password);
+    // small delay to allow spinner to show briefly
+    setTimeout(async () => {
+      const err = await this.auth.register(this.name.trim(), this.email.trim(), this.password);
+      this.loading.set(false);
       if (err) {
         this.error.set(err);
-        this.loading.set(false);
       } else {
         this.router.navigate(['/dashboard']);
       }
-    }, 600);
+    }, 300);
   }
 }

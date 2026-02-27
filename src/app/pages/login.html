@@ -80,8 +80,8 @@
   </div>
 </div>
 
-<!-- ── Forgot Password Modal ─────────────────────────────── -->
-@if (forgotOpen()) {
+<!-- ── Forgot Password Modal (simplified) ─────────────────────────────── -->
+<ng-container *ngIf="forgotOpen()">
   <div class="fp-backdrop" (click)="closeForgot()"></div>
   <div class="fp-modal" role="dialog" aria-modal="true" aria-label="Reset your password">
 
@@ -94,17 +94,14 @@
         </svg>
       </div>
       <div>
-        <h2 class="fp-title">
-          @if (forgotStep() === 'email')   { Find your account }
-          @if (forgotStep() === 'code')    { Check your email }
-          @if (forgotStep() === 'newpass') { Set a new password }
-          @if (forgotStep() === 'done')    { Password reset! }
-        </h2>
+        <h2 class="fp-title">Reset your password</h2>
         <p class="fp-sub">
-          @if (forgotStep() === 'email')   { Enter your registered email address }
-          @if (forgotStep() === 'code')    { We sent a 6-digit code to <strong>{{ forgotEmail }}</strong> }
-          @if (forgotStep() === 'newpass') { Choose a strong new password for <strong>{{ forgotEmail }}</strong> }
-          @if (forgotStep() === 'done')    { Your password has been updated }
+          <ng-container *ngIf="!resetSent()">
+            Enter your registered email address below and we’ll send you a link to reset it.
+          </ng-container>
+          <ng-container *ngIf="resetSent()">
+            Check your inbox for the reset email.
+          </ng-container>
         </p>
       </div>
       <button class="fp-close" (click)="closeForgot()" aria-label="Close">
@@ -112,153 +109,27 @@
       </button>
     </div>
 
-    <!-- Step indicators -->
-    <div class="fp-steps">
-      <span class="fp-step" [class.active]="forgotStep() === 'email'" [class.done]="forgotStep() === 'code' || forgotStep() === 'newpass' || forgotStep() === 'done'">1</span>
-      <span class="fp-step-line" [class.active]="forgotStep() === 'code' || forgotStep() === 'newpass' || forgotStep() === 'done'"></span>
-      <span class="fp-step" [class.active]="forgotStep() === 'code'" [class.done]="forgotStep() === 'newpass' || forgotStep() === 'done'">2</span>
-      <span class="fp-step-line" [class.active]="forgotStep() === 'newpass' || forgotStep() === 'done'"></span>
-      <span class="fp-step" [class.active]="forgotStep() === 'newpass'" [class.done]="forgotStep() === 'done'">3</span>
-      <span class="fp-step-line" [class.active]="forgotStep() === 'done'"></span>
-      <span class="fp-step" [class.active]="forgotStep() === 'done'">4</span>
-    </div>
-
     <!-- Error banner -->
-    @if (forgotError()) {
-      <div class="fp-error">{{ forgotError() }}</div>
-    }
+    <div *ngIf="forgotError()" class="fp-error">{{ forgotError() }}</div>
 
-    <!-- Step 1: Email -->
-    @if (forgotStep() === 'email') {
-      <div class="fp-body">
+    <div class="fp-body">
+      <ng-container *ngIf="!resetSent(); else doneBlock">
         <div class="form-group">
           <label for="fp-email">Email address</label>
           <input id="fp-email" type="email" [(ngModel)]="forgotEmail" name="fp-email"
             placeholder="you@example.com" autocomplete="email" required />
         </div>
         <button class="btn-fp" (click)="onForgotSubmitEmail()" [disabled]="forgotLoading()">
-          @if (forgotLoading()) { <span class="spinner"></span> Searching… }
-          @else { Continue }
+          <span *ngIf="forgotLoading(); else sendText" class="spinner"></span>
+          <ng-template #sendText>Send reset email</ng-template>
+          <span *ngIf="forgotLoading()"> Sending…</span>
         </button>
-      </div>
-    }
-
-    <!-- Step 2: Code verification -->
-    @if (forgotStep() === 'code') {
-      <div class="fp-body">
-
-        <!-- 6-digit OTP boxes -->
-        <div class="otp-group" (paste)="onDigitPaste($event)">
-          @for (digit of codeDigits; track $index) {
-            <input
-              #digitInput
-              class="otp-box"
-              type="text"
-              inputmode="numeric"
-              maxlength="1"
-              [value]="digit"
-              [class.filled]="digit !== ''"
-              (input)="onDigitInput($index, $event)"
-              (keydown)="onDigitKeydown($index, $event)"
-              autocomplete="one-time-code"
-              aria-label="Digit {{ $index + 1 }}"
-            />
-          }
-        </div>
-
-        <!-- Timer + resend -->
-        <div class="code-meta">
-          @if (codeExpiry() > 0) {
-            <span class="code-timer">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Expires in {{ formatTimer(codeExpiry()) }}
-            </span>
-          } @else {
-            <span class="code-expired">Code expired</span>
-          }
-          <button type="button" class="resend-btn" (click)="dispatchCode()">
-            Resend code
-          </button>
-        </div>
-
-        <button class="btn-fp" (click)="onVerifyCode()" [disabled]="forgotLoading() || enteredCode.length < 6">
-          @if (forgotLoading()) { <span class="spinner"></span> Verifying&hellip; }
-          @else { Verify Code }
-        </button>
-      </div>
-    }
-
-    <!-- Step 3: New password -->
-    @if (forgotStep() === 'newpass') {
-      <div class="fp-body">
-        <div class="form-group">
-          <label for="fp-newpass">New password</label>
-          <div class="pass-wrap">
-            <input id="fp-newpass"
-              [type]="showNewPass() ? 'text' : 'password'"
-              [(ngModel)]="newPassword" name="fp-newpass"
-              placeholder="Min. 6 characters" required />
-            <button type="button" class="pass-eye" (click)="showNewPass.set(!showNewPass())" aria-label="Toggle visibility">
-              @if (showNewPass()) {
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-              } @else {
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              }
-            </button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="fp-confirm">Confirm password</label>
-          <div class="pass-wrap">
-            <input id="fp-confirm"
-              [type]="showConfirm() ? 'text' : 'password'"
-              [(ngModel)]="confirmPass" name="fp-confirm"
-              placeholder="Repeat your new password" required />
-            <button type="button" class="pass-eye" (click)="showConfirm.set(!showConfirm())" aria-label="Toggle visibility">
-              @if (showConfirm()) {
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-              } @else {
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              }
-            </button>
-          </div>
-        </div>
-        <!-- Strength indicator -->
-        <div class="pass-strength">
-          <div class="strength-bar">
-            <span [class.filled]="newPassword.length >= 1"></span>
-            <span [class.filled]="newPassword.length >= 4"></span>
-            <span [class.filled]="newPassword.length >= 8"></span>
-            <span [class.filled]="newPassword.length >= 12"></span>
-          </div>
-          <span class="strength-label">
-            @if (newPassword.length === 0) { &nbsp; }
-            @else if (newPassword.length < 4) { Weak }
-            @else if (newPassword.length < 8) { Fair }
-            @else if (newPassword.length < 12) { Good }
-            @else { Strong }
-          </span>
-        </div>
-        <button class="btn-fp" (click)="onForgotSetPassword()" [disabled]="forgotLoading()">
-          @if (forgotLoading()) { <span class="spinner"></span> Updating… }
-          @else { Reset Password }
-        </button>
-      </div>
-    }
-
-    <!-- Step 3: Done -->
-    @if (forgotStep() === 'done') {
-      <div class="fp-body fp-done">
-        <div class="done-circle">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d17a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-        </div>
-        <p class="done-msg">Your password has been successfully reset. You can now log in with your new password.</p>
-        <button class="btn-fp" (click)="finishReset()">Back to Log In</button>
-      </div>
-    }
-
+      </ng-container>
+      <ng-template #doneBlock>
+        <p class="fp-done-msg">A password reset link has been sent to <strong>{{ forgotEmail }}</strong>.</p>
+        <button class="btn-fp" (click)="finishReset()">Close</button>
+      </ng-template>
+    </div>
   </div>
-}
+</ng-container>
 

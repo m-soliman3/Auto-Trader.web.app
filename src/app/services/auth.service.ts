@@ -1,6 +1,24 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import {
+  Auth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  onAuthStateChanged,
+  updateProfile,
+  User as FirebaseUser,
+} from '@angular/fire/auth';
+import {
+  Firestore,
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+} from '@angular/fire/firestore';
 
 export interface User {
   id: string;
@@ -9,108 +27,104 @@ export interface User {
   createdAt: string;
 }
 
-interface StoredUser extends User {
-  passwordHash: string;
-}
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly USERS_KEY = 'at_users';
-  private readonly SESSION_KEY = 'at_session';
-
   private fireAuth = inject(Auth);
+  private firestore = inject(Firestore);
   private router   = inject(Router);
 
-  currentUser = signal<User | null>(this.loadSession());
+  currentUser = signal<User | null>(null);
+  isLoggedIn  = computed(() => this.currentUser() !== null);
 
-  isLoggedIn = computed(() => this.currentUser() !== null);
-
-  /** Register a new user. Returns an error string or null on success. */
-  register(name: string, email: string, password: string): string | null {
-    const users = this.getUsers();
-    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
-      return 'An account with this email already exists.';
-    }
-    const newUser: StoredUser = {
-      id: crypto.randomUUID(),
-      name: name.trim(),
-      email: email.toLowerCase().trim(),
-      passwordHash: this.hash(password),
-      createdAt: new Date().toISOString(),
-    };
-    users.push(newUser);
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
-    this.startSession(newUser);
-    return null;
+  constructor() {
+    onAuthStateChanged(this.fireAuth, async (fbUser) => {
+      if (fbUser) {
+        const ref = doc(this.firestore, 'users', fbUser.uid);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          this.currentUser.set(snap.data() as User);
+        } else {
+          // Create and save fallback profile to Firestore
+          const fallbackProfile: User = {
+            id: fbUser.uid,
+            name: fbUser.displayName ?? 'User',
+            email: fbUser.email ?? '',
+            createdAt: new Date().toISOString(),
+          };
+          try {
+            await setDoc(ref, fallbackProfile);
+            this.currentUser.set(fallbackProfile);
+          } catch (err) {
+            console.error('failed to create user profile', err);
+            this.currentUser.set(fallbackProfile);
+          }
+        }
+      } else {
+        this.currentUser.set(null);
+      }
+    });
   }
 
-  /** Log in. Returns an error string or null on success. */
-  login(email: string, password: string): string | null {
-    const users = this.getUsers();
-    const user = users.find(
-      u => u.email.toLowerCase() === email.toLowerCase() && u.passwordHash === this.hash(password)
-    );
-    if (!user) {
-      return 'Incorrect email or password.';
+  /** Register a new user using Firebase. */
+  async register(name: string, email: string, password: string): Promise<string | null> {
+    try {
+      const cred = await createUserWithEmailAndPassword(this.fireAuth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+      const profile: User = {
+        id: cred.user.uid,
+        name,
+        email,
+        createdAt: new Date().toISOString(),
+      };
+      await setDoc(doc(this.firestore, 'users', cred.user.uid), profile);
+      this.currentUser.set(profile);
+      return null;
+    } catch (e: any) {
+      return this.mapError(e);
     }
-    this.startSession(user);
-    return null;
   }
 
-  logout() {
-    localStorage.removeItem(this.SESSION_KEY);
+  /** Log in via Firebase */
+  async login(email: string, password: string): Promise<string | null> {
+    try {
+      await signInWithEmailAndPassword(this.fireAuth, email, password);
+      return null;
+    } catch (e: any) {
+      return this.mapError(e);
+    }
+  }
+
+  async logout() {
+    await signOut(this.fireAuth);
     this.currentUser.set(null);
     this.router.navigate(['/']);
   }
 
-  // ── Helpers ─────────────────────────────────────────────
-
-  private startSession(user: StoredUser) {
-    const { passwordHash, ...safe } = user;
-    localStorage.setItem(this.SESSION_KEY, JSON.stringify(safe));
-    this.currentUser.set(safe);
-  }
-
-  private loadSession(): User | null {
-    try {
-      const raw = localStorage.getItem('at_session');
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  }
-
-  private getUsers(): StoredUser[] {
-    try {
-      return JSON.parse(localStorage.getItem(this.USERS_KEY) ?? '[]');
-    } catch {
-      return [];
-    }
-  }
-
   /**
-   * Reset a user's password.
-   * Returns an error string on failure, or null on success.
+   * Send a Firebase password-reset email.
    */
-  resetPassword(email: string, newPassword: string): string | null {
-    if (newPassword.length < 6) {
-      return 'Password must be at least 6 characters.';
+  async sendPasswordResetEmail(email: string): Promise<string | null> {
+    try {
+      await sendPasswordResetEmail(this.fireAuth, email);
+      return null;
+    } catch (e: any) {
+      return this.mapError(e);
     }
-    const users = this.getUsers();
-    const idx = users.findIndex(u => u.email.toLowerCase() === email.toLowerCase().trim());
-    if (idx === -1) {
-      return 'No account found with that email address.';
-    }
-    users[idx].passwordHash = this.hash(newPassword);
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
-    return null;
   }
 
   /** Real Google OAuth via Firebase – opens a popup */
   async loginWithGoogle(): Promise<string | null> {
     try {
       const result = await signInWithPopup(this.fireAuth, new GoogleAuthProvider());
-      this.saveOAuthSession(result.user);
+      // ensure profile stored
+      const profile: User = {
+        id: result.user.uid,
+        name: result.user.displayName ?? 'User',
+        email: result.user.email ?? '',
+        createdAt: new Date().toISOString(),
+      };
+      await setDoc(doc(this.firestore,'users',profile.id),profile, { merge: true });
+      this.currentUser.set(profile);
       return null;
     } catch (e: any) {
       if (e.code === 'auth/popup-closed-by-user') return null;
@@ -118,28 +132,18 @@ export class AuthService {
     }
   }
 
-  private saveOAuthSession(fbUser: { uid: string; displayName: string | null; email: string | null }) {
-    const user: User = {
-      id: fbUser.uid,
-      name: fbUser.displayName ?? 'User',
-      email: fbUser.email ?? '',
-      createdAt: new Date().toISOString(),
-    };
-    localStorage.setItem(this.SESSION_KEY, JSON.stringify(user));
-    this.currentUser.set(user);
-  }
-
-  /** Check whether an email is registered (used by forgot-password flow). */
-  emailExists(email: string): boolean {
-    return this.getUsers().some(u => u.email.toLowerCase() === email.toLowerCase().trim());
-  }
-
-  /** Very simple hash — good enough for a local demo */
-  private hash(str: string): string {
-    let h = 0;
-    for (let i = 0; i < str.length; i++) {
-      h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  // utility to translate errors
+  private mapError(e: any): string {
+    switch (e.code) {
+      case 'auth/email-already-in-use':  return 'An account with this email already exists.';
+      case 'auth/invalid-email':         return 'Please enter a valid email address.';
+      case 'auth/weak-password':         return 'Password must be at least 6 characters.';
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential':    return 'Incorrect email or password.';
+      case 'auth/user-disabled':         return 'This account has been disabled.';
+      case 'auth/too-many-requests':     return 'Too many attempts. Please try again later.';
+      default:                           return e.message ?? 'An error occurred.';
     }
-    return h.toString(16);
   }
 }
