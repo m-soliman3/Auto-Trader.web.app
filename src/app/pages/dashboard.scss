@@ -508,7 +508,17 @@
   font-size: 0.9rem;
   color: var(--text-muted);
   transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,209,122,0.07); }
   &.bot-btn-del:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.08); }
+}
+
+.icon-eye {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  color: inherit;
 }
 
