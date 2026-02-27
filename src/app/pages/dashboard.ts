@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, ViewChild } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { ExchangeService, ConnectedExchange, SUPPORTED_EXCHANGES } from '../services/exchange.service';
@@ -7,11 +7,12 @@ import { StrategyService, StrategyTemplate } from '../services/strategy.service'
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
+import { EditBotModal } from '../components/edit-bot-modal';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal],
+  imports: [CommonModule, DecimalPipe, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -21,9 +22,12 @@ export class Dashboard {
   botService      = inject(BotService);
   strategyService = inject(StrategyService);
 
+  @ViewChild(EditBotModal) editBotModal!: EditBotModal;
+
   showExchangeModal   = signal(false);
   showBotModal        = signal(false);
   showStrategiesModal = signal(false);
+  showEditBotModal    = signal(false);
   preselectedStrategy = signal<StrategyTemplate | null>(null);
   toastMsg          = signal('');
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
@@ -82,6 +86,17 @@ export class Dashboard {
   removeBot(bot: Bot) {
     this.botService.remove(bot.id);
     this.showToast(`🗑 "${bot.name}" deleted.`);
+  }
+
+  showBotSettings(bot: Bot) {
+    const isReadOnly = bot.status !== 'paused';
+    this.editBotModal.open(bot, isReadOnly);
+    this.showEditBotModal.set(true);
+  }
+
+  onBotUpdated(bot: Bot) {
+    this.showEditBotModal.set(false);
+    this.showToast(`✏️ "${bot.name}" updated successfully!`);
   }
 
   exchangeName(id: string): string {
