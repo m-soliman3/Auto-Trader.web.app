@@ -33,6 +33,32 @@
         <div class="alert-error">{{ error() }}</div>
       }
 
+      <!-- Bot Name -->
+      <div class="form-group">
+        <label for="botName">Bot Name</label>
+        <input
+          id="botName"
+          type="text"
+          [(ngModel)]="botName"
+          name="botName"
+          placeholder="e.g. My Trading Bot"
+          [disabled]="isReadOnly()"
+        />
+        <span class="hint">A unique name to identify your bot</span>
+      </div>
+
+      <!-- Exchange Selection -->
+      <div class="form-group">
+        <label for="exchange">Connected Exchange</label>
+        <select id="exchange" [(ngModel)]="selectedExchangeLabel" name="exchange" [disabled]="isReadOnly()">
+          <option value="">-- Select Exchange --</option>
+          @for (exch of exchanges(); track exch.label) {
+            <option [value]="exch.label">{{ exch.label }}</option>
+          }
+        </select>
+        <span class="hint">Exchange to use for trading</span>
+      </div>
+
       <!-- Investment -->
       <div class="form-group">
         <label for="investment">Investment Amount ($)</label>

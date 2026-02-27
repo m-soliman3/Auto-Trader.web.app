@@ -2,6 +2,7 @@ import { Component, inject, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BotService, Bot, SYMBOLS, TIMEFRAMES } from '../services/bot.service';
+import { ExchangeService } from '../services/exchange.service';
 
 @Component({
   selector: 'app-edit-bot-modal',
@@ -12,6 +13,7 @@ import { BotService, Bot, SYMBOLS, TIMEFRAMES } from '../services/bot.service';
 })
 export class EditBotModal {
   private botService = inject(BotService);
+  private exchangeService = inject(ExchangeService);
 
   closed = output<void>();
   updated = output<Bot>();
@@ -22,6 +24,8 @@ export class EditBotModal {
   isReadOnly = signal(false);
 
   // Form fields
+  botName = '';
+  selectedExchangeLabel = '';
   investment = '';
   stopLoss = '';
   takeProfit = '';
@@ -30,10 +34,13 @@ export class EditBotModal {
 
   symbols = SYMBOLS;
   timeframes = TIMEFRAMES;
+  exchanges = this.exchangeService.connections;
 
   open(bot: Bot, isReadOnly: boolean = false) {
     this.isReadOnly.set(isReadOnly);
     this.bot.set(bot);
+    this.botName = bot.name;
+    this.selectedExchangeLabel = bot.exchangeLabel;
     this.investment = String(bot.investment);
     this.stopLoss = String(bot.stopLoss);
     this.takeProfit = String(bot.takeProfit);
@@ -45,6 +52,18 @@ export class EditBotModal {
   save() {
     const current = this.bot();
     if (!current || this.isReadOnly()) return;
+
+    // Validate bot name
+    if (!this.botName.trim()) {
+      this.error.set('Bot name is required.');
+      return;
+    }
+
+    // Validate exchange selection
+    if (!this.selectedExchangeLabel.trim()) {
+      this.error.set('Please select an exchange.');
+      return;
+    }
 
     // Validate inputs
     const inv = parseFloat(this.investment);
@@ -86,7 +105,13 @@ export class EditBotModal {
 
     (async () => {
       try {
+        // Find the exchange to get the exchangeId
+        const selectedExchange = this.exchangeService.connections().find(ex => ex.label === this.selectedExchangeLabel);
+        
         await this.botService.update(current.id, {
+          name: this.botName.trim(),
+          exchangeLabel: this.selectedExchangeLabel.trim(),
+          exchangeId: selectedExchange?.exchangeId || current.exchangeId,
           investment: inv,
           stopLoss: sl,
           takeProfit: tp,
@@ -96,6 +121,9 @@ export class EditBotModal {
 
         const updatedBot = {
           ...current,
+          name: this.botName.trim(),
+          exchangeLabel: this.selectedExchangeLabel.trim(),
+          exchangeId: selectedExchange?.exchangeId || current.exchangeId,
           investment: inv,
           stopLoss: sl,
           takeProfit: tp,
