@@ -67,6 +67,27 @@ export class ConnectExchangeModal {
     if (!this.label.trim()) { this.error.set('Please enter a label.'); return; }
     if (!this.apiKey.trim()) { this.error.set('API Key is required.'); return; }
     if (!this.secret.trim()) { this.error.set('API Secret is required.'); return; }
+    
+    // Validate API Key format
+    if (this.apiKey.trim().length < 10) {
+      this.error.set('API Key must be at least 10 characters long.');
+      return;
+    }
+    if (!/^[a-zA-Z0-9_\-\.]+$/.test(this.apiKey.trim())) {
+      this.error.set('API Key contains invalid characters. Only alphanumeric, underscores, hyphens, and dots are allowed.');
+      return;
+    }
+
+    // Validate Secret format
+    if (this.secret.trim().length < 20) {
+      this.error.set('API Secret must be at least 20 characters long.');
+      return;
+    }
+    if (!/^[a-zA-Z0-9_\-\.\/\+\=]+$/.test(this.secret.trim())) {
+      this.error.set('API Secret contains invalid characters. Only alphanumeric, underscores, hyphens, forward slashes, plus signs, equals and dots are allowed.');
+      return;
+    }
+    
     if (ex.hasPassphrase && !this.passphrase.trim()) {
       this.error.set('Passphrase is required for this exchange.');
       return;
@@ -75,19 +96,24 @@ export class ConnectExchangeModal {
     this.error.set('');
     this.saving.set(true);
 
-    // Simulate a brief validation delay
-    setTimeout(async () => {
-      const conn: ConnectedExchange = {
-        exchangeId: ex.id,
-        label: this.label.trim(),
-        apiKey: this.apiKey.trim(),
-        secret: this.secret.trim(),
-        ...(this.passphrase.trim() && { passphrase: this.passphrase.trim() }),
-        connectedAt: new Date().toISOString(),
-      };
+    // Save credentials to Firestore
+    (async () => {
       try {
+        const ex = this.selected();
+        if (!ex) return;
+
+        const conn: ConnectedExchange = {
+          exchangeId: ex.id,
+          label: this.label.trim(),
+          apiKey: this.apiKey.trim(),
+          secret: this.secret.trim(),
+          ...(this.passphrase.trim() && { passphrase: this.passphrase.trim() }),
+          connectedAt: new Date().toISOString(),
+        };
+        
         await this.exchangeService.add(conn);
         this.saving.set(false);
+        this.error.set('');
         this.connected.emit(conn);
         this.close();
       } catch (err: any) {
@@ -96,7 +122,7 @@ export class ConnectExchangeModal {
         this.error.set(errorMsg);
         this.saving.set(false);
       }
-    }, 800);
+    })();
   }
 
   close() {

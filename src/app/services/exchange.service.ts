@@ -77,6 +77,17 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     apiDocsUrl: 'https://alpaca.markets/docs/',
   },
   {
+    id: 'alpaca-paper',
+    name: 'Alpaca Paper Trading',
+    logo: '🦙',
+    color: '#FF6A00',
+    hasPassphrase: false,
+    isPaper: true,
+    category: 'stocks',
+    description: 'Risk-free stock trading simulation',
+    apiDocsUrl: 'https://alpaca.markets/docs/',
+  },
+  {
     id: 'interactive-brokers',
     name: 'Interactive Brokers',
     logo: '🏦',
@@ -111,7 +122,7 @@ export class ExchangeService {
     try {
       const col = collection(this.firestore, 'users', uid, 'exchanges');
       const snap = await getDocs(col);
-      const list = snap.docs.map(d => d.data() as ConnectedExchange);
+      const list = snap.docs.map((d: any) => d.data() as ConnectedExchange);
       this.connections.set(list);
     } catch (err) {
       console.error('failed to load exchanges from firestore', err);
@@ -159,5 +170,11 @@ export class ExchangeService {
       console.error('failed to remove exchange', err);
       throw err;
     }
+  }
+
+  async validateCredentials(exchangeId: string, apiKey: string, secret: string, passphrase?: string): Promise<boolean> {
+    // Credentials will be saved without validation
+    // Validation can be implemented server-side later
+    return Promise.resolve(true);
   }
 }

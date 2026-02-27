@@ -18,6 +18,13 @@
   />
 }
 
+<app-edit-bot-modal
+  #editBotModal
+  [hidden]="!showEditBotModal()"
+  (closed)="showEditBotModal.set(false)"
+  (updated)="onBotUpdated($event)"
+/>
+
 <!-- Toast -->
 @if (toastMsg()) {
   <div class="toast">{{ toastMsg() }}</div>
@@ -127,6 +134,7 @@
                     <button class="bot-btn" (click)="toggleBotStatus(bot)" [title]="bot.status === 'active' ? 'Pause' : 'Resume'">
                       {{ bot.status === 'active' ? '⏸' : '▶' }}
                     </button>
+                    <button class="bot-btn" (click)="showBotSettings(bot)" [title]="bot.status === 'active' ? 'View settings' : 'Edit settings'">{{ bot.status === 'active' ? '👁️' : '✏️' }}</button>
                     <button class="bot-btn bot-btn-del" (click)="removeBot(bot)" title="Delete">🗑</button>
                   </td>
                 </tr>

@@ -159,6 +159,31 @@ export class BotService {
     }
   }
 
+  async update(id: string, updates: Partial<Bot>) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('update bot called without user');
+      return;
+    }
+    const existing = this.bots().find(b => b.id === id);
+    if (!existing) return;
+    
+    // Only allow updates when bot is paused
+    if (existing.status !== 'paused') {
+      throw new Error('Bot must be paused to edit its characteristics');
+    }
+
+    const updatedBot = { ...existing, ...updates };
+    try {
+      const docRef = doc(this.firestore, 'users', uid, 'bots', id);
+      await setDoc(docRef, updatedBot);
+      this.bots.update(list => list.map(b => b.id === id ? updatedBot : b));
+    } catch (err) {
+      console.error('failed to update bot', err);
+      throw err;
+    }
+  }
+
   async remove(id: string) {
     const uid = this.auth.currentUser()?.id;
     if (!uid) {
