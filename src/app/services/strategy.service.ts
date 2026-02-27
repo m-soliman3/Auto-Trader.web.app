@@ -1,4 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject, effect } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 
 export type RiskLevel  = 'Low' | 'Medium' | 'High';
 export type MarketType = 'crypto' | 'stocks' | 'forex' | 'multi';
@@ -295,22 +297,52 @@ export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
 
 @Injectable({ providedIn: 'root' })
 export class StrategyService {
-  private readonly SAVED_KEY = 'at_saved_strategies';
+  private auth = inject(AuthService);
+  private firestore = inject(Firestore);
 
-  savedIds = signal<string[]>(this.loadSaved());
-
+  savedIds = signal<string[]>([]);
   all = computed(() => STRATEGY_TEMPLATES);
+
+  constructor() {
+    effect(() => {
+      const user = this.auth.currentUser();
+      if (user) this.loadSavedFromFirestore(user.id);
+      else this.savedIds.set([]);
+    });
+  }
+
+  private async loadSavedFromFirestore(uid: string) {
+    try {
+      const ref = doc(this.firestore, 'users', uid);
+      const snap = await getDoc(ref);
+      const data = snap.data();
+      this.savedIds.set(data?.['savedStrategies'] ?? []);
+    } catch {
+      this.savedIds.set([]);
+    }
+  }
 
   isSaved(id: string) {
     return this.savedIds().includes(id);
   }
 
-  toggleSave(id: string) {
-    this.savedIds.update(ids => {
-      const next = ids.includes(id) ? ids.filter(i => i !== id) : [...ids, id];
-      localStorage.setItem(this.SAVED_KEY, JSON.stringify(next));
-      return next;
-    });
+  async toggleSave(id: string) {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('toggleSave called without user');
+      return;
+    }
+    const next = this.savedIds().includes(id)
+      ? this.savedIds().filter(i => i !== id)
+      : [...this.savedIds(), id];
+    this.savedIds.set(next);
+    try {
+      const ref = doc(this.firestore, 'users', uid);
+      await setDoc(ref, { savedStrategies: next }, { merge: true });
+    } catch (err) {
+      console.error('failed to update saved strategies', err);
+      throw err;
+    }
   }
 
   search(query: string, market: string, risk: string, category: string): StrategyTemplate[] {
@@ -327,8 +359,4 @@ export class StrategyService {
     });
   }
 
-  private loadSaved(): string[] {
-    try { return JSON.parse(localStorage.getItem(this.SAVED_KEY) ?? '[]'); }
-    catch { return []; }
-  }
 }

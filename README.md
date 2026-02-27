@@ -1,4 +1,42 @@
 # AutoTrading
+## Backend / Firestore setup
+
+This project now persists user data (accounts, exchanges, bots, saved strategies) in Firebase Firestore instead of `localStorage`.
+To finish the migration:
+
+1. **Enable Firestore** in the Firebase console for the project.
+2. Use the following security rules to restrict access to each user's own documents:
+
+```firestore.rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    // you may want a top-level "users/{userId}" doc as well for savedStrategies
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+```
+
+3. Deploy the rules with `firebase deploy --only firestore:rules`.
+
+Once Firestore is active, the Angular app will automatically read/write data under `users/{uid}`.
+
+## Building & Deployment
+
+After making changes:
+
+```bash
+npm install          # ensure dependencies are up to date
+npm run build        # compile Angular
+firebase deploy      # deploy hosting (and functions/rules if configured)
+```
+
+For rules only use `firebase deploy --only firestore:rules`.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.5.
 
