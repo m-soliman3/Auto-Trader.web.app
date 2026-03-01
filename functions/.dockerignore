@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+lib
+*.spec.ts
+.firebase
+.git
+.gitignore
+README.md

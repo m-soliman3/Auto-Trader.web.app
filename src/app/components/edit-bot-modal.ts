@@ -22,6 +22,7 @@ export class EditBotModal {
   error = signal('');
   saving = signal(false);
   isReadOnly = signal(false);
+  isActive = signal(false);
 
   // Form fields
   botName = '';
@@ -38,6 +39,7 @@ export class EditBotModal {
 
   open(bot: Bot, isReadOnly: boolean = false) {
     this.isReadOnly.set(isReadOnly);
+    this.isActive.set(bot.status === 'active');
     this.bot.set(bot);
     this.botName = bot.name;
     this.selectedExchangeLabel = bot.exchangeLabel;
@@ -108,28 +110,39 @@ export class EditBotModal {
         // Find the exchange to get the exchangeId
         const selectedExchange = this.exchangeService.connections().find(ex => ex.label === this.selectedExchangeLabel);
         
-        await this.botService.update(current.id, {
+        // Build updates object - always include name and exchange
+        const updates: Partial<Bot> = {
           name: this.botName.trim(),
           exchangeLabel: this.selectedExchangeLabel.trim(),
           exchangeId: selectedExchange?.exchangeId || current.exchangeId,
-          investment: inv,
-          stopLoss: sl,
-          takeProfit: tp,
-          timeframe: this.timeframe.trim(),
-          symbol: this.symbol.trim(),
-        });
+        };
+        
+        // Only include restricted fields if bot is paused
+        if (!this.isActive()) {
+          updates.investment = inv;
+          updates.stopLoss = sl;
+          updates.takeProfit = tp;
+          updates.timeframe = this.timeframe.trim();
+          updates.symbol = this.symbol.trim();
+        }
+        
+        await this.botService.update(current.id, updates);
 
-        const updatedBot = {
+        const updatedBot: Bot = {
           ...current,
           name: this.botName.trim(),
           exchangeLabel: this.selectedExchangeLabel.trim(),
           exchangeId: selectedExchange?.exchangeId || current.exchangeId,
-          investment: inv,
-          stopLoss: sl,
-          takeProfit: tp,
-          timeframe: this.timeframe.trim(),
-          symbol: this.symbol.trim(),
         };
+        
+        // Only include restricted fields if bot is paused
+        if (!this.isActive()) {
+          updatedBot.investment = inv;
+          updatedBot.stopLoss = sl;
+          updatedBot.takeProfit = tp;
+          updatedBot.timeframe = this.timeframe.trim();
+          updatedBot.symbol = this.symbol.trim();
+        }
 
         this.saving.set(false);
         this.error.set('');

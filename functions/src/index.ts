@@ -1,162 +1,173 @@
 import * as functions from "firebase-functions";
-import admin from "firebase-admin";
+import * as admin from "firebase-admin";
+import fetch from "node-fetch";
+import * as crypto from "crypto";
+import cors from "cors";
 
-admin.initializeApp();
-
-interface ValidateExchangeRequest {
-  exchangeId: string;
-  apiKey: string;
-  secret: string;
-  passphrase?: string;
+interface PortfolioData {
+  portfolioValue: number;
+  unrealizedPnl: number;
+  pnlPercentage: number;
+  updatedAt: string;
 }
 
-export const validateExchangeCredentials = functions.https.onCall(
-  async (data: ValidateExchangeRequest, context: functions.https.CallableContext) => {
-    // Verify user is authenticated
+if (!admin.apps.length) {
+  admin.initializeApp();
+}
+
+const corsHandler = cors({
+  origin: ["https://autotrader-b8851.web.app", "http://localhost:4200"],
+  methods: ["POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+});
+
+// --- Alpaca support temporarily disabled (ALPACA_API_SECRET not configured) ---
+// async function fetchAlpacaPortfolio(apiKey: string, apiSecret: string, isPaper: boolean): Promise<PortfolioData> { ... }
+
+async function fetchBinancePortfolio(
+  apiKey: string,
+  apiSecret: string
+): Promise<PortfolioData> {
+  const baseUrl = "https://api.binance.com";
+  const endpoint = "/api/v3/account";
+  const timestamp = Date.now();
+  const queryString = `timestamp=${timestamp}`;
+
+  const signature = crypto
+    .createHmac("sha256", apiSecret)
+    .update(queryString)
+    .digest("hex");
+
+  const url = `${baseUrl}${endpoint}?${queryString}&signature=${signature}`;
+  console.log("🔗 Binance URL:", url);
+
+  const response = await fetch(url, {
+    headers: { "X-MBX-APIKEY": apiKey },
+  } as any);
+
+  if (!response.ok) {
+    const text = await response.text();
+    console.error("❌ Binance error:", text);
+    throw new functions.https.HttpsError("internal", `Binance API error ${response.status}: ${text}`);
+  }
+
+  const data: any = await response.json();
+  const totalValue = data.balances.reduce((acc: number, asset: any) => {
+    return acc + parseFloat(asset.free) + parseFloat(asset.locked);
+  }, 0);
+
+  return {
+    portfolioValue: totalValue,
+    unrealizedPnl: 0,
+    pnlPercentage: 0,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+async function resolvePortfolio(
+  exchangeId: string,
+  apiKey: string,
+  apiSecretFromClient?: string
+): Promise<PortfolioData> {
+  const sanitizedApiKey = (apiKey || "").replace(/\s+/g, "");
+  const sanitizedApiSecret = (apiSecretFromClient || "").replace(/\s+/g, "");
+
+  if (!exchangeId || !sanitizedApiKey || !sanitizedApiSecret) {
+    console.error("❌ Missing exchangeId, apiKey, or apiSecret");
+    throw new functions.https.HttpsError("invalid-argument", "Missing exchangeId, apiKey, or apiSecret");
+  }
+
+  if (exchangeId !== "binance") {
+    console.error(`Unsupported exchange: ${exchangeId}`);
+    throw new functions.https.HttpsError("not-found", `Exchange not yet supported: ${exchangeId}`);
+  }
+
+  console.log("Fetching Binance portfolio...");
+  return fetchBinancePortfolio(sanitizedApiKey, sanitizedApiSecret);
+}
+
+export const getPortfolio = functions
+  .region("europe-west1")
+  .https.onCall(async (data, context) => {
     if (!context.auth) {
-      throw new functions.https.HttpsError(
-        "unauthenticated",
-        "User must be authenticated to validate exchange credentials"
-      );
+      throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
     }
 
-    const { exchangeId, apiKey, secret, passphrase } = data;
-
+    console.log("🚀 Function started for user:", context.auth.uid);
     try {
-      switch (exchangeId) {
-        case "alpaca":
-          return await validateAlpaca(apiKey, secret, false);
-        case "alpaca-paper":
-          return await validateAlpaca(apiKey, secret, true);
-        case "binance":
-          return await validateBinance(apiKey, secret);
-        case "coinbase":
-          return await validateCoinbase(apiKey, secret, passphrase || "");
-        case "kraken":
-          return await validateKraken(apiKey, secret);
-        case "bybit":
-          return await validateBybit(apiKey, secret);
-        case "interactive-brokers":
-          return await validateInteractiveBrokers(apiKey, secret);
-        default:
-          throw new functions.https.HttpsError(
-            "invalid-argument",
-            `Unknown exchange: ${exchangeId}`
-          );
-      }
+      const { exchangeId, apiKey, apiSecret } = data;
+
+      console.log("📊 Portfolio request for:", exchangeId);
+      console.log("🔑 API Key provided:", !!apiKey);
+
+      const portfolio = await resolvePortfolio(exchangeId, apiKey, apiSecret);
+
+      console.log("✅ Success! Portfolio value:", portfolio.portfolioValue);
+      return portfolio;
     } catch (error: any) {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        error.message || "Credential validation failed"
-      );
+      console.error("❌❌❌ Uncaught Error:", error);
+      if (error instanceof functions.https.HttpsError) {
+        throw error;
+      }
+      throw new functions.https.HttpsError("internal", error.message, error);
     }
-  }
-);
-
-async function validateAlpaca(
-  apiKey: string,
-  secret: string,
-  isPaper: boolean
-): Promise<boolean> {
-  const baseUrl = isPaper
-    ? "https://paper-api.alpaca.markets"
-    : "https://api.alpaca.markets";
-
-  const response = await fetch(`${baseUrl}/v2/account`, {
-    method: "GET",
-    headers: {
-      "APCA-API-KEY-ID": apiKey,
-      "APCA-API-SECRET-KEY": secret,
-    },
   });
 
-  if (!response.ok) {
-    throw new Error(`Invalid Alpaca credentials: HTTP ${response.status}`);
-  }
+export const getPortfolioHttp = functions
+  .region("europe-west1")
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") {
+        res.status(204).send("");
+        return;
+      }
 
-  return true;
-}
+      if (req.method !== "POST") {
+        res.status(405).json({ error: "Method not allowed" });
+        return;
+      }
 
-async function validateBinance(apiKey: string, secret: string): Promise<boolean> {
-  const response = await fetch("https://api.binance.com/api/v3/account", {
-    method: "GET",
-    headers: {
-      "X-MBX-APIKEY": apiKey,
-    },
+      try {
+        const authHeader = req.headers.authorization || "";
+        const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+        if (!token) {
+          res.status(401).json({ error: "Missing Authorization Bearer token" });
+          return;
+        }
+
+        const decoded = await admin.auth().verifyIdToken(token);
+        console.log("🚀 HTTP function started for user:", decoded.uid);
+
+        const { exchangeId, apiKey, apiSecret } = req.body || {};
+        console.log("📊 HTTP portfolio request for:", exchangeId);
+        console.log("🔑 API Key provided:", !!apiKey);
+
+        const portfolio = await resolvePortfolio(exchangeId, apiKey, apiSecret);
+        res.status(200).json(portfolio);
+      } catch (error: any) {
+        console.error("❌❌❌ HTTP function uncaught error:", error);
+        const code = error?.code;
+        if (code === "invalid-argument") {
+          res.status(400).json({ error: error.message });
+          return;
+        }
+        if (code === "not-found") {
+          res.status(404).json({ error: error.message });
+          return;
+        }
+        if (code === "unauthenticated") {
+          res.status(401).json({ error: error.message });
+          return;
+        }
+        const message = error?.message || "Internal server error";
+        if (message.includes("Binance API error 451") || message.includes("restricted location")) {
+          res.status(451).json({
+            error: "Binance blocked this server location (451 restricted location). Please use Binance for this region, Binance.US if applicable, or deploy functions in another allowed region.",
+          });
+          return;
+        }
+        res.status(500).json({ error: message });
+      }
+    });
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(
-      `Invalid Binance credentials: ${error.msg || `HTTP ${response.status}`}`
-    );
-  }
-
-  return true;
-}
-
-async function validateCoinbase(
-  apiKey: string,
-  secret: string,
-  passphrase: string
-): Promise<boolean> {
-  const response = await fetch("https://api.coinbase.com/api/v3/accounts", {
-    method: "GET",
-    headers: {
-      "CB-ACCESS-KEY": apiKey,
-      "CB-ACCESS-SIGN": secret,
-      "CB-ACCESS-TIMESTAMP": Date.now().toString(),
-      "CB-ACCESS-PASSPHRASE": passphrase,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Invalid Coinbase credentials: HTTP ${response.status}`);
-  }
-
-  return true;
-}
-
-async function validateKraken(apiKey: string, secret: string): Promise<boolean> {
-  const response = await fetch("https://api.kraken.com/0/public/Time");
-
-  if (!response.ok) {
-    throw new Error(`Kraken API validation failed: HTTP ${response.status}`);
-  }
-
-  return true;
-}
-
-async function validateBybit(apiKey: string, secret: string): Promise<boolean> {
-  const response = await fetch("https://api.bybit.com/v5/market/time");
-
-  if (!response.ok) {
-    throw new Error(`Bybit API validation failed: HTTP ${response.status}`);
-  }
-
-  return true;
-}
-
-async function validateInteractiveBrokers(
-  apiKey: string,
-  secret: string
-): Promise<boolean> {
-  const response = await fetch("https://api.ibkr.com/auth", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      apiKey: apiKey,
-      secret: secret,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(
-      `Invalid Interactive Brokers credentials: HTTP ${response.status}`
-    );
-  }
-
-  return true;
-}
