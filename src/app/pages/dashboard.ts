@@ -36,11 +36,56 @@ export class Dashboard {
     const hasEx  = this.exchangeService.hasExchange();
     const active = this.botService.activeBots().length;
     const total  = this.botService.bots().length;
+    const portfolio = this.exchangeService.portfolioData();
+    const isLoading = this.exchangeService.isLoadingPortfolio();
+    const error = this.exchangeService.portfolioError();
+    
+    let portfolioValue: string;
+    let portfolioChange: string;
+    let pnlValue: string;
+    let pnlChange: string;
+    let isPositive = true;
+    
+    if (error) {
+      portfolioValue = 'Error';
+      portfolioChange = error;
+    } else if (portfolio) {
+      portfolioValue = `$${portfolio.portfolioValue.toFixed(2)}`;
+      portfolioChange = portfolio.pnlPercentage >= 0 ? `+${portfolio.pnlPercentage.toFixed(2)}%` : `${portfolio.pnlPercentage.toFixed(2)}%`;
+      isPositive = portfolio.pnlPercentage >= 0;
+    } else if (isLoading) {
+      portfolioValue = 'Fetching...';
+      portfolioChange = 'Connecting to exchange...';
+    } else if (hasEx) {
+      portfolioValue = '—';
+      portfolioChange = '—';
+    } else {
+      portfolioValue = '—';
+      portfolioChange = 'Connect exchange';
+    }
+    
+    if (error) {
+      pnlValue = 'Error';
+      pnlChange = error;
+    } else if (portfolio) {
+      pnlValue = `$${portfolio.unrealizedPnl.toFixed(2)}`;
+      pnlChange = portfolio.pnlPercentage >= 0 ? `+${portfolio.pnlPercentage.toFixed(2)}%` : `${portfolio.pnlPercentage.toFixed(2)}%`;
+    } else if (isLoading) {
+      pnlValue = 'Fetching...';
+      pnlChange = 'Fetching...';
+    } else if (hasEx) {
+      pnlValue = '—';
+      pnlChange = '—';
+    } else {
+      pnlValue = '—';
+      pnlChange = 'Connect exchange';
+    }
+    
     return [
-      { label: 'Portfolio Value', value: hasEx ? '$0.00' : '—',          change: hasEx ? '+0.00%' : 'Connect exchange', positive: true,  icon: '💼' },
+      { label: 'Portfolio Value', value: portfolioValue,                  change: portfolioChange, positive: isPositive,  icon: '💼' },
       { label: 'Active Bots',     value: String(active),                  change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
       { label: 'Total Trades',    value: String(this.botService.bots().reduce((a,b)=>a+b.trades,0)), change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
-      { label: "Today's P&L",    value: hasEx ? '$0.00' : '—',          change: hasEx ? '+0.00%' : 'Connect exchange', positive: true,  icon: '⚡' },
+      { label: "Today's P&L",    value: pnlValue,                        change: pnlChange, positive: isPositive,  icon: '⚡' },
     ];
   }
 
@@ -89,7 +134,8 @@ export class Dashboard {
   }
 
   showBotSettings(bot: Bot) {
-    const isReadOnly = bot.status !== 'paused';
+    // Allow editing name and exchange even when active, fully read-only when stopped
+    const isReadOnly = bot.status === 'stopped';
     this.editBotModal.open(bot, isReadOnly);
     this.showEditBotModal.set(true);
   }

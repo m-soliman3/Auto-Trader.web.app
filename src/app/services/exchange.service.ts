@@ -1,4 +1,7 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Auth } from '@angular/fire/auth';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
 
@@ -21,6 +24,18 @@ export interface ConnectedExchange {
   secret: string;
   passphrase?: string;
   connectedAt: string;
+}
+
+export interface PortfolioData {
+  portfolioValue: number;
+  unrealizedPnl: number;
+  pnlPercentage: number;
+  updatedAt: string;
+}
+
+export interface PortfolioError {
+  message: string;
+  isRetrying: boolean;
 }
 
 export const SUPPORTED_EXCHANGES: Exchange[] = [
@@ -103,11 +118,20 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
 @Injectable({ providedIn: 'root' })
 export class ExchangeService {
   private auth = inject(AuthService);
+  private firebaseAuth = inject(Auth);
+  private http = inject(HttpClient);
   private firestore = inject(Firestore);
 
   connections = signal<ConnectedExchange[]>([]);
+  portfolioData = signal<PortfolioData | null>(null);
+  isLoadingPortfolio = signal(false);
+  portfolioError = signal<string | null>(null);
 
   hasExchange = computed(() => this.connections().length > 0);
+
+  private retryAttempts = 0;
+  private maxRetryAttempts = 3;
+  private retryDelayMs = 5000;
 
   constructor() {
     // react to currentUser signal changes
@@ -116,6 +140,65 @@ export class ExchangeService {
       if (user) this.loadFromFirestore(user.id);
       else this.connections.set([]);
     });
+    
+    // Auto-fetch portfolio when exchanges change
+    effect(() => {
+      if (this.connections().length > 0) {
+        this.isLoadingPortfolio.set(true);
+        this.portfolioError.set(null);
+        const exchange = this.connections()[0];
+        this.retryAttempts = 0;
+        this.fetchPortfolioDataWithRetry(exchange);
+      } else {
+        this.portfolioData.set(null);
+        this.isLoadingPortfolio.set(false);
+        this.portfolioError.set(null);
+        this.retryAttempts = 0;
+      }
+    });
+  }
+
+  private async fetchPortfolioDataWithRetry(exchange: ConnectedExchange) {
+    try {
+      await this.fetchPortfolioData(exchange);
+      this.isLoadingPortfolio.set(false);
+      this.portfolioError.set(null);
+    } catch (err: any) {
+      this.retryAttempts++;
+      
+      console.error('API Error Details:', {
+        message: err.message,
+        status: err.status,
+        statusText: err.statusText,
+        response: err.error,
+        fullError: err,
+      });
+      
+      if (this.retryAttempts < this.maxRetryAttempts) {
+        console.warn(`Portfolio fetch failed, retrying (${this.retryAttempts}/${this.maxRetryAttempts})...`, err.message);
+        this.portfolioError.set(`Retrying... (${this.retryAttempts}/${this.maxRetryAttempts})`);
+        
+        setTimeout(() => {
+          this.fetchPortfolioDataWithRetry(exchange);
+        }, this.retryDelayMs);
+      } else {
+        console.error('Failed to fetch portfolio after retries:', err);
+        this.isLoadingPortfolio.set(false);
+        
+        let errorMsg = 'Unable to fetch portfolio data';
+        if (err.message?.includes('401') || err.message?.includes('403')) {
+          errorMsg = 'Invalid API credentials - please reconnect';
+        } else if (err.message?.includes('timeout')) {
+          errorMsg = 'Request timeout - check your internet connection';
+        } else if (err.message?.includes('network')) {
+          errorMsg = 'Network error - please try again';
+        } else if (err.error?.error) {
+          errorMsg = `API Error: ${err.error.error}`;
+        }
+        
+        this.portfolioError.set(errorMsg);
+      }
+    }
   }
 
   private async loadFromFirestore(uid: string) {
@@ -150,6 +233,7 @@ export class ExchangeService {
       const docRef = doc(this.firestore, 'users', uid, 'exchanges', conn.label);
       await setDoc(docRef, dataToSave);
       this.connections.update(list => [conn, ...list]);
+      // Portfolio data will auto-load triggered by the connections effect
     } catch (err: any) {
       console.error('failed to add exchange', err);
       throw new Error(`Failed to save exchange: ${err?.message || 'Unknown error'}`);
@@ -177,4 +261,97 @@ export class ExchangeService {
     // Validation can be implemented server-side later
     return Promise.resolve(true);
   }
+
+  private async fetchPortfolioData(exchange: ConnectedExchange): Promise<void> {
+    try {
+      const currentUser = this.firebaseAuth.currentUser;
+      if (!currentUser) {
+        throw new Error('Not authenticated');
+      }
+      const idToken = await currentUser.getIdToken();
+
+      const endpoint = '/api/getPortfolio';
+
+      const response = await Promise.race([
+        firstValueFrom(this.http.post<PortfolioData>(
+          endpoint,
+          {
+            exchangeId: exchange.exchangeId,
+            apiKey: exchange.apiKey?.replace(/\s+/g, ''),
+            apiSecret: exchange.secret?.replace(/\s+/g, ''),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          }
+        )),
+        // 15 second timeout
+        new Promise<any>((_, reject) => 
+          setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000)
+        ),
+      ]);
+
+      const data = response as PortfolioData;
+      if (data && data.portfolioValue !== undefined) {
+        this.portfolioData.set(data);
+      } else {
+        throw new Error('Invalid portfolio data response');
+      }
+    } catch (err: any) {
+      console.error('Portfolio fetch error:', {
+        message: err.message,
+        code: err.code,
+        exchangeId: exchange.exchangeId,
+      });
+      
+      throw new Error(`Failed to fetch portfolio from ${exchange.exchangeId}: ${err.message}`);
+    }
+  }
+
+  // DEBUG: Test Alpaca Paper API call with stored credentials
+  async testAlpacaPaperAPI() {
+    const alpacaPaper = this.connections().find(c => c.exchangeId === 'alpaca-paper');
+    
+    if (!alpacaPaper) {
+      console.warn('❌ No Alpaca Paper account connected. Please connect first.');
+      return;
+    }
+
+    console.log('🧪 Testing Alpaca Paper API with stored credentials...');
+    console.log('Exchange:', alpacaPaper);
+
+    try {
+      const currentUser = this.firebaseAuth.currentUser;
+      if (!currentUser) {
+        throw new Error('Not authenticated');
+      }
+      const idToken = await currentUser.getIdToken();
+
+      const response = await firstValueFrom(this.http.post<PortfolioData>(
+        '/api/getPortfolio',
+        {
+          exchangeId: alpacaPaper.exchangeId,
+          apiKey: alpacaPaper.apiKey,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        }
+      ));
+
+      console.log('✅ SUCCESS! Portfolio Data:', response);
+      return response;
+    } catch (err: any) {
+      console.error('❌ ERROR fetching portfolio:', {
+        message: err.message,
+        code: err.code,
+      });
+      return null;
+    }
+  }
+
 }
+
+

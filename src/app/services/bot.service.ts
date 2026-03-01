@@ -168,9 +168,12 @@ export class BotService {
     const existing = this.bots().find(b => b.id === id);
     if (!existing) return;
     
-    // Only allow updates when bot is paused
-    if (existing.status !== 'paused') {
-      throw new Error('Bot must be paused to edit its characteristics');
+    // Check if trying to update restricted fields when bot is active
+    const restrictedFields = ['investment', 'stopLoss', 'takeProfit', 'symbol', 'timeframe'];
+    const isUpdatingRestricted = restrictedFields.some(field => field in updates);
+    
+    if (existing.status !== 'paused' && isUpdatingRestricted) {
+      throw new Error('Bot must be paused to edit investment, stop loss, take profit, symbol, or timeframe');
     }
 
     const updatedBot = { ...existing, ...updates };
