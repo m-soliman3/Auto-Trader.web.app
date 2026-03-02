@@ -2,6 +2,8 @@ import { Component, inject, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StrategyService, StrategyTemplate } from '../services/strategy.service';
+import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { AccountModeService } from '../services/account-mode.service';
 
 @Component({
   selector: 'app-browse-strategies-modal',
@@ -12,6 +14,8 @@ import { StrategyService, StrategyTemplate } from '../services/strategy.service'
 })
 export class BrowseStrategiesModal {
   private strategyService = inject(StrategyService);
+  private exchangeService = inject(ExchangeService);
+  private accountMode = inject(AccountModeService);
 
   closed   = output<void>();
   selected = output<StrategyTemplate>();
@@ -48,14 +52,43 @@ export class BrowseStrategiesModal {
   ];
 
   // ── Derived list ─────────────────────────────────────────────────────────
-  results = computed(() =>
-    this.strategyService.search(
+  private allowedMarkets = computed(() => {
+    const mode = this.accountMode.mode();
+    const activeExchangeIds = this.exchangeService.connectionsByMode(mode).map(connection => connection.exchangeId);
+    const sourceExchanges = activeExchangeIds.length > 0
+      ? SUPPORTED_EXCHANGES.filter(exchange => activeExchangeIds.includes(exchange.id))
+      : SUPPORTED_EXCHANGES.filter(exchange => (exchange.isPaper ?? false) === (mode === 'paper'));
+
+    const marketSet = new Set<string>();
+    for (const exchange of sourceExchanges) {
+      if (exchange.category === 'crypto') {
+        marketSet.add('crypto');
+      }
+      if (exchange.category === 'stocks') {
+        marketSet.add('stocks');
+      }
+    }
+
+    return marketSet;
+  });
+
+  results = computed(() => {
+    const baseResults = this.strategyService.search(
       this.searchQuery(),
       this.activeMarket(),
       this.activeRisk(),
       this.activeCategory(),
-    )
-  );
+    );
+
+    const allowedMarkets = this.allowedMarkets();
+    if (allowedMarkets.size === 0) {
+      return [];
+    }
+
+    return baseResults.filter(strategy =>
+      strategy.markets.some(market => market === 'multi' || allowedMarkets.has(market))
+    );
+  });
 
   isSaved(id: string) { return this.strategyService.isSaved(id); }
 

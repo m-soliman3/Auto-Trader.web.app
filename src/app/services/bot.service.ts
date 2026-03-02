@@ -1,6 +1,8 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
+import { SUPPORTED_EXCHANGES } from './exchange.service';
+import { AccountMode } from './account-mode.service';
 
 export type BotStatus = 'active' | 'paused' | 'stopped';
 
@@ -104,6 +106,19 @@ export class BotService {
 
   bots = signal<Bot[]>([]);
   activeBots = computed(() => this.bots().filter(b => b.status === 'active'));
+
+  private isPaperExchange(exchangeId: string): boolean {
+    return SUPPORTED_EXCHANGES.find(exchange => exchange.id === exchangeId)?.isPaper ?? false;
+  }
+
+  botsByMode(mode: AccountMode): Bot[] {
+    const showPaper = mode === 'paper';
+    return this.bots().filter(bot => this.isPaperExchange(bot.exchangeId) === showPaper);
+  }
+
+  activeBotsByMode(mode: AccountMode): Bot[] {
+    return this.botsByMode(mode).filter(bot => bot.status === 'active');
+  }
 
   constructor() {
     effect(() => {

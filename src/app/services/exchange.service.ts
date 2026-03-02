@@ -4,6 +4,7 @@ import { Auth } from '@angular/fire/auth';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
+import { AccountMode } from './account-mode.service';
 
 export interface Exchange {
   id: string;
@@ -142,6 +143,24 @@ export class ExchangeService {
   portfolioError = signal<string | null>(null);
 
   hasExchange = computed(() => this.connections().length > 0);
+
+  isPaperExchange(exchangeId: string): boolean {
+    return SUPPORTED_EXCHANGES.find(exchange => exchange.id === exchangeId)?.isPaper ?? false;
+  }
+
+  connectionsByMode(mode: AccountMode): ConnectedExchange[] {
+    const showPaper = mode === 'paper';
+    return this.connections().filter(conn => this.isPaperExchange(conn.exchangeId) === showPaper);
+  }
+
+  hasExchangeByMode(mode: AccountMode): boolean {
+    return this.connectionsByMode(mode).length > 0;
+  }
+
+  portfolioBreakdownByMode(mode: AccountMode): ExchangePortfolioBreakdown[] {
+    const showPaper = mode === 'paper';
+    return this.portfolioBreakdown().filter(row => row.isPaper === showPaper);
+  }
 
   private retryAttempts = 0;
   private maxRetryAttempts = 3;

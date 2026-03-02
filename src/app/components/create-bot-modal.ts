@@ -5,6 +5,7 @@ import {
   BotService, STRATEGIES, SYMBOLS, TIMEFRAMES, Strategy, Bot,
 } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
+import { AccountModeService } from '../services/account-mode.service';
 
 type Step = 1 | 2 | 3;
 
@@ -18,6 +19,7 @@ type Step = 1 | 2 | 3;
 export class CreateBotModal {
   private botService  = inject(BotService);
   private exchangeSvc = inject(ExchangeService);
+  private accountMode = inject(AccountModeService);
 
   closed  = output<void>();
   created = output<Bot>();
@@ -26,7 +28,8 @@ export class CreateBotModal {
   symbols    = SYMBOLS;
   timeframes = TIMEFRAMES;
 
-  exchanges = computed(() => this.exchangeSvc.connections());
+  exchanges = computed(() => this.exchangeSvc.connectionsByMode(this.accountMode.mode()));
+  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
 
   step     = signal<Step>(1);
   saving   = signal(false);

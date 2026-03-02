@@ -62,6 +62,35 @@
   gap: 0.75rem;
 }
 
+.account-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 0.4rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+
+  &.active {
+    background: var(--accent);
+    color: #0d0f14;
+  }
+}
+
 .theme-toggle {
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -170,6 +199,10 @@
   .hamburger { display: flex; }
 
   .btn-ghost, .nav-actions > a.btn-primary { display: none; }
+
+  .account-mode-toggle {
+    display: none;
+  }
 
   .nav-links {
     display: none;

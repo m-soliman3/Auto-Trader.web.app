@@ -70,7 +70,7 @@
     <div class="welcome-banner">
       <div class="welcome-text">
         <h1>Welcome, {{ auth.currentUser()?.name }}! 👋</h1>
-        <p>{{ exchangeService.hasExchange() ? 'Your exchanges are connected and ready to trade.' : 'Connect an exchange to start trading automatically.' }}</p>
+        <p>{{ hasVisibleExchange() ? modeLabel() + ' exchanges are connected and ready to trade.' : 'Connect a ' + modeLabel() + ' exchange to start trading automatically.' }}</p>
       </div>
       <div class="welcome-badge">
         <span class="badge-dot"></span>
@@ -106,14 +106,14 @@
     </div>
 
     <!-- Connected Exchanges -->
-    @if (exchangeService.hasExchange()) {
+    @if (hasVisibleExchange()) {
       <div class="panel">
         <div class="panel-header">
-          <h2 class="panel-title">Connected Exchanges</h2>
+          <h2 class="panel-title">Connected {{ modeLabel() }} Exchanges</h2>
           <button class="btn-add-exchange" (click)="showExchangeModal.set(true)">+ Add Exchange</button>
         </div>
         <div class="exchange-list">
-          @for (conn of exchangeService.connections(); track conn.label) {
+          @for (conn of visibleConnections(); track conn.label) {
             <div class="exchange-row">
               <div class="exrow-left">
                 <span class="exrow-logo">{{ exchangeLogo(conn.exchangeId) }}</span>
@@ -138,10 +138,10 @@
     }
 
     <!-- Bots Table -->
-    @if (botService.bots().length > 0) {
+    @if (visibleBots().length > 0) {
       <div class="panel">
         <div class="panel-header">
-          <h2 class="panel-title">My Bots</h2>
+          <h2 class="panel-title">My {{ modeLabel() }} Bots</h2>
           <button class="btn-add-exchange" (click)="showBotModal.set(true)">+ New Bot</button>
         </div>
         <div class="bots-table-wrap">
@@ -160,7 +160,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (bot of botService.bots(); track bot.id) {
+              @for (bot of visibleBots(); track bot.id) {
                 <tr>
                   <td class="bot-name">{{ bot.name }}</td>
                   <td>{{ bot.strategyName }}</td>
@@ -231,38 +231,38 @@
               <div class="check-sub">Account created and verified</div>
             </div>
           </li>
-          <li class="check-item" [class.done]="exchangeService.hasExchange()">
-            <span class="check-icon" [class.check-done]="exchangeService.hasExchange()" [class.check-todo]="!exchangeService.hasExchange()">
-              {{ exchangeService.hasExchange() ? '✓' : '2' }}
+          <li class="check-item" [class.done]="hasVisibleExchange()">
+            <span class="check-icon" [class.check-done]="hasVisibleExchange()" [class.check-todo]="!hasVisibleExchange()">
+              {{ hasVisibleExchange() ? '✓' : '2' }}
             </span>
             <div>
-              <div class="check-title">Connect an exchange</div>
+              <div class="check-title">Connect a {{ modeLabel() }} exchange</div>
               <div class="check-sub">
-                @if (exchangeService.hasExchange()) { {{ exchangeService.connections().length }} exchange(s) connected }
+                @if (hasVisibleExchange()) { {{ visibleConnections().length }} exchange(s) connected }
                 @else { <button class="inline-link" (click)="showExchangeModal.set(true)">Link Binance, Coinbase, or Kraken →</button> }
               </div>
             </div>
           </li>
-          <li class="check-item" [class.done]="botService.bots().length > 0">
-            <span class="check-icon" [class.check-done]="botService.bots().length > 0" [class.check-todo]="botService.bots().length === 0">
-              {{ botService.bots().length > 0 ? '✓' : '3' }}
+          <li class="check-item" [class.done]="visibleBots().length > 0">
+            <span class="check-icon" [class.check-done]="visibleBots().length > 0" [class.check-todo]="visibleBots().length === 0">
+              {{ visibleBots().length > 0 ? '✓' : '3' }}
             </span>
             <div>
               <div class="check-title">Create your first bot</div>
               <div class="check-sub">
-                @if (botService.bots().length > 0) { {{ botService.bots().length }} bot(s) created }
+                @if (visibleBots().length > 0) { {{ visibleBots().length }} bot(s) created }
                 @else { <button class="inline-link" (click)="showBotModal.set(true)">Build your first trading bot →</button> }
               </div>
             </div>
           </li>
-          <li class="check-item" [class.done]="botService.activeBots().length > 0">
-            <span class="check-icon" [class.check-done]="botService.activeBots().length > 0" [class.check-todo]="botService.activeBots().length === 0">
-              {{ botService.activeBots().length > 0 ? '✓' : '4' }}
+          <li class="check-item" [class.done]="visibleActiveBots().length > 0">
+            <span class="check-icon" [class.check-done]="visibleActiveBots().length > 0" [class.check-todo]="visibleActiveBots().length === 0">
+              {{ visibleActiveBots().length > 0 ? '✓' : '4' }}
             </span>
             <div>
               <div class="check-title">Go live</div>
               <div class="check-sub">
-                @if (botService.activeBots().length > 0) { {{ botService.activeBots().length }} bot(s) running }
+                @if (visibleActiveBots().length > 0) { {{ visibleActiveBots().length }} bot(s) running }
                 @else { Activate a bot to start trading }
               </div>
             </div>
@@ -289,10 +289,10 @@
           <path d="M0,100 Q100,80 150,90 Q220,105 280,80 Q340,55 400,70 Q460,85 520,55 Q560,38 600,50 L600,160 L0,160Z" fill="url(#ghostGrad)"/>
           <path d="M0,100 Q100,80 150,90 Q220,105 280,80 Q340,55 400,70 Q460,85 520,55 Q560,38 600,50" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" opacity="0.4"/>
         </svg>
-        @if (!exchangeService.hasExchange()) {
-          <p>Connect an exchange to start tracking real performance</p>
+        @if (!hasVisibleExchange()) {
+          <p>Connect a {{ modeLabel() }} exchange to start tracking performance</p>
           <button class="btn-connect" (click)="showExchangeModal.set(true)">+ Connect Exchange</button>
-        } @else if (botService.bots().length === 0) {
+        } @else if (visibleBots().length === 0) {
           <p>Exchange connected! Create a bot to start generating performance data.</p>
           <button class="btn-connect" (click)="showBotModal.set(true)">+ Create Your First Bot</button>
         } @else {
