@@ -13,7 +13,7 @@
           @if (isReadOnly()) {
             Review current bot settings
           } @else if (isActive()) {
-            Edit bot name and exchange (active bots)
+            View current bot settings (active bots)
           } @else {
             Adjust all bot characteristics (paused bots)
           }
@@ -50,7 +50,7 @@
           [(ngModel)]="botName"
           name="botName"
           placeholder="e.g. My Trading Bot"
-          [disabled]="isReadOnly()"
+          [disabled]="isReadOnly() || isActive()"
         />
         <span class="hint">A unique name to identify your bot</span>
       </div>
@@ -58,7 +58,7 @@
       <!-- Exchange Selection -->
       <div class="form-group">
         <label for="exchange">Connected Exchange</label>
-        <select id="exchange" [(ngModel)]="selectedExchangeLabel" name="exchange" [disabled]="isReadOnly()">
+        <select id="exchange" [(ngModel)]="selectedExchangeLabel" name="exchange" [disabled]="isReadOnly() || isActive()">
           <option value="">-- Select Exchange --</option>
           @for (exch of exchanges(); track exch.label) {
             <option [value]="exch.label">{{ exch.label }}</option>
@@ -145,7 +145,7 @@
       <!-- Buttons -->
       <div class="form-actions">
         <button type="button" class="btn btn-secondary" (click)="close()">{{ isReadOnly() ? 'Close' : 'Cancel' }}</button>
-        @if (!isReadOnly()) {
+        @if (!isReadOnly() && !isActive()) {
           <button type="submit" class="btn btn-primary" [disabled]="saving()">
             {{ saving() ? 'Updating...' : 'Save Changes' }}
           </button>
