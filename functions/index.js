@@ -50,8 +50,31 @@ const corsHandler = (0, cors_1.default)({
     methods: ["POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 });
-// --- Alpaca support temporarily disabled (ALPACA_API_SECRET not configured) ---
-// async function fetchAlpacaPortfolio(apiKey: string, apiSecret: string, isPaper: boolean): Promise<PortfolioData> { ... }
+async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
+    const baseUrl = isPaper
+        ? "https://paper-api.alpaca.markets"
+        : "https://api.alpaca.markets";
+    const url = `${baseUrl}/v2/account`;
+    console.log("🔗 Alpaca URL:", url, "isPaper:", isPaper);
+    const response = await (0, node_fetch_1.default)(url, {
+        headers: {
+            "APCA-API-KEY-ID": apiKey,
+            "APCA-API-SECRET-KEY": apiSecret,
+        },
+    });
+    if (!response.ok) {
+        const text = await response.text();
+        console.error("❌ Alpaca error:", text);
+        throw new functions.https.HttpsError("internal", `Alpaca API error ${response.status}: ${text}`);
+    }
+    const data = await response.json();
+    return {
+        portfolioValue: parseFloat(data.portfolio_value || "0"),
+        unrealizedPnl: parseFloat(data.unrealized_pl || "0"),
+        pnlPercentage: parseFloat(data.unrealized_plpc || "0") * 100,
+        updatedAt: new Date().toISOString(),
+    };
+}
 async function fetchBinancePortfolio(apiKey, apiSecret) {
     const baseUrl = "https://api.binance.com";
     const endpoint = "/api/v3/account";
@@ -89,12 +112,17 @@ async function resolvePortfolio(exchangeId, apiKey, apiSecretFromClient) {
         console.error("❌ Missing exchangeId, apiKey, or apiSecret");
         throw new functions.https.HttpsError("invalid-argument", "Missing exchangeId, apiKey, or apiSecret");
     }
-    if (exchangeId !== "binance") {
-        console.error(`Unsupported exchange: ${exchangeId}`);
-        throw new functions.https.HttpsError("not-found", `Exchange not yet supported: ${exchangeId}`);
+    if (exchangeId === "binance") {
+        console.log("Fetching Binance portfolio...");
+        return fetchBinancePortfolio(sanitizedApiKey, sanitizedApiSecret);
     }
-    console.log("Fetching Binance portfolio...");
-    return fetchBinancePortfolio(sanitizedApiKey, sanitizedApiSecret);
+    if (exchangeId === "alpaca" || exchangeId === "alpaca-paper") {
+        const isPaper = exchangeId === "alpaca-paper";
+        console.log(`Fetching Alpaca portfolio (paper=${isPaper})...`);
+        return fetchAlpacaPortfolio(sanitizedApiKey, sanitizedApiSecret, isPaper);
+    }
+    console.error(`Unsupported exchange: ${exchangeId}`);
+    throw new functions.https.HttpsError("not-found", `Exchange not yet supported: ${exchangeId}`);
 }
 exports.getPortfolio = functions
     .region("europe-west1")
