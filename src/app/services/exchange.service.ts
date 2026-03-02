@@ -33,6 +33,17 @@ export interface PortfolioData {
   updatedAt: string;
 }
 
+export interface ExchangePortfolioBreakdown {
+  label: string;
+  exchangeId: string;
+  exchangeName: string;
+  isPaper: boolean;
+  portfolioValue: number;
+  unrealizedPnl: number;
+  pnlPercentage: number;
+  updatedAt: string;
+}
+
 export interface PortfolioError {
   message: string;
   isRetrying: boolean;
@@ -124,6 +135,9 @@ export class ExchangeService {
 
   connections = signal<ConnectedExchange[]>([]);
   portfolioData = signal<PortfolioData | null>(null);
+  portfolioValuesByType = signal<{ real: number | null; paper: number | null }>({ real: null, paper: null });
+  pnlValuesByType = signal<{ real: number | null; paper: number | null }>({ real: null, paper: null });
+  portfolioBreakdown = signal<ExchangePortfolioBreakdown[]>([]);
   isLoadingPortfolio = signal(false);
   portfolioError = signal<string | null>(null);
 
@@ -146,11 +160,13 @@ export class ExchangeService {
       if (this.connections().length > 0) {
         this.isLoadingPortfolio.set(true);
         this.portfolioError.set(null);
-        const exchange = this.connections()[0];
         this.retryAttempts = 0;
-        this.fetchPortfolioDataWithRetry(exchange);
+        this.fetchPortfolioDataForAllConnectionsWithRetry(this.connections());
       } else {
         this.portfolioData.set(null);
+        this.portfolioValuesByType.set({ real: null, paper: null });
+        this.pnlValuesByType.set({ real: null, paper: null });
+        this.portfolioBreakdown.set([]);
         this.isLoadingPortfolio.set(false);
         this.portfolioError.set(null);
         this.retryAttempts = 0;
@@ -158,9 +174,59 @@ export class ExchangeService {
     });
   }
 
-  private async fetchPortfolioDataWithRetry(exchange: ConnectedExchange) {
+  private async fetchPortfolioDataForAllConnectionsWithRetry(exchanges: ConnectedExchange[]) {
     try {
-      await this.fetchPortfolioData(exchange);
+      let realPortfolioTotal = 0;
+      let paperPortfolioTotal = 0;
+      let realPnlTotal = 0;
+      let paperPnlTotal = 0;
+      let hasReal = false;
+      let hasPaper = false;
+      const breakdownRows: ExchangePortfolioBreakdown[] = [];
+
+      let primaryPortfolio: PortfolioData | null = null;
+
+      for (const exchange of exchanges) {
+        const data = await this.fetchPortfolioData(exchange);
+        const exchangeMeta = SUPPORTED_EXCHANGES.find(e => e.id === exchange.exchangeId);
+        const isPaper = exchangeMeta?.isPaper ?? false;
+
+        if (isPaper) {
+          paperPortfolioTotal += data.portfolioValue;
+          paperPnlTotal += data.unrealizedPnl;
+          hasPaper = true;
+        } else {
+          realPortfolioTotal += data.portfolioValue;
+          realPnlTotal += data.unrealizedPnl;
+          hasReal = true;
+        }
+
+        breakdownRows.push({
+          label: exchange.label,
+          exchangeId: exchange.exchangeId,
+          exchangeName: exchangeMeta?.name ?? exchange.exchangeId,
+          isPaper,
+          portfolioValue: data.portfolioValue,
+          unrealizedPnl: data.unrealizedPnl,
+          pnlPercentage: data.pnlPercentage,
+          updatedAt: data.updatedAt,
+        });
+
+        if (!primaryPortfolio) {
+          primaryPortfolio = data;
+        }
+      }
+
+      this.portfolioValuesByType.set({
+        real: hasReal ? realPortfolioTotal : null,
+        paper: hasPaper ? paperPortfolioTotal : null,
+      });
+      this.pnlValuesByType.set({
+        real: hasReal ? realPnlTotal : null,
+        paper: hasPaper ? paperPnlTotal : null,
+      });
+      this.portfolioBreakdown.set(breakdownRows);
+      this.portfolioData.set(primaryPortfolio);
       this.isLoadingPortfolio.set(false);
       this.portfolioError.set(null);
     } catch (err: any) {
@@ -179,11 +245,15 @@ export class ExchangeService {
         this.portfolioError.set(`Retrying... (${this.retryAttempts}/${this.maxRetryAttempts})`);
         
         setTimeout(() => {
-          this.fetchPortfolioDataWithRetry(exchange);
+          this.fetchPortfolioDataForAllConnectionsWithRetry(exchanges);
         }, this.retryDelayMs);
       } else {
         console.error('Failed to fetch portfolio after retries:', err);
         this.isLoadingPortfolio.set(false);
+        this.portfolioValuesByType.set({ real: null, paper: null });
+        this.pnlValuesByType.set({ real: null, paper: null });
+        this.portfolioBreakdown.set([]);
+        this.portfolioData.set(null);
         
         let errorMsg = 'Unable to fetch portfolio data';
         if (err.message?.includes('401') || err.message?.includes('403')) {
@@ -262,7 +332,7 @@ export class ExchangeService {
     return Promise.resolve(true);
   }
 
-  private async fetchPortfolioData(exchange: ConnectedExchange): Promise<void> {
+  private async fetchPortfolioData(exchange: ConnectedExchange): Promise<PortfolioData> {
     try {
       const currentUser = this.firebaseAuth.currentUser;
       if (!currentUser) {
@@ -294,7 +364,7 @@ export class ExchangeService {
 
       const data = response as PortfolioData;
       if (data && data.portfolioValue !== undefined) {
-        this.portfolioData.set(data);
+        return data;
       } else {
         throw new Error('Invalid portfolio data response');
       }

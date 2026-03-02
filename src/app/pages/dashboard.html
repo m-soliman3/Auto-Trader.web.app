@@ -17,6 +17,39 @@
     (selected)="onStrategySelected($event)"
   />
 }
+@if (showPortfolioDetailsModal()) {
+  <div class="portfolio-popup-backdrop" (click)="closePortfolioDetailsModal()">
+    <div class="portfolio-popup" (click)="$event.stopPropagation()">
+      <div class="portfolio-popup-header">
+        <h3>{{ portfolioDetailsTitle }}</h3>
+        <button class="portfolio-popup-close" (click)="closePortfolioDetailsModal()" aria-label="Close">✕</button>
+      </div>
+
+      @if (portfolioBreakdownRows.length > 0) {
+        <div class="portfolio-popup-list">
+          @for (row of portfolioBreakdownRows; track row.label) {
+            <div class="portfolio-popup-row">
+              <div class="portfolio-popup-row-left">
+                <div class="portfolio-popup-row-title">{{ row.label }}</div>
+                <div class="portfolio-popup-row-sub">{{ row.exchangeName }}</div>
+              </div>
+              <div class="portfolio-popup-row-right">
+                <span class="portfolio-money-type" [class.paper]="row.isPaper" [class.real]="!row.isPaper">
+                  {{ row.isPaper ? 'Paper Money' : 'Real Money' }}
+                </span>
+                <div class="portfolio-popup-value" [class.pnl-pos]="isPnlDetailsView && row.unrealizedPnl >= 0" [class.pnl-neg]="isPnlDetailsView && row.unrealizedPnl < 0">
+                  {{ formatBreakdownValue(row) }}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="portfolio-popup-empty">{{ portfolioDetailsEmptyMessage }}</div>
+      }
+    </div>
+  </div>
+}
 
 <app-edit-bot-modal
   #editBotModal
@@ -47,14 +80,27 @@
 
     <!-- Portfolio Cards -->
     <div class="cards-grid">
-      @for (card of portfolioCards; track card.label) {
-        <div class="stat-card">
+      @for (card of portfolioCards; track card.label; let i = $index) {
+        <div
+          class="stat-card"
+          [class.clickable]="i === 0 || i === 3"
+          [attr.role]="(i === 0 || i === 3) ? 'button' : null"
+          [attr.tabindex]="(i === 0 || i === 3) ? 0 : null"
+          (click)="onPortfolioCardClick(i)"
+          (keydown.enter)="onPortfolioCardClick(i)"
+          (keydown.space)="onPortfolioCardClick(i); $event.preventDefault()"
+        >
           <div class="stat-top">
             <span class="stat-icon">{{ card.icon }}</span>
             <span class="stat-label">{{ card.label }}</span>
           </div>
-          <div class="stat-value">{{ card.value }}</div>
-          <div class="stat-change" [class.positive]="card.positive" [class.negative]="!card.positive">{{ card.change }}</div>
+          <div class="stat-value" [class.split]="!!card.secondaryValue">{{ card.value }}</div>
+          @if (card.secondaryValue) {
+            <div class="stat-subvalue">{{ card.secondaryValue }}</div>
+          }
+          @if (card.change) {
+            <div class="stat-change" [class.positive]="card.positive" [class.negative]="!card.positive">{{ card.change }}</div>
+          }
         </div>
       }
     </div>

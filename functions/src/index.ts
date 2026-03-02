@@ -47,13 +47,34 @@ async function fetchAlpacaPortfolio(
   }
 
   const data: any = await response.json();
+  const equity = parseFloat(data.equity || data.portfolio_value || "0");
+  const lastEquity = parseFloat(data.last_equity || "0");
+  const todayPnl = equity - lastEquity;
+  const todayPnlPct = lastEquity > 0 ? (todayPnl / lastEquity) * 100 : 0;
 
   return {
-    portfolioValue: parseFloat(data.portfolio_value || "0"),
-    unrealizedPnl: parseFloat(data.unrealized_pl || "0"),
-    pnlPercentage: parseFloat(data.unrealized_plpc || "0") * 100,
+    portfolioValue: equity,
+    unrealizedPnl: todayPnl,
+    pnlPercentage: todayPnlPct,
     updatedAt: new Date().toISOString(),
   };
+}
+
+async function fetchBinance24hTicker(symbol: string): Promise<{ lastPrice: number; prevClosePrice: number } | null> {
+  const url = `https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`;
+  const response = await fetch(url as any);
+  if (!response.ok) {
+    return null;
+  }
+
+  const data: any = await response.json();
+  const lastPrice = parseFloat(data.lastPrice || "0");
+  const prevClosePrice = parseFloat(data.prevClosePrice || "0");
+  if (!Number.isFinite(lastPrice) || !Number.isFinite(prevClosePrice)) {
+    return null;
+  }
+
+  return { lastPrice, prevClosePrice };
 }
 
 async function fetchBinancePortfolio(
@@ -84,14 +105,49 @@ async function fetchBinancePortfolio(
   }
 
   const data: any = await response.json();
-  const totalValue = data.balances.reduce((acc: number, asset: any) => {
-    return acc + parseFloat(asset.free) + parseFloat(asset.locked);
-  }, 0);
+  const balances = (data.balances || []).filter((asset: any) => {
+    const totalQty = parseFloat(asset.free || "0") + parseFloat(asset.locked || "0");
+    return totalQty > 0;
+  });
+
+  const stableCoins = new Set(["USDT", "USDC", "BUSD", "FDUSD", "TUSD"]);
+
+  const valuedAssets = await Promise.all(
+    balances.map(async (asset: any) => {
+      const quantity = parseFloat(asset.free || "0") + parseFloat(asset.locked || "0");
+      if (!Number.isFinite(quantity) || quantity <= 0) {
+        return { currentValue: 0, previousValue: 0 };
+      }
+
+      const assetSymbol = String(asset.asset || "").toUpperCase();
+      if (stableCoins.has(assetSymbol)) {
+        return {
+          currentValue: quantity,
+          previousValue: quantity,
+        };
+      }
+
+      const ticker = await fetchBinance24hTicker(`${assetSymbol}USDT`);
+      if (!ticker) {
+        return { currentValue: 0, previousValue: 0 };
+      }
+
+      return {
+        currentValue: quantity * ticker.lastPrice,
+        previousValue: quantity * ticker.prevClosePrice,
+      };
+    })
+  );
+
+  const totalCurrentValue = valuedAssets.reduce((sum, asset) => sum + asset.currentValue, 0);
+  const totalPreviousValue = valuedAssets.reduce((sum, asset) => sum + asset.previousValue, 0);
+  const todayPnl = totalCurrentValue - totalPreviousValue;
+  const todayPnlPct = totalPreviousValue > 0 ? (todayPnl / totalPreviousValue) * 100 : 0;
 
   return {
-    portfolioValue: totalValue,
-    unrealizedPnl: 0,
-    pnlPercentage: 0,
+    portfolioValue: totalCurrentValue,
+    unrealizedPnl: todayPnl,
+    pnlPercentage: todayPnlPct,
     updatedAt: new Date().toISOString(),
   };
 }

@@ -1,7 +1,7 @@
 import { Component, inject, signal, computed, ViewChild } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { ExchangeService, ConnectedExchange, SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { ExchangeService, ConnectedExchange, ExchangePortfolioBreakdown, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { BotService, Bot, BotStatus } from '../services/bot.service';
 import { StrategyService, StrategyTemplate } from '../services/strategy.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
@@ -28,6 +28,8 @@ export class Dashboard {
   showBotModal        = signal(false);
   showStrategiesModal = signal(false);
   showEditBotModal    = signal(false);
+  showPortfolioDetailsModal = signal(false);
+  portfolioDetailsView = signal<'portfolio' | 'pnl'>('portfolio');
   preselectedStrategy = signal<StrategyTemplate | null>(null);
   toastMsg          = signal('');
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
@@ -36,56 +38,56 @@ export class Dashboard {
     const hasEx  = this.exchangeService.hasExchange();
     const active = this.botService.activeBots().length;
     const total  = this.botService.bots().length;
+    const portfolioByType = this.exchangeService.portfolioValuesByType();
+    const pnlByType = this.exchangeService.pnlValuesByType();
     const portfolio = this.exchangeService.portfolioData();
     const isLoading = this.exchangeService.isLoadingPortfolio();
     const error = this.exchangeService.portfolioError();
     
-    let portfolioValue: string;
-    let portfolioChange: string;
-    let pnlValue: string;
-    let pnlChange: string;
-    let isPositive = true;
+    let realMoneyValue: string;
+    let paperMoneyValue: string;
+    let realPnlValue: string;
+    let paperPnlValue: string;
     
     if (error) {
-      portfolioValue = 'Error';
-      portfolioChange = error;
+      realMoneyValue = 'Error';
+      paperMoneyValue = 'Error';
     } else if (portfolio) {
-      portfolioValue = `$${portfolio.portfolioValue.toFixed(2)}`;
-      portfolioChange = portfolio.pnlPercentage >= 0 ? `+${portfolio.pnlPercentage.toFixed(2)}%` : `${portfolio.pnlPercentage.toFixed(2)}%`;
-      isPositive = portfolio.pnlPercentage >= 0;
+      realMoneyValue = portfolioByType.real !== null ? `$${portfolioByType.real.toFixed(2)}` : '—';
+      paperMoneyValue = portfolioByType.paper !== null ? `$${portfolioByType.paper.toFixed(2)}` : '—';
     } else if (isLoading) {
-      portfolioValue = 'Fetching...';
-      portfolioChange = 'Connecting to exchange...';
+      realMoneyValue = 'Fetching...';
+      paperMoneyValue = 'Fetching...';
     } else if (hasEx) {
-      portfolioValue = '—';
-      portfolioChange = '—';
+      realMoneyValue = '—';
+      paperMoneyValue = '—';
     } else {
-      portfolioValue = '—';
-      portfolioChange = 'Connect exchange';
+      realMoneyValue = '—';
+      paperMoneyValue = '—';
     }
     
     if (error) {
-      pnlValue = 'Error';
-      pnlChange = error;
+      realPnlValue = 'Error';
+      paperPnlValue = 'Error';
     } else if (portfolio) {
-      pnlValue = `$${portfolio.unrealizedPnl.toFixed(2)}`;
-      pnlChange = portfolio.pnlPercentage >= 0 ? `+${portfolio.pnlPercentage.toFixed(2)}%` : `${portfolio.pnlPercentage.toFixed(2)}%`;
+      realPnlValue = pnlByType.real !== null ? `$${pnlByType.real.toFixed(2)}` : '—';
+      paperPnlValue = pnlByType.paper !== null ? `$${pnlByType.paper.toFixed(2)}` : '—';
     } else if (isLoading) {
-      pnlValue = 'Fetching...';
-      pnlChange = 'Fetching...';
+      realPnlValue = 'Fetching...';
+      paperPnlValue = 'Fetching...';
     } else if (hasEx) {
-      pnlValue = '—';
-      pnlChange = '—';
+      realPnlValue = '—';
+      paperPnlValue = '—';
     } else {
-      pnlValue = '—';
-      pnlChange = 'Connect exchange';
+      realPnlValue = '—';
+      paperPnlValue = '—';
     }
     
     return [
-      { label: 'Portfolio Value', value: portfolioValue,                  change: portfolioChange, positive: isPositive,  icon: '💼' },
+      { label: 'Portfolio Value', value: `Real Money: ${realMoneyValue}`, secondaryValue: `Paper Money: ${paperMoneyValue}`, change: '', positive: true, icon: '💼' },
       { label: 'Active Bots',     value: String(active),                  change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
       { label: 'Total Trades',    value: String(this.botService.bots().reduce((a,b)=>a+b.trades,0)), change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
-      { label: "Today's P&L",    value: pnlValue,                        change: pnlChange, positive: isPositive,  icon: '⚡' },
+      { label: "Today's P&L",    value: `Real Money: ${realPnlValue}`,    secondaryValue: `Paper Money: ${paperPnlValue}`, change: '', positive: true, icon: '⚡' },
     ];
   }
 
@@ -143,6 +145,49 @@ export class Dashboard {
   onBotUpdated(bot: Bot) {
     this.showEditBotModal.set(false);
     this.showToast(`✏️ "${bot.name}" updated successfully!`);
+  }
+
+  onPortfolioCardClick(index: number) {
+    if (index === 0) {
+      this.portfolioDetailsView.set('portfolio');
+    } else if (index === 3) {
+      this.portfolioDetailsView.set('pnl');
+    } else {
+      return;
+    }
+
+    this.showPortfolioDetailsModal.set(true);
+  }
+
+  closePortfolioDetailsModal() {
+    this.showPortfolioDetailsModal.set(false);
+  }
+
+  get portfolioBreakdownRows() {
+    return this.exchangeService.portfolioBreakdown();
+  }
+
+  get portfolioDetailsTitle() {
+    return this.portfolioDetailsView() === 'pnl' ? "Today's P&L Breakdown" : 'Portfolio Value Breakdown';
+  }
+
+  get portfolioDetailsEmptyMessage() {
+    return this.portfolioDetailsView() === 'pnl'
+      ? 'No exchange P&L data available yet.'
+      : 'No exchange balances available yet.';
+  }
+
+  get isPnlDetailsView() {
+    return this.portfolioDetailsView() === 'pnl';
+  }
+
+  formatBreakdownValue(row: ExchangePortfolioBreakdown): string {
+    if (this.portfolioDetailsView() === 'pnl') {
+      const sign = row.unrealizedPnl >= 0 ? '+' : '';
+      const pctSign = row.pnlPercentage >= 0 ? '+' : '';
+      return `${sign}$${row.unrealizedPnl.toFixed(2)} (${pctSign}${row.pnlPercentage.toFixed(2)}%)`;
+    }
+    return `$${row.portfolioValue.toFixed(2)}`;
   }
 
   exchangeName(id: string): string {
