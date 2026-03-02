@@ -1,8 +1,9 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, output, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BotService, Bot, SYMBOLS, TIMEFRAMES } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
+import { AccountModeService } from '../services/account-mode.service';
 
 @Component({
   selector: 'app-edit-bot-modal',
@@ -14,6 +15,7 @@ import { ExchangeService } from '../services/exchange.service';
 export class EditBotModal {
   private botService = inject(BotService);
   private exchangeService = inject(ExchangeService);
+  private accountMode = inject(AccountModeService);
 
   closed = output<void>();
   updated = output<Bot>();
@@ -35,7 +37,7 @@ export class EditBotModal {
 
   symbols = SYMBOLS;
   timeframes = TIMEFRAMES;
-  exchanges = this.exchangeService.connections;
+  exchanges = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
 
   open(bot: Bot, isReadOnly: boolean = false) {
     this.isReadOnly.set(isReadOnly);
@@ -108,7 +110,7 @@ export class EditBotModal {
     (async () => {
       try {
         // Find the exchange to get the exchangeId
-        const selectedExchange = this.exchangeService.connections().find(ex => ex.label === this.selectedExchangeLabel);
+        const selectedExchange = this.exchanges().find(ex => ex.label === this.selectedExchangeLabel);
         
         // Build updates object - always include name and exchange
         const updates: Partial<Bot> = {

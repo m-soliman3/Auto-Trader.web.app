@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './navbar/navbar';
+import { AccountModeService } from './services/account-mode.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,10 @@ import { Navbar } from './navbar/navbar';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {}
+export class App {
+  private readonly accountMode = inject(AccountModeService);
+
+  constructor() {
+    void this.accountMode;
+  }
+}

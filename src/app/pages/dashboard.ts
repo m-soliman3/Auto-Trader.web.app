@@ -8,6 +8,7 @@ import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
+import { AccountModeService } from '../services/account-mode.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,7 @@ export class Dashboard {
   exchangeService = inject(ExchangeService);
   botService      = inject(BotService);
   strategyService = inject(StrategyService);
+  accountMode     = inject(AccountModeService);
 
   @ViewChild(EditBotModal) editBotModal!: EditBotModal;
 
@@ -34,10 +36,17 @@ export class Dashboard {
   toastMsg          = signal('');
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
+  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
+  visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
+  visibleBots = computed(() => this.botService.botsByMode(this.accountMode.mode()));
+  visibleActiveBots = computed(() => this.botService.activeBotsByMode(this.accountMode.mode()));
+  hasVisibleExchange = computed(() => this.visibleConnections().length > 0);
+
   get portfolioCards() {
-    const hasEx  = this.exchangeService.hasExchange();
-    const active = this.botService.activeBots().length;
-    const total  = this.botService.bots().length;
+    const hasEx = this.hasVisibleExchange();
+    const active = this.visibleActiveBots().length;
+    const total = this.visibleBots().length;
+    const selectedMode = this.accountMode.mode();
     const portfolioByType = this.exchangeService.portfolioValuesByType();
     const pnlByType = this.exchangeService.pnlValuesByType();
     const portfolio = this.exchangeService.portfolioData();
@@ -53,8 +62,8 @@ export class Dashboard {
       realMoneyValue = 'Error';
       paperMoneyValue = 'Error';
     } else if (portfolio) {
-      realMoneyValue = portfolioByType.real !== null ? `$${portfolioByType.real.toFixed(2)}` : '—';
-      paperMoneyValue = portfolioByType.paper !== null ? `$${portfolioByType.paper.toFixed(2)}` : '—';
+      realMoneyValue = selectedMode === 'real' && portfolioByType.real !== null ? `$${portfolioByType.real.toFixed(2)}` : '—';
+      paperMoneyValue = selectedMode === 'paper' && portfolioByType.paper !== null ? `$${portfolioByType.paper.toFixed(2)}` : '—';
     } else if (isLoading) {
       realMoneyValue = 'Fetching...';
       paperMoneyValue = 'Fetching...';
@@ -70,8 +79,8 @@ export class Dashboard {
       realPnlValue = 'Error';
       paperPnlValue = 'Error';
     } else if (portfolio) {
-      realPnlValue = pnlByType.real !== null ? `$${pnlByType.real.toFixed(2)}` : '—';
-      paperPnlValue = pnlByType.paper !== null ? `$${pnlByType.paper.toFixed(2)}` : '—';
+      realPnlValue = selectedMode === 'real' && pnlByType.real !== null ? `$${pnlByType.real.toFixed(2)}` : '—';
+      paperPnlValue = selectedMode === 'paper' && pnlByType.paper !== null ? `$${pnlByType.paper.toFixed(2)}` : '—';
     } else if (isLoading) {
       realPnlValue = 'Fetching...';
       paperPnlValue = 'Fetching...';
@@ -84,10 +93,10 @@ export class Dashboard {
     }
     
     return [
-      { label: 'Portfolio Value', value: `Real Money: ${realMoneyValue}`, secondaryValue: `Paper Money: ${paperMoneyValue}`, change: '', positive: true, icon: '💼' },
-      { label: 'Active Bots',     value: String(active),                  change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
-      { label: 'Total Trades',    value: String(this.botService.bots().reduce((a,b)=>a+b.trades,0)), change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
-      { label: "Today's P&L",    value: `Real Money: ${realPnlValue}`,    secondaryValue: `Paper Money: ${paperPnlValue}`, change: '', positive: true, icon: '⚡' },
+      { label: `Portfolio Value (${this.modeLabel()})`, value: selectedMode === 'paper' ? paperMoneyValue : realMoneyValue, secondaryValue: '', change: '', positive: true, icon: '💼' },
+      { label: 'Active Bots',     value: String(active),                  secondaryValue: '', change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
+      { label: 'Total Trades',    value: String(this.visibleBots().reduce((a,b)=>a+b.trades,0)), secondaryValue: '', change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
+      { label: `Today's P&L (${this.modeLabel()})`, value: selectedMode === 'paper' ? paperPnlValue : realPnlValue, secondaryValue: '', change: '', positive: true, icon: '⚡' },
     ];
   }
 
@@ -164,7 +173,7 @@ export class Dashboard {
   }
 
   get portfolioBreakdownRows() {
-    return this.exchangeService.portfolioBreakdown();
+    return this.exchangeService.portfolioBreakdownByMode(this.accountMode.mode());
   }
 
   get portfolioDetailsTitle() {

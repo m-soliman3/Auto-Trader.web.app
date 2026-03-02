@@ -24,6 +24,30 @@
   --accent:         #00a85a;
 }
 
+/* === Paper/Demo mode overrides (dark) === */
+[data-account-mode="paper"][data-theme="dark"] {
+  --bg:             #0f1020;
+  --surface:        #1a1d34;
+  --surface-raised: #232847;
+  --border:         rgba(146,168,255,0.25);
+  --text-primary:   #eef1ff;
+  --text-secondary: #a8b3dd;
+  --text-muted:     #7f8ab6;
+  --accent:         #7aa2ff;
+}
+
+/* === Paper/Demo mode overrides (light) === */
+[data-account-mode="paper"][data-theme="light"] {
+  --bg:             #f4f6ff;
+  --surface:        #ffffff;
+  --surface-raised: #edf1ff;
+  --border:         rgba(78,106,214,0.2);
+  --text-primary:   #1a2550;
+  --text-secondary: #4f5d8f;
+  --text-muted:     #8692bf;
+  --accent:         #4f76ff;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {

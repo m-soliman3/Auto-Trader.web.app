@@ -1,4 +1,4 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, output, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
@@ -8,6 +8,7 @@ import {
   ConnectedExchange,
 } from '../services/exchange.service';
 import { AuthService } from '../services/auth.service';
+import { AccountModeService } from '../services/account-mode.service';
 
 @Component({
   selector: 'app-connect-exchange-modal',
@@ -19,14 +20,21 @@ import { AuthService } from '../services/auth.service';
 export class ConnectExchangeModal {
   private exchangeService = inject(ExchangeService);
   private authService = inject(AuthService);
+  private accountMode = inject(AccountModeService);
 
   closed = output<void>();
   connected = output<ConnectedExchange>();
 
   exchanges = SUPPORTED_EXCHANGES;
 
-  cryptoExchanges = SUPPORTED_EXCHANGES.filter(e => e.category === 'crypto');
-  stockExchanges  = SUPPORTED_EXCHANGES.filter(e => e.category === 'stocks');
+  cryptoExchanges = computed(() => {
+    const paper = this.accountMode.mode() === 'paper';
+    return SUPPORTED_EXCHANGES.filter(exchange => exchange.category === 'crypto' && (exchange.isPaper ?? false) === paper);
+  });
+  stockExchanges = computed(() => {
+    const paper = this.accountMode.mode() === 'paper';
+    return SUPPORTED_EXCHANGES.filter(exchange => exchange.category === 'stocks' && (exchange.isPaper ?? false) === paper);
+  });
   step = signal<1 | 2>(1);
   selected = signal<Exchange | null>(null);
   error = signal('');
