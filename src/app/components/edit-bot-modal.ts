@@ -55,7 +55,7 @@ export class EditBotModal {
 
   save() {
     const current = this.bot();
-    if (!current || this.isReadOnly()) return;
+    if (!current || this.isReadOnly() || this.isActive()) return;
 
     // Validate bot name
     if (!this.botName.trim()) {
