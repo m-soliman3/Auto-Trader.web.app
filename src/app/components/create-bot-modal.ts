@@ -41,11 +41,11 @@ export class CreateBotModal {
   // Step 2 form
   botName      = '';
   exchangeLabel = '';
-  symbol       = 'BTC/USDT';
-  timeframe    = '1h';
-  investment   = 500;
-  stopLoss     = 3;
-  takeProfit   = 6;
+  symbol       = '';
+  timeframe    = '';
+  investment   = '';
+  stopLoss     = '';
+  takeProfit   = '';
 
   get stepTitle(): string {
     return ['', 'Choose a Strategy', 'Configure Your Bot', 'Review & Launch'][this.step()];
@@ -63,24 +63,39 @@ export class CreateBotModal {
   selectStrategy(s: Strategy) {
     this.selectedStrategy.set(s);
     this.botName = `My ${s.name} Bot`;
+    this.exchangeLabel = '';
+    this.symbol = '';
+    this.timeframe = '';
+    this.investment = '';
+    this.stopLoss = '';
+    this.takeProfit = '';
     this.error.set('');
     this.step.set(2);
   }
 
   toReview() {
-    if (!this.botName.trim())       { this.error.set('Please enter a bot name.'); return; }
-    if (!this.exchangeLabel && this.exchanges().length > 0) {
-      this.exchangeLabel = this.exchanges()[0].label;
+    const validationError = this.validateConfig();
+    if (validationError) {
+      this.error.set(validationError);
+      return;
     }
-    if (!this.exchangeLabel)        { this.error.set('Connect an exchange first.'); return; }
-    if (this.investment < 10)       { this.error.set('Minimum investment is $10.'); return; }
-    if (this.stopLoss < 0.1)        { this.error.set('Stop-loss must be at least 0.1%.'); return; }
-    if (this.takeProfit < 0.1)      { this.error.set('Take-profit must be at least 0.1%.'); return; }
+
     this.error.set('');
     this.step.set(3);
   }
 
   launch() {
+    const validationError = this.validateConfig();
+    if (validationError) {
+      this.error.set(validationError);
+      this.step.set(2);
+      return;
+    }
+
+    const investment = Number.parseFloat(this.investment);
+    const stopLoss = Number.parseFloat(this.stopLoss);
+    const takeProfit = Number.parseFloat(this.takeProfit);
+
     const strat = this.selectedStrategy()!;
     const exchange = this.exchanges().find(e => e.label === this.exchangeLabel);
     this.saving.set(true);
@@ -95,9 +110,9 @@ export class CreateBotModal {
         exchangeId:   exchange?.exchangeId ?? '',
         symbol:       this.symbol,
         timeframe:    this.timeframe,
-        investment:   this.investment,
-        stopLoss:     this.stopLoss,
-        takeProfit:   this.takeProfit,
+        investment,
+        stopLoss,
+        takeProfit,
         status:       'active',
         trades:       0,
         pnl:          0,
@@ -113,6 +128,39 @@ export class CreateBotModal {
   back() {
     this.error.set('');
     this.step.update(s => (s - 1) as Step);
+  }
+
+  private validateConfig(): string | null {
+    if (!this.selectedStrategy()) return 'Please select a strategy first.';
+    if (!this.botName.trim()) return 'Please enter a bot name.';
+
+    const availableExchanges = this.exchanges();
+    if (availableExchanges.length === 0) return 'Connect an exchange first.';
+    if (!this.exchangeLabel.trim()) return 'Please select an exchange.';
+    if (!availableExchanges.some(ex => ex.label === this.exchangeLabel)) return 'Please select a valid exchange.';
+
+    if (!this.symbol.trim()) return 'Please select a trading pair.';
+    if (!this.symbols.includes(this.symbol)) return 'Please select a valid trading pair.';
+
+    if (!this.timeframe.trim()) return 'Please select a timeframe.';
+    if (!this.timeframes.includes(this.timeframe)) return 'Please select a valid timeframe.';
+
+    const investment = Number.parseFloat(this.investment);
+    if (!Number.isFinite(investment)) return 'Please enter an investment amount.';
+    if (investment < 10) return 'Minimum investment is $10.';
+
+    const stopLoss = Number.parseFloat(this.stopLoss);
+    if (!Number.isFinite(stopLoss)) return 'Please enter a stop-loss value.';
+    if (stopLoss < 0.1) return 'Stop-loss must be at least 0.1%.';
+    if (stopLoss > 50) return 'Stop-loss must not exceed 50%.';
+
+    const takeProfit = Number.parseFloat(this.takeProfit);
+    if (!Number.isFinite(takeProfit)) return 'Please enter a take-profit value.';
+    if (takeProfit < 0.1) return 'Take-profit must be at least 0.1%.';
+    if (takeProfit > 500) return 'Take-profit must not exceed 500%.';
+    if (takeProfit <= stopLoss) return 'Take-profit must be greater than stop-loss.';
+
+    return null;
   }
 
   close() { this.closed.emit(); }

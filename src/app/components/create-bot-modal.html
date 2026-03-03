@@ -63,16 +63,20 @@
       <div class="form-row">
         <div class="form-group">
           <label>Bot Name</label>
-          <input type="text" [(ngModel)]="botName" name="botName" placeholder="My BTC Bot" />
+          <input type="text" [(ngModel)]="botName" name="botName" placeholder="My BTC Bot" required />
         </div>
         <div class="form-group">
           <label>Exchange</label>
           @if (exchanges().length > 0) {
-            <select [(ngModel)]="exchangeLabel" name="exchangeLabel">
+            <select [(ngModel)]="exchangeLabel" name="exchangeLabel" required>
+              <option value="" disabled>-- Select Exchange --</option>
               @for (ex of exchanges(); track ex.label) {
                 <option [value]="ex.label">{{ ex.label }}</option>
               }
             </select>
+            @if (error() === 'Please select an exchange.') {
+              <span class="hint" style="color: var(--danger);">Please select an exchange.</span>
+            }
           } @else {
             <div class="no-exchange-warn">⚠️ No exchange connected yet</div>
           }
@@ -82,7 +86,8 @@
       <div class="form-row">
         <div class="form-group">
           <label>Trading Pair</label>
-          <select [(ngModel)]="symbol" name="symbol">
+          <select [(ngModel)]="symbol" name="symbol" required>
+            <option value="" disabled>-- Select Trading Pair --</option>
             @for (sym of symbols; track sym) {
               <option [value]="sym">{{ sym }}</option>
             }
@@ -90,6 +95,9 @@
         </div>
         <div class="form-group">
           <label>Timeframe</label>
+          @if (!timeframe) {
+            <span class="hint">Please select a timeframe</span>
+          }
           <div class="tf-group">
             @for (tf of timeframes; track tf) {
               <button type="button" class="tf-btn" [class.active]="timeframe === tf" (click)="timeframe = tf">{{ tf }}</button>
@@ -103,7 +111,7 @@
           <label>Investment Amount (USD)</label>
           <div class="input-prefix">
             <span class="prefix">$</span>
-            <input type="number" [(ngModel)]="investment" name="investment" min="10" step="10" />
+            <input type="number" [(ngModel)]="investment" name="investment" min="10" step="10" placeholder="e.g. 500" required />
           </div>
         </div>
       </div>
@@ -112,14 +120,14 @@
         <div class="form-group">
           <label>Stop-Loss <span class="field-sub">% below entry</span></label>
           <div class="input-suffix">
-            <input type="number" [(ngModel)]="stopLoss" name="stopLoss" min="0.1" max="50" step="0.5" />
+            <input type="number" [(ngModel)]="stopLoss" name="stopLoss" min="0.1" max="50" step="0.5" placeholder="e.g. 3" required />
             <span class="suffix">%</span>
           </div>
         </div>
         <div class="form-group">
           <label>Take-Profit <span class="field-sub">% above entry</span></label>
           <div class="input-suffix">
-            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="500" step="0.5" />
+            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="500" step="0.5" placeholder="e.g. 6" required />
             <span class="suffix">%</span>
           </div>
         </div>
