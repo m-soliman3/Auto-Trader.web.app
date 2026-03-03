@@ -23,7 +23,7 @@
     </ul>
 
     <div class="nav-actions">
-      @if (auth.isLoggedIn()) {
+      @if (auth.currentUser()) {
         <div class="account-mode-toggle" role="group" aria-label="Account mode">
           <button
             class="mode-btn"
