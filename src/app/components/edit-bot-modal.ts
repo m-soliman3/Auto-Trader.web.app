@@ -57,6 +57,11 @@ export class EditBotModal {
     const current = this.bot();
     if (!current || this.isReadOnly() || this.isActive()) return;
 
+    if (!this.isFormCompleteAndValid()) {
+      this.error.set('All fields are mandatory and must be valid.');
+      return;
+    }
+
     // Validate bot name
     if (!this.botName.trim()) {
       this.error.set('Bot name is required.');
@@ -162,5 +167,23 @@ export class EditBotModal {
   close() {
     this.bot.set(null);
     this.closed.emit();
+  }
+
+  isFormCompleteAndValid(): boolean {
+    if (!this.botName.trim()) return false;
+    if (!this.selectedExchangeLabel.trim()) return false;
+    if (!this.timeframe.trim()) return false;
+    if (!this.symbol.trim()) return false;
+
+    const inv = Number.parseFloat(this.investment);
+    const sl = Number.parseFloat(this.stopLoss);
+    const tp = Number.parseFloat(this.takeProfit);
+
+    if (!Number.isFinite(inv) || inv <= 0) return false;
+    if (!Number.isFinite(sl) || sl < 0 || sl >= 100) return false;
+    if (!Number.isFinite(tp) || tp <= 0 || tp >= 100) return false;
+    if (sl >= tp) return false;
+
+    return true;
   }
 }

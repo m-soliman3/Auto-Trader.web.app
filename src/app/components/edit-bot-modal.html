@@ -50,6 +50,7 @@
           [(ngModel)]="botName"
           name="botName"
           placeholder="e.g. My Trading Bot"
+          required
           [disabled]="isReadOnly() || isActive()"
         />
         <span class="hint">A unique name to identify your bot</span>
@@ -58,12 +59,15 @@
       <!-- Exchange Selection -->
       <div class="form-group">
         <label for="exchange">Connected Exchange</label>
-        <select id="exchange" [(ngModel)]="selectedExchangeLabel" name="exchange" [disabled]="isReadOnly() || isActive()">
+        <select id="exchange" [(ngModel)]="selectedExchangeLabel" name="exchange" required [disabled]="isReadOnly() || isActive()">
           <option value="">-- Select Exchange --</option>
           @for (exch of exchanges(); track exch.label) {
             <option [value]="exch.label">{{ exch.label }}</option>
           }
         </select>
+        @if (error() === 'Please select an exchange.') {
+          <span class="hint" style="color: var(--danger);">Please select an exchange.</span>
+        }
         <span class="hint">Exchange to use for trading</span>
       </div>
 
@@ -78,6 +82,7 @@
           placeholder="e.g. 100.00"
           step="0.01"
           min="0"
+          required
           [disabled]="isReadOnly() || isActive()"
         />
         <span class="hint">{{ isActive() ? 'Edit when paused' : 'Amount to invest per trade' }}</span>
@@ -86,7 +91,7 @@
       <!-- Symbol -->
       <div class="form-group">
         <label for="symbol">Trading Pair</label>
-        <select id="symbol" [(ngModel)]="symbol" name="symbol" [disabled]="isReadOnly() || isActive()">
+        <select id="symbol" [(ngModel)]="symbol" name="symbol" required [disabled]="isReadOnly() || isActive()">
           <option value="">-- Select Symbol --</option>
           @for (sym of symbols; track sym) {
             <option [value]="sym">{{ sym }}</option>
@@ -98,7 +103,7 @@
       <!-- Timeframe -->
       <div class="form-group">
         <label for="timeframe">Timeframe</label>
-        <select id="timeframe" [(ngModel)]="timeframe" name="timeframe" [disabled]="isReadOnly() || isActive()">
+        <select id="timeframe" [(ngModel)]="timeframe" name="timeframe" required [disabled]="isReadOnly() || isActive()">
           <option value="">-- Select Timeframe --</option>
           @for (tf of timeframes; track tf) {
             <option [value]="tf">{{ tf }}</option>
@@ -120,6 +125,7 @@
             step="0.01"
             min="0"
             max="99.99"
+            required
             [disabled]="isReadOnly() || isActive()"
           />
           <span class="hint">{{ isActive() ? 'Edit when paused' : 'Exit loss threshold' }}</span>
@@ -136,6 +142,7 @@
             step="0.01"
             min="0"
             max="99.99"
+            required
             [disabled]="isReadOnly() || isActive()"
           />
           <span class="hint">{{ isActive() ? 'Edit when paused' : 'Exit profit target' }}</span>
@@ -146,7 +153,7 @@
       <div class="form-actions">
         <button type="button" class="btn btn-secondary" (click)="close()">{{ isReadOnly() ? 'Close' : 'Cancel' }}</button>
         @if (!isReadOnly() && !isActive()) {
-          <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          <button type="submit" class="btn btn-primary" [disabled]="saving() || !isFormCompleteAndValid()">
             {{ saving() ? 'Updating...' : 'Save Changes' }}
           </button>
         }
