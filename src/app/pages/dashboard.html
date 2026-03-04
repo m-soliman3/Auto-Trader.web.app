@@ -58,6 +58,50 @@
   (updated)="onBotUpdated($event)"
 />
 
+<!-- Delete Bot Confirmation Modal -->
+@if (showDeleteBotModal() && botToDelete()) {
+  <div class="delete-bot-backdrop" (click)="cancelDeleteBot()">
+    <div class="delete-bot-modal" (click)="$event.stopPropagation()">
+      <div class="delete-bot-header">
+        <h3>Confirm Deletion</h3>
+        <button class="delete-bot-close" (click)="cancelDeleteBot()" aria-label="Close">✕</button>
+      </div>
+      <div class="delete-bot-content">
+        <p class="delete-bot-question">Are you sure you want to delete Bot <strong>{{ botToDelete()?.name }}</strong>?</p>
+        <div class="delete-bot-note">
+          <p><strong>Note:</strong> If you are unhappy with the bot, you can pause it and click edit to make necessary changes before running it again.</p>
+        </div>
+      </div>
+      <div class="delete-bot-actions">
+        <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteBot()">Cancel</button>
+        <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteBot()">Delete</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Delete Exchange Confirmation Modal -->
+@if (showDeleteExchangeModal() && exchangeToDelete()) {
+  <div class="delete-exchange-backdrop" (click)="cancelDeleteExchange()">
+    <div class="delete-exchange-modal" (click)="$event.stopPropagation()">
+      <div class="delete-exchange-header">
+        <h3>Confirm Disconnection</h3>
+        <button class="delete-exchange-close" (click)="cancelDeleteExchange()" aria-label="Close">✕</button>
+      </div>
+      <div class="delete-exchange-content">
+        <p class="delete-exchange-question">Are you sure you want to disconnect <strong>{{ exchangeToDelete() }}</strong>?</p>
+        <div class="delete-exchange-note">
+          <p><strong>⚠ Warning:</strong> This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.</p>
+        </div>
+      </div>
+      <div class="delete-exchange-actions">
+        <button class="delete-exchange-btn delete-exchange-cancel" (click)="cancelDeleteExchange()">Cancel</button>
+        <button class="delete-exchange-btn delete-exchange-confirm" (click)="confirmDeleteExchange()">Disconnect</button>
+      </div>
+    </div>
+  </div>
+}
+
 <!-- Toast -->
 @if (toastMsg()) {
   <div class="toast">{{ toastMsg() }}</div>
