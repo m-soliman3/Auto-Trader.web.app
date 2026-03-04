@@ -111,7 +111,7 @@
           <label>Investment Amount (USD)</label>
           <div class="input-prefix">
             <span class="prefix">$</span>
-            <input type="number" [(ngModel)]="investment" name="investment" min="10" step="10" placeholder="e.g. 500" required />
+            <input type="number" [(ngModel)]="investment" name="investment" min="0.01" step="0.01" placeholder="e.g. 500" required />
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
         <div class="form-group">
           <label>Take-Profit <span class="field-sub">% above entry</span></label>
           <div class="input-suffix">
-            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="500" step="0.5" placeholder="e.g. 6" required />
+            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="50" step="0.5" placeholder="e.g. 6" required />
             <span class="suffix">%</span>
           </div>
         </div>

@@ -14,7 +14,7 @@
       }
       <div>
         <h2>{{ step() === 1 ? 'Connect Exchange' : 'Enter API Credentials' }}</h2>
-        <p>{{ step() === 1 ? 'Choose the exchange you want to connect' : 'Your keys are stored locally and never sent to our servers' }}</p>
+        <p>{{ step() === 1 ? 'Choose the exchange you want to connect' : 'Your keys are securely validated with the exchange before saving' }}</p>
       </div>
     </div>
     <button class="close-btn" (click)="close()" aria-label="Close">

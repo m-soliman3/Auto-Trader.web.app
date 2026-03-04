@@ -81,7 +81,7 @@
           name="investment"
           placeholder="e.g. 100.00"
           step="0.01"
-          min="0"
+          min="0.01"
           required
           [disabled]="isReadOnly() || isActive()"
         />
@@ -123,8 +123,8 @@
             name="stopLoss"
             placeholder="e.g. 5"
             step="0.01"
-            min="0"
-            max="99.99"
+            min="0.1"
+            max="50"
             required
             [disabled]="isReadOnly() || isActive()"
           />
@@ -140,8 +140,8 @@
             name="takeProfit"
             placeholder="e.g. 10"
             step="0.01"
-            min="0"
-            max="99.99"
+            min="0.1"
+            max="50"
             required
             [disabled]="isReadOnly() || isActive()"
           />
@@ -153,7 +153,7 @@
       <div class="form-actions">
         <button type="button" class="btn btn-secondary" (click)="close()">{{ isReadOnly() ? 'Close' : 'Cancel' }}</button>
         @if (!isReadOnly() && !isActive()) {
-          <button type="submit" class="btn btn-primary" [disabled]="saving() || !isFormCompleteAndValid()">
+          <button type="submit" class="btn btn-primary" [disabled]="saving()">
             {{ saving() ? 'Updating...' : 'Save Changes' }}
           </button>
         }
