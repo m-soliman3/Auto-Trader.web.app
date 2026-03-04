@@ -110,6 +110,13 @@ export class ConnectExchangeModal {
         const ex = this.selected();
         if (!ex) return;
 
+        await this.exchangeService.validateCredentials(
+          ex.id,
+          this.apiKey.trim(),
+          this.secret.trim(),
+          this.passphrase.trim() || undefined,
+        );
+
         const conn: ConnectedExchange = {
           exchangeId: ex.id,
           label: this.label.trim(),

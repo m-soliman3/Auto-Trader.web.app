@@ -130,6 +130,17 @@ export class CreateBotModal {
     this.step.update(s => (s - 1) as Step);
   }
 
+  private getAvailablePortfolioValue(label: string): number | null {
+    const selectedLabel = label.trim();
+    if (!selectedLabel) return null;
+
+    const row = this.exchangeSvc
+      .portfolioBreakdownByMode(this.accountMode.mode())
+      .find(breakdown => breakdown.label === selectedLabel);
+
+    return row?.portfolioValue ?? null;
+  }
+
   private validateConfig(): string | null {
     if (!this.selectedStrategy()) return 'Please select a strategy first.';
     if (!this.botName.trim()) return 'Please enter a bot name.';
@@ -145,22 +156,78 @@ export class CreateBotModal {
     if (!this.timeframe.trim()) return 'Please select a timeframe.';
     if (!this.timeframes.includes(this.timeframe)) return 'Please select a valid timeframe.';
 
-    const investment = Number.parseFloat(this.investment);
-    if (!Number.isFinite(investment)) return 'Please enter an investment amount.';
-    if (investment < 10) return 'Minimum investment is $10.';
+    const investmentError = this.validateInvestment(true);
+    if (investmentError) return investmentError;
 
-    const stopLoss = Number.parseFloat(this.stopLoss);
-    if (!Number.isFinite(stopLoss)) return 'Please enter a stop-loss value.';
-    if (stopLoss < 0.1) return 'Stop-loss must be at least 0.1%.';
-    if (stopLoss > 50) return 'Stop-loss must not exceed 50%.';
+    const stopLossError = this.validateStopLoss(true);
+    if (stopLossError) return stopLossError;
 
-    const takeProfit = Number.parseFloat(this.takeProfit);
-    if (!Number.isFinite(takeProfit)) return 'Please enter a take-profit value.';
-    if (takeProfit < 0.1) return 'Take-profit must be at least 0.1%.';
-    if (takeProfit > 500) return 'Take-profit must not exceed 500%.';
-    if (takeProfit <= stopLoss) return 'Take-profit must be greater than stop-loss.';
+    const takeProfitError = this.validateTakeProfit(true);
+    if (takeProfitError) return takeProfitError;
 
     return null;
+  }
+
+  private validateInvestment(showMissing: boolean): string | null {
+    const rawInvestment = this.normalizeNumericInput(this.investment);
+    if (!rawInvestment) {
+      return showMissing ? 'Please enter an investment amount.' : null;
+    }
+
+    if (!this.isNumericValue(rawInvestment)) return 'Investment amount accepts numbers only.';
+
+    const investment = Number.parseFloat(rawInvestment);
+    if (!Number.isFinite(investment)) return 'Please enter a valid investment amount.';
+    if (investment <= 0) return 'Investment amount must be a positive number.';
+
+    const availablePortfolioValue = this.getAvailablePortfolioValue(this.exchangeLabel);
+    if (availablePortfolioValue === null || !Number.isFinite(availablePortfolioValue)) {
+      return showMissing ? 'Portfolio value for the selected exchange is not available yet. Please wait and try again.' : null;
+    }
+    if (investment > availablePortfolioValue) {
+      return `Investment amount cannot exceed the available portfolio value ($${availablePortfolioValue.toFixed(2)}).`;
+    }
+
+    return null;
+  }
+
+  private validateStopLoss(showMissing: boolean): string | null {
+    const rawStopLoss = this.normalizeNumericInput(this.stopLoss);
+    if (!rawStopLoss) {
+      return showMissing ? 'Please enter a stop-loss value.' : null;
+    }
+
+    if (!this.isNumericValue(rawStopLoss)) return 'Stop-loss accepts numbers only.';
+
+    const stopLoss = Number.parseFloat(rawStopLoss);
+    if (!Number.isFinite(stopLoss)) return 'Please enter a valid stop-loss value.';
+    if (stopLoss < 0.1 || stopLoss > 50) return 'Stop-loss must be between 0.1% and 50.0%.';
+
+    return null;
+  }
+
+  private validateTakeProfit(showMissing: boolean): string | null {
+    const rawTakeProfit = this.normalizeNumericInput(this.takeProfit);
+    if (!rawTakeProfit) {
+      return showMissing ? 'Please enter a take-profit value.' : null;
+    }
+
+    if (!this.isNumericValue(rawTakeProfit)) return 'Take-profit accepts numbers only.';
+
+    const takeProfit = Number.parseFloat(rawTakeProfit);
+    if (!Number.isFinite(takeProfit)) return 'Please enter a valid take-profit value.';
+    if (takeProfit < 0.1 || takeProfit > 50) return 'Take-profit must be between 0.1% and 50.0%.';
+
+    return null;
+  }
+
+  private isNumericValue(value: string): boolean {
+    return /^\d*\.?\d+$/.test(value.trim());
+  }
+
+  private normalizeNumericInput(value: string | number | null | undefined): string {
+    if (value === null || value === undefined) return '';
+    return String(value).trim();
   }
 
   close() { this.closed.emit(); }

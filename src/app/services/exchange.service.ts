@@ -346,9 +346,70 @@ export class ExchangeService {
   }
 
   async validateCredentials(exchangeId: string, apiKey: string, secret: string, passphrase?: string): Promise<boolean> {
-    // Credentials will be saved without validation
-    // Validation can be implemented server-side later
-    return Promise.resolve(true);
+    try {
+      const currentUser = this.firebaseAuth.currentUser;
+      if (!currentUser) {
+        throw new Error('Not authenticated');
+      }
+
+      const idToken = await currentUser.getIdToken();
+      const endpoint = '/api/getPortfolio';
+
+      const response = await Promise.race([
+        firstValueFrom(this.http.post<PortfolioData>(
+          endpoint,
+          {
+            exchangeId,
+            apiKey: apiKey?.replace(/\s+/g, ''),
+            apiSecret: secret?.replace(/\s+/g, ''),
+            ...(passphrase ? { passphrase: passphrase.replace(/\s+/g, '') } : {}),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+            },
+          }
+        )),
+        new Promise<any>((_, reject) =>
+          setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000)
+        ),
+      ]);
+
+      const data = response as PortfolioData;
+      if (data && data.portfolioValue !== undefined) {
+        return true;
+      }
+
+      throw new Error('Invalid validation response');
+    } catch (err: any) {
+      console.error('Credential validation failed:', {
+        message: err?.message,
+        status: err?.status,
+        response: err?.error,
+        exchangeId,
+      });
+
+      const status = err?.status;
+      const rawMessage = String(err?.error?.error || err?.message || '').toLowerCase();
+
+      if (
+        status === 401 ||
+        status === 403 ||
+        rawMessage.includes('invalid api-key') ||
+        rawMessage.includes('invalid signature') ||
+        rawMessage.includes('unauthorized') ||
+        rawMessage.includes('forbidden') ||
+        rawMessage.includes('authentication')
+      ) {
+        throw new Error('API key or API secret are incorrect. The keys must be copied from exchange. Refer to the website of this exchange for getting these data.');
+      }
+
+      if (rawMessage.includes('timeout')) {
+        throw new Error('Credential validation timed out. Please try again.');
+      }
+
+      throw new Error('API key or API secret are incorrect. The keys must be copied from exchange. Refer to the website of this exchange for getting these data.');
+    }
   }
 
   private async fetchPortfolioData(exchange: ConnectedExchange): Promise<PortfolioData> {
