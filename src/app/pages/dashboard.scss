@@ -205,6 +205,238 @@
   padding: 0.5rem 0.25rem;
 }
 
+/* ── Delete Bot Modal ── */
+.delete-bot-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2500;
+  padding: 1rem;
+}
+
+.delete-bot-modal {
+  width: min(500px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.delete-bot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+
+.delete-bot-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--bg);
+    color: var(--text-primary);
+  }
+}
+
+.delete-bot-content {
+  margin-bottom: 1.5rem;
+}
+
+.delete-bot-question {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.delete-bot-note {
+  background: rgba(255, 193, 7, 0.08);
+  border: 1px solid rgba(255, 193, 7, 0.25);
+  border-radius: 10px;
+  padding: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: var(--text-primary);
+  }
+}
+
+.delete-bot-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.delete-bot-btn {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.delete-bot-cancel {
+    background: transparent;
+    color: var(--text-primary);
+
+    &:hover {
+      background: var(--bg);
+      border-color: var(--text-secondary);
+    }
+  }
+
+  &.delete-bot-confirm {
+    background: #ff4757;
+    color: white;
+    border-color: #ff4757;
+
+    &:hover {
+      background: #ff3838;
+      border-color: #ff3838;
+    }
+  }
+}
+
+/* ── Delete Exchange Modal ── */
+.delete-exchange-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2500;
+  padding: 1rem;
+}
+
+.delete-exchange-modal {
+  width: min(500px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.delete-exchange-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+
+.delete-exchange-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--bg);
+    color: var(--text-primary);
+  }
+}
+
+.delete-exchange-content {
+  margin-bottom: 1.5rem;
+}
+
+.delete-exchange-question {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.delete-exchange-note {
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.25);
+  border-radius: 10px;
+  padding: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: #ff6b6b;
+  }
+}
+
+.delete-exchange-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.delete-exchange-btn {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.delete-exchange-cancel {
+    background: transparent;
+    color: var(--text-primary);
+
+    &:hover {
+      background: var(--bg);
+      border-color: var(--text-secondary);
+    }
+  }
+
+  &.delete-exchange-confirm {
+    background: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+
+    &:hover {
+      background: #ff5252;
+      border-color: #ff5252;
+    }
+  }
+}
+
 .stat-top {
   display: flex;
   align-items: center;

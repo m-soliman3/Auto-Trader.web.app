@@ -31,8 +31,12 @@ export class Dashboard {
   showStrategiesModal = signal(false);
   showEditBotModal    = signal(false);
   showPortfolioDetailsModal = signal(false);
+  showDeleteBotModal  = signal(false);
+  showDeleteExchangeModal = signal(false);
   portfolioDetailsView = signal<'portfolio' | 'pnl'>('portfolio');
   preselectedStrategy = signal<StrategyTemplate | null>(null);
+  botToDelete = signal<Bot | null>(null);
+  exchangeToDelete = signal<string | null>(null);
   toastMsg          = signal('');
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -62,8 +66,8 @@ export class Dashboard {
       realMoneyValue = 'Error';
       paperMoneyValue = 'Error';
     } else if (portfolio) {
-      realMoneyValue = selectedMode === 'real' && portfolioByType.real !== null ? `$${portfolioByType.real.toFixed(2)}` : '—';
-      paperMoneyValue = selectedMode === 'paper' && portfolioByType.paper !== null ? `$${portfolioByType.paper.toFixed(2)}` : '—';
+      realMoneyValue = selectedMode === 'real' && portfolioByType.real !== null ? `$${this.formatNumber(portfolioByType.real)}` : '—';
+      paperMoneyValue = selectedMode === 'paper' && portfolioByType.paper !== null ? `$${this.formatNumber(portfolioByType.paper)}` : '—';
     } else if (isLoading) {
       realMoneyValue = 'Fetching...';
       paperMoneyValue = 'Fetching...';
@@ -79,8 +83,8 @@ export class Dashboard {
       realPnlValue = 'Error';
       paperPnlValue = 'Error';
     } else if (portfolio) {
-      realPnlValue = selectedMode === 'real' && pnlByType.real !== null ? `$${pnlByType.real.toFixed(2)}` : '—';
-      paperPnlValue = selectedMode === 'paper' && pnlByType.paper !== null ? `$${pnlByType.paper.toFixed(2)}` : '—';
+      realPnlValue = selectedMode === 'real' && pnlByType.real !== null ? `$${this.formatNumber(pnlByType.real)}` : '—';
+      paperPnlValue = selectedMode === 'paper' && pnlByType.paper !== null ? `$${this.formatNumber(pnlByType.paper)}` : '—';
     } else if (isLoading) {
       realPnlValue = 'Fetching...';
       paperPnlValue = 'Fetching...';
@@ -129,8 +133,23 @@ export class Dashboard {
   }
 
   removeExchange(label: string) {
-    this.exchangeService.remove(label);
-    this.showToast('Exchange disconnected.');
+    this.exchangeToDelete.set(label);
+    this.showDeleteExchangeModal.set(true);
+  }
+
+  confirmDeleteExchange() {
+    const label = this.exchangeToDelete();
+    if (label) {
+      this.exchangeService.remove(label);
+      this.showDeleteExchangeModal.set(false);
+      this.exchangeToDelete.set(null);
+      this.showToast('Exchange disconnected.');
+    }
+  }
+
+  cancelDeleteExchange() {
+    this.showDeleteExchangeModal.set(false);
+    this.exchangeToDelete.set(null);
   }
 
   toggleBotStatus(bot: Bot) {
@@ -140,8 +159,23 @@ export class Dashboard {
   }
 
   removeBot(bot: Bot) {
-    this.botService.remove(bot.id);
-    this.showToast(`🗑 "${bot.name}" deleted.`);
+    this.botToDelete.set(bot);
+    this.showDeleteBotModal.set(true);
+  }
+
+  confirmDeleteBot() {
+    const bot = this.botToDelete();
+    if (bot) {
+      this.botService.remove(bot.id);
+      this.showDeleteBotModal.set(false);
+      this.botToDelete.set(null);
+      this.showToast(`🗑 "${bot.name}" deleted.`);
+    }
+  }
+
+  cancelDeleteBot() {
+    this.showDeleteBotModal.set(false);
+    this.botToDelete.set(null);
   }
 
   showBotSettings(bot: Bot) {
@@ -194,9 +228,13 @@ export class Dashboard {
     if (this.portfolioDetailsView() === 'pnl') {
       const sign = row.unrealizedPnl >= 0 ? '+' : '';
       const pctSign = row.pnlPercentage >= 0 ? '+' : '';
-      return `${sign}$${row.unrealizedPnl.toFixed(2)} (${pctSign}${row.pnlPercentage.toFixed(2)}%)`;
+      return `${sign}$${this.formatNumber(row.unrealizedPnl)} (${pctSign}${row.pnlPercentage.toFixed(2)}%)`;
     }
-    return `$${row.portfolioValue.toFixed(2)}`;
+    return `$${this.formatNumber(row.portfolioValue)}`;
+  }
+
+  formatNumber(value: number): string {
+    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   exchangeName(id: string): string {
