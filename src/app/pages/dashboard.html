@@ -17,6 +17,99 @@
     (selected)="onStrategySelected($event)"
   />
 }
+@if (showStrategyEditorModal()) {
+  <div class="portfolio-popup-backdrop" (click)="closeStrategyEditor()">
+    <div class="strategy-editor-modal" (click)="$event.stopPropagation()">
+      <div class="strategy-editor-header">
+        <h3>{{ strategyEditorTitle() }}</h3>
+        <button class="portfolio-popup-close" (click)="closeStrategyEditor()" aria-label="Close">✕</button>
+      </div>
+
+      @if (selectedTemplateForStrategy()) {
+        <div class="strategy-template-chip">
+          <span class="chip-icon">{{ selectedTemplateForStrategy()!.icon }}</span>
+          <div>
+            <div class="chip-title">{{ selectedTemplateForStrategy()!.name }}</div>
+            <div class="chip-sub">Real strategy template</div>
+          </div>
+        </div>
+      }
+
+      @if (strategyFormError()) {
+        <div class="strategy-editor-error">{{ strategyFormError() }}</div>
+      }
+
+      <div class="strategy-editor-grid">
+        <div class="form-group">
+          <label>Strategy Name</label>
+          <input
+            type="text"
+            [ngModel]="strategyNameInput()"
+            (ngModelChange)="strategyNameInput.set($event)"
+            [disabled]="isStrategyReadOnly()"
+            placeholder="Enter strategy name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Executing Bot</label>
+          <select
+            [ngModel]="strategyAssignedBotId()"
+            (ngModelChange)="strategyAssignedBotId.set($event)"
+            [disabled]="isStrategyReadOnly()"
+          >
+            <option value="" disabled>-- Select Bot --</option>
+            @for (bot of visibleBots(); track bot.id) {
+              <option [value]="bot.id">{{ bot.name }} · {{ bot.exchangeLabel }} · {{ bot.symbol }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Trade Side</label>
+          <select
+            [ngModel]="strategyTradeSideInput()"
+            (ngModelChange)="strategyTradeSideInput.set($event)"
+            [disabled]="isStrategyReadOnly()"
+          >
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Strategy Status</label>
+          <select
+            [ngModel]="strategyStatusInput()"
+            (ngModelChange)="strategyStatusInput.set($event)"
+            [disabled]="isStrategyReadOnly()"
+          >
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+          </select>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Execution Notes</label>
+          <textarea
+            rows="3"
+            [ngModel]="strategyNotes()"
+            (ngModelChange)="strategyNotes.set($event)"
+            [disabled]="isStrategyReadOnly()"
+            placeholder="Optional notes about this real strategy setup"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="strategy-editor-actions">
+        <button class="delete-bot-btn delete-bot-cancel" (click)="closeStrategyEditor()">Close</button>
+        @if (!isStrategyReadOnly()) {
+          <button class="strategy-save-btn" (click)="saveStrategy()">{{ strategyEditorActionLabel() }}</button>
+        }
+      </div>
+    </div>
+  </div>
+}
 @if (showPortfolioDetailsModal()) {
   <div class="portfolio-popup-backdrop" (click)="closePortfolioDetailsModal()">
     <div class="portfolio-popup" (click)="$event.stopPropagation()">
@@ -25,25 +118,52 @@
         <button class="portfolio-popup-close" (click)="closePortfolioDetailsModal()" aria-label="Close">✕</button>
       </div>
 
-      @if (portfolioBreakdownRows.length > 0) {
-        <div class="portfolio-popup-list">
-          @for (row of portfolioBreakdownRows; track row.label) {
-            <div class="portfolio-popup-row">
-              <div class="portfolio-popup-row-left">
-                <div class="portfolio-popup-row-title">{{ row.label }}</div>
-                <div class="portfolio-popup-row-sub">{{ row.exchangeName }}</div>
-              </div>
-              <div class="portfolio-popup-row-right">
-                <span class="portfolio-money-type" [class.paper]="row.isPaper" [class.real]="!row.isPaper">
-                  {{ row.isPaper ? 'Paper Money' : 'Real Money' }}
-                </span>
-                <div class="portfolio-popup-value" [class.pnl-pos]="isPnlDetailsView && row.unrealizedPnl >= 0" [class.pnl-neg]="isPnlDetailsView && row.unrealizedPnl < 0">
-                  {{ formatBreakdownValue(row) }}
+      @if (isTradesDetailsView ? tradeDetailsRows.length > 0 : portfolioBreakdownRows.length > 0) {
+        @if (isTradesDetailsView) {
+          @if (tradeDetailsRows.length > 0) {
+            <div class="portfolio-popup-list">
+              @for (execution of tradeDetailsRows; track execution.id) {
+                <div class="portfolio-popup-row">
+                  <div class="portfolio-popup-row-left">
+                    <div class="portfolio-popup-row-title">{{ execution.symbol }} · {{ execution.side.toUpperCase() }}</div>
+                    <div class="portfolio-popup-row-sub">{{ execution.strategyName }} · {{ execution.botName }}</div>
+                    <div class="portfolio-popup-row-sub">Order ID: {{ execution.orderId }}</div>
+                  </div>
+                  <div class="portfolio-popup-row-right">
+                    <span class="portfolio-money-type" [class.real]="execution.side === 'buy'" [class.paper]="execution.side === 'sell'">
+                      {{ execution.side.toUpperCase() }}
+                    </span>
+                    <div class="portfolio-popup-value">
+                      ${{ execution.investment | number:'1.2-2' }}
+                    </div>
+                    <div class="portfolio-popup-row-sub">{{ execution.executedAt | date:'medium' }}</div>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="portfolio-popup-empty">{{ portfolioDetailsEmptyMessage }}</div>
+          }
+        } @else {
+          <div class="portfolio-popup-list">
+            @for (row of portfolioBreakdownRows; track row.label) {
+              <div class="portfolio-popup-row">
+                <div class="portfolio-popup-row-left">
+                  <div class="portfolio-popup-row-title">{{ row.label }}</div>
+                  <div class="portfolio-popup-row-sub">{{ row.exchangeName }}</div>
+                </div>
+                <div class="portfolio-popup-row-right">
+                  <span class="portfolio-money-type" [class.paper]="row.isPaper" [class.real]="!row.isPaper">
+                    {{ row.isPaper ? 'Paper Money' : 'Real Money' }}
+                  </span>
+                  <div class="portfolio-popup-value" [class.pnl-pos]="isPnlDetailsView && row.unrealizedPnl >= 0" [class.pnl-neg]="isPnlDetailsView && row.unrealizedPnl < 0">
+                    {{ formatBreakdownValue(row) }}
+                  </div>
                 </div>
               </div>
-            </div>
-          }
-        </div>
+            }
+          </div>
+        }
       } @else {
         <div class="portfolio-popup-empty">{{ portfolioDetailsEmptyMessage }}</div>
       }
@@ -75,6 +195,28 @@
       <div class="delete-bot-actions">
         <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteBot()">Cancel</button>
         <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteBot()">Delete</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Delete Strategy Confirmation Modal -->
+@if (showDeleteStrategyModal() && strategyToDelete()) {
+  <div class="delete-bot-backdrop" (click)="cancelDeleteStrategy()">
+    <div class="delete-bot-modal" (click)="$event.stopPropagation()">
+      <div class="delete-bot-header">
+        <h3>Confirm Strategy Deletion</h3>
+        <button class="delete-bot-close" (click)="cancelDeleteStrategy()" aria-label="Close">✕</button>
+      </div>
+      <div class="delete-bot-content">
+        <p class="delete-bot-question">Are you sure you want to delete Strategy <strong>{{ strategyToDelete()?.name }}</strong>?</p>
+        <div class="delete-bot-note">
+          <p><strong>Note:</strong> This removes the strategy configuration and bot assignment. It does not delete the bot itself.</p>
+        </div>
+      </div>
+      <div class="delete-bot-actions">
+        <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteStrategy()">Cancel</button>
+        <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteStrategy()">Delete</button>
       </div>
     </div>
   </div>
@@ -127,9 +269,9 @@
       @for (card of portfolioCards; track card.label; let i = $index) {
         <div
           class="stat-card"
-          [class.clickable]="i === 0 || i === 3"
-          [attr.role]="(i === 0 || i === 3) ? 'button' : null"
-          [attr.tabindex]="(i === 0 || i === 3) ? 0 : null"
+          [class.clickable]="i === 0 || i === 2 || i === 3"
+          [attr.role]="(i === 0 || i === 2 || i === 3) ? 'button' : null"
+          [attr.tabindex]="(i === 0 || i === 2 || i === 3) ? 0 : null"
           (click)="onPortfolioCardClick(i)"
           (keydown.enter)="onPortfolioCardClick(i)"
           (keydown.space)="onPortfolioCardClick(i); $event.preventDefault()"
@@ -180,6 +322,72 @@
         </div>
       </div>
     }
+
+    <!-- Strategies Table -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">{{ strategiesSectionTitle() }}</h2>
+        <button class="btn-add-exchange" (click)="showStrategiesModal.set(true)">+ New Strategy</button>
+      </div>
+
+      @if (visibleStrategies().length > 0) {
+        <div class="bots-table-wrap">
+          <table class="bots-table strategies-table">
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Template</th>
+                <th>Side</th>
+                <th>Executing Bot</th>
+                <th>Status</th>
+                <th>Updated</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (strategy of visibleStrategies(); track strategy.id) {
+                <tr>
+                  <td class="bot-name">{{ strategy.name }}</td>
+                  <td>
+                    @if (strategyTemplateFor(strategy); as template) {
+                      <span>{{ template.icon }} {{ template.name }}</span>
+                    } @else {
+                      <span>{{ strategy.templateIcon }} {{ strategy.templateName }}</span>
+                    }
+                  </td>
+                  <td class="mono">{{ strategy.tradeSide.toUpperCase() }}</td>
+                  <td>{{ assignedBotLabel(strategy.assignedBotId) }}</td>
+                  <td>
+                    <span class="status-badge" [class.status-active]="strategy.status === 'active'" [class.status-paused]="strategy.status === 'paused'">
+                      {{ strategy.status === 'active' ? '🟢 Active' : '⏸ Paused' }}
+                    </span>
+                  </td>
+                  <td>{{ strategy.updatedAt | date:'mediumDate' }}</td>
+                  <td class="bot-actions">
+                    <button class="bot-btn" (click)="toggleStrategyStatus(strategy)" [title]="strategy.status === 'active' ? 'Pause strategy' : 'Activate strategy'">
+                      {{ strategy.status === 'active' ? '⏸' : '▶' }}
+                    </button>
+                    <button class="bot-btn bot-btn-view" (click)="openViewStrategy(strategy)" title="View">
+                      <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </button>
+                    <button class="bot-btn" (click)="openEditStrategy(strategy)" title="Edit">✏️</button>
+                    <button class="bot-btn bot-btn-del" (click)="removeStrategy(strategy)" title="Delete">🗑</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="strategy-empty-state">
+          <p>No real strategies configured yet for {{ modeLabel() }}.</p>
+          <button class="btn-add-exchange" (click)="showStrategiesModal.set(true)">Create your first strategy</button>
+        </div>
+      }
+    </div>
 
     <!-- Bots Table -->
     @if (visibleBots().length > 0) {

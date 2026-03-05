@@ -15,6 +15,13 @@
         }
       },
       {
+        "source": "/api/executeStrategy",
+        "function": {
+          "functionId": "executeStrategyHttp",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
