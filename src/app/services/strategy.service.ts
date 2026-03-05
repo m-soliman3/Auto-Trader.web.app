@@ -1,6 +1,9 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AuthService } from './auth.service';
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
+import { Auth } from '@angular/fire/auth';
+import { Firestore, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
+import { firstValueFrom } from 'rxjs';
 
 export type RiskLevel  = 'Low' | 'Medium' | 'High';
 export type MarketType = 'crypto' | 'stocks' | 'forex' | 'multi';
@@ -26,6 +29,36 @@ export interface StrategyTemplate {
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   isNew?: boolean;
   isPopular?: boolean;
+}
+
+export interface UserStrategy {
+  id: string;
+  templateId: string;
+  templateName: string;
+  templateIcon: string;
+  name: string;
+  assignedBotId: string;
+  assignedBotName: string;
+  status: 'active' | 'paused';
+  tradeSide: 'buy' | 'sell';
+  notes: string;
+  createdAt: string;
+  updatedAt: string;
+  lastExecutionAt?: string;
+}
+
+export interface StrategyExecution {
+  id: string;
+  strategyId: string;
+  strategyName: string;
+  botId: string;
+  botName: string;
+  exchangeId: string;
+  side: 'buy' | 'sell';
+  symbol: string;
+  investment: number;
+  orderId: string;
+  executedAt: string;
 }
 
 export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
@@ -298,16 +331,27 @@ export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
 @Injectable({ providedIn: 'root' })
 export class StrategyService {
   private auth = inject(AuthService);
+  private firebaseAuth = inject(Auth);
+  private http = inject(HttpClient);
   private firestore = inject(Firestore);
 
   savedIds = signal<string[]>([]);
+  userStrategies = signal<UserStrategy[]>([]);
+  executions = signal<StrategyExecution[]>([]);
   all = computed(() => STRATEGY_TEMPLATES);
 
   constructor() {
     effect(() => {
       const user = this.auth.currentUser();
-      if (user) this.loadSavedFromFirestore(user.id);
-      else this.savedIds.set([]);
+      if (user) {
+        this.loadSavedFromFirestore(user.id);
+        this.loadUserStrategiesFromFirestore(user.id);
+        this.loadExecutionsFromFirestore(user.id);
+      } else {
+        this.savedIds.set([]);
+        this.userStrategies.set([]);
+        this.executions.set([]);
+      }
     });
   }
 
@@ -319,6 +363,62 @@ export class StrategyService {
       this.savedIds.set(data?.['savedStrategies'] ?? []);
     } catch {
       this.savedIds.set([]);
+    }
+  }
+
+  private async loadUserStrategiesFromFirestore(uid: string) {
+    try {
+      const col = collection(this.firestore, 'users', uid, 'strategies');
+      const snap = await getDocs(col);
+      this.userStrategies.set(snap.docs.map(d => {
+        const data = d.data() as Partial<UserStrategy>;
+        return {
+          id: data.id ?? d.id,
+          templateId: data.templateId ?? '',
+          templateName: data.templateName ?? 'Strategy',
+          templateIcon: data.templateIcon ?? '📊',
+          name: data.name ?? 'Untitled Strategy',
+          assignedBotId: data.assignedBotId ?? '',
+          assignedBotName: data.assignedBotName ?? 'Unknown Bot',
+          status: data.status ?? 'active',
+          tradeSide: data.tradeSide ?? 'buy',
+          notes: data.notes ?? '',
+          createdAt: data.createdAt ?? new Date().toISOString(),
+          updatedAt: data.updatedAt ?? new Date().toISOString(),
+          lastExecutionAt: data.lastExecutionAt,
+        } satisfies UserStrategy;
+      }));
+    } catch (err) {
+      console.error('failed to load user strategies', err);
+      this.userStrategies.set([]);
+    }
+  }
+
+  private async loadExecutionsFromFirestore(uid: string) {
+    try {
+      const col = collection(this.firestore, 'users', uid, 'executions');
+      const snap = await getDocs(col);
+      const items = snap.docs.map(d => {
+        const data = d.data() as Partial<StrategyExecution>;
+        return {
+          id: d.id,
+          strategyId: data.strategyId ?? '',
+          strategyName: data.strategyName ?? 'Strategy',
+          botId: data.botId ?? '',
+          botName: data.botName ?? 'Bot',
+          exchangeId: data.exchangeId ?? '',
+          side: (data.side ?? 'buy') as 'buy' | 'sell',
+          symbol: data.symbol ?? '',
+          investment: Number(data.investment ?? 0),
+          orderId: data.orderId ?? '',
+          executedAt: data.executedAt ?? '',
+        } satisfies StrategyExecution;
+      }).sort((a, b) => new Date(b.executedAt).getTime() - new Date(a.executedAt).getTime());
+
+      this.executions.set(items);
+    } catch (err) {
+      console.error('failed to load strategy executions', err);
+      this.executions.set([]);
     }
   }
 
@@ -343,6 +443,108 @@ export class StrategyService {
       console.error('failed to update saved strategies', err);
       throw err;
     }
+  }
+
+  async createUserStrategy(input: {
+    templateId: string;
+    templateName: string;
+    templateIcon: string;
+    name: string;
+    assignedBotId: string;
+    assignedBotName: string;
+    status?: 'active' | 'paused';
+    tradeSide?: 'buy' | 'sell';
+    notes?: string;
+  }): Promise<UserStrategy> {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      throw new Error('createUserStrategy called without user');
+    }
+
+    const now = new Date().toISOString();
+    const strategy: UserStrategy = {
+      id: crypto.randomUUID(),
+      templateId: input.templateId,
+      templateName: input.templateName,
+      templateIcon: input.templateIcon,
+      name: input.name.trim(),
+      assignedBotId: input.assignedBotId,
+      assignedBotName: input.assignedBotName,
+      status: input.status ?? 'active',
+      tradeSide: input.tradeSide ?? 'buy',
+      notes: input.notes?.trim() ?? '',
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const ref = doc(this.firestore, 'users', uid, 'strategies', strategy.id);
+    await setDoc(ref, strategy);
+    this.userStrategies.update(list => [strategy, ...list]);
+    return strategy;
+  }
+
+  async updateUserStrategy(id: string, updates: {
+    name: string;
+    assignedBotId: string;
+    assignedBotName: string;
+    status: 'active' | 'paused';
+    tradeSide: 'buy' | 'sell';
+    notes?: string;
+  }): Promise<UserStrategy> {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      throw new Error('updateUserStrategy called without user');
+    }
+
+    const existing = this.userStrategies().find(strategy => strategy.id === id);
+    if (!existing) {
+      throw new Error('strategy not found');
+    }
+
+    const next: UserStrategy = {
+      ...existing,
+      name: updates.name.trim(),
+      assignedBotId: updates.assignedBotId,
+      assignedBotName: updates.assignedBotName,
+      status: updates.status,
+      tradeSide: updates.tradeSide,
+      notes: updates.notes?.trim() ?? '',
+      updatedAt: new Date().toISOString(),
+    };
+
+    const ref = doc(this.firestore, 'users', uid, 'strategies', id);
+    await setDoc(ref, next);
+    this.userStrategies.update(list => list.map(strategy => strategy.id === id ? next : strategy));
+    return next;
+  }
+
+  async removeUserStrategy(id: string): Promise<void> {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      throw new Error('removeUserStrategy called without user');
+    }
+
+    const ref = doc(this.firestore, 'users', uid, 'strategies', id);
+    await deleteDoc(ref);
+    this.userStrategies.update(list => list.filter(strategy => strategy.id !== id));
+  }
+
+  async executeStrategy(strategyId: string): Promise<{ success: boolean; side: 'buy' | 'sell'; orderId: string; executedAt: string; message: string; }> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    const idToken = await currentUser.getIdToken();
+    return firstValueFrom(this.http.post<{ success: boolean; side: 'buy' | 'sell'; orderId: string; executedAt: string; message: string; }>(
+      '/api/executeStrategy',
+      { strategyId },
+      {
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      },
+    ));
   }
 
   search(query: string, market: string, risk: string, category: string): StrategyTemplate[] {
