@@ -397,15 +397,24 @@ function shouldRunByTimeframe(strategy, bot, nowMs) {
 async function runActiveStrategiesOnce() {
     const db = admin.firestore();
     const nowMs = Date.now();
-    const activeStrategiesSnap = await db.collectionGroup("strategies").where("status", "==", "active").get();
+    const usersSnap = await db.collection("users").get();
+    const activeStrategies = [];
+    for (const userDoc of usersSnap.docs) {
+        const uid = userDoc.id;
+        const strategiesSnap = await db.collection(`users/${uid}/strategies`).where("status", "==", "active").get();
+        for (const strategyDoc of strategiesSnap.docs) {
+            activeStrategies.push({
+                uid,
+                strategyId: strategyDoc.id,
+                strategy: strategyDoc.data() || {},
+            });
+        }
+    }
     let executed = 0;
     let skipped = 0;
     let failed = 0;
-    for (const strategyDoc of activeStrategiesSnap.docs) {
-        const strategy = strategyDoc.data() || {};
-        const pathParts = strategyDoc.ref.path.split("/");
-        const uid = pathParts[1];
-        const strategyId = strategyDoc.id;
+    for (const activeItem of activeStrategies) {
+        const { uid, strategyId, strategy } = activeItem;
         if (!uid || !strategyId) {
             skipped++;
             continue;
@@ -444,7 +453,7 @@ async function runActiveStrategiesOnce() {
         }
     }
     return {
-        totalActiveStrategies: activeStrategiesSnap.size,
+        totalActiveStrategies: activeStrategies.length,
         executed,
         skipped,
         failed,
@@ -580,7 +589,11 @@ exports.executeStrategyHttp = functions
 });
 exports.runActiveStrategies = functions
     .region("europe-west1")
-    .runWith({ timeoutSeconds: 540, memory: "512MB" })
+    .runWith({
+    timeoutSeconds: 540,
+    memory: "512MB",
+    serviceAccount: "1022221175478-compute@developer.gserviceaccount.com",
+})
     .pubsub.schedule("every 1 minutes")
     .timeZone("Etc/UTC")
     .onRun(async () => {
