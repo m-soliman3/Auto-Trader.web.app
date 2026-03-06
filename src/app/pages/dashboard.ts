@@ -258,7 +258,7 @@ export class Dashboard {
           notes: this.strategyNotes(),
         });
         if (created.status === 'active' && assignedBot.status === 'active') {
-          await this.executeLiveStrategy(created.id, created.name);
+          this.showToast(`📊 "${created.name}" created. Backend evaluation is active and orders will only run on entry/exit signals.`);
         } else {
           this.showToast(`📊 "${created.name}" created and linked to "${assignedBot.name}".`);
         }
@@ -275,7 +275,7 @@ export class Dashboard {
           notes: this.strategyNotes(),
         });
         if (updated.status === 'active' && assignedBot.status === 'active') {
-          await this.executeLiveStrategy(updated.id, updated.name);
+          this.showToast(`✏️ "${updated.name}" updated. Backend evaluation will place orders only when signals trigger.`);
         } else {
           this.showToast(`✏️ "${updated.name}" updated successfully.`);
         }
@@ -322,7 +322,7 @@ export class Dashboard {
       if (updated.status === 'active') {
         const assignedBot = this.visibleBots().find(bot => bot.id === updated.assignedBotId);
         if (assignedBot?.status === 'active') {
-          await this.executeLiveStrategy(updated.id, updated.name);
+          this.showToast(`▶ "${updated.name}" activated. Backend evaluation is now running.`);
         } else {
           this.showToast(`▶ "${updated.name}" activated. Activate the assigned bot to execute trades.`);
         }
@@ -332,17 +332,6 @@ export class Dashboard {
     } catch (err) {
       console.error('failed to toggle strategy status', err);
       this.showToast('Unable to update strategy status right now.');
-    }
-  }
-
-  private async executeLiveStrategy(strategyId: string, strategyName: string) {
-    try {
-      const result = await this.strategyService.executeStrategy(strategyId);
-      this.showToast(`✅ ${strategyName}: ${result.side.toUpperCase()} order executed.`);
-    } catch (err: any) {
-      const backendMessage = err?.error?.error || err?.message || 'Live order execution failed.';
-      console.error('strategy execution failed', err);
-      this.showToast(`⚠️ ${strategyName}: ${backendMessage}`);
     }
   }
 
@@ -384,10 +373,7 @@ export class Dashboard {
           this.showToast(`▶ "${bot.name}" resumed.`);
           return;
         }
-
-        for (const strategy of linkedActiveStrategies) {
-          await this.executeLiveStrategy(strategy.id, strategy.name);
-        }
+        this.showToast(`▶ "${bot.name}" resumed. Linked strategies are now evaluated in backend for entry/exit signals.`);
       } else {
         this.showToast(`⏸ "${bot.name}" paused.`);
       }

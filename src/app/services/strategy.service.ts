@@ -1,9 +1,6 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AuthService } from './auth.service';
-import { HttpClient } from '@angular/common/http';
-import { Auth } from '@angular/fire/auth';
 import { Firestore, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
-import { firstValueFrom } from 'rxjs';
 
 export type RiskLevel  = 'Low' | 'Medium' | 'High';
 export type MarketType = 'crypto' | 'stocks' | 'forex' | 'multi';
@@ -331,8 +328,6 @@ export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
 @Injectable({ providedIn: 'root' })
 export class StrategyService {
   private auth = inject(AuthService);
-  private firebaseAuth = inject(Auth);
-  private http = inject(HttpClient);
   private firestore = inject(Firestore);
 
   savedIds = signal<string[]>([]);
@@ -462,6 +457,7 @@ export class StrategyService {
     }
 
     const now = new Date().toISOString();
+    const initialStatus = input.status ?? 'active';
     const strategy: UserStrategy = {
       id: crypto.randomUUID(),
       templateId: input.templateId,
@@ -470,11 +466,12 @@ export class StrategyService {
       name: input.name.trim(),
       assignedBotId: input.assignedBotId,
       assignedBotName: input.assignedBotName,
-      status: input.status ?? 'active',
+      status: initialStatus,
       tradeSide: input.tradeSide ?? 'buy',
       notes: input.notes?.trim() ?? '',
       createdAt: now,
       updatedAt: now,
+      lastExecutionAt: initialStatus === 'active' ? now : undefined,
     };
 
     const ref = doc(this.firestore, 'users', uid, 'strategies', strategy.id);
@@ -501,6 +498,7 @@ export class StrategyService {
       throw new Error('strategy not found');
     }
 
+    const now = new Date().toISOString();
     const next: UserStrategy = {
       ...existing,
       name: updates.name.trim(),
@@ -509,7 +507,9 @@ export class StrategyService {
       status: updates.status,
       tradeSide: updates.tradeSide,
       notes: updates.notes?.trim() ?? '',
-      updatedAt: new Date().toISOString(),
+      updatedAt: now,
+      // Prevent an immediate execution after saving an already-active strategy.
+      lastExecutionAt: updates.status === 'active' ? now : existing.lastExecutionAt,
     };
 
     const ref = doc(this.firestore, 'users', uid, 'strategies', id);
@@ -527,24 +527,6 @@ export class StrategyService {
     const ref = doc(this.firestore, 'users', uid, 'strategies', id);
     await deleteDoc(ref);
     this.userStrategies.update(list => list.filter(strategy => strategy.id !== id));
-  }
-
-  async executeStrategy(strategyId: string): Promise<{ success: boolean; side: 'buy' | 'sell'; orderId: string; executedAt: string; message: string; }> {
-    const currentUser = this.firebaseAuth.currentUser;
-    if (!currentUser) {
-      throw new Error('Not authenticated');
-    }
-
-    const idToken = await currentUser.getIdToken();
-    return firstValueFrom(this.http.post<{ success: boolean; side: 'buy' | 'sell'; orderId: string; executedAt: string; message: string; }>(
-      '/api/executeStrategy',
-      { strategyId },
-      {
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-      },
-    ));
   }
 
   search(query: string, market: string, risk: string, category: string): StrategyTemplate[] {
