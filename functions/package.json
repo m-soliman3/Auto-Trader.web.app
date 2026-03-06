@@ -1,5 +1,6 @@
 {
   "name": "functions",
+  "main": "index.js",
   "description": "Cloud Functions for Fire Store",
   "engines": {
     "node": "22"

@@ -179,6 +179,336 @@ function normalizeAlpacaSymbol(symbol) {
     }
     return upper.replace("USDT", "USD");
 }
+function normalizeSymbolForMarketData(symbol) {
+    const upper = String(symbol || "").toUpperCase().trim();
+    if (!upper.includes("/")) {
+        return upper;
+    }
+    const compact = upper.replace(/[^A-Z0-9]/g, "");
+    if (compact.endsWith("USD") && !compact.endsWith("USDT")) {
+        return `${compact.slice(0, -3)}USDT`;
+    }
+    return compact;
+}
+function calculateEmaSeries(values, period) {
+    if (!Array.isArray(values) || values.length === 0) {
+        return [];
+    }
+    const multiplier = 2 / (period + 1);
+    const series = [];
+    let previousEma = values[0];
+    series.push(previousEma);
+    for (let index = 1; index < values.length; index++) {
+        const value = values[index];
+        previousEma = (value - previousEma) * multiplier + previousEma;
+        series.push(previousEma);
+    }
+    return series;
+}
+async function fetchBinanceClosePrices(symbol, timeframe, limit = 120) {
+    const candles = await fetchBinanceCandles(symbol, timeframe, limit);
+    return candles.map((candle) => candle.close);
+}
+async function fetchBinanceCandles(symbol, timeframe, limit = 120) {
+    const normalizedSymbol = normalizeSymbolForMarketData(symbol);
+    const interval = ["1m", "5m", "15m", "1h", "4h", "1d"].includes(String(timeframe || ""))
+        ? String(timeframe)
+        : "1h";
+    const url = `https://api.binance.com/api/v3/klines?symbol=${normalizedSymbol}&interval=${interval}&limit=${Math.max(limit, 40)}`;
+    const response = await (0, node_fetch_1.default)(url);
+    if (!response.ok) {
+        return [];
+    }
+    const payloadText = await response.text();
+    const payload = payloadText ? JSON.parse(payloadText) : [];
+    if (!Array.isArray(payload)) {
+        return [];
+    }
+    return payload
+        .map((candle) => ({
+        open: Number.parseFloat(String(candle?.[1] || "0")),
+        high: Number.parseFloat(String(candle?.[2] || "0")),
+        low: Number.parseFloat(String(candle?.[3] || "0")),
+        close: Number.parseFloat(String(candle?.[4] || "0")),
+        volume: Number.parseFloat(String(candle?.[5] || "0")),
+    }))
+        .filter((candle) => Number.isFinite(candle.open)
+        && Number.isFinite(candle.high)
+        && Number.isFinite(candle.low)
+        && Number.isFinite(candle.close)
+        && candle.high >= candle.low
+        && candle.close > 0);
+}
+function average(values) {
+    if (!Array.isArray(values) || values.length === 0) {
+        return 0;
+    }
+    return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+function stdDev(values) {
+    if (!Array.isArray(values) || values.length === 0) {
+        return 0;
+    }
+    const mean = average(values);
+    const variance = average(values.map((value) => (value - mean) ** 2));
+    return Math.sqrt(variance);
+}
+function calculateRsiSeries(values, period = 14) {
+    if (!Array.isArray(values) || values.length < period + 1) {
+        return [];
+    }
+    const result = [];
+    let gains = 0;
+    let losses = 0;
+    for (let index = 1; index <= period; index++) {
+        const delta = values[index] - values[index - 1];
+        if (delta >= 0) {
+            gains += delta;
+        }
+        else {
+            losses += Math.abs(delta);
+        }
+    }
+    let avgGain = gains / period;
+    let avgLoss = losses / period;
+    const initialRs = avgLoss === 0 ? Number.POSITIVE_INFINITY : avgGain / avgLoss;
+    result.push(100 - 100 / (1 + initialRs));
+    for (let index = period + 1; index < values.length; index++) {
+        const delta = values[index] - values[index - 1];
+        const gain = delta > 0 ? delta : 0;
+        const loss = delta < 0 ? Math.abs(delta) : 0;
+        avgGain = (avgGain * (period - 1) + gain) / period;
+        avgLoss = (avgLoss * (period - 1) + loss) / period;
+        const rs = avgLoss === 0 ? Number.POSITIVE_INFINITY : avgGain / avgLoss;
+        result.push(100 - 100 / (1 + rs));
+    }
+    return result;
+}
+function calculateAtrSeries(candles, period = 14) {
+    if (!Array.isArray(candles) || candles.length < period + 1) {
+        return [];
+    }
+    const trueRanges = [];
+    for (let index = 0; index < candles.length; index++) {
+        const current = candles[index];
+        const previousClose = index > 0 ? candles[index - 1].close : current.close;
+        const tr = Math.max(current.high - current.low, Math.abs(current.high - previousClose), Math.abs(current.low - previousClose));
+        trueRanges.push(tr);
+    }
+    const atr = [];
+    const firstWindow = trueRanges.slice(0, period);
+    let previousAtr = average(firstWindow);
+    atr.push(previousAtr);
+    for (let index = period; index < trueRanges.length; index++) {
+        previousAtr = (previousAtr * (period - 1) + trueRanges[index]) / period;
+        atr.push(previousAtr);
+    }
+    return atr;
+}
+function calculateVwap(candles, period = 30) {
+    if (!Array.isArray(candles) || candles.length === 0) {
+        return 0;
+    }
+    const window = candles.slice(-period);
+    let weightedPriceSum = 0;
+    let volumeSum = 0;
+    for (const candle of window) {
+        const typicalPrice = (candle.high + candle.low + candle.close) / 3;
+        const volume = Number.isFinite(candle.volume) ? candle.volume : 0;
+        weightedPriceSum += typicalPrice * volume;
+        volumeSum += volume;
+    }
+    if (volumeSum <= 0) {
+        return average(window.map((candle) => candle.close));
+    }
+    return weightedPriceSum / volumeSum;
+}
+function buildMarketContext(candles) {
+    if (!Array.isArray(candles) || candles.length < 30) {
+        return null;
+    }
+    const closes = candles.map((candle) => candle.close);
+    const highs = candles.map((candle) => candle.high);
+    const lows = candles.map((candle) => candle.low);
+    const volumes = candles.map((candle) => candle.volume);
+    const ema9 = calculateEmaSeries(closes, 9);
+    const ema21 = calculateEmaSeries(closes, 21);
+    const ema12 = calculateEmaSeries(closes, 12);
+    const ema26 = calculateEmaSeries(closes, 26);
+    if (ema9.length < 2 || ema21.length < 2 || ema12.length < 2 || ema26.length < 2) {
+        return null;
+    }
+    const macdLine = ema12.map((value, index) => value - ema26[index]);
+    const macdSignal = calculateEmaSeries(macdLine, 9);
+    const rsiSeries = calculateRsiSeries(closes, 14);
+    const atrSeries = calculateAtrSeries(candles, 14);
+    const bbWindow = closes.slice(-20);
+    const bbBasis = average(bbWindow);
+    const bbSigma = stdDev(bbWindow);
+    const bbUpper = bbBasis + bbSigma * 2;
+    const bbLower = bbBasis - bbSigma * 2;
+    const current = closes[closes.length - 1];
+    const previous = closes[closes.length - 2];
+    const currentVolume = volumes[volumes.length - 1] || 0;
+    const volumeAverage = average(volumes.slice(-20));
+    const priorHigh20 = Math.max(...highs.slice(-21, -1));
+    const priorLow20 = Math.min(...lows.slice(-21, -1));
+    const roc14 = closes.length > 14
+        ? ((current - closes[closes.length - 15]) / closes[closes.length - 15]) * 100
+        : 0;
+    const vwap30 = calculateVwap(candles, 30);
+    const atrCurrent = atrSeries[atrSeries.length - 1] || 0;
+    return {
+        current,
+        previous,
+        ema9Current: ema9[ema9.length - 1],
+        ema9Previous: ema9[ema9.length - 2],
+        ema21Current: ema21[ema21.length - 1],
+        ema21Previous: ema21[ema21.length - 2],
+        macdCurrent: macdLine[macdLine.length - 1],
+        macdPrevious: macdLine[macdLine.length - 2],
+        macdSignalCurrent: macdSignal[macdSignal.length - 1],
+        macdSignalPrevious: macdSignal[macdSignal.length - 2],
+        rsiCurrent: rsiSeries.length > 0 ? rsiSeries[rsiSeries.length - 1] : 50,
+        rsiPrevious: rsiSeries.length > 1 ? rsiSeries[rsiSeries.length - 2] : 50,
+        bbUpper,
+        bbLower,
+        bbBasis,
+        roc14,
+        vwap30,
+        atr14: atrCurrent,
+        priorHigh20,
+        priorLow20,
+        currentVolume,
+        volumeAverage,
+    };
+}
+function signalByPreferredSide(candidateSide, preferredSide, reason) {
+    if (candidateSide !== preferredSide) {
+        return null;
+    }
+    return {
+        side: candidateSide,
+        reason,
+    };
+}
+async function evaluateStrategySignal(strategy, bot) {
+    const templateId = String(strategy?.templateId || "");
+    const preferredSide = String(strategy?.tradeSide || "buy").toLowerCase() === "sell" ? "sell" : "buy";
+    const candles = await fetchBinanceCandles(bot?.symbol, bot?.timeframe, 140);
+    const market = buildMarketContext(candles);
+    if (!market) {
+        return null;
+    }
+    const emaBullCross = market.ema9Previous <= market.ema21Previous && market.ema9Current > market.ema21Current;
+    const emaBearCross = market.ema9Previous >= market.ema21Previous && market.ema9Current < market.ema21Current;
+    const macdBullCross = market.macdPrevious <= market.macdSignalPrevious && market.macdCurrent > market.macdSignalCurrent;
+    const macdBearCross = market.macdPrevious >= market.macdSignalPrevious && market.macdCurrent < market.macdSignalCurrent;
+    const rsiOversoldCross = market.rsiPrevious <= 30 && market.rsiCurrent > 30;
+    const rsiOverboughtCross = market.rsiPrevious >= 70 && market.rsiCurrent < 70;
+    const breakoutUp = market.current > market.priorHigh20 && market.currentVolume >= market.volumeAverage * 1.15;
+    const breakoutDown = market.current < market.priorLow20 && market.currentVolume >= market.volumeAverage * 1.15;
+    const vwapDeviation = market.vwap30 > 0 ? (market.current - market.vwap30) / market.vwap30 : 0;
+    const highVolatility = market.atr14 > 0 && (market.atr14 / market.current) * 100 > 0.8;
+    const lowVolatility = market.atr14 > 0 && (market.atr14 / market.current) * 100 < 0.5;
+    switch (templateId) {
+        case "ema-crossover":
+            if (emaBullCross) {
+                return signalByPreferredSide("buy", preferredSide, "EMA9 crossed above EMA21");
+            }
+            if (emaBearCross) {
+                return signalByPreferredSide("sell", preferredSide, "EMA9 crossed below EMA21");
+            }
+            return null;
+        case "macd-trend":
+            if (macdBullCross && market.macdCurrent > 0) {
+                return signalByPreferredSide("buy", preferredSide, "MACD bullish crossover with positive momentum");
+            }
+            if (macdBearCross && market.macdCurrent < 0) {
+                return signalByPreferredSide("sell", preferredSide, "MACD bearish crossover with negative momentum");
+            }
+            return null;
+        case "supertrend":
+            if (emaBullCross && highVolatility) {
+                return signalByPreferredSide("buy", preferredSide, "Trend flipped bullish with elevated ATR");
+            }
+            if (emaBearCross && highVolatility) {
+                return signalByPreferredSide("sell", preferredSide, "Trend flipped bearish with elevated ATR");
+            }
+            return null;
+        case "rsi-reversal":
+            if (rsiOversoldCross) {
+                return signalByPreferredSide("buy", preferredSide, "RSI recovered from oversold zone");
+            }
+            if (rsiOverboughtCross) {
+                return signalByPreferredSide("sell", preferredSide, "RSI faded from overbought zone");
+            }
+            return null;
+        case "bollinger-bounce":
+            if (market.previous < market.bbLower && market.current >= market.bbLower) {
+                return signalByPreferredSide("buy", preferredSide, "Price bounced from lower Bollinger band");
+            }
+            if (market.previous > market.bbUpper && market.current <= market.bbUpper) {
+                return signalByPreferredSide("sell", preferredSide, "Price reverted from upper Bollinger band");
+            }
+            return null;
+        case "vwap-reversion":
+            if (vwapDeviation <= -0.015 && market.current > market.previous) {
+                return signalByPreferredSide("buy", preferredSide, "Price mean-reverting upward toward VWAP");
+            }
+            if (vwapDeviation >= 0.015 && market.current < market.previous) {
+                return signalByPreferredSide("sell", preferredSide, "Price mean-reverting downward toward VWAP");
+            }
+            return null;
+        case "breakout":
+            if (breakoutUp) {
+                return signalByPreferredSide("buy", preferredSide, "Volume-confirmed upside breakout");
+            }
+            if (breakoutDown) {
+                return signalByPreferredSide("sell", preferredSide, "Volume-confirmed downside breakout");
+            }
+            return null;
+        case "dca":
+            return signalByPreferredSide("buy", preferredSide, "Scheduled DCA accumulation interval");
+        case "momentum-roc":
+            if (market.roc14 >= 2.5) {
+                return signalByPreferredSide("buy", preferredSide, "ROC momentum crossed bullish threshold");
+            }
+            if (market.roc14 <= -2.5) {
+                return signalByPreferredSide("sell", preferredSide, "ROC momentum crossed bearish threshold");
+            }
+            return null;
+        case "grid":
+            if (market.current <= market.bbLower && lowVolatility) {
+                return signalByPreferredSide("buy", preferredSide, "Grid lower band fill opportunity");
+            }
+            if (market.current >= market.bbUpper && lowVolatility) {
+                return signalByPreferredSide("sell", preferredSide, "Grid upper band reduce opportunity");
+            }
+            return null;
+        case "scalping":
+            if (emaBullCross && market.currentVolume >= market.volumeAverage) {
+                return signalByPreferredSide("buy", preferredSide, "Short-term bullish momentum impulse");
+            }
+            if (emaBearCross && market.currentVolume >= market.volumeAverage) {
+                return signalByPreferredSide("sell", preferredSide, "Short-term bearish momentum impulse");
+            }
+            return null;
+        case "triangular-arb":
+            if (Math.abs(vwapDeviation) >= 0.01 && market.currentVolume >= market.volumeAverage * 1.2) {
+                return signalByPreferredSide(preferredSide, preferredSide, "Arbitrage window heuristic triggered");
+            }
+            return null;
+        case "covered-call":
+            if (market.rsiCurrent >= 60 && market.current > market.bbBasis) {
+                return signalByPreferredSide("sell", preferredSide, "Covered-call premium opportunity (overbought bias)");
+            }
+            return null;
+        default:
+            return null;
+    }
+    return null;
+}
 async function fetchBinancePrice(symbol) {
     const tickerUrl = `https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`;
     const response = await (0, node_fetch_1.default)(tickerUrl);
@@ -249,20 +579,68 @@ async function placeAlpacaOrder({ exchangeId, apiKey, apiSecret, symbol, side, i
     const isPaper = exchangeId === "alpaca-paper";
     const baseUrl = isPaper ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
     const normalizedSymbol = normalizeAlpacaSymbol(symbol);
+    const normalizedSide = String(side || "buy").toLowerCase() === "sell" ? "sell" : "buy";
+    const isCryptoSymbol = normalizedSymbol.includes("/");
+    const timeInForce = isCryptoSymbol ? "gtc" : "day";
+    const headers = {
+        "APCA-API-KEY-ID": apiKey,
+        "APCA-API-SECRET-KEY": apiSecret,
+        "Content-Type": "application/json",
+    };
+    let orderBody;
+    if (isCryptoSymbol && normalizedSide === "sell") {
+        const positionsResponse = await (0, node_fetch_1.default)(`${baseUrl}/v2/positions`, {
+            method: "GET",
+            headers,
+        });
+        const positionsText = await positionsResponse.text();
+        const positionsPayload = positionsText ? JSON.parse(positionsText) : [];
+        if (!positionsResponse.ok) {
+            throw new functions.https.HttpsError("internal", `Alpaca positions error ${positionsResponse.status}: ${positionsText}`);
+        }
+        const toComparable = (value) => String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+        const targetSymbol = toComparable(normalizedSymbol);
+        const matchingPosition = Array.isArray(positionsPayload)
+            ? positionsPayload.find((position) => toComparable(position?.symbol) === targetSymbol)
+            : null;
+        const availableQty = Number.parseFloat(String(matchingPosition?.qty || "0"));
+        const marketValue = Math.abs(Number.parseFloat(String(matchingPosition?.market_value || "0")));
+        if (!Number.isFinite(availableQty) || availableQty <= 0) {
+            throw new functions.https.HttpsError("failed-precondition", `No available ${normalizedSymbol} position to sell.`);
+        }
+        let qtyToSell = availableQty;
+        if (Number.isFinite(marketValue) && marketValue > 0 && Number.isFinite(Number(investment)) && Number(investment) > 0) {
+            qtyToSell = Math.min(availableQty, (Number(investment) / marketValue) * availableQty);
+        }
+        qtyToSell = Math.max(Math.min(qtyToSell * 0.995, availableQty * 0.995), 0);
+        if (!Number.isFinite(qtyToSell) || qtyToSell <= 0) {
+            throw new functions.https.HttpsError("failed-precondition", `Computed sell quantity is invalid for ${normalizedSymbol}.`);
+        }
+        orderBody = {
+            symbol: normalizedSymbol,
+            side: normalizedSide,
+            type: "market",
+            time_in_force: timeInForce,
+            qty: qtyToSell.toFixed(8),
+        };
+    }
+    else {
+        const baseNotional = Number(investment);
+        const bufferedNotional = normalizedSide === "buy" && isCryptoSymbol
+            ? baseNotional * 0.98
+            : baseNotional;
+        orderBody = {
+            symbol: normalizedSymbol,
+            side: normalizedSide,
+            type: "market",
+            time_in_force: timeInForce,
+            notional: bufferedNotional.toFixed(2),
+        };
+    }
     const response = await (0, node_fetch_1.default)(`${baseUrl}/v2/orders`, {
         method: "POST",
-        headers: {
-            "APCA-API-KEY-ID": apiKey,
-            "APCA-API-SECRET-KEY": apiSecret,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            symbol: normalizedSymbol,
-            side,
-            type: "market",
-            time_in_force: "day",
-            notional: Number(investment).toFixed(2),
-        }),
+        headers,
+        body: JSON.stringify(orderBody),
     });
     const payloadText = await response.text();
     const payload = payloadText ? JSON.parse(payloadText) : {};
@@ -274,7 +652,7 @@ async function placeAlpacaOrder({ exchangeId, apiKey, apiSecret, symbol, side, i
         raw: payload,
     };
 }
-async function executeStrategyOrder(uid, strategyId) {
+async function executeStrategyOrder(uid, strategyId, sideOverride) {
     const db = admin.firestore();
     const strategyRef = db.doc(`users/${uid}/strategies/${strategyId}`);
     const strategySnap = await strategyRef.get();
@@ -311,7 +689,8 @@ async function executeStrategyOrder(uid, strategyId) {
     if (!exchangeId || !apiKey || !apiSecret) {
         throw new functions.https.HttpsError("failed-precondition", "Missing exchange credentials for execution.");
     }
-    const side = String(strategy.tradeSide || "buy").toLowerCase() === "sell" ? "sell" : "buy";
+    const configuredSide = String(strategy.tradeSide || "buy").toLowerCase() === "sell" ? "sell" : "buy";
+    const side = sideOverride === "sell" || sideOverride === "buy" ? sideOverride : configuredSide;
     const symbol = String(bot.symbol || "");
     const investment = Number(bot.investment || 0);
     if (!symbol || !Number.isFinite(investment) || investment <= 0) {
@@ -385,14 +764,18 @@ function timeframeToMs(timeframe) {
 function shouldRunByTimeframe(strategy, bot, nowMs) {
     const cadenceMs = timeframeToMs(bot.timeframe);
     const lastExecutionRaw = strategy.lastExecutionAt;
-    if (!lastExecutionRaw) {
-        return true;
+    if (lastExecutionRaw) {
+        const lastExecutionMs = new Date(lastExecutionRaw).getTime();
+        if (Number.isFinite(lastExecutionMs) && lastExecutionMs > 0) {
+            return nowMs - lastExecutionMs >= cadenceMs;
+        }
     }
-    const lastExecutionMs = new Date(lastExecutionRaw).getTime();
-    if (!Number.isFinite(lastExecutionMs) || lastExecutionMs <= 0) {
-        return true;
+    const activationRaw = strategy.activatedAt || strategy.updatedAt || strategy.createdAt;
+    const activationMs = new Date(String(activationRaw || "")).getTime();
+    if (!Number.isFinite(activationMs) || activationMs <= 0) {
+        return false;
     }
-    return nowMs - lastExecutionMs >= cadenceMs;
+    return nowMs - activationMs >= cadenceMs;
 }
 async function runActiveStrategiesOnce() {
     const db = admin.firestore();
@@ -439,8 +822,38 @@ async function runActiveStrategiesOnce() {
             skipped++;
             continue;
         }
+        const strategyRef = db.doc(`users/${uid}/strategies/${strategyId}`);
+        let pendingSignal = strategy.pendingSignal;
+        let signalSideRaw = String(pendingSignal?.side || "").toLowerCase();
+        if (signalSideRaw !== "buy" && signalSideRaw !== "sell") {
+            const generatedSignal = await evaluateStrategySignal(strategy, bot);
+            if (generatedSignal) {
+                const nowIso = new Date().toISOString();
+                pendingSignal = {
+                    side: generatedSignal.side,
+                    reason: generatedSignal.reason,
+                    detectedAt: nowIso,
+                    source: "backend-evaluator",
+                    templateId: String(strategy.templateId || ""),
+                };
+                await strategyRef.set({
+                    pendingSignal,
+                    updatedAt: nowIso,
+                }, { merge: true });
+                signalSideRaw = String(pendingSignal.side || "").toLowerCase();
+            }
+        }
+        if (signalSideRaw !== "buy" && signalSideRaw !== "sell") {
+            skipped++;
+            continue;
+        }
         try {
-            await executeStrategyOrder(uid, strategyId);
+            await executeStrategyOrder(uid, strategyId, signalSideRaw);
+            await strategyRef.set({
+                pendingSignal: admin.firestore.FieldValue.delete(),
+                lastProcessedSignalAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+            }, { merge: true });
             executed++;
         }
         catch (error) {
