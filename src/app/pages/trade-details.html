@@ -1,0 +1,61 @@
+<div class="trade-page">
+  <div class="trade-card">
+    <div class="trade-header">
+      <button class="back-btn" (click)="goBack()" aria-label="Back to dashboard">← Back</button>
+      <h1>Trade Details</h1>
+    </div>
+
+    @if (trade(); as execution) {
+      <div class="trade-pill-row">
+        <span class="pill" [class.buy]="execution.side === 'buy'" [class.sell]="execution.side === 'sell'">
+          {{ execution.side.toUpperCase() }}
+        </span>
+        <span class="pill neutral">{{ execution.symbol }}</span>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>Trade ID</label>
+          <div class="value mono">{{ execution.id }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Action</label>
+          <div class="value">{{ execution.side.toUpperCase() }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Strategy</label>
+          <div class="value">{{ execution.strategyName }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Bot</label>
+          <div class="value">{{ execution.botName }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Exchange ID</label>
+          <div class="value mono">{{ execution.exchangeId }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Execution Price</label>
+          <div class="value">{{ executionPrice() !== null ? ('$' + (executionPrice()! | number:'1.2-6')) : 'N/A' }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Shares</label>
+          <div class="value">{{ shareQuantity() !== null ? (shareQuantity()! | number:'1.2-8') : 'N/A' }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Total Amount</label>
+          <div class="value">{{ totalAmount() !== null ? ('$' + (totalAmount()! | number:'1.2-2')) : 'N/A' }}</div>
+        </div>
+        <div class="detail-item full-width">
+          <label>Executed At</label>
+          <div class="value">{{ execution.executedAt | date:'full' }}</div>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>Trade not found. It may have been removed or not loaded yet.</p>
+        <a [routerLink]="dashboardLink()">Go to dashboard</a>
+      </div>
+    }
+  </div>
+</div>

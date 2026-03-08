@@ -1,0 +1,137 @@
+.trade-page {
+  min-height: 100vh;
+  padding: 100px 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(1200px 420px at 50% 0%, rgba(0, 209, 122, 0.09), transparent 60%);
+}
+
+.trade-card {
+  width: min(840px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.trade-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+  }
+}
+
+.back-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trade-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+
+  &.buy {
+    color: var(--accent);
+    background: rgba(0, 209, 122, 0.12);
+    border-color: rgba(0, 209, 122, 0.3);
+  }
+
+  &.sell {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+
+  &.neutral {
+    color: var(--text-secondary);
+    background: var(--bg);
+  }
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.detail-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.7rem 0.75rem;
+  background: var(--bg);
+
+  label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.74rem;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .value {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+
+  .mono {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+  }
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.empty-state {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 1rem;
+  color: var(--text-secondary);
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 700px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

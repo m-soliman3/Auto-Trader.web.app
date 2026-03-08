@@ -1,8 +1,14 @@
-import { Component, inject, signal, computed, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed, ViewChild, OnDestroy } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Auth } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
-import { ExchangeService, ConnectedExchange, ExchangePortfolioBreakdown, SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { ExchangeService, ConnectedExchange, ExchangePortfolioBreakdown, PortfolioPositionRow, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { BotService, Bot, BotStatus } from '../services/bot.service';
 import { StrategyExecution, StrategyService, StrategyTemplate, UserStrategy } from '../services/strategy.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
@@ -10,6 +16,40 @@ import { CreateBotModal } from '../components/create-bot-modal';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
 import { AccountModeService } from '../services/account-mode.service';
+import { DashboardLayoutService, DashboardSectionId } from '../services/dashboard-layout.service';
+import { environment } from '../../environments/environment';
+
+interface InstrumentChartResponse {
+  symbol: string;
+  timeframe: string;
+  exchangeId: string;
+  marketOpen?: boolean;
+  marketStatusReason?: string;
+  candles: Array<{
+    time: string;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+  }>;
+  lastPrice: number;
+  changePct: number;
+  updatedAt: string;
+}
+
+interface RunnerSummary {
+  totalActiveStrategies: number;
+  executed: number;
+  skipped: number;
+  skippedMarketClosed: number;
+  failed: number;
+  ranAt: string;
+}
+
+interface RunnerSummariesResponse {
+  count: number;
+  items: RunnerSummary[];
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -18,12 +58,28 @@ import { AccountModeService } from '../services/account-mode.service';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class Dashboard {
+export class Dashboard implements OnDestroy {
   auth            = inject(AuthService);
   exchangeService = inject(ExchangeService);
   botService      = inject(BotService);
   strategyService = inject(StrategyService);
   accountMode     = inject(AccountModeService);
+  dashboardLayout = inject(DashboardLayoutService);
+  private firebaseAuth = inject(Auth);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+  private http = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
+  private tradingBackendBaseUrl = String(environment.tradingBackendBaseUrl || '').replace(/\/$/, '');
+
+  private instrumentChartEndpoint(): string {
+    if (!this.tradingBackendBaseUrl) {
+      return '/api/getInstrumentChart';
+    }
+
+    return `${this.tradingBackendBaseUrl}/v1/instrument-chart`;
+  }
 
   @ViewChild(EditBotModal) editBotModal!: EditBotModal;
 
@@ -36,6 +92,8 @@ export class Dashboard {
   showDeleteBotModal  = signal(false);
   showDeleteStrategyModal = signal(false);
   showDeleteExchangeModal = signal(false);
+  showStrategyLiveViewModal = signal(false);
+  liveViewExpanded = signal(false);
   portfolioDetailsView = signal<'portfolio' | 'pnl' | 'trades'>('portfolio');
   strategyEditorMode = signal<'create' | 'view' | 'edit'>('create');
   selectedTemplateForStrategy = signal<StrategyTemplate | null>(null);
@@ -49,20 +107,194 @@ export class Dashboard {
   botToDelete = signal<Bot | null>(null);
   strategyToDelete = signal<UserStrategy | null>(null);
   exchangeToDelete = signal<string | null>(null);
+  liveViewStrategy = signal<UserStrategy | null>(null);
+  liveViewBot = signal<Bot | null>(null);
+  liveViewIsLoading = signal(false);
+  liveViewError = signal('');
+  liveViewTradingViewUrl = signal<SafeResourceUrl | null>(null);
+  liveViewCandles = signal<InstrumentChartResponse['candles']>([]);
+  liveViewLastPrice = signal<number | null>(null);
+  liveViewPriceChangePct = signal<number | null>(null);
+  liveViewUpdatedAt = signal('');
+  liveViewMarketOpen = signal<boolean | null>(null);
+  liveViewMarketStatusReason = signal('');
+  runnerSummaries = signal<RunnerSummary[]>([]);
+  runnerSummariesLoading = signal(false);
+  runnerSummariesError = signal('');
+  liquidatingPositionKey = signal('');
+  pendingLiquidationPosition = signal<PortfolioPositionRow | null>(null);
+  liquidationConfirmMessage = signal('');
+  showLiquidationConfirmModal = signal(false);
   toastMsg          = signal('');
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
+  private liveViewTimer: ReturnType<typeof setInterval> | null = null;
+  private runnerSummaryTimer: ReturnType<typeof setInterval> | null = null;
 
   modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
   visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
   visibleBots = computed(() => this.botService.botsByMode(this.accountMode.mode()));
   visibleActiveBots = computed(() => this.botService.activeBotsByMode(this.accountMode.mode()));
   hasVisibleExchange = computed(() => this.visibleConnections().length > 0);
+  showGettingStartedChecklist = computed(() => {
+    const hasExchange = this.hasVisibleExchange();
+    const hasBot = this.visibleBots().length > 0;
+    const hasActiveBot = this.visibleActiveBots().length > 0;
+    return !(hasExchange && hasBot && hasActiveBot);
+  });
   visibleStrategies = computed(() => {
     const visibleBotIds = new Set(this.visibleBots().map(bot => bot.id));
     return this.strategyService.userStrategies().filter(strategy => visibleBotIds.has(strategy.assignedBotId));
   });
+  hasMainGridSectionsVisible = computed(() => this.dashboardLayout.isSectionVisible('mainGrid'));
   strategyTemplateMap = computed(() => {
     return new Map(this.strategyService.all().map(template => [template.id, template]));
+  });
+  private readonly chartWidth = 100;
+  private readonly chartHeight = 44;
+  private readonly chartLeft = 8;
+  private readonly chartRight = 1.5;
+  private readonly chartTop = 2;
+  private readonly chartBottom = 5;
+  private readonly chartTicks = 4;
+
+  constructor() {
+    this.loadRunnerSummaries();
+    this.route.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        const mode = params.get('mode');
+        if (mode === 'paper' || mode === 'real') {
+          if (this.accountMode.mode() !== mode) {
+            this.accountMode.setMode(mode);
+          }
+          return;
+        }
+
+        void this.router.navigate(['/dashboard', this.accountMode.mode()], { replaceUrl: true });
+      });
+
+    this.route.queryParamMap.subscribe(params => {
+      if (params.get('open') === 'trades') {
+        this.portfolioDetailsView.set('trades');
+        this.showPortfolioDetailsModal.set(true);
+      }
+    });
+
+    if (this.tradingBackendBaseUrl) {
+      this.runnerSummaryTimer = setInterval(() => {
+        this.loadRunnerSummaries(false);
+      }, 30000);
+    }
+  }
+
+  private runnerSummariesEndpoint(): string {
+    if (!this.tradingBackendBaseUrl) {
+      return '/api/runner-summaries';
+    }
+
+    return `${this.tradingBackendBaseUrl}/v1/runner-summaries`;
+  }
+
+  async refreshRunnerSummaries() {
+    await this.loadRunnerSummaries(true);
+  }
+
+  private async loadRunnerSummaries(showLoader = true) {
+    if (!this.tradingBackendBaseUrl) {
+      this.runnerSummariesError.set('Backend monitor is disabled. Set tradingBackendBaseUrl in environment.');
+      this.runnerSummaries.set([]);
+      return;
+    }
+
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      this.runnerSummariesError.set('Sign in to view backend runner status.');
+      return;
+    }
+
+    if (showLoader) {
+      this.runnerSummariesLoading.set(true);
+    }
+    this.runnerSummariesError.set('');
+
+    try {
+      const idToken = await currentUser.getIdToken();
+      const payload = await firstValueFrom(this.http.get<RunnerSummariesResponse>(
+        `${this.runnerSummariesEndpoint()}?limit=10`,
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        },
+      ));
+
+      this.runnerSummaries.set(payload.items ?? []);
+    } catch (err) {
+      console.error('failed to load backend runner summaries', err);
+      this.runnerSummariesError.set('Unable to load backend runner status right now.');
+    } finally {
+      if (showLoader) {
+        this.runnerSummariesLoading.set(false);
+      }
+    }
+  }
+
+  runnerStatusLabel(summary: RunnerSummary): string {
+    if (summary.failed > 0) return 'Errors';
+    if (summary.executed > 0) return 'Executed';
+    if (summary.skippedMarketClosed > 0) return 'Market Closed';
+    return 'No Signal';
+  }
+
+  runnerStatusClass(summary: RunnerSummary): 'runner-ok' | 'runner-warn' | 'runner-quiet' {
+    if (summary.failed > 0) return 'runner-warn';
+    if (summary.executed > 0) return 'runner-ok';
+    return 'runner-quiet';
+  }
+
+  private readonly liveViewPriceBounds = computed(() => {
+    const candles = this.liveViewCandles();
+    if (candles.length === 0) {
+      return { min: 0, max: 1 };
+    }
+
+    const highs = candles.map(candle => candle.high);
+    const lows = candles.map(candle => candle.low);
+    const rawMax = Math.max(...highs);
+    const rawMin = Math.min(...lows);
+    const padding = Math.max((rawMax - rawMin) * 0.08, rawMin * 0.0005, 0.0001);
+    const min = Math.max(rawMin - padding, 0);
+    const max = rawMax + padding;
+    return { min, max: Math.max(max, min + 0.0001) };
+  });
+
+  liveViewPriceTicks = computed(() => {
+    const { min, max } = this.liveViewPriceBounds();
+    const ticks = Array.from({ length: this.chartTicks + 1 }, (_, idx) => {
+      const ratio = idx / this.chartTicks;
+      const price = max - ratio * (max - min);
+      return {
+        price,
+        y: this.priceToY(price),
+      };
+    });
+    return ticks;
+  });
+
+  liveViewTimeTicks = computed(() => {
+    const candles = this.liveViewCandles();
+    if (candles.length < 2) return [] as Array<{ x: number; label: string }>;
+
+    const count = 4;
+    return Array.from({ length: count }, (_, idx) => {
+      const ratio = idx / (count - 1);
+      const candleIndex = Math.min(candles.length - 1, Math.round(ratio * (candles.length - 1)));
+      const candle = candles[candleIndex];
+      return {
+        x: this.candleCenterX(candleIndex, candles.length),
+        label: this.formatCandleTime(candle?.time ?? ''),
+      };
+    });
   });
 
   get portfolioCards() {
@@ -157,6 +389,232 @@ export class Dashboard {
 
   strategyTemplateFor(strategy: UserStrategy): StrategyTemplate | null {
     return this.strategyTemplateMap().get(strategy.templateId) ?? null;
+  }
+
+  isDashboardSectionVisible(sectionId: DashboardSectionId): boolean {
+    return this.dashboardLayout.isSectionVisible(sectionId);
+  }
+
+  dashboardSectionOrder(sectionId: DashboardSectionId): number {
+    return this.dashboardLayout.sectionOrder(sectionId);
+  }
+
+  openStrategyLiveView(strategy: UserStrategy) {
+    const bot = this.visibleBots().find(item => item.id === strategy.assignedBotId) ?? null;
+    this.liveViewStrategy.set(strategy);
+    this.liveViewBot.set(bot);
+    this.liveViewTradingViewUrl.set(null);
+    this.liveViewError.set('');
+    this.liveViewCandles.set([]);
+    this.liveViewLastPrice.set(null);
+    this.liveViewPriceChangePct.set(null);
+    this.liveViewUpdatedAt.set('');
+    this.liveViewMarketOpen.set(null);
+    this.liveViewMarketStatusReason.set('');
+    this.liveViewExpanded.set(false);
+    this.showStrategyLiveViewModal.set(true);
+
+    this.loadStrategyLiveView(true);
+    if (this.liveViewTimer) {
+      clearInterval(this.liveViewTimer);
+    }
+    this.liveViewTimer = setInterval(() => {
+      this.loadStrategyLiveView(false);
+    }, 15000);
+  }
+
+  closeStrategyLiveView() {
+    this.showStrategyLiveViewModal.set(false);
+    this.liveViewTradingViewUrl.set(null);
+    this.liveViewMarketOpen.set(null);
+    this.liveViewMarketStatusReason.set('');
+    this.liveViewExpanded.set(false);
+    if (this.liveViewTimer) {
+      clearInterval(this.liveViewTimer);
+      this.liveViewTimer = null;
+    }
+  }
+
+  toggleLiveViewExpanded() {
+    this.liveViewExpanded.set(!this.liveViewExpanded());
+  }
+
+  private buildTradingViewUrl(bot: Bot | null): SafeResourceUrl | null {
+    if (!bot) return null;
+
+    const intervalMap: Record<string, string> = {
+      '1m': '1',
+      '5m': '5',
+      '15m': '15',
+      '1h': '60',
+      '4h': '240',
+      '1d': 'D',
+    };
+
+    const interval = intervalMap[String(bot.timeframe || '')] ?? '60';
+    const rawSymbol = String(bot.symbol || '').toUpperCase().trim();
+    const compact = rawSymbol.replace(/[^A-Z0-9]/g, '');
+
+    let tradingViewSymbol = 'BINANCE:BTCUSDT';
+    if (String(bot.exchangeId || '') === 'binance') {
+      tradingViewSymbol = `BINANCE:${compact || 'BTCUSDT'}`;
+    } else if (rawSymbol.includes('/')) {
+      // For crypto pairs on non-Binance connectors, use Binance feed for charting.
+      tradingViewSymbol = `BINANCE:${compact || 'BTCUSDT'}`;
+    } else {
+      // Stocks default to NASDAQ feed.
+      tradingViewSymbol = `NASDAQ:${rawSymbol || 'AAPL'}`;
+    }
+
+    const params = new URLSearchParams({
+      symbol: tradingViewSymbol,
+      interval,
+      hidesidetoolbar: '1',
+      symboledit: '0',
+      saveimage: '0',
+      toolbarbg: '#0f172a',
+      theme: 'dark',
+      style: '1',
+      timezone: 'Etc/UTC',
+      withdateranges: '1',
+      hide_top_toolbar: '1',
+      hide_legend: '0',
+      studies: '[]',
+    });
+
+    const url = `https://s.tradingview.com/widgetembed/?${params.toString()}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  ngOnDestroy() {
+    if (this.liveViewTimer) {
+      clearInterval(this.liveViewTimer);
+      this.liveViewTimer = null;
+    }
+    if (this.runnerSummaryTimer) {
+      clearInterval(this.runnerSummaryTimer);
+      this.runnerSummaryTimer = null;
+    }
+  }
+
+  private async loadStrategyLiveView(withLoader: boolean) {
+    const bot = this.liveViewBot();
+    const strategy = this.liveViewStrategy();
+    if (!bot) {
+      this.liveViewError.set('No executing bot found for this strategy.');
+      return;
+    }
+
+    if (!strategy) {
+      this.liveViewError.set('Strategy details are unavailable.');
+      return;
+    }
+
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      this.liveViewError.set('Please sign in again to load live data.');
+      return;
+    }
+
+    if (withLoader) {
+      this.liveViewIsLoading.set(true);
+    }
+    this.liveViewError.set('');
+
+    try {
+      const idToken = await currentUser.getIdToken();
+      const payload = await firstValueFrom(this.http.post<InstrumentChartResponse>(
+        this.instrumentChartEndpoint(),
+        { strategyId: strategy.id },
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        },
+      ));
+
+      const candles = (payload.candles ?? []).filter(candle => {
+        return Number.isFinite(candle.open)
+          && Number.isFinite(candle.high)
+          && Number.isFinite(candle.low)
+          && Number.isFinite(candle.close);
+      });
+
+      if (candles.length < 2) {
+        this.liveViewError.set('Not enough market data to draw chart.');
+        this.liveViewCandles.set([]);
+        return;
+      }
+
+      this.liveViewCandles.set(candles);
+      this.liveViewLastPrice.set(payload.lastPrice);
+      this.liveViewPriceChangePct.set(payload.changePct);
+      this.liveViewUpdatedAt.set(payload.updatedAt ?? new Date().toISOString());
+      this.liveViewMarketOpen.set(typeof payload.marketOpen === 'boolean' ? payload.marketOpen : null);
+      this.liveViewMarketStatusReason.set(payload.marketStatusReason ?? '');
+    } catch (err) {
+      console.error('failed to load live instrument chart', err);
+      this.liveViewError.set('Unable to load live market data right now.');
+    } finally {
+      if (withLoader) {
+        this.liveViewIsLoading.set(false);
+      }
+    }
+  }
+
+  priceToY(price: number): number {
+    const { min, max } = this.liveViewPriceBounds();
+    const chartMinY = this.chartTop;
+    const chartMaxY = this.chartHeight - this.chartBottom;
+    const ratio = (price - min) / Math.max(max - min, 1e-9);
+    return chartMaxY - ratio * (chartMaxY - chartMinY);
+  }
+
+  candleCenterX(index: number, total: number): number {
+    const chartMinX = this.chartLeft;
+    const chartMaxX = this.chartWidth - this.chartRight;
+    if (total <= 1) return chartMinX;
+    const slot = (chartMaxX - chartMinX) / total;
+    return chartMinX + slot * index + slot * 0.5;
+  }
+
+  candleBodyWidth(total: number): number {
+    const chartMinX = this.chartLeft;
+    const chartMaxX = this.chartWidth - this.chartRight;
+    const slot = (chartMaxX - chartMinX) / Math.max(total, 1);
+    return Math.max(Math.min(slot * 0.65, 0.9), 0.18);
+  }
+
+  candleBodyY(candle: InstrumentChartResponse['candles'][number]): number {
+    const openY = this.priceToY(candle.open);
+    const closeY = this.priceToY(candle.close);
+    return Math.min(openY, closeY);
+  }
+
+  candleBodyHeight(candle: InstrumentChartResponse['candles'][number]): number {
+    const openY = this.priceToY(candle.open);
+    const closeY = this.priceToY(candle.close);
+    return Math.max(Math.abs(closeY - openY), 0.25);
+  }
+
+  isBullishCandle(candle: InstrumentChartResponse['candles'][number]): boolean {
+    return candle.close >= candle.open;
+  }
+
+  formatAxisPrice(value: number): string {
+    const absValue = Math.abs(value);
+    if (absValue >= 1000) return value.toFixed(0);
+    if (absValue >= 1) return value.toFixed(2);
+    return value.toFixed(4);
+  }
+
+  private formatCandleTime(value: string): string {
+    const date = new Date(value);
+    if (!Number.isFinite(date.getTime())) return '--';
+
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   assignedBotLabel(botId: string): string {
@@ -433,8 +891,108 @@ export class Dashboard {
     this.showPortfolioDetailsModal.set(false);
   }
 
+  openTradeDetails(execution: StrategyExecution) {
+    this.showPortfolioDetailsModal.set(false);
+    this.router.navigate(['/trade', execution.id]);
+  }
+
   get portfolioBreakdownRows() {
     return this.exchangeService.portfolioBreakdownByMode(this.accountMode.mode());
+  }
+
+  get openPositionsRows(): PortfolioPositionRow[] {
+    return this.exchangeService.portfolioPositionsByMode(this.accountMode.mode());
+  }
+
+  get currentModePortfolioValue(): number | null {
+    const byType = this.exchangeService.portfolioValuesByType();
+    return this.accountMode.mode() === 'paper' ? byType.paper : byType.real;
+  }
+
+  get currentModePnlValue(): number | null {
+    const values = this.openPositionsRows
+      .map((position) => position.unrealizedPnl)
+      .filter((value): value is number => value !== null && value !== undefined && Number.isFinite(Number(value)))
+      .map((value) => Number(value));
+
+    if (values.length === 0) {
+      return null;
+    }
+
+    return values.reduce((total, value) => total + value, 0);
+  }
+
+  refreshPortfolioManagement() {
+    this.exchangeService.refreshPortfolioData();
+  }
+
+  async liquidateOpenPosition(position: PortfolioPositionRow) {
+    if (position.marketOpen === false) {
+      const statusReason = position.marketStatusReason?.trim();
+      const closedMessage = statusReason
+        ? `Market is closed now (${statusReason}). Would you like to place an order for this position?`
+        : 'Market is closed now. Would you like to place an order for this position?';
+
+      this.pendingLiquidationPosition.set(position);
+      this.liquidationConfirmMessage.set(closedMessage);
+      this.showLiquidationConfirmModal.set(true);
+      return;
+    }
+
+    await this.executeLiquidation(position);
+  }
+
+  closeLiquidationConfirmModal() {
+    this.showLiquidationConfirmModal.set(false);
+    this.pendingLiquidationPosition.set(null);
+    this.liquidationConfirmMessage.set('');
+  }
+
+  async confirmLiquidationWhenClosed() {
+    const position = this.pendingLiquidationPosition();
+    this.closeLiquidationConfirmModal();
+    if (!position) {
+      return;
+    }
+
+    await this.executeLiquidation(position);
+  }
+
+  private async executeLiquidation(position: PortfolioPositionRow) {
+    const key = `${position.exchangeLabel}:${position.symbol}`;
+    this.liquidatingPositionKey.set(key);
+
+    try {
+      await this.exchangeService.liquidatePosition(position);
+      this.showToast(`Position ${position.symbol} liquidated.`);
+    } catch (error: any) {
+      this.showToast(error?.message || 'Unable to liquidate position right now.');
+    } finally {
+      this.liquidatingPositionKey.set('');
+    }
+  }
+
+  positionProfitLossAmount(position: PortfolioPositionRow): number | null {
+    if (position.unrealizedPnl === null || position.unrealizedPnl === undefined) {
+      return null;
+    }
+
+    const pnl = Number(position.unrealizedPnl);
+    return Number.isFinite(pnl) ? pnl : null;
+  }
+
+  positionProfitLossPercentage(position: PortfolioPositionRow): number | null {
+    const pnl = this.positionProfitLossAmount(position);
+    if (pnl === null) {
+      return null;
+    }
+
+    const estimatedCostBasis = Number(position.marketValue) - pnl;
+    if (!Number.isFinite(estimatedCostBasis) || estimatedCostBasis <= 0) {
+      return null;
+    }
+
+    return (pnl / estimatedCostBasis) * 100;
   }
 
   get portfolioDetailsTitle() {

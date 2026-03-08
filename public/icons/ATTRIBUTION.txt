@@ -1,0 +1,10 @@
+Flaticon icon attribution
+
+Source page: https://www.flaticon.com/free-icon/expand_2223676
+Downloaded files:
+- expand.png from https://cdn-icons-png.flaticon.com/512/2223/2223676.png
+- collapse.png from https://cdn-icons-png.flaticon.com/512/2926/2926131.png
+Author: bqlqn
+License: Flaticon Free License (free for personal/commercial use with attribution)
+
+Ensure attribution is displayed where required by your usage and license terms.
