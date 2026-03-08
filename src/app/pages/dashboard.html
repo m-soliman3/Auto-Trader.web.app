@@ -110,6 +110,113 @@
     </div>
   </div>
 }
+@if (showStrategyLiveViewModal()) {
+  <div class="portfolio-popup-backdrop" (click)="closeStrategyLiveView()">
+    <div class="strategy-live-modal" [class.expanded]="liveViewExpanded()" (click)="$event.stopPropagation()">
+      <div class="strategy-live-header">
+        <h3>Live View</h3>
+        <div class="strategy-live-header-actions">
+          <button class="live-view-expand-btn" (click)="toggleLiveViewExpanded()" [attr.aria-label]="liveViewExpanded() ? 'Collapse market view' : 'Expand market view'">
+            <img
+              class="live-view-expand-icon"
+              [src]="liveViewExpanded() ? 'icons/collapse.png' : 'icons/expand.png'"
+              alt=""
+              aria-hidden="true"
+            />
+          </button>
+          <button class="portfolio-popup-close" (click)="closeStrategyLiveView()" aria-label="Close">✕</button>
+        </div>
+      </div>
+
+      @if (liveViewStrategy(); as strategy) {
+        <div class="strategy-live-meta">
+          <div class="strategy-live-title">{{ strategy.name }}</div>
+          @if (liveViewBot(); as bot) {
+            <div class="strategy-live-sub">{{ bot.symbol }} · {{ bot.timeframe }} · {{ bot.exchangeLabel }}</div>
+          }
+          @if (liveViewMarketOpen() !== null) {
+            <div class="strategy-live-session">
+              <span class="session-badge" [class.session-open]="liveViewMarketOpen()" [class.session-closed]="!liveViewMarketOpen()">
+                {{ liveViewMarketOpen() ? 'Market Open' : 'Market Closed' }}
+              </span>
+              @if (liveViewMarketStatusReason()) {
+                <span class="strategy-live-session-reason">{{ liveViewMarketStatusReason() }}</span>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      @if (liveViewError()) {
+        <div class="strategy-editor-error">{{ liveViewError() }}</div>
+      }
+
+      @if (liveViewCandles().length > 1) {
+        <div class="strategy-live-chart-wrap" [class.expanded]="liveViewExpanded()">
+          <svg class="strategy-live-chart" viewBox="0 0 100 44" preserveAspectRatio="none" aria-label="Live market chart">
+            @for (tick of liveViewPriceTicks(); track tick.y) {
+              <line class="chart-grid-line" x1="8" [attr.y1]="tick.y" x2="98.5" [attr.y2]="tick.y"></line>
+              <text class="chart-axis-label chart-axis-label-y" x="98.9" [attr.y]="tick.y">{{ formatAxisPrice(tick.price) }}</text>
+            }
+
+            @for (tick of liveViewTimeTicks(); track tick.x) {
+              <line class="chart-grid-line chart-grid-line-vertical" [attr.x1]="tick.x" y1="2" [attr.x2]="tick.x" y2="39"></line>
+              <text class="chart-axis-label chart-axis-label-x" [attr.x]="tick.x" y="43.2">{{ tick.label }}</text>
+            }
+
+            <line class="chart-axis-line" x1="8" y1="39" x2="98.5" y2="39"></line>
+
+            @for (candle of liveViewCandles(); track candle.time; let i = $index) {
+              <line
+                class="chart-candle-wick"
+                [class.bull]="isBullishCandle(candle)"
+                [class.bear]="!isBullishCandle(candle)"
+                [attr.x1]="candleCenterX(i, liveViewCandles().length)"
+                [attr.y1]="priceToY(candle.high)"
+                [attr.x2]="candleCenterX(i, liveViewCandles().length)"
+                [attr.y2]="priceToY(candle.low)">
+              </line>
+              <rect
+                class="chart-candle-body"
+                [class.bull]="isBullishCandle(candle)"
+                [class.bear]="!isBullishCandle(candle)"
+                [attr.x]="candleCenterX(i, liveViewCandles().length) - candleBodyWidth(liveViewCandles().length) / 2"
+                [attr.y]="candleBodyY(candle)"
+                [attr.width]="candleBodyWidth(liveViewCandles().length)"
+                [attr.height]="candleBodyHeight(candle)">
+              </rect>
+            }
+          </svg>
+        </div>
+      }
+
+      @if (liveViewIsLoading()) {
+        <div class="strategy-live-loading">Loading live market data...</div>
+      } @else {
+        @if (liveViewCandles().length > 1) {
+          <div class="strategy-live-stats">
+            <div class="live-stat">
+              <span class="live-stat-label">Last Price</span>
+              <span class="live-stat-value">{{ liveViewLastPrice() | number:'1.2-4' }}</span>
+            </div>
+            <div class="live-stat">
+              <span class="live-stat-label">80-candle Change</span>
+              <span class="live-stat-value" [class.pnl-pos]="(liveViewPriceChangePct() ?? 0) >= 0" [class.pnl-neg]="(liveViewPriceChangePct() ?? 0) < 0">
+                {{ (liveViewPriceChangePct() ?? 0) >= 0 ? '+' : '' }}{{ liveViewPriceChangePct() | number:'1.2-2' }}%
+              </span>
+            </div>
+            <div class="live-stat">
+              <span class="live-stat-label">Updated</span>
+              <span class="live-stat-value">{{ liveViewUpdatedAt() | date:'mediumTime' }}</span>
+            </div>
+          </div>
+        } @else {
+          <div class="strategy-live-loading">Waiting for latest market snapshot...</div>
+        }
+      }
+    </div>
+  </div>
+}
 @if (showPortfolioDetailsModal()) {
   <div class="portfolio-popup-backdrop" (click)="closePortfolioDetailsModal()">
     <div class="portfolio-popup" (click)="$event.stopPropagation()">
@@ -121,9 +228,16 @@
       @if (isTradesDetailsView ? tradeDetailsRows.length > 0 : portfolioBreakdownRows.length > 0) {
         @if (isTradesDetailsView) {
           @if (tradeDetailsRows.length > 0) {
-            <div class="portfolio-popup-list">
+            <div class="portfolio-popup-list trades-scroll-list">
               @for (execution of tradeDetailsRows; track execution.id) {
-                <div class="portfolio-popup-row">
+                <div
+                  class="portfolio-popup-row trade-row-clickable"
+                  role="button"
+                  tabindex="0"
+                  (click)="openTradeDetails(execution)"
+                  (keydown.enter)="openTradeDetails(execution)"
+                  (keydown.space)="openTradeDetails(execution); $event.preventDefault()"
+                >
                   <div class="portfolio-popup-row-left">
                     <div class="portfolio-popup-row-title">{{ execution.symbol }} · {{ execution.side.toUpperCase() }}</div>
                     <div class="portfolio-popup-row-sub">{{ execution.strategyName }} · {{ execution.botName }}</div>
@@ -244,6 +358,25 @@
   </div>
 }
 
+<!-- Liquidation Confirmation Modal -->
+@if (showLiquidationConfirmModal()) {
+  <div class="liquidation-confirm-backdrop" (click)="closeLiquidationConfirmModal()">
+    <div class="liquidation-confirm-modal" (click)="$event.stopPropagation()">
+      <div class="liquidation-confirm-header">
+        <h3>Confirm Liquidation</h3>
+        <button class="liquidation-confirm-close" (click)="closeLiquidationConfirmModal()" aria-label="Close">✕</button>
+      </div>
+      <div class="liquidation-confirm-content">
+        <p>{{ liquidationConfirmMessage() }}</p>
+      </div>
+      <div class="liquidation-confirm-actions">
+        <button class="liquidation-confirm-btn liquidation-cancel" (click)="closeLiquidationConfirmModal()">Cancel</button>
+        <button class="liquidation-confirm-btn liquidation-confirm" (click)="confirmLiquidationWhenClosed()">Confirm</button>
+      </div>
+    </div>
+  </div>
+}
+
 <!-- Toast -->
 @if (toastMsg()) {
   <div class="toast">{{ toastMsg() }}</div>
@@ -292,8 +425,8 @@
     </div>
 
     <!-- Connected Exchanges -->
-    @if (hasVisibleExchange()) {
-      <div class="panel">
+    @if (isDashboardSectionVisible('connectedExchanges') && hasVisibleExchange()) {
+      <div class="panel" [style.order]="dashboardSectionOrder('connectedExchanges')">
         <div class="panel-header">
           <h2 class="panel-title">Connected {{ modeLabel() }} Exchanges</h2>
           <button class="btn-add-exchange" (click)="showExchangeModal.set(true)">+ Add Exchange</button>
@@ -324,7 +457,8 @@
     }
 
     <!-- Strategies Table -->
-    <div class="panel">
+    @if (isDashboardSectionVisible('strategies')) {
+    <div class="panel" [style.order]="dashboardSectionOrder('strategies')">
       <div class="panel-header">
         <h2 class="panel-title">{{ strategiesSectionTitle() }}</h2>
         <button class="btn-add-exchange" (click)="showStrategiesModal.set(true)">+ New Strategy</button>
@@ -367,6 +501,7 @@
                     <button class="bot-btn" (click)="toggleStrategyStatus(strategy)" [title]="strategy.status === 'active' ? 'Pause strategy' : 'Activate strategy'">
                       {{ strategy.status === 'active' ? '⏸' : '▶' }}
                     </button>
+                    <button class="bot-btn bot-btn-live" (click)="openStrategyLiveView(strategy)" title="Live instrument chart">Live View</button>
                     <button class="bot-btn bot-btn-view" (click)="openViewStrategy(strategy)" title="View">
                       <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -388,10 +523,11 @@
         </div>
       }
     </div>
+    }
 
     <!-- Bots Table -->
-    @if (visibleBots().length > 0) {
-      <div class="panel">
+    @if (isDashboardSectionVisible('bots') && visibleBots().length > 0) {
+      <div class="panel" [style.order]="dashboardSectionOrder('bots')">
         <div class="panel-header">
           <h2 class="panel-title">My {{ modeLabel() }} Bots</h2>
           <button class="btn-add-exchange" (click)="showBotModal.set(true)">+ New Bot</button>
@@ -453,7 +589,8 @@
     }
 
     <!-- Main Content -->
-    <div class="main-grid">
+    @if (hasMainGridSectionsVisible()) {
+    <div class="main-grid" [style.order]="dashboardSectionOrder('mainGrid')">
 
       <!-- Quick Actions -->
       <div class="panel">
@@ -473,6 +610,7 @@
       </div>
 
       <!-- Getting Started Checklist -->
+      @if (showGettingStartedChecklist()) {
       <div class="panel">
         <h2 class="panel-title">Getting Started</h2>
         <ul class="checklist">
@@ -521,38 +659,164 @@
           </li>
         </ul>
       </div>
+      }
 
-    </div>
+      <!-- Backend Runner Monitor -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Backend Runner</h2>
+          <button class="btn-refresh-runner" (click)="refreshRunnerSummaries()" [disabled]="runnerSummariesLoading()">
+            {{ runnerSummariesLoading() ? 'Refreshing...' : 'Refresh' }}
+          </button>
+        </div>
 
-    <!-- Chart Placeholder / CTA -->
-    <div class="panel chart-placeholder">
-      <div class="panel-header">
-        <h2 class="panel-title">Portfolio Performance</h2>
-        <span class="empty-tag">No data yet</span>
-      </div>
-      <div class="chart-empty">
-        <svg viewBox="0 0 600 160" preserveAspectRatio="none" class="chart-ghost">
-          <defs>
-            <linearGradient id="ghostGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.08"/>
-              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path d="M0,100 Q100,80 150,90 Q220,105 280,80 Q340,55 400,70 Q460,85 520,55 Q560,38 600,50 L600,160 L0,160Z" fill="url(#ghostGrad)"/>
-          <path d="M0,100 Q100,80 150,90 Q220,105 280,80 Q340,55 400,70 Q460,85 520,55 Q560,38 600,50" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="6 4" opacity="0.4"/>
-        </svg>
-        @if (!hasVisibleExchange()) {
-          <p>Connect a {{ modeLabel() }} exchange to start tracking performance</p>
-          <button class="btn-connect" (click)="showExchangeModal.set(true)">+ Connect Exchange</button>
-        } @else if (visibleBots().length === 0) {
-          <p>Exchange connected! Create a bot to start generating performance data.</p>
-          <button class="btn-connect" (click)="showBotModal.set(true)">+ Create Your First Bot</button>
+        @if (runnerSummariesError()) {
+          <div class="runner-error">{{ runnerSummariesError() }}</div>
+        } @else if (runnerSummariesLoading() && runnerSummaries().length === 0) {
+          <div class="runner-loading">Loading backend runner summaries...</div>
+        } @else if (runnerSummaries().length === 0) {
+          <div class="runner-empty">No runner summaries yet.</div>
         } @else {
-          <p>Bots are live! Performance data will appear here once trades execute.</p>
-          <button class="btn-connect" (click)="showBotModal.set(true)">+ Add Another Bot</button>
+          <div class="runner-list">
+            @for (summary of runnerSummaries(); track summary.ranAt) {
+              <div class="runner-row">
+                <div class="runner-left">
+                  <div class="runner-time">{{ summary.ranAt | date:'medium' }}</div>
+                  <div class="runner-stats">
+                    Active: {{ summary.totalActiveStrategies }} · Executed: {{ summary.executed }} · Failed: {{ summary.failed }}
+                  </div>
+                </div>
+                <span class="runner-badge" [class.runner-ok]="runnerStatusClass(summary) === 'runner-ok'" [class.runner-warn]="runnerStatusClass(summary) === 'runner-warn'" [class.runner-quiet]="runnerStatusClass(summary) === 'runner-quiet'">
+                  {{ runnerStatusLabel(summary) }}
+                </span>
+              </div>
+            }
+          </div>
         }
       </div>
+
     </div>
+    }
+
+    <!-- Chart Placeholder / CTA -->
+    @if (isDashboardSectionVisible('portfolioPerformance')) {
+    <div class="panel chart-placeholder" [style.order]="dashboardSectionOrder('portfolioPerformance')">
+      <div class="panel-header">
+        <h2 class="panel-title">Portfolio Management</h2>
+        <button class="btn-refresh-runner" (click)="refreshPortfolioManagement()" [disabled]="exchangeService.isLoadingPortfolio()">
+          {{ exchangeService.isLoadingPortfolio() ? 'Refreshing...' : 'Refresh' }}
+        </button>
+      </div>
+
+      @if (!hasVisibleExchange()) {
+        <div class="chart-empty">
+          <p>Connect a {{ modeLabel() }} exchange to start managing your portfolio.</p>
+          <button class="btn-connect" (click)="showExchangeModal.set(true)">+ Connect Exchange</button>
+        </div>
+      } @else if (exchangeService.isLoadingPortfolio()) {
+        <div class="runner-loading">Loading portfolio data...</div>
+      } @else if (exchangeService.portfolioError()) {
+        <div class="runner-error">{{ exchangeService.portfolioError() }}</div>
+      } @else {
+        <div class="portfolio-management-grid">
+          <div class="portfolio-management-card">
+            <div class="portfolio-management-label">{{ modeLabel() }} Portfolio Value</div>
+            <div class="portfolio-management-value">
+              {{ currentModePortfolioValue !== null ? ('$' + (currentModePortfolioValue | number:'1.2-2')) : 'N/A' }}
+            </div>
+          </div>
+          <div class="portfolio-management-card">
+            <div class="portfolio-management-label">{{ modeLabel() }} Unrealized P&amp;L</div>
+            <div class="portfolio-management-value" [class.pnl-pos]="(currentModePnlValue ?? 0) >= 0" [class.pnl-neg]="(currentModePnlValue ?? 0) < 0">
+              {{ currentModePnlValue !== null ? ((currentModePnlValue >= 0 ? '+' : '') + '$' + (currentModePnlValue | number:'1.2-2')) : 'N/A' }}
+            </div>
+          </div>
+        </div>
+
+        @if (portfolioBreakdownRows.length > 0) {
+          <div class="portfolio-management-list">
+            @for (row of portfolioBreakdownRows; track row.label) {
+              <div class="portfolio-management-row">
+                <div>
+                  <div class="portfolio-popup-row-title">{{ row.label }}</div>
+                  <div class="portfolio-popup-row-sub">{{ row.exchangeName }}</div>
+                </div>
+                <div class="portfolio-management-row-right">
+                  <div class="portfolio-popup-value">${{ row.portfolioValue | number:'1.2-2' }}</div>
+                  <div class="portfolio-popup-row-sub" [class.pnl-pos]="row.unrealizedPnl >= 0" [class.pnl-neg]="row.unrealizedPnl < 0">
+                    {{ row.unrealizedPnl >= 0 ? '+' : '' }}${{ row.unrealizedPnl | number:'1.2-2' }}
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        <div class="portfolio-management-subtitle">Open Positions</div>
+        @if (openPositionsRows.length > 0) {
+          <div class="bots-table-wrap">
+            <table class="bots-table positions-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Side</th>
+                  <th>Exchange</th>
+                  <th>Market</th>
+                  <th>Shares</th>
+                  <th>Total Amount</th>
+                  <th>P/L Amount</th>
+                  <th>P/L %</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (position of openPositionsRows; track position.exchangeLabel + ':' + position.symbol) {
+                  <tr>
+                    <td class="portfolio-popup-row-title">{{ position.symbol }}</td>
+                    <td>
+                      <span class="position-side-badge" [class.side-long]="position.side === 'long'" [class.side-short]="position.side === 'short'">
+                        {{ position.side === 'short' ? 'Short' : 'Long' }}
+                      </span>
+                    </td>
+                    <td>{{ position.exchangeLabel }}</td>
+                    <td>
+                      <span class="market-status" [class.market-open]="position.marketOpen !== false" [class.market-closed]="position.marketOpen === false">
+                        {{ position.marketOpen === false ? 'Closed' : 'Open' }}
+                      </span>
+                    </td>
+                    <td class="mono">{{ position.quantity | number:'1.2-8' }}</td>
+                    <td>${{ position.marketValue | number:'1.2-2' }}</td>
+                    <td [class.pnl-pos]="(positionProfitLossAmount(position) ?? 0) >= 0" [class.pnl-neg]="(positionProfitLossAmount(position) ?? 0) < 0">
+                      {{ positionProfitLossAmount(position) !== null ? ((positionProfitLossAmount(position)! >= 0 ? '+' : '') + '$' + (positionProfitLossAmount(position)! | number:'1.2-2')) : 'N/A' }}
+                    </td>
+                    <td [class.pnl-pos]="(positionProfitLossPercentage(position) ?? 0) >= 0" [class.pnl-neg]="(positionProfitLossPercentage(position) ?? 0) < 0">
+                      {{ positionProfitLossPercentage(position) !== null ? ((positionProfitLossPercentage(position)! >= 0 ? '+' : '') + (positionProfitLossPercentage(position)! | number:'1.2-2') + '%') : 'N/A' }}
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="liquidate-btn"
+                        [disabled]="liquidatingPositionKey() === (position.exchangeLabel + ':' + position.symbol)"
+                        (click)="liquidateOpenPosition(position)"
+                      >
+                        {{ liquidatingPositionKey() === (position.exchangeLabel + ':' + position.symbol) ? 'Liquidating...' : 'Liquidate' }}
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <div class="portfolio-popup-empty">No open positions in {{ modeLabel() }} mode.</div>
+        }
+
+        <div class="portfolio-management-actions">
+          <button class="btn-connect" (click)="onPortfolioCardClick(0)">View Breakdown</button>
+        </div>
+      }
+    </div>
+    }
 
   </div>
 </div>

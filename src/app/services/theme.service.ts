@@ -18,4 +18,12 @@ export class ThemeService {
   toggle() {
     this.isDark.update(v => !v);
   }
+
+  setTheme(theme: 'dark' | 'light') {
+    this.isDark.set(theme === 'dark');
+  }
+
+  themeName(): 'dark' | 'light' {
+    return this.isDark() ? 'dark' : 'light';
+  }
 }

@@ -61,7 +61,7 @@ export class Home {
   steps = [
     { num: '01', title: 'Connect Your Exchange', desc: 'Link your exchange account via API keys in under 2 minutes. Your funds stay safely on the exchange at all times.' },
     { num: '02', title: 'Choose or Build a Bot', desc: 'Pick from a library of proven strategies or craft your own logic with our intuitive no-code builder.' },
-    { num: '03', title: 'Let It Trade for You', desc: 'Sit back while AutoTrader monitors markets around the clock, executing trades and managing risk automatically.' },
+    { num: '03', title: 'Let It Trade for You', desc: 'Sit back while auto-Trading monitors markets around the clock, executing trades and managing risk automatically.' },
   ];
 
   plans = [

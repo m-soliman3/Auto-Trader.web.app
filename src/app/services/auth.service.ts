@@ -10,6 +10,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  verifyBeforeUpdateEmail,
   User as FirebaseUser,
 } from '@angular/fire/auth';
 import {
@@ -27,6 +28,13 @@ export interface User {
   createdAt: string;
 }
 
+export interface AuthAccountDetails {
+  email: string;
+  emailVerified: boolean;
+  creationTime: string;
+  lastSignInTime: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private fireAuth = inject(Auth);
@@ -34,11 +42,19 @@ export class AuthService {
   private router   = inject(Router);
 
   currentUser = signal<User | null>(null);
+  accountDetails = signal<AuthAccountDetails | null>(null);
   isLoggedIn  = computed(() => this.currentUser() !== null);
 
   constructor() {
     onAuthStateChanged(this.fireAuth, async (fbUser) => {
       if (fbUser) {
+        this.accountDetails.set({
+          email: fbUser.email ?? '',
+          emailVerified: fbUser.emailVerified,
+          creationTime: fbUser.metadata.creationTime ?? '',
+          lastSignInTime: fbUser.metadata.lastSignInTime ?? '',
+        });
+
         const ref = doc(this.firestore, 'users', fbUser.uid);
         const snap = await getDoc(ref);
         if (snap.exists()) {
@@ -61,6 +77,7 @@ export class AuthService {
         }
       } else {
         this.currentUser.set(null);
+        this.accountDetails.set(null);
       }
     });
   }
@@ -112,6 +129,35 @@ export class AuthService {
     }
   }
 
+  async sendPasswordResetForCurrentUser(): Promise<string | null> {
+    const email = this.accountDetails()?.email ?? this.currentUser()?.email ?? '';
+    if (!email) return 'No email is available for this account.';
+    return this.sendPasswordResetEmail(email);
+  }
+
+  async changeEmailAddress(nextEmail: string): Promise<string | null> {
+    const user = this.fireAuth.currentUser;
+    if (!user) return 'Please log in again to update your email address.';
+
+    const normalized = nextEmail.trim();
+    if (!normalized) return 'Please enter a new email address.';
+
+    try {
+      await verifyBeforeUpdateEmail(user, normalized);
+      this.accountDetails.update(details => {
+        if (!details) return details;
+        return {
+          ...details,
+          email: normalized,
+          emailVerified: false,
+        };
+      });
+      return null;
+    } catch (e: any) {
+      return this.mapError(e);
+    }
+  }
+
   /** Real Google OAuth via Firebase – opens a popup */
   async loginWithGoogle(): Promise<string | null> {
     try {
@@ -143,6 +189,7 @@ export class AuthService {
       case 'auth/invalid-credential':    return 'Incorrect email or password.';
       case 'auth/user-disabled':         return 'This account has been disabled.';
       case 'auth/too-many-requests':     return 'Too many attempts. Please try again later.';
+      case 'auth/requires-recent-login': return 'Please log out and log back in, then try again.';
       default:                           return e.message ?? 'An error occurred.';
     }
   }

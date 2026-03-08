@@ -1,0 +1,173 @@
+<div class="settings-page">
+  @if (saveToastMessage()) {
+    <div class="settings-toast" role="status" aria-live="polite">
+      <span>{{ saveToastMessage() }}</span>
+      <button type="button" class="settings-toast-close" (click)="closeSaveToast()" aria-label="Close settings saved message">×</button>
+    </div>
+  }
+
+  <div class="settings-card settings-layout">
+    <div class="settings-header">
+      <h1>Settings</h1>
+      <a routerLink="/dashboard" class="back-link">Back to dashboard</a>
+    </div>
+
+    <aside class="settings-sidebar" aria-label="Settings sections">
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'display'" (click)="setSection($event, 'display')">Display</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'account'" (click)="setSection($event, 'account')">Account</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">Security</button>
+    </aside>
+
+    <div class="settings-content">
+    @if (activeSection() === 'display') {
+    <section class="settings-section">
+      <h2>Default Theme</h2>
+      <p class="section-sub">Current: {{ themeLabel() }}</p>
+
+      <div class="theme-options" role="radiogroup" aria-label="Theme">
+        <button
+          type="button"
+          class="theme-option"
+          [class.active]="draftTheme() === 'dark'"
+          (click)="setTheme('dark')"
+        >
+          Dark
+        </button>
+        <button
+          type="button"
+          class="theme-option"
+          [class.active]="draftTheme() === 'light'"
+          (click)="setTheme('light')"
+        >
+          Bright
+        </button>
+      </div>
+
+      <div class="display-divider"></div>
+
+      <h2>Dashboard Layout</h2>
+      <p class="section-sub">Choose which dashboard sections appear and set their order.</p>
+
+      <div class="dashboard-layout-list" role="list" aria-label="Dashboard sections">
+        @for (section of dashboardSections(); track section.id) {
+          <div
+            class="layout-row"
+            role="listitem"
+            draggable="true"
+            [class.dragging]="draggingSectionId() === section.id"
+            [class.drag-over]="dropTargetSectionId() === section.id"
+            [attr.aria-label]="sectionDragLabel(section)"
+            (dragstart)="onSectionDragStart($event, section.id)"
+            (dragover)="onSectionDragOver($event, section.id)"
+            (dragleave)="onSectionDragLeave($event, section.id)"
+            (drop)="onSectionDrop($event, section.id)"
+            (dragend)="onSectionDragEnd()"
+          >
+            <label class="layout-toggle">
+              <input
+                type="checkbox"
+                [checked]="section.visible"
+                (change)="setDashboardSectionVisible(section.id, $any($event.target).checked)"
+              />
+              <span>
+                <strong>{{ section.label }}</strong>
+                <small>{{ section.description }}</small>
+              </span>
+            </label>
+
+            <div class="layout-order-actions">
+              <button
+                type="button"
+                class="layout-order-btn"
+                [disabled]="!canMoveDashboardSectionUp(section.id)"
+                (click)="moveDashboardSectionUp(section.id)"
+              >
+                Up
+              </button>
+              <button
+                type="button"
+                class="layout-order-btn"
+                [disabled]="!canMoveDashboardSectionDown(section.id)"
+                (click)="moveDashboardSectionDown(section.id)"
+              >
+                Down
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="layout-footer-actions">
+        <button type="button" class="layout-reset-btn" (click)="resetDashboardLayout()">Reset to defaults</button>
+      </div>
+
+      <div class="display-actions">
+        <button type="button" class="secondary-btn" (click)="cancelDisplaySettings()" [disabled]="!displayDirty()">Cancel</button>
+        <button type="button" class="display-save-btn" (click)="saveDisplaySettings()" [disabled]="!displayDirty()">Save</button>
+      </div>
+    </section>
+    }
+
+    @if (activeSection() === 'account') {
+    <section class="settings-section">
+      <h2>Account</h2>
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>Email</label>
+          <div class="value">{{ auth.accountDetails()?.email || auth.currentUser()?.email || 'N/A' }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Email Verified</label>
+          <div class="value">{{ auth.accountDetails()?.emailVerified ? 'Yes' : 'No' }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Last Login</label>
+          <div class="value">{{ auth.accountDetails()?.lastSignInTime ? (auth.accountDetails()?.lastSignInTime | date:'full') : 'N/A' }}</div>
+        </div>
+        <div class="detail-item">
+          <label>Account Created</label>
+          <div class="value">{{ auth.accountDetails()?.creationTime ? (auth.accountDetails()?.creationTime | date:'full') : 'N/A' }}</div>
+        </div>
+      </div>
+    </section>
+    }
+
+    @if (activeSection() === 'security') {
+    <section class="settings-section">
+      <h2>Change Email Address</h2>
+      <div class="inline-form">
+        <input
+          type="email"
+          [ngModel]="newEmail()"
+          (ngModelChange)="newEmail.set($event)"
+          placeholder="Enter new email address"
+        />
+        <button type="button" (click)="changeEmail()" [disabled]="emailLoading()">
+          {{ emailLoading() ? 'Saving...' : 'Change Email' }}
+        </button>
+      </div>
+      @if (emailStatus()) {
+        <div class="status ok">{{ emailStatus() }}</div>
+      }
+      @if (emailError()) {
+        <div class="status err">{{ emailError() }}</div>
+      }
+    </section>
+
+    <section class="settings-section">
+      <h2>Reset Password</h2>
+      <p class="section-sub">Sends a password reset email to your current account email.</p>
+      <button class="secondary-btn" type="button" (click)="sendResetEmail()" [disabled]="resetLoading()">
+        {{ resetLoading() ? 'Sending...' : 'Send Reset Email' }}
+      </button>
+      @if (resetStatus()) {
+        <div class="status ok">{{ resetStatus() }}</div>
+      }
+      @if (resetError()) {
+        <div class="status err">{{ resetError() }}</div>
+      }
+    </section>
+    }
+    </div>
+  </div>
+</div>

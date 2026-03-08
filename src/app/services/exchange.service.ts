@@ -32,6 +32,26 @@ export interface PortfolioData {
   unrealizedPnl: number;
   pnlPercentage: number;
   updatedAt: string;
+  openPositions?: PortfolioPosition[];
+}
+
+export interface PortfolioPosition {
+  symbol: string;
+  quantity: number;
+  marketValue: number;
+  unrealizedPnl: number | null;
+  entryPrice: number | null;
+  currentPrice: number | null;
+  side: 'long' | 'short';
+  marketOpen?: boolean;
+  marketStatusReason?: string;
+}
+
+export interface PortfolioPositionRow extends PortfolioPosition {
+  exchangeId: string;
+  exchangeLabel: string;
+  exchangeName: string;
+  isPaper: boolean;
 }
 
 export interface ExchangePortfolioBreakdown {
@@ -139,6 +159,7 @@ export class ExchangeService {
   portfolioValuesByType = signal<{ real: number | null; paper: number | null }>({ real: null, paper: null });
   pnlValuesByType = signal<{ real: number | null; paper: number | null }>({ real: null, paper: null });
   portfolioBreakdown = signal<ExchangePortfolioBreakdown[]>([]);
+  portfolioPositions = signal<PortfolioPositionRow[]>([]);
   isLoadingPortfolio = signal(false);
   portfolioError = signal<string | null>(null);
 
@@ -162,9 +183,15 @@ export class ExchangeService {
     return this.portfolioBreakdown().filter(row => row.isPaper === showPaper);
   }
 
+  portfolioPositionsByMode(mode: AccountMode): PortfolioPositionRow[] {
+    const showPaper = mode === 'paper';
+    return this.portfolioPositions().filter((row) => row.isPaper === showPaper);
+  }
+
   private retryAttempts = 0;
   private maxRetryAttempts = 3;
   private retryDelayMs = 5000;
+  private readonly minVisiblePositionValueUsd = 0.01;
 
   constructor() {
     // react to currentUser signal changes
@@ -186,11 +213,32 @@ export class ExchangeService {
         this.portfolioValuesByType.set({ real: null, paper: null });
         this.pnlValuesByType.set({ real: null, paper: null });
         this.portfolioBreakdown.set([]);
+        this.portfolioPositions.set([]);
         this.isLoadingPortfolio.set(false);
         this.portfolioError.set(null);
         this.retryAttempts = 0;
       }
     });
+  }
+
+  async refreshPortfolioData() {
+    const currentConnections = this.connections();
+    if (currentConnections.length === 0) {
+      this.portfolioData.set(null);
+      this.portfolioValuesByType.set({ real: null, paper: null });
+      this.pnlValuesByType.set({ real: null, paper: null });
+      this.portfolioBreakdown.set([]);
+      this.portfolioPositions.set([]);
+      this.isLoadingPortfolio.set(false);
+      this.portfolioError.set(null);
+      this.retryAttempts = 0;
+      return;
+    }
+
+    this.isLoadingPortfolio.set(true);
+    this.portfolioError.set(null);
+    this.retryAttempts = 0;
+    await this.fetchPortfolioDataForAllConnectionsWithRetry(currentConnections);
   }
 
   private async fetchPortfolioDataForAllConnectionsWithRetry(exchanges: ConnectedExchange[]) {
@@ -202,6 +250,7 @@ export class ExchangeService {
       let hasReal = false;
       let hasPaper = false;
       const breakdownRows: ExchangePortfolioBreakdown[] = [];
+      const positionRows: PortfolioPositionRow[] = [];
 
       let primaryPortfolio: PortfolioData | null = null;
 
@@ -231,6 +280,41 @@ export class ExchangeService {
           updatedAt: data.updatedAt,
         });
 
+        const sourcePositions = Array.isArray(data.openPositions) ? data.openPositions : [];
+        for (const sourcePosition of sourcePositions) {
+          const quantity = Number(sourcePosition.quantity);
+          if (!Number.isFinite(quantity) || quantity <= 0) {
+            continue;
+          }
+
+          const marketValue = Number(sourcePosition.marketValue || 0);
+          if (!Number.isFinite(marketValue) || Math.abs(marketValue) < this.minVisiblePositionValueUsd) {
+            continue;
+          }
+
+          positionRows.push({
+            symbol: String(sourcePosition.symbol || '').toUpperCase(),
+            quantity,
+            marketValue,
+            unrealizedPnl: sourcePosition.unrealizedPnl === null || sourcePosition.unrealizedPnl === undefined
+              ? null
+              : Number(sourcePosition.unrealizedPnl),
+            entryPrice: sourcePosition.entryPrice === null || sourcePosition.entryPrice === undefined
+              ? null
+              : Number(sourcePosition.entryPrice),
+            currentPrice: sourcePosition.currentPrice === null || sourcePosition.currentPrice === undefined
+              ? null
+              : Number(sourcePosition.currentPrice),
+            side: String(sourcePosition.side || 'long').toLowerCase() === 'short' ? 'short' : 'long',
+            marketOpen: typeof sourcePosition.marketOpen === 'boolean' ? sourcePosition.marketOpen : undefined,
+            marketStatusReason: sourcePosition.marketStatusReason ? String(sourcePosition.marketStatusReason) : '',
+            exchangeId: exchange.exchangeId,
+            exchangeLabel: exchange.label,
+            exchangeName: exchangeMeta?.name ?? exchange.exchangeId,
+            isPaper,
+          });
+        }
+
         if (!primaryPortfolio) {
           primaryPortfolio = data;
         }
@@ -245,6 +329,7 @@ export class ExchangeService {
         paper: hasPaper ? paperPnlTotal : null,
       });
       this.portfolioBreakdown.set(breakdownRows);
+      this.portfolioPositions.set(positionRows);
       this.portfolioData.set(primaryPortfolio);
       this.isLoadingPortfolio.set(false);
       this.portfolioError.set(null);
@@ -262,16 +347,17 @@ export class ExchangeService {
       if (this.retryAttempts < this.maxRetryAttempts) {
         console.warn(`Portfolio fetch failed, retrying (${this.retryAttempts}/${this.maxRetryAttempts})...`, err.message);
         this.portfolioError.set(`Retrying... (${this.retryAttempts}/${this.maxRetryAttempts})`);
-        
-        setTimeout(() => {
-          this.fetchPortfolioDataForAllConnectionsWithRetry(exchanges);
-        }, this.retryDelayMs);
+
+        await new Promise((resolve) => setTimeout(resolve, this.retryDelayMs));
+        await this.fetchPortfolioDataForAllConnectionsWithRetry(exchanges);
+        return;
       } else {
         console.error('Failed to fetch portfolio after retries:', err);
         this.isLoadingPortfolio.set(false);
         this.portfolioValuesByType.set({ real: null, paper: null });
         this.pnlValuesByType.set({ real: null, paper: null });
         this.portfolioBreakdown.set([]);
+        this.portfolioPositions.set([]);
         this.portfolioData.set(null);
         
         let errorMsg = 'Unable to fetch portfolio data';
@@ -457,6 +543,47 @@ export class ExchangeService {
       
       throw new Error(`Failed to fetch portfolio from ${exchange.exchangeId}: ${err.message}`);
     }
+  }
+
+  async liquidatePosition(position: PortfolioPositionRow) {
+    const exchange = this.connections().find((conn) => conn.label === position.exchangeLabel);
+    if (!exchange) {
+      throw new Error('Exchange credentials not found for this position.');
+    }
+
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    const idToken = await currentUser.getIdToken();
+    try {
+      await firstValueFrom(this.http.post<{ success: boolean; message: string }>(
+        '/api/liquidatePosition',
+        {
+          exchangeId: exchange.exchangeId,
+          apiKey: exchange.apiKey?.replace(/\s+/g, ''),
+          apiSecret: exchange.secret?.replace(/\s+/g, ''),
+          symbol: position.symbol,
+          quantity: position.quantity,
+          side: position.side,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        }
+      ));
+    } catch (err: any) {
+      const apiMessage = String(err?.error?.error || err?.error?.message || '').trim();
+      if (apiMessage) {
+        throw new Error(apiMessage);
+      }
+
+      throw new Error(err?.message || 'Unable to liquidate this position right now.');
+    }
+
+    await this.refreshPortfolioData();
   }
 
   // DEBUG: Test Alpaca Paper API call with stored credentials

@@ -56,6 +56,10 @@ export interface StrategyExecution {
   investment: number;
   orderId: string;
   executedAt: string;
+  rawOrder?: Record<string, unknown>;
+  executionPrice?: number | null;
+  shareQuantity?: number | null;
+  totalAmount?: number | null;
 }
 
 export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
@@ -407,6 +411,10 @@ export class StrategyService {
           investment: Number(data.investment ?? 0),
           orderId: data.orderId ?? '',
           executedAt: data.executedAt ?? '',
+          rawOrder: (data.rawOrder ?? null) as Record<string, unknown> | undefined,
+          executionPrice: Number.isFinite(Number(data.executionPrice)) ? Number(data.executionPrice) : null,
+          shareQuantity: Number.isFinite(Number(data.shareQuantity)) ? Number(data.shareQuantity) : null,
+          totalAmount: Number.isFinite(Number(data.totalAmount)) ? Number(data.totalAmount) : null,
         } satisfies StrategyExecution;
       }).sort((a, b) => new Date(b.executedAt).getTime() - new Date(a.executedAt).getTime());
 

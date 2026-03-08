@@ -38,7 +38,7 @@ describe('App', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('AutoTrader');
+    expect(compiled.textContent).toContain('auto-Trading');
   });
 
   it('should hide account mode switch when logged out', async () => {
