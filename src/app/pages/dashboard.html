@@ -248,8 +248,9 @@
                       {{ execution.side.toUpperCase() }}
                     </span>
                     <div class="portfolio-popup-value">
-                      ${{ execution.investment | number:'1.2-2' }}
+                      ${{ executionActualAmount(execution) | number:'1.2-2' }}
                     </div>
+                    <div class="portfolio-popup-row-sub">{{ executionSharesLabel(execution) }}</div>
                     <div class="portfolio-popup-row-sub">{{ execution.executedAt | date:'medium' }}</div>
                   </div>
                 </div>
@@ -270,7 +271,7 @@
                   <span class="portfolio-money-type" [class.paper]="row.isPaper" [class.real]="!row.isPaper">
                     {{ row.isPaper ? 'Paper Money' : 'Real Money' }}
                   </span>
-                  <div class="portfolio-popup-value" [class.pnl-pos]="isPnlDetailsView && row.unrealizedPnl >= 0" [class.pnl-neg]="isPnlDetailsView && row.unrealizedPnl < 0">
+                  <div class="portfolio-popup-value" [class.pnl-pos]="isPnlDetailsView && (row.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="isPnlDetailsView && (row.unrealizedPnl ?? 0) < 0">
                     {{ formatBreakdownValue(row) }}
                   </div>
                 </div>
@@ -743,8 +744,8 @@
                 </div>
                 <div class="portfolio-management-row-right">
                   <div class="portfolio-popup-value">${{ row.portfolioValue | number:'1.2-2' }}</div>
-                  <div class="portfolio-popup-row-sub" [class.pnl-pos]="row.unrealizedPnl >= 0" [class.pnl-neg]="row.unrealizedPnl < 0">
-                    {{ row.unrealizedPnl >= 0 ? '+' : '' }}${{ row.unrealizedPnl | number:'1.2-2' }}
+                  <div class="portfolio-popup-row-sub" [class.pnl-pos]="(row.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="(row.unrealizedPnl ?? 0) < 0">
+                    {{ row.unrealizedPnl !== null && row.unrealizedPnl !== undefined ? ((row.unrealizedPnl >= 0 ? '+' : '') + '$' + (row.unrealizedPnl | number:'1.2-2')) : 'N/A' }}
                   </div>
                 </div>
               </div>
@@ -786,11 +787,11 @@
                     </td>
                     <td class="mono">{{ position.quantity | number:'1.2-8' }}</td>
                     <td>${{ position.marketValue | number:'1.2-2' }}</td>
-                    <td [class.pnl-pos]="(positionProfitLossAmount(position) ?? 0) >= 0" [class.pnl-neg]="(positionProfitLossAmount(position) ?? 0) < 0">
-                      {{ positionProfitLossAmount(position) !== null ? ((positionProfitLossAmount(position)! >= 0 ? '+' : '') + '$' + (positionProfitLossAmount(position)! | number:'1.2-2')) : 'N/A' }}
+                    <td [class.pnl-pos]="(position.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="(position.unrealizedPnl ?? 0) < 0">
+                      {{ position.unrealizedPnl !== null && position.unrealizedPnl !== undefined ? ((position.unrealizedPnl >= 0 ? '+' : '') + '$' + (position.unrealizedPnl | number:'1.2-2')) : 'N/A' }}
                     </td>
-                    <td [class.pnl-pos]="(positionProfitLossPercentage(position) ?? 0) >= 0" [class.pnl-neg]="(positionProfitLossPercentage(position) ?? 0) < 0">
-                      {{ positionProfitLossPercentage(position) !== null ? ((positionProfitLossPercentage(position)! >= 0 ? '+' : '') + (positionProfitLossPercentage(position)! | number:'1.2-2') + '%') : 'N/A' }}
+                    <td [class.pnl-pos]="(position.pnlPercentage ?? 0) >= 0" [class.pnl-neg]="(position.pnlPercentage ?? 0) < 0">
+                      {{ position.pnlPercentage !== null && position.pnlPercentage !== undefined ? ((position.pnlPercentage >= 0 ? '+' : '') + (position.pnlPercentage | number:'1.2-2') + '%') : 'N/A' }}
                     </td>
                     <td>
                       <button

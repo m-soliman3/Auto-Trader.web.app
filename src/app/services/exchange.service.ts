@@ -29,8 +29,8 @@ export interface ConnectedExchange {
 
 export interface PortfolioData {
   portfolioValue: number;
-  unrealizedPnl: number;
-  pnlPercentage: number;
+  unrealizedPnl: number | null;
+  pnlPercentage: number | null;
   updatedAt: string;
   openPositions?: PortfolioPosition[];
 }
@@ -40,6 +40,7 @@ export interface PortfolioPosition {
   quantity: number;
   marketValue: number;
   unrealizedPnl: number | null;
+  pnlPercentage?: number | null;
   entryPrice: number | null;
   currentPrice: number | null;
   side: 'long' | 'short';
@@ -60,8 +61,8 @@ export interface ExchangePortfolioBreakdown {
   exchangeName: string;
   isPaper: boolean;
   portfolioValue: number;
-  unrealizedPnl: number;
-  pnlPercentage: number;
+  unrealizedPnl: number | null;
+  pnlPercentage: number | null;
   updatedAt: string;
 }
 
@@ -191,7 +192,9 @@ export class ExchangeService {
   private retryAttempts = 0;
   private maxRetryAttempts = 3;
   private retryDelayMs = 5000;
-  private readonly minVisiblePositionValueUsd = 0.01;
+  private portfolioRefreshTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly portfolioRefreshMs = 10000;
+  private portfolioRefreshInFlight = false;
 
   constructor() {
     // react to currentUser signal changes
@@ -204,11 +207,10 @@ export class ExchangeService {
     // Auto-fetch portfolio when exchanges change
     effect(() => {
       if (this.connections().length > 0) {
-        this.isLoadingPortfolio.set(true);
-        this.portfolioError.set(null);
-        this.retryAttempts = 0;
-        this.fetchPortfolioDataForAllConnectionsWithRetry(this.connections());
+        this.startPortfolioPolling();
+        void this.refreshPortfolioData(true);
       } else {
+        this.stopPortfolioPolling();
         this.portfolioData.set(null);
         this.portfolioValuesByType.set({ real: null, paper: null });
         this.pnlValuesByType.set({ real: null, paper: null });
@@ -221,9 +223,29 @@ export class ExchangeService {
     });
   }
 
-  async refreshPortfolioData() {
+  private startPortfolioPolling() {
+    this.stopPortfolioPolling();
+    this.portfolioRefreshTimer = setInterval(() => {
+      void this.refreshPortfolioData(false);
+    }, this.portfolioRefreshMs);
+  }
+
+  private stopPortfolioPolling() {
+    if (this.portfolioRefreshTimer) {
+      clearInterval(this.portfolioRefreshTimer);
+      this.portfolioRefreshTimer = null;
+    }
+  }
+
+  async refreshPortfolioData(showLoader = true) {
+    if (this.portfolioRefreshInFlight) {
+      return;
+    }
+
+    this.portfolioRefreshInFlight = true;
     const currentConnections = this.connections();
     if (currentConnections.length === 0) {
+      this.stopPortfolioPolling();
       this.portfolioData.set(null);
       this.portfolioValuesByType.set({ real: null, paper: null });
       this.pnlValuesByType.set({ real: null, paper: null });
@@ -232,13 +254,20 @@ export class ExchangeService {
       this.isLoadingPortfolio.set(false);
       this.portfolioError.set(null);
       this.retryAttempts = 0;
+      this.portfolioRefreshInFlight = false;
       return;
     }
 
-    this.isLoadingPortfolio.set(true);
+    if (showLoader) {
+      this.isLoadingPortfolio.set(true);
+    }
     this.portfolioError.set(null);
     this.retryAttempts = 0;
-    await this.fetchPortfolioDataForAllConnectionsWithRetry(currentConnections);
+    try {
+      await this.fetchPortfolioDataForAllConnectionsWithRetry(currentConnections);
+    } finally {
+      this.portfolioRefreshInFlight = false;
+    }
   }
 
   private async fetchPortfolioDataForAllConnectionsWithRetry(exchanges: ConnectedExchange[]) {
@@ -249,6 +278,8 @@ export class ExchangeService {
       let paperPnlTotal = 0;
       let hasReal = false;
       let hasPaper = false;
+      let hasRealPnl = false;
+      let hasPaperPnl = false;
       const breakdownRows: ExchangePortfolioBreakdown[] = [];
       const positionRows: PortfolioPositionRow[] = [];
 
@@ -258,14 +289,23 @@ export class ExchangeService {
         const data = await this.fetchPortfolioData(exchange);
         const exchangeMeta = SUPPORTED_EXCHANGES.find(e => e.id === exchange.exchangeId);
         const isPaper = exchangeMeta?.isPaper ?? false;
+        const sourcePositions = Array.isArray(data.openPositions) ? data.openPositions : [];
+
+        // Unrlzd P&L must reflect the sum of individual positions.
+        const positionPnlSum = sourcePositions.reduce((sum, position) => {
+          const value = Number(position.unrealizedPnl);
+          return Number.isFinite(value) ? sum + value : sum;
+        }, 0);
 
         if (isPaper) {
           paperPortfolioTotal += data.portfolioValue;
-          paperPnlTotal += data.unrealizedPnl;
+          paperPnlTotal += positionPnlSum;
+          hasPaperPnl = true;
           hasPaper = true;
         } else {
           realPortfolioTotal += data.portfolioValue;
-          realPnlTotal += data.unrealizedPnl;
+          realPnlTotal += positionPnlSum;
+          hasRealPnl = true;
           hasReal = true;
         }
 
@@ -275,30 +315,25 @@ export class ExchangeService {
           exchangeName: exchangeMeta?.name ?? exchange.exchangeId,
           isPaper,
           portfolioValue: data.portfolioValue,
-          unrealizedPnl: data.unrealizedPnl,
-          pnlPercentage: data.pnlPercentage,
+          unrealizedPnl: positionPnlSum,
+          pnlPercentage: data.pnlPercentage === null || data.pnlPercentage === undefined ? null : Number(data.pnlPercentage),
           updatedAt: data.updatedAt,
         });
 
-        const sourcePositions = Array.isArray(data.openPositions) ? data.openPositions : [];
         for (const sourcePosition of sourcePositions) {
           const quantity = Number(sourcePosition.quantity);
-          if (!Number.isFinite(quantity) || quantity <= 0) {
-            continue;
-          }
-
-          const marketValue = Number(sourcePosition.marketValue || 0);
-          if (!Number.isFinite(marketValue) || Math.abs(marketValue) < this.minVisiblePositionValueUsd) {
-            continue;
-          }
+          const marketValue = Number(sourcePosition.marketValue);
 
           positionRows.push({
-            symbol: String(sourcePosition.symbol || '').toUpperCase(),
-            quantity,
-            marketValue,
+            symbol: String(sourcePosition.symbol || ''),
+            quantity: Number.isFinite(quantity) ? quantity : 0,
+            marketValue: Number.isFinite(marketValue) ? marketValue : 0,
             unrealizedPnl: sourcePosition.unrealizedPnl === null || sourcePosition.unrealizedPnl === undefined
               ? null
               : Number(sourcePosition.unrealizedPnl),
+            pnlPercentage: sourcePosition.pnlPercentage === null || sourcePosition.pnlPercentage === undefined
+              ? null
+              : Number(sourcePosition.pnlPercentage),
             entryPrice: sourcePosition.entryPrice === null || sourcePosition.entryPrice === undefined
               ? null
               : Number(sourcePosition.entryPrice),
@@ -325,8 +360,8 @@ export class ExchangeService {
         paper: hasPaper ? paperPortfolioTotal : null,
       });
       this.pnlValuesByType.set({
-        real: hasReal ? realPnlTotal : null,
-        paper: hasPaper ? paperPnlTotal : null,
+        real: hasRealPnl ? realPnlTotal : null,
+        paper: hasPaperPnl ? paperPnlTotal : null,
       });
       this.portfolioBreakdown.set(breakdownRows);
       this.portfolioPositions.set(positionRows);

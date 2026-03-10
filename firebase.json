@@ -44,7 +44,7 @@
   "functions": {
     "source": "functions"
   },
-  "firebaseRules": {
-    "rules": ".firebaserc"
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
