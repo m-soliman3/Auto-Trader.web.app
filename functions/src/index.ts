@@ -6,9 +6,21 @@ import cors from "cors";
 
 interface PortfolioData {
   portfolioValue: number;
-  unrealizedPnl: number;
-  pnlPercentage: number;
+  unrealizedPnl: number | null;
+  pnlPercentage: number | null;
   updatedAt: string;
+  openPositions?: Array<{
+    symbol: string;
+    quantity: number;
+    marketValue: number;
+    unrealizedPnl: number | null;
+    pnlPercentage: number | null;
+    entryPrice: number | null;
+    currentPrice: number | null;
+    side: "long" | "short";
+    marketOpen?: boolean;
+    marketStatusReason?: string;
+  }>;
 }
 
 if (!admin.apps.length) {
@@ -47,20 +59,56 @@ async function fetchAlpacaPortfolio(
   }
 
   const data: any = await response.json();
-  const equity = parseFloat(data.equity || data.portfolio_value || "0");
-  const lastEquity = parseFloat(data.last_equity || "0");
-  const todayPnl = equity - lastEquity;
-  const todayPnlPct = lastEquity > 0 ? (todayPnl / lastEquity) * 100 : 0;
+
+  const positionsUrl = `${baseUrl}/v2/positions`;
+  const positionsResponse = await fetch(positionsUrl, {
+    headers: {
+      "APCA-API-KEY-ID": apiKey,
+      "APCA-API-SECRET-KEY": apiSecret,
+    },
+  } as any);
+
+  if (!positionsResponse.ok) {
+    const text = await positionsResponse.text();
+    console.error("❌ Alpaca positions error:", text);
+    throw new functions.https.HttpsError("internal", `Alpaca positions API error ${positionsResponse.status}: ${text}`);
+  }
+
+  const positionsPayload: any[] = await positionsResponse.json();
+  const openPositions = Array.isArray(positionsPayload)
+    ? positionsPayload.map((position: any) => {
+        const side: "long" | "short" = String(position.side || "long").toLowerCase() === "short" ? "short" : "long";
+        return {
+          symbol: String(position.symbol || ""),
+          quantity: Number.parseFloat(position.qty || "0"),
+          marketValue: Number.parseFloat(position.market_value || "0"),
+          unrealizedPnl: position.unrealized_pl === undefined || position.unrealized_pl === null
+            ? null
+            : Number.parseFloat(position.unrealized_pl),
+          pnlPercentage: position.unrealized_plpc === undefined || position.unrealized_plpc === null
+            ? null
+            : Number.parseFloat(position.unrealized_plpc) * 100,
+          entryPrice: position.avg_entry_price === undefined || position.avg_entry_price === null
+            ? null
+            : Number.parseFloat(position.avg_entry_price),
+          currentPrice: position.current_price === undefined || position.current_price === null
+            ? null
+            : Number.parseFloat(position.current_price),
+          side,
+        };
+      })
+    : [];
 
   return {
-    portfolioValue: equity,
-    unrealizedPnl: todayPnl,
-    pnlPercentage: todayPnlPct,
+    portfolioValue: Number.parseFloat(data.equity || data.portfolio_value || "0"),
+    unrealizedPnl: Number.parseFloat(data.unrealized_pl || "0"),
+    pnlPercentage: Number.parseFloat(data.unrealized_plpc || "0") * 100,
     updatedAt: new Date().toISOString(),
+    openPositions,
   };
 }
 
-async function fetchBinance24hTicker(symbol: string): Promise<{ lastPrice: number; prevClosePrice: number } | null> {
+async function fetchBinance24hTicker(symbol: string): Promise<{ lastPrice: number } | null> {
   const url = `https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`;
   const response = await fetch(url as any);
   if (!response.ok) {
@@ -69,12 +117,11 @@ async function fetchBinance24hTicker(symbol: string): Promise<{ lastPrice: numbe
 
   const data: any = await response.json();
   const lastPrice = parseFloat(data.lastPrice || "0");
-  const prevClosePrice = parseFloat(data.prevClosePrice || "0");
-  if (!Number.isFinite(lastPrice) || !Number.isFinite(prevClosePrice)) {
+  if (!Number.isFinite(lastPrice)) {
     return null;
   }
 
-  return { lastPrice, prevClosePrice };
+  return { lastPrice };
 }
 
 async function fetchBinancePortfolio(
@@ -116,39 +163,54 @@ async function fetchBinancePortfolio(
     balances.map(async (asset: any) => {
       const quantity = parseFloat(asset.free || "0") + parseFloat(asset.locked || "0");
       if (!Number.isFinite(quantity) || quantity <= 0) {
-        return { currentValue: 0, previousValue: 0 };
+        return { assetSymbol: '', quantity: 0, currentPrice: null as number | null, currentValue: 0 };
       }
 
       const assetSymbol = String(asset.asset || "").toUpperCase();
       if (stableCoins.has(assetSymbol)) {
         return {
+          assetSymbol,
+          quantity,
+          currentPrice: 1,
           currentValue: quantity,
-          previousValue: quantity,
         };
       }
 
       const ticker = await fetchBinance24hTicker(`${assetSymbol}USDT`);
       if (!ticker) {
-        return { currentValue: 0, previousValue: 0 };
+        return { assetSymbol, quantity, currentPrice: null as number | null, currentValue: 0 };
       }
 
       return {
+        assetSymbol,
+        quantity,
+        currentPrice: ticker.lastPrice,
         currentValue: quantity * ticker.lastPrice,
-        previousValue: quantity * ticker.prevClosePrice,
       };
     })
   );
 
   const totalCurrentValue = valuedAssets.reduce((sum, asset) => sum + asset.currentValue, 0);
-  const totalPreviousValue = valuedAssets.reduce((sum, asset) => sum + asset.previousValue, 0);
-  const todayPnl = totalCurrentValue - totalPreviousValue;
-  const todayPnlPct = totalPreviousValue > 0 ? (todayPnl / totalPreviousValue) * 100 : 0;
+
+  const openPositions = valuedAssets
+    .filter((asset) => asset.assetSymbol && !stableCoins.has(asset.assetSymbol) && asset.quantity > 0)
+    .map((asset) => ({
+      symbol: asset.assetSymbol,
+      quantity: asset.quantity,
+      marketValue: asset.currentValue,
+      unrealizedPnl: null,
+      pnlPercentage: null,
+      entryPrice: null,
+      currentPrice: asset.currentPrice,
+      side: "long" as const,
+    }));
 
   return {
     portfolioValue: totalCurrentValue,
-    unrealizedPnl: todayPnl,
-    pnlPercentage: todayPnlPct,
+    unrealizedPnl: null,
+    pnlPercentage: null,
     updatedAt: new Date().toISOString(),
+    openPositions,
   };
 }
 

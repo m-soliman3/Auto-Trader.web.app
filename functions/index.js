@@ -68,10 +68,6 @@ async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
         throw new functions.https.HttpsError("internal", `Alpaca API error ${response.status}: ${text}`);
     }
     const data = await response.json();
-    const equity = parseFloat(data.equity || data.portfolio_value || "0");
-    const lastEquity = parseFloat(data.last_equity || "0");
-    const todayPnl = equity - lastEquity;
-    const todayPnlPct = lastEquity > 0 ? (todayPnl / lastEquity) * 100 : 0;
     const positionsResponse = await (0, node_fetch_1.default)(`${baseUrl}/v2/positions`, {
         headers: {
             "APCA-API-KEY-ID": apiKey,
@@ -83,15 +79,18 @@ async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
     const openPositions = Array.isArray(positionsPayload)
         ? positionsPayload
             .map((position) => {
-            const quantity = Math.abs(Number.parseFloat(String(position?.qty || "0")));
-            const marketValue = Math.abs(Number.parseFloat(String(position?.market_value || "0")));
-            const symbol = String(position?.symbol || "").toUpperCase();
+            const quantity = Number.parseFloat(String(position?.qty || "0"));
+            const marketValue = Number.parseFloat(String(position?.market_value || "0"));
+            const symbol = String(position?.symbol || "");
             const session = marketSessionForExchange(isPaper ? "alpaca-paper" : "alpaca", symbol, new Date());
             return {
                 symbol,
                 quantity,
                 marketValue,
                 unrealizedPnl: Number.parseFloat(String(position?.unrealized_pl || "0")),
+                pnlPercentage: Number.isFinite(Number.parseFloat(String(position?.unrealized_plpc || "")))
+                    ? Number.parseFloat(String(position?.unrealized_plpc || "0")) * 100
+                    : null,
                 entryPrice: Number.parseFloat(String(position?.avg_entry_price || "0")),
                 currentPrice: Number.parseFloat(String(position?.current_price || "0")),
                 side: String(position?.side || "long").toLowerCase() === "short" ? "short" : "long",
@@ -99,12 +98,11 @@ async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
                 marketStatusReason: session.reason,
             };
         })
-            .filter((position) => Number.isFinite(position.quantity) && position.quantity > 0)
         : [];
     return {
-        portfolioValue: equity,
-        unrealizedPnl: todayPnl,
-        pnlPercentage: todayPnlPct,
+        portfolioValue: Number.parseFloat(String(data.equity ?? data.portfolio_value ?? "0")),
+        unrealizedPnl: Number.parseFloat(String(data.unrealized_pl || "0")),
+        pnlPercentage: Number.parseFloat(String(data.unrealized_plpc || "0")) * 100,
         updatedAt: new Date().toISOString(),
         openPositions,
     };
@@ -117,11 +115,10 @@ async function fetchBinance24hTicker(symbol) {
     }
     const data = await response.json();
     const lastPrice = parseFloat(data.lastPrice || "0");
-    const prevClosePrice = parseFloat(data.prevClosePrice || "0");
-    if (!Number.isFinite(lastPrice) || !Number.isFinite(prevClosePrice)) {
+    if (!Number.isFinite(lastPrice)) {
         return null;
     }
-    return { lastPrice, prevClosePrice };
+    return { lastPrice };
 }
 async function fetchBinancePortfolio(apiKey, apiSecret) {
     const baseUrl = "https://api.binance.com";
@@ -152,7 +149,7 @@ async function fetchBinancePortfolio(apiKey, apiSecret) {
         const quantity = parseFloat(asset.free || "0") + parseFloat(asset.locked || "0");
         const assetSymbol = String(asset.asset || "").toUpperCase();
         if (!Number.isFinite(quantity) || quantity <= 0) {
-            return { assetSymbol, quantity: 0, currentPrice: null, currentValue: 0, previousValue: 0 };
+            return { assetSymbol: "", quantity: 0, currentPrice: null, currentValue: 0 };
         }
         if (stableCoins.has(assetSymbol)) {
             return {
@@ -160,25 +157,20 @@ async function fetchBinancePortfolio(apiKey, apiSecret) {
                 quantity,
                 currentPrice: 1,
                 currentValue: quantity,
-                previousValue: quantity,
             };
         }
         const ticker = await fetchBinance24hTicker(`${assetSymbol}USDT`);
         if (!ticker) {
-            return { assetSymbol, quantity, currentPrice: null, currentValue: 0, previousValue: 0 };
+            return { assetSymbol, quantity, currentPrice: null, currentValue: 0 };
         }
         return {
             assetSymbol,
             quantity,
             currentPrice: ticker.lastPrice,
             currentValue: quantity * ticker.lastPrice,
-            previousValue: quantity * ticker.prevClosePrice,
         };
     }));
     const totalCurrentValue = valuedAssets.reduce((sum, asset) => sum + asset.currentValue, 0);
-    const totalPreviousValue = valuedAssets.reduce((sum, asset) => sum + asset.previousValue, 0);
-    const todayPnl = totalCurrentValue - totalPreviousValue;
-    const todayPnlPct = totalPreviousValue > 0 ? (todayPnl / totalPreviousValue) * 100 : 0;
     const openPositions = valuedAssets
         .filter((asset) => asset.assetSymbol && !stableCoins.has(asset.assetSymbol) && asset.quantity > 0)
         .map((asset) => {
@@ -188,6 +180,7 @@ async function fetchBinancePortfolio(apiKey, apiSecret) {
             quantity: asset.quantity,
             marketValue: asset.currentValue,
             unrealizedPnl: null,
+            pnlPercentage: null,
             entryPrice: null,
             currentPrice: asset.currentPrice,
             side: "long",
@@ -197,8 +190,8 @@ async function fetchBinancePortfolio(apiKey, apiSecret) {
     });
     return {
         portfolioValue: totalCurrentValue,
-        unrealizedPnl: todayPnl,
-        pnlPercentage: todayPnlPct,
+        unrealizedPnl: null,
+        pnlPercentage: null,
         updatedAt: new Date().toISOString(),
         openPositions,
     };
@@ -1659,6 +1652,10 @@ exports.runActiveStrategies = functions
     .pubsub.schedule("every 1 minutes")
     .timeZone("Etc/UTC")
     .onRun(async () => {
+    if (String(process.env.ENABLE_SCHEDULED_RUNNER || "false").toLowerCase() !== "true") {
+        console.log("runActiveStrategies skipped: ENABLE_SCHEDULED_RUNNER is not true");
+        return null;
+    }
     const summary = await runActiveStrategiesOnce();
     console.log("runActiveStrategies summary", summary);
     return null;

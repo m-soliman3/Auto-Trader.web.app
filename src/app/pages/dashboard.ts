@@ -128,7 +128,6 @@ export class Dashboard implements OnDestroy {
   toastMsg          = signal('');
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
   private liveViewTimer: ReturnType<typeof setInterval> | null = null;
-  private runnerSummaryTimer: ReturnType<typeof setInterval> | null = null;
 
   modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
   visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
@@ -180,11 +179,6 @@ export class Dashboard implements OnDestroy {
       }
     });
 
-    if (this.tradingBackendBaseUrl) {
-      this.runnerSummaryTimer = setInterval(() => {
-        this.loadRunnerSummaries(false);
-      }, 30000);
-    }
   }
 
   private runnerSummariesEndpoint(): string {
@@ -490,10 +484,6 @@ export class Dashboard implements OnDestroy {
     if (this.liveViewTimer) {
       clearInterval(this.liveViewTimer);
       this.liveViewTimer = null;
-    }
-    if (this.runnerSummaryTimer) {
-      clearInterval(this.runnerSummaryTimer);
-      this.runnerSummaryTimer = null;
     }
   }
 
@@ -910,16 +900,8 @@ export class Dashboard implements OnDestroy {
   }
 
   get currentModePnlValue(): number | null {
-    const values = this.openPositionsRows
-      .map((position) => position.unrealizedPnl)
-      .filter((value): value is number => value !== null && value !== undefined && Number.isFinite(Number(value)))
-      .map((value) => Number(value));
-
-    if (values.length === 0) {
-      return null;
-    }
-
-    return values.reduce((total, value) => total + value, 0);
+    const byType = this.exchangeService.pnlValuesByType();
+    return this.accountMode.mode() === 'paper' ? byType.paper : byType.real;
   }
 
   refreshPortfolioManagement() {
@@ -972,29 +954,6 @@ export class Dashboard implements OnDestroy {
     }
   }
 
-  positionProfitLossAmount(position: PortfolioPositionRow): number | null {
-    if (position.unrealizedPnl === null || position.unrealizedPnl === undefined) {
-      return null;
-    }
-
-    const pnl = Number(position.unrealizedPnl);
-    return Number.isFinite(pnl) ? pnl : null;
-  }
-
-  positionProfitLossPercentage(position: PortfolioPositionRow): number | null {
-    const pnl = this.positionProfitLossAmount(position);
-    if (pnl === null) {
-      return null;
-    }
-
-    const estimatedCostBasis = Number(position.marketValue) - pnl;
-    if (!Number.isFinite(estimatedCostBasis) || estimatedCostBasis <= 0) {
-      return null;
-    }
-
-    return (pnl / estimatedCostBasis) * 100;
-  }
-
   get portfolioDetailsTitle() {
     if (this.portfolioDetailsView() === 'pnl') return "Today's P&L Breakdown";
     if (this.portfolioDetailsView() === 'trades') return 'Executed Buy/Sell Orders';
@@ -1022,8 +981,104 @@ export class Dashboard implements OnDestroy {
     return this.strategyService.executions().filter(execution => visibleBotIds.has(execution.botId));
   }
 
+  private toFiniteNumber(value: unknown): number | null {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  private executionPriceFor(execution: StrategyExecution): number | null {
+    if (Number.isFinite(Number(execution.executionPrice)) && Number(execution.executionPrice) > 0) {
+      return Number(execution.executionPrice);
+    }
+
+    const raw = (execution.rawOrder ?? {}) as Record<string, unknown>;
+    const direct = [
+      raw['filled_avg_price'],
+      raw['avg_execution_price'],
+      raw['average_price'],
+      raw['avgPrice'],
+      raw['price'],
+    ]
+      .map(value => this.toFiniteNumber(value))
+      .find((value): value is number => !!value && value > 0);
+    if (direct) return direct;
+
+    const fills = Array.isArray(raw['fills']) ? (raw['fills'] as Array<Record<string, unknown>>) : [];
+    if (fills.length > 0) {
+      let quoteSum = 0;
+      let qtySum = 0;
+      for (const fill of fills) {
+        const price = this.toFiniteNumber(fill['price']) ?? 0;
+        const qty = this.toFiniteNumber(fill['qty']) ?? 0;
+        if (price > 0 && qty > 0) {
+          quoteSum += price * qty;
+          qtySum += qty;
+        }
+      }
+      if (qtySum > 0) return quoteSum / qtySum;
+    }
+
+    return null;
+  }
+
+  private executionSharesFor(execution: StrategyExecution): number | null {
+    if (Number.isFinite(Number(execution.shareQuantity)) && Number(execution.shareQuantity) > 0) {
+      return Number(execution.shareQuantity);
+    }
+
+    const raw = (execution.rawOrder ?? {}) as Record<string, unknown>;
+    return [
+      raw['filled_qty'],
+      raw['qty'],
+      raw['executedQty'],
+      raw['origQty'],
+      raw['filled'],
+      raw['size'],
+    ]
+      .map(value => this.toFiniteNumber(value))
+      .find((value): value is number => !!value && value > 0) ?? null;
+  }
+
+  executionSharesLabel(execution: StrategyExecution): string {
+    const shares = this.executionSharesFor(execution);
+    const sideLabel = execution.side === 'sell' ? 'Shares sold' : 'Shares bought';
+    if (shares === null) return `${sideLabel}: N/A`;
+    return `${sideLabel}: ${shares.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 8 })}`;
+  }
+
+  executionActualAmount(execution: StrategyExecution): number {
+    if (Number.isFinite(Number(execution.totalAmount)) && Number(execution.totalAmount) > 0) {
+      return Number(execution.totalAmount);
+    }
+
+    const raw = (execution.rawOrder ?? {}) as Record<string, unknown>;
+    const direct = [
+      raw['filled_notional'],
+      raw['notional'],
+      raw['cummulativeQuoteQty'],
+      raw['executed_value'],
+      raw['amount'],
+    ]
+      .map(value => this.toFiniteNumber(value))
+      .find((value): value is number => !!value && value > 0);
+    if (direct) return direct;
+
+    const price = this.executionPriceFor(execution);
+    const shares = this.executionSharesFor(execution);
+    if (price && shares && shares > 0) {
+      return price * shares;
+    }
+
+    const investment = this.toFiniteNumber(execution.investment);
+    return investment && investment > 0 ? investment : 0;
+  }
+
   formatBreakdownValue(row: ExchangePortfolioBreakdown): string {
     if (this.portfolioDetailsView() === 'pnl') {
+      if (row.unrealizedPnl === null || row.unrealizedPnl === undefined || row.pnlPercentage === null || row.pnlPercentage === undefined) {
+        return 'N/A';
+      }
+
       const sign = row.unrealizedPnl >= 0 ? '+' : '';
       const pctSign = row.pnlPercentage >= 0 ? '+' : '';
       return `${sign}$${this.formatNumber(row.unrealizedPnl)} (${pctSign}${row.pnlPercentage.toFixed(2)}%)`;
