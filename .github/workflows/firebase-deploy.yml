@@ -34,30 +34,15 @@ jobs:
       - name: Build Angular app
         run: npm run build
 
-      - name: Validate auth configuration
+      - name: Validate WIF configuration
         run: |
-          has_json="${{ secrets.FIREBASE_SERVICE_ACCOUNT_AUTOTRADER_B8851 != '' }}"
-          has_wif="${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT_EMAIL != '' }}"
-
-          if [[ "$has_json" == "true" && "$has_wif" == "true" ]]; then
-            echo "Configure only one auth method: service-account JSON or workload identity federation."
+          if [[ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" || -z "${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}" ]]; then
+            echo "Missing required secrets for WIF auth."
+            echo "Set GCP_WORKLOAD_IDENTITY_PROVIDER and GCP_SERVICE_ACCOUNT_EMAIL in GitHub Actions secrets."
             exit 1
           fi
-
-          if [[ "$has_json" != "true" && "$has_wif" != "true" ]]; then
-            echo "Missing auth secrets. Set FIREBASE_SERVICE_ACCOUNT_AUTOTRADER_B8851"
-            echo "or set both GCP_WORKLOAD_IDENTITY_PROVIDER and GCP_SERVICE_ACCOUNT_EMAIL."
-            exit 1
-          fi
-
-      - name: Authenticate to Google Cloud
-        if: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_AUTOTRADER_B8851 != '' }}
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AUTOTRADER_B8851 }}'
 
       - name: Authenticate to Google Cloud (WIF)
-        if: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_AUTOTRADER_B8851 == '' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT_EMAIL != '' }}
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
