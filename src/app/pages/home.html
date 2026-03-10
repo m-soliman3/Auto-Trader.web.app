@@ -82,37 +82,6 @@
   </div>
 </section>
 
-<!-- ───── PRICING ───── -->
-<section class="section" id="pricing">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-tag">Pricing</p>
-      <h2>Simple, transparent pricing</h2>
-      <p class="section-sub">No hidden fees, no profit-sharing. Pay a flat monthly rate and keep every dollar you earn.</p>
-    </div>
-    <div class="pricing-grid">
-      @for (p of plans; track p.name) {
-        <div class="plan-card" [class.highlighted]="p.highlight">
-          @if (p.highlight) {
-            <div class="plan-badge">Most Popular</div>
-          }
-          <h3 class="plan-name">{{ p.name }}</h3>
-          <div class="plan-price">
-            <span class="price-value">{{ p.price }}</span>
-            <span class="price-period">/{{ p.period }}</span>
-          </div>
-          <ul class="plan-features">
-            @for (feat of p.features; track feat) {
-              <li><span class="check">✓</span> {{ feat }}</li>
-            }
-          </ul>
-          <button (click)="goToCta()" class="plan-cta" [class.plan-cta-primary]="p.highlight">{{ p.cta }}</button>
-        </div>
-      }
-    </div>
-  </div>
-</section>
-
 <!-- ───── CTA BANNER ───── -->
 <section class="cta-banner">
   <div class="container cta-inner">
