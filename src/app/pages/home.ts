@@ -64,30 +64,4 @@ export class Home {
     { num: '03', title: 'Let It Trade for You', desc: 'Sit back while auto-Trading monitors markets around the clock, executing trades and managing risk automatically.' },
   ];
 
-  plans = [
-    {
-      name: 'Starter',
-      price: '$0',
-      period: 'forever',
-      features: ['1 active bot', '5 exchanges', 'Backtesting (6 mo)', 'Email alerts', 'Community support'],
-      cta: 'Start Free',
-      highlight: false
-    },
-    {
-      name: 'Pro',
-      price: '$49',
-      period: 'per month',
-      features: ['Unlimited bots', '30+ exchanges', 'Backtesting (5 yr)', 'AI signals', 'Priority support', 'Telegram alerts'],
-      cta: 'Start 14-Day Trial',
-      highlight: true
-    },
-    {
-      name: 'Enterprise',
-      price: 'Custom',
-      period: 'contact us',
-      features: ['White-label option', 'Dedicated server', 'SLA guarantee', 'Custom integrations', 'Dedicated manager'],
-      cta: 'Contact Sales',
-      highlight: false
-    },
-  ];
 }
