@@ -37,6 +37,13 @@
         }
       },
       {
+        "source": "/api/getMarketData",
+        "function": {
+          "functionId": "getMarketData",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

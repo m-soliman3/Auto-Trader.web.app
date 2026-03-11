@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -288,6 +288,54 @@ exports.getPortfolioHttp = functions
                 return;
             }
             res.status(500).json({ error: message });
+        }
+    });
+});
+exports.getMarketData = functions
+    .region("europe-west1")
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "GET") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const { symbol, timeframe, interval } = req.query;
+            if (!symbol || !timeframe) {
+                res.status(400).json({
+                    error: "Missing required query parameters: symbol, timeframe",
+                });
+                return;
+            }
+            // Call the backend Cloud Run service to fetch market data
+            const backendUrl = process.env.TRADING_BACKEND_URL ||
+                "https://auto-trader-backend-zcypdnoyqa-ew.a.run.app";
+            const instrumentUrl = `${backendUrl}/v1/instrument-chart?` +
+                `symbol=${encodeURIComponent(String(symbol))}` +
+                `&timeframe=${encodeURIComponent(String(timeframe))}` +
+                (interval ? `&interval=${encodeURIComponent(String(interval))}` : "");
+            console.log("📈 Fetching market data from:", instrumentUrl);
+            const response = await (0, node_fetch_1.default)(instrumentUrl);
+            if (!response.ok) {
+                const text = await response.text();
+                console.error("❌ Market data fetch error:", text);
+                res.status(response.status).json({
+                    error: `Failed to fetch market data: ${text}`,
+                });
+                return;
+            }
+            const data = await response.json();
+            res.status(200).json(data);
+        }
+        catch (error) {
+            console.error("❌ Market data error:", error.message);
+            res.status(500).json({
+                error: error.message || "Failed to fetch market data",
+            });
         }
     });
 });
