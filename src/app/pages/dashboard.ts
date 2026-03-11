@@ -11,11 +11,11 @@ import { AuthService } from '../services/auth.service';
 import { ExchangeService, ConnectedExchange, ExchangePortfolioBreakdown, PortfolioPositionRow, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { BotService, Bot, BotStatus } from '../services/bot.service';
 import { StrategyExecution, StrategyService, StrategyTemplate, UserStrategy } from '../services/strategy.service';
+import { MarketStreamService } from '../services/market-stream.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
-import { MarketStreamDemoComponent } from '../components/market-stream-demo.component';
 import { AccountModeService } from '../services/account-mode.service';
 import { DashboardLayoutService, DashboardSectionId } from '../services/dashboard-layout.service';
 import { environment } from '../../environments/environment';
@@ -55,7 +55,7 @@ interface RunnerSummariesResponse {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, FormsModule, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal, MarketStreamDemoComponent],
+  imports: [CommonModule, DecimalPipe, FormsModule, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -64,6 +64,7 @@ export class Dashboard implements OnDestroy {
   exchangeService = inject(ExchangeService);
   botService      = inject(BotService);
   strategyService = inject(StrategyService);
+  marketStream    = inject(MarketStreamService);
   accountMode     = inject(AccountModeService);
   dashboardLayout = inject(DashboardLayoutService);
   private firebaseAuth = inject(Auth);
@@ -95,7 +96,6 @@ export class Dashboard implements OnDestroy {
   showDeleteExchangeModal = signal(false);
   showStrategyLiveViewModal = signal(false);
   liveViewExpanded = signal(false);
-  liveViewTabMode = signal<'chart' | 'stream'>('chart');
   portfolioDetailsView = signal<'portfolio' | 'pnl' | 'trades'>('portfolio');
   strategyEditorMode = signal<'create' | 'view' | 'edit'>('create');
   selectedTemplateForStrategy = signal<StrategyTemplate | null>(null);
@@ -411,12 +411,59 @@ export class Dashboard implements OnDestroy {
     this.showStrategyLiveViewModal.set(true);
 
     this.loadStrategyLiveView(true);
+    
+    // Initialize WebSocket stream for real-time updates
+    if (bot) {
+      this.initializeMarketStream(bot);
+    }
+    
     if (this.liveViewTimer) {
       clearInterval(this.liveViewTimer);
     }
     this.liveViewTimer = setInterval(() => {
       this.loadStrategyLiveView(false);
     }, 15000);
+  }
+
+  private async initializeMarketStream(bot: Bot) {
+    try {
+      if (this.marketStream.streamStatus() === 'disconnected') {
+        await this.marketStream.connect();
+      }
+      // Subscribe to real-time candles
+      this.marketStream.subscribe(bot.symbol, bot.timeframe, 5000);
+      
+      // Listen for updates
+      let lastUpdateTime = Date.now();
+      const subscription = setInterval(() => {
+        const candles = this.marketStream.currentCandles();
+        if (candles.length > 0) {
+          this.liveViewCandles.set(candles);
+          this.liveViewUpdatedAt.set(new Date().toISOString());
+          
+          // Update price info
+          const lastCandle = candles[candles.length - 1];
+          const firstCandle = candles[0];
+          this.liveViewLastPrice.set(lastCandle.close);
+          const changePct = firstCandle.close > 0 ? ((lastCandle.close - firstCandle.close) / firstCandle.close) * 100 : 0;
+          this.liveViewPriceChangePct.set(changePct);
+          
+          lastUpdateTime = Date.now();
+        }
+      }, 500);
+      
+      // Clean up subscription when modal closes
+      const closeWatcherTimer = setInterval(() => {
+        if (!this.showStrategyLiveViewModal()) {
+          clearInterval(subscription);
+          clearInterval(closeWatcherTimer);
+          this.marketStream.unsubscribe(bot.symbol);
+        }
+      }, 1000);
+    } catch (error) {
+      console.error('Failed to initialize market stream:', error);
+      this.liveViewError.set('Unable to connect to live data stream');
+    }
   }
 
   closeStrategyLiveView() {

@@ -145,105 +145,73 @@
             </div>
           }
         </div>
-
-        <!-- Live View Tabs -->
-        <div class="live-view-tabs">
-          <button 
-            [class.active]="liveViewTabMode() === 'chart'" 
-            (click)="liveViewTabMode.set('chart')"
-            class="live-view-tab-btn"
-          >
-            📊 Chart View
-          </button>
-          <button 
-            [class.active]="liveViewTabMode() === 'stream'" 
-            (click)="liveViewTabMode.set('stream')"
-            class="live-view-tab-btn"
-          >
-            📡 Live Stream
-          </button>
-        </div>
       }
 
       @if (liveViewError()) {
         <div class="strategy-editor-error">{{ liveViewError() }}</div>
       }
 
-      <!-- Chart View Tab -->
-      @if (liveViewTabMode() === 'chart') {
-        @if (liveViewCandles().length > 1) {
-          <div class="strategy-live-chart-wrap" [class.expanded]="liveViewExpanded()">
-            <svg class="strategy-live-chart" viewBox="0 0 100 44" preserveAspectRatio="none" aria-label="Live market chart">
-              @for (tick of liveViewPriceTicks(); track tick.y) {
-                <line class="chart-grid-line" x1="8" [attr.y1]="tick.y" x2="98.5" [attr.y2]="tick.y"></line>
-                <text class="chart-axis-label chart-axis-label-y" x="98.9" [attr.y]="tick.y">{{ formatAxisPrice(tick.price) }}</text>
-              }
+      @if (liveViewCandles().length > 1) {
+        <div class="strategy-live-chart-wrap" [class.expanded]="liveViewExpanded()">
+          <svg class="strategy-live-chart" viewBox="0 0 100 44" preserveAspectRatio="none" aria-label="Live market chart">
+            @for (tick of liveViewPriceTicks(); track tick.y) {
+              <line class="chart-grid-line" x1="8" [attr.y1]="tick.y" x2="98.5" [attr.y2]="tick.y"></line>
+              <text class="chart-axis-label chart-axis-label-y" x="98.9" [attr.y]="tick.y">{{ formatAxisPrice(tick.price) }}</text>
+            }
 
-              @for (tick of liveViewTimeTicks(); track tick.x) {
-                <line class="chart-grid-line chart-grid-line-vertical" [attr.x1]="tick.x" y1="2" [attr.x2]="tick.x" y2="39"></line>
-                <text class="chart-axis-label chart-axis-label-x" [attr.x]="tick.x" y="43.2">{{ tick.label }}</text>
-              }
+            @for (tick of liveViewTimeTicks(); track tick.x) {
+              <line class="chart-grid-line chart-grid-line-vertical" [attr.x1]="tick.x" y1="2" [attr.x2]="tick.x" y2="39"></line>
+              <text class="chart-axis-label chart-axis-label-x" [attr.x]="tick.x" y="43.2">{{ tick.label }}</text>
+            }
 
-              <line class="chart-axis-line" x1="8" y1="39" x2="98.5" y2="39"></line>
+            <line class="chart-axis-line" x1="8" y1="39" x2="98.5" y2="39"></line>
 
-              @for (candle of liveViewCandles(); track candle.time; let i = $index) {
-                <line
-                  class="chart-candle-wick"
-                  [class.bull]="isBullishCandle(candle)"
-                  [class.bear]="!isBullishCandle(candle)"
-                  [attr.x1]="candleCenterX(i, liveViewCandles().length)"
-                  [attr.y1]="priceToY(candle.high)"
-                  [attr.x2]="candleCenterX(i, liveViewCandles().length)"
-                  [attr.y2]="priceToY(candle.low)">
-                </line>
-                <rect
-                  class="chart-candle-body"
-                  [class.bull]="isBullishCandle(candle)"
-                  [class.bear]="!isBullishCandle(candle)"
-                  [attr.x]="candleCenterX(i, liveViewCandles().length) - candleBodyWidth(liveViewCandles().length) / 2"
-                  [attr.y]="candleBodyY(candle)"
-                  [attr.width]="candleBodyWidth(liveViewCandles().length)"
-                  [attr.height]="candleBodyHeight(candle)">
-                </rect>
-              }
-            </svg>
-          </div>
-        }
-
-        @if (liveViewIsLoading()) {
-          <div class="strategy-live-loading">Loading live market data...</div>
-        } @else {
-          @if (liveViewCandles().length > 1) {
-            <div class="strategy-live-stats">
-              <div class="live-stat">
-                <span class="live-stat-label">Last Price</span>
-                <span class="live-stat-value">{{ liveViewLastPrice() | number:'1.2-4' }}</span>
-              </div>
-              <div class="live-stat">
-                <span class="live-stat-label">80-candle Change</span>
-                <span class="live-stat-value" [class.pnl-pos]="(liveViewPriceChangePct() ?? 0) >= 0" [class.pnl-neg]="(liveViewPriceChangePct() ?? 0) < 0">
-                  {{ (liveViewPriceChangePct() ?? 0) >= 0 ? '+' : '' }}{{ liveViewPriceChangePct() | number:'1.2-2' }}%
-                </span>
-              </div>
-              <div class="live-stat">
-                <span class="live-stat-label">Updated</span>
-                <span class="live-stat-value">{{ liveViewUpdatedAt() | date:'mediumTime' }}</span>
-              </div>
-            </div>
-          } @else {
-            <div class="strategy-live-loading">Waiting for latest market snapshot...</div>
-          }
-        }
+            @for (candle of liveViewCandles(); track candle.time; let i = $index) {
+              <line
+                class="chart-candle-wick"
+                [class.bull]="isBullishCandle(candle)"
+                [class.bear]="!isBullishCandle(candle)"
+                [attr.x1]="candleCenterX(i, liveViewCandles().length)"
+                [attr.y1]="priceToY(candle.high)"
+                [attr.x2]="candleCenterX(i, liveViewCandles().length)"
+                [attr.y2]="priceToY(candle.low)">
+              </line>
+              <rect
+                class="chart-candle-body"
+                [class.bull]="isBullishCandle(candle)"
+                [class.bear]="!isBullishCandle(candle)"
+                [attr.x]="candleCenterX(i, liveViewCandles().length) - candleBodyWidth(liveViewCandles().length) / 2"
+                [attr.y]="candleBodyY(candle)"
+                [attr.width]="candleBodyWidth(liveViewCandles().length)"
+                [attr.height]="candleBodyHeight(candle)">
+              </rect>
+            }
+          </svg>
+        </div>
       }
 
-      <!-- Live Stream Tab -->
-      @if (liveViewTabMode() === 'stream') {
-        @if (liveViewStrategy(); as strategy) {
-          @if (liveViewBot(); as bot) {
-            <div class="live-stream-wrapper">
-              <app-market-stream-demo [initialSymbol]="bot.symbol" [initialTimeframe]="bot.timeframe" />
+      @if (liveViewIsLoading()) {
+        <div class="strategy-live-loading">Loading live market data...</div>
+      } @else {
+        @if (liveViewCandles().length > 1) {
+          <div class="strategy-live-stats">
+            <div class="live-stat">
+              <span class="live-stat-label">Last Price</span>
+              <span class="live-stat-value">{{ liveViewLastPrice() | number:'1.2-4' }}</span>
             </div>
-          }
+            <div class="live-stat">
+              <span class="live-stat-label">80-candle Change</span>
+              <span class="live-stat-value" [class.pnl-pos]="(liveViewPriceChangePct() ?? 0) >= 0" [class.pnl-neg]="(liveViewPriceChangePct() ?? 0) < 0">
+                {{ (liveViewPriceChangePct() ?? 0) >= 0 ? '+' : '' }}{{ liveViewPriceChangePct() | number:'1.2-2' }}%
+              </span>
+            </div>
+            <div class="live-stat">
+              <span class="live-stat-label">Updated</span>
+              <span class="live-stat-value">{{ liveViewUpdatedAt() | date:'mediumTime' }}</span>
+            </div>
+          </div>
+        } @else {
+          <div class="strategy-live-loading">Waiting for latest market snapshot...</div>
         }
       }
     </div>
