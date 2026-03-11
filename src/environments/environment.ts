@@ -1,6 +1,6 @@
 export const firebaseConfig = {
   apiKey: 'AIzaSyAXpbJmUhGfxb_oFV8h0vIf938hIFyG4eo',
-  authDomain: 'autotrader-b8851.firebaseapp.com',
+  authDomain: 'invest-begin.com',
   projectId: 'autotrader-b8851',
   storageBucket: 'autotrader-b8851.firebasestorage.app',
   messagingSenderId: '1022221175478',
