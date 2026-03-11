@@ -5,13 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const http_1 = __importDefault(require("http"));
 const config_1 = require("./infra/config");
 const auth_1 = require("./api/auth");
 const runner_1 = require("./engine/runner");
 const execution_1 = require("./engine/execution");
 const chart_1 = require("./engine/chart");
 const repository_1 = require("./engine/repository");
+const websocket_1 = require("./infra/websocket");
 const app = (0, express_1.default)();
+const server = http_1.default.createServer(app);
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: "1mb" }));
 app.get("/health", (_req, res) => {
@@ -83,6 +86,7 @@ app.post("/v1/instrument-chart", auth_1.requireUserAuth, async (req, res) => {
         res.status(412).json({ error: error?.message || "Unable to load chart" });
     }
 });
-app.listen(config_1.config.port, () => {
+(0, websocket_1.setupWebSocketServer)(server);
+server.listen(config_1.config.port, () => {
     console.log(`auto-trader-backend listening on port ${config_1.config.port}`);
 });

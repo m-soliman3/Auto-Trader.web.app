@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "autotrader-b8851",
     "public": "dist/auto-trading/browser",
     "ignore": [
       "firebase.json",

@@ -1,13 +1,16 @@
 import express from "express";
 import cors from "cors";
+import http from "http";
 import { config } from "./infra/config";
 import { requireRunnerKey, requireUserAuth } from "./api/auth";
 import { runActiveStrategiesOnce } from "./engine/runner";
 import { executeStrategyOrder } from "./engine/execution";
 import { resolveInstrumentChart } from "./engine/chart";
 import { getRecentRunnerSummaries } from "./engine/repository";
+import { setupWebSocketServer } from "./infra/websocket";
 
 const app = express();
+const server = http.createServer(app);
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
@@ -83,6 +86,8 @@ app.post("/v1/instrument-chart", requireUserAuth, async (req, res) => {
   }
 });
 
-app.listen(config.port, () => {
+setupWebSocketServer(server);
+
+server.listen(config.port, () => {
   console.log(`auto-trader-backend listening on port ${config.port}`);
 });

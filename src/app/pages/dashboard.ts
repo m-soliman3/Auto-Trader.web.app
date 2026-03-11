@@ -15,6 +15,7 @@ import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
+import { MarketStreamDemoComponent } from '../components/market-stream-demo.component';
 import { AccountModeService } from '../services/account-mode.service';
 import { DashboardLayoutService, DashboardSectionId } from '../services/dashboard-layout.service';
 import { environment } from '../../environments/environment';
@@ -54,7 +55,7 @@ interface RunnerSummariesResponse {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, FormsModule, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal],
+  imports: [CommonModule, DecimalPipe, FormsModule, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal, MarketStreamDemoComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -94,6 +95,7 @@ export class Dashboard implements OnDestroy {
   showDeleteExchangeModal = signal(false);
   showStrategyLiveViewModal = signal(false);
   liveViewExpanded = signal(false);
+  liveViewTabMode = signal<'chart' | 'stream'>('chart');
   portfolioDetailsView = signal<'portfolio' | 'pnl' | 'trades'>('portfolio');
   strategyEditorMode = signal<'create' | 'view' | 'edit'>('create');
   selectedTemplateForStrategy = signal<StrategyTemplate | null>(null);
