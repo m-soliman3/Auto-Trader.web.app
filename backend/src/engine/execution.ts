@@ -1,7 +1,22 @@
 import admin from "../infra/firebase";
 import { BotDoc, ExchangeDoc, StrategyDoc, TradeSide } from "../types/domain";
 import { marketSessionForExchange } from "./marketSession";
-import { placeAlpacaOrder, placeBinanceOrder } from "./marketData";
+import {
+  placeAlpacaOrder,
+  placeBinanceOrder,
+  placeBybitOrder,
+  placeKrakenOrder,
+  placeOkxOrder,
+  placeKucoinOrder,
+  placeMexcOrder,
+  placeGateioOrder,
+  placeBitfinexOrder,
+  placeDeribitOrder,
+  placeTradierOrder,
+  placeTastytradeOrder,
+  placeIgGroupOrder,
+  placeSchwabOrder,
+} from "./marketData";
 import { getBot, getExchangeByLabel, getStrategy, updateBot, updateStrategy, writeExecution } from "./repository";
 
 function toFiniteNumber(value: unknown): number | null {
@@ -110,13 +125,45 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
   const configuredSide: TradeSide = strategy.tradeSide === "sell" ? "sell" : "buy";
   const side: TradeSide = sideOverride === "sell" || sideOverride === "buy" ? sideOverride : configuredSide;
 
+  const passphrase = String(exchange.passphrase || "").trim();
+
   let orderResult: { orderId: string; raw: any };
   if (exchangeId === "binance") {
     orderResult = await placeBinanceOrder({ apiKey, apiSecret, symbol, side, investment });
   } else if (exchangeId === "alpaca" || exchangeId === "alpaca-paper") {
     orderResult = await placeAlpacaOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "bybit" || exchangeId === "bybit-testnet") {
+    orderResult = await placeBybitOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "kraken") {
+    orderResult = await placeKrakenOrder({ apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "okx" || exchangeId === "okx-demo") {
+    if (!passphrase) throw new Error("OKX requires a passphrase — please reconnect the exchange and provide it.");
+    orderResult = await placeOkxOrder({ exchangeId, apiKey, apiSecret, passphrase, symbol, side, investment });
+  } else if (exchangeId === "kucoin" || exchangeId === "kucoin-sandbox") {
+    if (!passphrase) throw new Error("KuCoin requires a passphrase — please reconnect the exchange and provide it.");
+    orderResult = await placeKucoinOrder({ exchangeId, apiKey, apiSecret, passphrase, symbol, side, investment });
+  } else if (exchangeId === "mexc") {
+    orderResult = await placeMexcOrder({ apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "gateio") {
+    orderResult = await placeGateioOrder({ apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "bitfinex") {
+    orderResult = await placeBitfinexOrder({ apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "deribit" || exchangeId === "deribit-testnet") {
+    orderResult = await placeDeribitOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "tradier" || exchangeId === "tradier-sandbox") {
+    orderResult = await placeTradierOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "tastytrade") {
+    if (!passphrase) throw new Error("Tastytrade requires your account number as the Passphrase field.");
+    orderResult = await placeTastytradeOrder({ apiKey, apiSecret, passphrase, symbol, side, investment });
+  } else if (exchangeId === "ig-group" || exchangeId === "ig-group-demo") {
+    if (!passphrase) throw new Error("IG Group requires your IG username as the Passphrase field.");
+    orderResult = await placeIgGroupOrder({ exchangeId, apiKey, apiSecret, passphrase, symbol, side, investment });
+  } else if (exchangeId === "schwab" || exchangeId === "schwab-paper") {
+    orderResult = await placeSchwabOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "interactive-brokers" || exchangeId === "interactive-brokers-paper") {
+    throw new Error("Interactive Brokers requires IB Gateway or TWS running locally. Direct REST API trading is not available without the IB middleware.");
   } else {
-    throw new Error(`Exchange ${exchangeId} is not yet supported`);
+    throw new Error(`Exchange "${exchangeId}" is not yet supported.`);
   }
 
   const now = new Date().toISOString();

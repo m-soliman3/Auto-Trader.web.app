@@ -1,5 +1,5 @@
 import { BotDoc, ExchangeDoc, Signal, StrategyDoc } from "../types/domain";
-import { fetchAlpacaStockBars, fetchBinanceCandles } from "./marketData";
+import { fetchAlpacaStockBars, fetchBinanceCandles, fetchCandlesViaYfinance } from "./marketData";
 import { buildMarketContext } from "./indicators";
 import { isCryptoLikeSymbol } from "./marketSession";
 
@@ -7,6 +7,29 @@ function signalByPreferredSide(candidate: "buy" | "sell", preferred: "buy" | "se
   if (candidate !== preferred) return null;
   return { side: candidate, reason };
 }
+
+// Exchanges that trade crypto assets 24/7 — use Binance/yfinance for market data
+const CRYPTO_EXCHANGES = new Set([
+  "binance", "coinbase",
+  "kraken",
+  "bybit", "bybit-testnet",
+  "okx", "okx-demo",
+  "kucoin", "kucoin-sandbox",
+  "bitfinex",
+  "gateio",
+  "mexc",
+  "deribit", "deribit-testnet",
+]);
+
+// Exchanges that trade equities — use Alpaca or yfinance for market data
+const STOCK_EXCHANGES = new Set([
+  "alpaca", "alpaca-paper",
+  "tradier", "tradier-sandbox",
+  "tastytrade",
+  "schwab", "schwab-paper",
+  "interactive-brokers", "interactive-brokers-paper",
+  "ig-group", "ig-group-demo",
+]);
 
 export async function evaluateStrategySignal(
   strategy: StrategyDoc,
@@ -18,7 +41,8 @@ export async function evaluateStrategySignal(
   const templateId = String(strategy.templateId || "");
 
   let candles;
-  if (exchangeId === "binance") {
+  if (CRYPTO_EXCHANGES.has(exchangeId)) {
+    // All crypto exchanges: use Binance candles (yfinance preferred, Binance REST fallback)
     candles = await fetchBinanceCandles(bot.symbol, bot.timeframe, 140);
   } else if (exchangeId === "alpaca" || exchangeId === "alpaca-paper") {
     if (isCryptoLikeSymbol(bot.symbol)) {
@@ -28,6 +52,9 @@ export async function evaluateStrategySignal(
       const apiSecret = String(exchange.secret || "").replace(/\s+/g, "");
       candles = await fetchAlpacaStockBars(apiKey, apiSecret, bot.symbol, bot.timeframe, 140);
     }
+  } else if (STOCK_EXCHANGES.has(exchangeId)) {
+    // All other stock exchanges: use yfinance via the generic fetcher
+    candles = await fetchCandlesViaYfinance(bot.symbol, bot.timeframe, 140);
   } else {
     return null;
   }

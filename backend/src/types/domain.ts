@@ -37,6 +37,7 @@ export interface ExchangeDoc {
   exchangeId: string;
   apiKey: string;
   secret: string;
+  passphrase?: string;
 }
 
 export interface Candle {
