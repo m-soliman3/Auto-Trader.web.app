@@ -1,0 +1,63 @@
+<div class="chatbot-widget" [class.open]="isOpen()" aria-label="Auto-Trader chat assistant">
+  @if (!isOpen()) {
+    <button class="chatbot-launcher" (click)="openPanel()" aria-label="Open AI assistant">
+      <span class="launcher-icon">AI</span>
+      <span class="launcher-text">Chat</span>
+      <span class="launcher-status" [class.online]="isOnline()" [class.offline]="!isOnline()"></span>
+    </button>
+  }
+
+  @if (isOpen()) {
+    <section class="chatbot-panel">
+      <header class="chatbot-header">
+        <div class="chatbot-header-copy">
+          <div class="chatbot-title">{{ panelTitle() }}</div>
+          <div class="chatbot-subtitle">{{ panelSubtitle() }}</div>
+        </div>
+        <div class="chatbot-header-actions">
+          <span class="chatbot-status" [class.online]="isOnline()" [class.offline]="!isOnline()">
+            {{ isOnline() ? 'Online' : 'Offline' }}
+          </span>
+          <button class="chatbot-minimize" (click)="minimizePanel()" aria-label="Minimize chat">_</button>
+        </div>
+      </header>
+
+      @if (error()) {
+        <div class="chatbot-error">{{ error() }}</div>
+      }
+
+      <div class="chatbot-messages">
+        @if (hasMessages()) {
+          @for (turn of turns(); track turn.content + $index) {
+            <div class="chat-msg" [class.user]="turn.role === 'user'" [class.assistant]="turn.role === 'assistant'">
+              <div class="chat-msg-role">{{ turn.role === 'user' ? 'You' : 'Assistant' }}</div>
+              <div class="chat-msg-content">{{ turn.content }}</div>
+            </div>
+          }
+        }
+      </div>
+
+      @if (suggestions().length > 0) {
+        <div class="chatbot-suggestions">
+          @for (suggestion of suggestions(); track suggestion.label + suggestion.action) {
+            <button class="chatbot-suggestion" (click)="useSuggestion(suggestion)">
+              {{ suggestion.label }}
+            </button>
+          }
+        </div>
+      }
+
+      <div class="chatbot-composer">
+        <input
+          type="text"
+          [(ngModel)]="input"
+          [placeholder]="inputPlaceholder()"
+          (keydown.enter)="send()"
+        />
+        <button class="chatbot-send" (click)="send()" [disabled]="isSending() || !input.trim()">
+          {{ isSending() ? '...' : 'Send' }}
+        </button>
+      </div>
+    </section>
+  }
+</div>

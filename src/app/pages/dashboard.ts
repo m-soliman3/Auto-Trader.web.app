@@ -179,8 +179,44 @@ export class Dashboard implements OnDestroy {
         this.portfolioDetailsView.set('trades');
         this.showPortfolioDetailsModal.set(true);
       }
+
+      const action = params.get('action');
+      if (action) {
+        this.openAssistantAction(action);
+
+        void this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { action: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true,
+        });
+      }
     });
 
+  }
+
+  private openAssistantAction(action: string) {
+    if (action === 'connect') {
+      this.showExchangeModal.set(true);
+      return;
+    }
+
+    if (action === 'bot') {
+      this.showBotModal.set(true);
+      return;
+    }
+
+    if (action === 'strategies') {
+      this.showStrategiesModal.set(true);
+      return;
+    }
+
+    if (action === 'learn') {
+      this.showToast('Ask a more specific question and I will guide you step-by-step.');
+      return;
+    }
+
+    this.showToast('Unknown assistant action.');
   }
 
   private runnerSummariesEndpoint(): string {
