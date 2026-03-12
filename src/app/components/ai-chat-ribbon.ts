@@ -14,6 +14,9 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './ai-chat-ribbon.scss',
 })
 export class AiChatRibbon {
+  private static readonly RESPONSE_DELAY_MS = 3000;
+  private static readonly TYPING_INTERVAL_MS = 18;
+
   private readonly chatbot = inject(ChatbotAssistantService);
   private readonly router = inject(Router);
   private readonly accountMode = inject(AccountModeService);
@@ -22,6 +25,7 @@ export class AiChatRibbon {
 
   isOpen = signal(false);
   isSending = signal(false);
+  isTypingReply = signal(false);
   isOnline = signal(false);
   input = '';
   error = signal('');
@@ -124,12 +128,15 @@ export class AiChatRibbon {
     this.turns.set(nextHistory);
     this.isOpen.set(true);
     this.isSending.set(true);
+    this.isTypingReply.set(false);
 
     try {
       const response = this.auth.isLoggedIn()
         ? await this.chatbot.ask(message, nextHistory.slice(-10))
         : await this.chatbot.askPublic(message, nextHistory.slice(-10));
-      this.turns.update((existing) => [...existing, { role: 'assistant', content: response.reply }]);
+
+      await this.wait(AiChatRibbon.RESPONSE_DELAY_MS);
+      await this.typeAssistantReply(response.reply);
       this.suggestions.set(response.suggestions ?? []);
     } catch (err: any) {
       this.error.set(err?.message || 'Unable to reach the AI assistant right now.');
@@ -141,8 +148,41 @@ export class AiChatRibbon {
         },
       ]);
     } finally {
+      this.isTypingReply.set(false);
       this.isSending.set(false);
     }
+  }
+
+  private wait(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  private async typeAssistantReply(reply: string) {
+    const fullReply = reply || 'I do not have an answer for that yet.';
+
+    this.turns.update((existing) => [...existing, { role: 'assistant', content: '' }]);
+    this.isTypingReply.set(true);
+
+    for (let i = 1; i <= fullReply.length; i += 1) {
+      const nextContent = fullReply.slice(0, i);
+      this.turns.update((existing) => {
+        if (existing.length === 0) {
+          return existing;
+        }
+
+        const next = [...existing];
+        const lastIndex = next.length - 1;
+        next[lastIndex] = {
+          ...next[lastIndex],
+          content: nextContent,
+        };
+        return next;
+      });
+
+      await this.wait(AiChatRibbon.TYPING_INTERVAL_MS);
+    }
+
+    this.isTypingReply.set(false);
   }
 
   async useSuggestion(suggestion: ChatSuggestion) {

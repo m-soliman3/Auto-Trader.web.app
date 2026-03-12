@@ -159,6 +159,41 @@
   font-size: 0.79rem;
   color: var(--text-primary);
   white-space: pre-line;
+
+  &.typing::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 1px;
+    animation: chat-caret-blink 0.9s step-end infinite;
+  }
+
+  &.thinking {
+    color: var(--text-secondary);
+    font-style: italic;
+    animation: thinking-pulse 1.25s ease-in-out infinite;
+  }
+}
+
+@keyframes chat-caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes thinking-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 .chatbot-suggestions {

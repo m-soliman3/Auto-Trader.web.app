@@ -19,16 +19,23 @@ const SYSTEM_PROMPT = [
   '- Prefer short numbered steps when giving instructions.',
   '- Never claim to execute actions. Only suggest next UI steps.',
   '- Include cautions about API key permissions and risk when relevant.',
+  '- For guest users, occasionally suggest opening a free account to continue setup guidance.',
 ].join('\n');
+
+const FREE_ACCOUNT_SUGGESTION: ChatActionSuggestion = {
+  label: 'Create Free Account',
+  action: 'signup',
+  route: '/signup',
+};
 
 function hasKeyword(input: string, keywords: string[]): boolean {
   const lower = input.toLowerCase();
   return keywords.some((keyword) => lower.includes(keyword));
 }
 
-function buildSuggestions(input: string, isAuthenticated: boolean): ChatActionSuggestion[] {
+function buildSuggestions(input: string, isAuthenticated: boolean, includeFreeAccountNudge: boolean): ChatActionSuggestion[] {
   if (!isAuthenticated) {
-    return buildPublicSuggestions(input);
+    return buildPublicSuggestions(input, includeFreeAccountNudge);
   }
 
   const suggestions: ChatActionSuggestion[] = [];
@@ -80,7 +87,7 @@ function buildSuggestions(input: string, isAuthenticated: boolean): ChatActionSu
   return suggestions.slice(0, 3);
 }
 
-function buildPublicSuggestions(input: string): ChatActionSuggestion[] {
+function buildPublicSuggestions(input: string, includeFreeAccountNudge: boolean): ChatActionSuggestion[] {
   const suggestions: ChatActionSuggestion[] = [];
 
   if (hasKeyword(input, ['signup', 'start', 'join', 'create account'])) {
@@ -115,7 +122,7 @@ function buildPublicSuggestions(input: string): ChatActionSuggestion[] {
         route: '/#features',
       },
       {
-        label: 'Create Account',
+        label: 'Create Free Account',
         action: 'signup',
         route: '/signup',
       },
@@ -125,6 +132,10 @@ function buildPublicSuggestions(input: string): ChatActionSuggestion[] {
         route: '/login',
       },
     );
+  }
+
+  if (includeFreeAccountNudge && !suggestions.some((item) => item.action === 'signup')) {
+    suggestions.unshift(FREE_ACCOUNT_SUGGESTION);
   }
 
   return suggestions.slice(0, 3);
@@ -208,6 +219,42 @@ function buildPublicRuleBasedReply(message: string): string {
     'Ask me about features, safety, getting started steps, or how bot automation works.',
     'When you are ready, create an account and I can guide setup step-by-step.',
   ].join('\n');
+}
+
+function shouldIncludeFreeAccountNudge(message: string, isAuthenticated: boolean): boolean {
+  if (isAuthenticated) {
+    return false;
+  }
+
+  return hasKeyword(message, [
+    'signup',
+    'sign up',
+    'join',
+    'create account',
+    'open account',
+    'getting started',
+    'how to start',
+    'start',
+    'trial',
+    'pricing',
+    'price',
+    'cost',
+    'free',
+    'register',
+  ]);
+}
+
+function appendFreeAccountNudge(reply: string, includeNudge: boolean): string {
+  if (!includeNudge) {
+    return reply;
+  }
+
+  const lower = reply.toLowerCase();
+  if (lower.includes('free account') || lower.includes('create an account') || lower.includes('create account')) {
+    return reply;
+  }
+
+  return `${reply}\n\nIf you want, open a free account and I can guide you step-by-step.`;
 }
 
 async function generateWithOpenAi(message: string, history: ChatTurn[]): Promise<string | null> {
@@ -307,13 +354,14 @@ async function generateWithGemini(message: string, history: ChatTurn[]): Promise
 }
 
 export async function generateAssistantReply(message: string, history: ChatTurn[], isAuthenticated: boolean) {
-  const suggestions = buildSuggestions(message, isAuthenticated);
+  const includeFreeAccountNudge = shouldIncludeFreeAccountNudge(message, isAuthenticated);
+  const suggestions = buildSuggestions(message, isAuthenticated, includeFreeAccountNudge);
 
   try {
     const geminiReply = await generateWithGemini(message, history);
     if (geminiReply) {
       return {
-        reply: geminiReply,
+        reply: appendFreeAccountNudge(geminiReply, includeFreeAccountNudge),
         suggestions,
         source: 'gemini' as const,
       };
@@ -326,7 +374,7 @@ export async function generateAssistantReply(message: string, history: ChatTurn[
     const openAiReply = await generateWithOpenAi(message, history);
     if (openAiReply) {
       return {
-        reply: openAiReply,
+        reply: appendFreeAccountNudge(openAiReply, includeFreeAccountNudge),
         suggestions,
         source: 'openai' as const,
       };
@@ -336,7 +384,7 @@ export async function generateAssistantReply(message: string, history: ChatTurn[
   }
 
   return {
-    reply: buildRuleBasedReply(message, isAuthenticated),
+    reply: appendFreeAccountNudge(buildRuleBasedReply(message, isAuthenticated), includeFreeAccountNudge),
     suggestions,
     source: 'rule-based' as const,
   };

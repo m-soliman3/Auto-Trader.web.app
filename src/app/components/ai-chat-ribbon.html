@@ -31,9 +31,16 @@
           @for (turn of turns(); track turn.content + $index) {
             <div class="chat-msg" [class.user]="turn.role === 'user'" [class.assistant]="turn.role === 'assistant'">
               <div class="chat-msg-role">{{ turn.role === 'user' ? 'You' : 'Assistant' }}</div>
-              <div class="chat-msg-content">{{ turn.content }}</div>
+              <div class="chat-msg-content" [class.typing]="isTypingReply() && turn.role === 'assistant' && $last">{{ turn.content }}</div>
             </div>
           }
+        }
+
+        @if (isSending() && !isTypingReply()) {
+          <div class="chat-msg assistant">
+            <div class="chat-msg-role">Assistant</div>
+            <div class="chat-msg-content thinking">Thinking...</div>
+          </div>
         }
       </div>
 
