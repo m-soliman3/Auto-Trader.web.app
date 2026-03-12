@@ -11,8 +11,13 @@ const SYSTEM_PROMPT = [
   '4) Confirm what success looks like before moving to real mode.',
   'Your scope:',
   '- Help users connect exchanges safely.',
+  '- Support both crypto exchanges and stock brokers/exchanges with API integrations.',
   '- Help users create bots with realistic risk controls.',
   '- Help users choose and set up strategies.',
+  '- Ask setup questions when needed (especially: Which trading platform/exchange do you use?).',
+  '- Help users verify whether their platform supports API trading.',
+  '- Guide users to create API key and secret with safe permissions.',
+  '- Guide users through strategy selection and bot setup in order.',
   'Rules:',
   '- Be concise and practical.',
   '- Keep responses friendly and clear for non-technical users.',
@@ -20,6 +25,12 @@ const SYSTEM_PROMPT = [
   '- Never claim to execute actions. Only suggest next UI steps.',
   '- Include cautions about API key permissions and risk when relevant.',
   '- For guest users, occasionally suggest opening a free account to continue setup guidance.',
+  '- Auto-Trader currently does not have a referral or affiliate program. If asked, clearly state that it is not available.',
+].join('\n');
+
+const NO_REFERRAL_PROGRAM_REPLY = [
+  'Auto-Trader does not have a referral or affiliate program right now.',
+  'If that changes, it will be announced in the app and official channels.',
 ].join('\n');
 
 const FREE_ACCOUNT_SUGGESTION: ChatActionSuggestion = {
@@ -28,9 +39,173 @@ const FREE_ACCOUNT_SUGGESTION: ChatActionSuggestion = {
   route: '/signup',
 };
 
+type PlatformApiSupport = {
+  name: string;
+  marketType: 'crypto' | 'stocks';
+  apiTradingSupported: boolean;
+  aliases: string[];
+  setupHint: string;
+};
+
+// Curated list used for quick platform detection and setup guidance.
+const KNOWN_PLATFORMS: PlatformApiSupport[] = [
+  {
+    name: 'Binance',
+    marketType: 'crypto',
+    apiTradingSupported: true,
+    aliases: ['binance'],
+    setupHint: 'Profile -> API Management -> Create API key (enable spot/futures trading as needed).',
+  },
+  {
+    name: 'Coinbase Advanced',
+    marketType: 'crypto',
+    apiTradingSupported: true,
+    aliases: ['coinbase', 'coinbase advanced', 'coinbase pro'],
+    setupHint: 'Settings -> API -> Create API key with trade permissions only.',
+  },
+  {
+    name: 'Kraken',
+    marketType: 'crypto',
+    apiTradingSupported: true,
+    aliases: ['kraken'],
+    setupHint: 'Security -> API -> Generate new key with query/trade permissions only.',
+  },
+  {
+    name: 'Bybit',
+    marketType: 'crypto',
+    apiTradingSupported: true,
+    aliases: ['bybit'],
+    setupHint: 'Account & Security -> API Management -> Create key for trading.',
+  },
+  {
+    name: 'KuCoin',
+    marketType: 'crypto',
+    apiTradingSupported: true,
+    aliases: ['kucoin'],
+    setupHint: 'API Management -> Create API key and keep passphrase safe.',
+  },
+  {
+    name: 'Bitget',
+    marketType: 'crypto',
+    apiTradingSupported: true,
+    aliases: ['bitget'],
+    setupHint: 'API Management -> Create key with trade permission and no withdrawals.',
+  },
+  {
+    name: 'Alpaca',
+    marketType: 'stocks',
+    apiTradingSupported: true,
+    aliases: ['alpaca'],
+    setupHint: 'Dashboard -> API Keys -> Generate key pair for paper/live trading.',
+  },
+  {
+    name: 'Interactive Brokers',
+    marketType: 'stocks',
+    apiTradingSupported: true,
+    aliases: ['interactive brokers', 'ibkr', 'ib'],
+    setupHint: 'Enable API in TWS/Gateway settings, then create API credentials per account setup.',
+  },
+  {
+    name: 'Tradier',
+    marketType: 'stocks',
+    apiTradingSupported: true,
+    aliases: ['tradier'],
+    setupHint: 'Developer/API section -> Create access token for paper/live environment.',
+  },
+];
+
 function hasKeyword(input: string, keywords: string[]): boolean {
   const lower = input.toLowerCase();
   return keywords.some((keyword) => lower.includes(keyword));
+}
+
+function findPlatformInMessage(message: string): PlatformApiSupport | null {
+  const lower = message.toLowerCase();
+  for (const platform of KNOWN_PLATFORMS) {
+    if (platform.aliases.some((alias) => lower.includes(alias))) {
+      return platform;
+    }
+  }
+
+  return null;
+}
+
+function buildPlatformAndApiSetupReply(message: string): string | null {
+  const lower = message.toLowerCase();
+  const asksSupportedMarkets = hasKeyword(lower, [
+    'what do you support',
+    'supported exchange',
+    'supported exchanges',
+    'supported broker',
+    'supported brokers',
+    'stocks',
+    'stock trading',
+    'crypto',
+    'markets',
+  ]);
+
+  if (asksSupportedMarkets) {
+    return [
+      'We support both crypto and stocks integrations.',
+      'Crypto examples: Binance, Coinbase Advanced, Kraken, Bybit, KuCoin, Bitget.',
+      'Stock examples: Alpaca, Interactive Brokers, and Tradier.',
+      'Tell me which platform you use and I will guide the exact API setup steps.',
+    ].join('\n');
+  }
+
+  const asksPlatformOrApi = hasKeyword(lower, [
+    'platform',
+    'exchange',
+    'broker',
+    'api',
+    'api trading',
+    'key',
+    'secret',
+    'setup',
+    'set up',
+    'connect',
+    'start',
+  ]);
+
+  if (!asksPlatformOrApi) {
+    return null;
+  }
+
+  const platform = findPlatformInMessage(message);
+  if (!platform) {
+    return [
+      'Great, I can guide your setup step-by-step.',
+      'First question: which trading platform/exchange do you use (for example Binance, Coinbase, Kraken, Bybit, KuCoin, or Bitget)?',
+      'Once you tell me, I will confirm API trading support and show the exact API key/secret steps.',
+    ].join('\n');
+  }
+
+  if (!platform.apiTradingSupported) {
+    return [
+      `${platform.name} is not currently supported for API trading in our setup flow.`,
+      'If you want, tell me your preferred alternative exchange and I can guide you immediately.',
+    ].join('\n');
+  }
+
+  return [
+    `${platform.name} supports API trading for ${platform.marketType}. Here is the safe setup path:`,
+    `1) In ${platform.name}, open: ${platform.setupHint}`,
+    '2) Create API credentials with trading permission only and keep withdrawals disabled.',
+    '3) Copy API key and secret when shown. Store them securely (secret is usually shown once).',
+    '4) In Auto-Trader, open Connect Exchange and paste key/secret.',
+    '5) Start in paper mode first to verify balance sync and order behavior.',
+  ].join('\n');
+}
+
+function buildStrategyAndBotSetupReply(): string {
+  return [
+    'After exchange connection, use this setup order:',
+    '1) Choose market and timeframe (for example BTCUSDT on 15m or 1h).',
+    '2) Pick a strategy that matches market type (trend strategy for trending markets, mean-reversion for ranging markets).',
+    '3) Create a bot and attach the strategy to that bot/symbol/timeframe.',
+    '4) Set risk controls first: position size, stop-loss, take-profit, and max daily loss.',
+    '5) Run in paper mode, review recent executions, then move to real mode only after stable behavior.',
+  ].join('\n');
 }
 
 function buildSuggestions(input: string, isAuthenticated: boolean, includeFreeAccountNudge: boolean): ChatActionSuggestion[] {
@@ -148,6 +323,11 @@ function buildRuleBasedReply(message: string, isAuthenticated: boolean): string 
 
   const lower = message.toLowerCase();
 
+  const platformSetupReply = buildPlatformAndApiSetupReply(message);
+  if (platformSetupReply) {
+    return platformSetupReply;
+  }
+
   if (hasKeyword(lower, ['connect', 'exchange', 'api key'])) {
     return [
       'To connect an exchange safely:',
@@ -158,20 +338,19 @@ function buildRuleBasedReply(message: string, isAuthenticated: boolean): string 
   }
 
   if (hasKeyword(lower, ['create bot', 'bot'])) {
-    return [
-      'For a first bot setup:',
-      '1) Pick one symbol and one timeframe.',
-      '2) Set small investment size and strict stop-loss.',
-      '3) Keep it paused until strategy and exchange data look correct.',
-    ].join('\n');
+    return buildStrategyAndBotSetupReply();
   }
 
   if (hasKeyword(lower, ['strategy', 'signal'])) {
+    return buildStrategyAndBotSetupReply();
+  }
+
+  if (hasKeyword(lower, ['setup', 'set up', 'onboard', 'getting started', 'start'])) {
     return [
-      'Strategy setup checklist:',
-      '1) Choose strategy type based on market condition (trend vs range).',
-      '2) Assign it to an existing bot with matching symbol/timeframe.',
-      '3) Monitor recent executions and adjust risk before scaling.',
+      'I can guide your complete setup step-by-step.',
+      '1) Tell me which exchange you use, and I will confirm API trading support.',
+      '2) I will guide API key/secret creation and safe permissions.',
+      '3) Then I will help you choose strategy, create bot, and set risk controls.',
     ].join('\n');
   }
 
@@ -186,6 +365,11 @@ function buildRuleBasedReply(message: string, isAuthenticated: boolean): string 
 
 function buildPublicRuleBasedReply(message: string): string {
   const lower = message.toLowerCase();
+
+  const platformSetupReply = buildPlatformAndApiSetupReply(message);
+  if (platformSetupReply) {
+    return platformSetupReply;
+  }
 
   if (hasKeyword(lower, ['what is', 'auto trader', 'about', 'platform'])) {
     return [
@@ -207,10 +391,10 @@ function buildPublicRuleBasedReply(message: string): string {
   if (hasKeyword(lower, ['how to start', 'getting started', 'begin'])) {
     return [
       'Fast start path:',
-      '1) Create an account.',
-      '2) Connect an exchange in paper mode.',
-      '3) Create a bot and assign a strategy.',
-      '4) Review behavior before running in real mode.',
+      '1) Tell me which exchange you use and I will verify API trading support.',
+      '2) I will guide API key/secret creation with safe permissions.',
+      '3) Create your account and connect exchange in paper mode.',
+      '4) Create a bot, assign strategy, and test before real mode.',
     ].join('\n');
   }
 
@@ -255,6 +439,20 @@ function appendFreeAccountNudge(reply: string, includeNudge: boolean): string {
   }
 
   return `${reply}\n\nIf you want, open a free account and I can guide you step-by-step.`;
+}
+
+function isReferralProgramQuestion(message: string): boolean {
+  return hasKeyword(message, [
+    'referral',
+    'refer',
+    'invite',
+    'invitation',
+    'affiliate',
+    'ref code',
+    'promo code',
+    'bonus code',
+    'commission',
+  ]);
 }
 
 async function generateWithOpenAi(message: string, history: ChatTurn[]): Promise<string | null> {
@@ -356,6 +554,14 @@ async function generateWithGemini(message: string, history: ChatTurn[]): Promise
 export async function generateAssistantReply(message: string, history: ChatTurn[], isAuthenticated: boolean) {
   const includeFreeAccountNudge = shouldIncludeFreeAccountNudge(message, isAuthenticated);
   const suggestions = buildSuggestions(message, isAuthenticated, includeFreeAccountNudge);
+
+  if (isReferralProgramQuestion(message)) {
+    return {
+      reply: NO_REFERRAL_PROGRAM_REPLY,
+      suggestions,
+      source: 'rule-based' as const,
+    };
+  }
 
   try {
     const geminiReply = await generateWithGemini(message, history);
