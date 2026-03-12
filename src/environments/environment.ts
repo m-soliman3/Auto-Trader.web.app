@@ -11,4 +11,6 @@ export const environment = {
   // Leave empty to keep using Firebase Hosting rewrites (/api/*).
   // Set to your Cloud Run URL to route supported endpoints there.
   tradingBackendBaseUrl: 'https://auto-trader-backend-zcypdnoyqa-ew.a.run.app',
+  // Set to your chatbot backend URL. Leave empty only if proxied at the same origin.
+  chatbotBackendBaseUrl: '',
 };

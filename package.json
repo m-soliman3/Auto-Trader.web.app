@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "chatbot:dev": "npm --prefix chatbot-backend run dev",
+    "chatbot:build": "npm --prefix chatbot-backend run build",
+    "chatbot:start": "npm --prefix chatbot-backend run start"
   },
   "prettier": {
     "printWidth": 100,
