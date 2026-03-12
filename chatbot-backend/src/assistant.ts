@@ -47,6 +47,7 @@ type PlatformApiSupport = {
   setupHint: string;
 };
 
+// Curated list used for quick platform detection and setup guidance.
 const KNOWN_PLATFORMS: PlatformApiSupport[] = [
   {
     name: 'Binance',
