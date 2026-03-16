@@ -817,7 +817,8 @@ export class Dashboard implements OnDestroy {
       this.closeStrategyEditor();
     } catch (err) {
       console.error('failed to save strategy', err);
-      this.strategyFormError.set('Unable to save strategy right now. Please try again.');
+      const message = (err as { message?: string } | null)?.message;
+      this.strategyFormError.set(message || 'Unable to save strategy right now. Please try again.');
     }
   }
 

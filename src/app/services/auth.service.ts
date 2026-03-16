@@ -26,6 +26,13 @@ export interface User {
   name: string;
   email: string;
   createdAt: string;
+  plan?: string;
+  subscription?: {
+    active?: boolean;
+    status?: string;
+    priceUsd?: number;
+    renewedAt?: string;
+  };
 }
 
 export interface AuthAccountDetails {

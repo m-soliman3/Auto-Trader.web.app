@@ -1,5 +1,6 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AuthService } from './auth.service';
+import { SubscriptionService } from './subscription.service';
 import { Firestore, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
 
 export type RiskLevel  = 'Low' | 'Medium' | 'High';
@@ -332,6 +333,7 @@ export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
 @Injectable({ providedIn: 'root' })
 export class StrategyService {
   private auth = inject(AuthService);
+  private subscription = inject(SubscriptionService);
   private firestore = inject(Firestore);
 
   savedIds = signal<string[]>([]);
@@ -463,6 +465,8 @@ export class StrategyService {
     if (!uid) {
       throw new Error('createUserStrategy called without user');
     }
+
+    this.subscription.assertCanCreate('strategy', this.userStrategies().length);
 
     const now = new Date().toISOString();
     const initialStatus = input.status ?? 'active';

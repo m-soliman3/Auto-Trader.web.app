@@ -100,7 +100,7 @@ export class CreateBotModal {
     const exchange = this.exchanges().find(e => e.label === this.exchangeLabel);
     this.saving.set(true);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const bot: Bot = {
         id:           crypto.randomUUID(),
         name:         this.botName.trim(),
@@ -118,10 +118,17 @@ export class CreateBotModal {
         pnl:          0,
         createdAt:    new Date().toISOString(),
       };
-      this.botService.add(bot);
-      this.saving.set(false);
-      this.created.emit(bot);
-      this.close();
+
+      try {
+        await this.botService.add(bot);
+        this.saving.set(false);
+        this.error.set('');
+        this.created.emit(bot);
+        this.close();
+      } catch (err: any) {
+        this.saving.set(false);
+        this.error.set(err?.message || 'Unable to create bot right now. Please try again.');
+      }
     }, 900);
   }
 

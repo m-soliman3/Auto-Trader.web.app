@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from './auth.service';
+import { SubscriptionService } from './subscription.service';
 import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
 import { AccountMode } from './account-mode.service';
 
@@ -339,6 +340,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
 @Injectable({ providedIn: 'root' })
 export class ExchangeService {
   private auth = inject(AuthService);
+  private subscription = inject(SubscriptionService);
   private firebaseAuth = inject(Auth);
   private http = inject(HttpClient);
   private firestore = inject(Firestore);
@@ -618,6 +620,9 @@ export class ExchangeService {
       console.warn(msg);
       throw new Error(msg);
     }
+
+    this.subscription.assertCanCreate('exchange', this.connections().length);
+
     try {
       // Remove undefined fields before saving to Firestore
       const dataToSave = {
