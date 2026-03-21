@@ -1,5 +1,6 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AuthService } from './auth.service';
+import { SubscriptionService } from './subscription.service';
 import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
 import { SUPPORTED_EXCHANGES } from './exchange.service';
 import { AccountMode } from './account-mode.service';
@@ -102,6 +103,7 @@ export const TIMEFRAMES = ['1m', '5m', '15m', '1h', '4h', '1d'];
 @Injectable({ providedIn: 'root' })
 export class BotService {
   private auth = inject(AuthService);
+  private subscription = inject(SubscriptionService);
   private firestore = inject(Firestore);
 
   bots = signal<Bot[]>([]);
@@ -145,6 +147,9 @@ export class BotService {
       console.warn('add bot called without user');
       return;
     }
+
+    this.subscription.assertCanCreate('bot', this.bots().length);
+
     try {
       const docRef = doc(this.firestore, 'users', uid, 'bots', bot.id);
       await setDoc(docRef, bot);

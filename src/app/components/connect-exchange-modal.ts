@@ -9,6 +9,7 @@ import {
 } from '../services/exchange.service';
 import { AuthService } from '../services/auth.service';
 import { AccountModeService } from '../services/account-mode.service';
+import { SubscriptionService } from '../services/subscription.service';
 
 @Component({
   selector: 'app-connect-exchange-modal',
@@ -21,6 +22,7 @@ export class ConnectExchangeModal {
   private exchangeService = inject(ExchangeService);
   private authService = inject(AuthService);
   private accountMode = inject(AccountModeService);
+  private subscription = inject(SubscriptionService);
 
   closed = output<void>();
   connected = output<ConnectedExchange>();
@@ -69,6 +71,11 @@ export class ConnectExchangeModal {
     // Check if user is logged in
     if (!this.authService.currentUser()) {
       this.error.set('You must be logged in to connect an exchange.');
+      return;
+    }
+
+    if (!this.subscription.canCreate('exchange', this.exchangeService.connections().length)) {
+      this.error.set('Free plan limit reached: you can connect only 1 exchange connection. Upgrade to Premium for $10/month to add more.');
       return;
     }
 

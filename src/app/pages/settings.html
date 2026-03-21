@@ -16,6 +16,8 @@
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'display'" (click)="setSection($event, 'display')">Display</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'account'" (click)="setSection($event, 'account')">Account</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">Security</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'billing'" (click)="setSection($event, 'billing')">Billing</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'legal'" (click)="setSection($event, 'legal')">Legal</button>
     </aside>
 
     <div class="settings-content">
@@ -166,6 +168,69 @@
       @if (resetError()) {
         <div class="status err">{{ resetError() }}</div>
       }
+    </section>
+    }
+
+    @if (activeSection() === 'billing') {
+    <section class="settings-section">
+      <h2>Billing</h2>
+      <p class="section-sub">This is a demo payment page. No real charges are made.</p>
+
+      <div class="billing-grid">
+        <article class="plan-card plan-card-free">
+          <h3>Free Plan</h3>
+          <div class="plan-price">$0<span>/month</span></div>
+          <ul class="plan-features">
+            <li>1 exchange connection</li>
+            <li>1 bot</li>
+            <li>1 strategy</li>
+          </ul>
+          <button type="button" class="secondary-btn" disabled>Current Plan</button>
+        </article>
+
+        <article class="plan-card plan-card-premium">
+          <h3>Premium</h3>
+          <div class="plan-price">$10<span>/month</span></div>
+          <ul class="plan-features">
+            <li>Unlimited exchanges</li>
+            <li>Unlimited bots</li>
+            <li>Unlimited strategies</li>
+          </ul>
+          <button type="button" class="display-save-btn" (click)="triggerDummyCheckout()">Start Premium (Demo)</button>
+        </article>
+      </div>
+
+      <div class="billing-note">
+        Dummy checkout mode is enabled. To activate premium for a user, update the user profile plan/subscription fields manually.
+      </div>
+
+      @if (billingStatus()) {
+        <div class="status ok">{{ billingStatus() }}</div>
+      }
+    </section>
+    }
+
+    @if (activeSection() === 'legal') {
+    <section class="settings-section">
+      <h2>Legal</h2>
+      <p class="section-sub">Read the latest legal documents for using auto-Trading.</p>
+
+      <div class="legal-links-grid">
+        <a routerLink="/terms" class="legal-link-card">
+          <strong>Terms of Service</strong>
+          <span>Rules and conditions for using the platform.</span>
+        </a>
+
+        <a routerLink="/privacy" class="legal-link-card">
+          <strong>Privacy Policy</strong>
+          <span>How your data is collected, used, and protected.</span>
+        </a>
+
+        <a routerLink="/disclaimer" class="legal-link-card">
+          <strong>Disclaimer</strong>
+          <span>Risk warnings and important liability limitations.</span>
+        </a>
+      </div>
     </section>
     }
     </div>

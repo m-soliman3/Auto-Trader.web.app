@@ -1,5 +1,6 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AuthService } from './auth.service';
+import { SubscriptionService } from './subscription.service';
 import { Firestore, collection, deleteDoc, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
 
 export type RiskLevel  = 'Low' | 'Medium' | 'High';
@@ -332,6 +333,7 @@ export const STRATEGY_TEMPLATES: StrategyTemplate[] = [
 @Injectable({ providedIn: 'root' })
 export class StrategyService {
   private auth = inject(AuthService);
+  private subscription = inject(SubscriptionService);
   private firestore = inject(Firestore);
 
   savedIds = signal<string[]>([]);
@@ -464,6 +466,8 @@ export class StrategyService {
       throw new Error('createUserStrategy called without user');
     }
 
+    this.subscription.assertCanCreate('strategy', this.userStrategies().length);
+
     const now = new Date().toISOString();
     const initialStatus = input.status ?? 'active';
     const strategy: UserStrategy = {
@@ -524,6 +528,23 @@ export class StrategyService {
     await setDoc(ref, next);
     this.userStrategies.update(list => list.map(strategy => strategy.id === id ? next : strategy));
     return next;
+  }
+
+  async setStatus(id: string, status: 'active' | 'paused'): Promise<void> {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) throw new Error('setStatus called without user');
+    const existing = this.userStrategies().find((s) => s.id === id);
+    if (!existing) throw new Error('strategy not found');
+    const now = new Date().toISOString();
+    const next: UserStrategy = {
+      ...existing,
+      status,
+      updatedAt: now,
+      lastExecutionAt: status === 'active' ? now : existing.lastExecutionAt,
+    };
+    const ref = doc(this.firestore, 'users', uid, 'strategies', id);
+    await setDoc(ref, next);
+    this.userStrategies.update((list) => list.map((s) => (s.id === id ? next : s)));
   }
 
   async removeUserStrategy(id: string): Promise<void> {

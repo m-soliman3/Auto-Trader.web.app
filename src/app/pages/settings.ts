@@ -15,7 +15,7 @@ const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'portfolioPerformance',
 ];
 
-type SettingsSectionId = 'display' | 'account' | 'security';
+type SettingsSectionId = 'display' | 'account' | 'security' | 'billing' | 'legal';
 
 @Component({
   selector: 'app-settings',
@@ -39,6 +39,7 @@ export class Settings {
   resetStatus = signal('');
   resetError = signal('');
   resetLoading = signal(false);
+  billingStatus = signal('');
   activeSection = signal<SettingsSectionId>('display');
 
   draftTheme = signal<'dark' | 'light'>(this.theme.themeName());
@@ -260,6 +261,10 @@ export class Settings {
     this.resetStatus.set('Password reset email sent. Check your inbox.');
   }
 
+  triggerDummyCheckout() {
+    this.billingStatus.set('Demo checkout only: no payment was processed. Premium activation is handled manually by admin.');
+  }
+
   private syncDisplayDraftFromPersisted() {
     this.draftTheme.set(this.theme.themeName());
     this.draftDashboardSections.set(this.cloneSections(this.dashboardLayout.sections()));
@@ -291,6 +296,6 @@ export class Settings {
   }
 
   private isSettingsSection(value: string | null): value is SettingsSectionId {
-    return value === 'display' || value === 'account' || value === 'security';
+    return value === 'display' || value === 'account' || value === 'security' || value === 'billing' || value === 'legal';
   }
 }

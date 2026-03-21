@@ -1,12 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import emailjs from '@emailjs/browser';
 
-// ── Fill these in after setting up EmailJS (see instructions below) ──
-const EMAILJS_PUBLIC_KEY  = 'HYIL6fQcJSo0pHAhw';
-const EMAILJS_SERVICE_ID  = 'Auto-Trader';
-const EMAILJS_TEMPLATE_ID = 'template_z125ea9';
+const CONTACT_API_URL =
+  globalThis.location?.hostname === 'localhost'
+    ? 'https://europe-west1-autotrader-b8851.cloudfunctions.net/sendContactMessage'
+    : '/api/contact';
 
 @Component({
   selector: 'app-contact',
@@ -19,6 +18,7 @@ export class Contact {
   senderEmail = '';
   subject     = '';
   message     = '';
+  lastSentEmail = '';
 
   loading = signal(false);
   status  = signal<'idle' | 'success' | 'error'>('idle');
@@ -29,25 +29,33 @@ export class Contact {
 
     this.loading.set(true);
     this.status.set('idle');
+    this.errMsg.set('');
 
     try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_email: this.senderEmail,
-          subject:    this.subject,
-          message:    this.message,
-          to_email:   'mohamed@investbegin.de',
+      const senderEmail = this.senderEmail.trim();
+      const subject = this.subject.trim();
+      const message = this.message.trim();
+
+      const response = await fetch(CONTACT_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        EMAILJS_PUBLIC_KEY
-      );
+        body: JSON.stringify({ senderEmail, subject, message }),
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        throw new Error(payload?.error || 'Something went wrong. Please try again.');
+      }
+
+      this.lastSentEmail = senderEmail;
       this.status.set('success');
       this.senderEmail = '';
       this.subject     = '';
       this.message     = '';
     } catch (e: any) {
-      this.errMsg.set(e?.text ?? 'Something went wrong. Please try again.');
+      this.errMsg.set(e?.message ?? 'Something went wrong. Please try again.');
       this.status.set('error');
     } finally {
       this.loading.set(false);
