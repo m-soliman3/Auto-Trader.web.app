@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -335,6 +335,85 @@ exports.getMarketData = functions
             console.error("❌ Market data error:", error.message);
             res.status(500).json({
                 error: error.message || "Failed to fetch market data",
+            });
+        }
+    });
+});
+const CONTACT_RECIPIENT = "mohamed@investbegin.de";
+const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || "Auto-Trader";
+const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || "template_z125ea9";
+const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY || "HYIL6fQcJSo0pHAhw";
+const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY || "";
+exports.sendContactMessage = functions
+    .region("europe-west1")
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const { senderEmail, subject, message } = req.body || {};
+            const sender = String(senderEmail || "").trim();
+            const emailSubject = String(subject || "").trim();
+            const emailMessage = String(message || "").trim();
+            if (!sender || !emailSubject || !emailMessage) {
+                res.status(400).json({ error: "Missing required fields" });
+                return;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(sender)) {
+                res.status(400).json({ error: "Invalid sender email" });
+                return;
+            }
+            if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+                console.error("❌ Missing EmailJS environment config.");
+                res.status(500).json({
+                    error: "Contact service is not configured",
+                });
+                return;
+            }
+            const payload = {
+                service_id: EMAILJS_SERVICE_ID,
+                template_id: EMAILJS_TEMPLATE_ID,
+                user_id: EMAILJS_PUBLIC_KEY,
+                template_params: {
+                    to_email: CONTACT_RECIPIENT,
+                    recipient_email: CONTACT_RECIPIENT,
+                    to_name: "Mohamed",
+                    from_email: sender,
+                    sender_email: sender,
+                    reply_to: sender,
+                    subject: emailSubject,
+                    message: emailMessage,
+                },
+            };
+            if (EMAILJS_PRIVATE_KEY) {
+                payload.accessToken = EMAILJS_PRIVATE_KEY;
+            }
+            const emailjsRes = await (0, node_fetch_1.default)("https://api.emailjs.com/api/v1.0/email/send", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+            if (!emailjsRes.ok) {
+                const text = await emailjsRes.text();
+                console.error("❌ EmailJS send failed:", text);
+                res.status(502).json({ error: "Failed to send message" });
+                return;
+            }
+            res.status(200).json({ ok: true });
+        }
+        catch (error) {
+            console.error("❌ Contact send error:", error?.message || error);
+            res.status(500).json({
+                error: error?.message || "Failed to send contact message",
             });
         }
     });

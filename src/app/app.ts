@@ -5,10 +5,12 @@ import { AccountModeService } from './services/account-mode.service';
 import { AuthService } from './services/auth.service';
 import { filter } from 'rxjs/operators';
 import { AiChatRibbon } from './components/ai-chat-ribbon';
+import { ScrollMemoryService } from './services/scroll-memory.service';
+import { SiteFooter } from './components/site-footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, AiChatRibbon],
+  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -16,6 +18,7 @@ export class App {
   private readonly accountMode = inject(AccountModeService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly scrollMemory = inject(ScrollMemoryService);
 
   private readonly currentUrl = signal(this.router.url);
 
@@ -31,6 +34,7 @@ export class App {
 
   constructor() {
     void this.accountMode;
+    void this.scrollMemory;
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

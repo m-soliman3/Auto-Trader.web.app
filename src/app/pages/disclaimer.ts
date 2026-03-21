@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,14 +10,17 @@ import { RouterLink } from '@angular/router';
     <div class="legal-page">
       <div class="legal-card">
         <div class="legal-top">
-          <a routerLink="/" class="back-link">Home</a>
-          <a routerLink="/contact" class="back-link">Contact</a>
+          <div class="legal-links">
+            <a routerLink="/" class="back-link">Home</a>
+            <a routerLink="/contact" class="back-link">Contact</a>
+          </div>
+          <button type="button" class="close-btn" aria-label="Close" (click)="close()">X</button>
         </div>
 
         <h1>Disclaimer</h1>
         <p class="meta">Effective date: 13 March 2026</p>
 
-        <section><h2>1. Educational and Informational Use</h2><p>All materials, indicators, examples, and strategy templates are provided for informational and educational purposes only.</p></section>
+        <section><h2>1. Platform Use and Responsibility</h2><p>auto-Trading is a live software platform designed for real users. You are solely responsible for how you configure and use strategies, indicators, automation rules, and account-level risk controls.</p></section>
         <section><h2>2. Not Financial Advice</h2><p>Nothing on auto-Trading constitutes investment, legal, accounting, or tax advice. Seek qualified professional guidance before making decisions.</p></section>
         <section><h2>3. No Guarantee of Results</h2><p>Past performance does not guarantee future results. Backtests, simulations, and hypothetical outcomes may differ substantially from live trading.</p></section>
         <section><h2>4. Trading Risk Warning</h2><p>Trading digital assets, equities, forex, and derivatives is high risk and may not be suitable for all users. You can lose some or all capital.</p></section>
@@ -35,12 +39,26 @@ import { RouterLink } from '@angular/router';
       .legal-card h2 { margin: 0 0 0.45rem; color: var(--text-primary); font-size: 1.1rem; }
       .legal-card p { margin: 0; color: var(--text-secondary); line-height: 1.65; }
       .legal-card section { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 0.85rem; }
-      .legal-top { display: flex; gap: 0.7rem; margin-bottom: 1rem; }
+      .legal-top { display: flex; justify-content: space-between; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+      .legal-links { display: flex; gap: 0.7rem; align-items: center; }
       .back-link { border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.8rem; color: var(--text-primary); text-decoration: none; font-size: 0.84rem; font-weight: 600; }
       .back-link:hover { border-color: rgba(0, 209, 122, 0.45); color: var(--accent); }
+      .close-btn { width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-primary); font-size: 0.95rem; font-weight: 700; line-height: 1; cursor: pointer; }
+      .close-btn:hover { border-color: rgba(0, 209, 122, 0.45); color: var(--accent); }
       .meta { margin-top: 0.45rem !important; color: var(--text-muted) !important; font-size: 0.9rem; }
       @media (max-width: 720px) { .legal-card { padding: 1rem; } .legal-card h1 { font-size: 1.6rem; } }
     `,
   ],
 })
-export class DisclaimerPage {}
+export class DisclaimerPage {
+  constructor(private readonly location: Location) {}
+
+  close(): void {
+    if (window.history.length > 1) {
+      this.location.back();
+      return;
+    }
+
+    window.location.assign('/');
+  }
+}

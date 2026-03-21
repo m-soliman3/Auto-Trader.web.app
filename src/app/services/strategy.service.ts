@@ -530,6 +530,23 @@ export class StrategyService {
     return next;
   }
 
+  async setStatus(id: string, status: 'active' | 'paused'): Promise<void> {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) throw new Error('setStatus called without user');
+    const existing = this.userStrategies().find((s) => s.id === id);
+    if (!existing) throw new Error('strategy not found');
+    const now = new Date().toISOString();
+    const next: UserStrategy = {
+      ...existing,
+      status,
+      updatedAt: now,
+      lastExecutionAt: status === 'active' ? now : existing.lastExecutionAt,
+    };
+    const ref = doc(this.firestore, 'users', uid, 'strategies', id);
+    await setDoc(ref, next);
+    this.userStrategies.update((list) => list.map((s) => (s.id === id ? next : s)));
+  }
+
   async removeUserStrategy(id: string): Promise<void> {
     const uid = this.auth.currentUser()?.id;
     if (!uid) {

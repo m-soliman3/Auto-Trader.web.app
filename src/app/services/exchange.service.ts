@@ -26,6 +26,7 @@ export interface ConnectedExchange {
   secret: string;
   passphrase?: string;
   connectedAt: string;
+  status?: 'active' | 'halted';
 }
 
 export interface PortfolioData {
@@ -605,7 +606,13 @@ export class ExchangeService {
     try {
       const col = collection(this.firestore, 'users', uid, 'exchanges');
       const snap = await getDocs(col);
-      const list = snap.docs.map((d: any) => d.data() as ConnectedExchange);
+      const list = snap.docs.map((d: any) => {
+        const data = d.data() as ConnectedExchange;
+        return {
+          ...data,
+          status: data.status === 'halted' ? 'halted' : 'active',
+        } as ConnectedExchange;
+      });
       this.connections.set(list);
     } catch (err) {
       console.error('failed to load exchanges from firestore', err);
@@ -632,14 +639,48 @@ export class ExchangeService {
         secret: conn.secret,
         ...(conn.passphrase && { passphrase: conn.passphrase }),
         connectedAt: conn.connectedAt,
+        status: conn.status === 'halted' ? 'halted' : 'active',
       };
       const docRef = doc(this.firestore, 'users', uid, 'exchanges', conn.label);
       await setDoc(docRef, dataToSave);
-      this.connections.update(list => [conn, ...list]);
+      const normalizedConn: ConnectedExchange = {
+        ...conn,
+        status: conn.status === 'halted' ? 'halted' : 'active',
+      };
+      this.connections.update(list => [normalizedConn, ...list]);
       // Portfolio data will auto-load triggered by the connections effect
     } catch (err: any) {
       console.error('failed to add exchange', err);
       throw new Error(`Failed to save exchange: ${err?.message || 'Unknown error'}`);
+    }
+  }
+
+  async setConnectionStatus(label: string, status: 'active' | 'halted') {
+    const uid = this.auth.currentUser()?.id;
+    if (!uid) {
+      console.warn('setConnectionStatus called without user');
+      return;
+    }
+
+    const existing = this.connections().find((conn) => conn.label === label);
+    if (!existing) {
+      return;
+    }
+
+    const updated: ConnectedExchange = {
+      ...existing,
+      status,
+    };
+
+    try {
+      const docRef = doc(this.firestore, 'users', uid, 'exchanges', label);
+      await setDoc(docRef, updated);
+      this.connections.update((list) =>
+        list.map((conn) => (conn.label === label ? updated : conn)),
+      );
+    } catch (err) {
+      console.error('failed to update exchange status', err);
+      throw err;
     }
   }
 

@@ -1,5 +1,12 @@
-<app-navbar />
-@if (showAssistantRibbon()) {
-	<app-ai-chat-ribbon />
-}
-<router-outlet />
+<div class="app-shell">
+	<app-navbar />
+	@if (showAssistantRibbon()) {
+		<app-ai-chat-ribbon />
+	}
+
+	<main class="app-main">
+		<router-outlet />
+	</main>
+
+	<app-site-footer />
+</div>

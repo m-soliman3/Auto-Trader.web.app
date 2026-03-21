@@ -16,30 +16,16 @@
         }
       },
       {
-        "source": "/api/executeStrategy",
-        "function": {
-          "functionId": "executeStrategyHttp",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/getInstrumentChart",
-        "function": {
-          "functionId": "getInstrumentChartHttp",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/liquidatePosition",
-        "function": {
-          "functionId": "liquidatePositionHttp",
-          "region": "europe-west1"
-        }
-      },
-      {
         "source": "/api/getMarketData",
         "function": {
           "functionId": "getMarketData",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/contact",
+        "function": {
+          "functionId": "sendContactMessage",
           "region": "europe-west1"
         }
       },

@@ -3,7 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Auth } from '@angular/fire/auth';
@@ -55,7 +55,7 @@ interface RunnerSummariesResponse {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, FormsModule, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal],
+  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -120,9 +120,18 @@ export class Dashboard implements OnDestroy {
   liveViewUpdatedAt = signal('');
   liveViewMarketOpen = signal<boolean | null>(null);
   liveViewMarketStatusReason = signal('');
+  liveViewStrategyMarkers = signal<Array<{ index: number; type: 'entry' | 'exit'; price: number }>>([]);
+  liveViewEmaLines = signal<{ ema9: Array<{ x: number; y: number }>, ema21: Array<{ x: number; y: number }> }>({ ema9: [], ema21: [] });
+  liveViewEntryPrice = signal<number | null>(null);
+  liveViewExitPrice = signal<number | null>(null);
+  liveViewStrategyCategory = signal<string>('');
   runnerSummaries = signal<RunnerSummary[]>([]);
   runnerSummariesLoading = signal(false);
   runnerSummariesError = signal('');
+  visibleRunnerSummaries = computed(() => this.runnerSummaries().slice(0, 5));
+  remainingRunnerSummariesCount = computed(() => {
+    return Math.max(0, this.runnerSummaries().length - 5);
+  });
   liquidatingPositionKey = signal('');
   pendingLiquidationPosition = signal<PortfolioPositionRow | null>(null);
   liquidationConfirmMessage = signal('');
@@ -133,7 +142,11 @@ export class Dashboard implements OnDestroy {
 
   modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
   visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
+  previewConnections = computed(() => this.visibleConnections().slice(0, 2));
+  remainingConnectionsCount = computed(() => Math.max(0, this.visibleConnections().length - 2));
   visibleBots = computed(() => this.botService.botsByMode(this.accountMode.mode()));
+  previewBots = computed(() => this.visibleBots().slice(0, 2));
+  remainingBotsCount = computed(() => Math.max(0, this.visibleBots().length - 2));
   visibleActiveBots = computed(() => this.botService.activeBotsByMode(this.accountMode.mode()));
   hasVisibleExchange = computed(() => this.visibleConnections().length > 0);
   showGettingStartedChecklist = computed(() => {
@@ -146,9 +159,16 @@ export class Dashboard implements OnDestroy {
     const visibleBotIds = new Set(this.visibleBots().map(bot => bot.id));
     return this.strategyService.userStrategies().filter(strategy => visibleBotIds.has(strategy.assignedBotId));
   });
+  previewStrategies = computed(() => this.visibleStrategies().slice(0, 2));
+  remainingStrategiesCount = computed(() => Math.max(0, this.visibleStrategies().length - 2));
   hasMainGridSectionsVisible = computed(() => this.dashboardLayout.isSectionVisible('mainGrid'));
   strategyTemplateMap = computed(() => {
     return new Map(this.strategyService.all().map(template => [template.id, template]));
+  });
+  liveViewStrategyTemplate = computed(() => {
+    const strategy = this.liveViewStrategy();
+    if (!strategy) return null;
+    return this.strategyTemplateMap().get(strategy.templateId) ?? null;
   });
   private readonly chartWidth = 100;
   private readonly chartHeight = 44;
@@ -195,19 +215,29 @@ export class Dashboard implements OnDestroy {
 
   }
 
+  ngOnDestroy(): void {
+    // Clean up timers on component destruction
+    if (this.liveViewTimer) {
+      clearInterval(this.liveViewTimer);
+    }
+    if (this.toastTimer) {
+      clearTimeout(this.toastTimer);
+    }
+  }
+
   private openAssistantAction(action: string) {
     if (action === 'connect') {
-      this.showExchangeModal.set(true);
+      this.goToAddExchange();
       return;
     }
 
     if (action === 'bot') {
-      this.showBotModal.set(true);
+      this.goToAddBot();
       return;
     }
 
     if (action === 'strategies') {
-      this.showStrategiesModal.set(true);
+      this.goToAddStrategy();
       return;
     }
 
@@ -395,10 +425,22 @@ export class Dashboard implements OnDestroy {
   ];
 
   handleAction(action: string) {
-    if (action === 'connect')    { this.showExchangeModal.set(true); }
-    else if (action === 'bot')   { this.showBotModal.set(true); }
-    else if (action === 'strategies') { this.showStrategiesModal.set(true); }
+    if (action === 'connect')    { this.goToAddExchange(); }
+    else if (action === 'bot')   { this.goToAddBot(); }
+    else if (action === 'strategies') { this.goToAddStrategy(); }
     else { this.showToast('Coming soon — stay tuned! 🚀'); }
+  }
+
+  goToAddExchange() {
+    void this.router.navigate(['/exchanges'], { queryParams: { open: 'add' } });
+  }
+
+  goToAddBot() {
+    void this.router.navigate(['/bots'], { queryParams: { open: 'add' } });
+  }
+
+  goToAddStrategy() {
+    void this.router.navigate(['/strategies'], { queryParams: { open: 'add' } });
   }
 
   onStrategySelected(strategy: StrategyTemplate) {
@@ -435,7 +477,8 @@ export class Dashboard implements OnDestroy {
     const bot = this.visibleBots().find(item => item.id === strategy.assignedBotId) ?? null;
     this.liveViewStrategy.set(strategy);
     this.liveViewBot.set(bot);
-    this.liveViewTradingViewUrl.set(null);
+    const templateForUrl = this.strategyTemplateMap().get(strategy.templateId) ?? null;
+    this.liveViewTradingViewUrl.set(this.buildTradingViewUrl(bot, templateForUrl));
     this.liveViewError.set('');
     this.liveViewCandles.set([]);
     this.liveViewLastPrice.set(null);
@@ -518,7 +561,7 @@ export class Dashboard implements OnDestroy {
     this.liveViewExpanded.set(!this.liveViewExpanded());
   }
 
-  private buildTradingViewUrl(bot: Bot | null): SafeResourceUrl | null {
+  private buildTradingViewUrl(bot: Bot | null, strategy: StrategyTemplate | null = null): SafeResourceUrl | null {
     if (!bot) return null;
 
     const intervalMap: Record<string, string> = {
@@ -545,6 +588,9 @@ export class Dashboard implements OnDestroy {
       tradingViewSymbol = `NASDAQ:${rawSymbol || 'AAPL'}`;
     }
 
+    // Build studies array from strategy indicators
+    const studies = this.getStrategyStudies(strategy);
+
     const params = new URLSearchParams({
       symbol: tradingViewSymbol,
       interval,
@@ -558,18 +604,226 @@ export class Dashboard implements OnDestroy {
       withdateranges: '1',
       hide_top_toolbar: '1',
       hide_legend: '0',
-      studies: '[]',
+      studies: JSON.stringify(studies),
     });
 
     const url = `https://s.tradingview.com/widgetembed/?${params.toString()}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  ngOnDestroy() {
-    if (this.liveViewTimer) {
-      clearInterval(this.liveViewTimer);
-      this.liveViewTimer = null;
+  private getStrategyStudies(strategy: StrategyTemplate | null): Array<{ id: string; version: Record<string, unknown> }> {
+    if (!strategy) return [];
+
+    const studies: Array<{ id: string; version: Record<string, unknown> }> = [];
+    const tagLower = strategy.tags.map(t => t.toLowerCase());
+
+    // Map strategy tags to TradingView studies
+    const tagToStudy: Record<string, { id: string; settings: Record<string, unknown> }> = {
+      'ema': {
+        id: 'MAExp@tv-basicstudies',
+        settings: { showMA: true, length: 9 },
+      },
+      'macd': {
+        id: 'MACD@tv-basicstudies',
+        settings: {},
+      },
+      'adx': {
+        id: 'ADX@tv-basicstudies',
+        settings: { length: 14 },
+      },
+      'rsi': {
+        id: 'RSI@tv-basicstudies',
+        settings: { length: 14 },
+      },
+      'bollinger': {
+        id: 'BB@tv-basicstudies',
+        settings: { length: 20 },
+      },
+      'supertrend': {
+        id: 'Supertrend@tv-basicstudies',
+        settings: { atrLength: 10, factor: 3 },
+      },
+      'atr': {
+        id: 'ATR@tv-basicstudies',
+        settings: { length: 14 },
+      },
+      'vwap': {
+        id: 'VWAP@tv-basicstudies',
+        settings: {},
+      },
+      'volume': {
+        id: 'Volume@tv-basicstudies',
+        settings: {},
+      },
+    };
+
+    // Convert tags to lowercase and check for matches
+    const addedStudies = new Set<string>();
+    for (const tag of tagLower) {
+      for (const [key, study] of Object.entries(tagToStudy)) {
+        if (tag.includes(key) && !addedStudies.has(study.id)) {
+          studies.push({
+            id: study.id,
+            version: study.settings,
+          });
+          addedStudies.add(study.id);
+        }
+      }
     }
+
+    return studies;
+  }
+
+  private computeStrategyMarkers(strategy: StrategyTemplate, candles: InstrumentChartResponse['candles']): Array<{ index: number; type: 'entry' | 'exit'; price: number }> {
+    const markers: Array<{ index: number; type: 'entry' | 'exit'; price: number }> = [];
+    if (candles.length < 3) return markers;
+
+    const category = strategy.category.toLowerCase();
+    const tagsLower = strategy.tags.map(t => t.toLowerCase());
+
+    // Detect potential entry/exit points based on strategy category
+    if (category.includes('trend')) {
+      // For trend strategies, mark potential crossovers
+      this.detectTrendMarkers(candles, markers);
+    } else if (category.includes('mean-reversion')) {
+      // For mean reversion, mark potential reversals at extremes
+      this.detectMeanReversionMarkers(candles, markers);
+    } else if (category.includes('momentum')) {
+      // For momentum strategies, mark breakouts
+      this.detectMomentumMarkers(candles, markers);
+    }
+
+    return markers;
+  }
+
+  private detectTrendMarkers(candles: InstrumentChartResponse['candles'], markers: Array<{ index: number; type: 'entry' | 'exit'; price: number }>): void {
+    // Detect simple EMA-like crossovers using close prices
+    const closePrice = candles.map(c => c.close);
+    const shortEMA = this.calculateEMA(closePrice, 9);
+    const longEMA = this.calculateEMA(closePrice, 21);
+
+    for (let i = 1; i < shortEMA.length; i++) {
+      const prev = { short: shortEMA[i - 1], long: longEMA[i - 1] };
+      const curr = { short: shortEMA[i], long: longEMA[i] };
+
+      // Golden cross (bullish)
+      if (prev.short <= prev.long && curr.short > curr.long) {
+        markers.push({ index: i, type: 'entry', price: candles[i].close });
+      }
+      // Death cross (bearish)
+      else if (prev.short >= prev.long && curr.short < curr.long) {
+        markers.push({ index: i, type: 'exit', price: candles[i].close });
+      }
+    }
+  }
+
+  private detectMeanReversionMarkers(candles: InstrumentChartResponse['candles'], markers: Array<{ index: number; type: 'entry' | 'exit'; price: number }>): void {
+    // Detect RSI-like extremes
+    const closePrice = candles.map(c => c.close);
+    const rsi = this.calculateRSI(closePrice, 14);
+
+    for (let i = 0; i < rsi.length; i++) {
+      // Oversold (entry signal)
+      if (rsi[i] < 30) {
+        markers.push({ index: i, type: 'entry', price: candles[i].close });
+      }
+      // Overbought (exit signal)
+      else if (rsi[i] > 70) {
+        markers.push({ index: i, type: 'exit', price: candles[i].close });
+      }
+    }
+  }
+
+  private detectMomentumMarkers(candles: InstrumentChartResponse['candles'], markers: Array<{ index: number; type: 'entry' | 'exit'; price: number }>): void {
+    // Detect breakouts based on volatility
+    const closePrice = candles.map(c => c.close);
+    const highPrice = candles.map(c => c.high);
+    const lowPrice = candles.map(c => c.low);
+
+    const lookback = 5;
+    for (let i = lookback; i < candles.length; i++) {
+      const prev = candles.slice(i - lookback, i);
+      const prevHigh = Math.max(...prev.map(c => c.high));
+      const prevLow = Math.min(...prev.map(c => c.low));
+
+      // Breakout above resistance
+      if (closePrice[i] > prevHigh) {
+        markers.push({ index: i, type: 'entry', price: candles[i].close });
+      }
+      // Breakdown below support
+      else if (closePrice[i] < prevLow) {
+        markers.push({ index: i, type: 'exit', price: candles[i].close });
+      }
+    }
+  }
+
+  private calculateEMA(prices: number[], period: number): number[] {
+    const ema: number[] = [];
+    const multiplier = 2 / (period + 1);
+
+    let sum = 0;
+    for (let i = 0; i < Math.min(period, prices.length); i++) {
+      sum += prices[i];
+    }
+    ema[period - 1] = sum / period;
+
+    for (let i = period; i < prices.length; i++) {
+      const prevEMA = ema[i - 1] ?? prices[i];
+      ema[i] = (prices[i] - prevEMA) * multiplier + prevEMA;
+    }
+
+    return ema;
+  }
+
+  private calculateRSI(prices: number[], period: number): number[] {
+    const rsi: number[] = [];
+    if (prices.length < period + 1) return [];
+
+    let gain = 0, loss = 0;
+    for (let i = 1; i <= period; i++) {
+      const change = prices[i] - prices[i - 1];
+      if (change > 0) gain += change;
+      else loss += -change;
+    }
+
+    let avgGain = gain / period;
+    let avgLoss = loss / period;
+
+    for (let i = period; i < prices.length; i++) {
+      const change = prices[i] - prices[i - 1];
+      const currentGain = change > 0 ? change : 0;
+      const currentLoss = change < 0 ? -change : 0;
+
+      avgGain = (avgGain * (period - 1) + currentGain) / period;
+      avgLoss = (avgLoss * (period - 1) + currentLoss) / period;
+
+      const rs = avgLoss === 0 ? 100 : avgGain / avgLoss;
+      rsi[i] = 100 - 100 / (1 + rs);
+    }
+
+    return rsi;
+  }
+
+  private computeEmaLines(candles: InstrumentChartResponse['candles']): { ema9: Array<{ x: number; y: number }>, ema21: Array<{ x: number; y: number }> } {
+    const closePrice = candles.map(c => c.close);
+    const ema9 = this.calculateEMA(closePrice, 9);
+    const ema21 = this.calculateEMA(closePrice, 21);
+
+    const ema9Data = ema9
+      .map((price, index) => ({
+        x: this.candleCenterX(index, candles.length),
+        y: this.priceToY(price)
+      }))
+      .filter((point, index) => ema9[index] !== undefined);
+
+    const ema21Data = ema21
+      .map((price, index) => ({
+        x: this.candleCenterX(index, candles.length),
+        y: this.priceToY(price)
+      }))
+      .filter((point, index) => ema21[index] !== undefined);
+
+    return { ema9: ema9Data, ema21: ema21Data };
   }
 
   private async loadStrategyLiveView(withLoader: boolean) {
@@ -627,6 +881,30 @@ export class Dashboard implements OnDestroy {
       this.liveViewUpdatedAt.set(payload.updatedAt ?? new Date().toISOString());
       this.liveViewMarketOpen.set(typeof payload.marketOpen === 'boolean' ? payload.marketOpen : null);
       this.liveViewMarketStatusReason.set(payload.marketStatusReason ?? '');
+      
+      // Compute strategy entry/exit markers for visualization
+      const strategyTemplate = this.liveViewStrategyTemplate();
+      if (strategyTemplate && candles.length > 0) {
+        // Store strategy category for conditional rendering
+        this.liveViewStrategyCategory.set(strategyTemplate.category.toLowerCase());
+        
+        const markers = this.computeStrategyMarkers(strategyTemplate, candles);
+        this.liveViewStrategyMarkers.set(markers);
+        
+        // Compute strategy-specific indicators based on category
+        const category = strategyTemplate.category.toLowerCase();
+        if (category.includes('trend')) {
+          // For trend strategies, show EMA lines
+          const emaData = this.computeEmaLines(candles);
+          this.liveViewEmaLines.set(emaData);
+        } else {
+          // Clear EMA lines for non-trend strategies
+          this.liveViewEmaLines.set({ ema9: [], ema21: [] });
+        }
+        
+        // Compute entry and exit price levels
+        this.computeEntryExitLevels(markers);
+      }
     } catch (err) {
       console.error('failed to load live instrument chart', err);
       this.liveViewError.set('Unable to load live market data right now.');
@@ -690,6 +968,41 @@ export class Dashboard implements OnDestroy {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
+  }
+
+  getEma9Points(): string {
+    const points = this.liveViewEmaLines().ema9;
+    if (points.length === 0) return '';
+    return points.map(p => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
+  }
+
+  getEma21Points(): string {
+    const points = this.liveViewEmaLines().ema21;
+    if (points.length === 0) return '';
+    return points.map(p => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
+  }
+
+  private computeEntryExitLevels(markers: Array<{ index: number; type: 'entry' | 'exit'; price: number }>): void {
+    // Get the most recent entry and exit prices from markers
+    const entryMarkers = markers.filter(m => m.type === 'entry');
+    const exitMarkers = markers.filter(m => m.type === 'exit');
+    
+    // Use the most recent entry and exit prices
+    const lastEntry = entryMarkers.length > 0 ? entryMarkers[entryMarkers.length - 1].price : null;
+    const lastExit = exitMarkers.length > 0 ? exitMarkers[exitMarkers.length - 1].price : null;
+    
+    this.liveViewEntryPrice.set(lastEntry);
+    this.liveViewExitPrice.set(lastExit);
+  }
+
+  getEntryLevelY(): number | null {
+    const price = this.liveViewEntryPrice();
+    return price !== null ? this.priceToY(price) : null;
+  }
+
+  getExitLevelY(): number | null {
+    const price = this.liveViewExitPrice();
+    return price !== null ? this.priceToY(price) : null;
   }
 
   assignedBotLabel(botId: string): string {
