@@ -18,17 +18,71 @@ import { RouterLink } from '@angular/router';
         </div>
 
         <h1>Privacy Policy</h1>
-        <p class="meta">Effective date: 13 March 2026</p>
+        <p class="meta">Effective date: 22 March 2026 | Last Updated: 22 March 2026</p>
 
-        <section><h2>1. Overview</h2><p>This Privacy Policy explains how auto-Trading collects, uses, stores, and protects your personal data when you use the app and website.</p></section>
-        <section><h2>2. Data We Collect</h2><ul><li>Account data such as name, email, and authentication identifiers.</li><li>App usage data including preferences, bot configurations, and strategy settings.</li><li>Technical diagnostics such as device/browser details and error logs.</li><li>Support messages submitted through contact channels.</li></ul></section>
-        <section><h2>3. How We Use Data</h2><ul><li>Provide and operate core platform features.</li><li>Authenticate users and secure accounts.</li><li>Store and sync settings, bots, and strategies.</li><li>Improve reliability and product quality.</li><li>Respond to support requests.</li></ul></section>
-        <section><h2>4. API Credentials and Sensitive Information</h2><p>Exchange API keys are used only to enable connected trading functionality. You are responsible for safe key permission scope and key rotation.</p></section>
-        <section><h2>5. Sharing and Processors</h2><p>We may use infrastructure and support providers to deliver the service. We do not sell your personal data.</p></section>
-        <section><h2>6. Data Retention</h2><p>Data is retained only as long as required for service operation, legal compliance, dispute handling, and security needs.</p></section>
-        <section><h2>7. Your Rights</h2><p>Depending on your jurisdiction, you may request access, correction, deletion, restriction, objection, or portability of your personal data.</p></section>
-        <section><h2>8. Security</h2><p>We apply reasonable technical and organizational safeguards, but no internet-based system can be guaranteed fully secure.</p></section>
-        <section><h2>9. Policy Updates</h2><p>We may update this policy periodically. Material changes are reflected by an updated effective date.</p></section>
+        <section><h2>1. Introduction</h2><p>Auto-Trading ("Company", "we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services, in compliance with the General Data Protection Regulation (GDPR) and other applicable privacy laws.</p></section>
+
+        <section><h2>2. Information We Collect</h2>
+        <p><strong>Personal Data:</strong></p>
+        <ul><li>Account information (name, email, phone number, country)</li><li>Authentication data and login credentials</li><li>Trading preferences and bot configurations</li><li>Strategy settings and execution history</li><li>Connected exchange API information (stored securely)</li></ul>
+        <p><strong>Usage Data:</strong></p>
+        <ul><li>Browser type, IP address, and device information</li><li>Pages visited and time spent on pages</li><li>User interactions and feature usage patterns</li><li>Error logs and technical diagnostics</li></ul>
+        <p><strong>Cookies and Tracking Technologies:</strong></p>
+        <ul><li>Session cookies for authentication</li><li>Preference cookies to remember your settings</li><li>Analytics cookies via Google Analytics and Google Tag Manager</li><li>Marketing cookies to analyze campaign performance</li></ul>
+        <p><strong>Support Data:</strong></p>
+        <ul><li>Messages submitted through contact forms</li><li>Support tickets and communications</li></ul>
+        </section>
+
+        <section><h2>3. Legal Basis for Processing (GDPR)</h2>
+        <p>We process your personal data based on:</p>
+        <ul><li><strong>Consent:</strong> You have explicitly consented to our data collection and use</li><li><strong>Contract:</strong> Processing is necessary to provide our services to you</li><li><strong>Legal Obligation:</strong> Processing is required by applicable laws and regulations</li><li><strong>Legitimate Interests:</strong> Processing is necessary for our legitimate business interests, such as improving service quality</li></ul>
+        </section>
+
+        <section><h2>4. How We Use Your Data</h2>
+        <ul><li>Provide, maintain, and improve our trading platform</li><li>Authenticate users and secure accounts</li><li>Store and sync your trading bots, strategies, and configurations</li><li>Analyze platform usage to enhance user experience</li><li>Send service updates and support communications</li><li>Comply with legal and regulatory requirements</li><li>Detect and prevent fraud or security issues</li></ul>
+        </section>
+
+        <section><h2>5. Third-Party Integrations</h2>
+        <ul><li><strong>Google Analytics & Google Tag Manager:</strong> For tracking website usage and user behavior</li><li><strong>Firebase:</strong> For hosting, authentication, and real-time database services</li><li><strong>Exchange APIs:</strong> Your API keys are used solely for trading execution</li></ul>
+        <p>We only share the minimum data necessary with these services and maintain data processor agreements in compliance with GDPR Article 28.</p>
+        </section>
+
+        <section><h2>6. Your Rights Under GDPR</h2>
+        <p>As an EU resident, you have the following rights:</p>
+        <ul><li><strong>Right of Access:</strong> Request a copy of your personal data</li><li><strong>Right to Rectification:</strong> Request correction of inaccurate data</li><li><strong>Right to Erasure (Right to be Forgotten):</strong> Request deletion of your data</li><li><strong>Right to Restrict Processing:</strong> Limit how we process your data</li><li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li><li><strong>Right to Object:</strong> Oppose our processing of your data</li><li><strong>Right to Withdraw Consent:</strong> Withdraw consent without affecting prior processing</li></ul>
+        <p>To exercise these rights, contact us at support@auto-trading.app</p>
+        </section>
+
+        <section><h2>7. Data Security</h2>
+        <p>We implement industry-standard security measures including encryption, secure authentication, and regular security audits. However, no online transmission is completely secure, and we cannot guarantee absolute security.</p>
+        </section>
+
+        <section><h2>8. Data Retention</h2>
+        <p>We retain your personal data for as long as necessary to provide our services, comply with legal obligations, and resolve disputes. You can request deletion at any time, except where legal obligations require retention.</p>
+        </section>
+
+        <section><h2>9. API Credentials and Sensitive Information</h2>
+        <p>Exchange API keys are encrypted and used only to enable trading functionality. You are responsible for maintaining the security of your API keys and setting appropriate permission scopes. We recommend regular key rotation.</p>
+        </section>
+
+        <section><h2>10. Cookies and Consent</h2>
+        <p>When you first visit our website, you will see a consent banner asking for your permission to use cookies and analytics. You can manage your preferences at any time. If you decline analytics cookies, Google Tag Manager will not collect your data.</p>
+        </section>
+
+        <section><h2>11. International Data Transfers</h2>
+        <p>Your data may be transferred to and processed in countries outside the EU. We ensure appropriate safeguards are in place for international transfers, including Standard Contractual Clauses.</p>
+        </section>
+
+        <section><h2>12. Changes to This Policy</h2>
+        <p>We may update this policy periodically. Material changes will be communicated to you via email, and the updated effective date will be reflected on this page. Your continued use of our services constitutes acceptance of the updated policy.</p>
+        </section>
+
+        <section><h2>13. Contact Information</h2>
+        <p><strong>Data Controller:</strong> Auto-Trading<br>
+        <strong>Email:</strong> support@auto-trading.app<br>
+        <strong>Website:</strong> https://auto-trading.app<br>
+        <strong>For complaints:</strong> You have the right to lodge a complaint with your local data protection authority.</p>
+        </section>
       </div>
     </div>
   `,

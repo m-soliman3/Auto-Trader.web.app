@@ -7,10 +7,11 @@ import { filter } from 'rxjs/operators';
 import { AiChatRibbon } from './components/ai-chat-ribbon';
 import { ScrollMemoryService } from './services/scroll-memory.service';
 import { SiteFooter } from './components/site-footer';
+import { ConsentBannerComponent } from './components/consent-banner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter],
+  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
