@@ -19,6 +19,63 @@ import { StrategyService } from '../services/strategy.service';
         />
       }
 
+      <!-- Disconnect Exchange Confirmation Modal -->
+      @if (showDisconnectModal() && exchangeToDisconnect()) {
+        <div class="disconnect-backdrop" (click)="cancelDisconnect()">
+          <div class="disconnect-modal" (click)="$event.stopPropagation()">
+            <div class="disconnect-header">
+              <h3>Confirm Disconnection</h3>
+              <button type="button" class="disconnect-close" (click)="cancelDisconnect()" aria-label="Close">✕</button>
+            </div>
+            <div class="disconnect-content">
+              <p class="disconnect-question">Are you sure you want to disconnect <strong>{{ exchangeToDisconnect() }}</strong>?</p>
+              <div class="disconnect-warning">
+                <p><strong>⚠ Warning:</strong> This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.</p>
+              </div>
+
+              <div class="disconnect-section">
+                <label class="disconnect-checkbox">
+                  <input
+                    type="checkbox"
+                    [checked]="disconnectRiskConfirmed()"
+                    (change)="disconnectRiskConfirmed.set($event.target.checked)"
+                    aria-label="I understand the risks"
+                  />
+                  <span>I understand the risks associated with disconnecting this exchange including any open/unfinished executions on my accounts</span>
+                </label>
+              </div>
+
+              <div class="disconnect-section">
+                <label class="disconnect-label">Type "disconnect this Exchange" to confirm:</label>
+                <input
+                  type="text"
+                  class="disconnect-input"
+                  [value]="disconnectConfirmText()"
+                  (input)="disconnectConfirmText.set($event.target.value)"
+                  placeholder="disconnect this Exchange"
+                  aria-label="Type to confirm disconnection"
+                />
+              </div>
+
+              @if (disconnectConfirmError()) {
+                <div class="disconnect-error">{{ disconnectConfirmError() }}</div>
+              }
+            </div>
+            <div class="disconnect-actions">
+              <button type="button" class="disconnect-btn-cancel" (click)="cancelDisconnect()">Cancel</button>
+              <button 
+                type="button"
+                class="disconnect-btn-confirm" 
+                (click)="confirmDisconnect()"
+                [disabled]="!canConfirmDisconnect()"
+              >
+                Disconnect
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
       <div class="page-shell">
         <aside class="page-index" aria-label="Page navigation">
           <div class="index-title">Navigation</div>
@@ -52,9 +109,6 @@ import { StrategyService } from '../services/strategy.service';
                       <div class="title">{{ conn.label }}</div>
                       <div class="sub">{{ exchangeName(conn.exchangeId) }} · Connected {{ conn.connectedAt | date:'mediumDate' }}</div>
                     </div>
-                    <span class="status" [class.halted]="connectionStatus(conn) === 'halted'">
-                      {{ connectionStatus(conn) === 'halted' ? 'Halted' : 'Active' }}
-                    </span>
                   </button>
                 }
               </div>
@@ -70,9 +124,9 @@ import { StrategyService } from '../services/strategy.service';
                   <h2>{{ selected.label }} Details</h2>
                   <p class="details-sub">{{ exchangeName(selected.exchangeId) }} · Connected {{ selected.connectedAt | date:'medium' }}</p>
                 </div>
-                <button type="button" class="halt-btn" (click)="toggleConnectionStatus(selected)" [disabled]="statusSaving() === selected.label">
-                  {{ statusSaving() === selected.label ? 'Saving...' : (connectionStatus(selected) === 'halted' ? 'Resume Connection' : 'Halt Connection') }}
-                </button>
+                <div class="header-actions">
+                  <button type="button" class="disconnect-btn" (click)="removeExchange(selected)">Disconnect</button>
+                </div>
               </div>
 
               <div class="credentials-grid">
@@ -162,11 +216,11 @@ import { StrategyService } from '../services/strategy.service';
       .row.selected { border-color: rgba(0, 209, 122, 0.45); box-shadow: 0 0 0 1px rgba(0, 209, 122, 0.2) inset; }
       .title { color: var(--text-primary); font-size: 0.92rem; font-weight: 700; }
       .sub { color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.15rem; }
-      .status { border: 1px solid rgba(0, 209, 122, 0.3); background: rgba(0, 209, 122, 0.12); color: var(--accent); border-radius: 999px; padding: 0.2rem 0.55rem; font-size: 0.7rem; font-weight: 700; }
-      .status.halted { border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.12); color: #ef4444; }
       .details-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; }
       .details-sub { margin: 0.15rem 0 0; color: var(--text-secondary); font-size: 0.82rem; }
-      .halt-btn { border: 1px solid var(--border); background: var(--surface-raised); color: var(--text-primary); border-radius: 10px; padding: 0.48rem 0.74rem; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+      .header-actions { display: flex; gap: 0.5rem; }
+      .disconnect-btn { border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.12); color: #ef4444; border-radius: 10px; padding: 0.48rem 0.74rem; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+      .disconnect-btn:hover { background: rgba(239, 68, 68, 0.2); }
       .credentials-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; margin-bottom: 0.95rem; }
       .credential-card { border: 1px solid var(--border); border-radius: 10px; background: var(--bg); padding: 0.72rem; }
       .credential-label { color: var(--text-secondary); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.04em; }
@@ -180,6 +234,30 @@ import { StrategyService } from '../services/strategy.service';
       .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
       .chip { border: 1px solid var(--border); border-radius: 999px; background: var(--bg); color: var(--text-primary); padding: 0.35rem 0.7rem; font-size: 0.8rem; }
       .empty { margin: 0; color: var(--text-secondary); font-size: 0.9rem; }
+      .disconnect-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+      .disconnect-modal { background: var(--surface); border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15); max-width: 500px; width: 90%; }
+      .disconnect-header { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem; border-bottom: 1px solid var(--border); }
+      .disconnect-header h3 { margin: 0; color: var(--text-primary); font-size: 1.1rem; }
+      .disconnect-close { background: none; border: none; color: var(--text-secondary); font-size: 1.4rem; cursor: pointer; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+      .disconnect-close:hover { color: var(--text-primary); }
+      .disconnect-content { padding: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+      .disconnect-question { margin: 0; color: var(--text-primary); font-size: 0.95rem; line-height: 1.5; }
+      .disconnect-warning { background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444; padding: 0.8rem; border-radius: 8px; }
+      .disconnect-warning p { margin: 0; color: var(--text-primary); font-size: 0.9rem; line-height: 1.5; }
+      .disconnect-section { display: flex; flex-direction: column; gap: 0.4rem; }
+      .disconnect-checkbox { display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; }
+      .disconnect-checkbox input { margin-top: 0.3rem; cursor: pointer; }
+      .disconnect-checkbox span { color: var(--text-primary); font-size: 0.9rem; line-height: 1.5; }
+      .disconnect-label { color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; }
+      .disconnect-input { border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text-primary); padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+      .disconnect-input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1); }
+      .disconnect-error { background: rgba(239, 68, 68, 0.12); color: #ef4444; padding: 0.6rem 0.8rem; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(239, 68, 68, 0.3); }
+      .disconnect-actions { display: flex; gap: 0.8rem; padding: 1rem 1.2rem; border-top: 1px solid var(--border); justify-content: flex-end; }
+      .disconnect-btn-cancel { border: 1px solid var(--border); background: var(--surface-raised); color: var(--text-primary); border-radius: 10px; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+      .disconnect-btn-cancel:hover { background: var(--bg); }
+      .disconnect-btn-confirm { border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.12); color: #ef4444; border-radius: 10px; padding: 0.5rem 1rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+      .disconnect-btn-confirm:hover:not(:disabled) { background: rgba(239, 68, 68, 0.2); }
+      .disconnect-btn-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
       @media (max-width: 900px) {
         .page-shell { grid-template-columns: 210px minmax(0, 1fr); }
         .page-index { position: sticky; top: 96px; flex-direction: column; align-items: stretch; overflow: visible; scrollbar-width: auto; }
@@ -206,7 +284,11 @@ export class ExchangesPage {
   private readonly router = inject(Router);
   readonly showAddExchangeModal = signal(false);
   readonly selectedExchangeLabel = signal<string | null>(null);
-  readonly statusSaving = signal('');
+  readonly showDisconnectModal = signal(false);
+  readonly exchangeToDisconnect = signal<string | null>(null);
+  readonly disconnectRiskConfirmed = signal(false);
+  readonly disconnectConfirmText = signal('');
+  readonly disconnectConfirmError = signal('');
 
   readonly modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
   readonly visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
@@ -235,6 +317,10 @@ export class ExchangesPage {
   readonly supportedVisible = computed(() => {
     const showPaper = this.accountMode.mode() === 'paper';
     return SUPPORTED_EXCHANGES.filter((exchange) => (exchange.isPaper ?? false) === showPaper);
+  });
+
+  readonly canConfirmDisconnect = computed(() => {
+    return this.disconnectRiskConfirmed() && this.disconnectConfirmText().toLowerCase() === 'disconnect this exchange';
   });
 
   constructor() {
@@ -267,18 +353,37 @@ export class ExchangesPage {
     this.selectedExchangeLabel.set(label);
   }
 
-  connectionStatus(conn: { status?: 'active' | 'halted' }): 'active' | 'halted' {
-    return conn.status === 'halted' ? 'halted' : 'active';
+  removeExchange(conn: { label: string }): void {
+    this.exchangeToDisconnect.set(conn.label);
+    this.disconnectRiskConfirmed.set(false);
+    this.disconnectConfirmText.set('');
+    this.disconnectConfirmError.set('');
+    this.showDisconnectModal.set(true);
   }
 
-  async toggleConnectionStatus(conn: { label: string; status?: 'active' | 'halted' }): Promise<void> {
-    const next = this.connectionStatus(conn) === 'halted' ? 'active' : 'halted';
-    this.statusSaving.set(conn.label);
-    try {
-      await this.exchangeService.setConnectionStatus(conn.label, next);
-    } finally {
-      this.statusSaving.set('');
+  confirmDisconnect(): void {
+    if (!this.canConfirmDisconnect()) {
+      if (!this.disconnectRiskConfirmed()) {
+        this.disconnectConfirmError.set('Please acknowledge the risks to continue');
+      } else {
+        this.disconnectConfirmError.set('Please type "disconnect this Exchange" to confirm');
+      }
+      return;
     }
+    const label = this.exchangeToDisconnect();
+    if (label) {
+      this.exchangeService.remove(label);
+      this.selectedExchangeLabel.set(null);
+    }
+    this.cancelDisconnect();
+  }
+
+  cancelDisconnect(): void {
+    this.showDisconnectModal.set(false);
+    this.exchangeToDisconnect.set(null);
+    this.disconnectRiskConfirmed.set(false);
+    this.disconnectConfirmText.set('');
+    this.disconnectConfirmError.set('');
   }
 
   maskSecret(secret: string): string {

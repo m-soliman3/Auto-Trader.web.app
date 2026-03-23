@@ -498,10 +498,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="delete-exchange-note">
           <p><strong>⚠ Warning:</strong> This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.</p>
         </div>
+
+        <!-- Risk Acknowledgment Checkbox -->
+        <div class="exchange-confirmation-section">
+          <label class="exchange-confirmation-checkbox">
+            <input
+              type="checkbox"
+              [checked]="exchangeDisconnectRiskConfirmed()"
+              (change)="exchangeDisconnectRiskConfirmed.set($event.target.checked)"
+              aria-label="I understand the risks"
+            />
+            <span>I understand that I will need to generate new API keys and secrets from the exchange to reconnect</span>
+          </label>
+        </div>
+
+        <!-- Text Input Confirmation -->
+        <div class="exchange-confirmation-section">
+          <label class="exchange-confirmation-label">Type "disconnect this Exchange" to confirm:</label>
+          <input
+            type="text"
+            class="exchange-confirmation-input"
+            [value]="exchangeDisconnectConfirmText()"
+            (input)="exchangeDisconnectConfirmText.set($event.target.value)"
+            placeholder="disconnect this Exchange"
+            aria-label="Type to confirm disconnection"
+          />
+        </div>
+
+        <!-- Error Message -->
+        @if (exchangeDisconnectError()) {
+          <div class="exchange-confirmation-error">{{ exchangeDisconnectError() }}</div>
+        }
       </div>
       <div class="delete-exchange-actions">
         <button class="delete-exchange-btn delete-exchange-cancel" (click)="cancelDeleteExchange()">Cancel</button>
-        <button class="delete-exchange-btn delete-exchange-confirm" (click)="confirmDeleteExchange()">Disconnect</button>
+        <button 
+          class="delete-exchange-btn delete-exchange-confirm" 
+          (click)="confirmDeleteExchange()"
+          [disabled]="!canConfirmExchangeDisconnect()"
+        >
+          Disconnect
+        </button>
       </div>
     </div>
   </div>
@@ -671,9 +708,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </td>
                   <td>{{ strategy.updatedAt | date:'mediumDate' }}</td>
                   <td class="bot-actions">
-                    <button class="bot-btn" (click)="toggleStrategyStatus(strategy)" [title]="strategy.status === 'active' ? 'Pause strategy' : 'Activate strategy'">
-                      {{ strategy.status === 'active' ? '⏸' : '▶' }}
-                    </button>
                     <button class="bot-btn bot-btn-live" (click)="openStrategyLiveView(strategy)" title="Live instrument chart">Live View</button>
                     <button class="bot-btn bot-btn-view" (click)="openViewStrategy(strategy)" title="View">
                       <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -681,8 +715,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <circle cx="12" cy="12" r="3"/>
                       </svg>
                     </button>
-                    <button class="bot-btn" (click)="openEditStrategy(strategy)" title="Edit">✏️</button>
-                    <button class="bot-btn bot-btn-del" (click)="removeStrategy(strategy)" title="Delete">🗑</button>
                   </td>
                 </tr>
               }
@@ -745,19 +777,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </span>
                   </td>
                   <td class="bot-actions">
-                    <button class="bot-btn" (click)="toggleBotStatus(bot)" [title]="bot.status === 'active' ? 'Pause' : 'Resume'">
-                      {{ bot.status === 'active' ? '⏸' : '▶' }}
-                    </button>
-                    <button class="bot-btn" (click)="showBotSettings(bot)" [title]="bot.status === 'active' ? 'View settings' : 'Edit settings'">
-                      @if (bot.status === 'active') {
-                        <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                          <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                      } @else {
-                        ✏️
-                      }
-                    </button>
                     <button class="bot-btn bot-btn-del" (click)="removeBot(bot)" title="Delete">🗑</button>
                   </td>
                 </tr>

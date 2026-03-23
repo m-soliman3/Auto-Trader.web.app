@@ -109,6 +109,9 @@ export class Dashboard implements OnDestroy {
   botToDelete = signal<Bot | null>(null);
   strategyToDelete = signal<UserStrategy | null>(null);
   exchangeToDelete = signal<string | null>(null);
+  exchangeDisconnectRiskConfirmed = signal(false);
+  exchangeDisconnectConfirmText = signal('');
+  exchangeDisconnectError = signal('');
   liveViewStrategy = signal<UserStrategy | null>(null);
   liveViewBot = signal<Bot | null>(null);
   liveViewIsLoading = signal(false);
@@ -170,6 +173,10 @@ export class Dashboard implements OnDestroy {
     if (!strategy) return null;
     return this.strategyTemplateMap().get(strategy.templateId) ?? null;
   });
+  canConfirmExchangeDisconnect = computed(() => {
+    return this.exchangeDisconnectRiskConfirmed() && 
+           this.exchangeDisconnectConfirmText() === 'disconnect this Exchange';
+  });
   private readonly chartWidth = 100;
   private readonly chartHeight = 44;
   private readonly chartLeft = 8;
@@ -201,12 +208,15 @@ export class Dashboard implements OnDestroy {
       }
 
       const action = params.get('action');
+      const botId = params.get('botId');
+      const templateId = params.get('templateId');
+      const strategyId = params.get('strategyId');
       if (action) {
-        this.openAssistantAction(action);
+        this.openAssistantAction(action, botId, templateId, strategyId);
 
         void this.router.navigate([], {
           relativeTo: this.route,
-          queryParams: { action: null },
+          queryParams: { action: null, botId: null, templateId: null, strategyId: null },
           queryParamsHandling: 'merge',
           replaceUrl: true,
         });
@@ -225,7 +235,7 @@ export class Dashboard implements OnDestroy {
     }
   }
 
-  private openAssistantAction(action: string) {
+  private openAssistantAction(action: string, botId?: string | null, templateId?: string | null, strategyId?: string | null) {
     if (action === 'connect') {
       this.goToAddExchange();
       return;
@@ -233,6 +243,33 @@ export class Dashboard implements OnDestroy {
 
     if (action === 'bot') {
       this.goToAddBot();
+      return;
+    }
+
+    if (action === 'edit-bot' && botId) {
+      const bot = this.visibleBots().find(b => b.id === botId);
+      if (bot && this.editBotModal) {
+        this.editBotModal.open(bot);
+      }
+      return;
+    }
+
+    if (action === 'create-strategy' && templateId) {
+      const template = this.strategyService.all().find(t => t.id === templateId);
+      if (template) {
+        this.strategyEditorMode.set('create');
+        this.selectedTemplateForStrategy.set(template);
+        this.showStrategyEditorModal.set(true);
+      }
+      return;
+    }
+
+    if (action === 'edit-strategy' && strategyId) {
+      const strategy = this.visibleStrategies().find(s => s.id === strategyId);
+      if (strategy) {
+        this.strategyEditorMode.set('edit');
+        this.openEditStrategy(strategy);
+      }
       return;
     }
 
@@ -1192,15 +1229,32 @@ export class Dashboard implements OnDestroy {
 
   removeExchange(label: string) {
     this.exchangeToDelete.set(label);
+    this.exchangeDisconnectRiskConfirmed.set(false);
+    this.exchangeDisconnectConfirmText.set('');
+    this.exchangeDisconnectError.set('');
     this.showDeleteExchangeModal.set(true);
   }
 
   confirmDeleteExchange() {
+    // Validate conditions
+    if (!this.exchangeDisconnectRiskConfirmed()) {
+      this.exchangeDisconnectError.set('You must confirm that you understand the risks.');
+      return;
+    }
+
+    if (this.exchangeDisconnectConfirmText() !== 'disconnect this Exchange') {
+      this.exchangeDisconnectError.set('Please type "disconnect this Exchange" exactly to confirm.');
+      return;
+    }
+
     const label = this.exchangeToDelete();
     if (label) {
       this.exchangeService.remove(label);
       this.showDeleteExchangeModal.set(false);
       this.exchangeToDelete.set(null);
+      this.exchangeDisconnectRiskConfirmed.set(false);
+      this.exchangeDisconnectConfirmText.set('');
+      this.exchangeDisconnectError.set('');
       this.showToast('Exchange disconnected.');
     }
   }
@@ -1208,6 +1262,9 @@ export class Dashboard implements OnDestroy {
   cancelDeleteExchange() {
     this.showDeleteExchangeModal.set(false);
     this.exchangeToDelete.set(null);
+    this.exchangeDisconnectRiskConfirmed.set(false);
+    this.exchangeDisconnectConfirmText.set('');
+    this.exchangeDisconnectError.set('');
   }
 
   async toggleBotStatus(bot: Bot) {
