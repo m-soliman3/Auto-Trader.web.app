@@ -38,7 +38,7 @@ export class Contact {
         sender_email:   payload.senderEmail,
         reply_to:       payload.senderEmail,
         subject:        payload.subject,
-        message:        payload.message,
+        message:        `From: ${payload.senderEmail}\n\n${payload.message}`,
       },
     };
 
