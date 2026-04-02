@@ -38,7 +38,7 @@ export class Contact {
         sender_email:   payload.senderEmail,
         reply_to:       payload.senderEmail,
         subject:        payload.subject,
-        message:        `From: ${payload.senderEmail}\n\n${payload.message}`,
+        message:        `From: ${payload.senderEmail.replace(/[\r\n]/g, '')}\n\n${payload.message}`,
       },
     };
 
