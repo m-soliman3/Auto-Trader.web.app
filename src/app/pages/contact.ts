@@ -18,7 +18,6 @@ export class Contact {
   senderEmail = '';
   subject     = '';
   message     = '';
-  lastSentEmail = '';
 
   loading = signal(false);
   status  = signal<'idle' | 'success' | 'error'>('idle');
@@ -49,7 +48,6 @@ export class Contact {
         throw new Error(payload?.error || 'Something went wrong. Please try again.');
       }
 
-      this.lastSentEmail = senderEmail;
       this.status.set('success');
       this.senderEmail = '';
       this.subject     = '';
