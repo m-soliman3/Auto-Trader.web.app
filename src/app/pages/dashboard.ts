@@ -480,6 +480,18 @@ export class Dashboard implements OnDestroy {
     void this.router.navigate(['/strategies'], { queryParams: { open: 'add' } });
   }
 
+  openExchangesPage() {
+    void this.router.navigate(['/exchanges']);
+  }
+
+  openBotsPage() {
+    void this.router.navigate(['/bots']);
+  }
+
+  openStrategiesPage() {
+    void this.router.navigate(['/strategies']);
+  }
+
   onStrategySelected(strategy: StrategyTemplate) {
     if (this.visibleBots().length === 0) {
       this.showToast('Create a bot first. A strategy must be assigned to an executing bot.');

@@ -382,10 +382,9 @@ export class StrategiesPage {
 
   onStrategySelected(strategy: StrategyTemplate): void {
     this.showAddStrategyModal.set(false);
-    this.clearOpenQuery();
-    // Navigate to dashboard to create the new strategy
-    this.router.navigate(['/dashboard', this.accountMode.mode()], {
-      queryParams: { action: 'create-strategy', templateId: strategy.id }
+
+    void this.router.navigate(['/dashboard', this.accountMode.mode()], {
+      queryParams: { action: 'create-strategy', templateId: strategy.id },
     });
   }
 
