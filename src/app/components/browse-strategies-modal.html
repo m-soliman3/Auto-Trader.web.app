@@ -99,7 +99,7 @@
                   (click)="toggleSave($event, s.id)" [title]="isSaved(s.id) ? 'Unsave' : 'Save'">
                   🔖 <span [style.opacity]="isSaved(s.id) ? '1' : '0.4'">{{ isSaved(s.id) ? 'Saved' : 'Save' }}</span>
                 </button>
-                <button class="btn-use-sm" (click)="useStrategy(s); $event.stopPropagation()">Use →</button>
+                <button class="btn-use-sm" (click)="onUseStrategyClick($event, s)" type="button">Use →</button>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@
           <button class="btn-save-detail" [class.saved]="isSaved(detail()!.id)" (click)="toggleSave($event, detail()!.id)">
             🔖 {{ isSaved(detail()!.id) ? 'Saved' : 'Save Strategy' }}
           </button>
-          <button class="btn-use" (click)="useStrategy(detail()!)">Use This Strategy →</button>
+          <button class="btn-use" (click)="onUseStrategyClick($event, detail()!)" type="button">Use This Strategy →</button>
         </div>
       </div>
     </div>

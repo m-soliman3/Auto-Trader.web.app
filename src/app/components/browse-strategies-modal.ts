@@ -104,7 +104,11 @@ export class BrowseStrategiesModal {
 
   useStrategy(s: StrategyTemplate) {
     this.selected.emit(s);
-    this.close();
+  }
+
+  onUseStrategyClick(event: Event, strategy: StrategyTemplate) {
+    event.stopPropagation();
+    this.useStrategy(strategy);
   }
 
   riskColor(risk: string): string {

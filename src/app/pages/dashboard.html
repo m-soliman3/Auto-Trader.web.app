@@ -636,7 +636,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="exchange-list">
           @for (conn of previewConnections(); track conn.label) {
-            <div class="exchange-row">
+            <div
+              class="exchange-row"
+              role="button"
+              tabindex="0"
+              (click)="openExchangesPage()"
+              (keydown.enter)="openExchangesPage()"
+              (keydown.space)="openExchangesPage(); $event.preventDefault()"
+            >
               <div class="exrow-left">
                 <span class="exrow-logo">{{ exchangeLogo(conn.exchangeId) }}</span>
                 <div>
@@ -651,7 +658,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
               <div class="exrow-right">
                 <span class="exrow-status">🟢 Live</span>
-                <button class="exrow-remove" (click)="removeExchange(conn.label)" title="Disconnect">✕</button>
               </div>
             </div>
           }
@@ -690,7 +696,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </thead>
             <tbody>
               @for (strategy of previewStrategies(); track strategy.id) {
-                <tr>
+                <tr
+                  role="button"
+                  tabindex="0"
+                  (click)="openStrategiesPage()"
+                  (keydown.enter)="openStrategiesPage()"
+                  (keydown.space)="openStrategiesPage(); $event.preventDefault()"
+                >
                   <td class="bot-name">{{ strategy.name }}</td>
                   <td>
                     @if (strategyTemplateFor(strategy); as template) {
@@ -708,8 +720,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </td>
                   <td>{{ strategy.updatedAt | date:'mediumDate' }}</td>
                   <td class="bot-actions">
-                    <button class="bot-btn bot-btn-live" (click)="openStrategyLiveView(strategy)" title="Live instrument chart">Live View</button>
-                    <button class="bot-btn bot-btn-view" (click)="openViewStrategy(strategy)" title="View">
+                    <button class="bot-btn bot-btn-view" (click)="openStrategiesPage(); $event.stopPropagation()" title="View">
                       <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                         <circle cx="12" cy="12" r="3"/>
@@ -761,7 +772,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </thead>
             <tbody>
               @for (bot of previewBots(); track bot.id) {
-                <tr>
+                <tr
+                  role="button"
+                  tabindex="0"
+                  (click)="openBotsPage()"
+                  (keydown.enter)="openBotsPage()"
+                  (keydown.space)="openBotsPage(); $event.preventDefault()"
+                >
                   <td class="bot-name">{{ bot.name }}</td>
                   <td>{{ bot.strategyName }}</td>
                   <td class="mono">{{ bot.symbol }}</td>
@@ -777,7 +794,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </span>
                   </td>
                   <td class="bot-actions">
-                    <button class="bot-btn bot-btn-del" (click)="removeBot(bot)" title="Delete">🗑</button>
+                    <button class="bot-btn bot-btn-view" (click)="openBotsPage(); $event.stopPropagation()" title="View">
+                      <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </button>
                   </td>
                 </tr>
               }

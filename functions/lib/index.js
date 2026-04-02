@@ -46,7 +46,14 @@ if (!admin.apps.length) {
     admin.initializeApp();
 }
 const corsHandler = (0, cors_1.default)({
-    origin: ["https://autotrader-b8851.web.app", "http://localhost:4200"],
+    // Allow production hosting plus local dev on any localhost/127.0.0.1 port.
+    origin: [
+        "https://autotrader-b8851.web.app",
+        "https://invest-begin.com",
+        "https://www.invest-begin.com",
+        /^http:\/\/localhost(?::\d+)?$/,
+        /^http:\/\/127\.0\.0\.1(?::\d+)?$/,
+    ],
     methods: ["POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 });
