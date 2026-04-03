@@ -29,32 +29,38 @@ export class Home {
     {
       icon: '⚡',
       title: 'AI-Powered Signals',
-      desc: 'Machine-learning models scan thousands of assets in real time and surface high-probability trade setups automatically.'
+      desc: 'Machine-learning models scan thousands of assets in real time and surface high-probability trade setups automatically.',
+      link: '/features/ai-signals',
     },
     {
       icon: '🔗',
       title: 'Multi-Exchange Support',
-      desc: 'Connect Binance, Coinbase, Kraken, Bybit, and 30+ more exchanges through a single unified API.'
+      desc: 'Connect Binance, Coinbase, Kraken, Bybit, and 30+ more exchanges through a single unified API.',
+      link: '/features/multi-exchange',
     },
     {
       icon: '🛡️',
       title: 'Risk Management',
-      desc: 'Customisable stop-loss, take-profit, position sizing, and portfolio exposure limits protect your capital 24/7.'
+      desc: 'Customisable stop-loss, take-profit, position sizing, and portfolio exposure limits protect your capital 24/7.',
+      link: '/features/risk-management',
     },
     {
       icon: '📊',
       title: 'Advanced Backtesting',
-      desc: 'Test your strategies against years of tick-level historical data before committing a single dollar to live trading.'
+      desc: 'Test your strategies against years of tick-level historical data before committing a single dollar to live trading.',
+      link: '/features/backtesting',
     },
     {
       icon: '🔔',
       title: 'Smart Alerts',
-      desc: 'Get real-time push, email, or Telegram notifications when conditions are met, trades execute, or drawdown limits trip.'
+      desc: 'Get real-time push, email, or Telegram notifications when conditions are met, trades execute, or drawdown limits trip.',
+      link: '/features/smart-alerts',
     },
     {
       icon: '🌐',
       title: 'No-Code Builder',
-      desc: 'Drag-and-drop strategy builder lets you automate complex logic without writing a single line of code.'
+      desc: 'Drag-and-drop strategy builder lets you automate complex logic without writing a single line of code.',
+      link: '/features/no-code-builder',
     },
   ];
 
