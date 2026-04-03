@@ -1,0 +1,95 @@
+@if (feature) {
+<!-- ── HERO ── -->
+<section class="fp-hero">
+  <div class="fp-hero-bg"></div>
+  <div class="fp-container">
+    <a routerLink="/" class="fp-breadcrumb">← Back to Home</a>
+    <div class="fp-hero-icon">{{ feature.icon }}</div>
+    <p class="fp-tag">Feature</p>
+    <h1 class="fp-hero-title">{{ feature.title }}</h1>
+    <p class="fp-hero-tagline">{{ feature.tagline }}</p>
+    <p class="fp-hero-desc">{{ feature.heroDescription }}</p>
+    <button (click)="goToCta()" class="fp-btn-accent">Start for Free →</button>
+  </div>
+</section>
+
+<!-- ── SVG ILLUSTRATION ── -->
+<section class="fp-illustration-section">
+  <div class="fp-container fp-illustration-wrap">
+    <div class="fp-illustration" [innerHTML]="safeSvg"></div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<section class="fp-section">
+  <div class="fp-container fp-two-col">
+    <div class="fp-overview">
+      <p class="fp-tag">Overview</p>
+      <h2>What is {{ feature.title }}?</h2>
+      @for (para of overviewParagraphs; track $index) {
+        <p class="fp-body-text">{{ para }}</p>
+      }
+    </div>
+    <div class="fp-how-it-works">
+      <div class="fp-hiw-card">
+        <p class="fp-tag">How It Works</p>
+        <h3>Under the Hood</h3>
+        <p class="fp-body-text">{{ feature.howItWorks }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENEFITS ── -->
+<section class="fp-section fp-section-alt">
+  <div class="fp-container">
+    <div class="fp-section-header">
+      <p class="fp-tag">Key Benefits</p>
+      <h2>Why traders love {{ feature.title }}</h2>
+    </div>
+    <div class="fp-benefits-grid">
+      @for (b of feature.benefits; track b.title) {
+        <div class="fp-benefit-card">
+          <span class="fp-benefit-icon">{{ b.icon }}</span>
+          <h3>{{ b.title }}</h3>
+          <p>{{ b.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── EXTERNAL LINKS ── -->
+<section class="fp-section">
+  <div class="fp-container">
+    <div class="fp-section-header">
+      <p class="fp-tag">Resources</p>
+      <h2>Learn more &amp; explore related tools</h2>
+      <p class="fp-section-sub">Curated links to trusted platforms and educational resources that complement {{ feature.title }}.</p>
+    </div>
+    <div class="fp-links-grid">
+      @for (link of feature.externalLinks; track link.url) {
+        <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="fp-link-card">
+          <div class="fp-link-header">
+            <span class="fp-link-title">{{ link.label }}</span>
+            <span class="fp-link-arrow">↗</span>
+          </div>
+          <p class="fp-link-desc">{{ link.description }}</p>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section class="fp-cta-banner">
+  <div class="fp-container fp-cta-inner">
+    <h2>Ready to put {{ feature.title }} to work?</h2>
+    <p>Join 125,000+ traders who automate their strategy with auto-Trading. Start free — no credit card required.</p>
+    <div class="fp-cta-actions">
+      <button (click)="goToCta()" class="fp-btn-accent">Create Free Account →</button>
+      <a routerLink="/" class="fp-btn-outline">Explore All Features</a>
+    </div>
+  </div>
+</section>
+}

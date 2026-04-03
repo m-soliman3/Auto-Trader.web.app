@@ -64,11 +64,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="features-grid">
       @for (f of features; track f.title) {
-        <div class="feature-card">
+        <a [routerLink]="f.link" class="feature-card feature-card-link">
           <div class="feature-icon">{{ f.icon }}</div>
           <h3>{{ f.title }}</h3>
           <p>{{ f.desc }}</p>
-        </div>
+          <span class="feature-learn-more">Learn more →</span>
+        </a>
       }
     </div>
   </div>

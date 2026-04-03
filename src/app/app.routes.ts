@@ -14,6 +14,7 @@ import { BotsPage } from './pages/bots';
 import { StrategiesPage } from './pages/strategies';
 import { PortfolioManagementPage } from './pages/portfolio-management';
 import { BackendRunnerPage } from './pages/backend-runner';
+import { FeatureDetailPage } from './pages/features/feature-detail';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
@@ -116,6 +117,11 @@ export const routes: Routes = [
         title: 'Settings — AutoTrader | Account & Platform Preferences',
       },
     ],
+  },
+  {
+    path: 'features/:slug',
+    component: FeatureDetailPage,
+    title: 'Feature — AutoTrader',
   },
   { path: '**', redirectTo: '' },
 ];
