@@ -16,6 +16,11 @@ export interface FeatureBenefit {
   description: string;
 }
 
+export interface RelatedPageLink {
+  label: string;
+  slug: string;
+}
+
 export interface FeatureData {
   slug: string;
   icon: string;
@@ -26,6 +31,7 @@ export interface FeatureData {
   howItWorks: string;
   benefits: FeatureBenefit[];
   externalLinks: FeatureLink[];
+  relatedLinks: RelatedPageLink[];
   svgIllustration: string;
   metaTitle: string;
 }
@@ -101,6 +107,11 @@ Every signal is back-tested against out-of-sample historical data before it is p
         url: 'https://www.investopedia.com/terms/m/machine-learning.asp',
         description: 'Deep-dive into how ML models are reshaping financial markets.',
       },
+    ],
+    relatedLinks: [
+      { slug: 'smart-alerts',      label: 'Smart Alerts' },
+      { slug: 'risk-management',   label: 'Risk Management' },
+      { slug: 'backtesting',       label: 'Advanced Backtesting' },
     ],
     svgIllustration: `<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -214,6 +225,11 @@ Once connected, you can run multiple bots on the same exchange simultaneously, e
         description: 'Leading derivatives exchange with high-leverage perpetual contracts.',
       },
     ],
+    relatedLinks: [
+      { slug: 'no-code-builder',  label: 'No-Code Strategy Builder' },
+      { slug: 'smart-alerts',     label: 'Smart Alerts' },
+      { slug: 'risk-management',  label: 'Risk Management' },
+    ],
     svgIllustration: `<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
       <!-- center hub -->
       <circle cx="240" cy="140" r="30" fill="rgba(0,209,122,0.15)" stroke="#00d17a" stroke-width="2"/>
@@ -319,6 +335,11 @@ Margin users benefit from additional safeguards including maximum leverage caps 
         description: "BabyPips' trusted guide to position sizing and capital preservation.",
       },
     ],
+    relatedLinks: [
+      { slug: 'ai-signals',    label: 'AI-Powered Signals' },
+      { slug: 'smart-alerts',  label: 'Smart Alerts' },
+      { slug: 'backtesting',   label: 'Advanced Backtesting' },
+    ],
     svgIllustration: `<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
       <!-- shield body -->
       <path d="M240,30 L330,70 L330,165 Q330,220 240,255 Q150,220 150,165 L150,70 Z" fill="rgba(0,209,122,0.1)" stroke="#00d17a" stroke-width="2"/>
@@ -408,6 +429,11 @@ Strategy optimisation lets you sweep a range of parameter values (e.g., moving a
         url: 'https://www.quantconnect.com',
         description: 'Algorithmic trading research platform — a great complement for advanced users.',
       },
+    ],
+    relatedLinks: [
+      { slug: 'no-code-builder',  label: 'No-Code Strategy Builder' },
+      { slug: 'risk-management',  label: 'Risk Management' },
+      { slug: 'ai-signals',       label: 'AI-Powered Signals' },
     ],
     svgIllustration: `<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -521,6 +547,11 @@ Custom Webhook Alerts let power users route notifications to any third-party sys
         description: 'How to set up a Discord webhook to receive auto-Trading notifications.',
       },
     ],
+    relatedLinks: [
+      { slug: 'ai-signals',      label: 'AI-Powered Signals' },
+      { slug: 'risk-management', label: 'Risk Management' },
+      { slug: 'multi-exchange',  label: 'Multi-Exchange Support' },
+    ],
     svgIllustration: `<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
       <!-- phone outline -->
       <rect x="170" y="30" width="140" height="220" rx="18" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
@@ -622,6 +653,11 @@ Once you have built your strategy, you can paper-trade it to validate behaviour 
         url: 'https://www.quantconnect.com/docs/v2/writing-algorithms/algorithm-framework/overview',
         description: 'Advanced algorithmic trading framework for users ready to go beyond no-code.',
       },
+    ],
+    relatedLinks: [
+      { slug: 'backtesting',     label: 'Advanced Backtesting' },
+      { slug: 'multi-exchange',  label: 'Multi-Exchange Support' },
+      { slug: 'smart-alerts',    label: 'Smart Alerts' },
     ],
     svgIllustration: `<svg viewBox="0 0 480 280" xmlns="http://www.w3.org/2000/svg">
       <!-- canvas background -->
