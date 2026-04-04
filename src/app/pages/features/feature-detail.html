@@ -29,6 +29,12 @@
       @for (para of overviewParagraphs; track $index) {
         <p class="fp-body-text">{{ para }}</p>
       }
+      <div class="fp-related-links">
+        <span class="fp-related-label">Explore also:</span>
+        @for (link of feature.relatedLinks; track link.slug) {
+          <a [routerLink]="['/features', link.slug]" class="fp-related-chip">{{ link.label }}</a>
+        }
+      </div>
     </div>
     <div class="fp-how-it-works">
       <div class="fp-hiw-card">
