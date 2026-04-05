@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface FeatureLink {
   label: string;
@@ -699,7 +700,7 @@ Once you have built your strategy, you can paper-trade it to validate behaviour 
 @Component({
   selector: 'app-feature-detail',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, TranslateModule],
   templateUrl: './feature-detail.html',
   styleUrl: './feature-detail.scss',
 })

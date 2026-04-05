@@ -3,13 +3,13 @@
 <section class="fp-hero">
   <div class="fp-hero-bg"></div>
   <div class="fp-container">
-    <a routerLink="/" class="fp-breadcrumb">← Back to Home</a>
+    <a routerLink="/" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
     <div class="fp-hero-icon">{{ feature.icon }}</div>
-    <p class="fp-tag">Feature</p>
+    <p class="fp-tag">{{ 'featureDetail.feature' | translate }}</p>
     <h1 class="fp-hero-title">{{ feature.title }}</h1>
     <p class="fp-hero-tagline">{{ feature.tagline }}</p>
     <p class="fp-hero-desc">{{ feature.heroDescription }}</p>
-    <button (click)="goToCta()" class="fp-btn-accent">Start for Free →</button>
+    <button (click)="goToCta()" class="fp-btn-accent">{{ 'featureDetail.startForFree' | translate }} →</button>
   </div>
 </section>
 
@@ -24,13 +24,13 @@
 <section class="fp-section">
   <div class="fp-container fp-two-col">
     <div class="fp-overview">
-      <p class="fp-tag">Overview</p>
-      <h2>What is {{ feature.title }}?</h2>
+      <p class="fp-tag">{{ 'featureDetail.overview' | translate }}</p>
+      <h2>{{ ('featureDetail.whatIs' | translate) + ' ' + feature.title + '?' }}</h2>
       @for (para of overviewParagraphs; track $index) {
         <p class="fp-body-text">{{ para }}</p>
       }
       <div class="fp-related-links">
-        <span class="fp-related-label">Explore also:</span>
+        <span class="fp-related-label">{{ 'featureDetail.exploreAlso' | translate }}</span>
         @for (link of feature.relatedLinks; track link.slug) {
           <a [routerLink]="['/features', link.slug]" class="fp-related-chip">{{ link.label }}</a>
         }
@@ -38,8 +38,8 @@
     </div>
     <div class="fp-how-it-works">
       <div class="fp-hiw-card">
-        <p class="fp-tag">How It Works</p>
-        <h3>Under the Hood</h3>
+        <p class="fp-tag">{{ 'featureDetail.howItWorks' | translate }}</p>
+        <h3>{{ 'featureDetail.underTheHood' | translate }}</h3>
         <p class="fp-body-text">{{ feature.howItWorks }}</p>
       </div>
     </div>
@@ -50,8 +50,8 @@
 <section class="fp-section fp-section-alt">
   <div class="fp-container">
     <div class="fp-section-header">
-      <p class="fp-tag">Key Benefits</p>
-      <h2>Why traders love {{ feature.title }}</h2>
+      <p class="fp-tag">{{ 'featureDetail.keyBenefits' | translate }}</p>
+      <h2>{{ ('featureDetail.whyTradersLove' | translate) + ' ' + feature.title }}</h2>
     </div>
     <div class="fp-benefits-grid">
       @for (b of feature.benefits; track b.title) {
@@ -69,9 +69,9 @@
 <section class="fp-section">
   <div class="fp-container">
     <div class="fp-section-header">
-      <p class="fp-tag">Resources</p>
-      <h2>Learn more &amp; explore related tools</h2>
-      <p class="fp-section-sub">Curated links to trusted platforms and educational resources that complement {{ feature.title }}.</p>
+      <p class="fp-tag">{{ 'featureDetail.resources' | translate }}</p>
+      <h2>{{ 'featureDetail.learnMoreAndExplore' | translate }}</h2>
+      <p class="fp-section-sub">{{ ('featureDetail.resourcesSub' | translate) + ' ' + feature.title + '.' }}</p>
     </div>
     <div class="fp-links-grid">
       @for (link of feature.externalLinks; track link.url) {
@@ -90,11 +90,11 @@
 <!-- ── CTA BANNER ── -->
 <section class="fp-cta-banner">
   <div class="fp-container fp-cta-inner">
-    <h2>Ready to put {{ feature.title }} to work?</h2>
-    <p>Join 125,000+ traders who automate their strategy with auto-Trading. Start free — no credit card required.</p>
+    <h2>{{ ('featureDetail.readyToPutToWork' | translate) + ' ' + feature.title + '?' }}</h2>
+    <p>{{ 'featureDetail.ctaDesc' | translate }}</p>
     <div class="fp-cta-actions">
-      <button (click)="goToCta()" class="fp-btn-accent">Create Free Account →</button>
-      <a routerLink="/" class="fp-btn-outline">Explore All Features</a>
+      <button (click)="goToCta()" class="fp-btn-accent">{{ 'featureDetail.createFreeAccount' | translate }} →</button>
+      <a routerLink="/" class="fp-btn-outline">{{ 'featureDetail.exploreAllFeatures' | translate }}</a>
     </div>
   </div>
 </section>

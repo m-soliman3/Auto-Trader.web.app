@@ -3,65 +3,66 @@ import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AccountModeService } from '../services/account-mode.service';
 import { ExchangeService } from '../services/exchange.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-portfolio-management-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule],
   template: `
     <div class="user-page">
       <div class="page-shell">
-        <aside class="page-index" aria-label="Page navigation">
-          <div class="index-title">Navigation</div>
-          <div class="index-current">{{ modeLabel() }} Mode</div>
-          <nav class="index-nav" aria-label="Main pages">
-            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">Dashboard</a>
-            <a class="index-link" routerLink="/exchanges">Exchanges</a>
-            <a class="index-link" routerLink="/bots">Bots</a>
-            <a class="index-link" routerLink="/strategies">Strategies</a>
-            <a class="index-link active" routerLink="/portfolio-management">Portfolio</a>
-            <a class="index-link" routerLink="/backend-runner">Backend Runner</a>
+        <aside class="page-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
+          <div class="index-title">{{ 'userPages.navigation' | translate }}</div>
+          <div class="index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+          <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
+            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
+            <a class="index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+            <a class="index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+            <a class="index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+            <a class="index-link active" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
+            <a class="index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
           </nav>
         </aside>
 
         <main class="page-main">
           <div class="page-header">
-            <h1>{{ modeLabel() }} Portfolio Management</h1>
+            <h1>{{ modeLabel() }} {{ 'portfolioManagement.title' | translate }}</h1>
             <div class="header-actions">
               <button type="button" class="refresh-btn" (click)="refresh()" [disabled]="exchangeService.isLoadingPortfolio()">
-                {{ exchangeService.isLoadingPortfolio() ? 'Refreshing...' : 'Refresh' }}
+                {{ exchangeService.isLoadingPortfolio() ? ('userPages.refreshing' | translate) : ('userPages.refresh' | translate) }}
               </button>
-              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">Back to Dashboard</a>
+              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.backToDashboard' | translate }}</a>
             </div>
           </div>
 
           <section class="panel summary-grid">
             <article class="summary-card">
-              <div class="summary-label">Portfolio Value</div>
-              <div class="summary-value">{{ portfolioValue() !== null ? ('$' + (portfolioValue() | number:'1.2-2')) : 'N/A' }}</div>
+              <div class="summary-label">{{ 'portfolioManagement.portfolioValue' | translate }}</div>
+              <div class="summary-value">{{ portfolioValue() !== null ? ('$' + (portfolioValue() | number:'1.2-2')) : ('common.na' | translate) }}</div>
             </article>
             <article class="summary-card">
-              <div class="summary-label">Unrealized P&L</div>
+              <div class="summary-label">{{ 'portfolioManagement.unrealizedPnl' | translate }}</div>
               <div class="summary-value" [class.pnl-pos]="(pnlValue() ?? 0) >= 0" [class.pnl-neg]="(pnlValue() ?? 0) < 0">
-                {{ pnlValue() !== null ? ((pnlValue()! >= 0 ? '+' : '') + '$' + (pnlValue() | number:'1.2-2')) : 'N/A' }}
+                {{ pnlValue() !== null ? ((pnlValue()! >= 0 ? '+' : '') + '$' + (pnlValue() | number:'1.2-2')) : ('common.na' | translate) }}
               </div>
             </article>
           </section>
 
           @if (exchangeService.portfolioError()) {
-            <section class="panel error">{{ exchangeService.portfolioError() }}</section>
+            <section class="panel error">{{ exchangeService.portfolioError() | translate }}</section>
           }
 
           <section class="panel">
-            <h2>Exchange Breakdown</h2>
+            <h2>{{ 'portfolioManagement.exchangeBreakdown' | translate }}</h2>
             @if (breakdownRows().length > 0) {
               <div class="table-wrap">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Exchange</th>
-                      <th>Value</th>
-                      <th>P&L</th>
+                      <th>{{ 'portfolioManagement.exchange' | translate }}</th>
+                      <th>{{ 'portfolioManagement.value' | translate }}</th>
+                      <th>{{ 'portfolioManagement.pnl' | translate }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -70,7 +71,7 @@ import { ExchangeService } from '../services/exchange.service';
                         <td>{{ row.label }}</td>
                         <td>{{ '$' + (row.portfolioValue | number:'1.2-2') }}</td>
                         <td [class.pnl-pos]="(row.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="(row.unrealizedPnl ?? 0) < 0">
-                          {{ row.unrealizedPnl !== null ? ((row.unrealizedPnl >= 0 ? '+' : '') + '$' + (row.unrealizedPnl | number:'1.2-2')) : 'N/A' }}
+                          {{ row.unrealizedPnl !== null ? ((row.unrealizedPnl >= 0 ? '+' : '') + '$' + (row.unrealizedPnl | number:'1.2-2')) : ('common.na' | translate) }}
                         </td>
                       </tr>
                     }
@@ -78,22 +79,22 @@ import { ExchangeService } from '../services/exchange.service';
                 </table>
               </div>
             } @else {
-              <p class="empty">No portfolio rows yet. Connect an exchange to load portfolio data.</p>
+              <p class="empty">{{ 'portfolioManagement.noPortfolioRows' | translate }}</p>
             }
           </section>
 
           <section class="panel">
-            <h2>Open Positions</h2>
+            <h2>{{ 'portfolioManagement.openPositions' | translate }}</h2>
             @if (positionRows().length > 0) {
               <div class="table-wrap">
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Symbol</th>
-                      <th>Exchange</th>
-                      <th>Qty</th>
-                      <th>Value</th>
-                      <th>P/L %</th>
+                      <th>{{ 'portfolioManagement.symbol' | translate }}</th>
+                      <th>{{ 'portfolioManagement.exchange' | translate }}</th>
+                      <th>{{ 'portfolioManagement.qty' | translate }}</th>
+                      <th>{{ 'portfolioManagement.value' | translate }}</th>
+                      <th>{{ 'portfolioManagement.plPercent' | translate }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -104,17 +105,17 @@ import { ExchangeService } from '../services/exchange.service';
                         <td>{{ position.quantity | number:'1.2-8' }}</td>
                         <td>{{ '$' + (position.marketValue | number:'1.2-2') }}</td>
                         <td [class.pnl-pos]="(position.pnlPercentage ?? 0) >= 0" [class.pnl-neg]="(position.pnlPercentage ?? 0) < 0">
-                          {{ position.pnlPercentage !== null && position.pnlPercentage !== undefined ? ((position.pnlPercentage >= 0 ? '+' : '') + (position.pnlPercentage | number:'1.2-2') + '%') : 'N/A' }}
-                        </td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-            } @else {
-              <p class="empty">No open positions in {{ modeLabel() }} mode.</p>
-            }
-          </section>
+                           {{ position.pnlPercentage !== null && position.pnlPercentage !== undefined ? ((position.pnlPercentage >= 0 ? '+' : '') + (position.pnlPercentage | number:'1.2-2') + '%') : ('common.na' | translate) }}
+                         </td>
+                       </tr>
+                     }
+                   </tbody>
+                 </table>
+               </div>
+             } @else {
+               <p class="empty">{{ 'portfolioManagement.noOpenPositions' | translate }} {{ modeLabel() }} {{ 'userPages.mode' | translate }}.</p>
+             }
+           </section>
         </main>
       </div>
     </div>

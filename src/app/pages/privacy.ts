@@ -1,87 +1,88 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-privacy-page',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslateModule],
   template: `
     <div class="legal-page">
       <div class="legal-card">
         <div class="legal-top">
           <div class="legal-links">
-            <a routerLink="/" class="back-link">Home</a>
-            <a routerLink="/contact" class="back-link">Contact</a>
+            <a routerLink="/" class="back-link">{{ 'legal.home' | translate }}</a>
+            <a routerLink="/contact" class="back-link">{{ 'legal.contact' | translate }}</a>
           </div>
-          <button type="button" class="close-btn" aria-label="Close" (click)="close()">X</button>
+          <button type="button" class="close-btn" [attr.aria-label]="'common.close' | translate" (click)="close()">X</button>
         </div>
 
-        <h1>Privacy Policy</h1>
-        <p class="meta">Effective date: 22 March 2026 | Last Updated: 22 March 2026</p>
+        <h1>{{ 'privacy.title' | translate }}</h1>
+        <p class="meta">{{ 'privacy.effectiveAndUpdated' | translate }}</p>
 
-        <section><h2>1. Introduction</h2><p>Auto-Trading ("Company", "we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services, in compliance with the General Data Protection Regulation (GDPR) and other applicable privacy laws.</p></section>
+        <section><h2>{{ 'privacy.s1Title' | translate }}</h2><p>{{ 'privacy.s1Body' | translate }}</p></section>
 
-        <section><h2>2. Information We Collect</h2>
-        <p><strong>Personal Data:</strong></p>
-        <ul><li>Account information (name, email, phone number, country)</li><li>Authentication data and login credentials</li><li>Trading preferences and bot configurations</li><li>Strategy settings and execution history</li><li>Connected exchange API information (stored securely)</li></ul>
-        <p><strong>Usage Data:</strong></p>
-        <ul><li>Browser type, IP address, and device information</li><li>Pages visited and time spent on pages</li><li>User interactions and feature usage patterns</li><li>Error logs and technical diagnostics</li></ul>
-        <p><strong>Cookies and Tracking Technologies:</strong></p>
-        <ul><li>Session cookies for authentication</li><li>Preference cookies to remember your settings</li><li>Analytics cookies via Google Analytics and Google Tag Manager</li><li>Marketing cookies to analyze campaign performance</li></ul>
-        <p><strong>Support Data:</strong></p>
-        <ul><li>Messages submitted through contact forms</li><li>Support tickets and communications</li></ul>
+        <section><h2>{{ 'privacy.s2Title' | translate }}</h2>
+        <p><strong>{{ 'privacy.personalData' | translate }}</strong></p>
+        <ul><li>{{ 'privacy.s2Personal1' | translate }}</li><li>{{ 'privacy.s2Personal2' | translate }}</li><li>{{ 'privacy.s2Personal3' | translate }}</li><li>{{ 'privacy.s2Personal4' | translate }}</li><li>{{ 'privacy.s2Personal5' | translate }}</li></ul>
+        <p><strong>{{ 'privacy.usageData' | translate }}</strong></p>
+        <ul><li>{{ 'privacy.s2Usage1' | translate }}</li><li>{{ 'privacy.s2Usage2' | translate }}</li><li>{{ 'privacy.s2Usage3' | translate }}</li><li>{{ 'privacy.s2Usage4' | translate }}</li></ul>
+        <p><strong>{{ 'privacy.cookiesAndTracking' | translate }}</strong></p>
+        <ul><li>{{ 'privacy.s2Cookie1' | translate }}</li><li>{{ 'privacy.s2Cookie2' | translate }}</li><li>{{ 'privacy.s2Cookie3' | translate }}</li><li>{{ 'privacy.s2Cookie4' | translate }}</li></ul>
+        <p><strong>{{ 'privacy.supportData' | translate }}</strong></p>
+        <ul><li>{{ 'privacy.s2Support1' | translate }}</li><li>{{ 'privacy.s2Support2' | translate }}</li></ul>
         </section>
 
-        <section><h2>3. Legal Basis for Processing (GDPR)</h2>
-        <p>We process your personal data based on:</p>
-        <ul><li><strong>Consent:</strong> You have explicitly consented to our data collection and use</li><li><strong>Contract:</strong> Processing is necessary to provide our services to you</li><li><strong>Legal Obligation:</strong> Processing is required by applicable laws and regulations</li><li><strong>Legitimate Interests:</strong> Processing is necessary for our legitimate business interests, such as improving service quality</li></ul>
+        <section><h2>{{ 'privacy.s3Title' | translate }}</h2>
+        <p>{{ 'privacy.s3Lead' | translate }}</p>
+        <ul><li><strong>{{ 'privacy.consent' | translate }}</strong> {{ 'privacy.s3Consent' | translate }}</li><li><strong>{{ 'privacy.contract' | translate }}</strong> {{ 'privacy.s3Contract' | translate }}</li><li><strong>{{ 'privacy.legalObligation' | translate }}</strong> {{ 'privacy.s3Legal' | translate }}</li><li><strong>{{ 'privacy.legitimateInterests' | translate }}</strong> {{ 'privacy.s3Legitimate' | translate }}</li></ul>
         </section>
 
-        <section><h2>4. How We Use Your Data</h2>
-        <ul><li>Provide, maintain, and improve our trading platform</li><li>Authenticate users and secure accounts</li><li>Store and sync your trading bots, strategies, and configurations</li><li>Analyze platform usage to enhance user experience</li><li>Send service updates and support communications</li><li>Comply with legal and regulatory requirements</li><li>Detect and prevent fraud or security issues</li></ul>
+        <section><h2>{{ 'privacy.s4Title' | translate }}</h2>
+        <ul><li>{{ 'privacy.s4Item1' | translate }}</li><li>{{ 'privacy.s4Item2' | translate }}</li><li>{{ 'privacy.s4Item3' | translate }}</li><li>{{ 'privacy.s4Item4' | translate }}</li><li>{{ 'privacy.s4Item5' | translate }}</li><li>{{ 'privacy.s4Item6' | translate }}</li><li>{{ 'privacy.s4Item7' | translate }}</li></ul>
         </section>
 
-        <section><h2>5. Third-Party Integrations</h2>
-        <ul><li><strong>Google Analytics & Google Tag Manager:</strong> For tracking website usage and user behavior</li><li><strong>Firebase:</strong> For hosting, authentication, and real-time database services</li><li><strong>Exchange APIs:</strong> Your API keys are used solely for trading execution</li></ul>
-        <p>We only share the minimum data necessary with these services and maintain data processor agreements in compliance with GDPR Article 28.</p>
+        <section><h2>{{ 'privacy.s5Title' | translate }}</h2>
+        <ul><li><strong>{{ 'privacy.googleAnalyticsTagManager' | translate }}</strong> {{ 'privacy.s5Item1' | translate }}</li><li><strong>{{ 'privacy.firebase' | translate }}</strong> {{ 'privacy.s5Item2' | translate }}</li><li><strong>{{ 'privacy.exchangeApis' | translate }}</strong> {{ 'privacy.s5Item3' | translate }}</li></ul>
+        <p>{{ 'privacy.s5Body' | translate }}</p>
         </section>
 
-        <section><h2>6. Your Rights Under GDPR</h2>
-        <p>As an EU resident, you have the following rights:</p>
-        <ul><li><strong>Right of Access:</strong> Request a copy of your personal data</li><li><strong>Right to Rectification:</strong> Request correction of inaccurate data</li><li><strong>Right to Erasure (Right to be Forgotten):</strong> Request deletion of your data</li><li><strong>Right to Restrict Processing:</strong> Limit how we process your data</li><li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li><li><strong>Right to Object:</strong> Oppose our processing of your data</li><li><strong>Right to Withdraw Consent:</strong> Withdraw consent without affecting prior processing</li></ul>
-        <p>To exercise these rights, contact us at support@auto-trading.app</p>
+        <section><h2>{{ 'privacy.s6Title' | translate }}</h2>
+        <p>{{ 'privacy.s6Lead' | translate }}</p>
+        <ul><li><strong>{{ 'privacy.rightOfAccess' | translate }}</strong> {{ 'privacy.s6Item1' | translate }}</li><li><strong>{{ 'privacy.rightToRectification' | translate }}</strong> {{ 'privacy.s6Item2' | translate }}</li><li><strong>{{ 'privacy.rightToErasure' | translate }}</strong> {{ 'privacy.s6Item3' | translate }}</li><li><strong>{{ 'privacy.rightToRestrict' | translate }}</strong> {{ 'privacy.s6Item4' | translate }}</li><li><strong>{{ 'privacy.rightToPortability' | translate }}</strong> {{ 'privacy.s6Item5' | translate }}</li><li><strong>{{ 'privacy.rightToObject' | translate }}</strong> {{ 'privacy.s6Item6' | translate }}</li><li><strong>{{ 'privacy.rightToWithdraw' | translate }}</strong> {{ 'privacy.s6Item7' | translate }}</li></ul>
+        <p>{{ 'privacy.s6Body' | translate }}</p>
         </section>
 
-        <section><h2>7. Data Security</h2>
-        <p>We implement industry-standard security measures including encryption, secure authentication, and regular security audits. However, no online transmission is completely secure, and we cannot guarantee absolute security.</p>
+        <section><h2>{{ 'privacy.s7Title' | translate }}</h2>
+        <p>{{ 'privacy.s7Body' | translate }}</p>
         </section>
 
-        <section><h2>8. Data Retention</h2>
-        <p>We retain your personal data for as long as necessary to provide our services, comply with legal obligations, and resolve disputes. You can request deletion at any time, except where legal obligations require retention.</p>
+        <section><h2>{{ 'privacy.s8Title' | translate }}</h2>
+        <p>{{ 'privacy.s8Body' | translate }}</p>
         </section>
 
-        <section><h2>9. API Credentials and Sensitive Information</h2>
-        <p>Exchange API keys are encrypted and used only to enable trading functionality. You are responsible for maintaining the security of your API keys and setting appropriate permission scopes. We recommend regular key rotation.</p>
+        <section><h2>{{ 'privacy.s9Title' | translate }}</h2>
+        <p>{{ 'privacy.s9Body' | translate }}</p>
         </section>
 
-        <section><h2>10. Cookies and Consent</h2>
-        <p>When you first visit our website, you will see a consent banner asking for your permission to use cookies and analytics. You can manage your preferences at any time. If you decline analytics cookies, Google Tag Manager will not collect your data.</p>
+        <section><h2>{{ 'privacy.s10Title' | translate }}</h2>
+        <p>{{ 'privacy.s10Body' | translate }}</p>
         </section>
 
-        <section><h2>11. International Data Transfers</h2>
-        <p>Your data may be transferred to and processed in countries outside the EU. We ensure appropriate safeguards are in place for international transfers, including Standard Contractual Clauses.</p>
+        <section><h2>{{ 'privacy.s11Title' | translate }}</h2>
+        <p>{{ 'privacy.s11Body' | translate }}</p>
         </section>
 
-        <section><h2>12. Changes to This Policy</h2>
-        <p>We may update this policy periodically. Material changes will be communicated to you via email, and the updated effective date will be reflected on this page. Your continued use of our services constitutes acceptance of the updated policy.</p>
+        <section><h2>{{ 'privacy.s12Title' | translate }}</h2>
+        <p>{{ 'privacy.s12Body' | translate }}</p>
         </section>
 
-        <section><h2>13. Contact Information</h2>
-        <p><strong>Data Controller:</strong> Auto-Trading<br>
-        <strong>Email:</strong> support@auto-trading.app<br>
-        <strong>Website:</strong> https://auto-trading.app<br>
-        <strong>For complaints:</strong> You have the right to lodge a complaint with your local data protection authority.</p>
+        <section><h2>{{ 'privacy.s13Title' | translate }}</h2>
+        <p><strong>{{ 'privacy.dataController' | translate }}</strong> Auto-Trading<br>
+        <strong>{{ 'privacy.email' | translate }}</strong> support@auto-trading.app<br>
+        <strong>{{ 'privacy.website' | translate }}</strong> https://auto-trading.app<br>
+        <strong>{{ 'privacy.forComplaints' | translate }}</strong> {{ 'privacy.s13ComplaintsBody' | translate }}</p>
         </section>
       </div>
     </div>

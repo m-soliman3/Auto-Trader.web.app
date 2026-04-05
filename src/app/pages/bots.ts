@@ -6,11 +6,12 @@ import { Bot, BotService } from '../services/bot.service';
 import { StrategyService } from '../services/strategy.service';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bots-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, CreateBotModal, EditBotModal],
+  imports: [CommonModule, RouterLink, CreateBotModal, EditBotModal, TranslateModule],
   template: `
     <div class="user-page">
       @if (showAddBotModal()) {
@@ -32,13 +33,13 @@ import { EditBotModal } from '../components/edit-bot-modal';
         <div class="delete-bot-backdrop" (click)="cancelDelete()">
           <div class="delete-bot-modal" (click)="$event.stopPropagation()">
             <div class="delete-bot-header">
-              <h3>Confirm Deletion</h3>
-              <button class="delete-bot-close" (click)="cancelDelete()" aria-label="Close">✕</button>
+              <h3>{{ 'bots.confirmDeletion' | translate }}</h3>
+              <button class="delete-bot-close" (click)="cancelDelete()" [attr.aria-label]="'common.close' | translate">✕</button>
             </div>
             <div class="delete-bot-content">
-              <p class="delete-bot-question">Are you sure you want to delete Bot <strong>{{ botToDelete()?.name }}</strong>?</p>
+              <p class="delete-bot-question">{{ 'bots.deleteQuestion' | translate }} <strong>{{ botToDelete()?.name }}</strong>?</p>
               <div class="delete-bot-note">
-                <p><strong>⚠ Warning:</strong> This will delete all bot configuration and stop any open/unexecuted orders associated with it on the exchange.</p>
+                <p><strong>⚠ {{ 'common.warning' | translate }}:</strong> {{ 'bots.deleteWarning' | translate }}</p>
               </div>
 
               <!-- Confirmation Checkbox -->
@@ -48,25 +49,25 @@ import { EditBotModal } from '../components/edit-bot-modal';
                     type="checkbox"
                     [checked]="deleteConfirmed()"
                     (change)="deleteConfirmed.set($event.target.checked)"
-                    aria-label="I confirm I want to delete this Bot"
+                    [attr.aria-label]="'bots.confirmDeleteAria' | translate"
                   />
-                  <span>i confirm i want to delete this Bot and stop any open/unexecuted order associated with it</span>
+                  <span>{{ 'bots.confirmDeleteText' | translate }}</span>
                 </label>
               </div>
 
               <!-- Error Message -->
               @if (deleteConfirmError()) {
-                <div class="delete-bot-confirmation-error">{{ deleteConfirmError() }}</div>
+                <div class="delete-bot-confirmation-error">{{ deleteConfirmError() | translate }}</div>
               }
             </div>
             <div class="delete-bot-actions">
-              <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDelete()">Cancel</button>
+              <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDelete()">{{ 'common.cancel' | translate }}</button>
               <button 
                 class="delete-bot-btn delete-bot-confirm" 
                 (click)="confirmDelete()"
                 [disabled]="!canConfirmDelete()"
               >
-                Delete
+                {{ 'bots.delete' | translate }}
               </button>
             </div>
           </div>
@@ -74,25 +75,25 @@ import { EditBotModal } from '../components/edit-bot-modal';
       }
 
       <div class="page-shell">
-        <aside class="page-index" aria-label="Page navigation">
-          <div class="index-title">Navigation</div>
-          <div class="index-current">{{ modeLabel() }} Mode</div>
-          <nav class="index-nav" aria-label="Main pages">
-            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">Dashboard</a>
-            <a class="index-link" routerLink="/exchanges">Exchanges</a>
-            <a class="index-link active" routerLink="/bots">Bots</a>
-            <a class="index-link" routerLink="/strategies">Strategies</a>
-            <a class="index-link" routerLink="/portfolio-management">Portfolio</a>
-            <a class="index-link" routerLink="/backend-runner">Backend Runner</a>
+        <aside class="page-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
+          <div class="index-title">{{ 'userPages.navigation' | translate }}</div>
+          <div class="index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+          <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
+            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
+            <a class="index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+            <a class="index-link active" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+            <a class="index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+            <a class="index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
+            <a class="index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
           </nav>
         </aside>
 
         <main class="page-main">
           <div class="page-header">
-            <h1>{{ modeLabel() }} Bots</h1>
+            <h1>{{ modeLabel() }} {{ 'userPages.bots' | translate }}</h1>
             <div class="header-actions">
-              <button type="button" class="add-btn" (click)="openAddBot()">+ New Bot</button>
-              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">Back to Dashboard</a>
+              <button type="button" class="add-btn" (click)="openAddBot()">+ {{ 'bots.newBot' | translate }}</button>
+              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.backToDashboard' | translate }}</a>
             </div>
           </div>
 
@@ -107,10 +108,10 @@ import { EditBotModal } from '../components/edit-bot-modal';
                         <div class="row-sub">{{ bot.exchangeLabel }} · {{ bot.symbol }} · {{ bot.timeframe }}</div>
                       </div>
                       <span class="badge" [class.active]="bot.status === 'active'" [class.paused]="bot.status !== 'active'">
-                        {{ bot.status === 'active' ? 'Active' : 'Paused' }}
-                      </span>
-                    </button>
-                  }
+                         {{ bot.status === 'active' ? ('common.active' | translate) : ('common.paused' | translate) }}
+                       </span>
+                     </button>
+                   }
                 </div>
               </section>
 
@@ -119,13 +120,13 @@ import { EditBotModal } from '../components/edit-bot-modal';
                   <div class="details-header">
                     <div>
                       <h2>{{ bot.name }}</h2>
-                      <p class="details-sub">Created {{ bot.createdAt | date:'medium' }}</p>
-                    </div>
-                    <div class="header-actions">
-                      <button type="button" class="toggle-btn" (click)="toggleBotStatus(bot)" [disabled]="statusSaving() === bot.id">
-                        {{ statusSaving() === bot.id ? 'Saving...' : (bot.status === 'active' ? 'Pause Bot' : 'Resume Bot') }}
-                      </button>
-                      <button type="button" [class]="'edit-btn ' + (bot.status === 'active' ? 'view' : 'edit')" (click)="openEditBot(bot)" [title]="bot.status === 'active' ? 'View Bot' : 'Edit Bot'">
+                       <p class="details-sub">{{ 'common.created' | translate }} {{ bot.createdAt | date:'medium' }}</p>
+                     </div>
+                     <div class="header-actions">
+                       <button type="button" class="toggle-btn" (click)="toggleBotStatus(bot)" [disabled]="statusSaving() === bot.id">
+                         {{ statusSaving() === bot.id ? ('common.saving' | translate) : (bot.status === 'active' ? ('bots.pauseBot' | translate) : ('bots.resumeBot' | translate)) }}
+                       </button>
+                       <button type="button" [class]="'edit-btn ' + (bot.status === 'active' ? 'view' : 'edit')" (click)="openEditBot(bot)" [title]="bot.status === 'active' ? ('bots.viewBot' | translate) : ('bots.editBot' | translate)">
                         @if (bot.status === 'active') {
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-eye">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -138,28 +139,28 @@ import { EditBotModal } from '../components/edit-bot-modal';
                           </svg>
                         }
                       </button>
-                      <button type="button" class="delete-btn" (click)="removeBot(bot)">Delete</button>
-                    </div>
-                  </div>
+                       <button type="button" class="delete-btn" (click)="removeBot(bot)">{{ 'bots.delete' | translate }}</button>
+                     </div>
+                   </div>
 
-                  <div class="details-grid">
-                    <div class="detail-card"><div class="detail-label">Exchange</div><div class="detail-value">{{ bot.exchangeLabel }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Symbol</div><div class="detail-value">{{ bot.symbol }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Timeframe</div><div class="detail-value">{{ bot.timeframe }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Investment</div><div class="detail-value">{{ '$' + (bot.investment | number:'1.2-2') }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Stop Loss</div><div class="detail-value">{{ bot.stopLoss }}%</div></div>
-                    <div class="detail-card"><div class="detail-label">Take Profit</div><div class="detail-value">{{ bot.takeProfit }}%</div></div>
-                    <div class="detail-card"><div class="detail-label">Total Trades</div><div class="detail-value">{{ bot.trades }}</div></div>
-                    <div class="detail-card"><div class="detail-label">P&L</div><div class="detail-value" [class.pnl-pos]="bot.pnl >= 0" [class.pnl-neg]="bot.pnl < 0">{{ (bot.pnl >= 0 ? '+' : '') + '$' + (bot.pnl | number:'1.2-2') }}</div></div>
-                  </div>
+                   <div class="details-grid">
+                     <div class="detail-card"><div class="detail-label">{{ 'portfolioManagement.exchange' | translate }}</div><div class="detail-value">{{ bot.exchangeLabel }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'portfolioManagement.symbol' | translate }}</div><div class="detail-value">{{ bot.symbol }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'createBot.timeframe' | translate }}</div><div class="detail-value">{{ bot.timeframe }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'createBot.investment' | translate }}</div><div class="detail-value">{{ '$' + (bot.investment | number:'1.2-2') }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'createBot.stopLoss' | translate }}</div><div class="detail-value">{{ bot.stopLoss }}%</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'createBot.takeProfit' | translate }}</div><div class="detail-value">{{ bot.takeProfit }}%</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'bots.totalTrades' | translate }}</div><div class="detail-value">{{ bot.trades }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'portfolioManagement.pnl' | translate }}</div><div class="detail-value" [class.pnl-pos]="bot.pnl >= 0" [class.pnl-neg]="bot.pnl < 0">{{ (bot.pnl >= 0 ? '+' : '') + '$' + (bot.pnl | number:'1.2-2') }}</div></div>
+                   </div>
 
-                  <h3 class="log-title">Trade Log</h3>
+                   <h3 class="log-title">{{ 'exchanges.tradeLog' | translate }}</h3>
                   @if (selectedBotTradeLogs().length > 0) {
                     <div class="table-wrap">
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>Executed At</th><th>Symbol</th><th>Side</th><th>Strategy</th><th>Order ID</th><th>Amount</th>
+                             <th>{{ 'tradeDetails.executedAt' | translate }}</th><th>{{ 'portfolioManagement.symbol' | translate }}</th><th>{{ 'exchanges.side' | translate }}</th><th>{{ 'tradeDetails.strategy' | translate }}</th><th>{{ 'exchanges.orderId' | translate }}</th><th>{{ 'exchanges.amount' | translate }}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -177,16 +178,16 @@ import { EditBotModal } from '../components/edit-bot-modal';
                       </table>
                     </div>
                   } @else {
-                    <p class="empty">No trades logged yet for this bot.</p>
-                  }
-                </section>
-              }
-            </div>
-          } @else {
-            <section class="panel">
-              <p class="empty">No {{ modeLabel().toLowerCase() }} bots created yet. Use Dashboard to add your first bot.</p>
-            </section>
-          }
+                     <p class="empty">{{ 'bots.noTradesForBot' | translate }}</p>
+                   }
+                 </section>
+               }
+             </div>
+           } @else {
+             <section class="panel">
+               <p class="empty">{{ 'bots.noBotsPrefix' | translate }} {{ modeLabel().toLowerCase() }} {{ 'bots.noBotsSuffix' | translate }}</p>
+             </section>
+           }
         </main>
       </div>
     </div>

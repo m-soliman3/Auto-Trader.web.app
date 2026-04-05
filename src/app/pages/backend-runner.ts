@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { AccountModeService } from '../services/account-mode.service';
 import { environment } from '../../environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface RunnerSummary {
   totalActiveStrategies: number;
@@ -27,51 +28,51 @@ type RunnerDatePreset = 'today' | 'yesterday' | 'this-week' | 'last-week' | 'thi
 @Component({
   selector: 'app-backend-runner-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule],
   template: `
     <div class="user-page">
       <div class="page-shell">
-        <aside class="page-index" aria-label="Page navigation">
-          <div class="index-title">Navigation</div>
-          <div class="index-current">{{ modeLabel() }} Mode</div>
-          <nav class="index-nav" aria-label="Main pages">
-            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">Dashboard</a>
-            <a class="index-link" routerLink="/exchanges">Exchanges</a>
-            <a class="index-link" routerLink="/bots">Bots</a>
-            <a class="index-link" routerLink="/strategies">Strategies</a>
-            <a class="index-link" routerLink="/portfolio-management">Portfolio</a>
-            <a class="index-link active" routerLink="/backend-runner">Backend Runner</a>
+        <aside class="page-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
+          <div class="index-title">{{ 'userPages.navigation' | translate }}</div>
+          <div class="index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+          <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
+            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
+            <a class="index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+            <a class="index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+            <a class="index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+            <a class="index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
+            <a class="index-link active" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
           </nav>
         </aside>
 
         <main class="page-main">
           <div class="page-header">
-            <h1>Backend Runner</h1>
+            <h1>{{ 'backendRunner.title' | translate }}</h1>
             <div class="header-actions">
               <button type="button" class="refresh-btn" (click)="refresh()" [disabled]="runnerSummariesLoading()">
-                {{ runnerSummariesLoading() ? 'Refreshing...' : 'Refresh' }}
+                {{ runnerSummariesLoading() ? ('userPages.refreshing' | translate) : ('userPages.refresh' | translate) }}
               </button>
-              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">Back to Dashboard</a>
+              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.backToDashboard' | translate }}</a>
             </div>
           </div>
 
           <section class="panel">
             <div class="filters-row">
               <label class="filter-field">
-                <span>Date Range</span>
+                <span>{{ 'backendRunner.dateRange' | translate }}</span>
                 <select [value]="pendingDatePreset()" (change)="onDatePresetChange($any($event.target).value)">
-                  <option value="today">Today</option>
-                  <option value="yesterday">Yesterday</option>
-                  <option value="this-week">This Week</option>
-                  <option value="last-week">Last Week</option>
-                  <option value="this-month">This Month</option>
-                  <option value="last-month">Last Month</option>
-                  <option value="custom">Custom</option>
+                  <option value="today">{{ 'backendRunner.today' | translate }}</option>
+                  <option value="yesterday">{{ 'backendRunner.yesterday' | translate }}</option>
+                  <option value="this-week">{{ 'backendRunner.thisWeek' | translate }}</option>
+                  <option value="last-week">{{ 'backendRunner.lastWeek' | translate }}</option>
+                  <option value="this-month">{{ 'backendRunner.thisMonth' | translate }}</option>
+                  <option value="last-month">{{ 'backendRunner.lastMonth' | translate }}</option>
+                  <option value="custom">{{ 'backendRunner.custom' | translate }}</option>
                 </select>
               </label>
 
               <label class="filter-field">
-                <span>Date From</span>
+                <span>{{ 'backendRunner.dateFrom' | translate }}</span>
                 <input
                   type="date"
                   [value]="pendingFromDateFilter()"
@@ -81,7 +82,7 @@ type RunnerDatePreset = 'today' | 'yesterday' | 'this-week' | 'last-week' | 'thi
               </label>
 
               <label class="filter-field">
-                <span>Date To</span>
+                <span>{{ 'backendRunner.dateTo' | translate }}</span>
                 <input
                   type="date"
                   [value]="pendingToDateFilter()"
@@ -91,31 +92,31 @@ type RunnerDatePreset = 'today' | 'yesterday' | 'this-week' | 'last-week' | 'thi
               </label>
 
               <label class="filter-field">
-                <span>Status</span>
+                <span>{{ 'backendRunner.status' | translate }}</span>
                 <select [value]="pendingStatusFilter()" (change)="onStatusFilterChange($any($event.target).value)">
-                  <option value="all">All</option>
-                  <option value="executed">Executed</option>
-                  <option value="not-executed">Not Executed</option>
+                  <option value="all">{{ 'backendRunner.all' | translate }}</option>
+                  <option value="executed">{{ 'backendRunner.executed' | translate }}</option>
+                  <option value="not-executed">{{ 'backendRunner.notExecuted' | translate }}</option>
                 </select>
               </label>
 
               <button type="button" class="apply-filters-btn" (click)="applyFilters()" [disabled]="!hasPendingFilterChanges()">
-                Apply Filters
+                {{ 'backendRunner.applyFilters' | translate }}
               </button>
 
               <button type="button" class="clear-filters-btn" (click)="clearFilters()" [disabled]="!hasActiveFilters()">
-                Clear Filters
+                {{ 'backendRunner.clearFilters' | translate }}
               </button>
             </div>
 
             @if (runnerSummariesError()) {
               <div class="runner-error">{{ runnerSummariesError() }}</div>
             } @else if (runnerSummariesLoading() && runnerSummaries().length === 0) {
-              <div class="runner-loading">Loading backend runner summaries...</div>
+              <div class="runner-loading">{{ 'backendRunner.loading' | translate }}</div>
             } @else if (runnerSummaries().length === 0) {
-              <div class="runner-empty">No runner summaries yet.</div>
+              <div class="runner-empty">{{ 'backendRunner.noSummariesYet' | translate }}</div>
             } @else if (filteredRunnerSummaries().length === 0) {
-              <div class="runner-empty">No runner summaries match the selected filters.</div>
+              <div class="runner-empty">{{ 'backendRunner.noSummariesMatch' | translate }}</div>
             } @else {
               <div class="runner-list">
                 @for (summary of filteredRunnerSummaries(); track summary.ranAt) {
@@ -123,11 +124,11 @@ type RunnerDatePreset = 'today' | 'yesterday' | 'this-week' | 'last-week' | 'thi
                     <div class="runner-left">
                       <div class="runner-time">{{ summary.ranAt | date:'medium' }}</div>
                       <div class="runner-stats">
-                        Active: {{ summary.totalActiveStrategies }} · Executed: {{ summary.executed }} · Failed: {{ summary.failed }}
+                        {{ 'backendRunner.active' | translate }}: {{ summary.totalActiveStrategies }} · {{ 'backendRunner.executed' | translate }}: {{ summary.executed }} · {{ 'backendRunner.failed' | translate }}: {{ summary.failed }}
                       </div>
                     </div>
                     <span class="runner-badge" [class.runner-ok]="runnerStatusClass(summary) === 'runner-ok'" [class.runner-warn]="runnerStatusClass(summary) === 'runner-warn'" [class.runner-quiet]="runnerStatusClass(summary) === 'runner-quiet'">
-                      {{ runnerStatusLabel(summary) }}
+                      {{ runnerStatusLabel(summary) | translate }}
                     </span>
                   </div>
                 }
@@ -271,9 +272,9 @@ export class BackendRunnerPage {
   }
 
   runnerStatusLabel(summary: RunnerSummary): string {
-    if (summary.failed > 0) return 'Has Failures';
-    if (summary.executed > 0) return 'Executed';
-    return 'No Executions';
+    if (summary.failed > 0) return 'backendRunner.hasFailures';
+    if (summary.executed > 0) return 'backendRunner.executed';
+    return 'backendRunner.noExecutions';
   }
 
   refresh(): void {
@@ -331,14 +332,14 @@ export class BackendRunnerPage {
 
   private async loadRunnerSummaries(showLoader = true): Promise<void> {
     if (!this.tradingBackendBaseUrl) {
-      this.runnerSummariesError.set('Backend monitor is disabled. Set tradingBackendBaseUrl in environment.');
+      this.runnerSummariesError.set('backendRunner.disabledMessage');
       this.runnerSummaries.set([]);
       return;
     }
 
     const currentUser = this.firebaseAuth.currentUser;
     if (!currentUser) {
-      this.runnerSummariesError.set('Sign in to view backend runner status.');
+      this.runnerSummariesError.set('backendRunner.signInMessage');
       return;
     }
 
@@ -359,7 +360,7 @@ export class BackendRunnerPage {
       ));
       this.runnerSummaries.set(payload.items ?? []);
     } catch {
-      this.runnerSummariesError.set('Unable to load backend runner status right now.');
+      this.runnerSummariesError.set('backendRunner.unableToLoad');
     } finally {
       if (showLoader) {
         this.runnerSummariesLoading.set(false);

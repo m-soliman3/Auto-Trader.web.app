@@ -11,11 +11,11 @@
     <div class="modal-header">
       <div class="modal-title-row">
         <div>
-          <h2>📊 Browse Strategies</h2>
-          <p>{{ results().length }} strategies available — pick one to run as a bot</p>
+          <h2>📊 {{ 'browseStrategies.title' | translate }}</h2>
+          <p>{{ results().length }} {{ 'browseStrategies.strategiesAvailable' | translate }}</p>
         </div>
       </div>
-      <button class="close-btn" (click)="close()" aria-label="Close">
+      <button class="close-btn" (click)="close()" [attr.aria-label]="'common.close' | translate">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
@@ -27,7 +27,7 @@
         <input
           class="search-input"
           type="text"
-          placeholder="Search strategies…"
+          [placeholder]="'browseStrategies.searchPlaceholder' | translate"
           [ngModel]="searchQuery()"
           (ngModelChange)="searchQuery.set($event)"
         />
@@ -54,8 +54,8 @@
       @if (results().length === 0) {
         <div class="empty-state">
           <span class="empty-icon">🔍</span>
-          <p>No strategies match your filters.</p>
-          <button class="chip active" (click)="searchQuery.set(''); activeMarket.set('all'); activeRisk.set('all'); activeCategory.set('all')">Clear Filters</button>
+          <p>{{ 'browseStrategies.noStrategiesMatch' | translate }}</p>
+          <button class="chip active" (click)="searchQuery.set(''); activeMarket.set('all'); activeRisk.set('all'); activeCategory.set('all')">{{ 'browseStrategies.clearFilters' | translate }}</button>
         </div>
       }
       <div class="strategy-list">
@@ -68,8 +68,8 @@
               <div class="card-info">
                 <div class="card-name-row">
                   <span class="card-name">{{ s.name }}</span>
-                  @if (s.isPopular) { <span class="badge-popular">🔥 Popular</span> }
-                  @if (s.isNew)     { <span class="badge-new">✨ New</span> }
+                  @if (s.isPopular) { <span class="badge-popular">🔥 {{ 'browseStrategies.popular' | translate }}</span> }
+                  @if (s.isNew)     { <span class="badge-new">✨ {{ 'browseStrategies.new' | translate }}</span> }
                 </div>
                 <p class="card-desc">{{ s.shortDesc }}</p>
                 <div class="card-tags">
@@ -83,23 +83,23 @@
               <div class="card-stats">
                 <div class="cstat">
                   <div class="cstat-val positive">{{ s.winRate }}%</div>
-                  <div class="cstat-lbl">Win Rate</div>
+                  <div class="cstat-lbl">{{ 'browseStrategies.winRate' | translate }}</div>
                 </div>
                 <div class="cstat">
                   <div class="cstat-val positive">+{{ s.avgReturn }}%</div>
-                  <div class="cstat-lbl">Avg/mo</div>
+                  <div class="cstat-lbl">{{ 'browseStrategies.avgPerMonth' | translate }}</div>
                 </div>
                 <div class="cstat">
                   <div class="cstat-val">{{ s.users | number }}</div>
-                  <div class="cstat-lbl">Users</div>
+                  <div class="cstat-lbl">{{ 'browseStrategies.users' | translate }}</div>
                 </div>
               </div>
               <div class="card-actions">
                 <button class="btn-bookmark" [class.saved]="isSaved(s.id)"
-                  (click)="toggleSave($event, s.id)" [title]="isSaved(s.id) ? 'Unsave' : 'Save'">
-                  🔖 <span [style.opacity]="isSaved(s.id) ? '1' : '0.4'">{{ isSaved(s.id) ? 'Saved' : 'Save' }}</span>
+                  (click)="toggleSave($event, s.id)" [title]="isSaved(s.id) ? ('browseStrategies.unsave' | translate) : ('browseStrategies.save' | translate)">
+                  🔖 <span [style.opacity]="isSaved(s.id) ? '1' : '0.4'">{{ isSaved(s.id) ? ('browseStrategies.saved' | translate) : ('browseStrategies.save' | translate) }}</span>
                 </button>
-                <button class="btn-use-sm" (click)="onUseStrategyClick($event, s)" type="button">Use →</button>
+                <button class="btn-use-sm" (click)="onUseStrategyClick($event, s)" type="button">{{ 'browseStrategies.use' | translate }} →</button>
               </div>
             </div>
           </div>
@@ -119,10 +119,10 @@
         </button>
         <div>
           <h2>{{ detail()!.icon }} {{ detail()!.name }}</h2>
-          <p>Strategy details &amp; performance</p>
+          <p>{{ 'browseStrategies.strategyDetailsPerformance' | translate }}</p>
         </div>
       </div>
-      <button class="close-btn" (click)="close()" aria-label="Close">
+      <button class="close-btn" (click)="close()" [attr.aria-label]="'common.close' | translate">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
@@ -130,7 +130,7 @@
     <div class="modal-body">
       <div class="detail-body">
         <div class="detail-badges">
-          <span class="risk-badge" [style.background]="riskColor(detail()!.risk) + '22'" [style.color]="riskColor(detail()!.risk)">{{ detail()!.risk }} Risk</span>
+          <span class="risk-badge" [style.background]="riskColor(detail()!.risk) + '22'" [style.color]="riskColor(detail()!.risk)">{{ detail()!.risk }} {{ 'common.risk' | translate }}</span>
           <span class="diff-badge">{{ detail()!.difficulty }}</span>
           @for (m of detail()!.markets; track m) {
             <span class="market-badge">{{ marketLabel(m) }}</span>
@@ -142,19 +142,19 @@
         <div class="detail-stats">
           <div class="dstat">
             <div class="dstat-value positive">{{ detail()!.winRate }}%</div>
-            <div class="dstat-label">Win Rate</div>
+            <div class="dstat-label">{{ 'browseStrategies.winRate' | translate }}</div>
           </div>
           <div class="dstat">
             <div class="dstat-value positive">+{{ detail()!.avgReturn }}%</div>
-            <div class="dstat-label">Avg Monthly</div>
+            <div class="dstat-label">{{ 'browseStrategies.avgMonthly' | translate }}</div>
           </div>
           <div class="dstat">
             <div class="dstat-value negative">-{{ detail()!.maxDrawdown }}%</div>
-            <div class="dstat-label">Max Drawdown</div>
+            <div class="dstat-label">{{ 'browseStrategies.maxDrawdown' | translate }}</div>
           </div>
           <div class="dstat">
             <div class="dstat-value">{{ detail()!.users | number }}</div>
-            <div class="dstat-label">Active Users</div>
+            <div class="dstat-label">{{ 'browseStrategies.activeUsers' | translate }}</div>
           </div>
         </div>
 
@@ -164,20 +164,20 @@
 
         <div class="detail-meta">
           <div class="meta-row">
-            <span class="meta-label">Supported Timeframes</span>
+            <span class="meta-label">{{ 'browseStrategies.supportedTimeframes' | translate }}</span>
             <span class="meta-value mono">{{ detail()!.timeframes.join(', ') }}</span>
           </div>
           <div class="meta-row">
-            <span class="meta-label">Min. Investment</span>
+            <span class="meta-label">{{ 'browseStrategies.minInvestment' | translate }}</span>
             <span class="meta-value">${{ detail()!.minInvestment | number }}</span>
           </div>
         </div>
 
         <div class="detail-actions">
           <button class="btn-save-detail" [class.saved]="isSaved(detail()!.id)" (click)="toggleSave($event, detail()!.id)">
-            🔖 {{ isSaved(detail()!.id) ? 'Saved' : 'Save Strategy' }}
+            🔖 {{ isSaved(detail()!.id) ? ('browseStrategies.saved' | translate) : ('browseStrategies.saveStrategy' | translate) }}
           </button>
-          <button class="btn-use" (click)="onUseStrategyClick($event, detail()!)" type="button">Use This Strategy →</button>
+          <button class="btn-use" (click)="onUseStrategyClick($event, detail()!)" type="button">{{ 'browseStrategies.useThisStrategy' | translate }} →</button>
         </div>
       </div>
     </div>

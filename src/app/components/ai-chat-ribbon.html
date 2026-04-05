@@ -1,8 +1,8 @@
-<div class="chatbot-widget" [class.open]="isOpen()" aria-label="Auto-Trader chat assistant">
+<div class="chatbot-widget" [class.open]="isOpen()" [attr.aria-label]="'chat.assistantAria' | translate">
   @if (!isOpen()) {
-    <button class="chatbot-launcher" (click)="openPanel()" aria-label="Open AI assistant">
+    <button class="chatbot-launcher" (click)="openPanel()" [attr.aria-label]="'chat.openAssistant' | translate">
       <span class="launcher-icon">AI</span>
-      <span class="launcher-text">Chat</span>
+      <span class="launcher-text">{{ 'chat.chat' | translate }}</span>
       <span class="launcher-status" [class.online]="isOnline()" [class.offline]="!isOnline()"></span>
     </button>
   }
@@ -16,9 +16,9 @@
         </div>
         <div class="chatbot-header-actions">
           <span class="chatbot-status" [class.online]="isOnline()" [class.offline]="!isOnline()">
-            {{ isOnline() ? 'Online' : 'Offline' }}
+            {{ isOnline() ? ('chat.online' | translate) : ('chat.offline' | translate) }}
           </span>
-          <button class="chatbot-minimize" (click)="minimizePanel()" aria-label="Minimize chat">_</button>
+          <button class="chatbot-minimize" (click)="minimizePanel()" [attr.aria-label]="'chat.minimizeChat' | translate">_</button>
         </div>
       </header>
 
@@ -30,7 +30,7 @@
         @if (hasMessages()) {
           @for (turn of turns(); track turn.content + $index) {
             <div class="chat-msg" [class.user]="turn.role === 'user'" [class.assistant]="turn.role === 'assistant'">
-              <div class="chat-msg-role">{{ turn.role === 'user' ? 'You' : 'Assistant' }}</div>
+              <div class="chat-msg-role">{{ turn.role === 'user' ? ('chat.you' | translate) : ('chat.assistant' | translate) }}</div>
               <div class="chat-msg-content" [class.typing]="isTypingReply() && turn.role === 'assistant' && $last">{{ turn.content }}</div>
             </div>
           }
@@ -38,8 +38,8 @@
 
         @if (isSending() && !isTypingReply()) {
           <div class="chat-msg assistant">
-            <div class="chat-msg-role">Assistant</div>
-            <div class="chat-msg-content thinking">Thinking...</div>
+            <div class="chat-msg-role">{{ 'chat.assistant' | translate }}</div>
+            <div class="chat-msg-content thinking">{{ 'chat.thinking' | translate }}</div>
           </div>
         }
       </div>
@@ -62,7 +62,7 @@
           (keydown.enter)="send()"
         />
         <button class="chatbot-send" (click)="send()" [disabled]="isSending() || !input.trim()">
-          {{ isSending() ? '...' : 'Send' }}
+          {{ isSending() ? '...' : ('chat.send' | translate) }}
         </button>
       </div>
     </section>

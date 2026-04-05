@@ -6,13 +6,14 @@ import {
 } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 type Step = 1 | 2 | 3;
 
 @Component({
   selector: 'app-create-bot-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './create-bot-modal.html',
   styleUrl: './create-bot-modal.scss',
 })
