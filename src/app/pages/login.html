@@ -20,8 +20,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
     </div>
 
-    <h1>Welcome back</h1>
-    <p class="auth-sub">Log in to your auto-Trading account</p>
+    <h1>{{ 'login.welcomeBack' | translate }}</h1>
+    <p class="auth-sub">{{ 'login.subtitle' | translate }}</p>
 
     @if (error()) {
       <div class="alert-error">{{ error() }}</div>
@@ -29,27 +29,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
-        <label for="email">Email address</label>
+        <label for="email">{{ 'login.emailLabel' | translate }}</label>
         <input
           id="email"
           type="email"
           [(ngModel)]="email"
           name="email"
-          placeholder="you@example.com"
+          [placeholder]="'login.emailPlaceholder' | translate"
           autocomplete="email"
           required
           (blur)="emailTouched.set(true)"
           [class.input-error]="emailTouched() && !isValidEmail(email)"
         />
         @if (emailTouched() && !isValidEmail(email)) {
-          <span class="field-error">Please enter a valid email address (e.g. you@example.com)</span>
+          <span class="field-error">{{ 'login.emailError' | translate }}</span>
         }
       </div>
 
       <div class="form-group">
         <div class="label-row">
-          <label for="password">Password</label>
-          <button type="button" class="forgot" (click)="openForgot()">Forgot password?</button>
+          <label for="password">{{ 'login.passwordLabel' | translate }}</label>
+          <button type="button" class="forgot" (click)="openForgot()">{{ 'login.forgotPassword' | translate }}</button>
         </div>
         <input
           id="password"
@@ -63,17 +63,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <button type="submit" class="btn-submit" [disabled]="loading()">
-        @if (loading()) { <span class="spinner"></span> Logging in… }
-        @else { Log In }
+        @if (loading()) { <span class="spinner"></span> {{ 'login.loggingIn' | translate }} }
+        @else { {{ 'login.logIn' | translate }} }
       </button>
     </form>
 
-    <div class="social-divider"><span>or continue with</span></div>
+    <div class="social-divider"><span>{{ 'login.orContinueWith' | translate }}</span></div>
 
     <div class="social-buttons">
       <button class="btn-social" (click)="loginWithGoogle()" [disabled]="socialLoading() !== ''">
         @if (socialLoading() === 'google') {
-          <span class="spinner spinner-dark"></span> Connecting…
+          <span class="spinner spinner-dark"></span> {{ 'login.connecting' | translate }}
         } @else {
           <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
             <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" fill="#FFC107"/>
@@ -81,20 +81,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <path d="M24 46c5.5 0 10.5-1.9 14.3-5.1l-6.6-5.6C29.7 36.9 27 37.9 24 37.9c-6 0-10.6-3.5-11.7-8.5l-7 5.4C8.5 41.6 15.7 46 24 46z" fill="#4CAF50"/>
             <path d="M44.5 20H24v8.5h11.8c-.6 2.7-2.1 5-4.2 6.7l6.6 5.6C41.8 37.2 45 31.1 45 24c0-1.3-.2-2.7-.5-4z" fill="#1976D2"/>
           </svg>
-          Continue with Google
+          {{ 'login.continueWithGoogle' | translate }}
         }
       </button>
 
     </div>
 
-    <p class="auth-alt">Don't have an account? <a routerLink="/signup">Sign up free</a></p>
+    <p class="auth-alt">{{ 'login.noAccount' | translate }} <a routerLink="/signup">{{ 'login.signUpFree' | translate }}</a></p>
   </div>
 </div>
 
-<!-- ── Forgot Password Modal (simplified) ─────────────────────────────── -->
+<!-- ── Forgot Password Modal ─────────────────────────────── -->
 <ng-container *ngIf="forgotOpen()">
   <div class="fp-backdrop" (click)="closeForgot()"></div>
-  <div class="fp-modal" role="dialog" aria-modal="true" aria-label="Reset your password">
+  <div class="fp-modal" role="dialog" aria-modal="true" [attr.aria-label]="'login.forgotTitle' | translate">
 
     <!-- Header -->
     <div class="fp-header">
@@ -105,17 +105,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </svg>
       </div>
       <div>
-        <h2 class="fp-title">Reset your password</h2>
+        <h2 class="fp-title">{{ 'login.forgotTitle' | translate }}</h2>
         <p class="fp-sub">
           <ng-container *ngIf="!resetSent()">
-            Enter your registered email address below and we’ll send you a link to reset it.
+            {{ 'login.forgotSubEnter' | translate }}
           </ng-container>
           <ng-container *ngIf="resetSent()">
-            Check your inbox for the reset email.
+            {{ 'login.forgotSubCheck' | translate }}
           </ng-container>
         </p>
       </div>
-      <button class="fp-close" (click)="closeForgot()" aria-label="Close">
+      <button class="fp-close" (click)="closeForgot()" [attr.aria-label]="'login.forgotClose' | translate">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
     </div>
@@ -126,21 +126,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="fp-body">
       <ng-container *ngIf="!resetSent(); else doneBlock">
         <div class="form-group">
-          <label for="fp-email">Email address</label>
+          <label for="fp-email">{{ 'login.emailLabel' | translate }}</label>
           <input id="fp-email" type="email" [(ngModel)]="forgotEmail" name="fp-email"
-            placeholder="you@example.com" autocomplete="email" required />
+            [placeholder]="'login.emailPlaceholder' | translate" autocomplete="email" required />
         </div>
         <button class="btn-fp" (click)="onForgotSubmitEmail()" [disabled]="forgotLoading()">
           <span *ngIf="forgotLoading(); else sendText" class="spinner"></span>
-          <ng-template #sendText>Send reset email</ng-template>
-          <span *ngIf="forgotLoading()"> Sending…</span>
+          <ng-template #sendText>{{ 'login.forgotSendEmail' | translate }}</ng-template>
+          <span *ngIf="forgotLoading()"> {{ 'login.forgotSending' | translate }}</span>
         </button>
       </ng-container>
       <ng-template #doneBlock>
-        <p class="fp-done-msg">A password reset link has been sent to <strong>{{ forgotEmail }}</strong>.</p>
-        <button class="btn-fp" (click)="finishReset()">Close</button>
+        <p class="fp-done-msg">{{ 'login.forgotDoneMsg' | translate }} <strong>{{ forgotEmail }}</strong>.</p>
+        <button class="btn-fp" (click)="finishReset()">{{ 'login.closeForgot' | translate }}</button>
       </ng-template>
     </div>
   </div>
 </ng-container>
-

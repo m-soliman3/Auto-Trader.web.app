@@ -1,0 +1,175 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "howItWorks": "Comment ça marche",
+    "logIn": "Connexion",
+    "getStarted": "Commencer",
+    "dashboard": "Tableau de bord",
+    "settings": "Paramètres",
+    "logOut": "Déconnexion",
+    "real": "Réel",
+    "paper": "Démo",
+    "switchToLight": "Passer au mode clair",
+    "switchToDark": "Passer au mode sombre",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "openUserMenu": "Ouvrir le menu utilisateur",
+    "closeUserMenu": "Fermer le menu utilisateur",
+    "accountMode": "Mode de compte"
+  },
+  "home": {
+    "badge": "🚀 Maintenant disponible — Moteur de signaux IA v3",
+    "heroTitle1": "Automatisez Votre",
+    "heroTitle2": "Stratégie de Trading.",
+    "heroTitle3": "Tradez Plus Intelligemment.",
+    "heroSub": "auto-Trading se connecte à plus de 30 exchanges et fait tourner vos bots 24h/24 — propulsé par des signaux d'apprentissage automatique, une gestion des risques solide et zéro émotion.",
+    "startFree": "Commencer gratuitement →",
+    "seeHowItWorks": "Voir comment ça marche",
+    "stats": {
+      "activeTraders": "Traders Actifs",
+      "volumeTraded": "Volume Échangé",
+      "uptime": "Disponibilité",
+      "avgReturn": "Rendement Annuel Moy."
+    },
+    "featuresTag": "Fonctionnalités",
+    "featuresTitle": "Tout ce dont vous avez besoin pour trader en pilote automatique",
+    "featuresSub": "Des signaux IA aux contrôles des risques — auto-Trading couvre l'ensemble du cycle du trading automatisé.",
+    "learnMore": "En savoir plus →",
+    "features": {
+      "aiSignals": {
+        "title": "Signaux IA",
+        "desc": "Les modèles d'apprentissage automatique analysent des milliers d'actifs en temps réel et détectent automatiquement les configurations de trading à haute probabilité."
+      },
+      "multiExchange": {
+        "title": "Support Multi-Exchange",
+        "desc": "Connectez Binance, Coinbase, Kraken, Bybit et plus de 30 exchanges via une seule API unifiée."
+      },
+      "riskManagement": {
+        "title": "Gestion des Risques",
+        "desc": "Stop-loss, take-profit, dimensionnement des positions et limites d'exposition du portefeuille personnalisables protègent votre capital 24h/24."
+      },
+      "backtesting": {
+        "title": "Backtesting Avancé",
+        "desc": "Testez vos stratégies sur des années de données historiques au niveau du tick avant d'engager le moindre dollar en trading réel."
+      },
+      "smartAlerts": {
+        "title": "Alertes Intelligentes",
+        "desc": "Recevez des notifications push, e-mail ou Telegram en temps réel lorsque des conditions sont remplies, des trades s'exécutent ou des limites de drawdown sont atteintes."
+      },
+      "noCode": {
+        "title": "Constructeur Sans Code",
+        "desc": "Le constructeur de stratégies drag-and-drop vous permet d'automatiser une logique complexe sans écrire une seule ligne de code."
+      }
+    },
+    "howItWorksTag": "Comment ça marche",
+    "howItWorksTitle": "Opérationnel en quelques minutes",
+    "steps": {
+      "step1": {
+        "title": "Connectez votre Exchange",
+        "desc": "Liez votre compte exchange via des clés API en moins de 2 minutes. Vos fonds restent en sécurité sur l'exchange en permanence."
+      },
+      "step2": {
+        "title": "Choisissez ou Créez un Bot",
+        "desc": "Choisissez parmi une bibliothèque de stratégies éprouvées ou créez votre propre logique avec notre constructeur intuitif sans code."
+      },
+      "step3": {
+        "title": "Laissez-le Trader pour Vous",
+        "desc": "Détendez-vous pendant qu'auto-Trading surveille les marchés en permanence, exécute des trades et gère automatiquement les risques."
+      }
+    },
+    "ctaTitle": "Prêt à trader en pilote automatique ?",
+    "ctaDesc": "Rejoignez plus de 125 000 traders qui ont automatisé leur stratégie avec auto-Trading. Commencez gratuitement — sans carte de crédit.",
+    "createFreeAccount": "Créer un compte gratuit →"
+  },
+  "login": {
+    "welcomeBack": "Bon retour",
+    "subtitle": "Connectez-vous à votre compte auto-Trading",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.fr",
+    "emailError": "Veuillez entrer une adresse e-mail valide (p. ex. vous@exemple.fr)",
+    "passwordLabel": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "passwordPlaceholder": "••••••••",
+    "loggingIn": "Connexion…",
+    "logIn": "Se connecter",
+    "orContinueWith": "ou continuer avec",
+    "connecting": "Connexion…",
+    "continueWithGoogle": "Continuer avec Google",
+    "noAccount": "Pas encore de compte ?",
+    "signUpFree": "S'inscrire gratuitement",
+    "forgotTitle": "Réinitialiser votre mot de passe",
+    "forgotSubEnter": "Entrez votre adresse e-mail enregistrée et nous vous enverrons un lien pour le réinitialiser.",
+    "forgotSubCheck": "Vérifiez votre boîte de réception pour l'e-mail de réinitialisation.",
+    "forgotClose": "Fermer",
+    "forgotSendEmail": "Envoyer l'e-mail de réinitialisation",
+    "forgotSending": "Envoi…",
+    "forgotDoneMsg": "Un lien de réinitialisation de mot de passe a été envoyé à",
+    "closeForgot": "Fermer"
+  },
+  "signup": {
+    "createAccount": "Créer votre compte",
+    "subtitle": "Commencez à automatiser vos trades en quelques minutes — c'est gratuit",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Jean Dupont",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "vous@exemple.fr",
+    "emailError": "Veuillez entrer une adresse e-mail valide (p. ex. vous@exemple.fr)",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Min. 8 caractères",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPlaceholder": "••••••••",
+    "agreeTerms": "J'accepte les",
+    "termsOfService": "Conditions d'utilisation",
+    "and": "et la",
+    "privacyPolicy": "Politique de confidentialité",
+    "creatingAccount": "Création du compte…",
+    "createFreeAccount": "Créer un compte gratuit",
+    "orSignUpWith": "ou s'inscrire avec",
+    "connecting": "Connexion…",
+    "signUpWithGoogle": "S'inscrire avec Google",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "logIn": "Se connecter"
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "subtitle": "Vous avez une question ou un commentaire ? Envoyez-nous un message et nous vous répondrons.",
+    "successMsg": "Votre message a été envoyé. Nous vous répondrons dans les plus brefs délais.",
+    "emailLabel": "Votre adresse e-mail",
+    "emailPlaceholder": "vous@exemple.fr",
+    "subjectLabel": "Sujet",
+    "subjectPlaceholder": "De quoi s'agit-il ?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Écrivez votre message ici…",
+    "sending": "Envoi…",
+    "sendMessage": "Envoyer le message",
+    "backToHome": "← Retour à l'accueil"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "backToDashboard": "Retour au tableau de bord",
+    "display": "Affichage",
+    "account": "Compte",
+    "security": "Sécurité",
+    "billing": "Facturation",
+    "legal": "Légal",
+    "saved": "Enregistré",
+    "close": "×"
+  },
+  "footer": {
+    "copyright": "© 2026 auto-Trading. Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "disclaimer": "Avertissement",
+    "contact": "Contact"
+  },
+  "language": {
+    "selectLanguage": "Choisir la langue",
+    "en": "Anglais",
+    "de": "Allemand",
+    "es": "Espagnol",
+    "fr": "Français",
+    "pt": "Portugais",
+    "ar": "Arabe"
+  }
+}

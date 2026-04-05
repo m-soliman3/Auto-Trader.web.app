@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-site-footer',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule],
   template: `
     <footer class="site-footer" aria-label="Site footer">
       <div class="footer-container">
@@ -17,13 +18,13 @@ import { RouterLink } from '@angular/router';
           <span>auto-Trading</span>
         </div>
 
-        <p class="footer-copy">© 2026 auto-Trading. All rights reserved.</p>
+        <p class="footer-copy">{{ 'footer.copyright' | translate }}</p>
 
         <div class="footer-links">
-          <a routerLink="/privacy">Privacy</a>
-          <a routerLink="/terms">Terms</a>
-          <a routerLink="/disclaimer">Disclaimer</a>
-          <a routerLink="/contact">Contact</a>
+          <a routerLink="/privacy">{{ 'footer.privacy' | translate }}</a>
+          <a routerLink="/terms">{{ 'footer.terms' | translate }}</a>
+          <a routerLink="/disclaimer">{{ 'footer.disclaimer' | translate }}</a>
+          <a routerLink="/contact">{{ 'footer.contact' | translate }}</a>
         </div>
       </div>
     </footer>

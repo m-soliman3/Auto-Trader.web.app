@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 // EmailJS public credentials — safe to include in browser code (read-only sending only).
 const EMAILJS_SERVICE_ID  = 'Auto-Trader';
@@ -11,7 +12,7 @@ const CONTACT_RECIPIENT   = 'mohamed@investbegin.de';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, TranslateModule],
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })

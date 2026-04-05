@@ -20,8 +20,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
     </div>
 
-    <h1>Create your account</h1>
-    <p class="auth-sub">Start automating your trades in minutes — it's free</p>
+    <h1>{{ 'signup.createAccount' | translate }}</h1>
+    <p class="auth-sub">{{ 'signup.subtitle' | translate }}</p>
 
     @if (error()) {
       <div class="alert-error">{{ error() }}</div>
@@ -29,51 +29,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <form (ngSubmit)="onSubmit()" novalidate>
       <div class="form-group">
-        <label for="name">Full name</label>
+        <label for="name">{{ 'signup.fullName' | translate }}</label>
         <input
           id="name"
           type="text"
           [(ngModel)]="name"
           name="name"
-          placeholder="John Doe"
+          [placeholder]="'signup.fullNamePlaceholder' | translate"
           autocomplete="name"
           required
         />
       </div>
 
       <div class="form-group">
-        <label for="email">Email address</label>
+        <label for="email">{{ 'signup.emailLabel' | translate }}</label>
         <input
           id="email"
           type="email"
           [(ngModel)]="email"
           name="email"
-          placeholder="you@example.com"
+          [placeholder]="'signup.emailPlaceholder' | translate"
           autocomplete="email"
           required
           (blur)="emailTouched.set(true)"
           [class.input-error]="emailTouched() && !isValidEmail(email)"
         />
         @if (emailTouched() && !isValidEmail(email)) {
-          <span class="field-error">Please enter a valid email address (e.g. you@example.com)</span>
+          <span class="field-error">{{ 'signup.emailError' | translate }}</span>
         }
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">{{ 'signup.passwordLabel' | translate }}</label>
         <input
           id="password"
           type="password"
           [(ngModel)]="password"
           name="password"
-          placeholder="Min. 8 characters"
+          [placeholder]="'signup.passwordPlaceholder' | translate"
           autocomplete="new-password"
           required
         />
       </div>
 
       <div class="form-group">
-        <label for="confirm">Confirm password</label>
+        <label for="confirm">{{ 'signup.confirmPassword' | translate }}</label>
         <input
           id="confirm"
           type="password"
@@ -88,22 +88,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="form-check">
         <input type="checkbox" id="agree" [(ngModel)]="agree" name="agree" />
         <label for="agree">
-          I agree to the <a routerLink="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a routerLink="/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+          {{ 'signup.agreeTerms' | translate }} <a routerLink="/terms" target="_blank" rel="noopener">{{ 'signup.termsOfService' | translate }}</a> {{ 'signup.and' | translate }} <a routerLink="/privacy" target="_blank" rel="noopener">{{ 'signup.privacyPolicy' | translate }}</a>
         </label>
       </div>
 
       <button type="submit" class="btn-submit" [disabled]="loading()">
-        @if (loading()) { <span class="spinner"></span> Creating account… }
-        @else { Create Free Account }
+        @if (loading()) { <span class="spinner"></span> {{ 'signup.creatingAccount' | translate }} }
+        @else { {{ 'signup.createFreeAccount' | translate }} }
       </button>
     </form>
 
-    <div class="social-divider"><span>or sign up with</span></div>
+    <div class="social-divider"><span>{{ 'signup.orSignUpWith' | translate }}</span></div>
 
     <div class="social-buttons">
       <button class="btn-social" (click)="loginWithGoogle()" [disabled]="socialLoading() !== ''">
         @if (socialLoading() === 'google') {
-          <span class="spinner spinner-dark"></span> Connecting…
+          <span class="spinner spinner-dark"></span> {{ 'signup.connecting' | translate }}
         } @else {
           <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
             <path d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" fill="#FFC107"/>
@@ -111,12 +111,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <path d="M24 46c5.5 0 10.5-1.9 14.3-5.1l-6.6-5.6C29.7 36.9 27 37.9 24 37.9c-6 0-10.6-3.5-11.7-8.5l-7 5.4C8.5 41.6 15.7 46 24 46z" fill="#4CAF50"/>
             <path d="M44.5 20H24v8.5h11.8c-.6 2.7-2.1 5-4.2 6.7l6.6 5.6C41.8 37.2 45 31.1 45 24c0-1.3-.2-2.7-.5-4z" fill="#1976D2"/>
           </svg>
-          Sign up with Google
+          {{ 'signup.signUpWithGoogle' | translate }}
         }
       </button>
 
     </div>
 
-    <p class="auth-alt">Already have an account? <a routerLink="/login">Log in</a></p>
+    <p class="auth-alt">{{ 'signup.alreadyHaveAccount' | translate }} <a routerLink="/login">{{ 'signup.logIn' | translate }}</a></p>
   </div>
 </div>
