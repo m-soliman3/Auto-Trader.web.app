@@ -19,16 +19,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="settings-card settings-layout">
     <div class="settings-header">
-      <h1>Settings</h1>
-      <a routerLink="/dashboard" class="back-link">Back to dashboard</a>
+      <h1>{{ 'settings.title' | translate }}</h1>
+      <a routerLink="/dashboard" class="back-link">{{ 'settings.backToDashboard' | translate }}</a>
     </div>
 
     <aside class="settings-sidebar" aria-label="Settings sections">
-      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'display'" (click)="setSection($event, 'display')">Display</button>
-      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'account'" (click)="setSection($event, 'account')">Account</button>
-      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">Security</button>
-      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'billing'" (click)="setSection($event, 'billing')">Billing</button>
-      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'legal'" (click)="setSection($event, 'legal')">Legal</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'display'" (click)="setSection($event, 'display')">{{ 'settings.display' | translate }}</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'account'" (click)="setSection($event, 'account')">{{ 'settings.account' | translate }}</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">{{ 'settings.security' | translate }}</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'billing'" (click)="setSection($event, 'billing')">{{ 'settings.billing' | translate }}</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'legal'" (click)="setSection($event, 'legal')">{{ 'settings.legal' | translate }}</button>
     </aside>
 
     <div class="settings-content">

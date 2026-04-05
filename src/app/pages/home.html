@@ -13,19 +13,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="hero-bg"></div>
   <div class="container">
-    <div class="hero-badge">🚀 Now live — AI v3 signals engine</div>
+    <div class="hero-badge">{{ 'home.badge' | translate }}</div>
     <h1 class="hero-title">
-      Automate Your<br />
-      <span class="gradient-text">Trading Strategy.</span><br />
-      Trade Smarter.
+      {{ 'home.heroTitle1' | translate }}<br />
+      <span class="gradient-text">{{ 'home.heroTitle2' | translate }}</span><br />
+      {{ 'home.heroTitle3' | translate }}
     </h1>
-    <p class="hero-sub">
-      auto-Trading connects to 30+ exchanges and runs your bots 24/7 — powered by
-      machine-learning signals, rock-solid risk management, and zero emotion.
-    </p>
+    <p class="hero-sub">{{ 'home.heroSub' | translate }}</p>
     <div class="hero-cta">
-      <button (click)="goToCta()" class="btn-accent">Start for Free →</button>
-      <a href="#how-it-works" class="btn-outline">See How It Works</a>
+      <button (click)="goToCta()" class="btn-accent">{{ 'home.startFree' | translate }}</button>
+      <a href="#how-it-works" class="btn-outline">{{ 'home.seeHowItWorks' | translate }}</a>
     </div>
     <div class="hero-chart" aria-hidden="true">
       <svg viewBox="0 0 700 200" preserveAspectRatio="none">
@@ -45,10 +42,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ───── STATS ───── -->
 <section class="stats-bar">
   <div class="container stats-grid">
-    @for (s of stats; track s.label) {
+    @for (s of stats; track s.labelKey) {
       <div class="stat">
         <span class="stat-value">{{ s.value }}</span>
-        <span class="stat-label">{{ s.label }}</span>
+        <span class="stat-label">{{ s.labelKey | translate }}</span>
       </div>
     }
   </div>
@@ -58,17 +55,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="section" id="features">
   <div class="container">
     <div class="section-header">
-      <p class="section-tag">Features</p>
-      <h2>Everything you need to trade on autopilot</h2>
-      <p class="section-sub">From AI signals to risk controls — auto-Trading covers the full lifecycle of automated trading.</p>
+      <p class="section-tag">{{ 'home.featuresTag' | translate }}</p>
+      <h2>{{ 'home.featuresTitle' | translate }}</h2>
+      <p class="section-sub">{{ 'home.featuresSub' | translate }}</p>
     </div>
     <div class="features-grid">
-      @for (f of features; track f.title) {
+      @for (f of features; track f.titleKey) {
         <a [routerLink]="f.link" class="feature-card feature-card-link">
           <div class="feature-icon">{{ f.icon }}</div>
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.desc }}</p>
-          <span class="feature-learn-more">Learn more →</span>
+          <h3>{{ f.titleKey | translate }}</h3>
+          <p>{{ f.descKey | translate }}</p>
+          <span class="feature-learn-more">{{ 'home.learnMore' | translate }}</span>
         </a>
       }
     </div>
@@ -79,15 +76,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="section section-alt" id="how-it-works">
   <div class="container">
     <div class="section-header">
-      <p class="section-tag">How It Works</p>
-      <h2>Up and running in minutes</h2>
+      <p class="section-tag">{{ 'home.howItWorksTag' | translate }}</p>
+      <h2>{{ 'home.howItWorksTitle' | translate }}</h2>
     </div>
     <div class="steps-grid">
       @for (s of steps; track s.num) {
         <div class="step-card">
           <div class="step-num">{{ s.num }}</div>
-          <h3>{{ s.title }}</h3>
-          <p>{{ s.desc }}</p>
+          <h3>{{ s.titleKey | translate }}</h3>
+          <p>{{ s.descKey | translate }}</p>
         </div>
       }
     </div>
@@ -97,11 +94,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ───── CTA BANNER ───── -->
 <section class="cta-banner">
   <div class="container cta-inner">
-    <h2>Ready to trade on autopilot?</h2>
-    <p>Join 125,000+ traders who have automated their strategy with auto-Trading. Start free — no credit card required.</p>
-    <button (click)="goToCta()" class="btn-accent">Create Free Account →</button>
+    <h2>{{ 'home.ctaTitle' | translate }}</h2>
+    <p>{{ 'home.ctaDesc' | translate }}</p>
+    <button (click)="goToCta()" class="btn-accent">{{ 'home.createFreeAccount' | translate }}</button>
   </div>
 </section>
-
-
-

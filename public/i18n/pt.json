@@ -1,0 +1,175 @@
+{
+  "nav": {
+    "home": "Início",
+    "features": "Funcionalidades",
+    "howItWorks": "Como funciona",
+    "logIn": "Entrar",
+    "getStarted": "Começar",
+    "dashboard": "Painel",
+    "settings": "Definições",
+    "logOut": "Sair",
+    "real": "Real",
+    "paper": "Demo",
+    "switchToLight": "Mudar para modo claro",
+    "switchToDark": "Mudar para modo escuro",
+    "openMenu": "Abrir menu de navegação",
+    "closeMenu": "Fechar menu de navegação",
+    "openUserMenu": "Abrir menu do utilizador",
+    "closeUserMenu": "Fechar menu do utilizador",
+    "accountMode": "Modo de conta"
+  },
+  "home": {
+    "badge": "🚀 Já disponível — Motor de sinais IA v3",
+    "heroTitle1": "Automatize a Sua",
+    "heroTitle2": "Estratégia de Trading.",
+    "heroTitle3": "Opere com Inteligência.",
+    "heroSub": "auto-Trading conecta-se a mais de 30 exchanges e executa os seus bots 24/7 — alimentado por sinais de machine learning, gestão de risco robusta e zero emoções.",
+    "startFree": "Começar gratuitamente →",
+    "seeHowItWorks": "Ver como funciona",
+    "stats": {
+      "activeTraders": "Traders Ativos",
+      "volumeTraded": "Volume Negociado",
+      "uptime": "Disponibilidade",
+      "avgReturn": "Retorno Anual Méd."
+    },
+    "featuresTag": "Funcionalidades",
+    "featuresTitle": "Tudo o que precisa para operar em piloto automático",
+    "featuresSub": "Desde sinais de IA a controlos de risco — auto-Trading cobre todo o ciclo de vida do trading automatizado.",
+    "learnMore": "Saber mais →",
+    "features": {
+      "aiSignals": {
+        "title": "Sinais com IA",
+        "desc": "Modelos de machine learning analisam milhares de ativos em tempo real e identificam automaticamente configurações de trading de alta probabilidade."
+      },
+      "multiExchange": {
+        "title": "Suporte Multi-Exchange",
+        "desc": "Conecte Binance, Coinbase, Kraken, Bybit e mais de 30 exchanges através de uma única API unificada."
+      },
+      "riskManagement": {
+        "title": "Gestão de Risco",
+        "desc": "Stop-loss, take-profit, dimensionamento de posições e limites de exposição de portfólio personalizáveis protegem o seu capital 24/7."
+      },
+      "backtesting": {
+        "title": "Backtesting Avançado",
+        "desc": "Teste as suas estratégias com anos de dados históricos ao nível do tick antes de comprometer um único dólar no trading real."
+      },
+      "smartAlerts": {
+        "title": "Alertas Inteligentes",
+        "desc": "Receba notificações push, e-mail ou Telegram em tempo real quando as condições forem cumpridas, os trades executados ou os limites de drawdown atingidos."
+      },
+      "noCode": {
+        "title": "Construtor Sem Código",
+        "desc": "O construtor de estratégias drag-and-drop permite automatizar lógica complexa sem escrever uma única linha de código."
+      }
+    },
+    "howItWorksTag": "Como funciona",
+    "howItWorksTitle": "Operacional em minutos",
+    "steps": {
+      "step1": {
+        "title": "Conecte o seu Exchange",
+        "desc": "Ligue a sua conta do exchange via chaves API em menos de 2 minutos. Os seus fundos ficam sempre em segurança no exchange."
+      },
+      "step2": {
+        "title": "Escolha ou Crie um Bot",
+        "desc": "Escolha de uma biblioteca de estratégias comprovadas ou crie a sua própria lógica com o nosso intuitivo construtor sem código."
+      },
+      "step3": {
+        "title": "Deixe-o Operar por Si",
+        "desc": "Relaxe enquanto o auto-Trading monitoriza os mercados continuamente, executando trades e gerindo o risco automaticamente."
+      }
+    },
+    "ctaTitle": "Pronto para operar em piloto automático?",
+    "ctaDesc": "Junte-se a mais de 125.000 traders que automatizaram a sua estratégia com auto-Trading. Comece gratuitamente — sem cartão de crédito.",
+    "createFreeAccount": "Criar conta gratuita →"
+  },
+  "login": {
+    "welcomeBack": "Bem-vindo de volta",
+    "subtitle": "Inicie sessão na sua conta auto-Trading",
+    "emailLabel": "Endereço de e-mail",
+    "emailPlaceholder": "voce@exemplo.pt",
+    "emailError": "Por favor, introduza um endereço de e-mail válido (p. ex. voce@exemplo.pt)",
+    "passwordLabel": "Palavra-passe",
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "passwordPlaceholder": "••••••••",
+    "loggingIn": "A iniciar sessão…",
+    "logIn": "Iniciar sessão",
+    "orContinueWith": "ou continuar com",
+    "connecting": "A conectar…",
+    "continueWithGoogle": "Continuar com Google",
+    "noAccount": "Não tem conta?",
+    "signUpFree": "Registar gratuitamente",
+    "forgotTitle": "Redefinir palavra-passe",
+    "forgotSubEnter": "Introduza o seu endereço de e-mail registado e enviaremos um link para o redefinir.",
+    "forgotSubCheck": "Verifique a sua caixa de entrada para o e-mail de redefinição.",
+    "forgotClose": "Fechar",
+    "forgotSendEmail": "Enviar e-mail de redefinição",
+    "forgotSending": "A enviar…",
+    "forgotDoneMsg": "Um link de redefinição de palavra-passe foi enviado para",
+    "closeForgot": "Fechar"
+  },
+  "signup": {
+    "createAccount": "Crie a sua conta",
+    "subtitle": "Comece a automatizar as suas operações em minutos — é gratuito",
+    "fullName": "Nome completo",
+    "fullNamePlaceholder": "João Silva",
+    "emailLabel": "Endereço de e-mail",
+    "emailPlaceholder": "voce@exemplo.pt",
+    "emailError": "Por favor, introduza um endereço de e-mail válido (p. ex. voce@exemplo.pt)",
+    "passwordLabel": "Palavra-passe",
+    "passwordPlaceholder": "Mín. 8 caracteres",
+    "confirmPassword": "Confirmar palavra-passe",
+    "confirmPlaceholder": "••••••••",
+    "agreeTerms": "Concordo com os",
+    "termsOfService": "Termos de Serviço",
+    "and": "e a",
+    "privacyPolicy": "Política de Privacidade",
+    "creatingAccount": "A criar conta…",
+    "createFreeAccount": "Criar conta gratuita",
+    "orSignUpWith": "ou registar com",
+    "connecting": "A conectar…",
+    "signUpWithGoogle": "Registar com Google",
+    "alreadyHaveAccount": "Já tem conta?",
+    "logIn": "Iniciar sessão"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Tem alguma pergunta ou comentário? Envie-nos uma mensagem e entraremos em contacto.",
+    "successMsg": "A sua mensagem foi enviada. Entraremos em contacto o mais brevemente possível.",
+    "emailLabel": "O seu endereço de e-mail",
+    "emailPlaceholder": "voce@exemplo.pt",
+    "subjectLabel": "Assunto",
+    "subjectPlaceholder": "Sobre o que é?",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Escreva a sua mensagem aqui…",
+    "sending": "A enviar…",
+    "sendMessage": "Enviar mensagem",
+    "backToHome": "← Voltar ao início"
+  },
+  "settings": {
+    "title": "Definições",
+    "backToDashboard": "Voltar ao painel",
+    "display": "Ecrã",
+    "account": "Conta",
+    "security": "Segurança",
+    "billing": "Faturação",
+    "legal": "Legal",
+    "saved": "Guardado",
+    "close": "×"
+  },
+  "footer": {
+    "copyright": "© 2026 auto-Trading. Todos os direitos reservados.",
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "disclaimer": "Aviso Legal",
+    "contact": "Contacto"
+  },
+  "language": {
+    "selectLanguage": "Selecionar idioma",
+    "en": "Inglês",
+    "de": "Alemão",
+    "es": "Espanhol",
+    "fr": "Francês",
+    "pt": "Português",
+    "ar": "Árabe"
+  }
+}

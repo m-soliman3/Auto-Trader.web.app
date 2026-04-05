@@ -1,0 +1,175 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "logIn": "Log In",
+    "getStarted": "Get Started",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logOut": "Log Out",
+    "real": "Real",
+    "paper": "Paper",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "openUserMenu": "Open user menu",
+    "closeUserMenu": "Close user menu",
+    "accountMode": "Account mode"
+  },
+  "home": {
+    "badge": "🚀 Now live — AI v3 signals engine",
+    "heroTitle1": "Automate Your",
+    "heroTitle2": "Trading Strategy.",
+    "heroTitle3": "Trade Smarter.",
+    "heroSub": "auto-Trading connects to 30+ exchanges and runs your bots 24/7 — powered by machine-learning signals, rock-solid risk management, and zero emotion.",
+    "startFree": "Start for Free →",
+    "seeHowItWorks": "See How It Works",
+    "stats": {
+      "activeTraders": "Active Traders",
+      "volumeTraded": "Volume Traded",
+      "uptime": "Uptime",
+      "avgReturn": "Avg. Annual Return"
+    },
+    "featuresTag": "Features",
+    "featuresTitle": "Everything you need to trade on autopilot",
+    "featuresSub": "From AI signals to risk controls — auto-Trading covers the full lifecycle of automated trading.",
+    "learnMore": "Learn more →",
+    "features": {
+      "aiSignals": {
+        "title": "AI-Powered Signals",
+        "desc": "Machine-learning models scan thousands of assets in real time and surface high-probability trade setups automatically."
+      },
+      "multiExchange": {
+        "title": "Multi-Exchange Support",
+        "desc": "Connect Binance, Coinbase, Kraken, Bybit, and 30+ more exchanges through a single unified API."
+      },
+      "riskManagement": {
+        "title": "Risk Management",
+        "desc": "Customisable stop-loss, take-profit, position sizing, and portfolio exposure limits protect your capital 24/7."
+      },
+      "backtesting": {
+        "title": "Advanced Backtesting",
+        "desc": "Test your strategies against years of tick-level historical data before committing a single dollar to live trading."
+      },
+      "smartAlerts": {
+        "title": "Smart Alerts",
+        "desc": "Get real-time push, email, or Telegram notifications when conditions are met, trades execute, or drawdown limits trip."
+      },
+      "noCode": {
+        "title": "No-Code Builder",
+        "desc": "Drag-and-drop strategy builder lets you automate complex logic without writing a single line of code."
+      }
+    },
+    "howItWorksTag": "How It Works",
+    "howItWorksTitle": "Up and running in minutes",
+    "steps": {
+      "step1": {
+        "title": "Connect Your Exchange",
+        "desc": "Link your exchange account via API keys in under 2 minutes. Your funds stay safely on the exchange at all times."
+      },
+      "step2": {
+        "title": "Choose or Build a Bot",
+        "desc": "Pick from a library of proven strategies or craft your own logic with our intuitive no-code builder."
+      },
+      "step3": {
+        "title": "Let It Trade for You",
+        "desc": "Sit back while auto-Trading monitors markets around the clock, executing trades and managing risk automatically."
+      }
+    },
+    "ctaTitle": "Ready to trade on autopilot?",
+    "ctaDesc": "Join 125,000+ traders who have automated their strategy with auto-Trading. Start free — no credit card required.",
+    "createFreeAccount": "Create Free Account →"
+  },
+  "login": {
+    "welcomeBack": "Welcome back",
+    "subtitle": "Log in to your auto-Trading account",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "emailError": "Please enter a valid email address (e.g. you@example.com)",
+    "passwordLabel": "Password",
+    "forgotPassword": "Forgot password?",
+    "passwordPlaceholder": "••••••••",
+    "loggingIn": "Logging in…",
+    "logIn": "Log In",
+    "orContinueWith": "or continue with",
+    "connecting": "Connecting…",
+    "continueWithGoogle": "Continue with Google",
+    "noAccount": "Don't have an account?",
+    "signUpFree": "Sign up free",
+    "forgotTitle": "Reset your password",
+    "forgotSubEnter": "Enter your registered email address below and we'll send you a link to reset it.",
+    "forgotSubCheck": "Check your inbox for the reset email.",
+    "forgotClose": "Close",
+    "forgotSendEmail": "Send reset email",
+    "forgotSending": "Sending…",
+    "forgotDoneMsg": "A password reset link has been sent to",
+    "closeForgot": "Close"
+  },
+  "signup": {
+    "createAccount": "Create your account",
+    "subtitle": "Start automating your trades in minutes — it's free",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "John Doe",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "emailError": "Please enter a valid email address (e.g. you@example.com)",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Min. 8 characters",
+    "confirmPassword": "Confirm password",
+    "confirmPlaceholder": "••••••••",
+    "agreeTerms": "I agree to the",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+    "creatingAccount": "Creating account…",
+    "createFreeAccount": "Create Free Account",
+    "orSignUpWith": "or sign up with",
+    "connecting": "Connecting…",
+    "signUpWithGoogle": "Sign up with Google",
+    "alreadyHaveAccount": "Already have an account?",
+    "logIn": "Log in"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Have a question or feedback? Send us a message and we'll get back to you.",
+    "successMsg": "Your message is sent. We will get back to you the soonest possible.",
+    "emailLabel": "Your email address",
+    "emailPlaceholder": "you@example.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "What's this about?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write your message here…",
+    "sending": "Sending…",
+    "sendMessage": "Send Message",
+    "backToHome": "← Back to home"
+  },
+  "settings": {
+    "title": "Settings",
+    "backToDashboard": "Back to dashboard",
+    "display": "Display",
+    "account": "Account",
+    "security": "Security",
+    "billing": "Billing",
+    "legal": "Legal",
+    "saved": "Saved",
+    "close": "×"
+  },
+  "footer": {
+    "copyright": "© 2026 auto-Trading. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclaimer": "Disclaimer",
+    "contact": "Contact"
+  },
+  "language": {
+    "selectLanguage": "Select language",
+    "en": "English",
+    "de": "German",
+    "es": "Spanish",
+    "fr": "French",
+    "pt": "Portuguese",
+    "ar": "Arabic"
+  }
+}

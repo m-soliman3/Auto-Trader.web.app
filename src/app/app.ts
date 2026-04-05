@@ -8,6 +8,7 @@ import { AiChatRibbon } from './components/ai-chat-ribbon';
 import { ScrollMemoryService } from './services/scroll-memory.service';
 import { SiteFooter } from './components/site-footer';
 import { ConsentBannerComponent } from './components/consent-banner';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,8 @@ export class App {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly scrollMemory = inject(ScrollMemoryService);
+  // Eagerly inject LanguageService so it initialises i18n and sets dir/lang on startup
+  private readonly language = inject(LanguageService);
 
   private readonly currentUrl = signal(this.router.url);
 
@@ -36,6 +39,7 @@ export class App {
   constructor() {
     void this.accountMode;
     void this.scrollMemory;
+    void this.language;
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))

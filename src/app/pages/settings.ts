@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
 import { DashboardLayoutService, DashboardSectionDefinition, DashboardSectionId } from '../services/dashboard-layout.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'connectedExchanges',
@@ -20,7 +21,7 @@ type SettingsSectionId = 'display' | 'account' | 'security' | 'billing' | 'legal
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslateModule],
   templateUrl: './settings.html',
   styleUrl: './settings.scss'
 })

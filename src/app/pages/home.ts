@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, TranslateModule],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -18,56 +19,26 @@ export class Home {
   goToCta() {
     this.router.navigate([this.auth.isLoggedIn() ? '/dashboard' : '/signup']);
   }
+
   stats = [
-    { value: '125K+', label: 'Active Traders' },
-    { value: '$4.2B', label: 'Volume Traded' },
-    { value: '99.9%', label: 'Uptime' },
-    { value: '38%', label: 'Avg. Annual Return' },
+    { value: '125K+', labelKey: 'home.stats.activeTraders' },
+    { value: '$4.2B', labelKey: 'home.stats.volumeTraded' },
+    { value: '99.9%', labelKey: 'home.stats.uptime' },
+    { value: '38%', labelKey: 'home.stats.avgReturn' },
   ];
 
   features = [
-    {
-      icon: '⚡',
-      title: 'AI-Powered Signals',
-      desc: 'Machine-learning models scan thousands of assets in real time and surface high-probability trade setups automatically.',
-      link: '/features/ai-signals',
-    },
-    {
-      icon: '🔗',
-      title: 'Multi-Exchange Support',
-      desc: 'Connect Binance, Coinbase, Kraken, Bybit, and 30+ more exchanges through a single unified API.',
-      link: '/features/multi-exchange',
-    },
-    {
-      icon: '🛡️',
-      title: 'Risk Management',
-      desc: 'Customisable stop-loss, take-profit, position sizing, and portfolio exposure limits protect your capital 24/7.',
-      link: '/features/risk-management',
-    },
-    {
-      icon: '📊',
-      title: 'Advanced Backtesting',
-      desc: 'Test your strategies against years of tick-level historical data before committing a single dollar to live trading.',
-      link: '/features/backtesting',
-    },
-    {
-      icon: '🔔',
-      title: 'Smart Alerts',
-      desc: 'Get real-time push, email, or Telegram notifications when conditions are met, trades execute, or drawdown limits trip.',
-      link: '/features/smart-alerts',
-    },
-    {
-      icon: '🌐',
-      title: 'No-Code Builder',
-      desc: 'Drag-and-drop strategy builder lets you automate complex logic without writing a single line of code.',
-      link: '/features/no-code-builder',
-    },
+    { icon: '⚡', titleKey: 'home.features.aiSignals.title', descKey: 'home.features.aiSignals.desc', link: '/features/ai-signals' },
+    { icon: '🔗', titleKey: 'home.features.multiExchange.title', descKey: 'home.features.multiExchange.desc', link: '/features/multi-exchange' },
+    { icon: '🛡️', titleKey: 'home.features.riskManagement.title', descKey: 'home.features.riskManagement.desc', link: '/features/risk-management' },
+    { icon: '📊', titleKey: 'home.features.backtesting.title', descKey: 'home.features.backtesting.desc', link: '/features/backtesting' },
+    { icon: '🔔', titleKey: 'home.features.smartAlerts.title', descKey: 'home.features.smartAlerts.desc', link: '/features/smart-alerts' },
+    { icon: '🌐', titleKey: 'home.features.noCode.title', descKey: 'home.features.noCode.desc', link: '/features/no-code-builder' },
   ];
 
   steps = [
-    { num: '01', title: 'Connect Your Exchange', desc: 'Link your exchange account via API keys in under 2 minutes. Your funds stay safely on the exchange at all times.' },
-    { num: '02', title: 'Choose or Build a Bot', desc: 'Pick from a library of proven strategies or craft your own logic with our intuitive no-code builder.' },
-    { num: '03', title: 'Let It Trade for You', desc: 'Sit back while auto-Trading monitors markets around the clock, executing trades and managing risk automatically.' },
+    { num: '01', titleKey: 'home.steps.step1.title', descKey: 'home.steps.step1.desc' },
+    { num: '02', titleKey: 'home.steps.step2.title', descKey: 'home.steps.step2.desc' },
+    { num: '03', titleKey: 'home.steps.step3.title', descKey: 'home.steps.step3.desc' },
   ];
-
 }
