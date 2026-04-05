@@ -792,7 +792,10 @@
     "liquidating": "Liquidando...",
     "liquidate": "Liquidar",
     "noOpenPositions": "Nenhuma posição aberta no modo {{mode}}.",
-    "viewBreakdown": "Ver detalhamento"
+    "viewBreakdown": "Ver detalhamento",
+    "botsRunningCount": "{{count}} ativos",
+    "botsCount": "{{count}} bot(s)",
+    "getStarted": "Começar"
   },
   "consent": {
     "title": "Sua privacidade é importante",

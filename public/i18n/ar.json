@@ -792,7 +792,10 @@
     "liquidating": "جارٍ التصفية...",
     "liquidate": "تصفية",
     "noOpenPositions": "لا توجد مراكز مفتوحة في وضع {{mode}}.",
-    "viewBreakdown": "عرض التفصيل"
+    "viewBreakdown": "عرض التفصيل",
+    "botsRunningCount": "{{count}} نشط",
+    "botsCount": "{{count}} بوت",
+    "getStarted": "ابدأ"
   },
   "consent": {
     "title": "خصوصيتك تهمنا",

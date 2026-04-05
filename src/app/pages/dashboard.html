@@ -618,8 +618,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           @if (card.secondaryValue) {
             <div class="stat-subvalue">{{ card.secondaryValue }}</div>
           }
-          @if (card.change) {
-            <div class="stat-change" [class.positive]="card.positive" [class.negative]="!card.positive">{{ card.change }}</div>
+          @if (card.changeKey) {
+            <div class="stat-change" [class.positive]="card.positive" [class.negative]="!card.positive">{{ card.changeKey | translate: card.changeParams }}</div>
           }
         </div>
       }

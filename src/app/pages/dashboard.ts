@@ -448,10 +448,10 @@ export class Dashboard implements OnDestroy {
     }
     
     return [
-      { labelKey: 'dashboard.portfolioValue', value: selectedMode === 'paper' ? paperMoneyValue : realMoneyValue, secondaryValue: '', change: '', positive: true, icon: '💼' },
-      { labelKey: 'dashboard.activeBots',     value: String(active),                  secondaryValue: '', change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
-      { labelKey: 'dashboard.totalTrades',    value: String(this.visibleBots().reduce((a,b)=>a+b.trades,0)), secondaryValue: '', change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
-      { labelKey: 'dashboard.todayPnl', value: selectedMode === 'paper' ? paperPnlValue : realPnlValue, secondaryValue: '', change: '', positive: true, icon: '⚡' },
+      { labelKey: 'dashboard.portfolioValue', value: selectedMode === 'paper' ? paperMoneyValue : realMoneyValue, secondaryValue: '', changeKey: '', changeParams: {}, positive: true, icon: '💼' },
+      { labelKey: 'dashboard.activeBots',     value: String(active),                  secondaryValue: '', changeKey: 'dashboard.botsRunningCount', changeParams: {count: active}, positive: true,  icon: '🤖' },
+      { labelKey: 'dashboard.totalTrades',    value: String(this.visibleBots().reduce((a,b)=>a+b.trades,0)), secondaryValue: '', changeKey: total ? 'dashboard.botsCount' : 'dashboard.getStarted', changeParams: {count: total}, positive: true,  icon: '📈' },
+      { labelKey: 'dashboard.todayPnl', value: selectedMode === 'paper' ? paperPnlValue : realPnlValue, secondaryValue: '', changeKey: '', changeParams: {}, positive: true, icon: '⚡' },
     ];
   }
 

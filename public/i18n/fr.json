@@ -792,7 +792,10 @@
     "liquidating": "Liquidation...",
     "liquidate": "Liquider",
     "noOpenPositions": "Aucune position ouverte en mode {{mode}}.",
-    "viewBreakdown": "Voir la répartition"
+    "viewBreakdown": "Voir la répartition",
+    "botsRunningCount": "{{count}} actifs",
+    "botsCount": "{{count}} bot(s)",
+    "getStarted": "Commencer"
   },
   "consent": {
     "title": "Votre confidentialité est importante",

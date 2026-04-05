@@ -792,7 +792,10 @@
     "liquidating": "Liquidierung...",
     "liquidate": "Liquidieren",
     "noOpenPositions": "Keine offenen Positionen im {{mode}}-Modus.",
-    "viewBreakdown": "Aufschlüsselung anzeigen"
+    "viewBreakdown": "Aufschlüsselung anzeigen",
+    "botsRunningCount": "{{count}} aktiv",
+    "botsCount": "{{count}} Bot(s)",
+    "getStarted": "Loslegen"
   },
   "consent": {
     "title": "Ihre Privatsphäre ist wichtig",

@@ -792,7 +792,10 @@
     "liquidating": "Liquidating...",
     "liquidate": "Liquidate",
     "noOpenPositions": "No open positions in {{mode}} mode.",
-    "viewBreakdown": "View Breakdown"
+    "viewBreakdown": "View Breakdown",
+    "botsRunningCount": "{{count}} running",
+    "botsCount": "{{count}} bot(s)",
+    "getStarted": "Get started"
   },
   "consent": {
     "title": "Your Privacy Matters",
