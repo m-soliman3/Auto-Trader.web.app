@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { AccountModeService } from '../services/account-mode.service';
 import { ChatSuggestion, ChatTurn, ChatbotAssistantService } from '../services/chatbot-assistant.service';
 import { AuthService } from '../services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ai-chat-ribbon',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './ai-chat-ribbon.html',
   styleUrl: './ai-chat-ribbon.scss',
 })

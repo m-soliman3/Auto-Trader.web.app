@@ -3,11 +3,12 @@ import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AccountModeService } from '../services/account-mode.service';
 import { StrategyService } from '../services/strategy.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-trade-details',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslateModule],
   templateUrl: './trade-details.html',
   styleUrl: './trade-details.scss'
 })

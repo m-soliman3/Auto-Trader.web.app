@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { StrategyService, StrategyTemplate } from '../services/strategy.service';
 import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-browse-strategies-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './browse-strategies-modal.html',
   styleUrl: './browse-strategies-modal.scss',
 })

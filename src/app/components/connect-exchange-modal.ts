@@ -10,11 +10,12 @@ import {
 import { AuthService } from '../services/auth.service';
 import { AccountModeService } from '../services/account-mode.service';
 import { SubscriptionService } from '../services/subscription.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-connect-exchange-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './connect-exchange-modal.html',
   styleUrl: './connect-exchange-modal.scss',
 })

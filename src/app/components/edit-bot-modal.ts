@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { BotService, Bot, SYMBOLS, TIMEFRAMES } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-bot-modal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './edit-bot-modal.html',
   styleUrl: './edit-bot-modal.scss',
 })

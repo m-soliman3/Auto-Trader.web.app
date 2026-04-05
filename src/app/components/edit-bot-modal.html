@@ -8,19 +8,19 @@
   <div class="modal-header">
     <div class="modal-title-row">
       <div>
-        <h2>{{ isReadOnly() ? 'View Bot Settings' : 'Edit Bot' }}</h2>
+        <h2>{{ isReadOnly() ? ('editBot.viewBotSettings' | translate) : ('editBot.editBot' | translate) }}</h2>
         <p>
           @if (isReadOnly()) {
-            Review current bot settings
+            {{ 'editBot.reviewCurrentBotSettings' | translate }}
           } @else if (isActive()) {
-            View current bot settings (active bots)
+            {{ 'editBot.viewCurrentBotSettingsActive' | translate }}
           } @else {
-            Adjust all bot characteristics (paused bots)
+            {{ 'editBot.adjustAllBotCharacteristicsPaused' | translate }}
           }
         </p>
       </div>
     </div>
-    <button class="close-btn" (click)="close()" aria-label="Close">
+    <button class="close-btn" (click)="close()" [attr.aria-label]="'common.close' | translate">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
   </div>
@@ -43,118 +43,118 @@
 
       <!-- Bot Name -->
       <div class="form-group">
-        <label for="botName">Bot Name</label>
+        <label for="botName">{{ 'editBot.botName' | translate }}</label>
         <input
           id="botName"
           type="text"
           [(ngModel)]="botName"
           name="botName"
-          placeholder="e.g. My Trading Bot"
+          [placeholder]="'editBot.botNamePlaceholder' | translate"
           required
           [disabled]="isReadOnly() || isActive()"
         />
-        <span class="hint">A unique name to identify your bot</span>
+        <span class="hint">{{ 'editBot.botNameHint' | translate }}</span>
       </div>
 
       <!-- Exchange Selection -->
       <div class="form-group">
-        <label for="exchange">Connected Exchange</label>
+        <label for="exchange">{{ 'editBot.connectedExchange' | translate }}</label>
         <select id="exchange" [(ngModel)]="selectedExchangeLabel" name="exchange" required [disabled]="isReadOnly() || isActive()">
-          <option value="">-- Select Exchange --</option>
+          <option value="">{{ 'editBot.selectExchange' | translate }}</option>
           @for (exch of exchanges(); track exch.label) {
             <option [value]="exch.label">{{ exch.label }}</option>
           }
         </select>
         @if (error() === 'Please select an exchange.') {
-          <span class="hint" style="color: var(--danger);">Please select an exchange.</span>
+          <span class="hint" style="color: var(--danger);">{{ 'editBot.pleaseSelectExchange' | translate }}</span>
         }
-        <span class="hint">Exchange to use for trading</span>
+        <span class="hint">{{ 'editBot.exchangeHint' | translate }}</span>
       </div>
 
       <!-- Investment -->
       <div class="form-group">
-        <label for="investment">Investment Amount ($)</label>
+        <label for="investment">{{ 'editBot.investmentAmount' | translate }}</label>
         <input
           id="investment"
           type="number"
           [(ngModel)]="investment"
           name="investment"
-          placeholder="e.g. 100.00"
+          [placeholder]="'editBot.investmentPlaceholder' | translate"
           step="0.01"
           min="0.01"
           required
           [disabled]="isReadOnly() || isActive()"
         />
-        <span class="hint">{{ isActive() ? 'Edit when paused' : 'Amount to invest per trade' }}</span>
+        <span class="hint">{{ isActive() ? ('editBot.editWhenPaused' | translate) : ('editBot.amountToInvestPerTrade' | translate) }}</span>
       </div>
 
       <!-- Symbol -->
       <div class="form-group">
-        <label for="symbol">Trading Pair</label>
+        <label for="symbol">{{ 'editBot.tradingPair' | translate }}</label>
         <select id="symbol" [(ngModel)]="symbol" name="symbol" required [disabled]="isReadOnly() || isActive()">
-          <option value="">-- Select Symbol --</option>
+          <option value="">{{ 'editBot.selectSymbol' | translate }}</option>
           @for (sym of symbols; track sym) {
             <option [value]="sym">{{ sym }}</option>
           }
         </select>
-        <span class="hint">{{ isActive() ? 'Edit when paused' : 'Asset to trade' }}</span>
+        <span class="hint">{{ isActive() ? ('editBot.editWhenPaused' | translate) : ('editBot.assetToTrade' | translate) }}</span>
       </div>
 
       <!-- Timeframe -->
       <div class="form-group">
-        <label for="timeframe">Timeframe</label>
+        <label for="timeframe">{{ 'editBot.timeframe' | translate }}</label>
         <select id="timeframe" [(ngModel)]="timeframe" name="timeframe" required [disabled]="isReadOnly() || isActive()">
-          <option value="">-- Select Timeframe --</option>
+          <option value="">{{ 'editBot.selectTimeframe' | translate }}</option>
           @for (tf of timeframes; track tf) {
             <option [value]="tf">{{ tf }}</option>
           }
         </select>
-        <span class="hint">{{ isActive() ? 'Edit when paused' : 'Candle duration for analysis' }}</span>
+        <span class="hint">{{ isActive() ? ('editBot.editWhenPaused' | translate) : ('editBot.candleDurationForAnalysis' | translate) }}</span>
       </div>
 
       <!-- Stop Loss and Take Profit Row -->
       <div class="form-row">
         <div class="form-group">
-          <label for="stopLoss">Stop Loss (%)</label>
+          <label for="stopLoss">{{ 'editBot.stopLoss' | translate }}</label>
           <input
             id="stopLoss"
             type="number"
             [(ngModel)]="stopLoss"
             name="stopLoss"
-            placeholder="e.g. 5"
+            [placeholder]="'editBot.stopLossPlaceholder' | translate"
             step="0.01"
             min="0.1"
             max="50"
             required
             [disabled]="isReadOnly() || isActive()"
           />
-          <span class="hint">{{ isActive() ? 'Edit when paused' : 'Exit loss threshold' }}</span>
+          <span class="hint">{{ isActive() ? ('editBot.editWhenPaused' | translate) : ('editBot.exitLossThreshold' | translate) }}</span>
         </div>
 
         <div class="form-group">
-          <label for="takeProfit">Take Profit (%)</label>
+          <label for="takeProfit">{{ 'editBot.takeProfit' | translate }}</label>
           <input
             id="takeProfit"
             type="number"
             [(ngModel)]="takeProfit"
             name="takeProfit"
-            placeholder="e.g. 10"
+            [placeholder]="'editBot.takeProfitPlaceholder' | translate"
             step="0.01"
             min="0.1"
             max="50"
             required
             [disabled]="isReadOnly() || isActive()"
           />
-          <span class="hint">{{ isActive() ? 'Edit when paused' : 'Exit profit target' }}</span>
+          <span class="hint">{{ isActive() ? ('editBot.editWhenPaused' | translate) : ('editBot.exitProfitTarget' | translate) }}</span>
         </div>
       </div>
 
       <!-- Buttons -->
       <div class="form-actions">
-        <button type="button" class="btn btn-secondary" (click)="close()">{{ isReadOnly() ? 'Close' : 'Cancel' }}</button>
+        <button type="button" class="btn btn-secondary" (click)="close()">{{ isReadOnly() ? ('common.close' | translate) : ('common.cancel' | translate) }}</button>
         @if (!isReadOnly() && !isActive()) {
           <button type="submit" class="btn btn-primary" [disabled]="saving()">
-            {{ saving() ? 'Updating...' : 'Save Changes' }}
+            {{ saving() ? ('editBot.updating' | translate) : ('editBot.saveChanges' | translate) }}
           </button>
         }
       </div>

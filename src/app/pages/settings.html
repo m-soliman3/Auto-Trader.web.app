@@ -13,7 +13,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   @if (saveToastMessage()) {
     <div class="settings-toast" role="status" aria-live="polite">
       <span>{{ saveToastMessage() }}</span>
-      <button type="button" class="settings-toast-close" (click)="closeSaveToast()" aria-label="Close settings saved message">×</button>
+      <button type="button" class="settings-toast-close" (click)="closeSaveToast()" [attr.aria-label]="'settings.closeSavedMessageAria' | translate">×</button>
     </div>
   }
 
@@ -23,7 +23,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a routerLink="/dashboard" class="back-link">{{ 'settings.backToDashboard' | translate }}</a>
     </div>
 
-    <aside class="settings-sidebar" aria-label="Settings sections">
+    <aside class="settings-sidebar" [attr.aria-label]="'settings.sectionsAria' | translate">
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'display'" (click)="setSection($event, 'display')">{{ 'settings.display' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'account'" (click)="setSection($event, 'account')">{{ 'settings.account' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">{{ 'settings.security' | translate }}</button>
@@ -34,17 +34,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="settings-content">
     @if (activeSection() === 'display') {
     <section class="settings-section">
-      <h2>Default Theme</h2>
-      <p class="section-sub">Current: {{ themeLabel() }}</p>
+      <h2>{{ 'settings.defaultTheme' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.currentTheme' | translate }}: {{ themeLabel() }}</p>
 
-      <div class="theme-options" role="radiogroup" aria-label="Theme">
+      <div class="theme-options" role="radiogroup" [attr.aria-label]="'settings.themeAria' | translate">
         <button
           type="button"
           class="theme-option"
           [class.active]="draftTheme() === 'dark'"
           (click)="setTheme('dark')"
         >
-          Dark
+          {{ 'settings.themeDark' | translate }}
         </button>
         <button
           type="button"
@@ -52,16 +52,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           [class.active]="draftTheme() === 'light'"
           (click)="setTheme('light')"
         >
-          Bright
+          {{ 'settings.themeBright' | translate }}
         </button>
       </div>
 
       <div class="display-divider"></div>
 
-      <h2>Dashboard Layout</h2>
-      <p class="section-sub">Choose which dashboard sections appear and set their order.</p>
+      <h2>{{ 'settings.dashboardLayout' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.dashboardLayoutSub' | translate }}</p>
 
-      <div class="dashboard-layout-list" role="list" aria-label="Dashboard sections">
+      <div class="dashboard-layout-list" role="list" [attr.aria-label]="'settings.dashboardSectionsAria' | translate">
         @for (section of dashboardSections(); track section.id) {
           <div
             class="layout-row"
@@ -95,7 +95,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 [disabled]="!canMoveDashboardSectionUp(section.id)"
                 (click)="moveDashboardSectionUp(section.id)"
               >
-                Up
+                {{ 'settings.up' | translate }}
               </button>
               <button
                 type="button"
@@ -103,7 +103,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 [disabled]="!canMoveDashboardSectionDown(section.id)"
                 (click)="moveDashboardSectionDown(section.id)"
               >
-                Down
+                {{ 'settings.down' | translate }}
               </button>
             </div>
           </div>
@@ -111,35 +111,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="layout-footer-actions">
-        <button type="button" class="layout-reset-btn" (click)="resetDashboardLayout()">Reset to defaults</button>
+        <button type="button" class="layout-reset-btn" (click)="resetDashboardLayout()">{{ 'settings.resetToDefaults' | translate }}</button>
       </div>
 
       <div class="display-actions">
-        <button type="button" class="secondary-btn" (click)="cancelDisplaySettings()" [disabled]="!displayDirty()">Cancel</button>
-        <button type="button" class="display-save-btn" (click)="saveDisplaySettings()" [disabled]="!displayDirty()">Save</button>
+        <button type="button" class="secondary-btn" (click)="cancelDisplaySettings()" [disabled]="!displayDirty()">{{ 'settings.cancel' | translate }}</button>
+        <button type="button" class="display-save-btn" (click)="saveDisplaySettings()" [disabled]="!displayDirty()">{{ 'settings.save' | translate }}</button>
       </div>
     </section>
     }
 
     @if (activeSection() === 'account') {
     <section class="settings-section">
-      <h2>Account</h2>
+      <h2>{{ 'settings.accountSectionTitle' | translate }}</h2>
       <div class="details-grid">
         <div class="detail-item">
-          <label>Email</label>
-          <div class="value">{{ auth.accountDetails()?.email || auth.currentUser()?.email || 'N/A' }}</div>
+          <label>{{ 'settings.email' | translate }}</label>
+          <div class="value">{{ auth.accountDetails()?.email || auth.currentUser()?.email || ('common.na' | translate) }}</div>
         </div>
         <div class="detail-item">
-          <label>Email Verified</label>
-          <div class="value">{{ auth.accountDetails()?.emailVerified ? 'Yes' : 'No' }}</div>
+          <label>{{ 'settings.emailVerified' | translate }}</label>
+          <div class="value">{{ auth.accountDetails()?.emailVerified ? ('common.yes' | translate) : ('common.no' | translate) }}</div>
         </div>
         <div class="detail-item">
-          <label>Last Login</label>
-          <div class="value">{{ auth.accountDetails()?.lastSignInTime ? (auth.accountDetails()?.lastSignInTime | date:'full') : 'N/A' }}</div>
+          <label>{{ 'settings.lastLogin' | translate }}</label>
+          <div class="value">{{ auth.accountDetails()?.lastSignInTime ? (auth.accountDetails()?.lastSignInTime | date:'full') : ('common.na' | translate) }}</div>
         </div>
         <div class="detail-item">
-          <label>Account Created</label>
-          <div class="value">{{ auth.accountDetails()?.creationTime ? (auth.accountDetails()?.creationTime | date:'full') : 'N/A' }}</div>
+          <label>{{ 'settings.accountCreated' | translate }}</label>
+          <div class="value">{{ auth.accountDetails()?.creationTime ? (auth.accountDetails()?.creationTime | date:'full') : ('common.na' | translate) }}</div>
         </div>
       </div>
     </section>
@@ -147,16 +147,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     @if (activeSection() === 'security') {
     <section class="settings-section">
-      <h2>Change Email Address</h2>
+      <h2>{{ 'settings.changeEmailAddress' | translate }}</h2>
       <div class="inline-form">
         <input
           type="email"
           [ngModel]="newEmail()"
           (ngModelChange)="newEmail.set($event)"
-          placeholder="Enter new email address"
+          [placeholder]="'settings.enterNewEmailAddress' | translate"
         />
         <button type="button" (click)="changeEmail()" [disabled]="emailLoading()">
-          {{ emailLoading() ? 'Saving...' : 'Change Email' }}
+          {{ emailLoading() ? ('settings.saving' | translate) : ('settings.changeEmail' | translate) }}
         </button>
       </div>
       @if (emailStatus()) {
@@ -168,10 +168,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </section>
 
     <section class="settings-section">
-      <h2>Reset Password</h2>
-      <p class="section-sub">Sends a password reset email to your current account email.</p>
+      <h2>{{ 'settings.resetPassword' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.resetPasswordSub' | translate }}</p>
       <button class="secondary-btn" type="button" (click)="sendResetEmail()" [disabled]="resetLoading()">
-        {{ resetLoading() ? 'Sending...' : 'Send Reset Email' }}
+        {{ resetLoading() ? ('settings.sending' | translate) : ('settings.sendResetEmail' | translate) }}
       </button>
       @if (resetStatus()) {
         <div class="status ok">{{ resetStatus() }}</div>
@@ -184,35 +184,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     @if (activeSection() === 'billing') {
     <section class="settings-section">
-      <h2>Billing</h2>
-      <p class="section-sub">This is a demo payment page. No real charges are made.</p>
+      <h2>{{ 'settings.billingTitle' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.billingSub' | translate }}</p>
 
       <div class="billing-grid">
         <article class="plan-card plan-card-free">
-          <h3>Free Plan</h3>
+          <h3>{{ 'settings.freePlan' | translate }}</h3>
           <div class="plan-price">$0<span>/month</span></div>
           <ul class="plan-features">
-            <li>1 exchange connection</li>
-            <li>1 bot</li>
-            <li>1 strategy</li>
+            <li>{{ 'settings.freePlanFeature1' | translate }}</li>
+            <li>{{ 'settings.freePlanFeature2' | translate }}</li>
+            <li>{{ 'settings.freePlanFeature3' | translate }}</li>
           </ul>
-          <button type="button" class="secondary-btn" disabled>Current Plan</button>
+          <button type="button" class="secondary-btn" disabled>{{ 'settings.currentPlan' | translate }}</button>
         </article>
 
         <article class="plan-card plan-card-premium">
-          <h3>Premium</h3>
+          <h3>{{ 'settings.premium' | translate }}</h3>
           <div class="plan-price">$10<span>/month</span></div>
           <ul class="plan-features">
-            <li>Unlimited exchanges</li>
-            <li>Unlimited bots</li>
-            <li>Unlimited strategies</li>
+            <li>{{ 'settings.premiumFeature1' | translate }}</li>
+            <li>{{ 'settings.premiumFeature2' | translate }}</li>
+            <li>{{ 'settings.premiumFeature3' | translate }}</li>
           </ul>
-          <button type="button" class="display-save-btn" (click)="triggerDummyCheckout()">Start Premium (Demo)</button>
+          <button type="button" class="display-save-btn" (click)="triggerDummyCheckout()">{{ 'settings.startPremiumDemo' | translate }}</button>
         </article>
       </div>
 
       <div class="billing-note">
-        Dummy checkout mode is enabled. To activate premium for a user, update the user profile plan/subscription fields manually.
+        {{ 'settings.billingNote' | translate }}
       </div>
 
       @if (billingStatus()) {
@@ -223,23 +223,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     @if (activeSection() === 'legal') {
     <section class="settings-section">
-      <h2>Legal</h2>
-      <p class="section-sub">Read the latest legal documents for using auto-Trading.</p>
+      <h2>{{ 'settings.legalTitle' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.legalSub' | translate }}</p>
 
       <div class="legal-links-grid">
         <a routerLink="/terms" class="legal-link-card">
-          <strong>Terms of Service</strong>
-          <span>Rules and conditions for using the platform.</span>
+          <strong>{{ 'settings.termsOfService' | translate }}</strong>
+          <span>{{ 'settings.termsDesc' | translate }}</span>
         </a>
 
         <a routerLink="/privacy" class="legal-link-card">
-          <strong>Privacy Policy</strong>
-          <span>How your data is collected, used, and protected.</span>
+          <strong>{{ 'settings.privacyPolicy' | translate }}</strong>
+          <span>{{ 'settings.privacyDesc' | translate }}</span>
         </a>
 
         <a routerLink="/disclaimer" class="legal-link-card">
-          <strong>Disclaimer</strong>
-          <span>Risk warnings and important liability limitations.</span>
+          <strong>{{ 'settings.disclaimer' | translate }}</strong>
+          <span>{{ 'settings.disclaimerDesc' | translate }}</span>
         </a>
       </div>
     </section>

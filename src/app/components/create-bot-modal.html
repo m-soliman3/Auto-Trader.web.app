@@ -36,7 +36,7 @@
         <button class="strategy-tile" (click)="selectStrategy(s)">
           <div class="tile-top">
             <span class="tile-icon">{{ s.icon }}</span>
-            <span class="risk-badge" [style.background]="s.riskColor + '22'" [style.color]="s.riskColor">{{ s.risk }} Risk</span>
+            <span class="risk-badge" [style.background]="s.riskColor + '22'" [style.color]="s.riskColor">{{ s.risk }} {{ 'common.risk' | translate }}</span>
           </div>
           <div class="tile-name">{{ s.name }}</div>
           <div class="tile-desc">{{ s.desc }}</div>
@@ -62,41 +62,41 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label>Bot Name</label>
-          <input type="text" [(ngModel)]="botName" name="botName" placeholder="My BTC Bot" required />
+          <label>{{ 'createBot.botName' | translate }}</label>
+          <input type="text" [(ngModel)]="botName" name="botName" [placeholder]="'createBot.botNamePlaceholder' | translate" required />
         </div>
         <div class="form-group">
-          <label>Exchange</label>
+          <label>{{ 'createBot.exchange' | translate }}</label>
           @if (exchanges().length > 0) {
             <select [(ngModel)]="exchangeLabel" name="exchangeLabel" required>
-              <option value="" disabled>-- Select Exchange --</option>
+              <option value="" disabled>{{ 'createBot.selectExchange' | translate }}</option>
               @for (ex of exchanges(); track ex.label) {
                 <option [value]="ex.label">{{ ex.label }}</option>
               }
             </select>
             @if (error() === 'Please select an exchange.') {
-              <span class="hint" style="color: var(--danger);">Please select an exchange.</span>
+              <span class="hint" style="color: var(--danger);">{{ 'createBot.pleaseSelectExchange' | translate }}</span>
             }
           } @else {
-            <div class="no-exchange-warn">⚠️ No exchange connected yet</div>
+            <div class="no-exchange-warn">⚠️ {{ 'createBot.noExchangeConnected' | translate }}</div>
           }
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label>Trading Pair</label>
+          <label>{{ 'createBot.tradingPair' | translate }}</label>
           <select [(ngModel)]="symbol" name="symbol" required>
-            <option value="" disabled>-- Select Trading Pair --</option>
+            <option value="" disabled>{{ 'createBot.selectTradingPair' | translate }}</option>
             @for (sym of symbols; track sym) {
               <option [value]="sym">{{ sym }}</option>
             }
           </select>
         </div>
         <div class="form-group">
-          <label>Timeframe</label>
+          <label>{{ 'createBot.timeframe' | translate }}</label>
           @if (!timeframe) {
-            <span class="hint">Please select a timeframe</span>
+            <span class="hint">{{ 'createBot.pleaseSelectTimeframe' | translate }}</span>
           }
           <div class="tf-group">
             @for (tf of timeframes; track tf) {
@@ -108,32 +108,32 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label>Investment Amount (USD)</label>
+          <label>{{ 'createBot.investmentAmountUsd' | translate }}</label>
           <div class="input-prefix">
             <span class="prefix">$</span>
-            <input type="number" [(ngModel)]="investment" name="investment" min="0.01" step="0.01" placeholder="e.g. 500" required />
+            <input type="number" [(ngModel)]="investment" name="investment" min="0.01" step="0.01" [placeholder]="'createBot.investmentPlaceholder' | translate" required />
           </div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label>Stop-Loss <span class="field-sub">% below entry</span></label>
+          <label>{{ 'createBot.stopLoss' | translate }} <span class="field-sub">{{ 'createBot.percentBelowEntry' | translate }}</span></label>
           <div class="input-suffix">
-            <input type="number" [(ngModel)]="stopLoss" name="stopLoss" min="0.1" max="50" step="0.5" placeholder="e.g. 3" required />
+            <input type="number" [(ngModel)]="stopLoss" name="stopLoss" min="0.1" max="50" step="0.5" [placeholder]="'createBot.stopLossPlaceholder' | translate" required />
             <span class="suffix">%</span>
           </div>
         </div>
         <div class="form-group">
-          <label>Take-Profit <span class="field-sub">% above entry</span></label>
+          <label>{{ 'createBot.takeProfit' | translate }} <span class="field-sub">{{ 'createBot.percentAboveEntry' | translate }}</span></label>
           <div class="input-suffix">
-            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="50" step="0.5" placeholder="e.g. 6" required />
+            <input type="number" [(ngModel)]="takeProfit" name="takeProfit" min="0.1" max="50" step="0.5" [placeholder]="'createBot.takeProfitPlaceholder' | translate" required />
             <span class="suffix">%</span>
           </div>
         </div>
       </div>
 
-      <button type="submit" class="btn-next">Review → </button>
+      <button type="submit" class="btn-next">{{ 'createBot.review' | translate }} → </button>
     </form>
   }
 
@@ -146,18 +146,18 @@
       }
 
       <div class="review-grid">
-        <div class="rv-row"><span class="rv-label">Bot Name</span><span class="rv-val">{{ botName }}</span></div>
-        <div class="rv-row"><span class="rv-label">Strategy</span><span class="rv-val">{{ selectedStrategy()?.icon }} {{ selectedStrategy()?.name }}</span></div>
-        <div class="rv-row"><span class="rv-label">Exchange</span><span class="rv-val">{{ exchangeLabel }}</span></div>
-        <div class="rv-row"><span class="rv-label">Pair</span><span class="rv-val">{{ symbol }}</span></div>
-        <div class="rv-row"><span class="rv-label">Timeframe</span><span class="rv-val">{{ timeframe }}</span></div>
-        <div class="rv-row"><span class="rv-label">Investment</span><span class="rv-val accent">${{ investment | number:'1.2-2' }}</span></div>
-        <div class="rv-row"><span class="rv-label">Stop-Loss</span><span class="rv-val loss">{{ stopLoss }}%</span></div>
-        <div class="rv-row"><span class="rv-label">Take-Profit</span><span class="rv-val profit">{{ takeProfit }}%</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.botName' | translate }}</span><span class="rv-val">{{ botName }}</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.strategy' | translate }}</span><span class="rv-val">{{ selectedStrategy()?.icon }} {{ selectedStrategy()?.name }}</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.exchange' | translate }}</span><span class="rv-val">{{ exchangeLabel }}</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.pair' | translate }}</span><span class="rv-val">{{ symbol }}</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.timeframe' | translate }}</span><span class="rv-val">{{ timeframe }}</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.investment' | translate }}</span><span class="rv-val accent">${{ investment | number:'1.2-2' }}</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.stopLoss' | translate }}</span><span class="rv-val loss">{{ stopLoss }}%</span></div>
+        <div class="rv-row"><span class="rv-label">{{ 'createBot.takeProfit' | translate }}</span><span class="rv-val profit">{{ takeProfit }}%</span></div>
       </div>
 
       <div class="risk-bar">
-        <div class="risk-label">Risk/Reward Ratio</div>
+        <div class="risk-label">{{ 'createBot.riskRewardRatio' | translate }}</div>
         <div class="rr-visual">
           <div class="rr-loss" [style.flex]="stopLoss">-{{ stopLoss }}%</div>
           <div class="rr-profit" [style.flex]="takeProfit">+{{ takeProfit }}%</div>
@@ -167,15 +167,15 @@
       <div class="review-note">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         @if (modeLabel() === 'Paper Money') {
-          This strategy runs in paper mode using simulated funds and live market conditions. The bot begins executing immediately after launch.
+          {{ 'createBot.paperModeNote' | translate }}
         } @else {
-          This strategy runs on your real-money account after launch. Verify your risk settings before continuing.
+          {{ 'createBot.realModeNote' | translate }}
         }
       </div>
 
       <button class="btn-launch" (click)="launch()" [disabled]="saving()">
-        @if (saving()) { <span class="spinner"></span> Launching… }
-        @else { 🚀 Launch Bot }
+        @if (saving()) { <span class="spinner"></span> {{ 'createBot.launching' | translate }} }
+        @else { 🚀 {{ 'createBot.launchBot' | translate }} }
       </button>
     </div>
   }
