@@ -1,36 +1,37 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-terms-page',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslateModule],
   template: `
     <div class="legal-page">
       <div class="legal-card">
         <div class="legal-top">
           <div class="legal-links">
-            <a routerLink="/" class="back-link">Home</a>
-            <a routerLink="/contact" class="back-link">Contact</a>
+            <a routerLink="/" class="back-link">{{ 'legal.home' | translate }}</a>
+            <a routerLink="/contact" class="back-link">{{ 'legal.contact' | translate }}</a>
           </div>
-          <button type="button" class="close-btn" aria-label="Close" (click)="close()">X</button>
+          <button type="button" class="close-btn" [attr.aria-label]="'common.close' | translate" (click)="close()">X</button>
         </div>
 
-        <h1>Terms of Service</h1>
-        <p class="meta">Effective date: 13 March 2026</p>
+        <h1>{{ 'terms.title' | translate }}</h1>
+        <p class="meta">{{ 'terms.effectiveDate' | translate }}</p>
 
-        <section><h2>1. Acceptance of Terms</h2><p>By creating an account or using auto-Trading, you agree to these Terms of Service. If you do not agree, do not use the platform.</p></section>
-        <section><h2>2. Eligibility and Account Responsibility</h2><p>You must be legally able to enter contracts in your jurisdiction. You are responsible for account security, API keys, and connected exchange or broker credentials.</p></section>
-        <section><h2>3. Platform Scope</h2><p>auto-Trading provides software tools for strategy automation and market workflows. We do not act as your broker, exchange, custodian, or financial adviser.</p></section>
-        <section><h2>4. Risk and User Decisions</h2><p>Trading involves substantial risk and can result in partial or total loss of capital. You are solely responsible for all configuration and trading decisions.</p></section>
-        <section><h2>5. No Investment Advice</h2><p>Indicators, templates, analytics, and educational material are informational only and do not constitute financial, legal, or tax advice.</p></section>
-        <section><h2>6. Availability and Service Changes</h2><p>We may update, suspend, or discontinue features at any time and do not guarantee uninterrupted uptime, execution timing, or third-party API availability.</p></section>
-        <section><h2>7. Fees and Plans</h2><p>Feature limits and plan pricing are shown in-app and may change over time. Unless required by law, fees already charged are non-refundable.</p></section>
-        <section><h2>8. Prohibited Use</h2><p>You may not use the platform for unlawful activity, unauthorized access, abuse of APIs, reverse engineering, or security-compromising behavior.</p></section>
-        <section><h2>9. Limitation of Liability</h2><p>To the maximum extent permitted by law, auto-Trading is not liable for indirect or consequential losses, including trading losses, data loss, or business interruption.</p></section>
-        <section><h2>10. Termination</h2><p>We may suspend or terminate access for Terms violations or security reasons. You may stop using the service at any time.</p></section>
-        <section><h2>11. Changes to These Terms</h2><p>We may update these Terms periodically. Continued use after updates means you accept the revised Terms.</p></section>
+        <section><h2>{{ 'terms.s1Title' | translate }}</h2><p>{{ 'terms.s1Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s2Title' | translate }}</h2><p>{{ 'terms.s2Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s3Title' | translate }}</h2><p>{{ 'terms.s3Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s4Title' | translate }}</h2><p>{{ 'terms.s4Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s5Title' | translate }}</h2><p>{{ 'terms.s5Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s6Title' | translate }}</h2><p>{{ 'terms.s6Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s7Title' | translate }}</h2><p>{{ 'terms.s7Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s8Title' | translate }}</h2><p>{{ 'terms.s8Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s9Title' | translate }}</h2><p>{{ 'terms.s9Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s10Title' | translate }}</h2><p>{{ 'terms.s10Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s11Title' | translate }}</h2><p>{{ 'terms.s11Body' | translate }}</p></section>
       </div>
     </div>
   `,

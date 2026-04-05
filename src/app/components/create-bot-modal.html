@@ -13,8 +13,20 @@
         </button>
       }
       <div>
-        <h2>{{ stepTitle }}</h2>
-        <p>{{ stepSub }}</p>
+        <h2>
+          {{
+            step() === 1
+              ? ('createBot.stepChooseStrategy' | translate)
+              : (step() === 2 ? ('createBot.stepConfigureBot' | translate) : ('createBot.stepReviewLaunch' | translate))
+          }}
+        </h2>
+        <p>
+          {{
+            step() === 1
+              ? ('createBot.stepChooseStrategySub' | translate)
+              : (step() === 2 ? ('createBot.stepConfigureBotSub' | translate) : ('createBot.stepReviewLaunchSub' | translate))
+          }}
+        </p>
       </div>
     </div>
     <div class="header-right">

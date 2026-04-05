@@ -1,33 +1,34 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-disclaimer-page',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, TranslateModule],
   template: `
     <div class="legal-page">
       <div class="legal-card">
         <div class="legal-top">
           <div class="legal-links">
-            <a routerLink="/" class="back-link">Home</a>
-            <a routerLink="/contact" class="back-link">Contact</a>
+            <a routerLink="/" class="back-link">{{ 'legal.home' | translate }}</a>
+            <a routerLink="/contact" class="back-link">{{ 'legal.contact' | translate }}</a>
           </div>
-          <button type="button" class="close-btn" aria-label="Close" (click)="close()">X</button>
+          <button type="button" class="close-btn" [attr.aria-label]="'common.close' | translate" (click)="close()">X</button>
         </div>
 
-        <h1>Disclaimer</h1>
-        <p class="meta">Effective date: 13 March 2026</p>
+        <h1>{{ 'disclaimer.title' | translate }}</h1>
+        <p class="meta">{{ 'disclaimer.effectiveDate' | translate }}</p>
 
-        <section><h2>1. Platform Use and Responsibility</h2><p>auto-Trading is a live software platform designed for real users. You are solely responsible for how you configure and use strategies, indicators, automation rules, and account-level risk controls.</p></section>
-        <section><h2>2. Not Financial Advice</h2><p>Nothing on auto-Trading constitutes investment, legal, accounting, or tax advice. Seek qualified professional guidance before making decisions.</p></section>
-        <section><h2>3. No Guarantee of Results</h2><p>Past performance does not guarantee future results. Backtests, simulations, and hypothetical outcomes may differ substantially from live trading.</p></section>
-        <section><h2>4. Trading Risk Warning</h2><p>Trading digital assets, equities, forex, and derivatives is high risk and may not be suitable for all users. You can lose some or all capital.</p></section>
-        <section><h2>5. Third-Party Services</h2><p>The platform depends on external exchanges, brokers, data feeds, and APIs. We are not responsible for third-party outages, delays, or policy changes.</p></section>
-        <section><h2>6. Execution and Connectivity</h2><p>We do not guarantee execution timing, fill prices, slippage outcomes, or uninterrupted connectivity under volatile market conditions.</p></section>
-        <section><h2>7. User Responsibility</h2><p>You are fully responsible for API permissions, risk limits, strategy rules, and ongoing monitoring of your own account activity.</p></section>
-        <section><h2>8. Jurisdiction and Compliance</h2><p>You are responsible for compliance with all laws and regulations applicable to your jurisdiction and trading activity.</p></section>
+        <section><h2>{{ 'disclaimer.s1Title' | translate }}</h2><p>{{ 'disclaimer.s1Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s2Title' | translate }}</h2><p>{{ 'disclaimer.s2Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s3Title' | translate }}</h2><p>{{ 'disclaimer.s3Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s4Title' | translate }}</h2><p>{{ 'disclaimer.s4Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s5Title' | translate }}</h2><p>{{ 'disclaimer.s5Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s6Title' | translate }}</h2><p>{{ 'disclaimer.s6Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s7Title' | translate }}</h2><p>{{ 'disclaimer.s7Body' | translate }}</p></section>
+        <section><h2>{{ 'disclaimer.s8Title' | translate }}</h2><p>{{ 'disclaimer.s8Body' | translate }}</p></section>
       </div>
     </div>
   `,

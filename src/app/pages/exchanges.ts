@@ -5,11 +5,12 @@ import { AccountModeService } from '../services/account-mode.service';
 import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { StrategyService } from '../services/strategy.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-exchanges-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, ConnectExchangeModal],
+  imports: [CommonModule, RouterLink, ConnectExchangeModal, TranslateModule],
   template: `
     <div class="user-page">
       @if (showAddExchangeModal()) {
@@ -24,13 +25,13 @@ import { StrategyService } from '../services/strategy.service';
         <div class="disconnect-backdrop" (click)="cancelDisconnect()">
           <div class="disconnect-modal" (click)="$event.stopPropagation()">
             <div class="disconnect-header">
-              <h3>Confirm Disconnection</h3>
-              <button type="button" class="disconnect-close" (click)="cancelDisconnect()" aria-label="Close">✕</button>
+              <h3>{{ 'exchanges.confirmDisconnection' | translate }}</h3>
+              <button type="button" class="disconnect-close" (click)="cancelDisconnect()" [attr.aria-label]="'common.close' | translate">✕</button>
             </div>
             <div class="disconnect-content">
-              <p class="disconnect-question">Are you sure you want to disconnect <strong>{{ exchangeToDisconnect() }}</strong>?</p>
+              <p class="disconnect-question">{{ 'exchanges.disconnectQuestion' | translate }} <strong>{{ exchangeToDisconnect() }}</strong>?</p>
               <div class="disconnect-warning">
-                <p><strong>⚠ Warning:</strong> This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.</p>
+                <p><strong>⚠ {{ 'common.warning' | translate }}:</strong> {{ 'exchanges.disconnectWarning' | translate }}</p>
               </div>
 
               <div class="disconnect-section">
@@ -39,37 +40,37 @@ import { StrategyService } from '../services/strategy.service';
                     type="checkbox"
                     [checked]="disconnectRiskConfirmed()"
                     (change)="disconnectRiskConfirmed.set($event.target.checked)"
-                    aria-label="I understand the risks"
+                    [attr.aria-label]="'exchanges.understandRisksAria' | translate"
                   />
-                  <span>I understand the risks associated with disconnecting this exchange including any open/unfinished executions on my accounts</span>
+                  <span>{{ 'exchanges.understandRisks' | translate }}</span>
                 </label>
               </div>
 
               <div class="disconnect-section">
-                <label class="disconnect-label">Type "disconnect this Exchange" to confirm:</label>
+                <label class="disconnect-label">{{ 'exchanges.typeDisconnectToConfirm' | translate }}</label>
                 <input
                   type="text"
                   class="disconnect-input"
                   [value]="disconnectConfirmText()"
                   (input)="disconnectConfirmText.set($event.target.value)"
-                  placeholder="disconnect this Exchange"
-                  aria-label="Type to confirm disconnection"
+                  [placeholder]="'exchanges.disconnectPhrase' | translate"
+                  [attr.aria-label]="'exchanges.typeToConfirmAria' | translate"
                 />
               </div>
 
               @if (disconnectConfirmError()) {
-                <div class="disconnect-error">{{ disconnectConfirmError() }}</div>
+                <div class="disconnect-error">{{ disconnectConfirmError() | translate }}</div>
               }
             </div>
             <div class="disconnect-actions">
-              <button type="button" class="disconnect-btn-cancel" (click)="cancelDisconnect()">Cancel</button>
+              <button type="button" class="disconnect-btn-cancel" (click)="cancelDisconnect()">{{ 'common.cancel' | translate }}</button>
               <button 
                 type="button"
                 class="disconnect-btn-confirm" 
                 (click)="confirmDisconnect()"
                 [disabled]="!canConfirmDisconnect()"
               >
-                Disconnect
+                {{ 'exchanges.disconnect' | translate }}
               </button>
             </div>
           </div>
@@ -77,82 +78,82 @@ import { StrategyService } from '../services/strategy.service';
       }
 
       <div class="page-shell">
-        <aside class="page-index" aria-label="Page navigation">
-          <div class="index-title">Navigation</div>
-          <div class="index-current">{{ modeLabel() }} Mode</div>
-          <nav class="index-nav" aria-label="Main pages">
-            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">Dashboard</a>
-            <a class="index-link active" routerLink="/exchanges">Exchanges</a>
-            <a class="index-link" routerLink="/bots">Bots</a>
-            <a class="index-link" routerLink="/strategies">Strategies</a>
-            <a class="index-link" routerLink="/portfolio-management">Portfolio</a>
-            <a class="index-link" routerLink="/backend-runner">Backend Runner</a>
+        <aside class="page-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
+          <div class="index-title">{{ 'userPages.navigation' | translate }}</div>
+          <div class="index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+          <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
+            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
+            <a class="index-link active" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+            <a class="index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+            <a class="index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+            <a class="index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
+            <a class="index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
           </nav>
         </aside>
 
         <main class="page-main">
           <div class="page-header">
-            <h1>{{ modeLabel() }} Exchanges</h1>
+            <h1>{{ modeLabel() }} {{ 'exchanges.title' | translate }}</h1>
             <div class="header-actions">
-              <button type="button" class="add-btn" (click)="openAddExchange()">+ Add Exchange</button>
-              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">Back to Dashboard</a>
+              <button type="button" class="add-btn" (click)="openAddExchange()">+ {{ 'exchanges.addExchange' | translate }}</button>
+              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.backToDashboard' | translate }}</a>
             </div>
           </div>
 
           <section class="panel">
-            <h2>Connected Exchanges</h2>
+            <h2>{{ 'exchanges.connectedExchanges' | translate }}</h2>
             @if (visibleConnections().length > 0) {
               <div class="list">
                 @for (conn of visibleConnections(); track conn.label) {
                   <button type="button" class="row" [class.selected]="selectedExchangeLabel() === conn.label" (click)="selectExchange(conn.label)">
                     <div>
                       <div class="title">{{ conn.label }}</div>
-                      <div class="sub">{{ exchangeName(conn.exchangeId) }} · Connected {{ conn.connectedAt | date:'mediumDate' }}</div>
+                       <div class="sub">{{ exchangeName(conn.exchangeId) }} · {{ 'exchanges.connected' | translate }} {{ conn.connectedAt | date:'mediumDate' }}</div>
                     </div>
                   </button>
                 }
               </div>
             } @else {
-              <p class="empty">No {{ modeLabel().toLowerCase() }} exchanges connected yet. Use Dashboard to connect one.</p>
-            }
+               <p class="empty">{{ 'exchanges.noConnectionsPrefix' | translate }} {{ modeLabel().toLowerCase() }} {{ 'exchanges.noConnectionsSuffix' | translate }}</p>
+             }
           </section>
 
           @if (selectedExchange(); as selected) {
             <section class="panel">
               <div class="details-header">
                 <div>
-                  <h2>{{ selected.label }} Details</h2>
-                  <p class="details-sub">{{ exchangeName(selected.exchangeId) }} · Connected {{ selected.connectedAt | date:'medium' }}</p>
+                  <h2>{{ selected.label }} {{ 'exchanges.details' | translate }}</h2>
+                  <p class="details-sub">{{ exchangeName(selected.exchangeId) }} · {{ 'exchanges.connected' | translate }} {{ selected.connectedAt | date:'medium' }}</p>
                 </div>
                 <div class="header-actions">
-                  <button type="button" class="disconnect-btn" (click)="removeExchange(selected)">Disconnect</button>
+                  <button type="button" class="disconnect-btn" (click)="removeExchange(selected)">{{ 'exchanges.disconnect' | translate }}</button>
                 </div>
               </div>
 
               <div class="credentials-grid">
                 <div class="credential-card">
-                  <div class="credential-label">API Key</div>
+                  <div class="credential-label">{{ 'connectExchange.apiKey' | translate }}</div>
                   <div class="credential-value">{{ selected.apiKey }}</div>
                 </div>
                 <div class="credential-card">
-                  <div class="credential-label">API Secret</div>
+                  <div class="credential-label">{{ 'connectExchange.apiSecret' | translate }}</div>
                   <div class="credential-value mono">{{ maskSecret(selected.secret) }}</div>
                 </div>
               </div>
 
-              <h3 class="trade-log-title">Trade Log</h3>
+              <h3 class="trade-log-title">{{ 'exchanges.tradeLog' | translate }}</h3>
               @if (selectedTradeLogs().length > 0) {
                 <div class="table-wrap">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Executed At</th>
-                        <th>Symbol</th>
-                        <th>Side</th>
-                        <th>Strategy</th>
-                        <th>Bot</th>
-                        <th>Order ID</th>
-                        <th>Amount</th>
+                        <th>{{ 'tradeDetails.executedAt' | translate }}</th>
+                        <th>{{ 'portfolioManagement.symbol' | translate }}</th>
+                        <th>{{ 'exchanges.side' | translate }}</th>
+                        <th>{{ 'tradeDetails.strategy' | translate }}</th>
+                        <th>{{ 'tradeDetails.bot' | translate }}</th>
+                        <th>{{ 'exchanges.orderId' | translate }}</th>
+                        <th>{{ 'exchanges.amount' | translate }}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -175,13 +176,13 @@ import { StrategyService } from '../services/strategy.service';
                   </table>
                 </div>
               } @else {
-                <p class="empty">No trades logged yet for this exchange.</p>
-              }
-            </section>
-          }
+                 <p class="empty">{{ 'exchanges.noTradesForExchange' | translate }}</p>
+               }
+             </section>
+           }
 
           <section class="panel">
-            <h2>Supported {{ modeLabel() }} Providers</h2>
+            <h2>{{ 'exchanges.supportedProviders' | translate }} {{ modeLabel() }}</h2>
             <div class="chips">
               @for (exchange of supportedVisible(); track exchange.id) {
                 <span class="chip">{{ exchange.logo }} {{ exchange.name }}</span>
@@ -364,9 +365,9 @@ export class ExchangesPage {
   confirmDisconnect(): void {
     if (!this.canConfirmDisconnect()) {
       if (!this.disconnectRiskConfirmed()) {
-        this.disconnectConfirmError.set('Please acknowledge the risks to continue');
+        this.disconnectConfirmError.set('exchanges.acknowledgeRisksToContinue');
       } else {
-        this.disconnectConfirmError.set('Please type "disconnect this Exchange" to confirm');
+        this.disconnectConfirmError.set('exchanges.typeDisconnectToConfirmError');
       }
       return;
     }

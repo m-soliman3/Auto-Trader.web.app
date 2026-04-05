@@ -5,11 +5,12 @@ import { AccountModeService } from '../services/account-mode.service';
 import { BotService } from '../services/bot.service';
 import { StrategyService, StrategyTemplate, UserStrategy } from '../services/strategy.service';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-strategies-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, BrowseStrategiesModal],
+  imports: [CommonModule, RouterLink, BrowseStrategiesModal, TranslateModule],
   template: `
     <div class="user-page">
       @if (showAddStrategyModal()) {
@@ -24,13 +25,13 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
         <div class="delete-strategy-backdrop" (click)="cancelDelete()">
           <div class="delete-strategy-modal" (click)="$event.stopPropagation()">
             <div class="delete-strategy-header">
-              <h3>Confirm Deletion</h3>
-              <button class="delete-strategy-close" (click)="cancelDelete()" aria-label="Close">✕</button>
+              <h3>{{ 'strategies.confirmDeletion' | translate }}</h3>
+              <button class="delete-strategy-close" (click)="cancelDelete()" [attr.aria-label]="'common.close' | translate">✕</button>
             </div>
             <div class="delete-strategy-content">
-              <p class="delete-strategy-question">Are you sure you want to delete Strategy <strong>{{ strategyToDelete()?.name }}</strong>?</p>
+              <p class="delete-strategy-question">{{ 'strategies.deleteQuestion' | translate }} <strong>{{ strategyToDelete()?.name }}</strong>?</p>
               <div class="delete-strategy-note">
-                <p><strong>⚠ Warning:</strong> This will delete all strategy configuration and assignment. The bot itself will not be deleted.</p>
+                <p><strong>⚠ {{ 'common.warning' | translate }}:</strong> {{ 'strategies.deleteWarning' | translate }}</p>
               </div>
 
               <!-- Confirmation Checkbox -->
@@ -40,25 +41,25 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
                     type="checkbox"
                     [checked]="deleteConfirmed()"
                     (change)="deleteConfirmed.set($event.target.checked)"
-                    aria-label="I confirm I want to delete this Strategy"
+                    [attr.aria-label]="'strategies.confirmDeleteAria' | translate"
                   />
-                  <span>i confirm i want to delete this Strategy and its associated configuration</span>
+                  <span>{{ 'strategies.confirmDeleteText' | translate }}</span>
                 </label>
               </div>
 
               <!-- Error Message -->
               @if (deleteConfirmError()) {
-                <div class="delete-strategy-confirmation-error">{{ deleteConfirmError() }}</div>
+                <div class="delete-strategy-confirmation-error">{{ deleteConfirmError() | translate }}</div>
               }
             </div>
             <div class="delete-strategy-actions">
-              <button class="delete-strategy-btn delete-strategy-cancel" (click)="cancelDelete()">Cancel</button>
+              <button class="delete-strategy-btn delete-strategy-cancel" (click)="cancelDelete()">{{ 'common.cancel' | translate }}</button>
               <button 
                 class="delete-strategy-btn delete-strategy-confirm" 
                 (click)="confirmDelete()"
                 [disabled]="!canConfirmDelete()"
               >
-                Delete
+                {{ 'strategies.delete' | translate }}
               </button>
             </div>
           </div>
@@ -66,25 +67,25 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
       }
 
       <div class="page-shell">
-        <aside class="page-index" aria-label="Page navigation">
-          <div class="index-title">Navigation</div>
-          <div class="index-current">{{ modeLabel() }} Mode</div>
-          <nav class="index-nav" aria-label="Main pages">
-            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">Dashboard</a>
-            <a class="index-link" routerLink="/exchanges">Exchanges</a>
-            <a class="index-link" routerLink="/bots">Bots</a>
-            <a class="index-link active" routerLink="/strategies">Strategies</a>
-            <a class="index-link" routerLink="/portfolio-management">Portfolio</a>
-            <a class="index-link" routerLink="/backend-runner">Backend Runner</a>
+        <aside class="page-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
+          <div class="index-title">{{ 'userPages.navigation' | translate }}</div>
+          <div class="index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+          <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
+            <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
+            <a class="index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+            <a class="index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+            <a class="index-link active" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+            <a class="index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
+            <a class="index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
           </nav>
         </aside>
 
         <main class="page-main">
           <div class="page-header">
-            <h1>{{ modeLabel() }} Strategies</h1>
+            <h1>{{ modeLabel() }} {{ 'userPages.strategies' | translate }}</h1>
             <div class="header-actions">
-              <button type="button" class="add-btn" (click)="openAddStrategy()">+ New Strategy</button>
-              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">Back to Dashboard</a>
+              <button type="button" class="add-btn" (click)="openAddStrategy()">+ {{ 'strategies.newStrategy' | translate }}</button>
+              <a class="top-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.backToDashboard' | translate }}</a>
             </div>
           </div>
 
@@ -99,10 +100,10 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
                         <div class="row-sub">{{ strategy.templateIcon }} {{ strategy.templateName }} · {{ strategy.assignedBotName }}</div>
                       </div>
                       <span class="badge" [class.active]="strategy.status === 'active'" [class.paused]="strategy.status !== 'active'">
-                        {{ strategy.status === 'active' ? 'Active' : 'Paused' }}
-                      </span>
-                    </button>
-                  }
+                         {{ strategy.status === 'active' ? ('common.active' | translate) : ('common.paused' | translate) }}
+                       </span>
+                     </button>
+                   }
                 </div>
               </section>
 
@@ -111,13 +112,13 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
                   <div class="details-header">
                     <div>
                       <h2>{{ strategy.name }}</h2>
-                      <p class="details-sub">{{ strategy.templateIcon }} {{ strategy.templateName }} · Updated {{ strategy.updatedAt | date:'mediumDate' }}</p>
-                    </div>
-                    <div class="header-actions">
-                      <button type="button" class="toggle-btn" (click)="toggleStrategyStatus(strategy)" [disabled]="statusSaving() === strategy.id">
-                        {{ statusSaving() === strategy.id ? 'Saving...' : (strategy.status === 'active' ? 'Pause Strategy' : 'Resume Strategy') }}
-                      </button>
-                      <button type="button" [class]="'edit-btn ' + (strategy.status === 'active' ? 'view' : 'edit')" (click)="openEditStrategy(strategy)" [title]="strategy.status === 'active' ? 'View Strategy' : 'Edit Strategy'">
+                       <p class="details-sub">{{ strategy.templateIcon }} {{ strategy.templateName }} · {{ 'common.updated' | translate }} {{ strategy.updatedAt | date:'mediumDate' }}</p>
+                     </div>
+                     <div class="header-actions">
+                       <button type="button" class="toggle-btn" (click)="toggleStrategyStatus(strategy)" [disabled]="statusSaving() === strategy.id">
+                         {{ statusSaving() === strategy.id ? ('common.saving' | translate) : (strategy.status === 'active' ? ('strategies.pauseStrategy' | translate) : ('strategies.resumeStrategy' | translate)) }}
+                       </button>
+                       <button type="button" [class]="'edit-btn ' + (strategy.status === 'active' ? 'view' : 'edit')" (click)="openEditStrategy(strategy)" [title]="strategy.status === 'active' ? ('strategies.viewStrategy' | translate) : ('strategies.editStrategy' | translate)">
                         @if (strategy.status === 'active') {
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-eye">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -130,28 +131,28 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
                           </svg>
                         }
                       </button>
-                      <button type="button" class="delete-btn" (click)="removeStrategy(strategy)">Delete</button>
-                    </div>
-                  </div>
+                       <button type="button" class="delete-btn" (click)="removeStrategy(strategy)">{{ 'strategies.delete' | translate }}</button>
+                     </div>
+                   </div>
 
-                  <div class="details-grid">
-                    <div class="detail-card"><div class="detail-label">Assigned Bot</div><div class="detail-value">{{ strategy.assignedBotName }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Trade Side</div><div class="detail-value">{{ strategy.tradeSide.toUpperCase() }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Status</div><div class="detail-value">{{ strategy.status | titlecase }}</div></div>
-                    <div class="detail-card"><div class="detail-label">Created</div><div class="detail-value">{{ strategy.createdAt | date:'mediumDate' }}</div></div>
-                  </div>
+                   <div class="details-grid">
+                     <div class="detail-card"><div class="detail-label">{{ 'strategies.assignedBot' | translate }}</div><div class="detail-value">{{ strategy.assignedBotName }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'strategies.tradeSide' | translate }}</div><div class="detail-value">{{ strategy.tradeSide.toUpperCase() }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'strategies.status' | translate }}</div><div class="detail-value">{{ strategy.status | titlecase }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'common.created' | translate }}</div><div class="detail-value">{{ strategy.createdAt | date:'mediumDate' }}</div></div>
+                   </div>
 
-                  @if (strategy.notes) {
-                    <div class="notes-card"><div class="detail-label">Notes</div><div class="notes-text">{{ strategy.notes }}</div></div>
-                  }
+                   @if (strategy.notes) {
+                     <div class="notes-card"><div class="detail-label">{{ 'strategies.notes' | translate }}</div><div class="notes-text">{{ strategy.notes }}</div></div>
+                   }
 
-                  <h3 class="log-title">Execution Log</h3>
+                   <h3 class="log-title">{{ 'strategies.executionLog' | translate }}</h3>
                   @if (selectedStrategyExecLogs().length > 0) {
                     <div class="table-wrap">
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>Executed At</th><th>Symbol</th><th>Side</th><th>Bot</th><th>Order ID</th><th>Amount</th>
+                             <th>{{ 'tradeDetails.executedAt' | translate }}</th><th>{{ 'portfolioManagement.symbol' | translate }}</th><th>{{ 'exchanges.side' | translate }}</th><th>{{ 'tradeDetails.bot' | translate }}</th><th>{{ 'exchanges.orderId' | translate }}</th><th>{{ 'exchanges.amount' | translate }}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -169,16 +170,16 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
                       </table>
                     </div>
                   } @else {
-                    <p class="empty">No executions logged yet for this strategy.</p>
-                  }
-                </section>
-              }
-            </div>
-          } @else {
-            <section class="panel">
-              <p class="empty">No {{ modeLabel().toLowerCase() }} strategies configured yet. Use Dashboard to create one.</p>
-            </section>
-          }
+                     <p class="empty">{{ 'strategies.noExecutionsForStrategy' | translate }}</p>
+                   }
+                 </section>
+               }
+             </div>
+           } @else {
+             <section class="panel">
+               <p class="empty">{{ 'strategies.noStrategiesPrefix' | translate }} {{ modeLabel().toLowerCase() }} {{ 'strategies.noStrategiesSuffix' | translate }}</p>
+             </section>
+           }
         </main>
       </div>
     </div>
