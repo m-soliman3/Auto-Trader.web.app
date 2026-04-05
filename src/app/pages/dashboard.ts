@@ -3,6 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -55,7 +56,7 @@ interface RunnerSummariesResponse {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal],
+  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, ConnectExchangeModal, CreateBotModal, BrowseStrategiesModal, EditBotModal, TranslateModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -143,7 +144,7 @@ export class Dashboard implements OnDestroy {
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
   private liveViewTimer: ReturnType<typeof setInterval> | null = null;
 
-  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
+  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
   visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
   previewConnections = computed(() => this.visibleConnections().slice(0, 2));
   remainingConnectionsCount = computed(() => Math.max(0, this.visibleConnections().length - 2));
@@ -339,10 +340,10 @@ export class Dashboard implements OnDestroy {
   }
 
   runnerStatusLabel(summary: RunnerSummary): string {
-    if (summary.failed > 0) return 'Errors';
-    if (summary.executed > 0) return 'Executed';
-    if (summary.skippedMarketClosed > 0) return 'Market Closed';
-    return 'No Signal';
+    if (summary.failed > 0) return 'dashboard.statusErrors';
+    if (summary.executed > 0) return 'dashboard.statusExecuted';
+    if (summary.skippedMarketClosed > 0) return 'dashboard.statusMarketClosed';
+    return 'dashboard.statusNoSignal';
   }
 
   runnerStatusClass(summary: RunnerSummary): 'runner-ok' | 'runner-warn' | 'runner-quiet' {
@@ -447,18 +448,18 @@ export class Dashboard implements OnDestroy {
     }
     
     return [
-      { label: `Portfolio Value (${this.modeLabel()})`, value: selectedMode === 'paper' ? paperMoneyValue : realMoneyValue, secondaryValue: '', change: '', positive: true, icon: '💼' },
-      { label: 'Active Bots',     value: String(active),                  secondaryValue: '', change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
-      { label: 'Total Trades',    value: String(this.visibleBots().reduce((a,b)=>a+b.trades,0)), secondaryValue: '', change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
-      { label: `Today's P&L (${this.modeLabel()})`, value: selectedMode === 'paper' ? paperPnlValue : realPnlValue, secondaryValue: '', change: '', positive: true, icon: '⚡' },
+      { labelKey: 'dashboard.portfolioValue', value: selectedMode === 'paper' ? paperMoneyValue : realMoneyValue, secondaryValue: '', change: '', positive: true, icon: '💼' },
+      { labelKey: 'dashboard.activeBots',     value: String(active),                  secondaryValue: '', change: active ? `${active} running` : '0 running', positive: true,  icon: '🤖' },
+      { labelKey: 'dashboard.totalTrades',    value: String(this.visibleBots().reduce((a,b)=>a+b.trades,0)), secondaryValue: '', change: total ? `${total} bot(s)` : 'Get started', positive: true,  icon: '📈' },
+      { labelKey: 'dashboard.todayPnl', value: selectedMode === 'paper' ? paperPnlValue : realPnlValue, secondaryValue: '', change: '', positive: true, icon: '⚡' },
     ];
   }
 
   quickActions = [
-    { label: 'Connect Exchange',  icon: '🔗', desc: 'Link Binance, Coinbase & more',    action: 'connect' },
-    { label: 'Create Bot',        icon: '🤖', desc: 'Build your first trading bot',      action: 'bot' },
-    { label: 'Create Strategy',   icon: '📊', desc: 'Assign a real strategy to a bot',   action: 'strategies' },
-    { label: 'Run Backtest',      icon: '🔬', desc: 'Test against historical data',      action: 'backtest' },
+    { labelKey: 'dashboard.qaConnectLabel',       icon: '🔗', descKey: 'dashboard.qaConnectDesc',       action: 'connect' },
+    { labelKey: 'dashboard.qaCreateBotLabel',     icon: '🤖', descKey: 'dashboard.qaCreateBotDesc',     action: 'bot' },
+    { labelKey: 'dashboard.qaCreateStrategyLabel',icon: '📊', descKey: 'dashboard.qaCreateStrategyDesc',action: 'strategies' },
+    { labelKey: 'dashboard.qaRunBacktestLabel',   icon: '🔬', descKey: 'dashboard.qaRunBacktestDesc',   action: 'backtest' },
   ];
 
   handleAction(action: string) {

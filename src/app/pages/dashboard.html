@@ -42,7 +42,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="chip-icon">{{ selectedTemplateForStrategy()!.icon }}</span>
           <div>
             <div class="chip-title">{{ selectedTemplateForStrategy()!.name }}</div>
-            <div class="chip-sub">Real strategy template</div>
+            <div class="chip-sub">{{ 'dashboard.realStrategyTemplate' | translate }}</div>
           </div>
         </div>
       }
@@ -53,24 +53,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="strategy-editor-grid">
         <div class="form-group">
-          <label>Strategy Name</label>
+          <label>{{ 'dashboard.strategyName' | translate }}</label>
           <input
             type="text"
             [ngModel]="strategyNameInput()"
             (ngModelChange)="strategyNameInput.set($event)"
             [disabled]="isStrategyReadOnly()"
-            placeholder="Enter strategy name"
+            [placeholder]="'dashboard.enterStrategyName' | translate"
           />
         </div>
 
         <div class="form-group">
-          <label>Executing Bot</label>
+          <label>{{ 'dashboard.executingBot' | translate }}</label>
           <select
             [ngModel]="strategyAssignedBotId()"
             (ngModelChange)="strategyAssignedBotId.set($event)"
             [disabled]="isStrategyReadOnly()"
           >
-            <option value="" disabled>-- Select Bot --</option>
+            <option value="" disabled>{{ 'dashboard.selectBot' | translate }}</option>
             @for (bot of visibleBots(); track bot.id) {
               <option [value]="bot.id">{{ bot.name }} · {{ bot.exchangeLabel }} · {{ bot.symbol }}</option>
             }
@@ -78,43 +78,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="form-group">
-          <label>Trade Side</label>
+          <label>{{ 'dashboard.tradeSide' | translate }}</label>
           <select
             [ngModel]="strategyTradeSideInput()"
             (ngModelChange)="strategyTradeSideInput.set($event)"
             [disabled]="isStrategyReadOnly()"
           >
-            <option value="buy">Buy</option>
-            <option value="sell">Sell</option>
+            <option value="buy">{{ 'dashboard.buy' | translate }}</option>
+            <option value="sell">{{ 'dashboard.sell' | translate }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Strategy Status</label>
+          <label>{{ 'dashboard.strategyStatus' | translate }}</label>
           <select
             [ngModel]="strategyStatusInput()"
             (ngModelChange)="strategyStatusInput.set($event)"
             [disabled]="isStrategyReadOnly()"
           >
-            <option value="active">Active</option>
-            <option value="paused">Paused</option>
+            <option value="active">{{ 'common.active' | translate }}</option>
+            <option value="paused">{{ 'common.paused' | translate }}</option>
           </select>
         </div>
 
         <div class="form-group full-width">
-          <label>Execution Notes</label>
+          <label>{{ 'dashboard.executionNotes' | translate }}</label>
           <textarea
             rows="3"
             [ngModel]="strategyNotes()"
             (ngModelChange)="strategyNotes.set($event)"
             [disabled]="isStrategyReadOnly()"
-            placeholder="Optional notes about this real strategy setup"
+            [placeholder]="'dashboard.strategyNotesPlaceholder' | translate"
           ></textarea>
         </div>
       </div>
 
       <div class="strategy-editor-actions">
-        <button class="delete-bot-btn delete-bot-cancel" (click)="closeStrategyEditor()">Close</button>
+        <button class="delete-bot-btn delete-bot-cancel" (click)="closeStrategyEditor()">{{ 'common.close' | translate }}</button>
         @if (!isStrategyReadOnly()) {
           <button class="strategy-save-btn" (click)="saveStrategy()">{{ strategyEditorActionLabel() }}</button>
         }
@@ -126,9 +126,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="portfolio-popup-backdrop" (click)="closeStrategyLiveView()">
     <div class="strategy-live-modal" [class.expanded]="liveViewExpanded()" (click)="$event.stopPropagation()">
       <div class="strategy-live-header">
-        <h3>Live View</h3>
+        <h3>{{ 'dashboard.liveView' | translate }}</h3>
         <div class="strategy-live-header-actions">
-          <button class="live-view-expand-btn" (click)="toggleLiveViewExpanded()" [attr.aria-label]="liveViewExpanded() ? 'Collapse market view' : 'Expand market view'">
+          <button class="live-view-expand-btn" (click)="toggleLiveViewExpanded()" [attr.aria-label]="liveViewExpanded() ? ('dashboard.collapseMarketView' | translate) : ('dashboard.expandMarketView' | translate)">
             <img
               class="live-view-expand-icon"
               [src]="liveViewExpanded() ? 'icons/collapse.png' : 'icons/expand.png'"
@@ -149,7 +149,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           @if (liveViewMarketOpen() !== null) {
             <div class="strategy-live-session">
               <span class="session-badge" [class.session-open]="liveViewMarketOpen()" [class.session-closed]="!liveViewMarketOpen()">
-                {{ liveViewMarketOpen() ? 'Market Open' : 'Market Closed' }}
+                {{ liveViewMarketOpen() ? ('dashboard.marketOpen' | translate) : ('dashboard.marketClosed' | translate) }}
               </span>
               @if (liveViewMarketStatusReason()) {
                 <span class="strategy-live-session-reason">{{ liveViewMarketStatusReason() }}</span>
@@ -176,7 +176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           @if (liveViewStrategy(); as strategy) {
             <div class="strategy-overlay-badge">
               <div class="strategy-badge-content">
-                <span class="strategy-badge-label">Strategy:</span>
+                <span class="strategy-badge-label">{{ 'dashboard.strategyBadge' | translate }}</span>
                 <span class="strategy-badge-name">{{ strategy.name }}</span>
                 @if (liveViewStrategyTemplate(); as template) {
                   <span class="strategy-badge-type">{{ template.category }}</span>
@@ -292,22 +292,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       @if (liveViewIsLoading()) {
-        <div class="strategy-live-loading">Loading live market data...</div>
+        <div class="strategy-live-loading">{{ 'dashboard.loadingLiveData' | translate }}</div>
       } @else {
         @if (liveViewCandles().length > 1) {
           <div class="strategy-live-stats">
             <div class="live-stat">
-              <span class="live-stat-label">Last Price</span>
+              <span class="live-stat-label">{{ 'dashboard.lastPrice' | translate }}</span>
               <span class="live-stat-value">{{ liveViewLastPrice() | number:'1.2-4' }}</span>
             </div>
             <div class="live-stat">
-              <span class="live-stat-label">80-candle Change</span>
+              <span class="live-stat-label">{{ 'dashboard.candleChange' | translate }}</span>
               <span class="live-stat-value" [class.pnl-pos]="(liveViewPriceChangePct() ?? 0) >= 0" [class.pnl-neg]="(liveViewPriceChangePct() ?? 0) < 0">
                 {{ (liveViewPriceChangePct() ?? 0) >= 0 ? '+' : '' }}{{ liveViewPriceChangePct() | number:'1.2-2' }}%
               </span>
             </div>
             <div class="live-stat">
-              <span class="live-stat-label">Updated</span>
+              <span class="live-stat-label">{{ 'common.updated' | translate }}</span>
               <span class="live-stat-value">{{ liveViewUpdatedAt() | date:'mediumTime' }}</span>
             </div>
           </div>
@@ -316,11 +316,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             @if (liveViewStrategyCategory().includes('trend')) {
               <div class="legend-item">
                 <span class="legend-marker ema-9" style="color: #3b82f6;">─</span>
-                <span class="legend-label">EMA 9 (Fast)</span>
+                <span class="legend-label">{{ 'dashboard.ema9Fast' | translate }}</span>
               </div>
               <div class="legend-item">
                 <span class="legend-marker ema-21" style="color: #f97316;">─</span>
-                <span class="legend-label">EMA 21 (Slow)</span>
+                <span class="legend-label">{{ 'dashboard.ema21Slow' | translate }}</span>
               </div>
             }
             
@@ -328,7 +328,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             @if (liveViewStrategyCategory().includes('mean-reversion')) {
               <div class="legend-item">
                 <span class="legend-marker" style="color: #8b5cf6; font-weight: bold;">◈</span>
-                <span class="legend-label">RSI-Based Signals</span>
+                <span class="legend-label">{{ 'dashboard.rsiSignals' | translate }}</span>
               </div>
             }
             
@@ -336,30 +336,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             @if (liveViewStrategyCategory().includes('momentum')) {
               <div class="legend-item">
                 <span class="legend-marker" style="color: #ec4899; font-weight: bold;">◆</span>
-                <span class="legend-label">Breakout Signals</span>
+                <span class="legend-label">{{ 'dashboard.breakoutSignals' | translate }}</span>
               </div>
             }
             
             <!-- Common Indicators (all strategies) -->
             <div class="legend-item">
               <span class="legend-marker entry">●</span>
-              <span class="legend-label">Entry Signal</span>
+              <span class="legend-label">{{ 'dashboard.entrySignal' | translate }}</span>
             </div>
             <div class="legend-item">
               <span class="legend-marker exit">●</span>
-              <span class="legend-label">Exit Signal</span>
+              <span class="legend-label">{{ 'dashboard.exitSignal' | translate }}</span>
             </div>
             <div class="legend-item">
               <span class="legend-marker" style="color: #22c55e; font-weight: bold;">┄</span>
-              <span class="legend-label">Entry Level</span>
+              <span class="legend-label">{{ 'dashboard.entryLevel' | translate }}</span>
             </div>
             <div class="legend-item">
               <span class="legend-marker" style="color: #ef4444; font-weight: bold;">┄</span>
-              <span class="legend-label">Exit Level</span>
+              <span class="legend-label">{{ 'dashboard.exitLevel' | translate }}</span>
             </div>
           </div>
         } @else {
-          <div class="strategy-live-loading">Waiting for latest market snapshot...</div>
+          <div class="strategy-live-loading">{{ 'dashboard.waitingSnapshot' | translate }}</div>
         }
       }
     </div>
@@ -389,7 +389,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <div class="portfolio-popup-row-left">
                     <div class="portfolio-popup-row-title">{{ execution.symbol }} · {{ execution.side.toUpperCase() }}</div>
                     <div class="portfolio-popup-row-sub">{{ execution.strategyName }} · {{ execution.botName }}</div>
-                    <div class="portfolio-popup-row-sub">Order ID: {{ execution.orderId }}</div>
+                    <div class="portfolio-popup-row-sub">{{ 'dashboard.orderId' | translate }} {{ execution.orderId }}</div>
                   </div>
                   <div class="portfolio-popup-row-right">
                     <span class="portfolio-money-type" [class.real]="execution.side === 'buy'" [class.paper]="execution.side === 'sell'">
@@ -417,7 +417,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
                 <div class="portfolio-popup-row-right">
                   <span class="portfolio-money-type" [class.paper]="row.isPaper" [class.real]="!row.isPaper">
-                    {{ row.isPaper ? 'Paper Money' : 'Real Money' }}
+                    {{ row.isPaper ? ('dashboard.paperMoney' | translate) : ('dashboard.realMoney' | translate) }}
                   </span>
                   <div class="portfolio-popup-value" [class.pnl-pos]="isPnlDetailsView && (row.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="isPnlDetailsView && (row.unrealizedPnl ?? 0) < 0">
                     {{ formatBreakdownValue(row) }}
@@ -446,18 +446,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="delete-bot-backdrop" (click)="cancelDeleteBot()">
     <div class="delete-bot-modal" (click)="$event.stopPropagation()">
       <div class="delete-bot-header">
-        <h3>Confirm Deletion</h3>
+        <h3>{{ 'bots.confirmDeletion' | translate }}</h3>
         <button class="delete-bot-close" (click)="cancelDeleteBot()" aria-label="Close">✕</button>
       </div>
       <div class="delete-bot-content">
-        <p class="delete-bot-question">Are you sure you want to delete Bot <strong>{{ botToDelete()?.name }}</strong>?</p>
+        <p class="delete-bot-question">{{ 'bots.deleteQuestion' | translate }} <strong>{{ botToDelete()?.name }}</strong>?</p>
         <div class="delete-bot-note">
-          <p><strong>Note:</strong> If you are unhappy with the bot, you can pause it and click edit to make necessary changes before running it again.</p>
+          <p><strong>{{ 'dashboard.note' | translate }}</strong> {{ 'dashboard.deleteBotNote' | translate }}</p>
         </div>
       </div>
       <div class="delete-bot-actions">
-        <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteBot()">Cancel</button>
-        <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteBot()">Delete</button>
+        <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteBot()">{{ 'common.cancel' | translate }}</button>
+        <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteBot()">{{ 'bots.delete' | translate }}</button>
       </div>
     </div>
   </div>
@@ -468,18 +468,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="delete-bot-backdrop" (click)="cancelDeleteStrategy()">
     <div class="delete-bot-modal" (click)="$event.stopPropagation()">
       <div class="delete-bot-header">
-        <h3>Confirm Strategy Deletion</h3>
-        <button class="delete-bot-close" (click)="cancelDeleteStrategy()" aria-label="Close">✕</button>
+        <h3>{{ 'dashboard.confirmStrategyDeletion' | translate }}</h3>
+        <button class="delete-bot-close" (click)="cancelDeleteStrategy()" [attr.aria-label]="'common.close' | translate">✕</button>
       </div>
       <div class="delete-bot-content">
-        <p class="delete-bot-question">Are you sure you want to delete Strategy <strong>{{ strategyToDelete()?.name }}</strong>?</p>
+        <p class="delete-bot-question">{{ 'strategies.deleteQuestion' | translate }} <strong>{{ strategyToDelete()?.name }}</strong>?</p>
         <div class="delete-bot-note">
-          <p><strong>Note:</strong> This removes the strategy configuration and bot assignment. It does not delete the bot itself.</p>
+          <p><strong>{{ 'dashboard.note' | translate }}</strong> {{ 'dashboard.deleteStrategyNote' | translate }}</p>
         </div>
       </div>
       <div class="delete-bot-actions">
-        <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteStrategy()">Cancel</button>
-        <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteStrategy()">Delete</button>
+        <button class="delete-bot-btn delete-bot-cancel" (click)="cancelDeleteStrategy()">{{ 'common.cancel' | translate }}</button>
+        <button class="delete-bot-btn delete-bot-confirm" (click)="confirmDeleteStrategy()">{{ 'strategies.delete' | translate }}</button>
       </div>
     </div>
   </div>
@@ -490,13 +490,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="delete-exchange-backdrop" (click)="cancelDeleteExchange()">
     <div class="delete-exchange-modal" (click)="$event.stopPropagation()">
       <div class="delete-exchange-header">
-        <h3>Confirm Disconnection</h3>
-        <button class="delete-exchange-close" (click)="cancelDeleteExchange()" aria-label="Close">✕</button>
+        <h3>{{ 'dashboard.confirmDisconnection' | translate }}</h3>
+        <button class="delete-exchange-close" (click)="cancelDeleteExchange()" [attr.aria-label]="'common.close' | translate">✕</button>
       </div>
       <div class="delete-exchange-content">
-        <p class="delete-exchange-question">Are you sure you want to disconnect <strong>{{ exchangeToDelete() }}</strong>?</p>
+        <p class="delete-exchange-question">{{ 'dashboard.confirmDisconnectQuestion' | translate }} <strong>{{ exchangeToDelete() }}</strong>?</p>
         <div class="delete-exchange-note">
-          <p><strong>⚠ Warning:</strong> This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.</p>
+          <p><strong>⚠ {{ 'common.warning' | translate }}:</strong> {{ 'dashboard.disconnectWarning' | translate }}</p>
         </div>
 
         <!-- Risk Acknowledgment Checkbox -->
@@ -506,22 +506,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               type="checkbox"
               [checked]="exchangeDisconnectRiskConfirmed()"
               (change)="exchangeDisconnectRiskConfirmed.set($event.target.checked)"
-              aria-label="I understand the risks"
+              [attr.aria-label]="'dashboard.disconnectRiskAck' | translate"
             />
-            <span>I understand that I will need to generate new API keys and secrets from the exchange to reconnect</span>
+            <span>{{ 'dashboard.disconnectRiskAck' | translate }}</span>
           </label>
         </div>
 
         <!-- Text Input Confirmation -->
         <div class="exchange-confirmation-section">
-          <label class="exchange-confirmation-label">Type "disconnect this Exchange" to confirm:</label>
+          <label class="exchange-confirmation-label">{{ 'dashboard.disconnectTypeToConfirm' | translate }}</label>
           <input
             type="text"
             class="exchange-confirmation-input"
             [value]="exchangeDisconnectConfirmText()"
             (input)="exchangeDisconnectConfirmText.set($event.target.value)"
-            placeholder="disconnect this Exchange"
-            aria-label="Type to confirm disconnection"
+            [placeholder]="'dashboard.disconnectPlaceholder' | translate"
+            [attr.aria-label]="'dashboard.disconnectTypeToConfirm' | translate"
           />
         </div>
 
@@ -531,13 +531,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       </div>
       <div class="delete-exchange-actions">
-        <button class="delete-exchange-btn delete-exchange-cancel" (click)="cancelDeleteExchange()">Cancel</button>
+        <button class="delete-exchange-btn delete-exchange-cancel" (click)="cancelDeleteExchange()">{{ 'common.cancel' | translate }}</button>
         <button 
           class="delete-exchange-btn delete-exchange-confirm" 
           (click)="confirmDeleteExchange()"
           [disabled]="!canConfirmExchangeDisconnect()"
         >
-          Disconnect
+          {{ 'dashboard.disconnect' | translate }}
         </button>
       </div>
     </div>
@@ -549,15 +549,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="liquidation-confirm-backdrop" (click)="closeLiquidationConfirmModal()">
     <div class="liquidation-confirm-modal" (click)="$event.stopPropagation()">
       <div class="liquidation-confirm-header">
-        <h3>Confirm Liquidation</h3>
-        <button class="liquidation-confirm-close" (click)="closeLiquidationConfirmModal()" aria-label="Close">✕</button>
+        <h3>{{ 'dashboard.confirmLiquidation' | translate }}</h3>
+        <button class="liquidation-confirm-close" (click)="closeLiquidationConfirmModal()" [attr.aria-label]="'common.close' | translate">✕</button>
       </div>
       <div class="liquidation-confirm-content">
         <p>{{ liquidationConfirmMessage() }}</p>
       </div>
       <div class="liquidation-confirm-actions">
-        <button class="liquidation-confirm-btn liquidation-cancel" (click)="closeLiquidationConfirmModal()">Cancel</button>
-        <button class="liquidation-confirm-btn liquidation-confirm" (click)="confirmLiquidationWhenClosed()">Confirm</button>
+        <button class="liquidation-confirm-btn liquidation-cancel" (click)="closeLiquidationConfirmModal()">{{ 'common.cancel' | translate }}</button>
+        <button class="liquidation-confirm-btn liquidation-confirm" (click)="confirmLiquidationWhenClosed()">{{ 'dashboard.confirm' | translate }}</button>
       </div>
     </div>
   </div>
@@ -571,16 +571,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="dashboard">
   <div class="container">
     <div class="dashboard-layout">
-      <aside class="dashboard-index" aria-label="Page navigation">
-        <div class="dashboard-index-title">Navigation</div>
-        <div class="dashboard-index-current">{{ modeLabel() }} Mode</div>
-        <nav class="dashboard-index-nav" aria-label="Main pages">
-          <a class="dashboard-index-link active" [routerLink]="['/dashboard', accountMode.mode()]">Dashboard</a>
-          <a class="dashboard-index-link" routerLink="/exchanges">Exchanges</a>
-          <a class="dashboard-index-link" routerLink="/bots">Bots</a>
-          <a class="dashboard-index-link" routerLink="/strategies">Strategies</a>
-          <a class="dashboard-index-link" routerLink="/portfolio-management">Portfolio</a>
-          <a class="dashboard-index-link" routerLink="/backend-runner">Backend Runner</a>
+      <aside class="dashboard-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
+        <div class="dashboard-index-title">{{ 'userPages.navigation' | translate }}</div>
+        <div class="dashboard-index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+        <nav class="dashboard-index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
+          <a class="dashboard-index-link active" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
+          <a class="dashboard-index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+          <a class="dashboard-index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+          <a class="dashboard-index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+          <a class="dashboard-index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
+          <a class="dashboard-index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
         </nav>
       </aside>
 
@@ -589,18 +589,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- Welcome Banner -->
     <div class="welcome-banner" id="dashboard-section">
       <div class="welcome-text">
-        <h1>Welcome, {{ auth.currentUser()?.name }}! 👋</h1>
-        <p>{{ hasVisibleExchange() ? modeLabel() + ' exchanges are connected and ready to trade.' : 'Connect a ' + modeLabel() + ' exchange to start trading automatically.' }}</p>
+        <h1>{{ 'dashboard.welcome' | translate: {name: auth.currentUser()?.name} }}</h1>
+        <p>{{ hasVisibleExchange() ? ('dashboard.exchangesConnectedReady' | translate: {mode: modeLabel()}) : ('dashboard.connectExchangeToTrade' | translate: {mode: modeLabel()}) }}</p>
       </div>
       <div class="welcome-badge">
         <span class="badge-dot"></span>
-        <span>Account Active</span>
+        <span>{{ 'dashboard.accountActive' | translate }}</span>
       </div>
     </div>
 
     <!-- Portfolio Cards -->
     <div class="cards-grid">
-      @for (card of portfolioCards; track card.label; let i = $index) {
+      @for (card of portfolioCards; track card.labelKey; let i = $index) {
         <div
           class="stat-card"
           [class.clickable]="i === 0 || i === 2 || i === 3"
@@ -612,7 +612,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         >
           <div class="stat-top">
             <span class="stat-icon">{{ card.icon }}</span>
-            <span class="stat-label">{{ card.label }}</span>
+            <span class="stat-label">{{ card.labelKey | translate: {mode: modeLabel()} }}</span>
           </div>
           <div class="stat-value" [class.split]="!!card.secondaryValue">{{ card.value }}</div>
           @if (card.secondaryValue) {
@@ -629,9 +629,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @if (isDashboardSectionVisible('connectedExchanges') && hasVisibleExchange()) {
       <div class="panel" id="exchanges-section" [style.order]="dashboardSectionOrder('connectedExchanges')">
         <div class="panel-header">
-          <h2 class="panel-title">Connected {{ modeLabel() }} Exchanges</h2>
+          <h2 class="panel-title">{{ 'dashboard.connectedExchanges' | translate: {mode: modeLabel()} }}</h2>
           <div class="panel-header-actions">
-            <button class="btn-add-exchange" (click)="goToAddExchange()">+ Add Exchange</button>
+            <button class="btn-add-exchange" (click)="goToAddExchange()">{{ 'dashboard.addExchange' | translate }}</button>
           </div>
         </div>
         <div class="exchange-list">
@@ -650,14 +650,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <div class="exrow-label">
                     {{ conn.label }}
                     @if (isPaperExchange(conn.exchangeId)) {
-                      <span class="paper-tag">Paper</span>
+                      <span class="paper-tag">{{ 'common.paper' | translate }}</span>
                     }
                   </div>
-                  <div class="exrow-sub">{{ exchangeName(conn.exchangeId) }} · Connected {{ conn.connectedAt | date:'mediumDate' }}</div>
+                  <div class="exrow-sub">{{ exchangeName(conn.exchangeId) }} · {{ 'dashboard.connectedOn' | translate }} {{ conn.connectedAt | date:'mediumDate' }}</div>
                 </div>
               </div>
               <div class="exrow-right">
-                <span class="exrow-status">🟢 Live</span>
+                <span class="exrow-status">{{ 'dashboard.live' | translate }}</span>
               </div>
             </div>
           }
@@ -676,7 +676,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="panel-header">
         <h2 class="panel-title">{{ strategiesSectionTitle() }}</h2>
         <div class="panel-header-actions">
-          <button class="btn-add-exchange" (click)="goToAddStrategy()">+ New Strategy</button>
+          <button class="btn-add-exchange" (click)="goToAddStrategy()">{{ 'dashboard.newStrategy' | translate }}</button>
         </div>
       </div>
 
@@ -685,12 +685,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <table class="bots-table strategies-table">
             <thead>
               <tr>
-                <th>Strategy</th>
-                <th>Template</th>
-                <th>Side</th>
-                <th>Executing Bot</th>
-                <th>Status</th>
-                <th>Updated</th>
+                <th>{{ 'dashboard.strategy' | translate }}</th>
+                <th>{{ 'dashboard.template' | translate }}</th>
+                <th>{{ 'dashboard.side' | translate }}</th>
+                <th>{{ 'dashboard.executingBot' | translate }}</th>
+                <th>{{ 'dashboard.statusHeader' | translate }}</th>
+                <th>{{ 'common.updated' | translate }}</th>
                 <th></th>
               </tr>
             </thead>
@@ -715,12 +715,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <td>{{ assignedBotLabel(strategy.assignedBotId) }}</td>
                   <td>
                     <span class="status-badge" [class.status-active]="strategy.status === 'active'" [class.status-paused]="strategy.status === 'paused'">
-                      {{ strategy.status === 'active' ? '🟢 Active' : '⏸ Paused' }}
+                      {{ strategy.status === 'active' ? ('dashboard.activeStatus' | translate) : ('dashboard.pausedStatus' | translate) }}
                     </span>
                   </td>
                   <td>{{ strategy.updatedAt | date:'mediumDate' }}</td>
                   <td class="bot-actions">
-                    <button class="bot-btn bot-btn-view" (click)="openStrategiesPage(); $event.stopPropagation()" title="View">
+                    <button class="bot-btn bot-btn-view" (click)="openStrategiesPage(); $event.stopPropagation()" [title]="'bots.viewBot' | translate">
                       <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                         <circle cx="12" cy="12" r="3"/>
@@ -739,8 +739,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       } @else {
         <div class="strategy-empty-state">
-          <p>No real strategies configured yet for {{ modeLabel() }}.</p>
-          <button class="btn-add-exchange" (click)="goToAddStrategy()">Create your first strategy</button>
+          <p>{{ 'dashboard.noStrategies' | translate: {mode: modeLabel()} }}</p>
+          <button class="btn-add-exchange" (click)="goToAddStrategy()">{{ 'dashboard.createFirstStrategy' | translate }}</button>
         </div>
       }
     </div>
@@ -750,23 +750,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @if (isDashboardSectionVisible('bots') && visibleBots().length > 0) {
       <div class="panel" id="bots-section" [style.order]="dashboardSectionOrder('bots')">
         <div class="panel-header">
-          <h2 class="panel-title">My {{ modeLabel() }} Bots</h2>
+          <h2 class="panel-title">{{ 'dashboard.myBots' | translate: {mode: modeLabel()} }}</h2>
           <div class="panel-header-actions">
-            <button class="btn-add-exchange" (click)="goToAddBot()">+ New Bot</button>
+            <button class="btn-add-exchange" (click)="goToAddBot()">{{ 'dashboard.newBot' | translate }}</button>
           </div>
         </div>
         <div class="bots-table-wrap">
           <table class="bots-table">
             <thead>
               <tr>
-                <th>Bot</th>
-                <th>Strategy</th>
-                <th>Pair</th>
-                <th>Exchange</th>
-                <th>TF</th>
-                <th>Investment</th>
-                <th>P&amp;L</th>
-                <th>Status</th>
+                <th>{{ 'dashboard.bot' | translate }}</th>
+                <th>{{ 'dashboard.strategy' | translate }}</th>
+                <th>{{ 'dashboard.pair' | translate }}</th>
+                <th>{{ 'portfolioManagement.exchange' | translate }}</th>
+                <th>{{ 'dashboard.tf' | translate }}</th>
+                <th>{{ 'dashboard.investmentHeader' | translate }}</th>
+                <th>{{ 'dashboard.plHeader' | translate }}</th>
+                <th>{{ 'dashboard.statusHeader' | translate }}</th>
                 <th></th>
               </tr>
             </thead>
@@ -790,11 +790,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   </td>
                   <td>
                     <span class="status-badge" [class.status-active]="bot.status === 'active'" [class.status-paused]="bot.status === 'paused'">
-                      {{ bot.status === 'active' ? '🟢 Active' : '⏸ Paused' }}
+                      {{ bot.status === 'active' ? ('dashboard.activeStatus' | translate) : ('dashboard.pausedStatus' | translate) }}
                     </span>
                   </td>
                   <td class="bot-actions">
-                    <button class="bot-btn bot-btn-view" (click)="openBotsPage(); $event.stopPropagation()" title="View">
+                    <button class="bot-btn bot-btn-view" (click)="openBotsPage(); $event.stopPropagation()" [title]="'bots.viewBot' | translate">
                       <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                         <circle cx="12" cy="12" r="3"/>
@@ -820,14 +820,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Quick Actions -->
       <div class="panel">
-        <h2 class="panel-title">Quick Actions</h2>
+        <h2 class="panel-title">{{ 'dashboard.quickActions' | translate }}</h2>
         <div class="actions-grid">
-          @for (action of quickActions; track action.label) {
+          @for (action of quickActions; track action.labelKey) {
             <button class="action-card" (click)="handleAction(action.action)">
               <span class="action-icon">{{ action.icon }}</span>
               <div>
-                <div class="action-label">{{ action.label }}</div>
-                <div class="action-desc">{{ action.desc }}</div>
+                <div class="action-label">{{ action.labelKey | translate }}</div>
+                <div class="action-desc">{{ action.descKey | translate }}</div>
               </div>
               <svg class="action-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -838,13 +838,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- Getting Started Checklist -->
       @if (showGettingStartedChecklist()) {
       <div class="panel">
-        <h2 class="panel-title">Getting Started</h2>
+        <h2 class="panel-title">{{ 'dashboard.gettingStarted' | translate }}</h2>
         <ul class="checklist">
           <li class="check-item done">
             <span class="check-icon check-done">✓</span>
             <div>
-              <div class="check-title">Create your account</div>
-              <div class="check-sub">Account created and verified</div>
+              <div class="check-title">{{ 'dashboard.createAccount' | translate }}</div>
+              <div class="check-sub">{{ 'dashboard.accountCreated' | translate }}</div>
             </div>
           </li>
           <li class="check-item" [class.done]="hasVisibleExchange()">
@@ -852,10 +852,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               {{ hasVisibleExchange() ? '✓' : '2' }}
             </span>
             <div>
-              <div class="check-title">Connect a {{ modeLabel() }} exchange</div>
+              <div class="check-title">{{ 'dashboard.connectExchange' | translate: {mode: modeLabel()} }}</div>
               <div class="check-sub">
-                @if (hasVisibleExchange()) { {{ visibleConnections().length }} exchange(s) connected }
-                @else { <button class="inline-link" (click)="goToAddExchange()">Link Binance, Coinbase, or Kraken →</button> }
+                @if (hasVisibleExchange()) { {{ 'dashboard.exchangesConnectedCount' | translate: {count: visibleConnections().length} }} }
+                @else { <button class="inline-link" (click)="goToAddExchange()">{{ 'dashboard.linkExchange' | translate }}</button> }
               </div>
             </div>
           </li>
@@ -864,10 +864,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               {{ visibleBots().length > 0 ? '✓' : '3' }}
             </span>
             <div>
-              <div class="check-title">Create your first bot</div>
+              <div class="check-title">{{ 'dashboard.createFirstBotChecklist' | translate }}</div>
               <div class="check-sub">
-                @if (visibleBots().length > 0) { {{ visibleBots().length }} bot(s) created }
-                @else { <button class="inline-link" (click)="goToAddBot()">Build your first trading bot →</button> }
+                @if (visibleBots().length > 0) { {{ 'dashboard.botsCreated' | translate: {count: visibleBots().length} }} }
+                @else { <button class="inline-link" (click)="goToAddBot()">{{ 'dashboard.buildFirstBot' | translate }}</button> }
               </div>
             </div>
           </li>
@@ -876,10 +876,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               {{ visibleActiveBots().length > 0 ? '✓' : '4' }}
             </span>
             <div>
-              <div class="check-title">Go live</div>
+              <div class="check-title">{{ 'dashboard.goLive' | translate }}</div>
               <div class="check-sub">
-                @if (visibleActiveBots().length > 0) { {{ visibleActiveBots().length }} bot(s) running }
-                @else { Activate a bot to start trading }
+                @if (visibleActiveBots().length > 0) { {{ 'dashboard.botsRunning' | translate: {count: visibleActiveBots().length} }} }
+                @else { {{ 'dashboard.activateBot' | translate }} }
               </div>
             </div>
           </li>
@@ -890,18 +890,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- Backend Runner Monitor -->
       <div class="panel">
         <div class="panel-header">
-          <h2 class="panel-title">Backend Runner</h2>
+          <h2 class="panel-title">{{ 'userPages.backendRunner' | translate }}</h2>
           <button class="btn-refresh-runner" (click)="refreshRunnerSummaries()" [disabled]="runnerSummariesLoading()">
-            {{ runnerSummariesLoading() ? 'Refreshing...' : 'Refresh' }}
+            {{ runnerSummariesLoading() ? ('backendRunner.refreshing' | translate) : ('backendRunner.refresh' | translate) }}
           </button>
         </div>
 
         @if (runnerSummariesError()) {
           <div class="runner-error">{{ runnerSummariesError() }}</div>
         } @else if (runnerSummariesLoading() && runnerSummaries().length === 0) {
-          <div class="runner-loading">Loading backend runner summaries...</div>
+          <div class="runner-loading">{{ 'backendRunner.loading' | translate }}</div>
         } @else if (runnerSummaries().length === 0) {
-          <div class="runner-empty">No runner summaries yet.</div>
+          <div class="runner-empty">{{ 'backendRunner.noSummariesYet' | translate }}</div>
         } @else {
           <div class="runner-list">
             @for (summary of visibleRunnerSummaries(); track summary.ranAt) {
@@ -909,11 +909,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="runner-left">
                   <div class="runner-time">{{ summary.ranAt | date:'medium' }}</div>
                   <div class="runner-stats">
-                    Active: {{ summary.totalActiveStrategies }} · Executed: {{ summary.executed }} · Failed: {{ summary.failed }}
+                    {{ 'dashboard.runnerStatsLabel' | translate: {active: summary.totalActiveStrategies, executed: summary.executed, failed: summary.failed} }}
                   </div>
                 </div>
                 <span class="runner-badge" [class.runner-ok]="runnerStatusClass(summary) === 'runner-ok'" [class.runner-warn]="runnerStatusClass(summary) === 'runner-warn'" [class.runner-quiet]="runnerStatusClass(summary) === 'runner-quiet'">
-                  {{ runnerStatusLabel(summary) }}
+                  {{ runnerStatusLabel(summary) | translate }}
                 </span>
               </div>
             }
@@ -933,33 +933,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @if (isDashboardSectionVisible('portfolioPerformance')) {
     <div class="panel chart-placeholder" id="portfolio-management-section" [style.order]="dashboardSectionOrder('portfolioPerformance')">
       <div class="panel-header">
-        <h2 class="panel-title">Portfolio Management</h2>
+        <h2 class="panel-title">{{ 'portfolioManagement.title' | translate }}</h2>
         <button class="btn-refresh-runner" (click)="refreshPortfolioManagement()" [disabled]="exchangeService.isLoadingPortfolio()">
-          {{ exchangeService.isLoadingPortfolio() ? 'Refreshing...' : 'Refresh' }}
+          {{ exchangeService.isLoadingPortfolio() ? ('backendRunner.refreshing' | translate) : ('backendRunner.refresh' | translate) }}
         </button>
       </div>
 
       @if (!hasVisibleExchange()) {
         <div class="chart-empty">
-          <p>Connect a {{ modeLabel() }} exchange to start managing your portfolio.</p>
-          <button class="btn-connect" (click)="goToAddExchange()">+ Connect Exchange</button>
+          <p>{{ 'dashboard.connectPortfolio' | translate: {mode: modeLabel()} }}</p>
+          <button class="btn-connect" (click)="goToAddExchange()">{{ 'dashboard.connectExchangeBtn' | translate }}</button>
         </div>
       } @else if (exchangeService.isLoadingPortfolio()) {
-        <div class="runner-loading">Loading portfolio data...</div>
+        <div class="runner-loading">{{ 'dashboard.loadingPortfolio' | translate }}</div>
       } @else if (exchangeService.portfolioError()) {
         <div class="runner-error">{{ exchangeService.portfolioError() }}</div>
       } @else {
         <div class="portfolio-management-grid">
           <div class="portfolio-management-card">
-            <div class="portfolio-management-label">{{ modeLabel() }} Portfolio Value</div>
+            <div class="portfolio-management-label">{{ 'dashboard.portfolioValueLabel' | translate: {mode: modeLabel()} }}</div>
             <div class="portfolio-management-value">
-              {{ currentModePortfolioValue !== null ? ('$' + (currentModePortfolioValue | number:'1.2-2')) : 'N/A' }}
+              {{ currentModePortfolioValue !== null ? ('$' + (currentModePortfolioValue | number:'1.2-2')) : ('common.na' | translate) }}
             </div>
           </div>
           <div class="portfolio-management-card">
-            <div class="portfolio-management-label">{{ modeLabel() }} Unrealized P&amp;L</div>
+            <div class="portfolio-management-label">{{ 'dashboard.unrealizedPnlLabel' | translate: {mode: modeLabel()} }}</div>
             <div class="portfolio-management-value" [class.pnl-pos]="(currentModePnlValue ?? 0) >= 0" [class.pnl-neg]="(currentModePnlValue ?? 0) < 0">
-              {{ currentModePnlValue !== null ? ((currentModePnlValue >= 0 ? '+' : '') + '$' + (currentModePnlValue | number:'1.2-2')) : 'N/A' }}
+              {{ currentModePnlValue !== null ? ((currentModePnlValue >= 0 ? '+' : '') + '$' + (currentModePnlValue | number:'1.2-2')) : ('common.na' | translate) }}
             </div>
           </div>
         </div>
@@ -975,7 +975,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <div class="portfolio-management-row-right">
                   <div class="portfolio-popup-value">${{ row.portfolioValue | number:'1.2-2' }}</div>
                   <div class="portfolio-popup-row-sub" [class.pnl-pos]="(row.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="(row.unrealizedPnl ?? 0) < 0">
-                    {{ row.unrealizedPnl !== null && row.unrealizedPnl !== undefined ? ((row.unrealizedPnl >= 0 ? '+' : '') + '$' + (row.unrealizedPnl | number:'1.2-2')) : 'N/A' }}
+                    {{ row.unrealizedPnl !== null && row.unrealizedPnl !== undefined ? ((row.unrealizedPnl >= 0 ? '+' : '') + '$' + (row.unrealizedPnl | number:'1.2-2')) : ('common.na' | translate) }}
                   </div>
                 </div>
               </div>
@@ -983,20 +983,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         }
 
-        <div class="portfolio-management-subtitle">Open Positions</div>
+        <div class="portfolio-management-subtitle">{{ 'portfolioManagement.openPositions' | translate }}</div>
         @if (openPositionsRows.length > 0) {
           <div class="bots-table-wrap">
             <table class="bots-table positions-table">
               <thead>
                 <tr>
-                  <th>Symbol</th>
-                  <th>Side</th>
-                  <th>Exchange</th>
-                  <th>Market</th>
-                  <th>Shares</th>
-                  <th>Total Amount</th>
-                  <th>P/L Amount</th>
-                  <th>P/L %</th>
+                  <th>{{ 'portfolioManagement.symbol' | translate }}</th>
+                  <th>{{ 'dashboard.side' | translate }}</th>
+                  <th>{{ 'portfolioManagement.exchange' | translate }}</th>
+                  <th>{{ 'dashboard.market' | translate }}</th>
+                  <th>{{ 'dashboard.shares' | translate }}</th>
+                  <th>{{ 'dashboard.totalAmount' | translate }}</th>
+                  <th>{{ 'dashboard.plAmount' | translate }}</th>
+                  <th>{{ 'portfolioManagement.plPercent' | translate }}</th>
                   <th></th>
                 </tr>
               </thead>
@@ -1006,22 +1006,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <td class="portfolio-popup-row-title">{{ position.symbol }}</td>
                     <td>
                       <span class="position-side-badge" [class.side-long]="position.side === 'long'" [class.side-short]="position.side === 'short'">
-                        {{ position.side === 'short' ? 'Short' : 'Long' }}
+                        {{ position.side === 'short' ? ('dashboard.short' | translate) : ('dashboard.long' | translate) }}
                       </span>
                     </td>
                     <td>{{ position.exchangeLabel }}</td>
                     <td>
                       <span class="market-status" [class.market-open]="position.marketOpen !== false" [class.market-closed]="position.marketOpen === false">
-                        {{ position.marketOpen === false ? 'Closed' : 'Open' }}
+                        {{ position.marketOpen === false ? ('dashboard.marketClosedStatus' | translate) : ('dashboard.marketOpenStatus' | translate) }}
                       </span>
                     </td>
                     <td class="mono">{{ position.quantity | number:'1.2-8' }}</td>
                     <td>${{ position.marketValue | number:'1.2-2' }}</td>
                     <td [class.pnl-pos]="(position.unrealizedPnl ?? 0) >= 0" [class.pnl-neg]="(position.unrealizedPnl ?? 0) < 0">
-                      {{ position.unrealizedPnl !== null && position.unrealizedPnl !== undefined ? ((position.unrealizedPnl >= 0 ? '+' : '') + '$' + (position.unrealizedPnl | number:'1.2-2')) : 'N/A' }}
+                      {{ position.unrealizedPnl !== null && position.unrealizedPnl !== undefined ? ((position.unrealizedPnl >= 0 ? '+' : '') + '$' + (position.unrealizedPnl | number:'1.2-2')) : ('common.na' | translate) }}
                     </td>
                     <td [class.pnl-pos]="(position.pnlPercentage ?? 0) >= 0" [class.pnl-neg]="(position.pnlPercentage ?? 0) < 0">
-                      {{ position.pnlPercentage !== null && position.pnlPercentage !== undefined ? ((position.pnlPercentage >= 0 ? '+' : '') + (position.pnlPercentage | number:'1.2-2') + '%') : 'N/A' }}
+                      {{ position.pnlPercentage !== null && position.pnlPercentage !== undefined ? ((position.pnlPercentage >= 0 ? '+' : '') + (position.pnlPercentage | number:'1.2-2') + '%') : ('common.na' | translate) }}
                     </td>
                     <td>
                       <button
@@ -1030,7 +1030,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         [disabled]="liquidatingPositionKey() === (position.exchangeLabel + ':' + position.symbol)"
                         (click)="liquidateOpenPosition(position)"
                       >
-                        {{ liquidatingPositionKey() === (position.exchangeLabel + ':' + position.symbol) ? 'Liquidating...' : 'Liquidate' }}
+                        {{ liquidatingPositionKey() === (position.exchangeLabel + ':' + position.symbol) ? ('dashboard.liquidating' | translate) : ('dashboard.liquidate' | translate) }}
                       </button>
                     </td>
                   </tr>
@@ -1039,11 +1039,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </table>
           </div>
         } @else {
-          <div class="portfolio-popup-empty">No open positions in {{ modeLabel() }} mode.</div>
+          <div class="portfolio-popup-empty">{{ 'dashboard.noOpenPositions' | translate: {mode: modeLabel()} }}</div>
         }
 
         <div class="portfolio-management-actions">
-          <button class="btn-connect" (click)="onPortfolioCardClick(0)">View Breakdown</button>
+          <button class="btn-connect" (click)="onPortfolioCardClick(0)">{{ 'dashboard.viewBreakdown' | translate }}</button>
         </div>
       }
     </div>
