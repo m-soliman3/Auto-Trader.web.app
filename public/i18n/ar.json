@@ -243,7 +243,22 @@
     "use": "Use",
     "useThisStrategy": "Use This Strategy",
     "users": "Users",
-    "winRate": "Win Rate"
+    "winRate": "Win Rate",
+    "allMarkets": "كل الأسواق",
+    "marketCrypto": "₿ كريبتو",
+    "marketStocks": "📈 أسهم",
+    "marketForex": "💱 فوركس",
+    "allRisk": "كل المخاطر",
+    "riskLow": "🟢 منخفض",
+    "riskMedium": "🟡 متوسط",
+    "riskHigh": "🔴 مرتفع",
+    "allCategories": "الكل",
+    "categoryTrend": "اتجاه",
+    "categoryMeanReversion": "العودة للمتوسط",
+    "categoryMomentum": "زخم",
+    "categoryVolatility": "تقلب",
+    "categoryArbitrage": "تحكيم",
+    "categoryIncome": "دخل"
   },
   "chat": {
     "assistant": "Assistant",
@@ -778,5 +793,29 @@
     "liquidate": "تصفية",
     "noOpenPositions": "لا توجد مراكز مفتوحة في وضع {{mode}}.",
     "viewBreakdown": "عرض التفصيل"
+  },
+  "consent": {
+    "title": "خصوصيتك تهمنا",
+    "description": "نستخدم ملفات تعريف الارتباط والتقنيات المماثلة لفهم أنماط استخدامك وتحسين خدماتنا وتزويدك بمحتوى مخصص. كما نستخدم Google Tag Manager لتحليل حركة مرور الموقع وتحسين تجربتك.",
+    "whatDataTitle": "ما البيانات التي نجمعها؟",
+    "essentialData": "البيانات الأساسية:",
+    "essentialDataDesc": "معلومات تسجيل الدخول وتفضيلات الحساب وبيانات التداول اللازمة لوظائف الخدمة",
+    "analyticsData": "بيانات التحليل:",
+    "analyticsDataDesc": "مشاهدات الصفحة وتفاعلات المستخدم ومعلومات الجهاز ونوع المتصفح (عبر Google Analytics)",
+    "marketingData": "بيانات التسويق:",
+    "marketingDataDesc": "أداء الحملات وأنماط سلوك المستخدم (عبر Google Tag Manager)",
+    "cookiesData": "ملفات تعريف الارتباط:",
+    "cookiesDataDesc": "ملفات تعريف الارتباط للجلسة والتفضيلات والتحليلات",
+    "yourRightsTitle": "حقوقك",
+    "yourRightsLead": "بموجب اللائحة العامة لحماية البيانات، لك الحق في:",
+    "rightAccess": "الوصول إلى بياناتك الشخصية",
+    "rightCorrection": "طلب تصحيح البيانات غير الدقيقة",
+    "rightDeletion": "طلب حذف بياناتك (حق النسيان)",
+    "rightObject": "الاعتراض على معالجة البيانات",
+    "rightWithdraw": "سحب الموافقة في أي وقت",
+    "privacyPolicyLink": "سياسة الخصوصية",
+    "moreInfoText": "لمزيد من المعلومات، يرجى مراجعة",
+    "declineAll": "رفض الكل",
+    "acceptAll": "قبول الكل"
   }
 }

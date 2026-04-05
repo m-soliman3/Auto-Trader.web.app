@@ -573,7 +573,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="dashboard-layout">
       <aside class="dashboard-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
         <div class="dashboard-index-title">{{ 'userPages.navigation' | translate }}</div>
-        <div class="dashboard-index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+        <div class="dashboard-index-current">{{ (modeLabel() | translate) }} {{ 'userPages.mode' | translate }}</div>
         <nav class="dashboard-index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
           <a class="dashboard-index-link active" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
           <a class="dashboard-index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
@@ -590,7 +590,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="welcome-banner" id="dashboard-section">
       <div class="welcome-text">
         <h1>{{ 'dashboard.welcome' | translate: {name: auth.currentUser()?.name} }}</h1>
-        <p>{{ hasVisibleExchange() ? ('dashboard.exchangesConnectedReady' | translate: {mode: modeLabel()}) : ('dashboard.connectExchangeToTrade' | translate: {mode: modeLabel()}) }}</p>
+        <p>{{ hasVisibleExchange() ? ('dashboard.exchangesConnectedReady' | translate: {mode: (modeLabel() | translate)}) : ('dashboard.connectExchangeToTrade' | translate: {mode: (modeLabel() | translate)}) }}</p>
       </div>
       <div class="welcome-badge">
         <span class="badge-dot"></span>
@@ -612,7 +612,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         >
           <div class="stat-top">
             <span class="stat-icon">{{ card.icon }}</span>
-            <span class="stat-label">{{ card.labelKey | translate: {mode: modeLabel()} }}</span>
+            <span class="stat-label">{{ card.labelKey | translate: {mode: (modeLabel() | translate)} }}</span>
           </div>
           <div class="stat-value" [class.split]="!!card.secondaryValue">{{ card.value }}</div>
           @if (card.secondaryValue) {
@@ -629,7 +629,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @if (isDashboardSectionVisible('connectedExchanges') && hasVisibleExchange()) {
       <div class="panel" id="exchanges-section" [style.order]="dashboardSectionOrder('connectedExchanges')">
         <div class="panel-header">
-          <h2 class="panel-title">{{ 'dashboard.connectedExchanges' | translate: {mode: modeLabel()} }}</h2>
+          <h2 class="panel-title">{{ 'dashboard.connectedExchanges' | translate: {mode: (modeLabel() | translate)} }}</h2>
           <div class="panel-header-actions">
             <button class="btn-add-exchange" (click)="goToAddExchange()">{{ 'dashboard.addExchange' | translate }}</button>
           </div>
@@ -739,7 +739,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       } @else {
         <div class="strategy-empty-state">
-          <p>{{ 'dashboard.noStrategies' | translate: {mode: modeLabel()} }}</p>
+          <p>{{ 'dashboard.noStrategies' | translate: {mode: (modeLabel() | translate)} }}</p>
           <button class="btn-add-exchange" (click)="goToAddStrategy()">{{ 'dashboard.createFirstStrategy' | translate }}</button>
         </div>
       }
@@ -750,7 +750,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @if (isDashboardSectionVisible('bots') && visibleBots().length > 0) {
       <div class="panel" id="bots-section" [style.order]="dashboardSectionOrder('bots')">
         <div class="panel-header">
-          <h2 class="panel-title">{{ 'dashboard.myBots' | translate: {mode: modeLabel()} }}</h2>
+          <h2 class="panel-title">{{ 'dashboard.myBots' | translate: {mode: (modeLabel() | translate)} }}</h2>
           <div class="panel-header-actions">
             <button class="btn-add-exchange" (click)="goToAddBot()">{{ 'dashboard.newBot' | translate }}</button>
           </div>
@@ -852,7 +852,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               {{ hasVisibleExchange() ? '✓' : '2' }}
             </span>
             <div>
-              <div class="check-title">{{ 'dashboard.connectExchange' | translate: {mode: modeLabel()} }}</div>
+              <div class="check-title">{{ 'dashboard.connectExchange' | translate: {mode: (modeLabel() | translate)} }}</div>
               <div class="check-sub">
                 @if (hasVisibleExchange()) { {{ 'dashboard.exchangesConnectedCount' | translate: {count: visibleConnections().length} }} }
                 @else { <button class="inline-link" (click)="goToAddExchange()">{{ 'dashboard.linkExchange' | translate }}</button> }
@@ -941,7 +941,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       @if (!hasVisibleExchange()) {
         <div class="chart-empty">
-          <p>{{ 'dashboard.connectPortfolio' | translate: {mode: modeLabel()} }}</p>
+          <p>{{ 'dashboard.connectPortfolio' | translate: {mode: (modeLabel() | translate)} }}</p>
           <button class="btn-connect" (click)="goToAddExchange()">{{ 'dashboard.connectExchangeBtn' | translate }}</button>
         </div>
       } @else if (exchangeService.isLoadingPortfolio()) {
@@ -951,13 +951,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       } @else {
         <div class="portfolio-management-grid">
           <div class="portfolio-management-card">
-            <div class="portfolio-management-label">{{ 'dashboard.portfolioValueLabel' | translate: {mode: modeLabel()} }}</div>
+            <div class="portfolio-management-label">{{ 'dashboard.portfolioValueLabel' | translate: {mode: (modeLabel() | translate)} }}</div>
             <div class="portfolio-management-value">
               {{ currentModePortfolioValue !== null ? ('$' + (currentModePortfolioValue | number:'1.2-2')) : ('common.na' | translate) }}
             </div>
           </div>
           <div class="portfolio-management-card">
-            <div class="portfolio-management-label">{{ 'dashboard.unrealizedPnlLabel' | translate: {mode: modeLabel()} }}</div>
+            <div class="portfolio-management-label">{{ 'dashboard.unrealizedPnlLabel' | translate: {mode: (modeLabel() | translate)} }}</div>
             <div class="portfolio-management-value" [class.pnl-pos]="(currentModePnlValue ?? 0) >= 0" [class.pnl-neg]="(currentModePnlValue ?? 0) < 0">
               {{ currentModePnlValue !== null ? ((currentModePnlValue >= 0 ? '+' : '') + '$' + (currentModePnlValue | number:'1.2-2')) : ('common.na' | translate) }}
             </div>
@@ -1039,7 +1039,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </table>
           </div>
         } @else {
-          <div class="portfolio-popup-empty">{{ 'dashboard.noOpenPositions' | translate: {mode: modeLabel()} }}</div>
+          <div class="portfolio-popup-empty">{{ 'dashboard.noOpenPositions' | translate: {mode: (modeLabel() | translate)} }}</div>
         }
 
         <div class="portfolio-management-actions">

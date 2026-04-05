@@ -243,7 +243,22 @@
     "use": "Use",
     "useThisStrategy": "Use This Strategy",
     "users": "Users",
-    "winRate": "Win Rate"
+    "winRate": "Win Rate",
+    "allMarkets": "Todos los mercados",
+    "marketCrypto": "₿ Cripto",
+    "marketStocks": "📈 Acciones",
+    "marketForex": "💱 Forex",
+    "allRisk": "Todo el riesgo",
+    "riskLow": "🟢 Bajo",
+    "riskMedium": "🟡 Medio",
+    "riskHigh": "🔴 Alto",
+    "allCategories": "Todas",
+    "categoryTrend": "Tendencia",
+    "categoryMeanReversion": "Reversión a la media",
+    "categoryMomentum": "Momentum",
+    "categoryVolatility": "Volatilidad",
+    "categoryArbitrage": "Arbitraje",
+    "categoryIncome": "Ingresos"
   },
   "chat": {
     "assistant": "Assistant",
@@ -778,5 +793,29 @@
     "liquidate": "Liquidar",
     "noOpenPositions": "No hay posiciones abiertas en modo {{mode}}.",
     "viewBreakdown": "Ver desglose"
+  },
+  "consent": {
+    "title": "Su privacidad es importante",
+    "description": "Utilizamos cookies y tecnologías similares para entender sus patrones de uso, mejorar nuestros servicios y ofrecerle contenido personalizado. También usamos Google Tag Manager para analizar el tráfico del sitio web y optimizar su experiencia.",
+    "whatDataTitle": "¿Qué datos recopilamos?",
+    "essentialData": "Datos esenciales:",
+    "essentialDataDesc": "Información de inicio de sesión, preferencias de cuenta, datos de trading necesarios para la funcionalidad del servicio",
+    "analyticsData": "Datos analíticos:",
+    "analyticsDataDesc": "Páginas visitadas, interacciones de usuario, información del dispositivo, tipo de navegador (vía Google Analytics)",
+    "marketingData": "Datos de marketing:",
+    "marketingDataDesc": "Rendimiento de campañas, patrones de comportamiento del usuario (vía Google Tag Manager)",
+    "cookiesData": "Cookies:",
+    "cookiesDataDesc": "Cookies de sesión, cookies de preferencias, cookies analíticas",
+    "yourRightsTitle": "Sus derechos",
+    "yourRightsLead": "Bajo el RGPD, tiene derecho a:",
+    "rightAccess": "Acceder a sus datos personales",
+    "rightCorrection": "Solicitar la corrección de datos inexactos",
+    "rightDeletion": "Solicitar la eliminación de sus datos (derecho al olvido)",
+    "rightObject": "Oponerse al procesamiento de datos",
+    "rightWithdraw": "Retirar el consentimiento en cualquier momento",
+    "privacyPolicyLink": "Política de privacidad",
+    "moreInfoText": "Para más información, revise nuestra",
+    "declineAll": "Rechazar todo",
+    "acceptAll": "Aceptar todo"
   }
 }

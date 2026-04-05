@@ -243,7 +243,22 @@
     "use": "Use",
     "useThisStrategy": "Use This Strategy",
     "users": "Users",
-    "winRate": "Win Rate"
+    "winRate": "Win Rate",
+    "allMarkets": "All Markets",
+    "marketCrypto": "₿ Crypto",
+    "marketStocks": "📈 Stocks",
+    "marketForex": "💱 Forex",
+    "allRisk": "All Risk",
+    "riskLow": "🟢 Low",
+    "riskMedium": "🟡 Medium",
+    "riskHigh": "🔴 High",
+    "allCategories": "All",
+    "categoryTrend": "Trend",
+    "categoryMeanReversion": "Mean Reversion",
+    "categoryMomentum": "Momentum",
+    "categoryVolatility": "Volatility",
+    "categoryArbitrage": "Arbitrage",
+    "categoryIncome": "Income"
   },
   "chat": {
     "assistant": "Assistant",
@@ -778,5 +793,29 @@
     "liquidate": "Liquidate",
     "noOpenPositions": "No open positions in {{mode}} mode.",
     "viewBreakdown": "View Breakdown"
+  },
+  "consent": {
+    "title": "Your Privacy Matters",
+    "description": "We use cookies and similar technologies to understand your usage patterns, improve our services, and provide you with personalized content. We also use Google Tag Manager to analyze website traffic and optimize your experience.",
+    "whatDataTitle": "What data do we collect?",
+    "essentialData": "Essential Data:",
+    "essentialDataDesc": "Login information, account preferences, trading data necessary for service functionality",
+    "analyticsData": "Analytics Data:",
+    "analyticsDataDesc": "Page views, user interactions, device information, browser type (via Google Analytics)",
+    "marketingData": "Marketing Data:",
+    "marketingDataDesc": "Campaign performance, user behavior patterns (via Google Tag Manager)",
+    "cookiesData": "Cookies:",
+    "cookiesDataDesc": "Session cookies, preference cookies, analytics cookies",
+    "yourRightsTitle": "Your Rights",
+    "yourRightsLead": "Under GDPR, you have the right to:",
+    "rightAccess": "Access your personal data",
+    "rightCorrection": "Request correction of inaccurate data",
+    "rightDeletion": "Request deletion of your data (right to be forgotten)",
+    "rightObject": "Object to data processing",
+    "rightWithdraw": "Withdraw consent at any time",
+    "privacyPolicyLink": "Privacy Policy",
+    "moreInfoText": "For more information, please review our",
+    "declineAll": "Decline All",
+    "acceptAll": "Accept All"
   }
 }

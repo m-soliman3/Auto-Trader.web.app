@@ -1,54 +1,56 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-consent-banner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, TranslateModule],
   template: `
     <div class="consent-overlay" *ngIf="showBanner">
       <div class="consent-banner">
         <div class="consent-content">
-          <h3 class="consent-title">Your Privacy Matters</h3>
+          <h3 class="consent-title">{{ 'consent.title' | translate }}</h3>
           <p class="consent-description">
-            We use cookies and similar technologies to understand your usage patterns, improve our services, and provide you with personalized content. We also use Google Tag Manager to analyze website traffic and optimize your experience.
+            {{ 'consent.description' | translate }}
           </p>
           
           <div class="consent-details">
             <details class="consent-details-group">
-              <summary class="consent-summary">What data do we collect?</summary>
+              <summary class="consent-summary">{{ 'consent.whatDataTitle' | translate }}</summary>
               <div class="consent-details-content">
                 <ul>
-                  <li><strong>Essential Data:</strong> Login information, account preferences, trading data necessary for service functionality</li>
-                  <li><strong>Analytics Data:</strong> Page views, user interactions, device information, browser type (via Google Analytics)</li>
-                  <li><strong>Marketing Data:</strong> Campaign performance, user behavior patterns (via Google Tag Manager)</li>
-                  <li><strong>Cookies:</strong> Session cookies, preference cookies, analytics cookies</li>
+                  <li><strong>{{ 'consent.essentialData' | translate }}</strong> {{ 'consent.essentialDataDesc' | translate }}</li>
+                  <li><strong>{{ 'consent.analyticsData' | translate }}</strong> {{ 'consent.analyticsDataDesc' | translate }}</li>
+                  <li><strong>{{ 'consent.marketingData' | translate }}</strong> {{ 'consent.marketingDataDesc' | translate }}</li>
+                  <li><strong>{{ 'consent.cookiesData' | translate }}</strong> {{ 'consent.cookiesDataDesc' | translate }}</li>
                 </ul>
               </div>
             </details>
 
             <details class="consent-details-group">
-              <summary class="consent-summary">Your Rights</summary>
+              <summary class="consent-summary">{{ 'consent.yourRightsTitle' | translate }}</summary>
               <div class="consent-details-content">
-                <p>Under GDPR, you have the right to:</p>
+                <p>{{ 'consent.yourRightsLead' | translate }}</p>
                 <ul>
-                  <li>Access your personal data</li>
-                  <li>Request correction of inaccurate data</li>
-                  <li>Request deletion of your data (right to be forgotten)</li>
-                  <li>Object to data processing</li>
-                  <li>Withdraw consent at any time</li>
+                  <li>{{ 'consent.rightAccess' | translate }}</li>
+                  <li>{{ 'consent.rightCorrection' | translate }}</li>
+                  <li>{{ 'consent.rightDeletion' | translate }}</li>
+                  <li>{{ 'consent.rightObject' | translate }}</li>
+                  <li>{{ 'consent.rightWithdraw' | translate }}</li>
                 </ul>
-                <p>For more information, please review our <a href="/privacy-policy" target="_blank" class="consent-link">Privacy Policy</a>.</p>
+                <p>{{ 'consent.moreInfoText' | translate }} <a routerLink="/privacy" class="consent-link">{{ 'consent.privacyPolicyLink' | translate }}</a>.</p>
               </div>
             </details>
           </div>
 
           <div class="consent-actions">
             <button class="consent-btn consent-btn-decline" (click)="handleDecline()">
-              Decline All
+              {{ 'consent.declineAll' | translate }}
             </button>
             <button class="consent-btn consent-btn-accept" (click)="handleAccept()">
-              Accept All
+              {{ 'consent.acceptAll' | translate }}
             </button>
           </div>
         </div>

@@ -34,17 +34,17 @@
       </div>
       <div class="chip-row">
         @for (m of markets; track m.value) {
-          <button class="chip" [class.active]="activeMarket() === m.value" (click)="activeMarket.set(m.value)">{{ m.label }}</button>
+          <button class="chip" [class.active]="activeMarket() === m.value" (click)="activeMarket.set(m.value)">{{ m.labelKey | translate }}</button>
         }
       </div>
       <div class="chip-row">
         @for (r of risks; track r.value) {
-          <button class="chip" [class.active]="activeRisk() === r.value" (click)="activeRisk.set(r.value)">{{ r.label }}</button>
+          <button class="chip" [class.active]="activeRisk() === r.value" (click)="activeRisk.set(r.value)">{{ r.labelKey | translate }}</button>
         }
       </div>
       <div class="chip-row">
         @for (c of categories; track c.value) {
-          <button class="chip" [class.active]="activeCategory() === c.value" (click)="activeCategory.set(c.value)">{{ c.label }}</button>
+          <button class="chip" [class.active]="activeCategory() === c.value" (click)="activeCategory.set(c.value)">{{ c.labelKey | translate }}</button>
         }
       </div>
     </div>

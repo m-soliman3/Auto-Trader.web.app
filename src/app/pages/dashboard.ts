@@ -144,7 +144,7 @@ export class Dashboard implements OnDestroy {
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
   private liveViewTimer: ReturnType<typeof setInterval> | null = null;
 
-  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
+  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'nav.paper' : 'nav.real');
   visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
   previewConnections = computed(() => this.visibleConnections().slice(0, 2));
   remainingConnectionsCount = computed(() => Math.max(0, this.visibleConnections().length - 2));
