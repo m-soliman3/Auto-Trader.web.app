@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { computed, signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { provideTranslateService } from '@ngx-translate/core';
 import { App } from './app';
 import { AuthService, User } from './services/auth.service';
 
@@ -22,6 +24,8 @@ describe('App', () => {
       imports: [App],
       providers: [
         provideRouter([]),
+        ...provideTranslateService({ fallbackLang: 'en' }),
+        { provide: Auth, useValue: { currentUser: null } },
         { provide: AuthService, useClass: MockAuthService },
       ],
     }).compileComponents();
