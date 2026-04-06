@@ -250,4 +250,9 @@ export class EditBotModal {
     if (value === null || value === undefined) return '';
     return String(value).trim();
   }
+
+  shouldShowExchangeHint(): boolean {
+    return !this.selectedExchangeLabel.trim()
+      && this.error() === this.translate.instant('editBot.validation.selectExchange');
+  }
 }

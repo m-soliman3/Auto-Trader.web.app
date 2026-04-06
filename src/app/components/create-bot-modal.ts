@@ -32,6 +32,7 @@ export class CreateBotModal {
 
   exchanges = computed(() => this.exchangeSvc.connectionsByMode(this.accountMode.mode()));
   modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'createBot.modePaperMoney' : 'createBot.modeRealMoney');
+  isPaperMode = computed(() => this.accountMode.mode() === 'paper');
 
   step     = signal<Step>(1);
   saving   = signal(false);
@@ -242,4 +243,9 @@ export class CreateBotModal {
   }
 
   close() { this.closed.emit(); }
+
+  shouldShowExchangeHint(): boolean {
+    return !this.exchangeLabel.trim()
+      && this.error() === this.translate.instant('createBot.validation.selectExchange');
+  }
 }
