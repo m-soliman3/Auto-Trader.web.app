@@ -396,7 +396,7 @@ exports.sendContactMessage = functions
                     sender_email: sender,
                     reply_to: sender,
                     subject: emailSubject,
-                    message: emailMessage,
+                    message: `From: ${sender}\n\n${emailMessage}`,
                 },
             };
             if (EMAILJS_PRIVATE_KEY) {
