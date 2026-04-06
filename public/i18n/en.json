@@ -894,8 +894,18 @@
     "getStarted": "Get started",
     "assistantAskSpecific": "Ask a more specific question and I will guide you step-by-step.",
     "assistantUnknownAction": "Unknown assistant action.",
+    "backendMonitorDisabled": "Backend monitor is disabled. Set tradingBackendBaseUrl in environment.",
+    "signInRunnerStatus": "Sign in to view backend runner status.",
+    "runnerStatusLoadError": "Unable to load backend runner status right now.",
     "comingSoon": "Coming soon — stay tuned! 🚀",
     "createBotFirst": "Create a bot first. A strategy must be assigned to an executing bot.",
+    "liveDataStreamError": "Unable to connect to live data stream",
+    "liveViewNoBot": "No executing bot found for this strategy.",
+    "liveViewNoStrategy": "Strategy details are unavailable.",
+    "liveViewSignInAgain": "Please sign in again to load live data.",
+    "liveViewNotEnoughData": "Not enough market data to draw chart.",
+    "liveViewLoadError": "Unable to load live market data right now.",
+    "unknownBot": "Unknown Bot",
     "strategyDeleted": "🗑 \"{{name}}\" deleted.",
     "unableDeleteStrategy": "Unable to delete strategy right now. Please try again.",
     "strategyCreatedBackendActive": "📊 \"{{name}}\" created. Backend evaluation is active and orders will only run on entry/exit signals.",
@@ -925,8 +935,12 @@
     "unableChangeBotStatus": "Unable to change bot status right now.",
     "botDeleted": "🗑 \"{{name}}\" deleted.",
     "botUpdatedSuccess": "✏️ \"{{name}}\" updated successfully!",
+    "marketClosedConfirmWithReason": "Market is closed now ({{reason}}). Would you like to place an order for this position?",
+    "marketClosedConfirm": "Market is closed now. Would you like to place an order for this position?",
     "positionLiquidated": "Position {{symbol}} liquidated.",
     "unableLiquidatePosition": "Unable to liquidate position right now.",
+    "sharesSold": "Shares sold",
+    "sharesBought": "Shares bought",
     "portfolioDetailsTitlePnl": "Today's P&L Breakdown",
     "portfolioDetailsTitleTrades": "Executed Buy/Sell Orders",
     "portfolioDetailsTitlePortfolio": "Portfolio Value Breakdown",
@@ -1051,5 +1065,299 @@
     "websiteLine": "Website: https://auto-trading.app",
     "lastUpdatedLabel": "Last Updated:",
     "lastUpdatedDate": "March 22, 2026"
+  },
+  "featurePages": {
+    "ai-signals": {
+      "title": "AI-Powered Signals",
+      "tagline": "Let machine intelligence find your next trade.",
+      "metaTitle": "AI-Powered Signals — AutoTrader",
+      "heroDescription": "Harness the power of machine learning to detect high-probability trade setups across thousands of assets — before the market moves.",
+      "overview": "Artificial intelligence has fundamentally changed the way professional traders approach the markets. At auto-Trading, our AI-powered signals engine continuously scans thousands of assets across equities, cryptocurrencies, forex pairs, and commodities — 24 hours a day, 7 days a week — to identify patterns that human analysts would take days to spot manually.\n\nOur proprietary signal models are built on a multi-layer neural network architecture trained on decades of tick-level price data, order-flow metrics, and macroeconomic indicators. Each model learns to recognise formations such as momentum breakouts, mean-reversion opportunities, volatility compression events, and cross-asset divergences. Once a high-probability setup is detected, the system generates a signal with an associated confidence score, recommended entry range, stop-loss level, and take-profit targets.\n\nUnlike static rule-based indicators, our AI signals adapt over time. Models are continuously retrained as new market data arrives, ensuring they remain relevant across changing market regimes — trending, ranging, or high-volatility environments. The engine is also exchange-aware: it factors in liquidity depth and typical spread for each asset so that the signals it surfaces are realistic and executable.\n\nEvery signal is back-tested against out-of-sample historical data before it is promoted to the live environment. This means you can trust that what you see in the signal feed reflects genuine edge — not a curve-fit artefact.",
+      "howItWorks": "The signals pipeline runs in three stages. First, a data-ingestion layer aggregates real-time price and volume feeds from all connected exchanges. Second, the feature-engineering module derives technical indicators, statistical moments, and market-microstructure features from the raw data. Third, the trained models score each asset and flag those that exceed the confidence threshold you set in your settings. Signals are surfaced instantly in the dashboard and, if you have alerts configured, delivered via push notification, email, or Telegram.",
+      "benefits": [
+        {
+          "title": "High-probability setups",
+          "description": "Models are precision-tuned for win rate and risk-reward balance, filtering out low-quality noise."
+        },
+        {
+          "title": "Continuously learning",
+          "description": "Adaptive retraining keeps the models aligned with current market conditions."
+        },
+        {
+          "title": "Multi-asset coverage",
+          "description": "Signals span crypto, equities, forex, and commodities — all in one feed."
+        },
+        {
+          "title": "Real-time delivery",
+          "description": "Signals arrive in milliseconds, ensuring you never miss a fast-moving opportunity."
+        },
+        {
+          "title": "Transparent scoring",
+          "description": "Every signal includes a confidence score and the key factors that triggered it."
+        },
+        {
+          "title": "Built-in risk parameters",
+          "description": "Each signal ships with a suggested stop-loss and take-profit so position sizing is straightforward."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "TradingView",
+          "description": "Visualise signal-triggered setups on professional-grade charts."
+        },
+        {
+          "label": "CoinGecko",
+          "description": "Track crypto market data and on-chain metrics alongside your signals."
+        },
+        {
+          "label": "Investopedia — Machine Learning in Finance",
+          "description": "Deep-dive into how ML models are reshaping financial markets."
+        }
+      ]
+    },
+    "multi-exchange": {
+      "title": "Multi-Exchange Support",
+      "tagline": "One platform. Every major exchange. Zero friction.",
+      "metaTitle": "Multi-Exchange Support — AutoTrader",
+      "heroDescription": "Connect Binance, Coinbase, Kraken, Bybit, and 30+ more exchanges through a single unified API and manage everything from one dashboard.",
+      "overview": "Managing trading accounts across multiple exchanges has traditionally been a nightmare. Each platform has its own interface, its own API quirks, and its own risk model. auto-Trading eliminates that complexity by providing a single, unified integration layer that speaks the native language of every major exchange.\n\nOur multi-exchange architecture is built around a standardised order-routing protocol. When you create a strategy or signal bot, you simply choose which exchange and trading pair you want to target. auto-Trading translates your instructions into the correct API call format for that exchange — handling authentication, rate-limit management, order-type mapping, and error recovery transparently in the background.\n\nWe currently support more than 30 spot and derivatives exchanges, including Binance (spot, futures, and margin), Coinbase Advanced Trade, Kraken Spot and Futures, Bybit, OKX, KuCoin, Gate.io, Bitfinex, MEXC, and many more. New exchange integrations are added regularly based on user demand. For traditional finance users, we also support select brokers via FIX and REST adapters.\n\nConnecting an exchange is a straightforward three-step process: generate read-and-trade API keys in your exchange account settings, paste them into the auto-Trading secure vault, and run a connection test. Your API keys are encrypted at rest using AES-256 and never leave our secure key-management service. Withdrawal permissions are never requested — your funds remain under your control at all times.\n\nOnce connected, you can run multiple bots on the same exchange simultaneously, each with its own strategy, risk limits, and position sizing. Cross-exchange arbitrage strategies are also supported for advanced users who want to exploit price discrepancies across venues.",
+      "howItWorks": "After connecting your exchange via API keys, auto-Trading maintains a persistent, authenticated session with the exchange's WebSocket feed to receive real-time price updates and order book data. When a bot triggers an order, our routing engine submits it directly to the exchange's order API, monitors its status, and handles partial fills, rejections, and network timeouts automatically. All trade history and P&L data is reconciled from the exchange's own records to ensure accuracy.",
+      "benefits": [
+        {
+          "title": "30+ exchanges supported",
+          "description": "Binance, Coinbase, Kraken, Bybit, OKX, KuCoin, and many more — all in one place."
+        },
+        {
+          "title": "AES-256 key encryption",
+          "description": "Your API keys are encrypted and stored in an isolated key-management vault."
+        },
+        {
+          "title": "WebSocket real-time data",
+          "description": "Live price feeds and order status updates with millisecond latency."
+        },
+        {
+          "title": "Simultaneous multi-bot execution",
+          "description": "Run multiple strategies on the same or different exchanges at the same time."
+        },
+        {
+          "title": "Automatic error recovery",
+          "description": "Rate-limit handling, order retry logic, and connection recovery built in."
+        },
+        {
+          "title": "Unified P&L dashboard",
+          "description": "View aggregated performance across all connected exchanges in one place."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "Binance",
+          "description": "The world's largest crypto exchange by volume — fully supported."
+        },
+        {
+          "label": "Coinbase Advanced Trade",
+          "description": "Coinbase's professional trading platform with deep order books."
+        },
+        {
+          "label": "Kraken",
+          "description": "A trusted exchange known for its security and futures products."
+        },
+        {
+          "label": "Bybit",
+          "description": "Leading derivatives exchange with high-leverage perpetual contracts."
+        }
+      ]
+    },
+    "risk-management": {
+      "title": "Risk Management",
+      "tagline": "Protect your capital with institutional-grade controls.",
+      "metaTitle": "Risk Management — AutoTrader",
+      "heroDescription": "Customisable stop-loss, take-profit, position sizing, and portfolio exposure limits protect your capital around the clock — so one bad trade can never sink your account.",
+      "overview": "Risk management is the single most important discipline in trading — more important than any signal, strategy, or system. Even the best entry logic will fail over time without a robust framework for controlling losses. auto-Trading puts institutional-grade risk controls directly in your hands, regardless of your experience level.\n\nAt the trade level, every bot can be configured with a hard stop-loss (a price level at which the position is closed to cap downside), a take-profit target (where gains are locked in), and a trailing stop (which moves the exit price upward as the trade becomes profitable). These levels can be set as fixed prices, percentage offsets from entry, or ATR (Average True Range) multiples for a volatility-adjusted approach.\n\nAt the position level, you can enforce maximum position size as a percentage of your account equity, a fixed-dollar amount, or Kelly-criterion sizing based on historical win rate and risk-reward. This prevents any single trade from taking up an outsized share of your portfolio.\n\nAt the portfolio level, you can define maximum drawdown limits per bot, per exchange, and across your entire portfolio. When a drawdown limit is breached, auto-Trading automatically pauses the affected bot and sends you an alert, giving you time to review the situation before re-activating. You can also set daily loss limits to prevent a bot from trading after a certain amount of capital has been lost in a single day — a feature inspired by the risk controls used at professional trading firms.\n\nMargin users benefit from additional safeguards including maximum leverage caps and automatic deleveraging if account margin falls below a configurable threshold. All risk parameters are audited and logged, providing a complete trail of every risk event for review and regulatory compliance.",
+      "howItWorks": "Risk rules are enforced at the order submission layer — before any order reaches the exchange. When a bot attempts to open a new position, auto-Trading's risk engine checks the proposed trade against all active rules: position size limits, portfolio exposure, drawdown thresholds, and daily loss budgets. Only if all checks pass does the order proceed. Stop-loss and take-profit orders are submitted simultaneously with the entry order as limit or stop-market orders depending on your preference.",
+      "benefits": [
+        {
+          "title": "Hard stop-loss & take-profit",
+          "description": "Fixed, percentage, or ATR-based levels ensure every trade has a defined exit."
+        },
+        {
+          "title": "Flexible position sizing",
+          "description": "Fixed size, equity percentage, or Kelly-criterion sizing to match your risk tolerance."
+        },
+        {
+          "title": "Drawdown circuit-breakers",
+          "description": "Auto-pause bots when drawdown limits are hit at trade, bot, or portfolio level."
+        },
+        {
+          "title": "Daily loss limits",
+          "description": "Stop trading for the day after a preset loss threshold — just like professional desks."
+        },
+        {
+          "title": "Risk audit log",
+          "description": "Every risk event is recorded for review, compliance, and strategy refinement."
+        },
+        {
+          "title": "Pre-trade validation",
+          "description": "All rules are checked before order submission — risk is managed proactively, not reactively."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "Investopedia — Risk Management in Trading",
+          "description": "A comprehensive primer on managing risk across trading strategies."
+        },
+        {
+          "label": "TradingView — Pine Script Risk Tools",
+          "description": "Learn how risk parameters are modelled in strategy back-tests."
+        },
+        {
+          "label": "BabyPips — Risk Management Guide",
+          "description": "BabyPips' trusted guide to position sizing and capital preservation."
+        }
+      ]
+    },
+    "backtesting": {
+      "title": "Advanced Backtesting",
+      "tagline": "Prove your strategy before risking a single dollar.",
+      "metaTitle": "Advanced Backtesting — AutoTrader",
+      "heroDescription": "Test your strategies against years of tick-level historical data before committing a single dollar to live trading.",
+      "overview": "Backtesting is the process of applying a trading strategy to historical market data to evaluate how it would have performed in the past. While past performance is never a guarantee of future results, rigorous backtesting is an indispensable step in validating that a strategy has genuine statistical edge — rather than being a lucky pattern that happened to fit one particular market period.\n\nauto-Trading's backtesting engine is built for speed, accuracy, and depth. Our historical data library covers tick-level OHLCV (open, high, low, close, volume) data for thousands of trading pairs across all supported exchanges, with some datasets stretching back more than ten years. Tick-level granularity means your backtest accurately models slippage, spread, and partial fills — the details that matter most when you transition from a test environment to live trading.\n\nRunning a backtest is as simple as selecting your strategy, specifying the instrument and date range, and clicking run. Results are available within seconds for most strategies, even over multi-year windows. The results view shows the equity curve, maximum drawdown, Sharpe ratio, Sortino ratio, win rate, average win/loss, profit factor, and a full trade-by-trade breakdown. You can export results to CSV for further analysis in your preferred analytics tool.\n\nFor users who want to avoid overfitting, our walk-forward analysis tool automatically divides the historical window into in-sample (optimisation) and out-of-sample (validation) periods and reports performance across multiple out-of-sample segments. Monte Carlo simulation is also available: it randomly shuffles the order of historical trades to estimate the distribution of possible outcomes and the probability of ruin.\n\nStrategy optimisation lets you sweep a range of parameter values (e.g., moving average periods or RSI thresholds) and identify configurations that maximise a chosen objective function — such as the Sharpe ratio or profit factor — while controlling for overfitting through parameter sensitivity analysis.",
+      "howItWorks": "When you launch a backtest, the engine loads the requested historical data from our distributed time-series database and feeds it bar-by-bar through your strategy logic. Each bar triggers the same signal generation, order routing, and risk management code that runs in live trading — ensuring simulation fidelity. The engine tracks open positions, unrealised P&L, and margin usage at every tick, producing a precise equity curve that reflects realistic trading conditions including commissions, slippage estimates, and funding rates for perpetual contracts.",
+      "benefits": [
+        {
+          "title": "Years of tick-level history",
+          "description": "Data stretching back 10+ years at tick granularity for realistic simulation."
+        },
+        {
+          "title": "Full performance analytics",
+          "description": "Sharpe, Sortino, max drawdown, win rate, profit factor, and more — all in one view."
+        },
+        {
+          "title": "Walk-forward validation",
+          "description": "Automatically test on out-of-sample periods to guard against overfitting."
+        },
+        {
+          "title": "Monte Carlo simulation",
+          "description": "Estimate outcome distributions and probability of ruin from your trade history."
+        },
+        {
+          "title": "Parameter optimisation",
+          "description": "Sweep parameter ranges and identify robust configurations efficiently."
+        },
+        {
+          "title": "CSV export",
+          "description": "Export full trade logs and equity curves for external analysis."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "TradingView Strategy Tester",
+          "description": "TradingView's built-in backtesting documentation — great for understanding fundamentals."
+        },
+        {
+          "label": "Investopedia — Backtesting Definition",
+          "description": "Clear explanation of backtesting concepts, limitations, and best practices."
+        },
+        {
+          "label": "QuantConnect",
+          "description": "Algorithmic trading research platform — a great complement for advanced users."
+        }
+      ]
+    },
+    "smart-alerts": {
+      "title": "Smart Alerts",
+      "tagline": "Stay informed, wherever you are.",
+      "metaTitle": "Smart Alerts — AutoTrader",
+      "heroDescription": "Get real-time push, email, or Telegram notifications the moment trade conditions are met, positions open or close, or drawdown limits are breached.",
+      "overview": "In automated trading, staying informed is just as important as executing correctly. Markets move fast, and you need to know the moment something significant happens — whether that is a new signal firing, a position being opened or closed, a stop-loss being hit, or a bot encountering an unexpected error.\n\nauto-Trading's Smart Alerts system is designed to keep you in the loop without overwhelming you with noise. You choose exactly what you want to be notified about, on which channels, and with what level of urgency. Notifications are dispatched in real time — typically within 100 milliseconds of the triggering event — ensuring you are never late to act.\n\nPush Notifications are delivered directly to your mobile device via the auto-Trading app or your browser. They are the fastest channel and are ideal for time-sensitive events like new trade signals or risk-limit breaches. Push notifications are fully customisable: you can set quiet hours, choose which event types trigger them, and configure sounds and vibration patterns.\n\nEmail Alerts provide a more structured, audit-friendly record of your bot activity. Auto-Trading sends a formatted HTML email for each alert, containing the full details of the triggering event, current portfolio state, and a one-click deep-link back to the relevant section of the dashboard. You can set digest modes to batch non-urgent alerts into hourly or daily summaries.\n\nTelegram Bot Integration connects your auto-Trading account to a private Telegram chat or group. This is particularly popular with traders who use Telegram as their primary communication tool and want trade updates alongside their messages. Setup takes less than two minutes: create a Telegram bot via @BotFather, copy the token into your auto-Trading settings, and start your first chat.\n\nCustom Webhook Alerts let power users route notifications to any third-party system — Discord, Slack, a custom dashboard, or a serverless function — by posting a JSON payload to an endpoint of your choice.",
+      "howItWorks": "Each alert is defined by a trigger condition, a message template, and one or more delivery channels. Trigger conditions include price-level crosses, indicator threshold events, order lifecycle events (filled, rejected, cancelled), risk-limit breaches, and scheduled time-based reports. Message templates support variable substitution so alerts include live data at the time of dispatch.",
+      "benefits": [
+        {
+          "title": "Push notifications",
+          "description": "Real-time alerts on your phone or browser within 100 ms of the triggering event."
+        },
+        {
+          "title": "Email alerts",
+          "description": "Rich HTML emails with full context and a one-click link back to your dashboard."
+        },
+        {
+          "title": "Telegram integration",
+          "description": "Receive trade updates in a private Telegram chat — set up in under two minutes."
+        },
+        {
+          "title": "Custom webhooks",
+          "description": "Route alerts to Discord, Slack, or any HTTP endpoint with a JSON payload."
+        },
+        {
+          "title": "Granular control",
+          "description": "Choose exactly which events trigger alerts — signal, fill, error, drawdown, and more."
+        },
+        {
+          "title": "Quiet hours",
+          "description": "Suppress non-critical alerts during sleep hours so your rest is undisturbed."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "Telegram BotFather",
+          "description": "Create your Telegram bot token for auto-Trading's Telegram integration."
+        },
+        {
+          "label": "TradingView Alerts",
+          "description": "TradingView's alert system — a great comparison reference."
+        },
+        {
+          "label": "Discord Webhooks",
+          "description": "How to set up a Discord webhook to receive auto-Trading notifications."
+        }
+      ]
+    },
+    "no-code-builder": {
+      "title": "No-Code Strategy Builder",
+      "tagline": "Build powerful trading strategies without writing a single line of code.",
+      "metaTitle": "No-Code Strategy Builder — AutoTrader",
+      "heroDescription": "Our drag-and-drop strategy builder lets you automate complex trading logic — entry conditions, filters, risk rules, and exit signals — without any programming knowledge.",
+      "overview": "Algorithmic trading was once the exclusive domain of software engineers and quant researchers. Writing robust, production-ready trading code requires expertise in programming languages, API integrations, concurrency management, error handling, and real-time data processing. auto-Trading's No-Code Strategy Builder changes all of that by providing a powerful visual interface that lets any trader — regardless of technical background — build, test, and deploy automated strategies.\n\nThe builder is organised around the concept of blocks. Each block represents a distinct piece of logic: a market data input, a technical indicator calculation, a conditional rule, an action (like opening or closing a position), or a risk parameter. You drag blocks from the side panel onto the canvas, connect them with arrows to define the flow of logic, and configure each block through a simple properties panel. The resulting strategy is compiled into an efficient execution graph that runs in auto-Trading's cloud infrastructure.\n\nThe indicator library currently includes over 80 standard technical indicators, including moving averages (SMA, EMA, WMA, DEMA, TEMA), momentum indicators (RSI, MACD, Stochastic, CCI, Williams %R), volatility indicators (Bollinger Bands, ATR, Keltner Channels, Donchian Channels), volume indicators (OBV, VWAP, MFI, CMF), and trend indicators (ADX, Ichimoku, Parabolic SAR). Custom indicator expressions are supported through a formula editor for users who want to combine standard indicators into bespoke calculations.\n\nCondition blocks support logical operators (AND, OR, NOT), numeric comparisons, cross-over and cross-under detections, and time-of-day filters. Multi-timeframe analysis is also supported: you can reference indicator values from a higher timeframe (e.g., the daily trend direction) within a lower-timeframe strategy (e.g., a 15-minute entry signal).\n\nOnce you have built your strategy, you can paper-trade it to validate behaviour without any financial risk, run a full backtest over historical data, and then deploy it to live trading with a single click. Strategies can be duplicated, version-controlled, and shared with other auto-Trading users.",
+      "howItWorks": "The visual strategy canvas is powered by a directed acyclic graph (DAG) engine. Each block you add to the canvas becomes a node in the DAG, and each connection between blocks defines a data dependency. When the strategy runs, the engine evaluates the DAG in topological order for every new market bar, ensuring that all upstream calculations are completed before downstream conditions and actions are evaluated. This design allows complex, multi-indicator strategies to run efficiently even at tick-level frequency.",
+      "benefits": [
+        {
+          "title": "True drag-and-drop",
+          "description": "Build strategies entirely with clicks and drags — no coding required."
+        },
+        {
+          "title": "80+ built-in indicators",
+          "description": "SMA, EMA, RSI, MACD, Bollinger Bands, ATR, VWAP, Ichimoku, and many more."
+        },
+        {
+          "title": "Multi-timeframe support",
+          "description": "Reference higher-timeframe data inside lower-timeframe strategies."
+        },
+        {
+          "title": "Version control",
+          "description": "Save and restore previous versions of your strategy at any time."
+        },
+        {
+          "title": "Integrated paper trading",
+          "description": "Test your strategy in a live market environment with virtual funds."
+        },
+        {
+          "title": "One-click live deployment",
+          "description": "Go from backtest to live trading in a single click — no code changes needed."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "TradingView Pine Script",
+          "description": "TradingView's scripting language — great for understanding strategy logic concepts."
+        },
+        {
+          "label": "Investopedia — Algorithmic Trading",
+          "description": "Overview of algorithmic trading and how automation benefits traders."
+        },
+        {
+          "label": "QuantConnect — Algorithm Framework",
+          "description": "Advanced algorithmic trading framework for users ready to go beyond no-code."
+        }
+      ]
+    }
   }
 }

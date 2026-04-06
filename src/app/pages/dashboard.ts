@@ -3,7 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -74,6 +74,7 @@ export class Dashboard implements OnDestroy {
   private destroyRef = inject(DestroyRef);
   private http = inject(HttpClient);
   private sanitizer = inject(DomSanitizer);
+  private translate = inject(TranslateService);
   private tradingBackendBaseUrl = String(environment.tradingBackendBaseUrl || '').replace(/\/$/, '');
 
   private instrumentChartEndpoint(): string {
@@ -176,7 +177,7 @@ export class Dashboard implements OnDestroy {
   });
   canConfirmExchangeDisconnect = computed(() => {
     return this.exchangeDisconnectRiskConfirmed() && 
-           this.exchangeDisconnectConfirmText() === 'disconnect this Exchange';
+           this.exchangeDisconnectConfirmText() === this.t('dashboard.disconnectPlaceholder');
   });
   private readonly chartWidth = 100;
   private readonly chartHeight = 44;
@@ -280,11 +281,11 @@ export class Dashboard implements OnDestroy {
     }
 
     if (action === 'learn') {
-      this.showToast('Ask a more specific question and I will guide you step-by-step.');
+      this.showToast(this.t('dashboard.assistantAskSpecific'));
       return;
     }
 
-    this.showToast('Unknown assistant action.');
+    this.showToast(this.t('dashboard.assistantUnknownAction'));
   }
 
   private runnerSummariesEndpoint(): string {
@@ -301,14 +302,14 @@ export class Dashboard implements OnDestroy {
 
   private async loadRunnerSummaries(showLoader = true) {
     if (!this.tradingBackendBaseUrl) {
-      this.runnerSummariesError.set('Backend monitor is disabled. Set tradingBackendBaseUrl in environment.');
+      this.runnerSummariesError.set(this.t('dashboard.backendMonitorDisabled'));
       this.runnerSummaries.set([]);
       return;
     }
 
     const currentUser = this.firebaseAuth.currentUser;
     if (!currentUser) {
-      this.runnerSummariesError.set('Sign in to view backend runner status.');
+      this.runnerSummariesError.set(this.t('dashboard.signInRunnerStatus'));
       return;
     }
 
@@ -331,7 +332,7 @@ export class Dashboard implements OnDestroy {
       this.runnerSummaries.set(payload.items ?? []);
     } catch (err) {
       console.error('failed to load backend runner summaries', err);
-      this.runnerSummariesError.set('Unable to load backend runner status right now.');
+      this.runnerSummariesError.set(this.t('dashboard.runnerStatusLoadError'));
     } finally {
       if (showLoader) {
         this.runnerSummariesLoading.set(false);
@@ -466,7 +467,7 @@ export class Dashboard implements OnDestroy {
     if (action === 'connect')    { this.goToAddExchange(); }
     else if (action === 'bot')   { this.goToAddBot(); }
     else if (action === 'strategies') { this.goToAddStrategy(); }
-    else { this.showToast('Coming soon — stay tuned! 🚀'); }
+    else { this.showToast(this.t('dashboard.comingSoon')); }
   }
 
   goToAddExchange() {
@@ -495,7 +496,7 @@ export class Dashboard implements OnDestroy {
 
   onStrategySelected(strategy: StrategyTemplate) {
     if (this.visibleBots().length === 0) {
-      this.showToast('Create a bot first. A strategy must be assigned to an executing bot.');
+      this.showToast(this.t('dashboard.createBotFirst'));
       return;
     }
 
@@ -591,7 +592,7 @@ export class Dashboard implements OnDestroy {
       }, 1000);
     } catch (error) {
       console.error('Failed to initialize market stream:', error);
-      this.liveViewError.set('Unable to connect to live data stream');
+      this.liveViewError.set(this.t('dashboard.liveDataStreamError'));
     }
   }
 
@@ -880,18 +881,18 @@ export class Dashboard implements OnDestroy {
     const bot = this.liveViewBot();
     const strategy = this.liveViewStrategy();
     if (!bot) {
-      this.liveViewError.set('No executing bot found for this strategy.');
+      this.liveViewError.set(this.t('dashboard.liveViewNoBot'));
       return;
     }
 
     if (!strategy) {
-      this.liveViewError.set('Strategy details are unavailable.');
+      this.liveViewError.set(this.t('dashboard.liveViewNoStrategy'));
       return;
     }
 
     const currentUser = this.firebaseAuth.currentUser;
     if (!currentUser) {
-      this.liveViewError.set('Please sign in again to load live data.');
+      this.liveViewError.set(this.t('dashboard.liveViewSignInAgain'));
       return;
     }
 
@@ -920,7 +921,7 @@ export class Dashboard implements OnDestroy {
       });
 
       if (candles.length < 2) {
-        this.liveViewError.set('Not enough market data to draw chart.');
+        this.liveViewError.set(this.t('dashboard.liveViewNotEnoughData'));
         this.liveViewCandles.set([]);
         return;
       }
@@ -957,7 +958,7 @@ export class Dashboard implements OnDestroy {
       }
     } catch (err) {
       console.error('failed to load live instrument chart', err);
-      this.liveViewError.set('Unable to load live market data right now.');
+      this.liveViewError.set(this.t('dashboard.liveViewLoadError'));
     } finally {
       if (withLoader) {
         this.liveViewIsLoading.set(false);
@@ -1056,7 +1057,7 @@ export class Dashboard implements OnDestroy {
   }
 
   assignedBotLabel(botId: string): string {
-    return this.botService.bots().find(bot => bot.id === botId)?.name ?? 'Unknown Bot';
+    return this.botService.bots().find(bot => bot.id === botId)?.name ?? this.t('dashboard.unknownBot');
   }
 
   openViewStrategy(strategy: UserStrategy) {
@@ -1103,10 +1104,10 @@ export class Dashboard implements OnDestroy {
       await this.strategyService.removeUserStrategy(strategy.id);
       this.showDeleteStrategyModal.set(false);
       this.strategyToDelete.set(null);
-      this.showToast(`🗑 "${strategy.name}" deleted.`);
+      this.showToast(this.t('dashboard.strategyDeleted', { name: strategy.name }));
     } catch (err) {
       console.error('failed to delete strategy', err);
-      this.showToast('Unable to delete strategy right now. Please try again.');
+      this.showToast(this.t('dashboard.unableDeleteStrategy'));
     }
   }
 
@@ -1123,14 +1124,14 @@ export class Dashboard implements OnDestroy {
 
     const name = this.strategyNameInput().trim();
     if (!name) {
-      this.strategyFormError.set('Please enter a strategy name.');
+      this.strategyFormError.set(this.t('dashboard.validation.enterStrategyName'));
       return;
     }
 
     const assignedBotId = this.strategyAssignedBotId();
     const assignedBot = this.visibleBots().find(bot => bot.id === assignedBotId);
     if (!assignedBot) {
-      this.strategyFormError.set('Please select the bot that will execute this strategy.');
+      this.strategyFormError.set(this.t('dashboard.validation.selectExecutingBot'));
       return;
     }
 
@@ -1138,7 +1139,7 @@ export class Dashboard implements OnDestroy {
       if (this.strategyEditorMode() === 'create') {
         const template = this.selectedTemplateForStrategy();
         if (!template) {
-          this.strategyFormError.set('Select a strategy template first.');
+          this.strategyFormError.set(this.t('dashboard.validation.selectTemplateFirst'));
           return;
         }
 
@@ -1154,9 +1155,9 @@ export class Dashboard implements OnDestroy {
           notes: this.strategyNotes(),
         });
         if (created.status === 'active' && assignedBot.status === 'active') {
-          this.showToast(`📊 "${created.name}" created. Backend evaluation is active and orders will only run on entry/exit signals.`);
+          this.showToast(this.t('dashboard.strategyCreatedBackendActive', { name: created.name }));
         } else {
-          this.showToast(`📊 "${created.name}" created and linked to "${assignedBot.name}".`);
+          this.showToast(this.t('dashboard.strategyCreatedLinked', { name: created.name, botName: assignedBot.name }));
         }
       } else {
         const existing = this.strategyToManage();
@@ -1171,9 +1172,9 @@ export class Dashboard implements OnDestroy {
           notes: this.strategyNotes(),
         });
         if (updated.status === 'active' && assignedBot.status === 'active') {
-          this.showToast(`✏️ "${updated.name}" updated. Backend evaluation will place orders only when signals trigger.`);
+          this.showToast(this.t('dashboard.strategyUpdatedBackendSignals', { name: updated.name }));
         } else {
-          this.showToast(`✏️ "${updated.name}" updated successfully.`);
+          this.showToast(this.t('dashboard.strategyUpdatedSuccess', { name: updated.name }));
         }
       }
 
@@ -1181,18 +1182,20 @@ export class Dashboard implements OnDestroy {
     } catch (err) {
       console.error('failed to save strategy', err);
       const message = (err as { message?: string } | null)?.message;
-      this.strategyFormError.set(message || 'Unable to save strategy right now. Please try again.');
+      this.strategyFormError.set(message || this.t('dashboard.unableSaveStrategy'));
     }
   }
 
   strategyEditorTitle(): string {
-    if (this.strategyEditorMode() === 'create') return 'Create Strategy';
-    if (this.strategyEditorMode() === 'edit') return 'Edit Strategy';
-    return 'View Strategy';
+    if (this.strategyEditorMode() === 'create') return this.t('dashboard.strategyEditorCreateTitle');
+    if (this.strategyEditorMode() === 'edit') return this.t('dashboard.strategyEditorEditTitle');
+    return this.t('dashboard.strategyEditorViewTitle');
   }
 
   strategyEditorActionLabel(): string {
-    return this.strategyEditorMode() === 'edit' ? 'Save Changes' : 'Create Strategy';
+    return this.strategyEditorMode() === 'edit'
+      ? this.t('dashboard.strategyEditorSaveChanges')
+      : this.t('dashboard.strategyEditorCreateAction');
   }
 
   isStrategyReadOnly(): boolean {
@@ -1200,7 +1203,9 @@ export class Dashboard implements OnDestroy {
   }
 
   strategiesSectionTitle(): string {
-    return this.accountMode.mode() === 'paper' ? 'My Paper Money Strategy' : 'My Real Money Strategies';
+    return this.accountMode.mode() === 'paper'
+      ? this.t('dashboard.myPaperMoneyStrategy')
+      : this.t('dashboard.myRealMoneyStrategies');
   }
 
   async toggleStrategyStatus(strategy: UserStrategy) {
@@ -1219,25 +1224,25 @@ export class Dashboard implements OnDestroy {
       if (updated.status === 'active') {
         const assignedBot = this.visibleBots().find(bot => bot.id === updated.assignedBotId);
         if (assignedBot?.status === 'active') {
-          this.showToast(`▶ "${updated.name}" activated. Backend evaluation is now running.`);
+          this.showToast(this.t('dashboard.strategyActivatedBackendRunning', { name: updated.name }));
         } else {
-          this.showToast(`▶ "${updated.name}" activated. Activate the assigned bot to execute trades.`);
+          this.showToast(this.t('dashboard.strategyActivatedActivateBot', { name: updated.name }));
         }
       } else {
-        this.showToast(`⏸ "${updated.name}" paused.`);
+        this.showToast(this.t('dashboard.strategyPaused', { name: updated.name }));
       }
     } catch (err) {
       console.error('failed to toggle strategy status', err);
-      this.showToast('Unable to update strategy status right now.');
+      this.showToast(this.t('dashboard.unableUpdateStrategyStatus'));
     }
   }
 
   onConnected(conn: ConnectedExchange) {
-    this.showToast(`✅ ${conn.label} connected successfully!`);
+    this.showToast(this.t('dashboard.exchangeConnectedSuccess', { label: conn.label }));
   }
 
   onBotCreated(bot: Bot) {
-    this.showToast(`🤖 "${bot.name}" launched and is now active!`);
+    this.showToast(this.t('dashboard.botLaunchedActive', { name: bot.name }));
   }
 
   removeExchange(label: string) {
@@ -1251,12 +1256,12 @@ export class Dashboard implements OnDestroy {
   confirmDeleteExchange() {
     // Validate conditions
     if (!this.exchangeDisconnectRiskConfirmed()) {
-      this.exchangeDisconnectError.set('You must confirm that you understand the risks.');
+      this.exchangeDisconnectError.set(this.t('dashboard.disconnectConfirmRiskRequired'));
       return;
     }
 
-    if (this.exchangeDisconnectConfirmText() !== 'disconnect this Exchange') {
-      this.exchangeDisconnectError.set('Please type "disconnect this Exchange" exactly to confirm.');
+    if (this.exchangeDisconnectConfirmText() !== this.t('dashboard.disconnectPlaceholder')) {
+      this.exchangeDisconnectError.set(this.t('dashboard.disconnectTypeExact'));
       return;
     }
 
@@ -1268,7 +1273,7 @@ export class Dashboard implements OnDestroy {
       this.exchangeDisconnectRiskConfirmed.set(false);
       this.exchangeDisconnectConfirmText.set('');
       this.exchangeDisconnectError.set('');
-      this.showToast('Exchange disconnected.');
+      this.showToast(this.t('dashboard.exchangeDisconnected'));
     }
   }
 
@@ -1287,16 +1292,16 @@ export class Dashboard implements OnDestroy {
       if (next === 'active') {
         const linkedActiveStrategies = this.visibleStrategies().filter(strategy => strategy.assignedBotId === bot.id && (strategy.status ?? 'active') === 'active');
         if (linkedActiveStrategies.length === 0) {
-          this.showToast(`▶ "${bot.name}" resumed.`);
+          this.showToast(this.t('dashboard.botResumed', { name: bot.name }));
           return;
         }
-        this.showToast(`▶ "${bot.name}" resumed. Linked strategies are now evaluated in backend for entry/exit signals.`);
+        this.showToast(this.t('dashboard.botResumedWithStrategies', { name: bot.name }));
       } else {
-        this.showToast(`⏸ "${bot.name}" paused.`);
+        this.showToast(this.t('dashboard.botPaused', { name: bot.name }));
       }
     } catch (err) {
       console.error('failed to toggle bot status', err);
-      this.showToast('Unable to change bot status right now.');
+      this.showToast(this.t('dashboard.unableChangeBotStatus'));
     }
   }
 
@@ -1311,7 +1316,7 @@ export class Dashboard implements OnDestroy {
       this.botService.remove(bot.id);
       this.showDeleteBotModal.set(false);
       this.botToDelete.set(null);
-      this.showToast(`🗑 "${bot.name}" deleted.`);
+      this.showToast(this.t('dashboard.botDeleted', { name: bot.name }));
     }
   }
 
@@ -1329,7 +1334,7 @@ export class Dashboard implements OnDestroy {
 
   onBotUpdated(bot: Bot) {
     this.showEditBotModal.set(false);
-    this.showToast(`✏️ "${bot.name}" updated successfully!`);
+    this.showToast(this.t('dashboard.botUpdatedSuccess', { name: bot.name }));
   }
 
   onPortfolioCardClick(index: number) {
@@ -1381,8 +1386,8 @@ export class Dashboard implements OnDestroy {
     if (position.marketOpen === false) {
       const statusReason = position.marketStatusReason?.trim();
       const closedMessage = statusReason
-        ? `Market is closed now (${statusReason}). Would you like to place an order for this position?`
-        : 'Market is closed now. Would you like to place an order for this position?';
+        ? this.t('dashboard.marketClosedConfirmWithReason', { reason: statusReason })
+        : this.t('dashboard.marketClosedConfirm');
 
       this.pendingLiquidationPosition.set(position);
       this.liquidationConfirmMessage.set(closedMessage);
@@ -1415,24 +1420,24 @@ export class Dashboard implements OnDestroy {
 
     try {
       await this.exchangeService.liquidatePosition(position);
-      this.showToast(`Position ${position.symbol} liquidated.`);
+      this.showToast(this.t('dashboard.positionLiquidated', { symbol: position.symbol }));
     } catch (error: any) {
-      this.showToast(error?.message || 'Unable to liquidate position right now.');
+      this.showToast(error?.message || this.t('dashboard.unableLiquidatePosition'));
     } finally {
       this.liquidatingPositionKey.set('');
     }
   }
 
   get portfolioDetailsTitle() {
-    if (this.portfolioDetailsView() === 'pnl') return "Today's P&L Breakdown";
-    if (this.portfolioDetailsView() === 'trades') return 'Executed Buy/Sell Orders';
-    return 'Portfolio Value Breakdown';
+    if (this.portfolioDetailsView() === 'pnl') return this.t('dashboard.portfolioDetailsTitlePnl');
+    if (this.portfolioDetailsView() === 'trades') return this.t('dashboard.portfolioDetailsTitleTrades');
+    return this.t('dashboard.portfolioDetailsTitlePortfolio');
   }
 
   get portfolioDetailsEmptyMessage() {
-    if (this.portfolioDetailsView() === 'pnl') return 'No exchange P&L data available yet.';
-    if (this.portfolioDetailsView() === 'trades') return 'No executed buy/sell orders yet.';
-    return 'No exchange balances available yet.';
+    if (this.portfolioDetailsView() === 'pnl') return this.t('dashboard.portfolioDetailsEmptyPnl');
+    if (this.portfolioDetailsView() === 'trades') return this.t('dashboard.portfolioDetailsEmptyTrades');
+    return this.t('dashboard.portfolioDetailsEmptyPortfolio');
   }
 
   get isPnlDetailsView() {
@@ -1510,8 +1515,10 @@ export class Dashboard implements OnDestroy {
 
   executionSharesLabel(execution: StrategyExecution): string {
     const shares = this.executionSharesFor(execution);
-    const sideLabel = execution.side === 'sell' ? 'Shares sold' : 'Shares bought';
-    if (shares === null) return `${sideLabel}: N/A`;
+    const sideLabel = execution.side === 'sell'
+      ? this.t('dashboard.sharesSold')
+      : this.t('dashboard.sharesBought');
+    if (shares === null) return `${sideLabel}: ${this.t('common.na')}`;
     return `${sideLabel}: ${shares.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 8 })}`;
   }
 
@@ -1545,7 +1552,7 @@ export class Dashboard implements OnDestroy {
   formatBreakdownValue(row: ExchangePortfolioBreakdown): string {
     if (this.portfolioDetailsView() === 'pnl') {
       if (row.unrealizedPnl === null || row.unrealizedPnl === undefined || row.pnlPercentage === null || row.pnlPercentage === undefined) {
-        return 'N/A';
+        return this.t('common.na');
       }
 
       const sign = row.unrealizedPnl >= 0 ? '+' : '';
@@ -1575,5 +1582,9 @@ export class Dashboard implements OnDestroy {
     this.toastMsg.set(msg);
     if (this.toastTimer) clearTimeout(this.toastTimer);
     this.toastTimer = setTimeout(() => this.toastMsg.set(''), 4000);
+  }
+
+  private t(key: string, params?: Record<string, unknown>): string {
+    return this.translate.instant(key, params);
   }
 }

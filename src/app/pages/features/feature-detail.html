@@ -3,7 +3,7 @@
 <section class="fp-hero">
   <div class="fp-hero-bg"></div>
   <div class="fp-container">
-    <a routerLink="/" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
+    <a [routerLink]="['/', languageService.currentLang()]" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
     <div class="fp-hero-icon">{{ feature.icon }}</div>
     <p class="fp-tag">{{ 'featureDetail.feature' | translate }}</p>
     <h1 class="fp-hero-title">{{ feature.title }}</h1>
@@ -32,7 +32,7 @@
       <div class="fp-related-links">
         <span class="fp-related-label">{{ 'featureDetail.exploreAlso' | translate }}</span>
         @for (link of feature.relatedLinks; track link.slug) {
-          <a [routerLink]="['/features', link.slug]" class="fp-related-chip">{{ link.label }}</a>
+          <a [routerLink]="['/', languageService.currentLang(), 'features', link.slug]" class="fp-related-chip">{{ link.label }}</a>
         }
       </div>
     </div>
@@ -94,7 +94,7 @@
     <p>{{ 'featureDetail.ctaDesc' | translate }}</p>
     <div class="fp-cta-actions">
       <button (click)="goToCta()" class="fp-btn-accent">{{ 'featureDetail.createFreeAccount' | translate }} →</button>
-      <a routerLink="/" class="fp-btn-outline">{{ 'featureDetail.exploreAllFeatures' | translate }}</a>
+      <a [routerLink]="['/', languageService.currentLang()]" class="fp-btn-outline">{{ 'featureDetail.exploreAllFeatures' | translate }}</a>
     </div>
   </div>
 </section>

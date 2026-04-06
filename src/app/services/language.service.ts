@@ -1,5 +1,7 @@
 import { Injectable, inject, signal, effect } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { filter } from 'rxjs/operators';
 
 export interface Language {
   code: string;
@@ -22,6 +24,7 @@ const STORAGE_KEY = 'at_language';
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
   private readonly translate = inject(TranslateService);
+  private readonly router = inject(Router);
 
   readonly languages = LANGUAGES;
   readonly currentLang = signal<string>(this.getInitialLang());
@@ -40,11 +43,23 @@ export class LanguageService {
         // storage not available
       }
     });
+
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.syncLanguageFromUrl(event.urlAfterRedirects);
+      });
+
+    this.syncLanguageFromUrl(this.router.url);
   }
 
   setLanguage(code: string): void {
     if (LANGUAGES.some((l) => l.code === code)) {
       this.currentLang.set(code);
+      const nextUrl = this.buildUrlWithLanguage(this.router.url, code);
+      if (nextUrl !== this.router.url) {
+        void this.router.navigateByUrl(nextUrl, { replaceUrl: true });
+      }
     }
   }
 
@@ -71,5 +86,40 @@ export class LanguageService {
     const dir = lang?.dir ?? 'ltr';
     document.documentElement.setAttribute('dir', dir);
     document.documentElement.setAttribute('lang', code);
+  }
+
+  private syncLanguageFromUrl(url: string): void {
+    const parsed = this.router.parseUrl(url);
+    const primary = parsed.root.children['primary'];
+    const segments = primary?.segments.map((segment) => segment.path) ?? [];
+    const first = segments[0];
+
+    if (first && LANGUAGES.some((lang) => lang.code === first)) {
+      if (this.currentLang() !== first) {
+        this.currentLang.set(first);
+      }
+      return;
+    }
+
+    const nextUrl = this.buildUrlWithLanguage(url, this.currentLang());
+    if (nextUrl !== url) {
+      void this.router.navigateByUrl(nextUrl, { replaceUrl: true });
+    }
+  }
+
+  private buildUrlWithLanguage(url: string, code: string): string {
+    const parsed = this.router.parseUrl(url);
+    const primary = parsed.root.children['primary'];
+    const segments = primary?.segments.map((segment) => segment.path) ?? [];
+    const hasLangPrefix = segments.length > 0 && LANGUAGES.some((lang) => lang.code === segments[0]);
+    const nextSegments = hasLangPrefix ? [code, ...segments.slice(1)] : [code, ...segments];
+    const commands: Array<string> = ['/', ...nextSegments];
+
+    const nextTree = this.router.createUrlTree(commands, {
+      queryParams: parsed.queryParams,
+      fragment: parsed.fragment ?? undefined,
+    });
+
+    return this.router.serializeUrl(nextTree);
   }
 }

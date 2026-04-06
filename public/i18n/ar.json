@@ -513,127 +513,127 @@
     "tradeId": "Trade ID"
   },
   "userPages": {
-    "pageNavigation": "Page navigation",
-    "navigation": "Navigation",
-    "mode": "Mode",
-    "mainPages": "Main pages",
-    "dashboard": "Dashboard",
-    "exchanges": "Exchanges",
-    "bots": "Bots",
-    "strategies": "Strategies",
-    "portfolio": "Portfolio",
-    "backendRunner": "Backend Runner",
-    "backToDashboard": "Back to Dashboard",
-    "refresh": "Refresh",
-    "refreshing": "Refreshing..."
+    "pageNavigation": "تنقل الصفحة",
+    "navigation": "الملاحة",
+    "mode": "موضة",
+    "mainPages": "الصفحات الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "exchanges": "التبادلات",
+    "bots": "روبوتات",
+    "strategies": "استراتيجيات",
+    "portfolio": "محفظة",
+    "backendRunner": "مشغل الواجهة الخلفية",
+    "backToDashboard": "العودة إلى لوحة القيادة",
+    "refresh": "تحديث",
+    "refreshing": "منعش..."
   },
   "backendRunner": {
-    "title": "Backend Runner",
-    "dateRange": "Date Range",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "thisWeek": "This Week",
-    "lastWeek": "Last Week",
-    "thisMonth": "This Month",
-    "lastMonth": "Last Month",
-    "custom": "Custom",
-    "dateFrom": "Date From",
-    "dateTo": "Date To",
-    "status": "Status",
-    "all": "All",
-    "executed": "Executed",
-    "notExecuted": "Not Executed",
-    "applyFilters": "Apply Filters",
-    "clearFilters": "Clear Filters",
-    "loading": "Loading backend runner summaries...",
-    "noSummariesYet": "No runner summaries yet.",
-    "noSummariesMatch": "No runner summaries match the selected filters.",
-    "active": "Active",
-    "failed": "Failed",
-    "hasFailures": "Has Failures",
-    "noExecutions": "No Executions",
-    "disabledMessage": "Backend monitor is disabled. Set tradingBackendBaseUrl in environment.",
-    "signInMessage": "Sign in to view backend runner status.",
-    "unableToLoad": "Unable to load backend runner status right now."
+    "title": "مشغل الخلفية",
+    "dateRange": "نطاق التاريخ",
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "thisWeek": "هذا الأسبوع",
+    "lastWeek": "الأسبوع الماضي",
+    "thisMonth": "هذا الشهر",
+    "lastMonth": "الشهر الماضي",
+    "custom": "مخصص",
+    "dateFrom": "التاريخ من",
+    "dateTo": "التاريخ إلى",
+    "status": "الحالة",
+    "all": "الكل",
+    "executed": "تم التنفيذ",
+    "notExecuted": "لم يتم التنفيذ",
+    "applyFilters": "تطبيق المرشحات",
+    "clearFilters": "مسح الفلاتر",
+    "loading": "جارٍ تحميل ملخصات مشغل الواجهة الخلفية...",
+    "noSummariesYet": "لا توجد ملخصات للعدائين بعد.",
+    "noSummariesMatch": "لا توجد ملخصات للجري تتطابق مع الفلاتر المحددة.",
+    "active": "نشيط",
+    "failed": "فشل",
+    "hasFailures": "لديه إخفاقات",
+    "noExecutions": "لا إعدامات",
+    "disabledMessage": "تم تعطيل مراقب الواجهة الخلفية. قم بتعيين tradingBackendBaseUrl في البيئة.",
+    "signInMessage": "تسجيل الدخول لمشاهدة حالة مشغل الخلفية.",
+    "unableToLoad": "غير قادر على تحميل حالة مشغل الخلفية الآن."
   },
   "portfolioManagement": {
-    "title": "Portfolio Management",
-    "portfolioValue": "Portfolio Value",
-    "unrealizedPnl": "Unrealized P&L",
-    "exchangeBreakdown": "Exchange Breakdown",
-    "exchange": "Exchange",
-    "value": "Value",
-    "pnl": "P&L",
-    "noPortfolioRows": "No portfolio rows yet. Connect an exchange to load portfolio data.",
-    "openPositions": "Open Positions",
-    "symbol": "Symbol",
-    "qty": "Qty",
-    "plPercent": "P/L %",
-    "noOpenPositions": "No open positions in"
+    "title": "إدارة المحفظة",
+    "portfolioValue": "قيمة المحفظة",
+    "unrealizedPnl": "الأرباح والخسائر غير المحققة",
+    "exchangeBreakdown": "تحليل التبادل",
+    "exchange": "تبادل",
+    "value": "قيمة",
+    "pnl": "الأرباح والخسائر",
+    "noPortfolioRows": "لا توجد صفوف للمحفظة بعد. قم بربط بورصة لتحميل بيانات المحفظة.",
+    "openPositions": "الوظائف الشاغرة",
+    "symbol": "رمز",
+    "qty": "الكمية",
+    "plPercent": "صافي الربح/الخسارة %",
+    "noOpenPositions": "لا توجد وظائف شاغرة في"
   },
   "exchanges": {
-    "confirmDisconnection": "Confirm Disconnection",
-    "disconnectQuestion": "Are you sure you want to disconnect",
-    "disconnectWarning": "This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.",
-    "understandRisksAria": "I understand the risks",
-    "understandRisks": "I understand the risks associated with disconnecting this exchange including any open/unfinished executions on my accounts",
-    "typeDisconnectToConfirm": "Type \"disconnect this Exchange\" to confirm:",
-    "disconnectPhrase": "disconnect this Exchange",
-    "typeToConfirmAria": "Type to confirm disconnection",
-    "disconnect": "Disconnect",
-    "title": "Exchanges",
-    "addExchange": "Add Exchange",
-    "connectedExchanges": "Connected Exchanges",
-    "connected": "Connected",
-    "noConnectionsPrefix": "No",
-    "noConnectionsSuffix": "exchanges connected yet. Use Dashboard to connect one.",
-    "details": "Details",
-    "tradeLog": "Trade Log",
-    "side": "Side",
-    "orderId": "Order ID",
-    "amount": "Amount",
-    "noTradesForExchange": "No trades logged yet for this exchange.",
-    "supportedProviders": "Supported Providers",
-    "acknowledgeRisksToContinue": "Please acknowledge the risks to continue",
-    "typeDisconnectToConfirmError": "Please type \"disconnect this Exchange\" to confirm"
+    "confirmDisconnection": "تأكيد الفصل",
+    "disconnectQuestion": "هل أنت متأكد أنك تريد قطع الاتصال؟",
+    "disconnectWarning": "سيؤدي هذا إلى حذف جميع بيانات اتصال البورصة بما في ذلك بيانات اعتماد واجهة برمجة التطبيقات. سيتطلب إعادة توصيل البورصة الحصول على بيانات اعتماد جديدة من واجهة برمجة التطبيقات الخاصة بالبورصة.",
+    "understandRisksAria": "أنا أفهم المخاطر",
+    "understandRisks": "أفهم المخاطر المرتبطة بفصل هذا التبادل بما في ذلك أي عمليات تنفيذ مفتوحة/غير مكتملة على حساباتي",
+    "typeDisconnectToConfirm": "اكتب \"قطع هذا التبادل\" للتأكيد:",
+    "disconnectPhrase": "افصل هذا الإكسشينج",
+    "typeToConfirmAria": "اكتب لتأكيد الانقطاع",
+    "disconnect": "افصل",
+    "title": "التبادلات",
+    "addExchange": "إضافة تبادل",
+    "connectedExchanges": "البورصات المتصلة",
+    "connected": "متصل",
+    "noConnectionsPrefix": "لا",
+    "noConnectionsSuffix": "لا توجد بورصات متصلة بعد. استخدم لوحة التحكم لتوصيل واحدة.",
+    "details": "تفاصيل",
+    "tradeLog": "سجل التداول",
+    "side": "جانب",
+    "orderId": "معرّف الطلب",
+    "amount": "مقدار",
+    "noTradesForExchange": "لم يتم تسجيل أي صفقات حتى الآن في هذا التبادل.",
+    "supportedProviders": "المزودون المدعومون",
+    "acknowledgeRisksToContinue": "يرجى الاعتراف بالمخاطر للاستمرار",
+    "typeDisconnectToConfirmError": "يرجى كتابة \"قطع هذا التبادل\" للتأكيد"
   },
   "bots": {
-    "confirmDeletion": "Confirm Deletion",
-    "deleteQuestion": "Are you sure you want to delete Bot",
-    "deleteWarning": "This will delete all bot configuration and stop any open/unexecuted orders associated with it on the exchange.",
-    "confirmDeleteAria": "I confirm I want to delete this Bot",
-    "confirmDeleteText": "I confirm I want to delete this Bot and stop any open/unexecuted order associated with it",
-    "delete": "Delete",
-    "newBot": "New Bot",
-    "pauseBot": "Pause Bot",
-    "resumeBot": "Resume Bot",
-    "viewBot": "View Bot",
-    "editBot": "Edit Bot",
-    "totalTrades": "Total Trades",
-    "noTradesForBot": "No trades logged yet for this bot.",
-    "noBotsPrefix": "No",
-    "noBotsSuffix": "bots created yet. Use Dashboard to add your first bot."
+    "confirmDeletion": "تأكيد الحذف",
+    "deleteQuestion": "هل أنت متأكد أنك تريد حذف البوت؟",
+    "deleteWarning": "سيؤدي هذا إلى حذف جميع إعدادات الروبوت وإيقاف أي أوامر مفتوحة/غير منفذة مرتبطة به على البورصة.",
+    "confirmDeleteAria": "أؤكد أنني أريد حذف هذا الروبوت",
+    "confirmDeleteText": "أؤكد أنني أرغب في حذف هذا الروبوت وإيقاف أي أمر مفتوح/غير منفذ مرتبط به",
+    "delete": "حذف",
+    "newBot": "روبوت جديد",
+    "pauseBot": "إيقاف البوت مؤقتًا",
+    "resumeBot": "بوت السيرة الذاتية",
+    "viewBot": "عرض الروبوت",
+    "editBot": "تحرير الروبوت",
+    "totalTrades": "إجمالي الصفقات",
+    "noTradesForBot": "لم يتم تسجيل أي صفقات حتى الآن لهذا الروبوت.",
+    "noBotsPrefix": "لا",
+    "noBotsSuffix": "لم يتم إنشاء أي روبوتات بعد. استخدم لوحة التحكم لإضافة روبوتك الأول."
   },
   "strategies": {
-    "confirmDeletion": "Confirm Deletion",
-    "deleteQuestion": "Are you sure you want to delete Strategy",
-    "deleteWarning": "This will delete all strategy configuration and assignment. The bot itself will not be deleted.",
-    "confirmDeleteAria": "I confirm I want to delete this Strategy",
-    "confirmDeleteText": "I confirm I want to delete this Strategy and its associated configuration",
-    "delete": "Delete",
-    "newStrategy": "New Strategy",
-    "pauseStrategy": "Pause Strategy",
-    "resumeStrategy": "Resume Strategy",
-    "viewStrategy": "View Strategy",
-    "editStrategy": "Edit Strategy",
-    "assignedBot": "Assigned Bot",
-    "tradeSide": "Trade Side",
-    "status": "Status",
-    "notes": "Notes",
-    "executionLog": "Execution Log",
-    "noExecutionsForStrategy": "No executions logged yet for this strategy.",
-    "noStrategiesPrefix": "No",
-    "noStrategiesSuffix": "strategies configured yet. Use Dashboard to create one."
+    "confirmDeletion": "تأكيد الحذف",
+    "deleteQuestion": "هل أنت متأكد أنك تريد حذف الاستراتيجية؟",
+    "deleteWarning": "سيؤدي هذا إلى حذف جميع إعدادات واستراتيجيات التعيين. لن يتم حذف البوت نفسه.",
+    "confirmDeleteAria": "أؤكد أنني أريد حذف هذه الاستراتيجية",
+    "confirmDeleteText": "أؤكد أنني أرغب في حذف هذه الاستراتيجية وإعداداتها المرتبطة",
+    "delete": "حذف",
+    "newStrategy": "استراتيجية جديدة",
+    "pauseStrategy": "استراتيجية التوقف",
+    "resumeStrategy": "استراتيجية السيرة الذاتية",
+    "viewStrategy": "عرض الاستراتيجية",
+    "editStrategy": "تحرير الاستراتيجية",
+    "assignedBot": "الروبوت المعين",
+    "tradeSide": "جانب التجارة",
+    "status": "الحالة",
+    "notes": "ملاحظات",
+    "executionLog": "سجل التنفيذ",
+    "noExecutionsForStrategy": "لم يتم تسجيل أي تنفيذ بعد لهذه الاستراتيجية.",
+    "noStrategiesPrefix": "لا",
+    "noStrategiesSuffix": "لا توجد استراتيجيات مكونة بعد. استخدم لوحة التحكم لإنشاء واحدة."
   },
   "legal": {
     "home": "الرئيسية",
@@ -810,7 +810,7 @@
     "disconnectWarning": "سيؤدي هذا إلى حذف جميع بيانات اتصال البورصة بما في ذلك بيانات اعتماد API. إعادة الاتصال ستتطلب بيانات اعتماد API جديدة من البورصة.",
     "disconnectRiskAck": "أفهم أنني سأحتاج إلى إنشاء مفاتيح API وأسرار جديدة من البورصة لإعادة الاتصال",
     "disconnectTypeToConfirm": "اكتب \"disconnect this Exchange\" للتأكيد:",
-    "disconnectPlaceholder": "disconnect this Exchange",
+    "disconnectPlaceholder": "افصل هذا الإكسشينج",
     "disconnect": "قطع الاتصال",
     "confirmLiquidation": "تأكيد التصفية",
     "confirm": "تأكيد",
@@ -892,51 +892,65 @@
     "botsRunningCount": "{{count}} نشط",
     "botsCount": "{{count}} بوت",
     "getStarted": "ابدأ",
-    "assistantAskSpecific": "Ask a more specific question and I will guide you step-by-step.",
-    "assistantUnknownAction": "Unknown assistant action.",
-    "comingSoon": "Coming soon — stay tuned! 🚀",
-    "createBotFirst": "Create a bot first. A strategy must be assigned to an executing bot.",
-    "strategyDeleted": "🗑 \"{{name}}\" deleted.",
-    "unableDeleteStrategy": "Unable to delete strategy right now. Please try again.",
-    "strategyCreatedBackendActive": "📊 \"{{name}}\" created. Backend evaluation is active and orders will only run on entry/exit signals.",
-    "strategyCreatedLinked": "📊 \"{{name}}\" created and linked to \"{{botName}}\".",
-    "strategyUpdatedBackendSignals": "✏️ \"{{name}}\" updated. Backend evaluation will place orders only when signals trigger.",
-    "strategyUpdatedSuccess": "✏️ \"{{name}}\" updated successfully.",
-    "unableSaveStrategy": "Unable to save strategy right now. Please try again.",
-    "strategyEditorCreateTitle": "Create Strategy",
-    "strategyEditorEditTitle": "Edit Strategy",
-    "strategyEditorViewTitle": "View Strategy",
-    "strategyEditorSaveChanges": "Save Changes",
-    "strategyEditorCreateAction": "Create Strategy",
-    "myPaperMoneyStrategy": "My Paper Money Strategy",
-    "myRealMoneyStrategies": "My Real Money Strategies",
-    "strategyActivatedBackendRunning": "▶ \"{{name}}\" activated. Backend evaluation is now running.",
-    "strategyActivatedActivateBot": "▶ \"{{name}}\" activated. Activate the assigned bot to execute trades.",
-    "strategyPaused": "⏸ \"{{name}}\" paused.",
-    "unableUpdateStrategyStatus": "Unable to update strategy status right now.",
-    "exchangeConnectedSuccess": "✅ {{label}} connected successfully!",
-    "botLaunchedActive": "🤖 \"{{name}}\" launched and is now active!",
-    "disconnectConfirmRiskRequired": "You must confirm that you understand the risks.",
-    "disconnectTypeExact": "Please type \"disconnect this Exchange\" exactly to confirm.",
-    "exchangeDisconnected": "Exchange disconnected.",
-    "botResumed": "▶ \"{{name}}\" resumed.",
-    "botResumedWithStrategies": "▶ \"{{name}}\" resumed. Linked strategies are now evaluated in backend for entry/exit signals.",
-    "botPaused": "⏸ \"{{name}}\" paused.",
-    "unableChangeBotStatus": "Unable to change bot status right now.",
-    "botDeleted": "🗑 \"{{name}}\" deleted.",
-    "botUpdatedSuccess": "✏️ \"{{name}}\" updated successfully!",
-    "positionLiquidated": "Position {{symbol}} liquidated.",
-    "unableLiquidatePosition": "Unable to liquidate position right now.",
-    "portfolioDetailsTitlePnl": "Today's P&L Breakdown",
-    "portfolioDetailsTitleTrades": "Executed Buy/Sell Orders",
-    "portfolioDetailsTitlePortfolio": "Portfolio Value Breakdown",
-    "portfolioDetailsEmptyPnl": "No exchange P&L data available yet.",
-    "portfolioDetailsEmptyTrades": "No executed buy/sell orders yet.",
-    "portfolioDetailsEmptyPortfolio": "No exchange balances available yet.",
+    "assistantAskSpecific": "اطرح سؤالا اكثر تحديدا وساقودك خطوة بخطوة.",
+    "assistantUnknownAction": "اجراء المساعد غير معروف.",
+    "backendMonitorDisabled": "مراقب الخلفية معطل. قم بتعيين tradingBackendBaseUrl في البيئة.",
+    "signInRunnerStatus": "سجل الدخول لعرض حالة مشغل الخلفية.",
+    "runnerStatusLoadError": "تعذر تحميل حالة مشغل الخلفية حاليا.",
+    "comingSoon": "قريبا - ترقب! 🚀",
+    "createBotFirst": "انشئ بوتا اولا. يجب اسناد الاستراتيجية الى بوت منفذ.",
+    "liveDataStreamError": "تعذر الاتصال ببث البيانات الحي",
+    "liveViewNoBot": "لم يتم العثور على بوت منفذ لهذه الاستراتيجية.",
+    "liveViewNoStrategy": "تفاصيل الاستراتيجية غير متاحة.",
+    "liveViewSignInAgain": "يرجى تسجيل الدخول مرة اخرى لتحميل البيانات الحية.",
+    "liveViewNotEnoughData": "لا توجد بيانات سوق كافية لرسم المخطط.",
+    "liveViewLoadError": "تعذر تحميل بيانات السوق الحية حاليا.",
+    "unknownBot": "بوت غير معروف",
+    "strategyDeleted": "🗑 تم حذف \"{{name}}\".",
+    "unableDeleteStrategy": "تعذر حذف الاستراتيجية حاليا. حاول مرة اخرى.",
+    "strategyCreatedBackendActive": "📊 تم انشاء \"{{name}}\". تقييم الخلفية نشط ولن تنفذ الاوامر الا عند اشارات الدخول/الخروج.",
+    "strategyCreatedLinked": "📊 تم انشاء \"{{name}}\" وربطها مع \"{{botName}}\".",
+    "strategyUpdatedBackendSignals": "✏️ تم تحديث \"{{name}}\". سيضع تقييم الخلفية الاوامر فقط عند تفعيل الاشارات.",
+    "strategyUpdatedSuccess": "✏️ تم تحديث \"{{name}}\" بنجاح.",
+    "unableSaveStrategy": "تعذر حفظ الاستراتيجية حاليا. حاول مرة اخرى.",
+    "strategyEditorCreateTitle": "انشاء استراتيجية",
+    "strategyEditorEditTitle": "تعديل الاستراتيجية",
+    "strategyEditorViewTitle": "عرض الاستراتيجية",
+    "strategyEditorSaveChanges": "حفظ التغييرات",
+    "strategyEditorCreateAction": "انشاء استراتيجية",
+    "myPaperMoneyStrategy": "استراتيجية الحساب التجريبي الخاصة بي",
+    "myRealMoneyStrategies": "استراتيجياتي بالحساب الحقيقي",
+    "strategyActivatedBackendRunning": "▶ تم تفعيل \"{{name}}\". تقييم الخلفية يعمل الان.",
+    "strategyActivatedActivateBot": "▶ تم تفعيل \"{{name}}\". فعّل البوت المعين لتنفيذ الصفقات.",
+    "strategyPaused": "⏸ \"{{name}}\" متوقفة مؤقتا.",
+    "unableUpdateStrategyStatus": "تعذر تحديث حالة الاستراتيجية حاليا.",
+    "exchangeConnectedSuccess": "✅ تم ربط {{label}} بنجاح!",
+    "botLaunchedActive": "🤖 تم تشغيل \"{{name}}\" وهو نشط الان!",
+    "disconnectConfirmRiskRequired": "يجب ان تؤكد انك تفهم المخاطر.",
+    "disconnectTypeExact": "يرجى كتابة \"disconnect this Exchange\" حرفيا للتأكيد.",
+    "exchangeDisconnected": "تم فصل منصة التداول.",
+    "botResumed": "▶ تمت متابعة \"{{name}}\".",
+    "botResumedWithStrategies": "▶ تمت متابعة \"{{name}}\". يتم الان تقييم الاستراتيجيات المرتبطة في الخلفية لاشارات الدخول/الخروج.",
+    "botPaused": "⏸ \"{{name}}\" متوقف مؤقتا.",
+    "unableChangeBotStatus": "تعذر تغيير حالة البوت حاليا.",
+    "botDeleted": "🗑 تم حذف \"{{name}}\".",
+    "botUpdatedSuccess": "✏️ تم تحديث \"{{name}}\" بنجاح!",
+    "marketClosedConfirmWithReason": "السوق مغلق حاليا ({{reason}}). هل تريد وضع امر لهذه الصفقة؟",
+    "marketClosedConfirm": "السوق مغلق حاليا. هل تريد وضع امر لهذه الصفقة؟",
+    "positionLiquidated": "تمت تصفية المركز {{symbol}}.",
+    "unableLiquidatePosition": "تعذر تصفية المركز حاليا.",
+    "sharesSold": "الاسهم المباعة",
+    "sharesBought": "الاسهم المشتراة",
+    "portfolioDetailsTitlePnl": "تفصيل ارباح/خسائر اليوم",
+    "portfolioDetailsTitleTrades": "اوامر الشراء/البيع المنفذة",
+    "portfolioDetailsTitlePortfolio": "تفصيل قيمة المحفظة",
+    "portfolioDetailsEmptyPnl": "لا تتوفر بيانات ارباح/خسائر حسب المنصة بعد.",
+    "portfolioDetailsEmptyTrades": "لا توجد اوامر شراء/بيع منفذة بعد.",
+    "portfolioDetailsEmptyPortfolio": "لا تتوفر ارصدة منصات بعد.",
     "validation": {
-      "enterStrategyName": "Please enter a strategy name.",
-      "selectExecutingBot": "Please select the bot that will execute this strategy.",
-      "selectTemplateFirst": "Select a strategy template first."
+      "enterStrategyName": "يرجى ادخال اسم للاستراتيجية.",
+      "selectExecutingBot": "يرجى اختيار البوت الذي سينفذ هذه الاستراتيجية.",
+      "selectTemplateFirst": "اختر قالب استراتيجية اولا."
     }
   },
   "consent": {
@@ -1051,5 +1065,299 @@
     "websiteLine": "Website: https://auto-trading.app",
     "lastUpdatedLabel": "Last Updated:",
     "lastUpdatedDate": "March 22, 2026"
+  },
+  "featurePages": {
+    "ai-signals": {
+      "title": "إشارات مدعومة بالذكاء الاصطناعي",
+      "tagline": "دع الذكاء الاصطناعي يجد تجارتك التالية.",
+      "metaTitle": "الإشارات المدعومة بالذكاء الاصطناعي — أوتو تريدر",
+      "heroDescription": "استفد من قوة التعلم الآلي لاكتشاف إعدادات التداول عالية الاحتمالية عبر آلاف الأصول — قبل تحرك السوق.",
+      "overview": "لقد غيّرت الذكاء الاصطناعي بشكل جذري الطريقة التي يقترب بها المتداولون المحترفون من الأسواق. في أوتو-تريدينغ، تقوم محرك الإشارات المدعوم بالذكاء الاصطناعي لدينا بمسح آلاف الأصول عبر الأسهم، العملات الرقمية، أزواج الفوركس، والسلع — على مدار 24 ساعة في اليوم، 7 أيام في الأسبوع — لتحديد الأنماط التي يحتاج المحللون البشريون أيامًا لاكتشافها يدويًا.\n\nنماذج الإشارات الخاصة بنا مبنية على هيكل شبكة عصبية متعددة الطبقات تم تدريبها على عقود من بيانات الأسعار على مستوى النقرة، ومقاييس تدفق الطلبات، والمؤشرات الاقتصادية الكلية. يتعلم كل نموذج التعرف على التكوينات مثل اختراقات الزخم، وفرص ارتداد المتوسط، وأحداث ضغط التقلب، وانحرافات الأصول المتقاطعة. بمجرد اكتشاف إعداد ذي احتمالية عالية، يقوم النظام بتوليد إشارة مع درجة ثقة مرتبطة بها، ونطاق الدخول الموصى به، ومستوى وقف الخسارة، وأهداف أخذ الربح.\n\nعلى عكس المؤشرات الثابتة القائمة على القواعد، تتكيف إشارات الذكاء الاصطناعي لدينا مع مرور الوقت. يتم إعادة تدريب النماذج باستمرار مع وصول بيانات السوق الجديدة، مما يضمن بقاؤها ملائمة عبر تغييرات أنظمة السوق — سواء كانت في اتجاه صاعد، أو متذبذبة، أو في بيئات عالية التقلب. المحرك أيضًا واعٍ بالبورصة: فهو يأخذ في الاعتبار عمق السيولة والفارق المعتاد لكل أصل حتى تكون الإشارات التي يعرضها واقعية وقابلة للتنفيذ.\n\nيتم اختبار كل إشارة مقابل بيانات تاريخية خارج العينة قبل ترحيلها إلى البيئة الحية. هذا يعني أنه يمكنك الثقة بأن ما تراه في تغذية الإشارات يعكس ميزة حقيقية — وليس مجرد نتيجة ملاءمة للمنحنى.",
+      "howItWorks": "تعمل قناة الإشارات في ثلاث مراحل. أولاً، تقوم طبقة جمع البيانات بتجميع معلومات الأسعار والحجم في الوقت الفعلي من جميع البورصات المتصلة. ثانياً، يقوم نموذج هندسة الميزات باستخلاص المؤشرات التقنية، واللحظات الإحصائية، وميزات البنية الدقيقة للسوق من البيانات الخام. ثالثاً، تقوم النماذج المدربة بتقييم كل أصل ووضع علامة على تلك التي تتجاوز عتبة الثقة التي حددتها في إعداداتك. تظهر الإشارات على الفور في لوحة التحكم، وإذا قمت بتكوين التنبيهات، يتم إرسالها عبر إشعار فوري، البريد الإلكتروني، أو تيليغرام.",
+      "benefits": [
+        {
+          "title": "إعدادات عالية الاحتمالية",
+          "description": "تم تعديل النماذج بدقة لمعدل الفوز وتوازن المخاطرة والمكافأة، مع تصفية الضوضاء منخفضة الجودة."
+        },
+        {
+          "title": "التعلم المستمر",
+          "description": "إعادة التدريب التكيفية تحافظ على توافق النماذج مع الظروف الحالية للسوق."
+        },
+        {
+          "title": "تغطية متعددة الأصول",
+          "description": "الإشارات تغطي العملات المشفرة والأسهم والفوركس والسلع — جميعها في خلاصة واحدة."
+        },
+        {
+          "title": "التسليم في الوقت الفعلي",
+          "description": "تصل الإشارات في غضون أجزاء من الثانية، مما يضمن ألا تفوت أي فرصة سريعة الحركة."
+        },
+        {
+          "title": "التسجيل الشفاف",
+          "description": "كل إشارة تتضمن درجة الثقة والعوامل الأساسية التي أدت إلى ظهورها."
+        },
+        {
+          "title": "معلمات المخاطر المدمجة",
+          "description": "تأتي كل إشارة مع وقف خسارة مقترح وأخذ ربح بحيث يكون تحديد حجم المركز سهلاً."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "تريدينج فيو",
+          "description": "تصور إعدادات مفعلة بالإشارة على مخططات احترافية المستوى."
+        },
+        {
+          "label": "كوين جيكو",
+          "description": "تتبع بيانات سوق العملات المشفرة ومؤشرات السلسلة جنبًا إلى جنب مع إشاراتك."
+        },
+        {
+          "label": "إنفستوبيديا — التعلم الآلي في التمويل",
+          "description": "غوص عميق في كيفية إعادة نماذج التعلم الآلي تشكيل الأسواق المالية."
+        }
+      ]
+    },
+    "multi-exchange": {
+      "title": "دعم تعدد البورصات",
+      "tagline": "منصة واحدة. كل بورصة كبرى. بدون احتكاك.",
+      "metaTitle": "دعم متعدد للبورصات — أوتو تريدير",
+      "heroDescription": "قم بربط Binance وCoinbase وKraken وBybit وأكثر من 30 بورصة أخرى من خلال واجهة برمجة تطبيقات موحدة واحدة وقم بإدارة كل شيء من لوحة تحكم واحدة.",
+      "overview": "إدارة حسابات التداول عبر منصات متعددة كانت تقليدياً كابوساً. كل منصة لها واجهتها الخاصة، وخصائص واجهة برمجة التطبيقات الخاصة بها، ونموذج المخاطر الخاص بها. التداول الآلي يقضي على هذه التعقيدات من خلال توفير طبقة تكامل واحدة وموحدة تتحدث اللغة الأصلية لكل بورصة رئيسية.\n\nتم بناء هيكلية التداول المتعدد البورصات لدينا حول بروتوكول توجيه الأوامر الموحد. عندما تقوم بإنشاء استراتيجية أو روبوت إشارات، كل ما عليك هو اختيار البورصة وزوج التداول الذي تريد استهدافه. يقوم التداول الآلي بتحويل تعليماتك إلى صيغة استدعاء واجهة برمجة التطبيقات الصحيحة لتلك البورصة — مع التعامل مع المصادقة وإدارة حدود المعدل، وتخطيط نوع الأمر، والتعافي من الأخطاء بشكل شفاف في الخلفية.\n\nنحن ندعم حاليا أكثر من 30 بورصة للأسهم الفورية والمشتقات، بما في ذلك بينانس (الفوري، العقود الآجلة، والهامش)، كوين بايس للتداول المتقدم، كراكن للفوري والعقود الآجلة، بايبت، OKX، كوكوين، Gate.io، بيتفينكس، MEXC، والعديد غيرها. يتم إضافة دمج بورصات جديدة بانتظام حسب طلب المستخدمين. بالنسبة لمستخدمي التمويل التقليدي، ندعم أيضا وسطاء محددين عبر موائمات FIX و REST.\n\nربط بورصة هو عملية بسيطة من ثلاث خطوات: إنشاء مفاتيح API للقراءة والتداول في إعدادات حسابك في البورصة، لصقها في الخزنة الآمنة للتداول الآلي، وإجراء اختبار الاتصال. يتم تشفير مفاتيح API الخاصة بك أثناء الراحة باستخدام AES-256 ولا تغادر أبدًا خدمة إدارة المفاتيح الآمنة لدينا. لم يتم طلب أذونات السحب أبدًا — تظل أموالك تحت سيطرتك في جميع الأوقات.\n\nبمجرد الاتصال، يمكنك تشغيل عدة روبوتات على نفس البورصة في نفس الوقت، كل منها لديه استراتيجيته الخاصة، وحدود المخاطرة، وحجم المركز. كما يتم دعم استراتيجيات المراجحة عبر البورصات للمستخدمين المتقدمين الذين يرغبون في استغلال فروق الأسعار بين الأسواق.",
+      "howItWorks": "بعد توصيل بورصتك عبر مفاتيح API، يحافظ التداول الآلي على جلسة مصادقة مستمرة مع تغذية WebSocket الخاصة بالبورصة لتلقي تحديثات الأسعار وبيانات دفتر الأوامر في الوقت الفعلي. عندما يقوم الروبوت بتفعيل أمر، يقوم محرك التوجيه لدينا بإرساله مباشرة إلى واجهة برمجة تطبيقات الطلبات الخاصة بالبورصة، ويراقب حالته، ويعالج التعبئة الجزئية، والرفض، وانتهاء مهلة الشبكة تلقائيًا. يتم تسوية جميع بيانات تاريخ التداول والأرباح والخسائر من سجلات البورصة نفسها لضمان الدقة.",
+      "benefits": [
+        {
+          "title": "دعم أكثر من 30 بورصة",
+          "description": "بينانس، كوين بايز، كراكن، بايبيت، أو كي إكس، كوكوين، والعديد غيرها — كل ذلك في مكان واحد."
+        },
+        {
+          "title": "تشفير مفتاح AES-256",
+          "description": "مفاتيح واجهة برمجة التطبيقات الخاصة بك مشفرة ومخزنة في خزانة إدارة مفاتيح معزولة."
+        },
+        {
+          "title": "بيانات الوقت الفعلي عبر WebSocket",
+          "description": "تغذيات الأسعار الحية وتحديثات حالة الطلب بفاصل زمني قدره ميلي ثانية."
+        },
+        {
+          "title": "تنفيذ متعدد للروبوتات في الوقت نفسه",
+          "description": "تشغيل استراتيجيات متعددة على نفس البورصة أو بورصات مختلفة في الوقت نفسه."
+        },
+        {
+          "title": "استعادة الأخطاء تلقائيًا",
+          "description": "معالجة تحديد معدل الإرسال، ومنطق إعادة محاولة الطلب، واستعادة الاتصال مدمجة."
+        },
+        {
+          "title": "لوحة القيادة الموحدة للأرباح والخسائر",
+          "description": "عرض الأداء المجمع عبر جميع البورصات المتصلة في مكان واحد."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "باينانس",
+          "description": "أكبر بورصة للعملات الرقمية في العالم من حيث الحجم — مدعومة بالكامل."
+        },
+        {
+          "label": "تداول كوينبيس المتقدم",
+          "description": "منصة التداول الاحترافية لـ Coinbase مع دفاتر أوامر عميقة."
+        },
+        {
+          "label": "كراكن",
+          "description": "بورصة موثوقة معروفة بأمنها ومنتجات العقود الآجلة."
+        },
+        {
+          "label": "بايبِت",
+          "description": "بورصة المشتقات الرائدة بعقود دائمة عالية الرافعة المالية."
+        }
+      ]
+    },
+    "risk-management": {
+      "title": "إدارة المخاطر",
+      "tagline": "احمِ رأس مالك بضوابط بمستوى المؤسسات.",
+      "metaTitle": "إدارة المخاطر — أوتو تريدر",
+      "heroDescription": "تساعد حدود وقف الخسارة القابلة للتخصيص، جني الأرباح، حجم المركز، وحدود التعرض في المحفظة على حماية رأس مالك على مدار الساعة — لذا لن يتمكن أي تداول سيء من إغراق حسابك.",
+      "overview": "إدارة المخاطر هي الانضباط الأكثر أهمية في التداول — أكثر أهمية من أي إشارة أو استراتيجية أو نظام. حتى أفضل منطق للدخول سيفشل مع الوقت دون إطار قوي للتحكم في الخسائر. التداول الآلي يضع ضوابط المخاطر بمستوى المؤسسات مباشرة بين يديك، بغض النظر عن مستوى خبرتك.\n\nعلى مستوى التداول، يمكن تكوين كل روبوت مع وقف خسارة صارم (مستوى سعري يتم عنده إغلاق المركز للحد من الخسائر)، وهدف جني الأرباح (حيث يتم تثبيت المكاسب)، ووقف متحرك (الذي يحرك سعر الخروج للأعلى مع تحقيق الصفقة للربح). يمكن تحديد هذه المستويات كأسعار ثابتة، أو كنسب مئوية من سعر الدخول، أو كأضعاف ATR (المتوسط الحقيقي للنطاق) لأخذ التقلبات بعين الاعتبار.\n\nعلى مستوى المركز، يمكنك فرض الحد الأقصى لحجم المركز كنسبة مئوية من حقوق ملكية حسابك، أو بمبلغ ثابت بالدولار، أو بحجم وفق معيار كيلي بناءً على معدل الفوز التاريخي ونسبة المخاطرة إلى العائد. هذا يمنع أي صفقة واحدة من احتلال حصة كبيرة جدًا من محفظتك.\n\nعلى مستوى المحفظة، يمكنك تحديد حدود أقصى خسارة لكل روبوت، لكل بورصة، وعبر محفظتك بأكملها. عندما يتم تجاوز حد الخسارة، يقوم التداول الآلي بإيقاف الروبوت المتأثر تلقائيًا ويرسل لك تنبيهًا، مما يمنحك وقتًا لمراجعة الوضع قبل إعادة التفعيل. يمكنك أيضًا تعيين حدود خسارة يومية لمنع الروبوت من التداول بعد فقدان مقدار معين من رأس المال في يوم واحد — وهي ميزة مستوحاة من ضوابط المخاطر المستخدمة في شركات التداول الاحترافية.\n\nيستفيد مستخدمو الهامش من ضوابط إضافية تشمل حدود الرفع المالي القصوى والتخفيف التلقائي للرفع إذا انخفض هامش الحساب عن عتبة قابلة للتكوين. يتم تدقيق جميع معايير المخاطر وتسجيلها، مما يوفر سجلًا كاملاً لكل حدث مخاطرة للمراجعة والامتثال التنظيمي.",
+      "howItWorks": "يتم فرض قواعد المخاطر على طبقة تقديم الطلب — قبل أن يصل أي طلب إلى البورصة. عندما يحاول الروبوت فتح مركز جديد، يقوم محرك المخاطر الخاص بالتداول الآلي بالتحقق من الصفقة المقترحة مقابل جميع القواعد النشطة: حدود حجم المركز، تعرض المحفظة، عتبات الانخفاض، وميزانيات الخسارة اليومية. فقط إذا اجتازت جميع الفحوصات، يتم تنفيذ الطلب. يتم تقديم أوامر وقف الخسارة وجني الأرباح في الوقت نفسه مع أمر الدخول كأوامر محددة أو سوقية مع وقف حسب تفضيلاتك.",
+      "benefits": [
+        {
+          "title": "وقف خسارة وجني ربح صارم",
+          "description": "المستويات الثابتة أو القائمة على النسبة المئوية أو ATR تضمن أن لكل صفقة خروج محدد."
+        },
+        {
+          "title": "تحديد حجم المراكز بشكل مرن",
+          "description": "حجم ثابت، نسبة الأسهم، أو تحديد الحجم وفق معيار كيلي ليتناسب مع تحملك للمخاطر."
+        },
+        {
+          "title": "قواطع الدائرة القابلة للسحب",
+          "description": "إيقاف البوتات تلقائيًا عند الوصول إلى حدود الخسارة على مستوى التداول أو البوت أو المحفظة."
+        },
+        {
+          "title": "حدود الخسارة اليومية",
+          "description": "توقف عن التداول خلال اليوم بعد بلوغ حد الخسارة المحدد مسبقًا — تمامًا مثل المكاتب الاحترافية."
+        },
+        {
+          "title": "سجل تدقيق المخاطر",
+          "description": "يتم تسجيل كل حدث مخاطرة للمراجعة والامتثال وتحسين الاستراتيجية."
+        },
+        {
+          "title": "التحقق قبل التداول",
+          "description": "يتم التحقق من جميع القواعد قبل تقديم الطلب — يتم إدارة المخاطر بشكل استباقي، وليس بشكل تفاعلي."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "إنفستوبيديا — إدارة المخاطر في التداول",
+          "description": "مقدمة شاملة حول إدارة المخاطر عبر استراتيجيات التداول."
+        },
+        {
+          "label": "TradingView — أدوات مخاطر Pine Script",
+          "description": "تعلم كيف يتم نمذجة معايير المخاطر في اختبارات العودة للاستراتيجيات."
+        },
+        {
+          "label": "BabyPips — دليل إدارة المخاطر",
+          "description": "الدليل الموثوق به من BabyPips لتحديد حجم المراكز والحفاظ على رأس المال."
+        }
+      ]
+    },
+    "backtesting": {
+      "title": "الاختبار الخلفي المتقدم",
+      "tagline": "اثبت استراتيجيتك قبل المخاطرة بدولار واحد.",
+      "metaTitle": "الاختبار الخلفي المتقدم — أوتو تريدار",
+      "heroDescription": "اختبر استراتيجياتك ضد بيانات تاريخية بمستوى النقرة لسنوات قبل أن تلتزم بدولار واحد في التداول الحي.",
+      "overview": "الاختبار الرجعي هو عملية تطبيق استراتيجية تداول على بيانات السوق التاريخية لتقييم كيفية أدائها في الماضي. وعلى الرغم من أن الأداء السابق لا يضمن النتائج المستقبلية أبدًا، إلا أن الاختبار الرجعي الدقيق هو خطوة لا غنى عنها للتحقق من أن الاستراتيجية تمتلك ميزة إحصائية حقيقية — بدلاً من كونها نمطًا محظوظًا صادف أن ملاءم فترة سوق معينة.\n\nمحرك اختبار الاسترجاع للتداول الآلي مُصمَّم للسرعة والدقة والعمق. تغطي مكتبة البيانات التاريخية لدينا بيانات OHLCV (الافتتاح، الأعلى، الأدنى، الإغلاق، الحجم) على مستوى النقطة لكل الآلاف من أزواج التداول عبر جميع البورصات المدعومة، مع بعض مجموعات البيانات التي تمتد لأكثر من عشر سنوات. تعني دقة مستوى النقطة أن اختبار الاسترجاع الخاص بك يحاكي بدقة الانزلاق، والفارق السعري، والتنفيذ الجزئي للأوامر — التفاصيل التي تهم أكثر عند الانتقال من بيئة الاختبار إلى التداول الفعلي.\n\nتشغيل اختبار رجعي أمر بسيط مثل اختيار استراتيجيتك، تحديد الأداة والفترة الزمنية، والنقر على تشغيل. تتوفر النتائج خلال ثوانٍ لمعظم الاستراتيجيات، حتى على مدى سنوات متعددة. تعرض نافذة النتائج منحنى الأسهم، وأقصى انخفاض، ونسبة شارب، ونسبة سورتينو، ومعدل الفوز، ومتوسط الربح/الخسارة، وعامل الربح، وتحليل كامل لكل صفقة على حدة. يمكنك تصدير النتائج إلى CSV لمزيد من التحليل في أداة التحليل التي تفضلها.\n\nبالنسبة للمستخدمين الذين يرغبون في تجنب الإفراط في التكيّف، أداة التحليل التقدمي لدينا تقوم تلقائيًا بتقسيم نافذة البيانات التاريخية إلى فترات داخل العينة (لتحسين الأداء) وخارج العينة (للتحقق من الصحة) وتوضح الأداء عبر عدة مقاطع خارج العينة. كما تتوفر محاكاة مونت كارلو: حيث تقوم بخلط ترتيب الصفقات التاريخية بشكل عشوائي لتقدير توزيع النتائج الممكنة واحتمالية الخسارة الكلية.\n\nيتيح تحسين الاستراتيجية لك فحص مجموعة من قيم المعلمات (مثل فترات المتوسطات المتحركة أو عتبات مؤشر القوة النسبية) وتحديد التكوينات التي تعظم دالة الهدف المختارة — مثل نسبة شارب أو عامل الربح — مع التحكم في الإفراط في التوفيق من خلال تحليل حساسية المعلمات.",
+      "howItWorks": "عندما تبدأ اختبارًا رجعيًا، يقوم المحرك بتحميل البيانات التاريخية المطلوبة من قاعدة بياناتنا الموزعة للسلاسل الزمنية ويغذيها شريطًا بشريط من خلال منطق استراتيجيتك. كل شريط يؤدي إلى تشغيل نفس كود توليد الإشارات، وتوجيه الأوامر، وإدارة المخاطر الذي يعمل في التداول الفعلي — مما يضمن دقة المحاكاة. يتتبع المحرك المراكز المفتوحة، والأرباح والخسائر غير المحققة، واستخدام الهامش عند كل تغير سعري، مما ينتج منحنى حقوق ملكية دقيق يعكس ظروف التداول الواقعية بما في ذلك العمولات، وتقديرات الانزلاق السعري، ومعدلات التمويل للعقود الدائمة.",
+      "benefits": [
+        {
+          "title": "سنوات من تاريخ مستوى النقرة",
+          "description": "بيانات تمتد على مدى أكثر من 10 سنوات بدقة النقرة لمحاكاة واقعية."
+        },
+        {
+          "title": "تحليلات الأداء الكاملة",
+          "description": "شارب، سورتينو، أقصى تراجع، معدل الفوز، عامل الربح، والمزيد — كل ذلك في عرض واحد."
+        },
+        {
+          "title": "التحقق الأمامي",
+          "description": "اختبر تلقائيًا على فترات خارج العينة للحماية من الإفراط في التلاؤم."
+        },
+        {
+          "title": "محاكاة مونت كارلو",
+          "description": "قدّر توزيعات النتائج واحتمال الخسارة من تاريخ تداولاتك."
+        },
+        {
+          "title": "تحسين المعلمات",
+          "description": "قم بمسح نطاقات المعلمات وتحديد التكوينات القوية بشكل فعال."
+        },
+        {
+          "title": "تصدير CSV",
+          "description": "تصدير سجلات التداول الكاملة ومنحنيات الأسهم للتحليل الخارجي."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "مختبر استراتيجيات TradingView",
+          "description": "توثيق الاختبار الرجعي المدمج في TradingView — ممتاز لفهم الأساسيات."
+        },
+        {
+          "label": "إنفستوبيديا — تعريف الاختبار الرجعي",
+          "description": "شرح واضح لمفاهيم اختبار الأداء الرجعي، والقيود، وأفضل الممارسات."
+        },
+        {
+          "label": "كوانت كونكت",
+          "description": "منصة أبحاث التداول الخوارزمي — إضافة رائعة للمستخدمين المتقدمين."
+        }
+      ]
+    },
+    "smart-alerts": {
+      "title": "تنبيهات ذكية",
+      "tagline": "ابقَ مطّلعًا، أينما كنت.",
+      "metaTitle": "التنبيهات الذكية — أوتو تريدَر",
+      "heroDescription": "احصل على إشعارات فورية عبر الدفع أو البريد الإلكتروني أو تيليجرام في اللحظة التي تتحقق فيها شروط التداول، أو تُفتح أو تُغلق الصفقات، أو يتم تجاوز حدود الخسارة.",
+      "overview": "في التداول الآلي، البقاء على اطلاع لا يقل أهمية عن التنفيذ الصحيح. تتحرك الأسواق بسرعة، وتحتاج إلى معرفة اللحظة التي يحدث فيها شيء مهم — سواء كان ذلك إطلاق إشارة جديدة، فتح أو إغلاق مركز، الوصول إلى وقف الخسارة، أو مواجه الروبوت لخطأ غير متوقع.\n\nتم تصميم نظام التنبيهات الذكية في التداول الآلي للحفاظ على اطلاعك دون إغراقك بالضجيج. أنت تختار بالضبط ما تريد أن تتلقى إشعارات عنه، ومن خلال أي قنوات، وبأي مستوى من سرعة الاستجابة. يتم إرسال الإشعارات في الوقت الفعلي — عادةً خلال 100 مللي ثانية من حدوث الحدث — لضمان ألا تتأخر أبدًا في اتخاذ الإجراء.\n\nيتم تسليم الإشعارات الفورية مباشرة إلى جهازك المحمول عبر تطبيق التداول الآلي أو متصفحك. إنها أسرع قناة وهي مثالية للأحداث الحساسة للوقت مثل إشارات التداول الجديدة أو تجاوز حدود المخاطر. الإشعارات الفورية قابلة للتخصيص بالكامل: يمكنك تحديد ساعات الهدوء، واختيار أنواع الأحداث التي تُفعّلها، وتكوين أصوات وأنماط الاهتزاز.\n\nتنبيهات البريد الإلكتروني توفر سجلاً أكثر تنظيماً وسهل التدقيق لنشاط الروبوت الخاص بك. يقوم التداول التلقائي بإرسال بريد إلكتروني بصيغة HTML لكل تنبيه، يحتوي على التفاصيل الكاملة للحدث المسبب للتنبيه، وحالة المحفظة الحالية، ورابط سريع بنقرة واحدة للعودة إلى القسم المعني من لوحة القيادة. يمكنك إعداد أوضاع ملخص لتجميع التنبيهات غير العاجلة في ملخصات ساعة أو يومية.\n\nتكامل بوت تيليغرام يربط حساب التداول الآلي الخاص بك بدردشة تيليغرام خاصة أو مجموعة. هذا شائع بشكل خاص مع المتداولين الذين يستخدمون تيليغرام كأداة اتصال رئيسية ويرغبون في الحصول على تحديثات التداول بجانب رسائلهم. يستغرق الإعداد أقل من دقيقتين: قم بإنشاء بوت تيليغرام عبر @BotFather، انسخ الرمز المميز في إعدادات التداول الآلي الخاصة بك، وابدأ محادثتك الأولى.\n\nتنبيهات الويب هوك المخصصة تتيح للمستخدمين المتقدمين توجيه الإشعارات إلى أي نظام تابع لجهة خارجية — مثل Discord أو Slack أو لوحة تحكم مخصصة أو وظيفة بدون خادم — عن طريق إرسال حمولة JSON إلى نقطة نهاية من اختيارك.",
+      "howItWorks": "يتم تعريف كل تنبيه بواسطة حالة تفعيل، ونموذج رسالة، وقناة أو أكثر للتسليم. تشمل حالات التفعيل تجاوز مستويات الأسعار، وأحداث عتبة المؤشرات، وأحداث دورة حياة الطلب (تم التنفيذ، تم الرفض، تم الإلغاء)، والانتهاكات الخاصة بحدود المخاطر، والتقارير المجدولة القائمة على الوقت. تدعم نماذج الرسائل استبدال المتغيرات بحيث تتضمن التنبيهات البيانات الحية في وقت الإرسال.",
+      "benefits": [
+        {
+          "title": "الإشعارات الفورية",
+          "description": "تنبيهات فورية على هاتفك أو متصفحك خلال 100 مللي ثانية من حدوث الحدث."
+        },
+        {
+          "title": "تنبيهات البريد الإلكتروني",
+          "description": "رسائل بريد إلكتروني HTML غنية تحتوي على السياق الكامل ورابط بنقرة واحدة للرجوع إلى لوحة التحكم الخاصة بك."
+        },
+        {
+          "title": "تكامل تيليجرام",
+          "description": "تلقى تحديثات التداول في دردشة خاصة على تيليجرام — قم بالإعداد في أقل من دقيقتين."
+        },
+        {
+          "title": "الويب هوكس المخصصة",
+          "description": "قم بتوجيه التنبيهات إلى Discord أو Slack أو أي نقطة نهاية HTTP مع حمولة JSON."
+        },
+        {
+          "title": "تحكم دقيق",
+          "description": "اختر بالضبط الأحداث التي تؤدي إلى تنبيه — الإشارة، التنفيذ، الخطأ، الخسارة، وأكثر."
+        },
+        {
+          "title": "ساعات الهدوء",
+          "description": "قم بكتم الإشعارات غير المهمة خلال ساعات النوم حتى لا يتأثر راحة نومك."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "بوت فاذر على تليجرام",
+          "description": "أنشئ رمز بوت التيليجرام الخاص بك لتكامل التيليجرام مع التداول التلقائي."
+        },
+        {
+          "label": "تنبيهات TradingView",
+          "description": "نظام التنبيهات في TradingView — مرجع مقارنة رائع."
+        },
+        {
+          "label": "ويب هوكس ديسكورد",
+          "description": "كيفية إعداد ويب هوك على ديسكورد لتلقي إشعارات التداول الآلي."
+        }
+      ]
+    },
+    "no-code-builder": {
+      "title": "منشئ الاستراتيجيات بدون كود",
+      "tagline": "ابنِ استراتيجيات تداول قوية دون كتابة سطر واحد من التعليمات البرمجية.",
+      "metaTitle": "منشئ استراتيجيات بدون كود — أوتو تريدر",
+      "heroDescription": "أداة بناء الاستراتيجيات بالسحب والإفلات لدينا تتيح لك أتمتة منطق التداول المعقد — شروط الدخول، الفلاتر، قواعد المخاطر، وإشارات الخروج — دون الحاجة إلى أي معرفة بالبرمجة.",
+      "overview": "كان التداول الخوارزمي في السابق مجالاً حصرياً لمهندسي البرمجيات وباحثي الكميات. كتابة كود تداول قوي وجاهز للإنتاج يتطلب خبرة في لغات البرمجة وتكامل واجهات برمجة التطبيقات وإدارة التزامن ومعالجة الأخطاء ومعالجة البيانات في الوقت الفعلي. يغير منشئ الاستراتيجيات بدون كود في auto-Trading كل ذلك من خلال توفير واجهة بصرية قوية تتيح لأي متداول — بغض النظر عن الخلفية التقنية — بناء واختبار ونشر استراتيجيات آلية.\n\nيتم تنظيم أداة البناء حول مفهوم الكتل. تمثل كل كتلة قطعة مميزة من المنطق: إدخال بيانات السوق، حساب مؤشر فني، قاعدة شرطية، إجراء (مثل فتح أو إغلاق مركز)، أو معلمة مخاطر. تقوم بسحب الكتل من اللوحة الجانبية إلى اللوحة الرئيسية، وربطها بأسهم لتحديد تدفق المنطق، وتكوين كل كتلة من خلال لوحة الخصائص البسيطة. يتم تجميع الاستراتيجية الناتجة في رسم بياني للتنفيذ فعال يعمل على بنية تحتية سحابية للتداول الآلي.\n\nتتضمن مكتبة المؤشرات حاليًا أكثر من 80 مؤشرًا فنيًا قياسيًا، بما في ذلك المتوسطات المتحركة (SMA، EMA، WMA، DEMA، TEMA)، مؤشرات الزخم (RSI، MACD، Stochastic، CCI، Williams %R)، مؤشرات التقلب (Bollinger Bands، ATR، Keltner Channels، Donchian Channels)، مؤشرات الحجم (OBV، VWAP، MFI، CMF)، ومؤشرات الاتجاه (ADX، Ichimoku، Parabolic SAR). يتم دعم التعبيرات المخصصة للمؤشرات من خلال محرر الصيغ للمستخدمين الذين يرغبون في دمج المؤشرات القياسية في حسابات مخصصة.\n\nكتل الشروط تدعم العمليات المنطقية (و، أو، ليس)، والمقارنات الرقمية، واكتشافات التقاطع والتقاطع السفلي، ومرشحات وقت اليوم. كما يتم دعم التحليل متعدد الأطر الزمنية: يمكنك الرجوع إلى قيم المؤشر من إطار زمني أعلى (على سبيل المثال، اتجاه الاتجاه اليومي) ضمن استراتيجية إطار زمني أقل (على سبيل المثال، إشارة دخول لمدة 15 دقيقة).\n\nبمجرد بناء استراتيجيتك، يمكنك تداولها ورقياً للتحقق من السلوك دون أي مخاطر مالية، إجراء اختبار رجعي كامل على البيانات التاريخية، ثم نشرها للتداول الحي بنقرة واحدة. يمكن تكرار الاستراتيجيات، التحكم في إصداراتها، ومشاركتها مع مستخدمي التداول الآلي الآخرين.",
+      "howItWorks": "يتم تشغيل لوحة الاستراتيجية البصرية بواسطة محرك رسم بياني موجَّه لا دوري (DAG). كل كتلة تضيفها إلى اللوحة تصبح عقدة في الـDAG، وكل اتصال بين الكتل يحدد تبعية البيانات. عندما يتم تشغيل الاستراتيجية، يقوم المحرك بتقييم الـDAG بالترتيب الطوبولوجي لكل شريط سوق جديد، مما يضمن اكتمال جميع الحسابات الأولية قبل تقييم الشروط والإجراءات اللاحقة. يسمح هذا التصميم لتشغيل استراتيجيات معقدة متعددة المؤشرات بكفاءة حتى عند تردد مستوى النقرة.",
+      "benefits": [
+        {
+          "title": "السحب والإفلات الحقيقي",
+          "description": "ابنِ استراتيجيات بالكامل باستخدام النقرات والسحب — لا حاجة للبرمجة."
+        },
+        {
+          "title": "أكثر من 80 مؤشرًا مدمجًا",
+          "description": "SMA، EMA، RSI، MACD، خطوط بولينجر، ATR، VWAP، إيشيموكو، والعديد غيرها."
+        },
+        {
+          "title": "دعم تعدد الأطر الزمنية",
+          "description": "الإشارة إلى بيانات الإطار الزمني الأعلى داخل استراتيجيات الإطار الزمني الأدنى."
+        },
+        {
+          "title": "التحكم في الإصدارات",
+          "description": "احفظ واستعد الإصدارات السابقة من استراتيجيتك في أي وقت."
+        },
+        {
+          "title": "التداول الورقي المتكامل",
+          "description": "اختبر استراتيجيتك في بيئة سوق حية باستخدام أموال افتراضية."
+        },
+        {
+          "title": "نشر مباشر بنقرة واحدة",
+          "description": "انتقل من الاختبار الخلفي إلى التداول المباشر بنقرة واحدة — لا حاجة لتغييرات في الكود."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "تريدينغ فيو باين سكريبت",
+          "description": "لغة البرمجة الخاصة بـ TradingView — رائعة لفهم مفاهيم منطق الاستراتيجية."
+        },
+        {
+          "label": "إنفستوبيديا — التداول الخوارزمي",
+          "description": "نظرة عامة على التداول الخوارزمي وكيف تفيد الأتمتة المتداولين."
+        },
+        {
+          "label": "كوانت كونكت — إطار العمل الخوارزمي",
+          "description": "إطار تداول خوارزمي متقدم للمستخدمين المستعدين لتجاوز البرمجة بدون كود."
+        }
+      ]
+    }
   }
 }

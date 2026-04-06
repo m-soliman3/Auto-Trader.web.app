@@ -513,127 +513,127 @@
     "tradeId": "Trade ID"
   },
   "userPages": {
-    "pageNavigation": "Page navigation",
-    "navigation": "Navigation",
-    "mode": "Mode",
-    "mainPages": "Main pages",
-    "dashboard": "Dashboard",
-    "exchanges": "Exchanges",
-    "bots": "Bots",
-    "strategies": "Strategies",
-    "portfolio": "Portfolio",
-    "backendRunner": "Backend Runner",
-    "backToDashboard": "Back to Dashboard",
-    "refresh": "Refresh",
-    "refreshing": "Refreshing..."
+    "pageNavigation": "Navigation de page",
+    "navigation": "Menu de navigation",
+    "mode": "Mode de trading",
+    "mainPages": "Pages principales",
+    "dashboard": "Tableau de bord",
+    "exchanges": "Échanges",
+    "bots": "Bottes",
+    "strategies": "Stratégies",
+    "portfolio": "Portefeuille",
+    "backendRunner": "Exécuteur Backend",
+    "backToDashboard": "Retour au tableau de bord",
+    "refresh": "Actualiser",
+    "refreshing": "Rafraîchissant..."
   },
   "backendRunner": {
-    "title": "Backend Runner",
-    "dateRange": "Date Range",
-    "today": "Today",
-    "yesterday": "Yesterday",
-    "thisWeek": "This Week",
-    "lastWeek": "Last Week",
-    "thisMonth": "This Month",
-    "lastMonth": "Last Month",
-    "custom": "Custom",
-    "dateFrom": "Date From",
-    "dateTo": "Date To",
-    "status": "Status",
-    "all": "All",
-    "executed": "Executed",
-    "notExecuted": "Not Executed",
-    "applyFilters": "Apply Filters",
-    "clearFilters": "Clear Filters",
-    "loading": "Loading backend runner summaries...",
-    "noSummariesYet": "No runner summaries yet.",
-    "noSummariesMatch": "No runner summaries match the selected filters.",
-    "active": "Active",
-    "failed": "Failed",
-    "hasFailures": "Has Failures",
-    "noExecutions": "No Executions",
-    "disabledMessage": "Backend monitor is disabled. Set tradingBackendBaseUrl in environment.",
-    "signInMessage": "Sign in to view backend runner status.",
-    "unableToLoad": "Unable to load backend runner status right now."
+    "title": "Exécuteur Backend",
+    "dateRange": "Plage de dates",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "thisWeek": "Cette semaine",
+    "lastWeek": "La semaine dernière",
+    "thisMonth": "Ce mois-ci",
+    "lastMonth": "Le mois dernier",
+    "custom": "Personnalisé",
+    "dateFrom": "Date à partir de",
+    "dateTo": "Date à",
+    "status": "Statut",
+    "all": "Tout",
+    "executed": "Exécuté",
+    "notExecuted": "Non exécuté",
+    "applyFilters": "Appliquer les filtres",
+    "clearFilters": "Effacer les filtres",
+    "loading": "Chargement des résumés du moteur backend...",
+    "noSummariesYet": "Pas encore de résumés de coureurs.",
+    "noSummariesMatch": "Aucun résumé de coureur ne correspond aux filtres sélectionnés.",
+    "active": "actif",
+    "failed": "Échoué",
+    "hasFailures": "A des échecs",
+    "noExecutions": "Pas d'exécutions",
+    "disabledMessage": "Le moniteur backend est désactivé. Définissez tradingBackendBaseUrl dans l'environnement.",
+    "signInMessage": "Connectez-vous pour voir l'état du moteur backend.",
+    "unableToLoad": "Impossible de charger le statut de l'exécuteur backend pour le moment."
   },
   "portfolioManagement": {
-    "title": "Portfolio Management",
-    "portfolioValue": "Portfolio Value",
-    "unrealizedPnl": "Unrealized P&L",
-    "exchangeBreakdown": "Exchange Breakdown",
-    "exchange": "Exchange",
-    "value": "Value",
-    "pnl": "P&L",
-    "noPortfolioRows": "No portfolio rows yet. Connect an exchange to load portfolio data.",
-    "openPositions": "Open Positions",
-    "symbol": "Symbol",
-    "qty": "Qty",
-    "plPercent": "P/L %",
-    "noOpenPositions": "No open positions in"
+    "title": "Gestion de portefeuille",
+    "portfolioValue": "Valeur du portefeuille",
+    "unrealizedPnl": "Pertes et profits non réalisés",
+    "exchangeBreakdown": "Panne d'échange",
+    "exchange": "Échange",
+    "value": "Valeur",
+    "pnl": "Compte de profits et pertes",
+    "noPortfolioRows": "Aucune ligne de portefeuille pour le moment. Connectez un échange pour charger les données du portefeuille.",
+    "openPositions": "Postes ouverts",
+    "symbol": "Symbole",
+    "qty": "Qté",
+    "plPercent": "% P/L",
+    "noOpenPositions": "Aucun poste ouvert dans"
   },
   "exchanges": {
-    "confirmDisconnection": "Confirm Disconnection",
-    "disconnectQuestion": "Are you sure you want to disconnect",
-    "disconnectWarning": "This will delete all exchange connection data including API credentials. Reconnecting the exchange will require getting new API credentials from the exchange.",
-    "understandRisksAria": "I understand the risks",
-    "understandRisks": "I understand the risks associated with disconnecting this exchange including any open/unfinished executions on my accounts",
-    "typeDisconnectToConfirm": "Type \"disconnect this Exchange\" to confirm:",
-    "disconnectPhrase": "disconnect this Exchange",
-    "typeToConfirmAria": "Type to confirm disconnection",
-    "disconnect": "Disconnect",
-    "title": "Exchanges",
-    "addExchange": "Add Exchange",
-    "connectedExchanges": "Connected Exchanges",
-    "connected": "Connected",
-    "noConnectionsPrefix": "No",
-    "noConnectionsSuffix": "exchanges connected yet. Use Dashboard to connect one.",
-    "details": "Details",
-    "tradeLog": "Trade Log",
-    "side": "Side",
-    "orderId": "Order ID",
-    "amount": "Amount",
-    "noTradesForExchange": "No trades logged yet for this exchange.",
-    "supportedProviders": "Supported Providers",
-    "acknowledgeRisksToContinue": "Please acknowledge the risks to continue",
-    "typeDisconnectToConfirmError": "Please type \"disconnect this Exchange\" to confirm"
+    "confirmDisconnection": "Confirmer la déconnexion",
+    "disconnectQuestion": "Êtes-vous sûr de vouloir vous déconnecter",
+    "disconnectWarning": "Cela supprimera toutes les données de connexion de l'échange, y compris les informations d'identification API. Reconnecter l'échange nécessitera d'obtenir de nouvelles informations d'identification API de l'échange.",
+    "understandRisksAria": "Je comprends les risques",
+    "understandRisks": "Je comprends les risques associés à la déconnexion de cet échange, y compris toute exécution ouverte/inachevée sur mes comptes",
+    "typeDisconnectToConfirm": "Tapez \"déconnecter cet Exchange\" pour confirmer :",
+    "disconnectPhrase": "déconnecter cet Exchange",
+    "typeToConfirmAria": "Tapez pour confirmer la déconnexion",
+    "disconnect": "Déconnecter",
+    "title": "Échanges",
+    "addExchange": "Ajouter un échange",
+    "connectedExchanges": "Échanges connectés",
+    "connected": "connecté",
+    "noConnectionsPrefix": "Non",
+    "noConnectionsSuffix": "Échanges encore connectés. Utilisez le tableau de bord pour en connecter un.",
+    "details": "Détails",
+    "tradeLog": "Journal des transactions",
+    "side": "Côté",
+    "orderId": "ID de commande",
+    "amount": "Montant",
+    "noTradesForExchange": "Aucune transaction enregistrée pour cette bourse pour le moment.",
+    "supportedProviders": "Fournisseurs pris en charge",
+    "acknowledgeRisksToContinue": "Veuillez reconnaître les risques pour continuer",
+    "typeDisconnectToConfirmError": "Veuillez taper \"déconnecter cet Exchange\" pour confirmer"
   },
   "bots": {
-    "confirmDeletion": "Confirm Deletion",
-    "deleteQuestion": "Are you sure you want to delete Bot",
-    "deleteWarning": "This will delete all bot configuration and stop any open/unexecuted orders associated with it on the exchange.",
-    "confirmDeleteAria": "I confirm I want to delete this Bot",
-    "confirmDeleteText": "I confirm I want to delete this Bot and stop any open/unexecuted order associated with it",
-    "delete": "Delete",
-    "newBot": "New Bot",
-    "pauseBot": "Pause Bot",
-    "resumeBot": "Resume Bot",
-    "viewBot": "View Bot",
-    "editBot": "Edit Bot",
-    "totalTrades": "Total Trades",
-    "noTradesForBot": "No trades logged yet for this bot.",
-    "noBotsPrefix": "No",
-    "noBotsSuffix": "bots created yet. Use Dashboard to add your first bot."
+    "confirmDeletion": "Confirmer la suppression",
+    "deleteQuestion": "Êtes-vous sûr de vouloir supprimer le Bot",
+    "deleteWarning": "Cela supprimera toute la configuration du bot et arrêtera toutes les ordres ouverts/non exécutés qui y sont associés sur la bourse.",
+    "confirmDeleteAria": "Je confirme que je veux supprimer ce Bot",
+    "confirmDeleteText": "Je confirme que je souhaite supprimer ce Bot et arrêter toute commande ouverte/non exécutée qui y est associée",
+    "delete": "Supprimer",
+    "newBot": "Nouveau Bot",
+    "pauseBot": "Mettre le bot en pause",
+    "resumeBot": "Bot de CV",
+    "viewBot": "Bot de vue",
+    "editBot": "Éditer le bot",
+    "totalTrades": "Total des transactions",
+    "noTradesForBot": "Aucune transaction enregistrée pour ce bot pour le moment.",
+    "noBotsPrefix": "Non",
+    "noBotsSuffix": "Aucun bot créé pour le moment. Utilisez le tableau de bord pour ajouter votre premier bot."
   },
   "strategies": {
-    "confirmDeletion": "Confirm Deletion",
-    "deleteQuestion": "Are you sure you want to delete Strategy",
-    "deleteWarning": "This will delete all strategy configuration and assignment. The bot itself will not be deleted.",
-    "confirmDeleteAria": "I confirm I want to delete this Strategy",
-    "confirmDeleteText": "I confirm I want to delete this Strategy and its associated configuration",
-    "delete": "Delete",
-    "newStrategy": "New Strategy",
-    "pauseStrategy": "Pause Strategy",
-    "resumeStrategy": "Resume Strategy",
-    "viewStrategy": "View Strategy",
-    "editStrategy": "Edit Strategy",
-    "assignedBot": "Assigned Bot",
-    "tradeSide": "Trade Side",
-    "status": "Status",
-    "notes": "Notes",
-    "executionLog": "Execution Log",
-    "noExecutionsForStrategy": "No executions logged yet for this strategy.",
-    "noStrategiesPrefix": "No",
-    "noStrategiesSuffix": "strategies configured yet. Use Dashboard to create one."
+    "confirmDeletion": "Confirmer la suppression",
+    "deleteQuestion": "Êtes-vous sûr de vouloir supprimer la stratégie",
+    "deleteWarning": "Cela supprimera toute la configuration et l'affectation de la stratégie. Le bot lui-même ne sera pas supprimé.",
+    "confirmDeleteAria": "Je confirme que je veux supprimer cette stratégie",
+    "confirmDeleteText": "Je confirme que je souhaite supprimer cette stratégie et sa configuration associée",
+    "delete": "Supprimer",
+    "newStrategy": "Nouvelle stratégie",
+    "pauseStrategy": "Stratégie de pause",
+    "resumeStrategy": "Stratégie de CV",
+    "viewStrategy": "Afficher la stratégie",
+    "editStrategy": "Modifier la stratégie",
+    "assignedBot": "Bot assigné",
+    "tradeSide": "Côté commercial",
+    "status": "Statut",
+    "notes": "Commentaires",
+    "executionLog": "Journal d'exécution",
+    "noExecutionsForStrategy": "Aucune exécution enregistrée pour cette stratégie pour le moment.",
+    "noStrategiesPrefix": "Non",
+    "noStrategiesSuffix": "Aucune stratégie n'est encore configurée. Utilisez le tableau de bord pour en créer une."
   },
   "legal": {
     "home": "Accueil",
@@ -810,7 +810,7 @@
     "disconnectWarning": "Cela supprimera toutes les données de connexion de l'exchange, y compris les identifiants API. La reconnexion nécessitera de nouveaux identifiants API de l'exchange.",
     "disconnectRiskAck": "Je comprends que je devrai générer de nouvelles clés et secrets API depuis l'exchange pour me reconnecter",
     "disconnectTypeToConfirm": "Tapez \"disconnect this Exchange\" pour confirmer :",
-    "disconnectPlaceholder": "disconnect this Exchange",
+    "disconnectPlaceholder": "déconnecter cet Exchange",
     "disconnect": "Déconnecter",
     "confirmLiquidation": "Confirmer la liquidation",
     "confirm": "Confirmer",
@@ -837,7 +837,7 @@
     "createFirstStrategy": "Créer votre première stratégie",
     "myBots": "Mes bots {{mode}}",
     "newBot": "+ Nouveau bot",
-    "bot": "Bot",
+    "bot": "Robot",
     "pair": "Paire",
     "tf": "UDT",
     "investmentHeader": "Investissement",
@@ -882,7 +882,7 @@
     "totalAmount": "Montant total",
     "plAmount": "Montant P&P",
     "short": "Court",
-    "long": "Long",
+    "long": "long",
     "marketClosedStatus": "Fermé",
     "marketOpenStatus": "Ouvert",
     "liquidating": "Liquidation...",
@@ -890,53 +890,67 @@
     "noOpenPositions": "Aucune position ouverte en mode {{mode}}.",
     "viewBreakdown": "Voir la répartition",
     "botsRunningCount": "{{count}} actifs",
-    "botsCount": "{{count}} bot(s)",
+    "botsCount": "{{count}} robot(s)",
     "getStarted": "Commencer",
-    "assistantAskSpecific": "Ask a more specific question and I will guide you step-by-step.",
-    "assistantUnknownAction": "Unknown assistant action.",
-    "comingSoon": "Coming soon — stay tuned! 🚀",
-    "createBotFirst": "Create a bot first. A strategy must be assigned to an executing bot.",
-    "strategyDeleted": "🗑 \"{{name}}\" deleted.",
-    "unableDeleteStrategy": "Unable to delete strategy right now. Please try again.",
-    "strategyCreatedBackendActive": "📊 \"{{name}}\" created. Backend evaluation is active and orders will only run on entry/exit signals.",
-    "strategyCreatedLinked": "📊 \"{{name}}\" created and linked to \"{{botName}}\".",
-    "strategyUpdatedBackendSignals": "✏️ \"{{name}}\" updated. Backend evaluation will place orders only when signals trigger.",
-    "strategyUpdatedSuccess": "✏️ \"{{name}}\" updated successfully.",
-    "unableSaveStrategy": "Unable to save strategy right now. Please try again.",
-    "strategyEditorCreateTitle": "Create Strategy",
-    "strategyEditorEditTitle": "Edit Strategy",
-    "strategyEditorViewTitle": "View Strategy",
-    "strategyEditorSaveChanges": "Save Changes",
-    "strategyEditorCreateAction": "Create Strategy",
-    "myPaperMoneyStrategy": "My Paper Money Strategy",
-    "myRealMoneyStrategies": "My Real Money Strategies",
-    "strategyActivatedBackendRunning": "▶ \"{{name}}\" activated. Backend evaluation is now running.",
-    "strategyActivatedActivateBot": "▶ \"{{name}}\" activated. Activate the assigned bot to execute trades.",
-    "strategyPaused": "⏸ \"{{name}}\" paused.",
-    "unableUpdateStrategyStatus": "Unable to update strategy status right now.",
-    "exchangeConnectedSuccess": "✅ {{label}} connected successfully!",
-    "botLaunchedActive": "🤖 \"{{name}}\" launched and is now active!",
-    "disconnectConfirmRiskRequired": "You must confirm that you understand the risks.",
-    "disconnectTypeExact": "Please type \"disconnect this Exchange\" exactly to confirm.",
-    "exchangeDisconnected": "Exchange disconnected.",
-    "botResumed": "▶ \"{{name}}\" resumed.",
-    "botResumedWithStrategies": "▶ \"{{name}}\" resumed. Linked strategies are now evaluated in backend for entry/exit signals.",
-    "botPaused": "⏸ \"{{name}}\" paused.",
-    "unableChangeBotStatus": "Unable to change bot status right now.",
-    "botDeleted": "🗑 \"{{name}}\" deleted.",
-    "botUpdatedSuccess": "✏️ \"{{name}}\" updated successfully!",
-    "positionLiquidated": "Position {{symbol}} liquidated.",
-    "unableLiquidatePosition": "Unable to liquidate position right now.",
-    "portfolioDetailsTitlePnl": "Today's P&L Breakdown",
-    "portfolioDetailsTitleTrades": "Executed Buy/Sell Orders",
-    "portfolioDetailsTitlePortfolio": "Portfolio Value Breakdown",
-    "portfolioDetailsEmptyPnl": "No exchange P&L data available yet.",
-    "portfolioDetailsEmptyTrades": "No executed buy/sell orders yet.",
-    "portfolioDetailsEmptyPortfolio": "No exchange balances available yet.",
+    "assistantAskSpecific": "Pose une question plus precise et je te guiderai etape par etape.",
+    "assistantUnknownAction": "Action de l'assistant inconnue.",
+    "backendMonitorDisabled": "Le moniteur backend est desactive. Definis tradingBackendBaseUrl dans l'environnement.",
+    "signInRunnerStatus": "Connecte-toi pour voir l'etat du backend runner.",
+    "runnerStatusLoadError": "Impossible de charger l'etat du backend runner pour le moment.",
+    "comingSoon": "Bientot disponible - reste connecte ! 🚀",
+    "createBotFirst": "Cree d'abord un bot. Une strategie doit etre assignee a un bot executant.",
+    "liveDataStreamError": "Impossible de se connecter au flux de donnees en direct",
+    "liveViewNoBot": "Aucun bot executant trouve pour cette strategie.",
+    "liveViewNoStrategy": "Les details de la strategie ne sont pas disponibles.",
+    "liveViewSignInAgain": "Reconnecte-toi pour charger les donnees en direct.",
+    "liveViewNotEnoughData": "Pas assez de donnees de marche pour tracer le graphique.",
+    "liveViewLoadError": "Impossible de charger les donnees de marche en direct pour le moment.",
+    "unknownBot": "Bot inconnu",
+    "strategyDeleted": "🗑 \"{{name}}\" supprimee.",
+    "unableDeleteStrategy": "Impossible de supprimer la strategie pour le moment. Reessaie.",
+    "strategyCreatedBackendActive": "📊 \"{{name}}\" creee. L'evaluation backend est active et les ordres ne s'executeront que sur des signaux d'entree/sortie.",
+    "strategyCreatedLinked": "📊 \"{{name}}\" creee et liee a \"{{botName}}\".",
+    "strategyUpdatedBackendSignals": "✏️ \"{{name}}\" mise a jour. L'evaluation backend placera des ordres uniquement quand les signaux se declenchent.",
+    "strategyUpdatedSuccess": "✏️ \"{{name}}\" mise a jour avec succes.",
+    "unableSaveStrategy": "Impossible d'enregistrer la strategie pour le moment. Reessaie.",
+    "strategyEditorCreateTitle": "Creer une strategie",
+    "strategyEditorEditTitle": "Modifier la strategie",
+    "strategyEditorViewTitle": "Voir la strategie",
+    "strategyEditorSaveChanges": "Enregistrer les modifications",
+    "strategyEditorCreateAction": "Creer une strategie",
+    "myPaperMoneyStrategy": "Ma strategie en mode papier",
+    "myRealMoneyStrategies": "Mes strategies en argent reel",
+    "strategyActivatedBackendRunning": "▶ \"{{name}}\" activee. L'evaluation backend est maintenant en cours.",
+    "strategyActivatedActivateBot": "▶ \"{{name}}\" activee. Active le bot assigne pour executer les trades.",
+    "strategyPaused": "⏸ \"{{name}}\" en pause.",
+    "unableUpdateStrategyStatus": "Impossible de mettre a jour le statut de la strategie pour le moment.",
+    "exchangeConnectedSuccess": "✅ {{label}} connectee avec succes !",
+    "botLaunchedActive": "🤖 \"{{name}}\" lance et maintenant actif !",
+    "disconnectConfirmRiskRequired": "Tu dois confirmer que tu comprends les risques.",
+    "disconnectTypeExact": "Veuillez saisir exactement \"disconnect this Exchange\" pour confirmer.",
+    "exchangeDisconnected": "Exchange deconnectee.",
+    "botResumed": "▶ \"{{name}}\" repris.",
+    "botResumedWithStrategies": "▶ \"{{name}}\" repris. Les strategies liees sont maintenant evaluees dans le backend pour les signaux d'entree/sortie.",
+    "botPaused": "⏸ \"{{name}}\" en pause.",
+    "unableChangeBotStatus": "Impossible de changer le statut du bot pour le moment.",
+    "botDeleted": "🗑 \"{{name}}\" supprime.",
+    "botUpdatedSuccess": "✏️ \"{{name}}\" mis a jour avec succes !",
+    "marketClosedConfirmWithReason": "Le marche est ferme actuellement ({{reason}}). Voulez-vous placer un ordre pour cette position ?",
+    "marketClosedConfirm": "Le marche est ferme actuellement. Voulez-vous placer un ordre pour cette position ?",
+    "positionLiquidated": "Position {{symbol}} liquidee.",
+    "unableLiquidatePosition": "Impossible de liquider la position pour le moment.",
+    "sharesSold": "Actions vendues",
+    "sharesBought": "Actions achetees",
+    "portfolioDetailsTitlePnl": "Detail du P&L d'aujourd'hui",
+    "portfolioDetailsTitleTrades": "Ordres d'achat/vente executes",
+    "portfolioDetailsTitlePortfolio": "Detail de la valeur du portefeuille",
+    "portfolioDetailsEmptyPnl": "Aucune donnee P&L par exchange disponible pour le moment.",
+    "portfolioDetailsEmptyTrades": "Aucun ordre d'achat/vente execute pour le moment.",
+    "portfolioDetailsEmptyPortfolio": "Aucun solde d'exchange disponible pour le moment.",
     "validation": {
-      "enterStrategyName": "Please enter a strategy name.",
-      "selectExecutingBot": "Please select the bot that will execute this strategy.",
-      "selectTemplateFirst": "Select a strategy template first."
+      "enterStrategyName": "Veuillez saisir un nom de strategie.",
+      "selectExecutingBot": "Veuillez selectionner le bot qui executera cette strategie.",
+      "selectTemplateFirst": "Selectionnez d'abord un modele de strategie."
     }
   },
   "consent": {
@@ -1051,5 +1065,299 @@
     "websiteLine": "Website: https://auto-trading.app",
     "lastUpdatedLabel": "Last Updated:",
     "lastUpdatedDate": "March 22, 2026"
+  },
+  "featurePages": {
+    "ai-signals": {
+      "title": "Signaux alimentés par l'IA",
+      "tagline": "Laissez l'intelligence machine trouver votre prochaine transaction.",
+      "metaTitle": "Signaux Alimentés par l'IA — AutoTrader",
+      "heroDescription": "Exploitez la puissance de l'apprentissage automatique pour détecter des configurations de trading à haute probabilité sur des milliers d'actifs — avant que le marché ne bouge.",
+      "overview": "L'intelligence artificielle a fondamentalement changé la manière dont les traders professionnels abordent les marchés. Chez auto-Trading, notre moteur de signaux alimenté par l'IA analyse en continu des milliers d'actifs à travers les actions, les cryptomonnaies, les paires de devises et les matières premières — 24 heures sur 24, 7 jours sur 7 — pour identifier des motifs que les analystes humains mettraient des jours à repérer manuellement.\n\nNos modèles de signaux propriétaires sont basés sur une architecture de réseau neuronal multicouche entraînée sur des décennies de données de prix au niveau du tick, des métriques de flux d'ordres et des indicateurs macroéconomiques. Chaque modèle apprend à reconnaître des formations telles que les ruptures de momentum, les opportunités de retour à la moyenne, les événements de compression de volatilité et les divergences inter-actifs. Lorsqu'une configuration à haute probabilité est détectée, le système génère un signal avec un score de confiance associé, une plage d'entrée recommandée, un niveau de stop-loss et des objectifs de take-profit.\n\nContrairement aux indicateurs statiques basés sur des règles, nos signaux IA s'adaptent au fil du temps. Les modèles sont continuellement réentraînés à mesure que de nouvelles données de marché arrivent, garantissant qu'ils restent pertinents dans des régimes de marché changeants — en tendance, en range ou dans des environnements à forte volatilité. Le moteur est également conscient des échanges : il prend en compte la profondeur de liquidité et l'écart typique pour chaque actif, afin que les signaux qu'il génère soient réalistes et exécutables.\n\nChaque signal est testé en arrière-plan sur des données historiques hors échantillon avant d'être promu dans l'environnement en direct. Cela signifie que vous pouvez avoir confiance que ce que vous voyez dans le flux de signaux reflète un véritable avantage — et non un artefact de sur-ajustement.",
+      "howItWorks": "Le pipeline de signaux fonctionne en trois étapes. Tout d'abord, une couche d'ingestion de données agrège les flux de prix et de volume en temps réel de toutes les bourses connectées. Ensuite, le module d'ingénierie des caractéristiques dérive des indicateurs techniques, des moments statistiques et des caractéristiques de microstructure du marché à partir des données brutes. Enfin, les modèles entraînés évaluent chaque actif et signalent ceux qui dépassent le seuil de confiance que vous avez défini dans vos paramètres. Les signaux sont affichés instantanément sur le tableau de bord et, si vous avez configuré des alertes, sont envoyés via notification push, email ou Telegram.",
+      "benefits": [
+        {
+          "title": "Configurations à haute probabilité",
+          "description": "Les modèles sont ajustés avec précision pour le taux de victoire et l'équilibre risque-rendement, en filtrant le bruit de faible qualité."
+        },
+        {
+          "title": "Apprendre en continu",
+          "description": "La ré-entraînement adaptatif maintient les modèles alignés avec les conditions actuelles du marché."
+        },
+        {
+          "title": "Couverture multi-actifs",
+          "description": "Les signaux couvrent la crypto, les actions, le forex et les matières premières — tout dans un seul flux."
+        },
+        {
+          "title": "Livraison en temps réel",
+          "description": "Les signaux arrivent en millisecondes, garantissant que vous ne manquiez jamais une opportunité en mouvement rapide."
+        },
+        {
+          "title": "Score transparent",
+          "description": "Chaque signal comprend un score de confiance et les principaux facteurs qui l'ont déclenché."
+        },
+        {
+          "title": "Paramètres de risque intégrés",
+          "description": "Chaque signal est livré avec un stop-loss et un take-profit suggérés afin que le dimensionnement des positions soit simple."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "TradingView",
+          "description": "Visualisez les configurations déclenchées par des signaux sur des graphiques de qualité professionnelle."
+        },
+        {
+          "label": "CoinGecko",
+          "description": "Suivez les données du marché des cryptomonnaies et les métriques on-chain en même temps que vos signaux."
+        },
+        {
+          "label": "Investopedia — Apprentissage automatique en finance",
+          "description": "Plongée approfondie sur la façon dont les modèles d'apprentissage automatique transforment les marchés financiers."
+        }
+      ]
+    },
+    "multi-exchange": {
+      "title": "Support multi-bourses",
+      "tagline": "Une plateforme. Chaque grande bourse. Zéro friction.",
+      "metaTitle": "Prise en charge multi-bourses — AutoTrader",
+      "heroDescription": "Connectez Binance, Coinbase, Kraken, Bybit et plus de 30 autres plateformes via une seule API unifiée et gérez tout depuis un seul tableau de bord.",
+      "overview": "Gérer des comptes de trading sur plusieurs plateformes a traditionnellement été un cauchemar. Chaque plateforme a sa propre interface, ses propres particularités d'API et son propre modèle de risque. Le trading automatique élimine cette complexité en fournissant une couche d'intégration unique et unifiée qui parle le langage natif de chaque grande bourse.\n\nNotre architecture multi-plateforme est construite autour d'un protocole de routage des ordres standardisé. Lorsque vous créez une stratégie ou un bot de signal, vous choisissez simplement quelle bourse et quelle paire de trading vous souhaitez cibler. Le trading automatique traduit vos instructions dans le format correct des appels API pour cette bourse — gérant l'authentification, la gestion des limites de taux, la correspondance des types d'ordres et la récupération des erreurs de manière transparente en arrière-plan.\n\nNous supportons actuellement plus de 30 plateformes d'échanges au comptant et de dérivés, y compris Binance (spot, contrats à terme et marge), Coinbase Advanced Trade, Kraken Spot et Futures, Bybit, OKX, KuCoin, Gate.io, Bitfinex, MEXC, et bien d'autres. De nouvelles intégrations de plateformes sont ajoutées régulièrement en fonction de la demande des utilisateurs. Pour les utilisateurs de la finance traditionnelle, nous supportons également certains courtiers via des adaptateurs FIX et REST.\n\nConnecter un échange est un processus simple en trois étapes : générez des clés API de lecture et de trading dans les paramètres de votre compte d'échange, collez-les dans le coffre-fort sécurisé de l'auto-trading, et effectuez un test de connexion. Vos clés API sont cryptées au repos en utilisant AES-256 et ne quittent jamais notre service sécurisé de gestion des clés. Les autorisations de retrait ne sont jamais demandées — vos fonds restent sous votre contrôle à tout moment.\n\nUne fois connecté, vous pouvez exécuter plusieurs bots sur la même bourse simultanément, chacun avec sa propre stratégie, ses limites de risque et sa taille de position. Les stratégies d'arbitrage entre bourses sont également prises en charge pour les utilisateurs avancés qui souhaitent exploiter les différences de prix entre les plateformes.",
+      "howItWorks": "Après avoir connecté votre plateforme d'échange via des clés API, le trading automatique maintient une session persistante et authentifiée avec le flux WebSocket de l'échange pour recevoir des mises à jour de prix en temps réel et des données sur le carnet d'ordres. Lorsqu'un bot déclenche un ordre, notre moteur de routage le soumet directement à l'API d'ordre de l'échange, surveille son statut et gère automatiquement les exécutions partielles, les rejets et les délais d'attente réseau. Tout l'historique des transactions et les données de P&L sont rapprochés à partir des propres enregistrements de l'échange afin d'assurer l'exactitude.",
+      "benefits": [
+        {
+          "title": "Plus de 30 échanges pris en charge",
+          "description": "Binance, Coinbase, Kraken, Bybit, OKX, KuCoin, et bien d'autres — tous en un seul endroit."
+        },
+        {
+          "title": "Chiffrement de clé AES-256",
+          "description": "Vos clés API sont chiffrées et stockées dans un coffre de gestion des clés isolé."
+        },
+        {
+          "title": "Données en temps réel WebSocket",
+          "description": "Flux de prix en direct et mises à jour du statut des commandes avec une latence de millisecondes."
+        },
+        {
+          "title": "Exécution simultanée de plusieurs bots",
+          "description": "Exécutez plusieurs stratégies sur la même ou sur différentes plateformes en même temps."
+        },
+        {
+          "title": "Récupération automatique des erreurs",
+          "description": "Gestion des limites de taux, logique de nouvelle tentative de commande et récupération de connexion intégrées."
+        },
+        {
+          "title": "Tableau de bord P&L unifié",
+          "description": "Voir les performances agrégées sur toutes les bourses connectées en un seul endroit."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "Binance",
+          "description": "La plus grande plateforme d'échange de crypto au monde par volume — entièrement prise en charge."
+        },
+        {
+          "label": "Coinbase Trade Avancé",
+          "description": "La plateforme de trading professionnelle de Coinbase avec des carnets d'ordres profonds."
+        },
+        {
+          "label": "Kraken",
+          "description": "Une plateforme d'échange fiable connue pour sa sécurité et ses produits à terme."
+        },
+        {
+          "label": "Bybit",
+          "description": "Bourse de dérivés leader avec des contrats perpétuels à effet de levier élevé."
+        }
+      ]
+    },
+    "risk-management": {
+      "title": "Gestion des risques",
+      "tagline": "Protégez votre capital avec des contrôles de qualité institutionnelle.",
+      "metaTitle": "Gestion des risques — AutoTrader",
+      "heroDescription": "Des limites personnalisables de stop-loss, take-profit, taille de position et exposition du portefeuille protègent votre capital 24h/24 — ainsi, une seule mauvaise transaction ne pourra jamais faire couler votre compte.",
+      "overview": "La gestion des risques est la discipline la plus importante en trading — plus importante que n'importe quel signal, stratégie ou système. Même la meilleure logique d'entrée échouera avec le temps sans un cadre solide pour contrôler les pertes. L'auto-trading met des contrôles de risque de qualité institutionnelle directement entre vos mains, quel que soit votre niveau d'expérience.\n\nAu niveau du trading, chaque bot peut être configuré avec un stop-loss strict (un niveau de prix auquel la position est clôturée pour limiter les pertes), un objectif de take-profit (où les gains sont sécurisés), et un trailing stop (qui déplace le prix de sortie vers le haut à mesure que la transaction devient rentable). Ces niveaux peuvent être définis comme des prix fixes, des pourcentages par rapport à l'entrée, ou des multiples de l'ATR (Average True Range) pour une approche ajustée à la volatilité.\n\nAu niveau de la position, vous pouvez appliquer une taille maximale de position en pourcentage de vos fonds propres, un montant fixe en dollars, ou une taille selon le critère de Kelly basée sur le taux de réussite historique et le rapport risque-rendement. Cela empêche qu'une seule opération occupe une part trop importante de votre portefeuille.\n\nAu niveau du portefeuille, vous pouvez définir des limites de perte maximale par bot, par plateforme d'échange et pour l'ensemble de votre portefeuille. Lorsque cette limite de perte est dépassée, le trading automatique met automatiquement en pause le bot concerné et vous envoie une alerte, vous donnant le temps de revoir la situation avant de le réactiver. Vous pouvez également définir des limites de perte quotidienne pour empêcher un bot de trader après qu'un certain montant de capital ait été perdu en une seule journée — une fonctionnalité inspirée des contrôles de risque utilisés dans les sociétés de trading professionnelles.\n\nLes utilisateurs de marge bénéficient de protections supplémentaires, y compris des plafonds de levier maximum et un désendettement automatique si la marge du compte tombe en dessous d'un seuil configurable. Tous les paramètres de risque sont audités et consignés, fournissant une trace complète de chaque événement de risque pour examen et conformité réglementaire.",
+      "howItWorks": "Les règles de risque sont appliquées au niveau de la soumission des ordres — avant qu’aucun ordre n’atteigne la bourse. Lorsqu’un bot tente d’ouvrir une nouvelle position, le moteur de risque de l’auto-trading vérifie la transaction proposée par rapport à toutes les règles actives : limites de taille de position, exposition du portefeuille, seuils de recul et budgets de pertes quotidiens. Ce n’est que si tous les contrôles sont réussis que l’ordre peut être exécuté. Les ordres stop-loss et take-profit sont soumis simultanément avec l’ordre d’entrée en tant qu’ordres à cours limité ou à cours de marché stop, selon votre préférence.",
+      "benefits": [
+        {
+          "title": "Stop-loss et take-profit stricts",
+          "description": "Les niveaux fixes, en pourcentage ou basés sur l'ATR garantissent que chaque transaction a une sortie définie."
+        },
+        {
+          "title": "Dimensionnement flexible des positions",
+          "description": "Taille fixe, pourcentage d'équité ou dimensionnement selon le critère de Kelly pour correspondre à votre tolérance au risque."
+        },
+        {
+          "title": "Disjoncteurs de réduction",
+          "description": "Mettre automatiquement les bots en pause lorsque les limites de perte sont atteintes au niveau du trade, du bot ou du portefeuille."
+        },
+        {
+          "title": "Limites de perte quotidiennes",
+          "description": "Arrêtez de trader pour la journée après avoir atteint un seuil de perte prédéfini — comme le font les bureaux professionnels."
+        },
+        {
+          "title": "Journal d'audit des risques",
+          "description": "Chaque événement à risque est enregistré pour examen, conformité et affinage de la stratégie."
+        },
+        {
+          "title": "Validation pré-négociation",
+          "description": "Toutes les règles sont vérifiées avant la soumission de la commande — le risque est géré de manière proactive, et non réactive."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "Investopedia — Gestion des risques dans le trading",
+          "description": "Un guide complet sur la gestion des risques dans les stratégies de trading."
+        },
+        {
+          "label": "TradingView — Outils de risque Pine Script",
+          "description": "Apprenez comment les paramètres de risque sont modélisés dans les tests rétroactifs de stratégie."
+        },
+        {
+          "label": "BabyPips — Guide de gestion des risques",
+          "description": "Le guide de confiance de BabyPips sur la taille des positions et la préservation du capital."
+        }
+      ]
+    },
+    "backtesting": {
+      "title": "Test de rétroaction avancé",
+      "tagline": "Prouvez votre stratégie avant de risquer un seul dollar.",
+      "metaTitle": "Backtesting avancé — AutoTrader",
+      "heroDescription": "Testez vos stratégies sur des années de données historiques au niveau des ticks avant d'engager un seul dollar en trading en direct.",
+      "overview": "Le backtesting est le processus consistant à appliquer une stratégie de trading à des données historiques du marché afin d'évaluer comment elle aurait performé dans le passé. Bien que les performances passées ne garantissent jamais les résultats futurs, un backtesting rigoureux est une étape indispensable pour valider qu'une stratégie possède un véritable avantage statistique — plutôt que d'être un motif chanceux qui correspondait à une période de marché particulière.\n\nLe moteur de backtesting d'auto-Trading est conçu pour la vitesse, la précision et la profondeur. Notre bibliothèque de données historiques couvre les données OHLCV au niveau du tick (ouverture, haut, bas, fermeture, volume) pour des milliers de paires de trading sur toutes les plateformes prises en charge, avec certains ensembles de données remontant à plus de dix ans. La granularité au niveau du tick signifie que votre backtest modélise avec précision le slippage, le spread et les exécutions partielles — les détails les plus importants lorsque vous passez d'un environnement de test au trading en direct.\n\nExécuter un backtest est aussi simple que de sélectionner votre stratégie, de spécifier l'instrument et la plage de dates, puis de cliquer sur exécuter. Les résultats sont disponibles en quelques secondes pour la plupart des stratégies, même sur des périodes de plusieurs années. La vue des résultats montre la courbe de capital, le maximum de perte (drawdown), le ratio de Sharpe, le ratio de Sortino, le taux de réussite, le gain/perte moyen, le facteur de profit et une ventilation complète transaction par transaction. Vous pouvez exporter les résultats au format CSV pour une analyse plus approfondie dans votre outil d'analyse préféré.\n\nPour les utilisateurs qui souhaitent éviter le surapprentissage, notre outil d'analyse walk-forward divise automatiquement la fenêtre historique en périodes in-sample (optimisation) et out-of-sample (validation) et rapporte les performances sur plusieurs segments out-of-sample. La simulation de Monte Carlo est également disponible : elle mélange aléatoirement l'ordre des transactions historiques pour estimer la distribution des résultats possibles et la probabilité de ruine.\n\nL'optimisation de stratégie vous permet de balayer une gamme de valeurs de paramètres (par exemple, les périodes de moyenne mobile ou les seuils RSI) et d'identifier les configurations qui maximisent une fonction objective choisie — comme le ratio de Sharpe ou le facteur de profit — tout en contrôlant le surapprentissage grâce à l'analyse de sensibilité des paramètres.",
+      "howItWorks": "Lorsque vous lancez un backtest, le moteur charge les données historiques demandées depuis notre base de données distribuée de séries temporelles et les transmet bar par bar à votre logique de stratégie. Chaque barre déclenche la même génération de signaux, l'acheminement des ordres et le code de gestion des risques qui fonctionne en trading en direct — garantissant la fidélité de la simulation. Le moteur suit les positions ouvertes, les P&L non réalisés et l'utilisation de la marge à chaque tick, produisant une courbe de capital précise reflétant les conditions de trading réalistes, y compris les commissions, les estimations de slippage et les taux de financement pour les contrats perpétuels.",
+      "benefits": [
+        {
+          "title": "Des années d'historique au niveau du tick",
+          "description": "Données remontant à plus de 10 ans avec une granularité de tick pour une simulation réaliste."
+        },
+        {
+          "title": "Analyse complète des performances",
+          "description": "Sharpe, Sortino, perte maximale, taux de gain, facteur de profit, et plus encore — tout en un seul aperçu."
+        },
+        {
+          "title": "Validation en avance",
+          "description": "Tester automatiquement sur des périodes hors échantillon pour se prémunir contre le surapprentissage."
+        },
+        {
+          "title": "Simulation de Monte-Carlo",
+          "description": "Estimez les distributions des résultats et la probabilité de ruine à partir de votre historique de transactions."
+        },
+        {
+          "title": "Optimisation des paramètres",
+          "description": "Balayez les plages de paramètres et identifiez efficacement les configurations robustes."
+        },
+        {
+          "title": "Export CSV",
+          "description": "Exporter les journaux de transactions complets et les courbes d'équité pour une analyse externe."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "Testeur de stratégie TradingView",
+          "description": "La documentation intégrée de backtesting de TradingView — idéale pour comprendre les fondamentaux."
+        },
+        {
+          "label": "Investopedia — Définition du backtesting",
+          "description": "Explication claire des concepts, des limites et des meilleures pratiques de la rétro-analyse."
+        },
+        {
+          "label": "QuantConnect",
+          "description": "Plateforme de recherche en trading algorithmique — un excellent complément pour les utilisateurs avancés."
+        }
+      ]
+    },
+    "smart-alerts": {
+      "title": "Alertes intelligentes",
+      "tagline": "Restez informé, où que vous soyez.",
+      "metaTitle": "Alertes Intelligentes — AutoTrader",
+      "heroDescription": "Recevez des notifications instantanées par push, e-mail ou Telegram dès que les conditions de trading sont remplies, que des positions s'ouvrent ou se ferment, ou que les limites de perte sont dépassées.",
+      "overview": "Dans le trading automatisé, rester informé est tout aussi important que d'exécuter correctement. Les marchés évoluent rapidement, et vous devez être au courant au moment où quelque chose de significatif se produit — que ce soit un nouveau signal qui se déclenche, une position qui s'ouvre ou se ferme, un stop-loss qui est atteint ou un bot qui rencontre une erreur inattendue.\n\nLe système d'Alertes Intelligentes d'auto-Trading est conçu pour vous tenir informé sans vous submerger de bruit. Vous choisissez exactement de quoi vous voulez être informé, par quels canaux et avec quel niveau d'urgence. Les notifications sont envoyées en temps réel — généralement dans les 100 millisecondes suivant l'événement déclencheur — vous garantissant de ne jamais agir trop tard.\n\nLes notifications push sont envoyées directement sur votre appareil mobile via l'application auto-Trading ou votre navigateur. Elles sont le canal le plus rapide et sont idéales pour les événements sensibles au temps, comme les nouveaux signaux de trading ou les dépassements de limites de risque. Les notifications push sont entièrement personnalisables : vous pouvez définir des heures de silence, choisir quels types d'événements les déclenchent et configurer les sons et les modèles de vibration.\n\nLes alertes par e-mail offrent un enregistrement plus structuré et propice à l'audit de l'activité de votre bot. Le trading automatique envoie un e-mail HTML formaté pour chaque alerte, contenant tous les détails de l'événement déclencheur, l'état actuel du portefeuille et un lien direct en un clic vers la section pertinente du tableau de bord. Vous pouvez définir des modes de synthèse pour regrouper les alertes non urgentes en résumés horaires ou quotidiens.\n\nL'intégration du bot Telegram connecte votre compte de trading automatique à un chat ou groupe privé sur Telegram. Cela est particulièrement populaire auprès des traders qui utilisent Telegram comme outil de communication principal et souhaitent recevoir des mises à jour de trading en même temps que leurs messages. La configuration prend moins de deux minutes : créez un bot Telegram via @BotFather, copiez le token dans les paramètres de votre trading automatique, et commencez votre premier chat.\n\nLes alertes Webhook personnalisées permettent aux utilisateurs avancés d'acheminer les notifications vers n'importe quel système tiers — Discord, Slack, un tableau de bord personnalisé ou une fonction serverless — en envoyant une charge utile JSON à un point de terminaison de votre choix.",
+      "howItWorks": "Chaque alerte est définie par une condition de déclenchement, un modèle de message et un ou plusieurs canaux de diffusion. Les conditions de déclenchement incluent le franchissement de niveaux de prix, les événements de seuil d'indicateur, les événements du cycle de vie des ordres (exécuté, rejeté, annulé), les dépassements de limites de risque et les rapports programmés basés sur le temps. Les modèles de message prennent en charge la substitution de variables afin que les alertes incluent des données en direct au moment de l'envoi.",
+      "benefits": [
+        {
+          "title": "Notifications push",
+          "description": "Alertes en temps réel sur votre téléphone ou votre navigateur dans les 100 ms suivant l'événement déclencheur."
+        },
+        {
+          "title": "Alertes par e-mail",
+          "description": "Des e-mails HTML riches avec un contexte complet et un lien en un clic pour revenir à votre tableau de bord."
+        },
+        {
+          "title": "Intégration de Telegram",
+          "description": "Recevez des mises à jour commerciales dans un chat Telegram privé — configurez-le en moins de deux minutes."
+        },
+        {
+          "title": "Webhooks personnalisés",
+          "description": "Acheminer les alertes de route vers Discord, Slack ou tout point de terminaison HTTP avec une charge utile JSON."
+        },
+        {
+          "title": "Contrôle granulaire",
+          "description": "Choisissez exactement quels événements déclenchent des alertes — signal, exécution, erreur, perte, et plus encore."
+        },
+        {
+          "title": "Heures de silence",
+          "description": "Supprimez les alertes non critiques pendant les heures de sommeil afin que votre repos ne soit pas perturbé."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "BotFather de Telegram",
+          "description": "Créez votre jeton de bot Telegram pour l'intégration Telegram du trading automatique."
+        },
+        {
+          "label": "Alertes TradingView",
+          "description": "Le système d'alerte de TradingView — une excellente référence de comparaison."
+        },
+        {
+          "label": "Webhooks Discord",
+          "description": "Comment configurer un webhook Discord pour recevoir des notifications de trading automatique."
+        }
+      ]
+    },
+    "no-code-builder": {
+      "title": "Constructeur de stratégie sans code",
+      "tagline": "Créez des stratégies de trading puissantes sans écrire une seule ligne de code.",
+      "metaTitle": "Constructeur de Stratégie Sans Code — AutoTrader",
+      "heroDescription": "Notre générateur de stratégies par glisser-déposer vous permet d'automatiser une logique de trading complexe — conditions d'entrée, filtres, règles de risque et signaux de sortie — sans aucune connaissance en programmation.",
+      "overview": "Le trading algorithmique était autrefois le domaine exclusif des ingénieurs en logiciel et des chercheurs quantitatifs. Écrire un code de trading robuste et prêt pour la production nécessite une expertise en langages de programmation, intégration d'API, gestion de la concurrence, gestion des erreurs et traitement des données en temps réel. Le générateur de stratégies sans code d'auto-Trading change tout cela en offrant une interface visuelle puissante qui permet à tout trader — quel que soit son niveau technique — de construire, tester et déployer des stratégies automatisées.\n\nLe constructeur est organisé autour du concept de blocs. Chaque bloc représente une partie distincte de la logique : une entrée de données de marché, un calcul d'indicateur technique, une règle conditionnelle, une action (comme ouvrir ou fermer une position), ou un paramètre de risque. Vous faites glisser les blocs depuis le panneau latéral vers le canevas, les connectez avec des flèches pour définir le flux de la logique, et configurez chaque bloc via un panneau de propriétés simple. La stratégie résultante est compilée en un graphique d'exécution efficace qui s'exécute dans l'infrastructure cloud d'auto-Trading.\n\nLa bibliothèque d'indicateurs comprend actuellement plus de 80 indicateurs techniques standard, y compris les moyennes mobiles (SMA, EMA, WMA, DEMA, TEMA), les indicateurs de momentum (RSI, MACD, Stochastique, CCI, Williams %R), les indicateurs de volatilité (Bandes de Bollinger, ATR, Canaux de Keltner, Canaux de Donchian), les indicateurs de volume (OBV, VWAP, MFI, CMF) et les indicateurs de tendance (ADX, Ichimoku, SAR Parabolique). Les expressions d'indicateurs personnalisés sont prises en charge via un éditeur de formules pour les utilisateurs qui souhaitent combiner des indicateurs standard en calculs sur mesure.\n\nLes blocs de condition prennent en charge les opérateurs logiques (ET, OU, NON), les comparaisons numériques, les détections de croisement et de décroisement, ainsi que les filtres en fonction de l'heure de la journée. L'analyse multi-échelles est également prise en charge : vous pouvez faire référence aux valeurs des indicateurs d'une échelle de temps supérieure (par exemple, la direction de la tendance quotidienne) dans une stratégie d'échelle de temps inférieure (par exemple, un signal d'entrée sur 15 minutes).\n\nUne fois que vous avez construit votre stratégie, vous pouvez la trader sur papier pour valider son comportement sans aucun risque financier, exécuter un backtest complet sur des données historiques, puis la déployer en trading réel en un seul clic. Les stratégies peuvent être dupliquées, contrôlées par version et partagées avec d'autres utilisateurs d'auto-trading.",
+      "howItWorks": "Le canevas de stratégie visuelle est alimenté par un moteur de graphe acyclique dirigé (DAG). Chaque bloc que vous ajoutez au canevas devient un nœud dans le DAG, et chaque connexion entre les blocs définit une dépendance de données. Lorsque la stratégie s'exécute, le moteur évalue le DAG dans l'ordre topologique pour chaque nouvelle barre de marché, garantissant que tous les calculs en amont sont terminés avant que les conditions et actions en aval ne soient évaluées. Cette conception permet aux stratégies complexes avec plusieurs indicateurs de s'exécuter efficacement, même à la fréquence des ticks.",
+      "benefits": [
+        {
+          "title": "Vrai glisser-déposer",
+          "description": "Construisez des stratégies entièrement avec des clics et des glissements — aucun codage requis."
+        },
+        {
+          "title": "Plus de 80 indicateurs intégrés",
+          "description": "SMA, EMA, RSI, MACD, Bandes de Bollinger, ATR, VWAP, Ichimoku, et bien d'autres."
+        },
+        {
+          "title": "Support multi-échelles de temps",
+          "description": "Référencez les données d'une période plus longue à l'intérieur des stratégies de période plus courte."
+        },
+        {
+          "title": "Contrôle de version",
+          "description": "Enregistrez et restaurez les versions précédentes de votre stratégie à tout moment."
+        },
+        {
+          "title": "Trading sur papier intégré",
+          "description": "Testez votre stratégie dans un environnement de marché en direct avec des fonds virtuels."
+        },
+        {
+          "title": "Déploiement en direct en un clic",
+          "description": "Passez du backtest au trading en direct en un seul clic — aucune modification de code nécessaire."
+        }
+      ],
+      "externalLinks": [
+        {
+          "label": "TradingView Pine Script",
+          "description": "Le langage de script de TradingView — idéal pour comprendre les concepts de logique de stratégie."
+        },
+        {
+          "label": "Investopedia — Trading Algorithmique",
+          "description": "Aperçu du trading algorithmique et de la manière dont l'automatisation bénéficie aux traders."
+        },
+        {
+          "label": "QuantConnect — Cadre Algorithmique",
+          "description": "Cadre de trading algorithmique avancé pour les utilisateurs prêts à aller au-delà du sans-code."
+        }
+      ]
+    }
   }
 }

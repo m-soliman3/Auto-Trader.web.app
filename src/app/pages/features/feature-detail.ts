@@ -3,7 +3,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../../services/language.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface FeatureLink {
   label: string;
@@ -708,25 +710,88 @@ export class FeatureDetailPage implements OnInit {
   private route     = inject(ActivatedRoute);
   private router    = inject(Router);
   private auth      = inject(AuthService);
+  languageService   = inject(LanguageService);
   private sanitizer = inject(DomSanitizer);
+  private translate = inject(TranslateService);
 
+  private baseFeature: FeatureData | null = null;
   feature: FeatureData | null = null;
   safeSvg: SafeHtml | null = null;
   overviewParagraphs: string[] = [];
 
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    this.route.paramMap
+      .pipe(takeUntilDestroyed())
+      .subscribe((params) => {
+        this.loadFeature(params.get('slug') ?? '');
+      });
+
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.applyTranslatedFeature());
+  }
+
+  private loadFeature(slug: string): void {
     const data = FEATURES[slug];
     if (!data) {
       this.router.navigate(['/']);
       return;
     }
-    this.feature = data;
+
+    this.baseFeature = data;
     this.safeSvg = this.sanitizer.bypassSecurityTrustHtml(data.svgIllustration);
-    this.overviewParagraphs = data.overview.split('\n\n').map(p => p.trim()).filter(Boolean);
+    this.applyTranslatedFeature();
+  }
+
+  private t(key: string, fallback: string): string {
+    const translated = this.translate.instant(key);
+    return translated === key ? fallback : translated;
+  }
+
+  private applyTranslatedFeature(): void {
+    const base = this.baseFeature;
+    if (!base) {
+      return;
+    }
+
+    const keyRoot = `featurePages.${base.slug}`;
+    const translatedOverview = this.t(`${keyRoot}.overview`, base.overview);
+
+    this.feature = {
+      ...base,
+      title: this.t(`${keyRoot}.title`, base.title),
+      tagline: this.t(`${keyRoot}.tagline`, base.tagline),
+      metaTitle: this.t(`${keyRoot}.metaTitle`, base.metaTitle),
+      heroDescription: this.t(`${keyRoot}.heroDescription`, base.heroDescription),
+      overview: translatedOverview,
+      howItWorks: this.t(`${keyRoot}.howItWorks`, base.howItWorks),
+      benefits: base.benefits.map((benefit, index) => ({
+        ...benefit,
+        title: this.t(`${keyRoot}.benefits.${index}.title`, benefit.title),
+        description: this.t(`${keyRoot}.benefits.${index}.description`, benefit.description),
+      })),
+      externalLinks: base.externalLinks.map((link, index) => ({
+        ...link,
+        label: this.t(`${keyRoot}.externalLinks.${index}.label`, link.label),
+        description: this.t(`${keyRoot}.externalLinks.${index}.description`, link.description),
+      })),
+      relatedLinks: base.relatedLinks.map((link) => ({
+        ...link,
+        label: this.t(`featurePages.${link.slug}.title`, link.label),
+      })),
+    };
+
+    this.overviewParagraphs = translatedOverview
+      .split('\n\n')
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean);
   }
 
   goToCta(): void {
-    this.router.navigate([this.auth.isLoggedIn() ? '/dashboard' : '/signup']);
+    this.router.navigate([
+      '/',
+      this.languageService.currentLang(),
+      this.auth.isLoggedIn() ? 'dashboard' : 'signup',
+    ]);
   }
 }
