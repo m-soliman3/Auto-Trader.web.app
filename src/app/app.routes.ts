@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, UrlMatchResult, UrlSegment } from '@angular/router';
 import { Home } from './pages/home';
 import { Login } from './pages/login';
 import { Signup } from './pages/signup';
@@ -18,6 +18,27 @@ import { FeatureDetailPage } from './pages/features/feature-detail';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { LANGUAGES } from './services/language.service';
+
+const SUPPORTED_LANG_CODES = new Set(LANGUAGES.map((lang) => lang.code));
+
+export function languagePrefixMatcher(segments: UrlSegment[]): UrlMatchResult | null {
+  if (segments.length === 0) {
+    return null;
+  }
+
+  const [first] = segments;
+  if (!SUPPORTED_LANG_CODES.has(first.path)) {
+    return null;
+  }
+
+  return {
+    consumed: [first],
+    posParams: {
+      lang: first,
+    },
+  };
+}
 
 const dashboardTitleResolver: ResolveFn<string> = (route: ActivatedRouteSnapshot) => {
   const mode = route.paramMap.get('mode');
@@ -26,7 +47,7 @@ const dashboardTitleResolver: ResolveFn<string> = (route: ActivatedRouteSnapshot
     : 'Live Trading Dashboard — AutoTrader | Real-Time Strategy Execution';
 };
 
-export const routes: Routes = [
+const coreRoutes: Routes = [
   {
     path: '',
     component: Home,
@@ -123,5 +144,21 @@ export const routes: Routes = [
     component: FeatureDetailPage,
     title: 'Feature — AutoTrader',
   },
-  { path: '**', redirectTo: '' },
+];
+
+export const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'en',
+  },
+  {
+    matcher: languagePrefixMatcher,
+    children: [
+      ...coreRoutes,
+      { path: '**', redirectTo: '' },
+    ],
+  },
+  ...coreRoutes,
+  { path: '**', redirectTo: 'en' },
 ];

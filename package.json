@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "i18n:sync-features": "node scripts/sync-feature-pages-i18n.mjs",
     "chatbot:dev": "npm --prefix chatbot-backend run dev",
     "chatbot:build": "npm --prefix chatbot-backend run build",
     "chatbot:start": "npm --prefix chatbot-backend run start"
@@ -45,6 +46,8 @@
     "@angular/cli": "^21.1.5",
     "@angular/compiler-cli": "^21.1.0",
     "@google-cloud/resource-manager": "^6.2.1",
+    "@vitalets/google-translate-api": "^9.2.1",
+    "bing-translate-api": "^4.2.0",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"

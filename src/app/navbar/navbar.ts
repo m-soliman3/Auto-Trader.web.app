@@ -1,10 +1,11 @@
-import { Component, DestroyRef, ElementRef, HostListener, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostListener, computed, effect, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { AccountModeService, AccountMode } from '../services/account-mode.service';
 import { LanguageService } from '../services/language.service';
+import { UiPolicyService } from '../services/ui-policy.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,6 +24,7 @@ export class Navbar {
   auth = inject(AuthService);
   accountMode = inject(AccountModeService);
   languageService = inject(LanguageService);
+  uiPolicy = inject(UiPolicyService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -37,6 +39,12 @@ export class Navbar {
   });
 
   constructor() {
+    effect(() => {
+      if (!this.uiPolicy.canChangeLanguage()) {
+        this.closeLangMenu();
+      }
+    });
+
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

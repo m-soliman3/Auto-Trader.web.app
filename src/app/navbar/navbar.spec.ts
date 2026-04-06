@@ -77,6 +77,27 @@ describe('Navbar interactions', () => {
     return fixture;
   }
 
+  function setupLoggedOutNavbar() {
+    const auth = TestBed.inject(AuthService) as unknown as MockAuthService;
+    auth.setUser(null);
+
+    const fixture = TestBed.createComponent(Navbar);
+    fixture.detectChanges();
+    return fixture;
+  }
+
+  it('shows language selector only before login', () => {
+    const loggedOutFixture = setupLoggedOutNavbar();
+    const loggedOutCompiled = loggedOutFixture.nativeElement as HTMLElement;
+
+    expect(loggedOutCompiled.querySelector('.lang-selector-wrap')).not.toBeNull();
+
+    const loggedInFixture = setupLoggedInNavbar();
+    const loggedInCompiled = loggedInFixture.nativeElement as HTMLElement;
+
+    expect(loggedInCompiled.querySelector('.lang-selector-wrap')).toBeNull();
+  });
+
   it('closes the user menu when clicking outside the navbar', () => {
     const fixture = setupLoggedInNavbar();
     const compiled = fixture.nativeElement as HTMLElement;

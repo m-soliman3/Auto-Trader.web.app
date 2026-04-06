@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class Home {
   private auth   = inject(AuthService);
   private router = inject(Router);
+  languageService = inject(LanguageService);
 
   /** Sends logged-in users straight to the dashboard */
   goToCta() {
@@ -28,12 +30,12 @@ export class Home {
   ];
 
   features = [
-    { icon: '⚡', titleKey: 'home.features.aiSignals.title', descKey: 'home.features.aiSignals.desc', link: '/features/ai-signals' },
-    { icon: '🔗', titleKey: 'home.features.multiExchange.title', descKey: 'home.features.multiExchange.desc', link: '/features/multi-exchange' },
-    { icon: '🛡️', titleKey: 'home.features.riskManagement.title', descKey: 'home.features.riskManagement.desc', link: '/features/risk-management' },
-    { icon: '📊', titleKey: 'home.features.backtesting.title', descKey: 'home.features.backtesting.desc', link: '/features/backtesting' },
-    { icon: '🔔', titleKey: 'home.features.smartAlerts.title', descKey: 'home.features.smartAlerts.desc', link: '/features/smart-alerts' },
-    { icon: '🌐', titleKey: 'home.features.noCode.title', descKey: 'home.features.noCode.desc', link: '/features/no-code-builder' },
+    { icon: '⚡', titleKey: 'home.features.aiSignals.title', descKey: 'home.features.aiSignals.desc', slug: 'ai-signals' },
+    { icon: '🔗', titleKey: 'home.features.multiExchange.title', descKey: 'home.features.multiExchange.desc', slug: 'multi-exchange' },
+    { icon: '🛡️', titleKey: 'home.features.riskManagement.title', descKey: 'home.features.riskManagement.desc', slug: 'risk-management' },
+    { icon: '📊', titleKey: 'home.features.backtesting.title', descKey: 'home.features.backtesting.desc', slug: 'backtesting' },
+    { icon: '🔔', titleKey: 'home.features.smartAlerts.title', descKey: 'home.features.smartAlerts.desc', slug: 'smart-alerts' },
+    { icon: '🌐', titleKey: 'home.features.noCode.title', descKey: 'home.features.noCode.desc', slug: 'no-code-builder' },
   ];
 
   steps = [

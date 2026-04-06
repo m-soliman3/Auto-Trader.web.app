@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
       <div class="page-shell">
         <aside class="page-index" [attr.aria-label]="'userPages.pageNavigation' | translate">
           <div class="index-title">{{ 'userPages.navigation' | translate }}</div>
-          <div class="index-current">{{ modeLabel() }} {{ 'userPages.mode' | translate }}</div>
+          <div class="index-current">{{ (modeLabel() | translate) }} {{ 'userPages.mode' | translate }}</div>
           <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
             <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
             <a class="index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
@@ -27,7 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
         <main class="page-main">
           <div class="page-header">
-            <h1>{{ modeLabel() }} {{ 'portfolioManagement.title' | translate }}</h1>
+            <h1>{{ (modeLabel() | translate) }} {{ 'portfolioManagement.title' | translate }}</h1>
             <div class="header-actions">
               <button type="button" class="refresh-btn" (click)="refresh()" [disabled]="exchangeService.isLoadingPortfolio()">
                 {{ exchangeService.isLoadingPortfolio() ? ('userPages.refreshing' | translate) : ('userPages.refresh' | translate) }}
@@ -113,7 +113,7 @@ import { TranslateModule } from '@ngx-translate/core';
                  </table>
                </div>
              } @else {
-               <p class="empty">{{ 'portfolioManagement.noOpenPositions' | translate }} {{ modeLabel() }} {{ 'userPages.mode' | translate }}.</p>
+               <p class="empty">{{ 'portfolioManagement.noOpenPositions' | translate }} {{ (modeLabel() | translate) }} {{ 'userPages.mode' | translate }}.</p>
              }
            </section>
         </main>
@@ -174,7 +174,7 @@ export class PortfolioManagementPage {
   readonly accountMode = inject(AccountModeService);
   readonly exchangeService = inject(ExchangeService);
 
-  readonly modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
+  readonly modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'nav.paper' : 'nav.real');
   readonly portfolioValue = computed(() => this.exchangeService.portfolioValuesByType()[this.accountMode.mode()]);
   readonly pnlValue = computed(() => this.exchangeService.pnlValuesByType()[this.accountMode.mode()]);
   readonly breakdownRows = computed(() => this.exchangeService.portfolioBreakdownByMode(this.accountMode.mode()));
