@@ -1,6 +1,7 @@
 import { Component, computed, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
+import { provideTranslateService } from '@ngx-translate/core';
 import { Navbar } from './navbar';
 import { AuthService, User } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
@@ -54,6 +55,7 @@ describe('Navbar interactions', () => {
           { path: 'login', component: DummyPage },
           { path: 'signup', component: DummyPage },
         ]),
+        ...provideTranslateService({ fallbackLang: 'en' }),
         { provide: AuthService, useClass: MockAuthService },
         { provide: ThemeService, useClass: MockThemeService },
         { provide: AccountModeService, useClass: MockAccountModeService },

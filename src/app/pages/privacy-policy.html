@@ -1,152 +1,159 @@
 <div class="privacy-page">
   <div class="privacy-container">
-    <h1>Privacy Policy</h1>
+    <div class="legal-top">
+      <div class="legal-links">
+        <a routerLink="/" class="back-link">{{ 'legal.home' | translate }}</a>
+        <a routerLink="/contact" class="back-link">{{ 'legal.contact' | translate }}</a>
+      </div>
+    </div>
+
+    <h1>{{ 'privacyPolicy.title' | translate }}</h1>
 
     <section class="privacy-section">
-      <h2>1. Introduction</h2>
+      <h2>{{ 'privacyPolicy.s1Title' | translate }}</h2>
       <p>
-        Auto-Trading ("Company", "we", "our", or "us") operates the auto-trading.app website (the "Service").
+        {{ 'privacyPolicy.s1Body1' | translate }}
       </p>
       <p>
-        This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+        {{ 'privacyPolicy.s1Body2' | translate }}
       </p>
       <p>
-        We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy.
+        {{ 'privacyPolicy.s1Body3' | translate }}
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>2. Data Collection and Use</h2>
-      <h3>Types of Data Collected:</h3>
+      <h2>{{ 'privacyPolicy.s2Title' | translate }}</h2>
+      <h3>{{ 'privacyPolicy.s2TypesTitle' | translate }}</h3>
       <ul>
         <li>
-          <strong>Personal Data:</strong> Account information, name, email address, trading preferences, connected exchange data
+          <strong>{{ 'privacyPolicy.s2PersonalLabel' | translate }}</strong> {{ 'privacyPolicy.s2PersonalBody' | translate }}
         </li>
         <li>
-          <strong>Usage Data:</strong> Browser type, IP address, pages visited, time and date of visits, duration of visit, and other diagnostic data
+          <strong>{{ 'privacyPolicy.s2UsageLabel' | translate }}</strong> {{ 'privacyPolicy.s2UsageBody' | translate }}
         </li>
         <li>
-          <strong>Cookies:</strong> Session cookies, preference cookies, analytics cookies for understanding your behavior
+          <strong>{{ 'privacyPolicy.s2CookiesLabel' | translate }}</strong> {{ 'privacyPolicy.s2CookiesBody' | translate }}
         </li>
         <li>
-          <strong>Analytics Data:</strong> Collected via Google Analytics and Google Tag Manager to improve service quality
+          <strong>{{ 'privacyPolicy.s2AnalyticsLabel' | translate }}</strong> {{ 'privacyPolicy.s2AnalyticsBody' | translate }}
         </li>
       </ul>
 
-      <h3>Purposes of Data Processing:</h3>
+      <h3>{{ 'privacyPolicy.s2PurposesTitle' | translate }}</h3>
       <ul>
-        <li>To provide and maintain our Service</li>
-        <li>To notify you about changes to our Service</li>
-        <li>To allow you to participate in interactive features of our Service</li>
-        <li>To provide customer support</li>
-        <li>To gather analysis or valuable information so we can improve the Service</li>
-        <li>To monitor the usage of our Service</li>
-        <li>To detect, prevent, and address technical and security issues</li>
-      </ul>
-    </section>
-
-    <section class="privacy-section">
-      <h2>3. Legal Basis for Processing</h2>
-      <p>The processing of your personal data is based on:</p>
-      <ul>
-        <li><strong>Consent:</strong> You have given explicit consent for processing</li>
-        <li><strong>Contract:</strong> Processing is necessary to perform a contract with you</li>
-        <li><strong>Legal Obligation:</strong> Processing is necessary to comply with applicable laws</li>
-        <li><strong>Legitimate Interests:</strong> Processing is necessary for our legitimate business interests</li>
+        <li>{{ 'privacyPolicy.s2Purpose1' | translate }}</li>
+        <li>{{ 'privacyPolicy.s2Purpose2' | translate }}</li>
+        <li>{{ 'privacyPolicy.s2Purpose3' | translate }}</li>
+        <li>{{ 'privacyPolicy.s2Purpose4' | translate }}</li>
+        <li>{{ 'privacyPolicy.s2Purpose5' | translate }}</li>
+        <li>{{ 'privacyPolicy.s2Purpose6' | translate }}</li>
+        <li>{{ 'privacyPolicy.s2Purpose7' | translate }}</li>
       </ul>
     </section>
 
     <section class="privacy-section">
-      <h2>4. Your Rights (GDPR)</h2>
-      <p>Under the General Data Protection Regulation (GDPR), you have the following rights:</p>
+      <h2>{{ 'privacyPolicy.s3Title' | translate }}</h2>
+      <p>{{ 'privacyPolicy.s3Lead' | translate }}</p>
       <ul>
-        <li><strong>Right of Access:</strong> You can request access to your personal data</li>
-        <li><strong>Right to Rectification:</strong> You can request correction of inaccurate data</li>
-        <li><strong>Right to Erasure:</strong> You can request deletion of your data (right to be forgotten)</li>
-        <li><strong>Right to Restrict Processing:</strong> You can restrict how we process your data</li>
-        <li><strong>Right to Data Portability:</strong> You can request your data in a portable format</li>
-        <li><strong>Right to Object:</strong> You can object to our processing of your data</li>
-        <li><strong>Right to Withdraw Consent:</strong> You can withdraw consent at any time without affecting lawfulness of prior processing</li>
-      </ul>
-
-      <p>To exercise any of these rights, please contact us at support@auto-trading.app</p>
-    </section>
-
-    <section class="privacy-section">
-      <h2>5. Cookies and Tracking</h2>
-      <p>We use cookies and similar tracking technologies to track activity on our Service and hold certain information. You can instruct your browser to refuse cookies or alert you when cookies are being sent.</p>
-
-      <h3>Types of Cookies:</h3>
-      <ul>
-        <li><strong>Essential Cookies:</strong> Required for basic functionality</li>
-        <li><strong>Analytics Cookies:</strong> Help us understand how you use the Service</li>
-        <li><strong>Marketing Cookies:</strong> Track your activity for marketing purposes</li>
-        <li><strong>Preference Cookies:</strong> Remember your choices and preferences</li>
+        <li><strong>{{ 'privacyPolicy.s3ConsentLabel' | translate }}</strong> {{ 'privacyPolicy.s3ConsentBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s3ContractLabel' | translate }}</strong> {{ 'privacyPolicy.s3ContractBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s3LegalLabel' | translate }}</strong> {{ 'privacyPolicy.s3LegalBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s3LegitimateLabel' | translate }}</strong> {{ 'privacyPolicy.s3LegitimateBody' | translate }}</li>
       </ul>
     </section>
 
     <section class="privacy-section">
-      <h2>6. Third-Party Services</h2>
-      <p>We use the following third-party services:</p>
+      <h2>{{ 'privacyPolicy.s4Title' | translate }}</h2>
+      <p>{{ 'privacyPolicy.s4Lead' | translate }}</p>
+      <ul>
+        <li><strong>{{ 'privacyPolicy.s4RightAccessLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightAccessBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s4RightRectificationLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightRectificationBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s4RightErasureLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightErasureBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s4RightRestrictLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightRestrictBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s4RightPortabilityLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightPortabilityBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s4RightObjectLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightObjectBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s4RightWithdrawLabel' | translate }}</strong> {{ 'privacyPolicy.s4RightWithdrawBody' | translate }}</li>
+      </ul>
+
+      <p>{{ 'privacyPolicy.s4Contact' | translate }}</p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>{{ 'privacyPolicy.s5Title' | translate }}</h2>
+      <p>{{ 'privacyPolicy.s5Body' | translate }}</p>
+
+      <h3>{{ 'privacyPolicy.s5TypesTitle' | translate }}</h3>
+      <ul>
+        <li><strong>{{ 'privacyPolicy.s5EssentialLabel' | translate }}</strong> {{ 'privacyPolicy.s5EssentialBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s5AnalyticsLabel' | translate }}</strong> {{ 'privacyPolicy.s5AnalyticsBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s5MarketingLabel' | translate }}</strong> {{ 'privacyPolicy.s5MarketingBody' | translate }}</li>
+        <li><strong>{{ 'privacyPolicy.s5PreferenceLabel' | translate }}</strong> {{ 'privacyPolicy.s5PreferenceBody' | translate }}</li>
+      </ul>
+    </section>
+
+    <section class="privacy-section">
+      <h2>{{ 'privacyPolicy.s6Title' | translate }}</h2>
+      <p>{{ 'privacyPolicy.s6Lead' | translate }}</p>
       <ul>
         <li>
-          <strong>Google Analytics:</strong> To analyze website traffic
-          <a href="https://policies.google.com/privacy" target="_blank" class="privacy-link">Google Privacy Policy</a>
+          <strong>{{ 'privacyPolicy.s6GoogleAnalyticsLabel' | translate }}</strong> {{ 'privacyPolicy.s6GoogleAnalyticsBody' | translate }}
+          <a href="https://policies.google.com/privacy" target="_blank" class="privacy-link">{{ 'privacyPolicy.googlePrivacyPolicy' | translate }}</a>
         </li>
         <li>
-          <strong>Google Tag Manager:</strong> For data collection and event tracking
-          <a href="https://policies.google.com/privacy" target="_blank" class="privacy-link">Google Privacy Policy</a>
+          <strong>{{ 'privacyPolicy.s6GoogleTagManagerLabel' | translate }}</strong> {{ 'privacyPolicy.s6GoogleTagManagerBody' | translate }}
+          <a href="https://policies.google.com/privacy" target="_blank" class="privacy-link">{{ 'privacyPolicy.googlePrivacyPolicy' | translate }}</a>
         </li>
         <li>
-          <strong>Firebase:</strong> For hosting and real-time database services
-          <a href="https://firebase.google.com/support/privacy" target="_blank" class="privacy-link">Firebase Privacy</a>
+          <strong>{{ 'privacyPolicy.s6FirebaseLabel' | translate }}</strong> {{ 'privacyPolicy.s6FirebaseBody' | translate }}
+          <a href="https://firebase.google.com/support/privacy" target="_blank" class="privacy-link">{{ 'privacyPolicy.firebasePrivacy' | translate }}</a>
         </li>
       </ul>
     </section>
 
     <section class="privacy-section">
-      <h2>7. Data Security</h2>
+      <h2>{{ 'privacyPolicy.s7Title' | translate }}</h2>
       <p>
-        We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure.
+        {{ 'privacyPolicy.s7Body' | translate }}
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>8. Data Retention</h2>
+      <h2>{{ 'privacyPolicy.s8Title' | translate }}</h2>
       <p>
-        We retain personal data for as long as necessary to provide our Services and fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.
+        {{ 'privacyPolicy.s8Body' | translate }}
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>9. International Data Transfers</h2>
+      <h2>{{ 'privacyPolicy.s9Title' | translate }}</h2>
       <p>
-        Your information may be transferred to, and maintained on, computers located outside of your state, province, country, or other governmental jurisdiction where privacy laws may differ from those of your jurisdiction.
+        {{ 'privacyPolicy.s9Body1' | translate }}
       </p>
       <p>
-        If we transfer data outside the EU, we implement appropriate safeguards such as Standard Contractual Clauses or Binding Corporate Rules.
-      </p>
-    </section>
-
-    <section class="privacy-section">
-      <h2>10. Changes to This Policy</h2>
-      <p>
-        We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date at the top of this Privacy Policy.
+        {{ 'privacyPolicy.s9Body2' | translate }}
       </p>
     </section>
 
     <section class="privacy-section">
-      <h2>11. Contact Us</h2>
-      <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+      <h2>{{ 'privacyPolicy.s10Title' | translate }}</h2>
       <p>
-        <strong>Auto-Trading</strong><br>
-        Email: support@auto-trading.app<br>
-        Website: https://auto-trading.app
+        {{ 'privacyPolicy.s10Body' | translate }}
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2>{{ 'privacyPolicy.s11Title' | translate }}</h2>
+      <p>{{ 'privacyPolicy.s11Lead' | translate }}</p>
+      <p>
+        <strong>{{ 'privacyPolicy.companyName' | translate }}</strong><br>
+        {{ 'privacyPolicy.emailLine' | translate }}<br>
+        {{ 'privacyPolicy.websiteLine' | translate }}
       </p>
     </section>
 
     <div class="privacy-footer">
-      <p><strong>Last Updated:</strong> March 22, 2026</p>
+      <p><strong>{{ 'privacyPolicy.lastUpdatedLabel' | translate }}</strong> {{ 'privacyPolicy.lastUpdatedDate' | translate }}</p>
     </div>
   </div>
 </div>
