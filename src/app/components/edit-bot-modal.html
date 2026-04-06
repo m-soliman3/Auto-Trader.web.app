@@ -65,7 +65,7 @@
             <option [value]="exch.label">{{ exch.label }}</option>
           }
         </select>
-        @if (shouldShowExchangeHint()) {
+        @if (error() === 'Please select an exchange.') {
           <span class="hint" style="color: var(--danger);">{{ 'editBot.pleaseSelectExchange' | translate }}</span>
         }
         <span class="hint">{{ 'editBot.exchangeHint' | translate }}</span>

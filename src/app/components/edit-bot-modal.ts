@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BotService, Bot, SYMBOLS, TIMEFRAMES } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-bot-modal',
@@ -17,7 +17,6 @@ export class EditBotModal {
   private botService = inject(BotService);
   private exchangeService = inject(ExchangeService);
   private accountMode = inject(AccountModeService);
-  private translate = inject(TranslateService);
 
   closed = output<void>();
   updated = output<Bot>();
@@ -61,13 +60,13 @@ export class EditBotModal {
 
     // Validate bot name
     if (!this.botName.trim()) {
-      this.error.set(this.translate.instant('editBot.validation.botNameRequired'));
+      this.error.set('Bot name is required.');
       return;
     }
 
     // Validate exchange selection
     if (!this.selectedExchangeLabel.trim()) {
-      this.error.set(this.translate.instant('editBot.validation.selectExchange'));
+      this.error.set('Please select an exchange.');
       return;
     }
 
@@ -90,12 +89,12 @@ export class EditBotModal {
     }
 
     if (!this.timeframe.trim()) {
-      this.error.set(this.translate.instant('editBot.validation.selectTimeframe'));
+      this.error.set('Please select a timeframe.');
       return;
     }
 
     if (!this.symbol.trim()) {
-      this.error.set(this.translate.instant('editBot.validation.selectSymbol'));
+      this.error.set('Please select a symbol.');
       return;
     }
 
@@ -151,7 +150,7 @@ export class EditBotModal {
         this.close();
       } catch (err: any) {
         console.error('failed to update bot', err);
-        const errorMsg = err?.message || this.translate.instant('editBot.validation.failedToUpdate');
+        const errorMsg = err?.message || 'Failed to update bot. Please try again.';
         this.error.set(errorMsg);
         this.saving.set(false);
       }
@@ -190,23 +189,21 @@ export class EditBotModal {
   private validateInvestment(showMissing: boolean): string | null {
     const rawInvestment = this.normalizeNumericInput(this.investment);
     if (!rawInvestment) {
-      return showMissing ? this.translate.instant('editBot.validation.enterInvestmentAmount') : null;
+      return showMissing ? 'Please enter an investment amount.' : null;
     }
 
-    if (!this.isNumericValue(rawInvestment)) return this.translate.instant('editBot.validation.investmentNumbersOnly');
+    if (!this.isNumericValue(rawInvestment)) return 'Investment amount accepts numbers only.';
 
     const inv = Number.parseFloat(rawInvestment);
-    if (!Number.isFinite(inv)) return this.translate.instant('editBot.validation.validInvestmentAmount');
-    if (inv <= 0) return this.translate.instant('editBot.validation.investmentPositive');
+    if (!Number.isFinite(inv)) return 'Please enter a valid investment amount.';
+    if (inv <= 0) return 'Investment must be a positive number.';
 
     const availablePortfolioValue = this.getAvailablePortfolioValue(this.selectedExchangeLabel);
     if (availablePortfolioValue === null || !Number.isFinite(availablePortfolioValue)) {
-      return showMissing ? this.translate.instant('editBot.validation.portfolioValueUnavailable') : null;
+      return showMissing ? 'Portfolio value for the selected exchange is not available yet. Please wait and try again.' : null;
     }
     if (inv > availablePortfolioValue) {
-      return this.translate.instant('editBot.validation.investmentExceedsPortfolio', {
-        amount: availablePortfolioValue.toFixed(2),
-      });
+      return `Investment amount cannot exceed the available portfolio value ($${availablePortfolioValue.toFixed(2)}).`;
     }
 
     return null;
@@ -215,14 +212,14 @@ export class EditBotModal {
   private validateStopLoss(showMissing: boolean): string | null {
     const rawStopLoss = this.normalizeNumericInput(this.stopLoss);
     if (!rawStopLoss) {
-      return showMissing ? this.translate.instant('editBot.validation.enterStopLoss') : null;
+      return showMissing ? 'Please enter a stop-loss value.' : null;
     }
 
-    if (!this.isNumericValue(rawStopLoss)) return this.translate.instant('editBot.validation.stopLossNumbersOnly');
+    if (!this.isNumericValue(rawStopLoss)) return 'Stop Loss accepts numbers only.';
 
     const sl = Number.parseFloat(rawStopLoss);
-    if (!Number.isFinite(sl)) return this.translate.instant('editBot.validation.validStopLoss');
-    if (sl < 0.1 || sl > 50) return this.translate.instant('editBot.validation.stopLossRange');
+    if (!Number.isFinite(sl)) return 'Please enter a valid stop-loss value.';
+    if (sl < 0.1 || sl > 50) return 'Stop Loss must be between 0.1% and 50.0%.';
 
     return null;
   }
@@ -230,14 +227,14 @@ export class EditBotModal {
   private validateTakeProfit(showMissing: boolean): string | null {
     const rawTakeProfit = this.normalizeNumericInput(this.takeProfit);
     if (!rawTakeProfit) {
-      return showMissing ? this.translate.instant('editBot.validation.enterTakeProfit') : null;
+      return showMissing ? 'Please enter a take-profit value.' : null;
     }
 
-    if (!this.isNumericValue(rawTakeProfit)) return this.translate.instant('editBot.validation.takeProfitNumbersOnly');
+    if (!this.isNumericValue(rawTakeProfit)) return 'Take Profit accepts numbers only.';
 
     const tp = Number.parseFloat(rawTakeProfit);
-    if (!Number.isFinite(tp)) return this.translate.instant('editBot.validation.validTakeProfit');
-    if (tp < 0.1 || tp > 50) return this.translate.instant('editBot.validation.takeProfitRange');
+    if (!Number.isFinite(tp)) return 'Please enter a valid take-profit value.';
+    if (tp < 0.1 || tp > 50) return 'Take Profit must be between 0.1% and 50.0%.';
 
     return null;
   }
@@ -249,10 +246,5 @@ export class EditBotModal {
   private normalizeNumericInput(value: string | number | null | undefined): string {
     if (value === null || value === undefined) return '';
     return String(value).trim();
-  }
-
-  shouldShowExchangeHint(): boolean {
-    return !this.selectedExchangeLabel.trim()
-      && this.error() === this.translate.instant('editBot.validation.selectExchange');
   }
 }

@@ -34,7 +34,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="strategy-editor-modal" (click)="$event.stopPropagation()">
       <div class="strategy-editor-header">
         <h3>{{ strategyEditorTitle() }}</h3>
-        <button class="portfolio-popup-close" (click)="closeStrategyEditor()" [attr.aria-label]="'common.close' | translate">✕</button>
+        <button class="portfolio-popup-close" (click)="closeStrategyEditor()" aria-label="Close">✕</button>
       </div>
 
       @if (selectedTemplateForStrategy()) {
@@ -136,7 +136,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               aria-hidden="true"
             />
           </button>
-          <button class="portfolio-popup-close" (click)="closeStrategyLiveView()" [attr.aria-label]="'common.close' | translate">✕</button>
+          <button class="portfolio-popup-close" (click)="closeStrategyLiveView()" aria-label="Close">✕</button>
         </div>
       </div>
 
@@ -370,7 +370,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="portfolio-popup" (click)="$event.stopPropagation()">
       <div class="portfolio-popup-header">
         <h3>{{ portfolioDetailsTitle }}</h3>
-        <button class="portfolio-popup-close" (click)="closePortfolioDetailsModal()" [attr.aria-label]="'common.close' | translate">✕</button>
+        <button class="portfolio-popup-close" (click)="closePortfolioDetailsModal()" aria-label="Close">✕</button>
       </div>
 
       @if (isTradesDetailsView ? tradeDetailsRows.length > 0 : portfolioBreakdownRows.length > 0) {
@@ -447,7 +447,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="delete-bot-modal" (click)="$event.stopPropagation()">
       <div class="delete-bot-header">
         <h3>{{ 'bots.confirmDeletion' | translate }}</h3>
-        <button class="delete-bot-close" (click)="cancelDeleteBot()" [attr.aria-label]="'common.close' | translate">✕</button>
+        <button class="delete-bot-close" (click)="cancelDeleteBot()" aria-label="Close">✕</button>
       </div>
       <div class="delete-bot-content">
         <p class="delete-bot-question">{{ 'bots.deleteQuestion' | translate }} <strong>{{ botToDelete()?.name }}</strong>?</p>
@@ -1053,3 +1053,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </div>
+

@@ -48,7 +48,7 @@
         <div class="chatbot-suggestions">
           @for (suggestion of suggestions(); track suggestion.label + suggestion.action) {
             <button class="chatbot-suggestion" (click)="useSuggestion(suggestion)">
-              {{ suggestion.label | translate }}
+              {{ suggestion.label }}
             </button>
           }
         </div>

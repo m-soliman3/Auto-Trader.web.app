@@ -22,32 +22,32 @@ export interface DashboardSectionDefinition {
 const DEFAULT_SECTIONS: DashboardSectionDefinition[] = [
   {
     id: 'connectedExchanges',
-    label: 'settings.layout.connectedExchangesLabel',
-    description: 'settings.layout.connectedExchangesDescription',
+    label: 'Connected Exchanges',
+    description: 'Shows linked exchanges and connection status.',
     visible: true,
   },
   {
     id: 'strategies',
-    label: 'settings.layout.strategiesLabel',
-    description: 'settings.layout.strategiesDescription',
+    label: 'Strategies',
+    description: 'Shows your configured strategies and controls.',
     visible: true,
   },
   {
     id: 'bots',
-    label: 'settings.layout.botsLabel',
-    description: 'settings.layout.botsDescription',
+    label: 'Bots',
+    description: 'Shows your bots table and current states.',
     visible: true,
   },
   {
     id: 'mainGrid',
-    label: 'settings.layout.quickPanelsLabel',
-    description: 'settings.layout.quickPanelsDescription',
+    label: 'Quick Panels',
+    description: 'Quick Actions, Getting Started, and Backend Runner.',
     visible: true,
   },
   {
     id: 'portfolioPerformance',
-    label: 'settings.layout.portfolioPerformanceLabel',
-    description: 'settings.layout.portfolioPerformanceDescription',
+    label: 'Portfolio Performance',
+    description: 'Shows the performance placeholder/summary panel.',
     visible: true,
   },
 ];
