@@ -6,7 +6,7 @@ import {
 } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 type Step = 1 | 2 | 3;
 
@@ -21,6 +21,7 @@ export class CreateBotModal {
   private botService  = inject(BotService);
   private exchangeSvc = inject(ExchangeService);
   private accountMode = inject(AccountModeService);
+  private translate = inject(TranslateService);
 
   closed  = output<void>();
   created = output<Bot>();
@@ -30,7 +31,7 @@ export class CreateBotModal {
   timeframes = TIMEFRAMES;
 
   exchanges = computed(() => this.exchangeSvc.connectionsByMode(this.accountMode.mode()));
-  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
+  modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'createBot.modePaperMoney' : 'createBot.modeRealMoney');
 
   step     = signal<Step>(1);
   saving   = signal(false);
@@ -128,7 +129,7 @@ export class CreateBotModal {
         this.close();
       } catch (err: any) {
         this.saving.set(false);
-        this.error.set(err?.message || 'Unable to create bot right now. Please try again.');
+        this.error.set(err?.message || this.translate.instant('createBot.validation.unableToCreateBot'));
       }
     }, 900);
   }
@@ -150,19 +151,19 @@ export class CreateBotModal {
   }
 
   private validateConfig(): string | null {
-    if (!this.selectedStrategy()) return 'Please select a strategy first.';
-    if (!this.botName.trim()) return 'Please enter a bot name.';
+    if (!this.selectedStrategy()) return this.translate.instant('createBot.validation.selectStrategyFirst');
+    if (!this.botName.trim()) return this.translate.instant('createBot.validation.enterBotName');
 
     const availableExchanges = this.exchanges();
-    if (availableExchanges.length === 0) return 'Connect an exchange first.';
-    if (!this.exchangeLabel.trim()) return 'Please select an exchange.';
-    if (!availableExchanges.some(ex => ex.label === this.exchangeLabel)) return 'Please select a valid exchange.';
+    if (availableExchanges.length === 0) return this.translate.instant('createBot.validation.connectExchangeFirst');
+    if (!this.exchangeLabel.trim()) return this.translate.instant('createBot.validation.selectExchange');
+    if (!availableExchanges.some(ex => ex.label === this.exchangeLabel)) return this.translate.instant('createBot.validation.selectValidExchange');
 
-    if (!this.symbol.trim()) return 'Please select a trading pair.';
-    if (!this.symbols.includes(this.symbol)) return 'Please select a valid trading pair.';
+    if (!this.symbol.trim()) return this.translate.instant('createBot.validation.selectTradingPair');
+    if (!this.symbols.includes(this.symbol)) return this.translate.instant('createBot.validation.selectValidTradingPair');
 
-    if (!this.timeframe.trim()) return 'Please select a timeframe.';
-    if (!this.timeframes.includes(this.timeframe)) return 'Please select a valid timeframe.';
+    if (!this.timeframe.trim()) return this.translate.instant('createBot.validation.selectTimeframe');
+    if (!this.timeframes.includes(this.timeframe)) return this.translate.instant('createBot.validation.selectValidTimeframe');
 
     const investmentError = this.validateInvestment(true);
     if (investmentError) return investmentError;
@@ -179,21 +180,23 @@ export class CreateBotModal {
   private validateInvestment(showMissing: boolean): string | null {
     const rawInvestment = this.normalizeNumericInput(this.investment);
     if (!rawInvestment) {
-      return showMissing ? 'Please enter an investment amount.' : null;
+      return showMissing ? this.translate.instant('createBot.validation.enterInvestmentAmount') : null;
     }
 
-    if (!this.isNumericValue(rawInvestment)) return 'Investment amount accepts numbers only.';
+    if (!this.isNumericValue(rawInvestment)) return this.translate.instant('createBot.validation.investmentNumbersOnly');
 
     const investment = Number.parseFloat(rawInvestment);
-    if (!Number.isFinite(investment)) return 'Please enter a valid investment amount.';
-    if (investment <= 0) return 'Investment amount must be a positive number.';
+    if (!Number.isFinite(investment)) return this.translate.instant('createBot.validation.validInvestmentAmount');
+    if (investment <= 0) return this.translate.instant('createBot.validation.investmentPositive');
 
     const availablePortfolioValue = this.getAvailablePortfolioValue(this.exchangeLabel);
     if (availablePortfolioValue === null || !Number.isFinite(availablePortfolioValue)) {
-      return showMissing ? 'Portfolio value for the selected exchange is not available yet. Please wait and try again.' : null;
+      return showMissing ? this.translate.instant('createBot.validation.portfolioValueUnavailable') : null;
     }
     if (investment > availablePortfolioValue) {
-      return `Investment amount cannot exceed the available portfolio value ($${availablePortfolioValue.toFixed(2)}).`;
+      return this.translate.instant('createBot.validation.investmentExceedsPortfolio', {
+        amount: availablePortfolioValue.toFixed(2),
+      });
     }
 
     return null;
@@ -202,14 +205,14 @@ export class CreateBotModal {
   private validateStopLoss(showMissing: boolean): string | null {
     const rawStopLoss = this.normalizeNumericInput(this.stopLoss);
     if (!rawStopLoss) {
-      return showMissing ? 'Please enter a stop-loss value.' : null;
+      return showMissing ? this.translate.instant('createBot.validation.enterStopLoss') : null;
     }
 
-    if (!this.isNumericValue(rawStopLoss)) return 'Stop-loss accepts numbers only.';
+    if (!this.isNumericValue(rawStopLoss)) return this.translate.instant('createBot.validation.stopLossNumbersOnly');
 
     const stopLoss = Number.parseFloat(rawStopLoss);
-    if (!Number.isFinite(stopLoss)) return 'Please enter a valid stop-loss value.';
-    if (stopLoss < 0.1 || stopLoss > 50) return 'Stop-loss must be between 0.1% and 50.0%.';
+    if (!Number.isFinite(stopLoss)) return this.translate.instant('createBot.validation.validStopLoss');
+    if (stopLoss < 0.1 || stopLoss > 50) return this.translate.instant('createBot.validation.stopLossRange');
 
     return null;
   }
@@ -217,14 +220,14 @@ export class CreateBotModal {
   private validateTakeProfit(showMissing: boolean): string | null {
     const rawTakeProfit = this.normalizeNumericInput(this.takeProfit);
     if (!rawTakeProfit) {
-      return showMissing ? 'Please enter a take-profit value.' : null;
+      return showMissing ? this.translate.instant('createBot.validation.enterTakeProfit') : null;
     }
 
-    if (!this.isNumericValue(rawTakeProfit)) return 'Take-profit accepts numbers only.';
+    if (!this.isNumericValue(rawTakeProfit)) return this.translate.instant('createBot.validation.takeProfitNumbersOnly');
 
     const takeProfit = Number.parseFloat(rawTakeProfit);
-    if (!Number.isFinite(takeProfit)) return 'Please enter a valid take-profit value.';
-    if (takeProfit < 0.1 || takeProfit > 50) return 'Take-profit must be between 0.1% and 50.0%.';
+    if (!Number.isFinite(takeProfit)) return this.translate.instant('createBot.validation.validTakeProfit');
+    if (takeProfit < 0.1 || takeProfit > 50) return this.translate.instant('createBot.validation.takeProfitRange');
 
     return null;
   }

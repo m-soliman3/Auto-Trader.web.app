@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
 import { DashboardLayoutService, DashboardSectionDefinition, DashboardSectionId } from '../services/dashboard-layout.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'connectedExchanges',
@@ -31,6 +31,7 @@ export class Settings {
   dashboardLayout = inject(DashboardLayoutService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
 
   newEmail = signal('');
   emailStatus = signal('');
@@ -46,7 +47,9 @@ export class Settings {
   draftTheme = signal<'dark' | 'light'>(this.theme.themeName());
   draftDashboardSections = signal<DashboardSectionDefinition[]>(this.cloneSections(this.dashboardLayout.sections()));
 
-  themeLabel = computed(() => this.draftTheme() === 'dark' ? 'Dark' : 'Bright');
+  themeLabel = computed(() =>
+    this.translate.instant(this.draftTheme() === 'dark' ? 'settings.themeDark' : 'settings.themeBright'),
+  );
   dashboardSections = computed(() => this.draftDashboardSections());
   displayDirty = computed(() => {
     if (this.draftTheme() !== this.theme.themeName()) {
@@ -200,7 +203,9 @@ export class Settings {
   }
 
   sectionDragLabel(section: DashboardSectionDefinition): string {
-    return `Drag to reorder ${section.label}`;
+    return this.translate.instant('settings.dragToReorderAria', {
+      section: this.translate.instant(section.label),
+    });
   }
 
   setSection(event: Event, sectionId: SettingsSectionId) {
@@ -222,7 +227,7 @@ export class Settings {
       })),
     );
     this.syncDisplayDraftFromPersisted();
-    this.showSaveToast('Settings saved.');
+    this.showSaveToast(this.translate.instant('settings.savedMessage'));
   }
 
   cancelDisplaySettings() {
@@ -242,7 +247,7 @@ export class Settings {
       return;
     }
 
-    this.emailStatus.set('Verification email sent to your new address. Confirm it to complete the change.');
+    this.emailStatus.set(this.translate.instant('settings.verificationEmailSent'));
     this.newEmail.set('');
   }
 
@@ -259,11 +264,11 @@ export class Settings {
       return;
     }
 
-    this.resetStatus.set('Password reset email sent. Check your inbox.');
+    this.resetStatus.set(this.translate.instant('settings.passwordResetEmailSent'));
   }
 
   triggerDummyCheckout() {
-    this.billingStatus.set('Demo checkout only: no payment was processed. Premium activation is handled manually by admin.');
+    this.billingStatus.set(this.translate.instant('settings.demoCheckoutOnly'));
   }
 
   private syncDisplayDraftFromPersisted() {

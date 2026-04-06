@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AccountModeService } from '../services/account-mode.service';
 import { ChatSuggestion, ChatTurn, ChatbotAssistantService } from '../services/chatbot-assistant.service';
 import { AuthService } from '../services/auth.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ai-chat-ribbon',
@@ -23,6 +23,7 @@ export class AiChatRibbon {
   private readonly accountMode = inject(AccountModeService);
   private readonly auth = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly translate = inject(TranslateService);
 
   isOpen = signal(false);
   isSending = signal(false);
@@ -34,20 +35,22 @@ export class AiChatRibbon {
   turns = signal<ChatTurn[]>([]);
 
   suggestions = signal<ChatSuggestion[]>([
-    { label: 'Connect Exchange', action: 'connect', route: '/dashboard/real?action=connect' },
-    { label: 'Create Bot', action: 'bot', route: '/dashboard/real?action=bot' },
-    { label: 'Browse Strategies', action: 'strategies', route: '/dashboard/real?action=strategies' },
+    { label: 'chat.suggestionConnectExchange', action: 'connect', route: '/dashboard/real?action=connect' },
+    { label: 'chat.suggestionCreateBot', action: 'bot', route: '/dashboard/real?action=bot' },
+    { label: 'chat.suggestionBrowseStrategies', action: 'strategies', route: '/dashboard/real?action=strategies' },
   ]);
 
   hasMessages = computed(() => this.turns().length > 0);
   isLoggedIn = this.auth.isLoggedIn;
-  panelTitle = computed(() => this.isLoggedIn() ? 'Auto-Trader AI Copilot' : 'Auto-Trader Assistant');
+  panelTitle = computed(() => this.isLoggedIn()
+    ? this.translate.instant('chat.panelTitleLoggedIn')
+    : this.translate.instant('chat.panelTitleLoggedOut'));
   panelSubtitle = computed(() => this.isLoggedIn()
-    ? 'Ask about bots, strategies, and exchange setup.'
-    : 'Ask about features, safety, and getting started.');
+    ? this.translate.instant('chat.panelSubtitleLoggedIn')
+    : this.translate.instant('chat.panelSubtitleLoggedOut'));
   inputPlaceholder = computed(() => this.isLoggedIn()
-    ? 'Ask: Create a low-risk paper bot for BTCUSDT...'
-    : 'Ask: What can Auto-Trader do for me?');
+    ? this.translate.instant('chat.inputPlaceholderLoggedIn')
+    : this.translate.instant('chat.inputPlaceholderLoggedOut'));
 
   constructor() {
     effect(() => {
@@ -65,15 +68,15 @@ export class AiChatRibbon {
   private seedWelcomeMessage(isLoggedIn: boolean) {
     if (isLoggedIn) {
       this.suggestions.set([
-        { label: 'Connect Exchange', action: 'connect', route: '/dashboard/real?action=connect' },
-        { label: 'Create Bot', action: 'bot', route: '/dashboard/real?action=bot' },
-        { label: 'Browse Strategies', action: 'strategies', route: '/dashboard/real?action=strategies' },
+        { label: 'chat.suggestionConnectExchange', action: 'connect', route: '/dashboard/real?action=connect' },
+        { label: 'chat.suggestionCreateBot', action: 'bot', route: '/dashboard/real?action=bot' },
+        { label: 'chat.suggestionBrowseStrategies', action: 'strategies', route: '/dashboard/real?action=strategies' },
       ]);
     } else {
       this.suggestions.set([
-        { label: 'Explore Features', action: 'home', route: '/#features' },
-        { label: 'Create Account', action: 'signup', route: '/signup' },
-        { label: 'Log In', action: 'login', route: '/login' },
+        { label: 'chat.suggestionExploreFeatures', action: 'home', route: '/#features' },
+        { label: 'chat.suggestionCreateAccount', action: 'signup', route: '/signup' },
+        { label: 'chat.suggestionLogIn', action: 'login', route: '/login' },
       ]);
     }
 
@@ -85,7 +88,7 @@ export class AiChatRibbon {
       this.turns.set([
         {
           role: 'assistant',
-          content: 'How can I help you today? I can guide you to connect an exchange, create a bot, or configure a strategy.',
+          content: this.translate.instant('chat.welcomeMessageLoggedIn'),
         },
       ]);
       return;
@@ -94,7 +97,7 @@ export class AiChatRibbon {
     this.turns.set([
       {
         role: 'assistant',
-        content: 'Welcome to Auto-Trader. I can answer questions about features, safety, and how to get started before you sign in.',
+        content: this.translate.instant('chat.welcomeMessageLoggedOut'),
       },
     ]);
   }
@@ -140,12 +143,12 @@ export class AiChatRibbon {
       await this.typeAssistantReply(response.reply);
       this.suggestions.set(response.suggestions ?? []);
     } catch (err: any) {
-      this.error.set(err?.message || 'Unable to reach the AI assistant right now.');
+      this.error.set(err?.message || this.translate.instant('chat.unableToReachAssistant'));
       this.turns.update((existing) => [
         ...existing,
         {
           role: 'assistant',
-          content: 'I could not reach the assistant service. Please try again in a moment.',
+          content: this.translate.instant('chat.couldNotReachAssistantService'),
         },
       ]);
     } finally {
@@ -159,7 +162,7 @@ export class AiChatRibbon {
   }
 
   private async typeAssistantReply(reply: string) {
-    const fullReply = reply || 'I do not have an answer for that yet.';
+    const fullReply = reply || this.translate.instant('chat.noAnswerYet');
 
     this.turns.update((existing) => [...existing, { role: 'assistant', content: '' }]);
     this.isTypingReply.set(true);
