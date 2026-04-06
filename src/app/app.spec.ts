@@ -70,7 +70,7 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const toggle = compiled.querySelector('.account-mode-toggle');
     expect(toggle).not.toBeNull();
-    expect(toggle?.textContent).toContain('Real');
-    expect(toggle?.textContent).toContain('Paper');
+    expect(toggle?.textContent).toContain('nav.real');
+    expect(toggle?.textContent).toContain('nav.paper');
   });
 });
