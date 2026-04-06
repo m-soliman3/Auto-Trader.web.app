@@ -29,27 +29,27 @@ export class BrowseStrategiesModal {
   detail         = signal<StrategyTemplate | null>(null);
 
   markets = [
-    { value: 'all',    label: 'All Markets' },
-    { value: 'crypto', label: '₿ Crypto' },
-    { value: 'stocks', label: '📈 Stocks' },
-    { value: 'forex',  label: '💱 Forex' },
+    { value: 'all',    labelKey: 'browseStrategies.allMarkets' },
+    { value: 'crypto', labelKey: 'browseStrategies.marketCrypto' },
+    { value: 'stocks', labelKey: 'browseStrategies.marketStocks' },
+    { value: 'forex',  labelKey: 'browseStrategies.marketForex' },
   ];
 
   risks = [
-    { value: 'all',    label: 'All Risk' },
-    { value: 'low',    label: '🟢 Low' },
-    { value: 'medium', label: '🟡 Medium' },
-    { value: 'high',   label: '🔴 High' },
+    { value: 'all',    labelKey: 'browseStrategies.allRisk' },
+    { value: 'low',    labelKey: 'browseStrategies.riskLow' },
+    { value: 'medium', labelKey: 'browseStrategies.riskMedium' },
+    { value: 'high',   labelKey: 'browseStrategies.riskHigh' },
   ];
 
   categories = [
-    { value: 'all',           label: 'All' },
-    { value: 'trend',         label: 'Trend' },
-    { value: 'mean-reversion',label: 'Mean Reversion' },
-    { value: 'momentum',      label: 'Momentum' },
-    { value: 'volatility',    label: 'Volatility' },
-    { value: 'arbitrage',     label: 'Arbitrage' },
-    { value: 'income',        label: 'Income' },
+    { value: 'all',           labelKey: 'browseStrategies.allCategories' },
+    { value: 'trend',         labelKey: 'browseStrategies.categoryTrend' },
+    { value: 'mean-reversion',labelKey: 'browseStrategies.categoryMeanReversion' },
+    { value: 'momentum',      labelKey: 'browseStrategies.categoryMomentum' },
+    { value: 'volatility',    labelKey: 'browseStrategies.categoryVolatility' },
+    { value: 'arbitrage',     labelKey: 'browseStrategies.categoryArbitrage' },
+    { value: 'income',        labelKey: 'browseStrategies.categoryIncome' },
   ];
 
   // ── Derived list ─────────────────────────────────────────────────────────
