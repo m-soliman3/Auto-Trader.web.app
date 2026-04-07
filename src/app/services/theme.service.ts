@@ -2,7 +2,7 @@ import { Injectable, signal, effect } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  isDark = signal<boolean>(true);
+  isDark = signal<boolean>(false);
 
   constructor() {
     const saved = localStorage.getItem('theme');

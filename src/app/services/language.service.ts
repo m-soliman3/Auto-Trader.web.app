@@ -20,6 +20,77 @@ export const LANGUAGES: Language[] = [
 ];
 
 const STORAGE_KEY = 'at_language';
+const REGION_LOOKUP_TIMEOUT_MS = 4000;
+
+const COUNTRY_LANGUAGE_MAP: Record<string, string> = {
+  // German-speaking regions
+  DE: 'de',
+  AT: 'de',
+  CH: 'de',
+  LI: 'de',
+  LU: 'de',
+
+  // Spanish-speaking regions
+  ES: 'es',
+  MX: 'es',
+  AR: 'es',
+  CO: 'es',
+  CL: 'es',
+  PE: 'es',
+  VE: 'es',
+  UY: 'es',
+  PY: 'es',
+  BO: 'es',
+  EC: 'es',
+  GT: 'es',
+  CU: 'es',
+  DO: 'es',
+  HN: 'es',
+  SV: 'es',
+  NI: 'es',
+  CR: 'es',
+  PA: 'es',
+
+  // French-speaking regions
+  FR: 'fr',
+  BE: 'fr',
+  MC: 'fr',
+  CA: 'fr',
+
+  // Portuguese-speaking regions
+  PT: 'pt',
+  BR: 'pt',
+  AO: 'pt',
+  MZ: 'pt',
+  CV: 'pt',
+  GW: 'pt',
+  ST: 'pt',
+  TL: 'pt',
+
+  // Arabic-speaking regions
+  SA: 'ar',
+  AE: 'ar',
+  EG: 'ar',
+  MA: 'ar',
+  DZ: 'ar',
+  TN: 'ar',
+  JO: 'ar',
+  LB: 'ar',
+  SY: 'ar',
+  IQ: 'ar',
+  KW: 'ar',
+  QA: 'ar',
+  BH: 'ar',
+  OM: 'ar',
+  YE: 'ar',
+  SD: 'ar',
+  LY: 'ar',
+  PS: 'ar',
+  MR: 'ar',
+  SO: 'ar',
+  DJ: 'ar',
+  KM: 'ar',
+};
 
 @Injectable({ providedIn: 'root' })
 export class LanguageService {
@@ -51,6 +122,10 @@ export class LanguageService {
       });
 
     this.syncLanguageFromUrl(this.router.url);
+
+    if (!this.hasStoredLanguagePreference() && !this.getLanguageFromUrl(this.router.url)) {
+      void this.applyStartupLanguageByLocation();
+    }
   }
 
   setLanguage(code: string): void {
@@ -77,8 +152,90 @@ export class LanguageService {
       // storage not available
     }
 
-    const browserLang = navigator.language?.split('-')[0] ?? 'en';
-    return LANGUAGES.some((l) => l.code === browserLang) ? browserLang : 'en';
+    return 'en';
+  }
+
+  private hasStoredLanguagePreference(): boolean {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return !!stored && LANGUAGES.some((l) => l.code === stored);
+    } catch {
+      return false;
+    }
+  }
+
+  private getLanguageFromUrl(url: string): string | null {
+    const parsed = this.router.parseUrl(url);
+    const primary = parsed.root.children['primary'];
+    const first = primary?.segments[0]?.path;
+    if (first && LANGUAGES.some((lang) => lang.code === first)) {
+      return first;
+    }
+    return null;
+  }
+
+  private async applyStartupLanguageByLocation(): Promise<void> {
+    const startingLanguage = this.currentLang();
+    const locationLanguage = await this.detectLanguageFromLocation();
+
+    // Do not override a language selected while startup detection was in progress.
+    if (this.currentLang() !== startingLanguage || this.hasStoredLanguagePreference() || this.getLanguageFromUrl(this.router.url)) {
+      return;
+    }
+
+    this.setLanguage(locationLanguage ?? 'en');
+  }
+
+  private async detectLanguageFromLocation(): Promise<string | null> {
+    const countryCode = await this.getCountryCodeFromCurrentLocation();
+    if (!countryCode) {
+      return null;
+    }
+
+    const mapped = COUNTRY_LANGUAGE_MAP[countryCode.toUpperCase()];
+    return mapped && LANGUAGES.some((lang) => lang.code === mapped) ? mapped : null;
+  }
+
+  private async getCountryCodeFromCurrentLocation(): Promise<string | null> {
+    if (!('geolocation' in navigator)) {
+      return null;
+    }
+
+    try {
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: false,
+          timeout: REGION_LOOKUP_TIMEOUT_MS,
+          maximumAge: 600000,
+        });
+      });
+
+      const abortController = new AbortController();
+      const timeoutId = window.setTimeout(() => abortController.abort(), REGION_LOOKUP_TIMEOUT_MS);
+
+      try {
+        const response = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`,
+          { signal: abortController.signal },
+        );
+
+        if (!response.ok) {
+          return null;
+        }
+
+        const payload: unknown = await response.json();
+        if (!payload || typeof payload !== 'object' || !("countryCode" in payload)) {
+          return null;
+        }
+
+        const countryCode = (payload as { countryCode?: unknown }).countryCode;
+        return typeof countryCode === 'string' && countryCode.length > 0 ? countryCode : null;
+      } finally {
+        window.clearTimeout(timeoutId);
+      }
+    } catch {
+      return null;
+    }
   }
 
   private applyDir(code: string): void {
