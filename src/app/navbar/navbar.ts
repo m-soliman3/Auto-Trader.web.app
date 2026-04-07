@@ -34,6 +34,7 @@ export class Navbar {
   langMenuOpen = signal(false);
   dashboardLink = signal('/dashboard/real');
   currentUrl = signal(this.router.url);
+  showThemeToggle = computed(() => this.currentUrl().startsWith('/settings'));
   showAccountModeSwitch = computed(() => {
     return this.auth.currentUser() !== null && !this.currentUrl().startsWith('/settings');
   });
