@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -710,6 +710,7 @@ export class FeatureDetailPage implements OnInit {
   private route     = inject(ActivatedRoute);
   private router    = inject(Router);
   private auth      = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
   languageService   = inject(LanguageService);
   private sanitizer = inject(DomSanitizer);
   private translate = inject(TranslateService);
@@ -720,14 +721,17 @@ export class FeatureDetailPage implements OnInit {
   overviewParagraphs: string[] = [];
 
   ngOnInit(): void {
+    // Ensure first render has data even before the paramMap stream emits.
+    this.loadFeature(this.route.snapshot.paramMap.get('slug') ?? '');
+
     this.route.paramMap
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         this.loadFeature(params.get('slug') ?? '');
       });
 
     this.translate.onLangChange
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.applyTranslatedFeature());
   }
 
