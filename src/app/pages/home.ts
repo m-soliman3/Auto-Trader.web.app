@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 
 @Component({
@@ -15,7 +15,13 @@ import { LanguageService } from '../services/language.service';
 export class Home {
   private auth   = inject(AuthService);
   private router = inject(Router);
+  private translate = inject(TranslateService);
   languageService = inject(LanguageService);
+
+  t(key: string, fallback: string): string {
+    const value = this.translate.instant(key);
+    return !value || value === key ? fallback : value;
+  }
 
   /** Sends logged-in users straight to the dashboard */
   goToCta() {

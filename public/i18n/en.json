@@ -40,8 +40,8 @@
       "marketExecution": "Market Execution",
       "monitoringAlerts": "Monitoring & Alerts",
       "stepLine1": "Select a trading strategy.",
-      "stepLine2": "Set up bot.",
-      "stepLine3": "Connect your exchange/broker.",
+      "stepLine2": "Set up a bot.",
+      "stepLine3": "Connect your exchange or broker.",
       "stepLine4": "Done!"
     },
     "startFree": "Start for Free →",
