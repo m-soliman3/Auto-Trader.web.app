@@ -236,27 +236,29 @@
   font-size: 0.98rem;
   line-height: 1.6;
   padding: 0.2rem 0;
-  white-space: normal;
+  white-space: nowrap;
   overflow: hidden;
   opacity: 1;
-  transform-origin: left center;
-  transform: scaleX(1);
-  animation: typeLoop 8s ease-in-out infinite;
+  width: 0;
+  animation: typeLoop 8s steps(var(--typing-ch, 30), end) infinite;
 }
 
 .hero-step-line:nth-child(1) {
   justify-self: start;
+  --typing-ch: 28;
   animation-delay: 0s;
 }
 
 .hero-step-line:nth-child(2) {
   justify-self: end;
   text-align: left;
+  --typing-ch: 18;
   animation-delay: 2s;
 }
 
 .hero-step-line:nth-child(3) {
   justify-self: start;
+  --typing-ch: 34;
   animation-delay: 4s;
 }
 
@@ -266,28 +268,29 @@
   font-weight: 700;
   font-size: 1.14rem;
   letter-spacing: 0.02em;
+  --typing-ch: 6;
   animation-delay: 6s;
 }
 
 @keyframes typeLoop {
   0% {
-    transform: scaleX(0);
+    width: 0;
     opacity: 0;
   }
   10% {
-    transform: scaleX(1);
+    width: calc(var(--typing-ch, 30) * 1ch);
     opacity: 1;
   }
   35% {
-    transform: scaleX(1);
+    width: calc(var(--typing-ch, 30) * 1ch);
     opacity: 1;
   }
   50% {
-    transform: scaleX(0);
+    width: 0;
     opacity: 0;
   }
   100% {
-    transform: scaleX(0);
+    width: 0;
     opacity: 0;
   }
 }
@@ -331,6 +334,8 @@
     clip-path: none !important;
     transform: none !important;
     opacity: 1 !important;
+    width: auto !important;
+    border-right: none !important;
   }
 }
 
@@ -655,6 +660,9 @@
   .hero-step-line {
     justify-self: start !important;
     text-align: left;
+    white-space: normal;
+    width: auto;
+    border-right: none;
   }
 
   .hero-step-line:nth-child(4) {
