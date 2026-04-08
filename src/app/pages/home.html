@@ -19,22 +19,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="gradient-text">{{ 'home.heroTitle2' | translate }}</span><br />
       {{ 'home.heroTitle3' | translate }}
     </h1>
-    <p class="hero-sub">{{ 'home.heroSub' | translate }}</p>
+    <div class="hero-graph" role="img" [attr.aria-label]="'home.graph.ariaLabel' | translate">
+      <div class="graph-inputs">
+        <div class="graph-node">{{ 'home.graph.strategy' | translate }}</div>
+        <div class="graph-node">{{ 'home.graph.botConfig' | translate }}</div>
+        <div class="graph-node">{{ 'home.graph.exchangeApi' | translate }}</div>
+      </div>
+      <div class="graph-connectors" aria-hidden="true">
+        <span class="graph-link graph-link-left"></span>
+        <span class="graph-link graph-link-mid"></span>
+        <span class="graph-link graph-link-right"></span>
+      </div>
+      <div class="graph-node graph-core">{{ 'home.graph.automationCore' | translate }}</div>
+      <div class="graph-connectors graph-connectors-output" aria-hidden="true">
+        <span class="graph-link graph-link-out-left"></span>
+        <span class="graph-link graph-link-out-right"></span>
+      </div>
+      <div class="graph-outputs">
+        <div class="graph-node graph-output">{{ 'home.graph.marketExecution' | translate }}</div>
+        <div class="graph-node graph-output">{{ 'home.graph.monitoringAlerts' | translate }}</div>
+      </div>
+    </div>
+    <div class="hero-graph-steps" aria-label="{{ 'home.graph.ariaLabel' | translate }}">
+      <p class="hero-step-line">{{ 'home.graph.stepLine1' | translate }}</p>
+      <p class="hero-step-line">{{ 'home.graph.stepLine2' | translate }}</p>
+      <p class="hero-step-line">{{ 'home.graph.stepLine3' | translate }}</p>
+      <p class="hero-step-line">{{ 'home.graph.stepLine4' | translate }}</p>
+    </div>
     <div class="hero-cta">
       <button (click)="goToCta()" class="btn-accent">{{ 'home.startFree' | translate }}</button>
       <a href="#how-it-works" class="btn-outline">{{ 'home.seeHowItWorks' | translate }}</a>
-    </div>
-    <div class="hero-chart" aria-hidden="true">
-      <svg viewBox="0 0 700 200" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#00d17a" stop-opacity="0.3"/>
-            <stop offset="100%" stop-color="#00d17a" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path d="M0,160 C50,150 80,140 120,130 C160,120 180,135 220,110 C260,85 280,95 320,70 C360,45 380,60 420,40 C460,20 490,30 540,15 C580,5 640,20 700,10 L700,200 L0,200 Z" fill="url(#chartGrad)"/>
-        <path d="M0,160 C50,150 80,140 120,130 C160,120 180,135 220,110 C260,85 280,95 320,70 C360,45 380,60 420,40 C460,20 490,30 540,15 C580,5 640,20 700,10" fill="none" stroke="#00d17a" stroke-width="2.5"/>
-      </svg>
     </div>
   </div>
 </section>

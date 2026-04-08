@@ -23,7 +23,27 @@
     "heroTitle1": "Automatisiere Deine",
     "heroTitle2": "Handelsstrategie.",
     "heroTitle3": "Klüger Handeln.",
-    "heroSub": "auto-Trading verbindet sich mit über 30 Börsen und lässt Ihre Bots rund um die Uhr laufen — angetrieben von maschinellen Lernsignalen, robustem Risikomanagement und null Emotionen.",
+    "heroSub": "Wählen Sie eine Handelsstrategie, die Ihre Ziele erreicht.\nWählen Sie einen Bot, der Trades für Sie ausführt.\nVerbinden Sie Ihre Börse oder Ihren Broker.\nMöchten Sie mehr erfahren? Wir zeigen Ihnen, wie es funktioniert.\nBereit zu starten? Starten Sie hier.",
+    "flow": {
+      "title": "So hängt alles zusammen",
+      "strategy": "Handelsstrategie",
+      "bot": "Bot",
+      "exchange": "Börse / Broker",
+      "automation": "Trading-Automatisierung"
+    },
+    "graph": {
+      "ariaLabel": "Handelsstrategie, Bot-Konfiguration und Börsen- oder Broker-API fließen in den Trading-Automatisierungskern und anschließend in Marktausführung sowie Monitoring und Benachrichtigungen",
+      "strategy": "Handelsstrategie",
+      "botConfig": "Bot-Konfiguration",
+      "exchangeApi": "Börsen- / Broker-API",
+      "automationCore": "Trading-Automatisierungskern",
+      "marketExecution": "Marktausführung",
+      "monitoringAlerts": "Monitoring & Benachrichtigungen",
+      "stepLine1": "Wählen Sie eine Handelsstrategie.",
+      "stepLine2": "Richten Sie den Bot ein.",
+      "stepLine3": "Verbinden Sie Ihre Börse/Ihren Broker.",
+      "stepLine4": "Fertig!"
+    },
     "startFree": "Kostenlos starten →",
     "seeHowItWorks": "So funktioniert es",
     "stats": {
