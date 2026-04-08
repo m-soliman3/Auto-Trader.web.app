@@ -23,7 +23,27 @@
     "heroTitle1": "Automatiza Tu",
     "heroTitle2": "Estrategia de Trading.",
     "heroTitle3": "Opera con Inteligencia.",
-    "heroSub": "auto-Trading se conecta a más de 30 exchanges y ejecuta tus bots 24/7 — impulsado por señales de aprendizaje automático, gestión de riesgo sólida y cero emociones.",
+    "heroSub": "Elige una estrategia de trading que alcance tus objetivos.\nSelecciona un bot que ejecute operaciones por ti.\nConecta tu exchange o broker.\n¿Te interesa saber más? Déjanos mostrarte cómo funciona.\n¿Listo para empezar? Empieza aquí.",
+    "flow": {
+      "title": "Cómo se conecta todo",
+      "strategy": "Estrategia de Trading",
+      "bot": "Bot",
+      "exchange": "Exchange / Broker",
+      "automation": "Automatización del Trading"
+    },
+    "graph": {
+      "ariaLabel": "La estrategia de trading, la configuración del bot y la API del exchange o broker alimentan el núcleo de automatización, que luego conduce a la ejecución en mercado y a la monitorización y alertas",
+      "strategy": "Estrategia de Trading",
+      "botConfig": "Configuración del Bot",
+      "exchangeApi": "API de Exchange / Broker",
+      "automationCore": "Núcleo de Automatización del Trading",
+      "marketExecution": "Ejecución de Mercado",
+      "monitoringAlerts": "Monitorización y Alertas",
+      "stepLine1": "Selecciona una estrategia de trading.",
+      "stepLine2": "Configura el bot.",
+      "stepLine3": "Conecta tu exchange/broker.",
+      "stepLine4": "¡Listo!"
+    },
     "startFree": "Empezar gratis →",
     "seeHowItWorks": "Ver cómo funciona",
     "stats": {

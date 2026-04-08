@@ -26,6 +26,7 @@
   z-index: 1;
   padding: 4rem 1.5rem 2rem;
   max-width: 850px;
+  text-align: left;
 }
 
 .hero-badge {
@@ -62,11 +63,244 @@
   line-height: 1.7;
   max-width: 600px;
   margin-bottom: 2.5rem;
+  white-space: pre-line;
+}
+
+.hero-graph {
+  width: 100%;
+  max-width: 760px;
+  margin-bottom: 2.5rem;
+  padding: 1.6rem 1.25rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--border));
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 209, 122, 0.15), transparent 40%),
+    radial-gradient(circle at 90% 100%, rgba(0, 168, 255, 0.12), transparent 45%),
+    linear-gradient(180deg, rgba(7, 12, 20, 0.9), rgba(7, 12, 20, 0.75));
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(4px);
+  animation: graphBreath 4.8s ease-in-out infinite;
+}
+
+.graph-inputs,
+.graph-outputs {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.graph-inputs {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(700px, 100%);
+  margin: 0 auto;
+}
+
+.graph-outputs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(560px, 100%);
+  margin: 0 auto;
+}
+
+.graph-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(0, 209, 122, 0.28);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(15, 24, 36, 0.9), rgba(9, 16, 26, 0.85));
+  color: var(--text-primary);
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  animation: nodeFloat 5.5s ease-in-out infinite;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 209, 122, 0.55);
+  }
+}
+
+.graph-inputs .graph-node:nth-child(1) { animation-delay: 0.05s; }
+.graph-inputs .graph-node:nth-child(2) { animation-delay: 0.25s; }
+.graph-inputs .graph-node:nth-child(3) { animation-delay: 0.45s; }
+.graph-outputs .graph-node:nth-child(1) { animation-delay: 0.2s; }
+.graph-outputs .graph-node:nth-child(2) { animation-delay: 0.4s; }
+
+.graph-connectors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0.55rem 0 0.7rem;
+  align-items: center;
+  width: min(700px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.graph-link {
+  display: block;
+  width: 82px;
+  height: 2px;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, rgba(0, 209, 122, 0.28), rgba(0, 168, 255, 0.28)),
+    linear-gradient(90deg, rgba(0, 209, 122, 0.95) 0%, rgba(0, 209, 122, 0) 28%, rgba(0, 168, 255, 0.95) 55%, rgba(0, 168, 255, 0) 85%);
+  transform-origin: center;
+  box-shadow: 0 0 10px rgba(0, 209, 122, 0.45);
+  background-size: 100% 100%, 220% 100%;
+  background-position: 0 0, 0 0;
+  animation: connectorFlow 2.3s linear infinite;
+  justify-self: center;
+}
+
+.graph-link-left { transform: rotate(23deg) scaleX(0.8); }
+.graph-link-mid {
+  width: 2px;
+  height: 22px;
+  transform: none;
+}
+.graph-link-right { transform: rotate(-23deg) scaleX(0.8); }
+
+.graph-core {
+  display: flex;
+  width: max-content;
+  margin: 0 auto;
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(0, 209, 122, 0.22), rgba(0, 209, 122, 0.12));
+  box-shadow: 0 12px 24px rgba(0, 209, 122, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: corePulse 2.6s ease-in-out infinite;
+}
+
+.graph-connectors-output {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0.75rem auto;
+  width: min(560px, 100%);
+}
+
+.graph-link-out-left { transform: rotate(-22deg) scaleX(0.95); }
+.graph-link-out-right { transform: rotate(22deg) scaleX(0.95); }
+
+.graph-output {
+  border-color: rgba(0, 168, 255, 0.45);
+  background: linear-gradient(180deg, rgba(12, 23, 36, 0.92), rgba(9, 19, 30, 0.9));
+}
+
+.hero-graph-steps {
+  max-width: 760px;
+  margin: 0 0 2rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hero-step-line {
+  margin: 0;
+  width: fit-content;
+  max-width: 100%;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  padding: 0.2rem 0;
+  white-space: normal;
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+  animation: typeLoop 8s steps(28, end) infinite;
+}
+
+.hero-step-line:nth-child(1) {
+  justify-self: start;
+  animation-delay: 0s;
+}
+
+.hero-step-line:nth-child(2) {
+  justify-self: end;
+  text-align: left;
+  animation-delay: 2s;
+}
+
+.hero-step-line:nth-child(3) {
+  justify-self: start;
+  animation-delay: 4s;
+}
+
+.hero-step-line:nth-child(4) {
+  justify-self: center;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.14rem;
+  letter-spacing: 0.02em;
+  animation-delay: 6s;
+}
+
+@keyframes typeLoop {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  10% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  35% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  50% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+}
+
+@keyframes connectorFlow {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 0, 220% 0; }
+}
+
+@keyframes corePulse {
+  0%, 100% {
+    box-shadow: 0 12px 24px rgba(0, 209, 122, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  50% {
+    box-shadow: 0 16px 30px rgba(0, 209, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+}
+
+@keyframes nodeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes graphBreath {
+  0%, 100% {
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  50% {
+    box-shadow: 0 30px 48px rgba(0, 0, 0, 0.34), 0 0 28px rgba(0, 209, 122, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-graph,
+  .graph-node,
+  .graph-link,
+  .graph-core,
+  .hero-step-line {
+    animation: none !important;
+    transition: none !important;
+    clip-path: none !important;
+  }
 }
 
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 3rem;
 }
@@ -96,13 +330,6 @@
   font-size: 1rem;
   transition: all 0.2s;
   &:hover { border-color: var(--accent); color: var(--accent); }
-}
-
-.hero-chart {
-  width: 100%;
-  max-width: 700px;
-  opacity: 0.7;
-  svg { width: 100%; height: auto; }
 }
 
 /* ── STATS ── */
@@ -371,4 +598,30 @@
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .features-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; text-align: center; }
+  .hero-graph { padding: 1.1rem 0.95rem; }
+  .graph-inputs,
+  .graph-outputs { grid-template-columns: 1fr; }
+  .graph-connectors,
+  .graph-connectors-output { grid-template-columns: 1fr; }
+  .graph-link,
+  .graph-link-left,
+  .graph-link-mid,
+  .graph-link-right,
+  .graph-link-out-left,
+  .graph-link-out-right {
+    width: 2px;
+    height: 14px;
+    margin: 0 auto;
+    transform: none;
+  }
+  .graph-node { font-size: 0.88rem; padding: 0.45rem 0.8rem; }
+  .hero-step-line {
+    justify-self: start !important;
+    text-align: left;
+  }
+
+  .hero-step-line:nth-child(4) {
+    justify-self: center !important;
+    text-align: center;
+  }
 }
