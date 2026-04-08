@@ -19,32 +19,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="gradient-text">{{ 'home.heroTitle2' | translate }}</span><br />
       {{ 'home.heroTitle3' | translate }}
     </h1>
-    <div class="hero-graph" role="img" [attr.aria-label]="'home.graph.ariaLabel' | translate">
+    <div class="hero-graph" role="img" [attr.aria-label]="t('home.graph.ariaLabel', 'Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts')">
       <div class="graph-inputs">
-        <div class="graph-node">{{ 'home.graph.strategy' | translate }}</div>
-        <div class="graph-node">{{ 'home.graph.botConfig' | translate }}</div>
-        <div class="graph-node">{{ 'home.graph.exchangeApi' | translate }}</div>
+        <div class="graph-node">{{ t('home.graph.strategy', 'Trading Strategy') }}</div>
+        <div class="graph-node">{{ t('home.graph.botConfig', 'Bot Configuration') }}</div>
+        <div class="graph-node">{{ t('home.graph.exchangeApi', 'Exchange / Broker API') }}</div>
       </div>
       <div class="graph-connectors" aria-hidden="true">
         <span class="graph-link graph-link-left"></span>
         <span class="graph-link graph-link-mid"></span>
         <span class="graph-link graph-link-right"></span>
       </div>
-      <div class="graph-node graph-core">{{ 'home.graph.automationCore' | translate }}</div>
+      <div class="graph-node graph-core">{{ t('home.graph.automationCore', 'Trading Automation Core') }}</div>
       <div class="graph-connectors graph-connectors-output" aria-hidden="true">
         <span class="graph-link graph-link-out-left"></span>
         <span class="graph-link graph-link-out-right"></span>
       </div>
       <div class="graph-outputs">
-        <div class="graph-node graph-output">{{ 'home.graph.marketExecution' | translate }}</div>
-        <div class="graph-node graph-output">{{ 'home.graph.monitoringAlerts' | translate }}</div>
+        <div class="graph-node graph-output">{{ t('home.graph.marketExecution', 'Market Execution') }}</div>
+        <div class="graph-node graph-output">{{ t('home.graph.monitoringAlerts', 'Monitoring and Alerts') }}</div>
       </div>
     </div>
-    <div class="hero-graph-steps" aria-label="{{ 'home.graph.ariaLabel' | translate }}">
-      <p class="hero-step-line">{{ 'home.graph.stepLine1' | translate }}</p>
-      <p class="hero-step-line">{{ 'home.graph.stepLine2' | translate }}</p>
-      <p class="hero-step-line">{{ 'home.graph.stepLine3' | translate }}</p>
-      <p class="hero-step-line">{{ 'home.graph.stepLine4' | translate }}</p>
+    <div class="hero-graph-steps" [attr.aria-label]="t('home.graph.ariaLabel', 'Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts')">
+      <p class="hero-step-line">{{ t('home.graph.stepLine1', 'Select a trading strategy.') }}</p>
+      <p class="hero-step-line">{{ t('home.graph.stepLine2', 'Set up a bot.') }}</p>
+      <p class="hero-step-line">{{ t('home.graph.stepLine3', 'Connect your exchange or broker.') }}</p>
+      <p class="hero-step-line">{{ t('home.graph.stepLine4', 'Done!') }}</p>
     </div>
     <div class="hero-cta">
       <button (click)="goToCta()" class="btn-accent">{{ 'home.startFree' | translate }}</button>
