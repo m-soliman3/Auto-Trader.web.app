@@ -13,4 +13,6 @@ export const environment = {
   tradingBackendBaseUrl: 'https://auto-trader-backend-zcypdnoyqa-ew.a.run.app',
   // Set to your chatbot backend URL. Leave empty only if proxied at the same origin.
   chatbotBackendBaseUrl: '',
+  // Stripe publishable key for the embedded payment form.
+  stripePublishableKey: 'pk_live_51QDLjUCZhBElEvM6oiXno0kPFEwlv6jD1ohfH0n73Zhsineme4vEL5QzpeaiiJSVc9xABp7uTq64atUj6sFOFCw400FqkxEzkO',
 };

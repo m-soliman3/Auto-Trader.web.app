@@ -1,0 +1,195 @@
+.billing-page {
+  min-height: 100dvh;
+  padding: 2rem 1rem;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(0, 209, 122, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 85%, rgba(56, 189, 248, 0.1), transparent 40%),
+    var(--bg);
+}
+
+.billing-card {
+  width: min(100%, 860px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.2rem;
+  box-shadow: 0 22px 40px rgba(2, 6, 23, 0.16);
+}
+
+.billing-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.billing-header p {
+  margin: 0.45rem 0 0;
+  color: var(--text-secondary);
+}
+
+.summary-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.summary-grid article {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.7rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.summary-grid strong {
+  color: var(--text-primary);
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.billing-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+
+.secondary-btn,
+.danger-btn {
+  border-radius: 10px;
+  padding: 0.62rem 0.9rem;
+  border: 1px solid transparent;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  color: var(--text-secondary);
+  border-color: var(--border);
+  background: transparent;
+}
+
+.danger-btn {
+  color: #fff;
+  background: #dc2626;
+}
+
+.danger-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.history-section {
+  margin-top: 1rem;
+}
+
+.history-section h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.history-list {
+  margin-top: 0.7rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.invoice-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.invoice-main {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.invoice-main strong {
+  color: var(--text-primary);
+}
+
+.invoice-main span,
+.invoice-meta span {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.invoice-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.invoice-meta a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.status {
+  margin-top: 0.75rem;
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.status.ok {
+  background: rgba(0, 209, 122, 0.1);
+  border: 1px solid rgba(0, 209, 122, 0.28);
+  color: var(--accent);
+}
+
+.status.err {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  color: #ef4444;
+}
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .billing-page {
+    padding: 1rem 0.7rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .billing-actions {
+    flex-direction: column;
+  }
+
+  .secondary-btn,
+  .danger-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .invoice-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

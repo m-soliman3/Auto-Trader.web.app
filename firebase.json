@@ -30,6 +30,34 @@
         }
       },
       {
+        "source": "/api/createPremiumSubscriptionIntent",
+        "function": {
+          "functionId": "createPremiumSubscriptionIntent",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/confirmPremiumSubscriptionActivation",
+        "function": {
+          "functionId": "confirmPremiumSubscriptionActivation",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getPremiumBillingOverview",
+        "function": {
+          "functionId": "getPremiumBillingOverview",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/cancelPremiumSubscription",
+        "function": {
+          "functionId": "cancelPremiumSubscription",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "/v1/chat",
         "run": {
           "serviceId": "auto-trader-chatbot-backend",
