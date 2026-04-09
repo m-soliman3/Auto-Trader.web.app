@@ -3,7 +3,18 @@ import { AuthService, User } from './auth.service';
 
 type LimitedResource = 'exchange' | 'bot' | 'strategy';
 
-const FREE_LIMIT_PER_RESOURCE = 1;
+const FREE_LIMITS: Record<LimitedResource, number> = {
+  exchange: 1,
+  bot: 1,
+  strategy: 1,
+};
+
+const PREMIUM_LIMITS: Record<LimitedResource, number> = {
+  exchange: 4,
+  bot: 10,
+  strategy: 5,
+};
+
 const PREMIUM_MONTHLY_PRICE_USD = 10;
 
 @Injectable({ providedIn: 'root' })
@@ -13,23 +24,30 @@ export class SubscriptionService {
   isPremium = computed(() => this.resolvePremiumState(this.auth.currentUser()));
 
   canCreate(resource: LimitedResource, existingCount: number): boolean {
-    if (this.isPremium()) return true;
-    return existingCount < FREE_LIMIT_PER_RESOURCE;
+    return existingCount < this.getLimit(resource);
   }
 
   assertCanCreate(resource: LimitedResource, existingCount: number) {
     if (this.canCreate(resource, existingCount)) return;
-    throw new Error(this.buildUpgradeMessage(resource));
+    throw new Error(this.buildLimitMessage(resource));
   }
 
-  private buildUpgradeMessage(resource: LimitedResource): string {
+  private buildLimitMessage(resource: LimitedResource): string {
     const label = resource === 'exchange'
       ? 'exchange connection'
       : resource === 'bot'
         ? 'bot'
         : 'strategy';
 
-    return `Free plan limit reached: you can connect only 1 ${label}. Upgrade to Premium for $${PREMIUM_MONTHLY_PRICE_USD}/month to add more.`;
+    if (!this.isPremium()) {
+      return `Free plan limit reached: you can connect only ${FREE_LIMITS[resource]} ${label}. Upgrade to Premium for $${PREMIUM_MONTHLY_PRICE_USD}/month to add more.`;
+    }
+
+    return `Premium plan limit reached: you can connect up to ${PREMIUM_LIMITS[resource]} ${label}${PREMIUM_LIMITS[resource] > 1 ? 's' : ''}.`;
+  }
+
+  private getLimit(resource: LimitedResource): number {
+    return this.isPremium() ? PREMIUM_LIMITS[resource] : FREE_LIMITS[resource];
   }
 
   private resolvePremiumState(user: User | null): boolean {
