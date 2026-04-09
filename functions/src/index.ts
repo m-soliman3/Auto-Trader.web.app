@@ -630,19 +630,86 @@ export const createPremiumSubscriptionIntent = functions
           expand: ["latest_invoice.payment_intent"],
         });
 
-        const latestInvoice: any = subscription.latest_invoice || null;
-        const paymentIntent: any = latestInvoice?.payment_intent || null;
-        if (!paymentIntent?.client_secret) {
-          res.status(500).json({ error: "Subscription invoice did not return a payment client secret" });
+        let latestInvoice: any = subscription.latest_invoice || null;
+        if (typeof latestInvoice === "string" && latestInvoice) {
+          latestInvoice = await stripe.invoices.retrieve(latestInvoice, {
+            expand: ["payment_intent"],
+          });
+        }
+
+        let paymentIntent: any = latestInvoice?.payment_intent || null;
+        if (typeof paymentIntent === "string" && paymentIntent) {
+          paymentIntent = await stripe.paymentIntents.retrieve(paymentIntent);
+        }
+
+        // Some Stripe configurations return an open invoice without an attached payment intent at creation time.
+        // In that case, attempt to trigger invoice payment to force Stripe to generate the payment intent.
+        if (!paymentIntent?.client_secret && latestInvoice?.id) {
+          try {
+            const paidAttempt: any = await stripe.invoices.pay(latestInvoice.id, {
+              expand: ["payment_intent"],
+            } as any);
+
+            latestInvoice = paidAttempt || latestInvoice;
+            let fallbackPaymentIntent: any = paidAttempt?.payment_intent || null;
+            if (typeof fallbackPaymentIntent === "string" && fallbackPaymentIntent) {
+              fallbackPaymentIntent = await stripe.paymentIntents.retrieve(fallbackPaymentIntent);
+            }
+
+            if (fallbackPaymentIntent?.client_secret) {
+              paymentIntent = fallbackPaymentIntent;
+            }
+          } catch (payAttemptError: any) {
+            console.warn("⚠ invoice pay fallback failed while creating subscription intent", {
+              subscriptionId: subscription.id,
+              invoiceId: latestInvoice?.id,
+              message: payAttemptError?.message || payAttemptError,
+            });
+          }
+        }
+
+        const clientSecret = String(paymentIntent?.client_secret || "");
+
+        if (!clientSecret) {
+          const alreadyActive = subscription.status === "active" || subscription.status === "trialing";
+          if (!alreadyActive) {
+            console.error("❌ missing client secret for incomplete subscription", {
+              subscriptionId: subscription.id,
+              subscriptionStatus: subscription.status,
+              invoiceId: latestInvoice?.id || null,
+              invoiceStatus: latestInvoice?.status || null,
+              hasPaymentIntent: Boolean(latestInvoice?.payment_intent),
+            });
+
+            res.status(500).json({
+              error: "Subscription invoice did not return a payment client secret",
+              subscriptionStatus: subscription.status,
+              invoiceStatus: latestInvoice?.status || null,
+              hint: "Ensure this Stripe Price is recurring and charge_automatically-compatible. If using test cards, use test mode keys.",
+            });
+            return;
+          }
+
+          res.status(200).json({
+            clientSecret: "",
+            paymentIntentId: null,
+            subscriptionId: subscription.id,
+            amount: billingAmount,
+            currency: billingCurrency,
+            paymentRequired: false,
+            subscriptionStatus: subscription.status,
+          });
           return;
         }
 
         res.status(200).json({
-          clientSecret: paymentIntent.client_secret,
+          clientSecret,
           paymentIntentId: paymentIntent.id,
           subscriptionId: subscription.id,
           amount: billingAmount,
           currency: billingCurrency,
+          paymentRequired: true,
+          subscriptionStatus: subscription.status,
         });
       } catch (error: any) {
         const message = error?.message || "Failed to create subscription intent";

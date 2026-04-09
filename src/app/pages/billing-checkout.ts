@@ -11,10 +11,12 @@ import { AuthService } from '../services/auth.service';
 
 interface CreatePaymentIntentResponse {
   clientSecret: string;
-  paymentIntentId: string;
+  paymentIntentId: string | null;
   subscriptionId: string;
   amount: number;
   currency: string;
+  paymentRequired?: boolean;
+  subscriptionStatus?: string;
 }
 
 interface ConfirmPremiumActivationResponse {
@@ -75,29 +77,32 @@ export class BillingCheckoutPage implements AfterViewInit, OnDestroy {
       const idToken = await firebaseUser.getIdToken();
       const createResp = await this.createPaymentIntent(idToken);
 
-      this.statusMessage.set('Processing payment...');
+      const paymentRequired = createResp.paymentRequired !== false;
+      if (paymentRequired) {
+        this.statusMessage.set('Processing payment...');
 
-      const result = await this.stripe.confirmCardPayment(createResp.clientSecret, {
-        payment_method: {
-          card: this.cardElement,
-          billing_details: {
-            name: this.cardholderName().trim() || undefined,
-            email: this.billingEmail().trim() || firebaseUser.email || undefined,
+        const result = await this.stripe.confirmCardPayment(createResp.clientSecret, {
+          payment_method: {
+            card: this.cardElement,
+            billing_details: {
+              name: this.cardholderName().trim() || undefined,
+              email: this.billingEmail().trim() || firebaseUser.email || undefined,
+            },
           },
-        },
-      });
+        });
 
-      if (result.error) {
-        this.errorMessage.set(result.error.message || 'Payment failed. Please check your card details and try again.');
-        this.isProcessing.set(false);
-        return;
-      }
+        if (result.error) {
+          this.errorMessage.set(result.error.message || 'Payment failed. Please check your card details and try again.');
+          this.isProcessing.set(false);
+          return;
+        }
 
-      const paymentIntentId = result.paymentIntent?.id || createResp.paymentIntentId;
-      if (!paymentIntentId || !createResp.subscriptionId) {
-        this.errorMessage.set('Payment completed, but subscription activation could not be verified. Please contact support.');
-        this.isProcessing.set(false);
-        return;
+        const paymentIntentId = result.paymentIntent?.id || createResp.paymentIntentId;
+        if (!paymentIntentId || !createResp.subscriptionId) {
+          this.errorMessage.set('Payment completed, but subscription activation could not be verified. Please contact support.');
+          this.isProcessing.set(false);
+          return;
+        }
       }
 
       this.statusMessage.set('Activating Premium subscription...');
@@ -109,7 +114,8 @@ export class BillingCheckoutPage implements AfterViewInit, OnDestroy {
         void this.router.navigate(['/billing', 'manage']);
       }, 1200);
     } catch (error: any) {
-      this.errorMessage.set(error?.message || 'Unable to process payment right now. Please try again later.');
+      const apiError = error?.error?.error;
+      this.errorMessage.set(apiError || error?.message || 'Unable to process payment right now. Please try again later.');
       this.isProcessing.set(false);
       return;
     }
