@@ -37,6 +37,8 @@ interface CreatePayPalSubscriptionResponse {
   approvalUrl: string;
 }
 
+type PaymentMethodId = 'card' | 'applePay' | 'googlePay' | 'paypal';
+
 @Component({
   selector: 'app-billing-checkout',
   standalone: true,
@@ -61,6 +63,9 @@ export class BillingCheckoutPage implements AfterViewInit, OnDestroy {
   walletLabel = signal('');
   walletError = signal('');
   paypalLoading = signal(false);
+  selectedMethod = signal<PaymentMethodId>('card');
+  supportsApplePay = signal(false);
+  supportsGooglePay = signal(false);
 
   private stripe: Stripe | null = null;
   private elements: StripeElements | null = null;
@@ -143,6 +148,38 @@ export class BillingCheckoutPage implements AfterViewInit, OnDestroy {
     }
 
     this.isProcessing.set(false);
+  }
+
+  selectPaymentMethod(method: PaymentMethodId): void {
+    if (method === 'applePay' && !this.supportsApplePay()) {
+      this.errorMessage.set('Apple Pay is not available on this device/browser.');
+      return;
+    }
+
+    if (method === 'googlePay' && !this.supportsGooglePay()) {
+      this.errorMessage.set('Google Pay is not available on this device/browser.');
+      return;
+    }
+
+    this.errorMessage.set('');
+    this.walletError.set('');
+    this.selectedMethod.set(method);
+  }
+
+  isMethodSelected(method: PaymentMethodId): boolean {
+    return this.selectedMethod() === method;
+  }
+
+  walletPanelTitle(): string {
+    if (this.selectedMethod() === 'applePay') {
+      return 'Apple Pay';
+    }
+
+    if (this.selectedMethod() === 'googlePay') {
+      return 'Google Pay';
+    }
+
+    return 'Wallet Checkout';
   }
 
   async startPayPalSubscription(): Promise<void> {
@@ -250,6 +287,8 @@ export class BillingCheckoutPage implements AfterViewInit, OnDestroy {
     });
 
     const canMakePayment = await this.paymentRequest.canMakePayment();
+    this.supportsApplePay.set(Boolean(canMakePayment?.['applePay']));
+    this.supportsGooglePay.set(Boolean(canMakePayment?.['googlePay']));
     this.setWalletLabel(canMakePayment);
     if (!canMakePayment) {
       this.walletReady.set(false);

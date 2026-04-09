@@ -16,6 +16,53 @@
       </div>
     </section>
 
+    <section class="method-picker">
+      <h2>Choose payment method</h2>
+
+      <label class="method-option" [class.active]="isMethodSelected('card')">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('card')"
+          (change)="selectPaymentMethod('card')"
+        />
+        <span>Credit / Debit Card</span>
+      </label>
+
+      <label class="method-option" [class.active]="isMethodSelected('applePay')" [class.disabled]="!supportsApplePay()">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('applePay')"
+          (change)="selectPaymentMethod('applePay')"
+          [disabled]="!supportsApplePay()"
+        />
+        <span>Apple Pay</span>
+      </label>
+
+      <label class="method-option" [class.active]="isMethodSelected('googlePay')" [class.disabled]="!supportsGooglePay()">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('googlePay')"
+          (change)="selectPaymentMethod('googlePay')"
+          [disabled]="!supportsGooglePay()"
+        />
+        <span>Google Pay</span>
+      </label>
+
+      <label class="method-option" [class.active]="isMethodSelected('paypal')">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('paypal')"
+          (change)="selectPaymentMethod('paypal')"
+        />
+        <span>PayPal</span>
+      </label>
+    </section>
+
+    <section class="method-panel" [class.method-hidden]="!isMethodSelected('card')">
     <div class="field-group">
       <label for="cardholder-name">Cardholder name</label>
       <input
@@ -44,9 +91,18 @@
       <label>Card details</label>
       <div id="card-element" class="card-element"></div>
     </div>
+    <button
+      type="button"
+      class="primary-btn method-submit"
+      (click)="payAndActivatePremium()"
+      [disabled]="isInitializing() || isProcessing()"
+    >
+      {{ isProcessing() ? 'Processing...' : 'Subscribe with Card for $10/month' }}
+    </button>
+    </section>
 
-    <section class="alt-payments">
-      <h2>Apple Pay / Google Pay</h2>
+    <section class="alt-payments method-panel" [class.method-hidden]="!(isMethodSelected('applePay') || isMethodSelected('googlePay'))">
+      <h2>{{ walletPanelTitle() }}</h2>
       <p>{{ walletLabel() }}</p>
       <div id="wallet-button" class="wallet-button" [class.wallet-hidden]="!walletReady()"></div>
       @if (walletError()) {
@@ -54,7 +110,7 @@
       }
     </section>
 
-    <section class="alt-payments">
+    <section class="alt-payments method-panel" [class.method-hidden]="!isMethodSelected('paypal')">
       <h2>PayPal</h2>
       <p>Subscribe with PayPal and return here for instant activation.</p>
       <button type="button" class="paypal-btn" [disabled]="paypalLoading() || isProcessing()" (click)="startPayPalSubscription()">
@@ -73,14 +129,6 @@
     <div class="actions">
       <a routerLink="/settings/billing" class="secondary-btn">Back</a>
       <a routerLink="/billing/manage" class="secondary-btn">Manage billing</a>
-      <button
-        type="button"
-        class="primary-btn"
-        (click)="payAndActivatePremium()"
-        [disabled]="isInitializing() || isProcessing()"
-      >
-        {{ isProcessing() ? 'Processing...' : 'Subscribe with Card for $10/month' }}
-      </button>
     </div>
   </div>
 </div>

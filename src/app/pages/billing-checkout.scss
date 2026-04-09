@@ -60,6 +60,52 @@
   font-size: 1rem;
 }
 
+.method-picker {
+  margin-bottom: 0.9rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.method-picker h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.method-option {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.method-option input {
+  accent-color: #00d17a;
+}
+
+.method-option.active {
+  border-color: rgba(0, 209, 122, 0.45);
+  color: var(--text-primary);
+  background: rgba(0, 209, 122, 0.08);
+}
+
+.method-option.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.method-panel {
+  margin-top: 0.3rem;
+}
+
+.method-hidden {
+  display: none;
+}
+
 .field-group {
   display: grid;
   gap: 0.42rem;
@@ -134,6 +180,10 @@
 .paypal-btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.method-submit {
+  width: 100%;
 }
 
 .status {
