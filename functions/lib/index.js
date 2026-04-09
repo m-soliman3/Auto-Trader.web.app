@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -358,6 +358,9 @@ const PREMIUM_MONTHLY_PRICE_CENTS = Math.max(1, Math.round(PREMIUM_MONTHLY_PRICE
 const PREMIUM_CURRENCY = "usd";
 const STRIPE_SECRET_KEY = (0, params_1.defineSecret)("STRIPE_SECRET_KEY");
 const STRIPE_PREMIUM_PRICE_ID = (0, params_1.defineSecret)("STRIPE_PREMIUM_PRICE_ID");
+const PAYPAL_CLIENT_ID = (0, params_1.defineSecret)("PAYPAL_CLIENT_ID");
+const PAYPAL_CLIENT_SECRET = (0, params_1.defineSecret)("PAYPAL_CLIENT_SECRET");
+const PAYPAL_PLAN_ID = (0, params_1.defineSecret)("PAYPAL_PLAN_ID");
 let stripeClient = null;
 function resolveStripeSecretKey() {
     const envSecret = process.env.STRIPE_SECRET_KEY || "";
@@ -380,6 +383,42 @@ function resolveStripePremiumPriceId() {
         return priceIdFromParam;
     }
     return "";
+}
+function resolvePayPalApiBaseUrl() {
+    return process.env.PAYPAL_API_BASE_URL || "https://api-m.paypal.com";
+}
+function resolvePayPalClientId() {
+    const value = PAYPAL_CLIENT_ID.value() || process.env.PAYPAL_CLIENT_ID || "";
+    return String(value).trim();
+}
+function resolvePayPalClientSecret() {
+    const value = PAYPAL_CLIENT_SECRET.value() || process.env.PAYPAL_CLIENT_SECRET || "";
+    return String(value).trim();
+}
+function resolvePayPalPlanId() {
+    const value = PAYPAL_PLAN_ID.value() || process.env.PAYPAL_PLAN_ID || "";
+    return String(value).trim();
+}
+async function getPayPalAccessToken() {
+    const clientId = resolvePayPalClientId();
+    const clientSecret = resolvePayPalClientSecret();
+    if (!clientId || !clientSecret) {
+        throw new Error("PayPal is not configured (missing client credentials)");
+    }
+    const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+    const tokenResponse = await (0, node_fetch_1.default)(`${resolvePayPalApiBaseUrl()}/v1/oauth2/token`, {
+        method: "POST",
+        headers: {
+            Authorization: `Basic ${auth}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "grant_type=client_credentials",
+    });
+    const tokenPayload = await tokenResponse.json();
+    if (!tokenResponse.ok || !tokenPayload?.access_token) {
+        throw new Error(`Failed to obtain PayPal access token: ${tokenPayload?.error_description || tokenResponse.statusText}`);
+    }
+    return String(tokenPayload.access_token);
 }
 function getStripeClient() {
     if (stripeClient) {
@@ -835,6 +874,147 @@ exports.cancelPremiumSubscription = functions
                 return;
             }
             console.error("❌ cancelPremiumSubscription failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+exports.createPayPalSubscription = functions
+    .region("europe-west1")
+    .runWith({ secrets: [PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PAYPAL_PLAN_ID] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const planId = resolvePayPalPlanId();
+            if (!planId) {
+                res.status(500).json({ error: "PayPal plan is not configured" });
+                return;
+            }
+            const returnUrl = String(req.body?.returnUrl || "").trim() || "https://autotrader-b8851.web.app/billing/checkout?paypal=success";
+            const cancelUrl = String(req.body?.cancelUrl || "").trim() || "https://autotrader-b8851.web.app/billing/checkout?paypal=cancel";
+            const accessToken = await getPayPalAccessToken();
+            const response = await (0, node_fetch_1.default)(`${resolvePayPalApiBaseUrl()}/v1/billing/subscriptions`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    plan_id: planId,
+                    custom_id: decoded.uid,
+                    application_context: {
+                        brand_name: "AutoTrader",
+                        user_action: "SUBSCRIBE_NOW",
+                        return_url: returnUrl,
+                        cancel_url: cancelUrl,
+                    },
+                }),
+            });
+            const payload = await response.json();
+            if (!response.ok) {
+                res.status(500).json({ error: payload?.message || "Failed to create PayPal subscription" });
+                return;
+            }
+            const approvalUrl = Array.isArray(payload?.links)
+                ? payload.links.find((link) => link?.rel === "approve")?.href || ""
+                : "";
+            if (!payload?.id || !approvalUrl) {
+                res.status(500).json({ error: "PayPal did not return subscription approval URL" });
+                return;
+            }
+            res.status(200).json({
+                subscriptionId: String(payload.id),
+                approvalUrl: String(approvalUrl),
+            });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to create PayPal subscription";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ createPayPalSubscription failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+exports.confirmPayPalSubscription = functions
+    .region("europe-west1")
+    .runWith({ secrets: [PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PAYPAL_PLAN_ID] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const subscriptionId = String(req.body?.subscriptionId || "").trim();
+            if (!subscriptionId) {
+                res.status(400).json({ error: "Missing subscriptionId" });
+                return;
+            }
+            const accessToken = await getPayPalAccessToken();
+            const response = await (0, node_fetch_1.default)(`${resolvePayPalApiBaseUrl()}/v1/billing/subscriptions/${encodeURIComponent(subscriptionId)}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            const payload = await response.json();
+            if (!response.ok) {
+                res.status(500).json({ error: payload?.message || "Failed to verify PayPal subscription" });
+                return;
+            }
+            const customId = String(payload?.custom_id || "").trim();
+            if (customId && customId !== decoded.uid) {
+                res.status(403).json({ error: "PayPal subscription does not belong to this user" });
+                return;
+            }
+            const status = String(payload?.status || "").toUpperCase();
+            const activeLike = status === "ACTIVE" || status === "APPROVED";
+            if (!activeLike) {
+                res.status(400).json({ error: `PayPal subscription is not active (status: ${status || "unknown"})` });
+                return;
+            }
+            const userRef = admin.firestore().collection("users").doc(decoded.uid);
+            await userRef.set({
+                plan: "premium",
+                subscription: {
+                    active: true,
+                    status: "active",
+                    priceUsd: PREMIUM_MONTHLY_PRICE_USD,
+                    renewedAt: new Date().toISOString(),
+                    provider: "paypal",
+                    paypalSubscriptionId: subscriptionId,
+                    cancelAtPeriodEnd: false,
+                },
+            }, { merge: true });
+            res.status(200).json({
+                ok: true,
+                message: "Premium subscription activated via PayPal",
+            });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to confirm PayPal subscription";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ confirmPayPalSubscription failed:", error);
             res.status(500).json({ error: message });
         }
     });

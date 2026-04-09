@@ -58,6 +58,20 @@
         }
       },
       {
+        "source": "/api/createPayPalSubscription",
+        "function": {
+          "functionId": "createPayPalSubscription",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/confirmPayPalSubscription",
+        "function": {
+          "functionId": "confirmPayPalSubscription",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "/v1/chat",
         "run": {
           "serviceId": "auto-trader-chatbot-backend",

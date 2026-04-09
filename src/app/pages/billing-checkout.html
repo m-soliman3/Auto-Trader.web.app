@@ -45,6 +45,23 @@
       <div id="card-element" class="card-element"></div>
     </div>
 
+    <section class="alt-payments">
+      <h2>Apple Pay / Google Pay</h2>
+      <p>{{ walletLabel() }}</p>
+      <div id="wallet-button" class="wallet-button" [class.wallet-hidden]="!walletReady()"></div>
+      @if (walletError()) {
+        <div class="status err">{{ walletError() }}</div>
+      }
+    </section>
+
+    <section class="alt-payments">
+      <h2>PayPal</h2>
+      <p>Subscribe with PayPal and return here for instant activation.</p>
+      <button type="button" class="paypal-btn" [disabled]="paypalLoading() || isProcessing()" (click)="startPayPalSubscription()">
+        {{ paypalLoading() ? 'Redirecting to PayPal...' : 'Subscribe with PayPal' }}
+      </button>
+    </section>
+
     @if (statusMessage()) {
       <div class="status ok">{{ statusMessage() }}</div>
     }
@@ -62,7 +79,7 @@
         (click)="payAndActivatePremium()"
         [disabled]="isInitializing() || isProcessing()"
       >
-        {{ isProcessing() ? 'Processing...' : 'Subscribe for $10/month' }}
+        {{ isProcessing() ? 'Processing...' : 'Subscribe with Card for $10/month' }}
       </button>
     </div>
   </div>
