@@ -105,6 +105,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ───── HOW AUTOTRADER HELPS ───── -->
+<section class="section" id="how-autotrader-helps">
+  <div class="container">
+    <div class="section-header help-header">
+      <h2>{{ t('home.help.title', 'How can AutoTrader Help you') }}</h2>
+      <p class="section-sub">{{ t('home.help.sub', 'Explore key areas where AutoTrader supports planning, automation, and execution across your workflow.') }}</p>
+    </div>
+
+    <div class="help-keywords" [attr.aria-label]="t('home.help.ariaLabel', 'Helpful AutoTrader topics')">
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" class="help-keyword-link">algorithmic trading</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">choose a platform</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" class="help-keyword-link">experienced traders</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" class="help-keyword-link">real time</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" class="help-keyword-link">trades automatically</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">trading platforms</a>
+      <a href="#how-it-works" class="help-keyword-link">trading strategy</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" class="help-keyword-link">trading systems</a>
+    </div>
+  </div>
+</section>
+
 <!-- ───── CTA BANNER ───── -->
 <section class="cta-banner">
   <div class="container cta-inner">

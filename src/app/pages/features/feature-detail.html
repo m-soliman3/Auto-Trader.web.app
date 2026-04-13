@@ -87,6 +87,37 @@
   </div>
 </section>
 
+<!-- ── EXPLORE MORE + ACCOUNT LINKS ── -->
+<section class="fp-section fp-section-alt">
+  <div class="fp-container">
+    <div class="fp-section-header">
+      <p class="fp-tag">{{ 'featureDetail.exploreAlso' | translate }}</p>
+      <h2>{{ 'featureDetail.exploreAllFeatures' | translate }}</h2>
+    </div>
+
+    <div class="fp-more-features-grid">
+      @for (item of otherFeatures; track item.slug) {
+        <a [routerLink]="localizedLink('features', item.slug)" class="fp-more-feature-card">
+          <span class="fp-more-feature-icon">{{ item.icon }}</span>
+          <h3>{{ item.label }}</h3>
+          <p>{{ item.tagline }}</p>
+        </a>
+      }
+    </div>
+
+    @if (!auth.isLoggedIn()) {
+      <div class="fp-account-links">
+        <a [routerLink]="localizedLink('login')" class="fp-btn-outline">{{ 'nav.logIn' | translate }}</a>
+        <a [routerLink]="localizedLink('signup')" class="fp-btn-accent">{{ 'nav.getStarted' | translate }}</a>
+      </div>
+    } @else {
+      <div class="fp-account-links">
+        <a [routerLink]="localizedLink('dashboard')" class="fp-btn-accent">{{ 'nav.dashboard' | translate }}</a>
+      </div>
+    }
+  </div>
+</section>
+
 <!-- ── CTA BANNER ── -->
 <section class="fp-cta-banner">
   <div class="fp-container fp-cta-inner">

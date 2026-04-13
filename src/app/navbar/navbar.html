@@ -1,6 +1,6 @@
 <nav class="navbar" [class.scrolled]="scrolled()">
   <div class="nav-container">
-    <a class="logo" [routerLink]="auth.isLoggedIn() ? dashboardLink() : '/'" (click)="closeMenu()">
+    <a class="logo" [routerLink]="auth.isLoggedIn() ? dashboardLink() : homeLink()" (click)="onLogoClick($event)">
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect width="32" height="32" rx="8" fill="#00d17a"/>
         <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -10,14 +10,14 @@
 
     <ul class="nav-links" [class.open]="menuOpen()">
       @if (!auth.isLoggedIn()) {
-        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">{{ 'nav.home' | translate }}</a></li>
-        <li><a href="#features" (click)="closeMenu()">{{ 'nav.features' | translate }}</a></li>
-        <li><a href="#how-it-works" (click)="closeMenu()">{{ 'nav.howItWorks' | translate }}</a></li>
-        <li class="mobile-only"><a routerLink="/login" (click)="closeMenu()">{{ 'nav.logIn' | translate }}</a></li>
-        <li class="mobile-only"><a routerLink="/signup" class="btn-primary" (click)="closeMenu()">{{ 'nav.getStarted' | translate }}</a></li>
+        <li><a [routerLink]="homeLink()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="onHomeClick($event)">{{ 'nav.home' | translate }}</a></li>
+        <li><a [routerLink]="homeLink()" fragment="features" (click)="onSectionClick('features', $event)">{{ 'nav.features' | translate }}</a></li>
+        <li><a [routerLink]="homeLink()" fragment="how-it-works" (click)="onSectionClick('how-it-works', $event)">{{ 'nav.howItWorks' | translate }}</a></li>
+        <li class="mobile-only"><a [routerLink]="localizedLink('login')" (click)="closeMenu()">{{ 'nav.logIn' | translate }}</a></li>
+        <li class="mobile-only"><a [routerLink]="localizedLink('signup')" class="btn-primary" (click)="closeMenu()">{{ 'nav.getStarted' | translate }}</a></li>
       } @else {
         <li class="mobile-only"><a [routerLink]="dashboardLink()" routerLinkActive="active" (click)="closeMenu()">{{ 'nav.dashboard' | translate }}</a></li>
-        <li class="mobile-only"><a routerLink="/settings" routerLinkActive="active" (click)="closeMenu()">{{ 'nav.settings' | translate }}</a></li>
+        <li class="mobile-only"><a [routerLink]="localizedLink('settings')" routerLinkActive="active" (click)="closeMenu()">{{ 'nav.settings' | translate }}</a></li>
         <li class="mobile-only"><button class="btn-logout-mobile" (click)="auth.logout(); closeMenu()">{{ 'nav.logOut' | translate }}</button></li>
       }
     </ul>
@@ -92,8 +92,8 @@
       }
 
       @if (!auth.isLoggedIn()) {
-        <a routerLink="/login" class="btn-ghost">{{ 'nav.logIn' | translate }}</a>
-        <a routerLink="/signup" class="btn-primary">{{ 'nav.getStarted' | translate }}</a>
+        <a [routerLink]="localizedLink('login')" class="btn-ghost">{{ 'nav.logIn' | translate }}</a>
+        <a [routerLink]="localizedLink('signup')" class="btn-primary">{{ 'nav.getStarted' | translate }}</a>
       } @else {
         <a [routerLink]="dashboardLink()" class="btn-ghost">{{ 'nav.dashboard' | translate }}</a>
         <div class="user-menu-wrap">
@@ -104,7 +104,7 @@
 
           @if (userMenuOpen()) {
             <div class="user-menu" role="menu">
-              <a class="user-menu-item" routerLink="/settings" (click)="closeUserMenu()" role="menuitem">{{ 'nav.settings' | translate }}</a>
+              <a class="user-menu-item" [routerLink]="localizedLink('settings')" (click)="closeUserMenu()" role="menuitem">{{ 'nav.settings' | translate }}</a>
               <button class="user-menu-item logout" (click)="auth.logout(); closeUserMenu()" role="menuitem">{{ 'nav.logOut' | translate }}</button>
             </div>
           }

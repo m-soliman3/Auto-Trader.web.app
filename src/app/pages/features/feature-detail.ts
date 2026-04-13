@@ -39,6 +39,13 @@ export interface FeatureData {
   metaTitle: string;
 }
 
+interface FeatureNavLink {
+  slug: string;
+  label: string;
+  tagline: string;
+  icon: string;
+}
+
 const FEATURES: Record<string, FeatureData> = {
   'ai-signals': {
     slug: 'ai-signals',
@@ -709,7 +716,7 @@ Once you have built your strategy, you can paper-trade it to validate behaviour 
 export class FeatureDetailPage implements OnInit {
   private route     = inject(ActivatedRoute);
   private router    = inject(Router);
-  private auth      = inject(AuthService);
+  readonly auth     = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   languageService   = inject(LanguageService);
   private sanitizer = inject(DomSanitizer);
@@ -719,6 +726,7 @@ export class FeatureDetailPage implements OnInit {
   feature: FeatureData | null = null;
   safeSvg: SafeHtml | null = null;
   overviewParagraphs: string[] = [];
+  otherFeatures: FeatureNavLink[] = [];
 
   ngOnInit(): void {
     // Ensure first render has data even before the paramMap stream emits.
@@ -789,13 +797,25 @@ export class FeatureDetailPage implements OnInit {
       .split('\n\n')
       .map((paragraph) => paragraph.trim())
       .filter(Boolean);
+
+    this.otherFeatures = Object.values(FEATURES)
+      .filter((feature) => feature.slug !== base.slug)
+      .map((feature) => {
+        const featureKeyRoot = `featurePages.${feature.slug}`;
+        return {
+          slug: feature.slug,
+          icon: feature.icon,
+          label: this.t(`${featureKeyRoot}.title`, feature.title),
+          tagline: this.t(`${featureKeyRoot}.tagline`, feature.tagline),
+        };
+      });
+  }
+
+  localizedLink(...segments: string[]): string[] {
+    return ['/', this.languageService.currentLang(), ...segments];
   }
 
   goToCta(): void {
-    this.router.navigate([
-      '/',
-      this.languageService.currentLang(),
-      this.auth.isLoggedIn() ? 'dashboard' : 'signup',
-    ]);
+    this.router.navigate(this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup'));
   }
 }

@@ -1,103 +1,204 @@
 {
-  "hosting": {
-    "site": "autotrader-b8851",
-    "public": "dist/auto-trading/browser",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/api/getPortfolio",
-        "function": {
-          "functionId": "getPortfolioHttp",
-          "region": "europe-west1"
+  "hosting": [
+    {
+      "target": "prod",
+      "public": "dist/auto-trading/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/api/getPortfolio",
+          "function": {
+            "functionId": "getPortfolioHttp",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/getMarketData",
+          "function": {
+            "functionId": "getMarketData",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/contact",
+          "function": {
+            "functionId": "sendContactMessage",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/createPremiumSubscriptionIntent",
+          "function": {
+            "functionId": "createPremiumSubscriptionIntent",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/confirmPremiumSubscriptionActivation",
+          "function": {
+            "functionId": "confirmPremiumSubscriptionActivation",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/getPremiumBillingOverview",
+          "function": {
+            "functionId": "getPremiumBillingOverview",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/cancelPremiumSubscription",
+          "function": {
+            "functionId": "cancelPremiumSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/createPayPalSubscription",
+          "function": {
+            "functionId": "createPayPalSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/confirmPayPalSubscription",
+          "function": {
+            "functionId": "confirmPayPalSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/v1/chat",
+          "run": {
+            "serviceId": "auto-trader-chatbot-backend",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/v1/public-chat",
+          "run": {
+            "serviceId": "auto-trader-chatbot-backend",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/health",
+          "run": {
+            "serviceId": "auto-trader-chatbot-backend",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
         }
-      },
-      {
-        "source": "/api/getMarketData",
-        "function": {
-          "functionId": "getMarketData",
-          "region": "europe-west1"
+      ]
+    },
+    {
+      "target": "staging",
+      "public": "dist/auto-trading/browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/api/getPortfolio",
+          "function": {
+            "functionId": "getPortfolioHttp",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/getMarketData",
+          "function": {
+            "functionId": "getMarketData",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/contact",
+          "function": {
+            "functionId": "sendContactMessage",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/createPremiumSubscriptionIntent",
+          "function": {
+            "functionId": "createPremiumSubscriptionIntent",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/confirmPremiumSubscriptionActivation",
+          "function": {
+            "functionId": "confirmPremiumSubscriptionActivation",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/getPremiumBillingOverview",
+          "function": {
+            "functionId": "getPremiumBillingOverview",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/cancelPremiumSubscription",
+          "function": {
+            "functionId": "cancelPremiumSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/createPayPalSubscription",
+          "function": {
+            "functionId": "createPayPalSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/confirmPayPalSubscription",
+          "function": {
+            "functionId": "confirmPayPalSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/v1/chat",
+          "run": {
+            "serviceId": "auto-trader-chatbot-backend",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/v1/public-chat",
+          "run": {
+            "serviceId": "auto-trader-chatbot-backend",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/health",
+          "run": {
+            "serviceId": "auto-trader-chatbot-backend",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
         }
-      },
-      {
-        "source": "/api/contact",
-        "function": {
-          "functionId": "sendContactMessage",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/createPremiumSubscriptionIntent",
-        "function": {
-          "functionId": "createPremiumSubscriptionIntent",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/confirmPremiumSubscriptionActivation",
-        "function": {
-          "functionId": "confirmPremiumSubscriptionActivation",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/getPremiumBillingOverview",
-        "function": {
-          "functionId": "getPremiumBillingOverview",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/cancelPremiumSubscription",
-        "function": {
-          "functionId": "cancelPremiumSubscription",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/createPayPalSubscription",
-        "function": {
-          "functionId": "createPayPalSubscription",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/api/confirmPayPalSubscription",
-        "function": {
-          "functionId": "confirmPayPalSubscription",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/v1/chat",
-        "run": {
-          "serviceId": "auto-trader-chatbot-backend",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/v1/public-chat",
-        "run": {
-          "serviceId": "auto-trader-chatbot-backend",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "/health",
-        "run": {
-          "serviceId": "auto-trader-chatbot-backend",
-          "region": "europe-west1"
-        }
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  },
+      ]
+    }
+  ],
   "functions": {
     "source": "functions"
   },

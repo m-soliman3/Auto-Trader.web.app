@@ -1,5 +1,6 @@
 import { Component, DestroyRef, ElementRef, HostListener, computed, effect, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 import { ThemeService } from '../services/theme.service';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -27,6 +28,7 @@ export class Navbar {
   uiPolicy = inject(UiPolicyService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly router = inject(Router);
+  private readonly viewportScroller = inject(ViewportScroller);
   private readonly destroyRef = inject(DestroyRef);
   scrolled = signal(false);
   menuOpen = signal(false);
@@ -34,9 +36,9 @@ export class Navbar {
   langMenuOpen = signal(false);
   dashboardLink = signal('/dashboard/real');
   currentUrl = signal(this.router.url);
-  showThemeToggle = computed(() => this.currentUrl().startsWith('/settings'));
+  showThemeToggle = computed(() => this.hasPrimarySegment('settings'));
   showAccountModeSwitch = computed(() => {
-    return this.auth.currentUser() !== null && !this.currentUrl().startsWith('/settings');
+    return this.auth.currentUser() !== null && !this.hasPrimarySegment('settings');
   });
 
   constructor() {
@@ -70,8 +72,8 @@ export class Navbar {
     this.accountMode.setMode(mode);
     this.updateDashboardLink();
 
-    if (this.router.url.startsWith('/dashboard')) {
-      void this.router.navigate(['/dashboard', mode]);
+    if (this.hasPrimarySegment('dashboard')) {
+      void this.router.navigate(this.localizedLink('dashboard', mode));
     }
   }
 
@@ -83,6 +85,49 @@ export class Navbar {
 
   closeMenu() {
     this.menuOpen.set(false);
+  }
+
+  homeLink(): string[] {
+    return this.localizedLink();
+  }
+
+  localizedLink(...segments: string[]): string[] {
+    return ['/', this.languageService.currentLang(), ...segments];
+  }
+
+  onLogoClick(event?: Event) {
+    if (this.auth.isLoggedIn()) {
+      this.closeMenu();
+      return;
+    }
+
+    this.onHomeClick(event);
+  }
+
+  onHomeClick(event?: Event) {
+    this.closeMenu();
+
+    if (!this.isHomeRoute()) {
+      return;
+    }
+
+    event?.preventDefault();
+    this.router
+      .navigate([], { fragment: undefined })
+      .then(() => queueMicrotask(() => this.viewportScroller.scrollToPosition([0, 0])));
+  }
+
+  onSectionClick(fragment: string, event: Event) {
+    this.closeMenu();
+
+    if (!this.isHomeRoute()) {
+      return;
+    }
+
+    event.preventDefault();
+    this.router
+      .navigate([], { fragment })
+      .then(() => queueMicrotask(() => this.viewportScroller.scrollToAnchor(fragment)));
   }
 
   toggleUserMenu() {
@@ -144,6 +189,21 @@ export class Navbar {
   }
 
   private updateDashboardLink() {
-    this.dashboardLink.set(`/dashboard/${this.accountMode.mode()}`);
+    this.dashboardLink.set(this.router.serializeUrl(this.router.createUrlTree(this.localizedLink('dashboard', this.accountMode.mode()))));
+  }
+
+  private isHomeRoute(): boolean {
+    const urlTree = this.router.parseUrl(this.currentUrl());
+    const primarySegments = urlTree.root.children['primary']?.segments ?? [];
+    const normalizedPath = `/${primarySegments.map((segment) => segment.path).join('/')}`;
+    const localizedHomePath = `/${this.languageService.currentLang()}`;
+
+    return normalizedPath === '/' || normalizedPath === localizedHomePath;
+  }
+
+  private hasPrimarySegment(segment: string): boolean {
+    const urlTree = this.router.parseUrl(this.currentUrl());
+    const primarySegments = urlTree.root.children['primary']?.segments ?? [];
+    return primarySegments.some((urlSegment) => urlSegment.path === segment);
   }
 }
