@@ -200,6 +200,12 @@
   &:last-child { margin-bottom: 0; }
 
   strong { color: var(--text-primary); font-weight: 600; }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 }
 
 /* ── RELATED FEATURE LINKS ── */
