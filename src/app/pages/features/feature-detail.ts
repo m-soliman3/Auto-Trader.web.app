@@ -815,7 +815,15 @@ export class FeatureDetailPage implements OnInit {
     return ['/', this.languageService.currentLang(), ...segments];
   }
 
-  goToCta(): void {
-    this.router.navigate(this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup'));
+  localizedHref(...segments: string[]): string {
+    return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
+  }
+
+  ctaLink(): string[] {
+    return this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
+  }
+
+  ctaHref(): string {
+    return this.localizedHref(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
   }
 }

@@ -47,7 +47,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="hero-step-line">{{ t('home.graph.stepLine4', 'Done!') }}</p>
     </div>
     <div class="hero-cta">
-      <button (click)="goToCta()" class="btn-accent">{{ 'home.startFree' | translate }}</button>
+      <a [routerLink]="ctaRouterLink()" [attr.href]="ctaHref()" class="btn-accent">{{ 'home.startFree' | translate }}</a>
       <a href="#how-it-works" class="btn-outline">{{ 'home.seeHowItWorks' | translate }}</a>
     </div>
   </div>
@@ -75,7 +75,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="features-grid">
       @for (f of features; track f.titleKey) {
-        <a [routerLink]="['/', languageService.currentLang(), 'features', f.slug]" class="feature-card feature-card-link">
+        <a [routerLink]="['/', languageService.currentLang(), 'features', f.slug]" [attr.href]="localizedHref('features', f.slug)" class="feature-card feature-card-link">
           <div class="feature-icon">{{ f.icon }}</div>
           <h3>{{ f.titleKey | translate }}</h3>
           <p>{{ f.descKey | translate }}</p>
@@ -114,14 +114,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="help-keywords" [attr.aria-label]="t('home.help.ariaLabel', 'Helpful AutoTrader topics')">
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" class="help-keyword-link">algorithmic trading</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">choose a platform</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" class="help-keyword-link">experienced traders</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" class="help-keyword-link">real time</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" class="help-keyword-link">trades automatically</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">trading platforms</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" [attr.href]="localizedHref('features', 'ai-signals')" class="help-keyword-link">algorithmic trading</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" [attr.href]="localizedHref('features', 'multi-exchange')" class="help-keyword-link">choose a platform</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" [attr.href]="localizedHref('features', 'backtesting')" class="help-keyword-link">experienced traders</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" [attr.href]="localizedHref('features', 'smart-alerts')" class="help-keyword-link">real time</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" [attr.href]="localizedHref('features', 'no-code-builder')" class="help-keyword-link">trades automatically</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" [attr.href]="localizedHref('features', 'multi-exchange')" class="help-keyword-link">trading platforms</a>
       <a href="#how-it-works" class="help-keyword-link">trading strategy</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" class="help-keyword-link">trading systems</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" [attr.href]="localizedHref('features', 'risk-management')" class="help-keyword-link">trading systems</a>
     </div>
   </div>
 </section>
@@ -131,6 +131,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container cta-inner">
     <h2>{{ 'home.ctaTitle' | translate }}</h2>
     <p>{{ 'home.ctaDesc' | translate }}</p>
-    <button (click)="goToCta()" class="btn-accent">{{ 'home.createFreeAccount' | translate }}</button>
+    <a [routerLink]="ctaRouterLink()" [attr.href]="ctaHref()" class="btn-accent">{{ 'home.createFreeAccount' | translate }}</a>
   </div>
 </section>
