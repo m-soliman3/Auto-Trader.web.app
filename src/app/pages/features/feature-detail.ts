@@ -831,6 +831,18 @@ export class FeatureDetailPage implements OnInit {
     return origin ? `${origin}${path}` : path;
   }
 
+  localizedHref(...segments: string[]): string {
+    return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
+  }
+
+  ctaLink(): string[] {
+    return this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
+  }
+
+  ctaHref(): string {
+    return this.localizedHref(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
+  }
+
   private inlineReferenceHtml(externalLinks: FeatureLink[], relatedLinks: RelatedPageLink[]): string {
     const resourcesLabel = this.t('featureDetail.resources', 'Resources').replace(/[:：]\s*$/u, '');
     const exploreLabel = this.t('featureDetail.exploreAlso', 'Explore also').replace(/[:：]\s*$/u, '');
@@ -886,9 +898,5 @@ export class FeatureDetailPage implements OnInit {
       .replaceAll('>', '&gt;')
       .replaceAll('"', '&quot;')
       .replaceAll("'", '&#39;');
-  }
-
-  goToCta(): void {
-    this.router.navigate(this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup'));
   }
 }

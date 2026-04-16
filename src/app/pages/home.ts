@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -14,7 +14,6 @@ import { LanguageService } from '../services/language.service';
 })
 export class Home {
   private auth   = inject(AuthService);
-  private router = inject(Router);
   private translate = inject(TranslateService);
   languageService = inject(LanguageService);
 
@@ -23,9 +22,16 @@ export class Home {
     return !value || value === key ? fallback : value;
   }
 
-  /** Sends logged-in users straight to the dashboard */
-  goToCta() {
-    this.router.navigate([this.auth.isLoggedIn() ? '/dashboard' : '/signup']);
+  localizedHref(...segments: string[]): string {
+    return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
+  }
+
+  ctaRouterLink(): string[] {
+    return ['/', this.auth.isLoggedIn() ? 'dashboard' : 'signup'];
+  }
+
+  ctaHref(): string {
+    return this.auth.isLoggedIn() ? '/dashboard' : '/signup';
   }
 
   stats = [

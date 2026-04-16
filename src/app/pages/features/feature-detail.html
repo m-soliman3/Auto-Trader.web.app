@@ -3,13 +3,13 @@
 <section class="fp-hero">
   <div class="fp-hero-bg"></div>
   <div class="fp-container">
-    <a [routerLink]="['/', languageService.currentLang()]" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
+    <a [routerLink]="['/', languageService.currentLang()]" [attr.href]="localizedHref()" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
     <div class="fp-hero-icon">{{ feature.icon }}</div>
     <p class="fp-tag">{{ 'featureDetail.feature' | translate }}</p>
     <h1 class="fp-hero-title">{{ feature.title }}</h1>
     <p class="fp-hero-tagline">{{ feature.tagline }}</p>
     <p class="fp-hero-desc">{{ feature.heroDescription }}</p>
-    <button (click)="goToCta()" class="fp-btn-accent">{{ 'featureDetail.startForFree' | translate }} →</button>
+    <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="fp-btn-accent">{{ 'featureDetail.startForFree' | translate }} →</a>
   </div>
 </section>
 
@@ -32,7 +32,7 @@
       <div class="fp-related-links">
         <span class="fp-related-label">{{ 'featureDetail.exploreAlso' | translate }}</span>
         @for (link of feature.relatedLinks; track link.slug) {
-          <a [href]="featurePageUrl(link.slug)" class="fp-related-chip">{{ link.label }}</a>
+          <a [routerLink]="['/', languageService.currentLang(), 'features', link.slug]" [attr.href]="localizedHref('features', link.slug)" class="fp-related-chip">{{ link.label }}</a>
         }
       </div>
     </div>
@@ -97,7 +97,7 @@
 
     <div class="fp-more-features-grid">
       @for (item of otherFeatures; track item.slug) {
-        <a [href]="featurePageUrl(item.slug)" class="fp-more-feature-card">
+        <a [routerLink]="localizedLink('features', item.slug)" [attr.href]="localizedHref('features', item.slug)" class="fp-more-feature-card">
           <span class="fp-more-feature-icon">{{ item.icon }}</span>
           <h3>{{ item.label }}</h3>
           <p>{{ item.tagline }}</p>
@@ -107,12 +107,12 @@
 
     @if (!auth.isLoggedIn()) {
       <div class="fp-account-links">
-        <a [routerLink]="localizedLink('login')" class="fp-btn-outline">{{ 'nav.logIn' | translate }}</a>
-        <a [routerLink]="localizedLink('signup')" class="fp-btn-accent">{{ 'nav.getStarted' | translate }}</a>
+        <a [routerLink]="localizedLink('login')" [attr.href]="localizedHref('login')" class="fp-btn-outline">{{ 'nav.logIn' | translate }}</a>
+        <a [routerLink]="localizedLink('signup')" [attr.href]="localizedHref('signup')" class="fp-btn-accent">{{ 'nav.getStarted' | translate }}</a>
       </div>
     } @else {
       <div class="fp-account-links">
-        <a [routerLink]="localizedLink('dashboard')" class="fp-btn-accent">{{ 'nav.dashboard' | translate }}</a>
+        <a [routerLink]="localizedLink('dashboard')" [attr.href]="localizedHref('dashboard')" class="fp-btn-accent">{{ 'nav.dashboard' | translate }}</a>
       </div>
     }
   </div>
@@ -124,8 +124,8 @@
     <h2>{{ ('featureDetail.readyToPutToWork' | translate) + ' ' + feature.title + '?' }}</h2>
     <p>{{ 'featureDetail.ctaDesc' | translate }}</p>
     <div class="fp-cta-actions">
-      <button (click)="goToCta()" class="fp-btn-accent">{{ 'featureDetail.createFreeAccount' | translate }} →</button>
-      <a [routerLink]="['/', languageService.currentLang()]" class="fp-btn-outline">{{ 'featureDetail.exploreAllFeatures' | translate }}</a>
+      <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="fp-btn-accent">{{ 'featureDetail.createFreeAccount' | translate }} →</a>
+      <a [routerLink]="['/', languageService.currentLang()]" [attr.href]="localizedHref()" class="fp-btn-outline">{{ 'featureDetail.exploreAllFeatures' | translate }}</a>
     </div>
   </div>
 </section>
