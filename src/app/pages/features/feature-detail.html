@@ -4,6 +4,19 @@
   <div class="fp-hero-bg"></div>
   <div class="fp-container">
     <a [routerLink]="['/', languageService.currentLang()]" [attr.href]="localizedHref()" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
+    <div class="fp-language-links" [attr.aria-label]="'Feature page language variants'">
+      <span class="fp-language-label">{{ 'language.selectLanguage' | translate }}:</span>
+      @for (lang of languageService.languages; track lang.code) {
+        <a
+          [routerLink]="featureLanguageLink(lang.code)"
+          [attr.href]="featureLanguageHref(lang.code)"
+          [attr.hreflang]="lang.code"
+          [attr.lang]="lang.code"
+          class="fp-language-chip"
+          [class.active]="lang.code === languageService.currentLang()"
+        >{{ lang.label }}</a>
+      }
+    </div>
     <div class="fp-hero-icon">{{ feature.icon }}</div>
     <p class="fp-tag">{{ 'featureDetail.feature' | translate }}</p>
     <h1 class="fp-hero-title">{{ feature.title }}</h1>
