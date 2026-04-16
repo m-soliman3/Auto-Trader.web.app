@@ -27,12 +27,12 @@
       <p class="fp-tag">{{ 'featureDetail.overview' | translate }}</p>
       <h2>{{ ('featureDetail.whatIs' | translate) + ' ' + feature.title + '?' }}</h2>
       @for (para of overviewParagraphs; track $index) {
-        <p class="fp-body-text">{{ para }}</p>
+        <p class="fp-body-text" [innerHTML]="para"></p>
       }
       <div class="fp-related-links">
         <span class="fp-related-label">{{ 'featureDetail.exploreAlso' | translate }}</span>
         @for (link of feature.relatedLinks; track link.slug) {
-          <a [routerLink]="['/', languageService.currentLang(), 'features', link.slug]" class="fp-related-chip">{{ link.label }}</a>
+          <a [href]="featurePageUrl(link.slug)" target="_blank" rel="noopener noreferrer" class="fp-related-chip">{{ link.label }}</a>
         }
       </div>
     </div>
@@ -40,7 +40,7 @@
       <div class="fp-hiw-card">
         <p class="fp-tag">{{ 'featureDetail.howItWorks' | translate }}</p>
         <h3>{{ 'featureDetail.underTheHood' | translate }}</h3>
-        <p class="fp-body-text">{{ feature.howItWorks }}</p>
+        <p class="fp-body-text" [innerHTML]="howItWorksHtml"></p>
       </div>
     </div>
   </div>
@@ -97,7 +97,7 @@
 
     <div class="fp-more-features-grid">
       @for (item of otherFeatures; track item.slug) {
-        <a [routerLink]="localizedLink('features', item.slug)" class="fp-more-feature-card">
+        <a [href]="featurePageUrl(item.slug)" target="_blank" rel="noopener noreferrer" class="fp-more-feature-card">
           <span class="fp-more-feature-icon">{{ item.icon }}</span>
           <h3>{{ item.label }}</h3>
           <p>{{ item.tagline }}</p>

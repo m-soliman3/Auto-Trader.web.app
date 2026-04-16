@@ -1,6 +1,6 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { LanguageService } from '../../services/language.service';
@@ -721,11 +721,13 @@ export class FeatureDetailPage implements OnInit {
   languageService   = inject(LanguageService);
   private sanitizer = inject(DomSanitizer);
   private translate = inject(TranslateService);
+  private document = inject(DOCUMENT);
 
   private baseFeature: FeatureData | null = null;
   feature: FeatureData | null = null;
   safeSvg: SafeHtml | null = null;
   overviewParagraphs: string[] = [];
+  howItWorksHtml = '';
   otherFeatures: FeatureNavLink[] = [];
 
   ngOnInit(): void {
@@ -768,6 +770,16 @@ export class FeatureDetailPage implements OnInit {
 
     const keyRoot = `featurePages.${base.slug}`;
     const translatedOverview = this.t(`${keyRoot}.overview`, base.overview);
+    const translatedHowItWorks = this.t(`${keyRoot}.howItWorks`, base.howItWorks);
+    const translatedExternalLinks = base.externalLinks.map((link, index) => ({
+      ...link,
+      label: this.t(`${keyRoot}.externalLinks.${index}.label`, link.label),
+      description: this.t(`${keyRoot}.externalLinks.${index}.description`, link.description),
+    }));
+    const translatedRelatedLinks = base.relatedLinks.map((link) => ({
+      ...link,
+      label: this.t(`featurePages.${link.slug}.title`, link.label),
+    }));
 
     this.feature = {
       ...base,
@@ -776,27 +788,25 @@ export class FeatureDetailPage implements OnInit {
       metaTitle: this.t(`${keyRoot}.metaTitle`, base.metaTitle),
       heroDescription: this.t(`${keyRoot}.heroDescription`, base.heroDescription),
       overview: translatedOverview,
-      howItWorks: this.t(`${keyRoot}.howItWorks`, base.howItWorks),
+      howItWorks: translatedHowItWorks,
       benefits: base.benefits.map((benefit, index) => ({
         ...benefit,
         title: this.t(`${keyRoot}.benefits.${index}.title`, benefit.title),
         description: this.t(`${keyRoot}.benefits.${index}.description`, benefit.description),
       })),
-      externalLinks: base.externalLinks.map((link, index) => ({
-        ...link,
-        label: this.t(`${keyRoot}.externalLinks.${index}.label`, link.label),
-        description: this.t(`${keyRoot}.externalLinks.${index}.description`, link.description),
-      })),
-      relatedLinks: base.relatedLinks.map((link) => ({
-        ...link,
-        label: this.t(`featurePages.${link.slug}.title`, link.label),
-      })),
+      externalLinks: translatedExternalLinks,
+      relatedLinks: translatedRelatedLinks,
     };
+
+    const referencesHtml = this.inlineReferenceHtml(translatedExternalLinks, translatedRelatedLinks);
 
     this.overviewParagraphs = translatedOverview
       .split('\n\n')
       .map((paragraph) => paragraph.trim())
       .filter(Boolean);
+    this.overviewParagraphs = this.overviewParagraphs.map((paragraph) => this.linkifyText(paragraph));
+    this.overviewParagraphs.push(referencesHtml);
+    this.howItWorksHtml = `${this.linkifyText(translatedHowItWorks)}<br><br>${referencesHtml}`;
 
     this.otherFeatures = Object.values(FEATURES)
       .filter((feature) => feature.slug !== base.slug)
@@ -813,6 +823,46 @@ export class FeatureDetailPage implements OnInit {
 
   localizedLink(...segments: string[]): string[] {
     return ['/', this.languageService.currentLang(), ...segments];
+  }
+
+  featurePageUrl(slug: string): string {
+    const path = `/${this.languageService.currentLang()}/features/${slug}`;
+    const origin = this.document.location?.origin ?? '';
+    return origin ? `${origin}${path}` : path;
+  }
+
+  private inlineReferenceHtml(externalLinks: FeatureLink[], relatedLinks: RelatedPageLink[]): string {
+    const resourcesLabel = this.t('featureDetail.resources', 'Resources').replace(/[:：]\s*$/u, '');
+    const exploreLabel = this.t('featureDetail.exploreAlso', 'Explore also').replace(/[:：]\s*$/u, '');
+    const resources = externalLinks
+      .slice(0, 2)
+      .map((link) => this.inlineAnchor(link.url, link.label))
+      .join(' · ');
+    const related = relatedLinks
+      .map((link) => this.inlineAnchor(this.featurePageUrl(link.slug), link.label))
+      .join(' · ');
+    return `${this.escapeHtml(resourcesLabel)}: ${resources}<br>${this.escapeHtml(exploreLabel)}: ${related}`;
+  }
+
+  private inlineAnchor(url: string, label: string): string {
+    return `<a href="${this.escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${this.escapeHtml(label)}</a>`;
+  }
+
+  private linkifyText(text: string): string {
+    const escaped = this.escapeHtml(text);
+    return escaped.replace(
+      /(https?:\/\/[^\s<>"']+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+  }
+
+  private escapeHtml(text: string): string {
+    return text
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
   }
 
   goToCta(): void {
