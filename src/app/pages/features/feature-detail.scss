@@ -37,6 +37,46 @@
   &:hover { color: var(--accent); }
 }
 
+.fp-language-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.fp-language-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.fp-language-chip {
+  display: inline-block;
+  padding: 0.28rem 0.72rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0, 209, 122, 0.06);
+  }
+
+  &.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0, 209, 122, 0.08);
+  }
+}
+
 .fp-hero-icon {
   font-size: 3rem;
   line-height: 1;

@@ -843,6 +843,14 @@ export class FeatureDetailPage implements OnInit {
     return this.localizedHref(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
   }
 
+  featureLanguageLink(languageCode: string): string[] {
+    return ['/', languageCode, 'features', this.baseFeature?.slug ?? ''];
+  }
+
+  featureLanguageHref(languageCode: string): string {
+    return `/${languageCode}/features/${this.baseFeature?.slug ?? ''}`;
+  }
+
   private inlineReferenceHtml(externalLinks: FeatureLink[], relatedLinks: RelatedPageLink[]): string {
     const resourcesLabel = this.t('featureDetail.resources', 'Resources').replace(/[:：]\s*$/u, '');
     const exploreLabel = this.t('featureDetail.exploreAlso', 'Explore also').replace(/[:：]\s*$/u, '');
