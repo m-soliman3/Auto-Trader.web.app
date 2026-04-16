@@ -114,14 +114,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="help-keywords" [attr.aria-label]="t('home.help.ariaLabel', 'Helpful AutoTrader topics')">
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" class="help-keyword-link">algorithmic trading</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">choose a platform</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" class="help-keyword-link">experienced traders</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" class="help-keyword-link">real time</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" class="help-keyword-link">trades automatically</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">trading platforms</a>
-      <a href="#how-it-works" class="help-keyword-link">trading strategy</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" class="help-keyword-link">trading systems</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" class="help-keyword-link">{{ 'home.features.aiSignals.title' | translate }}</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" class="help-keyword-link">{{ 'home.features.multiExchange.title' | translate }}</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" class="help-keyword-link">{{ 'home.features.riskManagement.title' | translate }}</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" class="help-keyword-link">{{ 'home.features.backtesting.title' | translate }}</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" class="help-keyword-link">{{ 'home.features.smartAlerts.title' | translate }}</a>
+      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" class="help-keyword-link">{{ 'home.features.noCode.title' | translate }}</a>
     </div>
   </div>
 </section>
