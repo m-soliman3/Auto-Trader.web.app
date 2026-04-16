@@ -15,6 +15,8 @@ import { StrategiesPage } from './pages/strategies';
 import { PortfolioManagementPage } from './pages/portfolio-management';
 import { BackendRunnerPage } from './pages/backend-runner';
 import { FeatureDetailPage } from './pages/features/feature-detail';
+import { BillingCheckoutPage } from './pages/billing-checkout';
+import { BillingManagePage } from './pages/billing-manage';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
@@ -138,6 +140,18 @@ const coreRoutes: Routes = [
         title: 'Settings — AutoTrader | Account & Platform Preferences',
       },
     ],
+  },
+  {
+    path: 'billing/checkout',
+    component: BillingCheckoutPage,
+    canActivate: [authGuard],
+    title: 'Secure Checkout — AutoTrader | Upgrade to Premium',
+  },
+  {
+    path: 'billing/manage',
+    component: BillingManagePage,
+    canActivate: [authGuard],
+    title: 'Billing Management — AutoTrader | History & Subscription Controls',
   },
   {
     path: 'features/:slug',

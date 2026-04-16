@@ -32,6 +32,12 @@ export interface User {
     status?: string;
     priceUsd?: number;
     renewedAt?: string;
+    stripeCustomerId?: string;
+    stripeSubscriptionId?: string;
+    currentPeriodEnd?: string;
+    cancelAtPeriodEnd?: boolean;
+    canceledAt?: string;
+    canceledBy?: string;
   };
 }
 
@@ -140,6 +146,20 @@ export class AuthService {
     const email = this.accountDetails()?.email ?? this.currentUser()?.email ?? '';
     if (!email) return 'No email is available for this account.';
     return this.sendPasswordResetEmail(email);
+  }
+
+  async reloadCurrentUserProfile(): Promise<void> {
+    const fbUser = this.fireAuth.currentUser;
+    if (!fbUser) {
+      this.currentUser.set(null);
+      return;
+    }
+
+    const ref = doc(this.firestore, 'users', fbUser.uid);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      this.currentUser.set(snap.data() as User);
+    }
   }
 
   async changeEmailAddress(nextEmail: string): Promise<string | null> {

@@ -46,3 +46,8 @@ Thumbs.db
 # Python cache files
 __pycache__/
 *.pyc
+
+# Local runtime secrets
+functions/.env
+functions/.env.*
+functions/.runtimeconfig.json

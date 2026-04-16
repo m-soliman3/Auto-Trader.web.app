@@ -348,6 +348,55 @@
   margin: 0;
 }
 
+/* ── MORE FEATURES + ACCOUNT LINKS ── */
+.fp-more-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.fp-more-feature-card {
+  display: block;
+  text-decoration: none;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.15rem;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: rgba(0, 209, 122, 0.4);
+    transform: translateY(-2px);
+  }
+
+  h3 {
+    margin: 0.45rem 0 0.35rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+}
+
+.fp-more-feature-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.fp-account-links {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
 /* ── CTA BANNER ── */
 .fp-cta-banner {
   background: linear-gradient(135deg, rgba(0, 209, 122, 0.12) 0%, rgba(0, 168, 255, 0.08) 100%);
@@ -397,4 +446,5 @@
 @media (max-width: 600px) {
   .fp-benefits-grid { grid-template-columns: 1fr; }
   .fp-links-grid    { grid-template-columns: 1fr; }
+  .fp-more-features-grid { grid-template-columns: 1fr; }
 }

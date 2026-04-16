@@ -38,6 +38,40 @@ firebase deploy      # deploy hosting (and functions/rules if configured)
 
 For rules only use `firebase deploy --only firestore:rules`.
 
+## Parallel Staging App (Safe Feature Testing)
+
+This repository supports a parallel staging web app using a separate Firebase Hosting target.
+
+One-time setup (already wired in config files, run only once per Firebase project):
+
+```bash
+# Create a separate hosting site for staging
+firebase hosting:sites:create autotrader-b8851-staging
+
+# Ensure target mappings are applied (if needed)
+firebase target:apply hosting prod autotrader-b8851
+firebase target:apply hosting staging autotrader-b8851-staging
+```
+
+Deploy commands:
+
+```bash
+# Production app (main branch)
+npm run deploy:prod
+
+# Parallel staging app (feature/staging branch)
+npm run deploy:staging
+
+# Optional temporary preview channel on staging target
+npm run deploy:staging:preview
+```
+
+Recommended branch flow:
+
+- Use `main` for production deployments.
+- Use a dedicated branch (for example `staging` or `develop`) for testing new features.
+- Deploy that branch to the staging target so production remains unchanged.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.5.
 
 ## Development server

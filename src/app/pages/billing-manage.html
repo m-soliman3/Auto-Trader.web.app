@@ -1,0 +1,77 @@
+<div class="billing-page">
+  <div class="billing-card">
+    <header class="billing-header">
+      <h1>Billing Management</h1>
+      <p>View your subscription status, invoice history, and cancellation options.</p>
+    </header>
+
+    @if (loading()) {
+      <div class="status ok">Loading billing data...</div>
+    }
+
+    @if (errorMessage()) {
+      <div class="status err">{{ errorMessage() }}</div>
+    }
+
+    @if (statusMessage()) {
+      <div class="status ok">{{ statusMessage() }}</div>
+    }
+
+    @if (overview(); as data) {
+      <section class="summary-grid">
+        <article>
+          <span class="label">Plan</span>
+          <strong>{{ data.plan | titlecase }}</strong>
+        </article>
+        <article>
+          <span class="label">Status</span>
+          <strong>{{ data.status }}</strong>
+        </article>
+        <article>
+          <span class="label">Cancel at period end</span>
+          <strong>{{ data.cancelAtPeriodEnd ? 'Yes' : 'No' }}</strong>
+        </article>
+        <article>
+          <span class="label">Current period ends</span>
+          <strong>{{ formatDate(data.currentPeriodEnd) }}</strong>
+        </article>
+      </section>
+
+      <div class="billing-actions">
+        <a class="secondary-btn" routerLink="/settings/billing">Back to Billing</a>
+        @if (canCancel()) {
+          <button type="button" class="danger-btn" [disabled]="cancelLoading()" (click)="cancelAtPeriodEnd()">
+            {{ cancelLoading() ? 'Requesting cancellation...' : 'Cancel at period end' }}
+          </button>
+        }
+      </div>
+
+      <section class="history-section">
+        <h2>Billing History</h2>
+        @if (data.invoices.length === 0) {
+          <p class="muted">No invoices available yet.</p>
+        } @else {
+          <div class="history-list">
+            @for (invoice of data.invoices; track invoice.id) {
+              <article class="invoice-item">
+                <div class="invoice-main">
+                  <strong>{{ formatMoney(invoice.amountPaid, invoice.currency) }}</strong>
+                  <span>{{ invoice.status }}</span>
+                </div>
+                <div class="invoice-meta">
+                  <span>{{ formatDate(invoice.createdAt) }}</span>
+                  @if (invoice.hostedInvoiceUrl) {
+                    <a [href]="invoice.hostedInvoiceUrl" target="_blank" rel="noreferrer">Open invoice</a>
+                  }
+                  @if (!invoice.hostedInvoiceUrl && invoice.invoicePdf) {
+                    <a [href]="invoice.invoicePdf" target="_blank" rel="noreferrer">Download PDF</a>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+    }
+  </div>
+</div>

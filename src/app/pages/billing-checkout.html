@@ -1,0 +1,134 @@
+<div class="checkout-page">
+  <div class="checkout-card">
+    <header class="checkout-header">
+      <h1>Premium Checkout</h1>
+      <p>Start your monthly Premium subscription securely inside AutoTrader.</p>
+    </header>
+
+    <section class="checkout-summary">
+      <div>
+        <span class="label">Plan</span>
+        <strong>Premium</strong>
+      </div>
+      <div>
+        <span class="label">Price</span>
+        <strong>$10 / month</strong>
+      </div>
+    </section>
+
+    <section class="method-picker">
+      <h2>Choose payment method</h2>
+
+      <label class="method-option" [class.active]="isMethodSelected('card')">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('card')"
+          (change)="selectPaymentMethod('card')"
+        />
+        <span>Credit / Debit Card</span>
+      </label>
+
+      <label class="method-option" [class.active]="isMethodSelected('applePay')" [class.disabled]="!supportsApplePay()">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('applePay')"
+          (change)="selectPaymentMethod('applePay')"
+          [disabled]="!supportsApplePay()"
+        />
+        <span>Apple Pay</span>
+      </label>
+
+      <label class="method-option" [class.active]="isMethodSelected('googlePay')" [class.disabled]="!supportsGooglePay()">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('googlePay')"
+          (change)="selectPaymentMethod('googlePay')"
+          [disabled]="!supportsGooglePay()"
+        />
+        <span>Google Pay</span>
+      </label>
+
+      <label class="method-option" [class.active]="isMethodSelected('paypal')">
+        <input
+          type="radio"
+          name="payment-method"
+          [checked]="isMethodSelected('paypal')"
+          (change)="selectPaymentMethod('paypal')"
+        />
+        <span>PayPal</span>
+      </label>
+    </section>
+
+    <section class="method-panel" [class.method-hidden]="!isMethodSelected('card')">
+    <div class="field-group">
+      <label for="cardholder-name">Cardholder name</label>
+      <input
+        id="cardholder-name"
+        type="text"
+        [value]="cardholderName()"
+        (input)="cardholderName.set($any($event.target).value)"
+        placeholder="John Doe"
+        autocomplete="cc-name"
+      />
+    </div>
+
+    <div class="field-group">
+      <label for="billing-email">Billing email</label>
+      <input
+        id="billing-email"
+        type="email"
+        [value]="billingEmail()"
+        (input)="billingEmail.set($any($event.target).value)"
+        placeholder="you@example.com"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="field-group">
+      <label>Card details</label>
+      <div id="card-element" class="card-element"></div>
+    </div>
+    <button
+      type="button"
+      class="primary-btn method-submit"
+      (click)="payAndActivatePremium()"
+      [disabled]="isInitializing() || isProcessing()"
+    >
+      {{ isProcessing() ? 'Processing...' : 'Subscribe with Card for $10/month' }}
+    </button>
+    </section>
+
+    <section class="alt-payments method-panel" [class.method-hidden]="!(isMethodSelected('applePay') || isMethodSelected('googlePay'))">
+      <h2>{{ walletPanelTitle() }}</h2>
+      <p>{{ walletLabel() }}</p>
+      <div id="wallet-button" class="wallet-button" [class.wallet-hidden]="!walletReady()"></div>
+      @if (walletError()) {
+        <div class="status err">{{ walletError() }}</div>
+      }
+    </section>
+
+    <section class="alt-payments method-panel" [class.method-hidden]="!isMethodSelected('paypal')">
+      <h2>PayPal</h2>
+      <p>Subscribe with PayPal and return here for instant activation.</p>
+      <button type="button" class="paypal-btn" [disabled]="paypalLoading() || isProcessing()" (click)="startPayPalSubscription()">
+        {{ paypalLoading() ? 'Redirecting to PayPal...' : 'Subscribe with PayPal' }}
+      </button>
+    </section>
+
+    @if (statusMessage()) {
+      <div class="status ok">{{ statusMessage() }}</div>
+    }
+
+    @if (errorMessage()) {
+      <div class="status err">{{ errorMessage() }}</div>
+    }
+
+    <div class="actions">
+      <a routerLink="/settings/billing" class="secondary-btn">Back</a>
+      <a routerLink="/billing/manage" class="secondary-btn">Manage billing</a>
+    </div>
+  </div>
+</div>

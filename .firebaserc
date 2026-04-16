@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "autotrader-b8851"
-  }
+  },
+  "targets": {
+    "autotrader-b8851": {
+      "hosting": {
+        "prod": [
+          "autotrader-b8851"
+        ],
+        "staging": [
+          "autotrader-b8851-staging"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

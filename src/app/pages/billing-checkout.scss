@@ -1,0 +1,259 @@
+.checkout-page {
+  min-height: 100dvh;
+  padding: 2rem 1rem;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(0, 209, 122, 0.14), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.12), transparent 40%),
+    var(--bg);
+}
+
+.checkout-card {
+  width: min(100%, 520px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.16);
+}
+
+.checkout-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.checkout-header p {
+  margin-top: 0.45rem;
+  margin-bottom: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-size: 0.94rem;
+}
+
+.checkout-summary {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.checkout-summary > div {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.7rem 0.75rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.checkout-summary strong {
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.method-picker {
+  margin-bottom: 0.9rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.method-picker h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.method-option {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.method-option input {
+  accent-color: #00d17a;
+}
+
+.method-option.active {
+  border-color: rgba(0, 209, 122, 0.45);
+  color: var(--text-primary);
+  background: rgba(0, 209, 122, 0.08);
+}
+
+.method-option.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.method-panel {
+  margin-top: 0.3rem;
+}
+
+.method-hidden {
+  display: none;
+}
+
+.field-group {
+  display: grid;
+  gap: 0.42rem;
+  margin-bottom: 0.8rem;
+}
+
+.field-group label {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.field-group input {
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface-2);
+  color: var(--text-primary);
+  padding: 0.66rem 0.78rem;
+  font: inherit;
+}
+
+.field-group input:focus {
+  outline: none;
+  border-color: rgba(0, 209, 122, 0.6);
+  box-shadow: 0 0 0 3px rgba(0, 209, 122, 0.16);
+}
+
+.card-element {
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface-2);
+  padding: 0.72rem 0.78rem;
+}
+
+.alt-payments {
+  margin-top: 0.9rem;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.alt-payments h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.alt-payments p {
+  margin: 0.4rem 0 0.6rem;
+  color: var(--text-secondary);
+  font-size: 0.87rem;
+}
+
+.wallet-button {
+  min-height: 44px;
+}
+
+.wallet-hidden {
+  display: none;
+}
+
+.paypal-btn {
+  border: 1px solid #fbbf24;
+  border-radius: 11px;
+  background: linear-gradient(120deg, #fbbf24, #f59e0b);
+  color: #1f2937;
+  font-weight: 700;
+  padding: 0.62rem 0.9rem;
+  cursor: pointer;
+}
+
+.paypal-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.method-submit {
+  width: 100%;
+}
+
+.status {
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.9rem;
+  margin-top: 0.65rem;
+}
+
+.status.ok {
+  background: rgba(0, 209, 122, 0.1);
+  border: 1px solid rgba(0, 209, 122, 0.28);
+  color: var(--accent);
+}
+
+.status.err {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  color: #ef4444;
+}
+
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
+.secondary-btn,
+.primary-btn {
+  border-radius: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.62rem 0.9rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  color: var(--text-secondary);
+  border-color: var(--border);
+  background: transparent;
+}
+
+.primary-btn {
+  color: #012012;
+  background: linear-gradient(120deg, #00d17a, #38bdf8);
+}
+
+.primary-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .checkout-page {
+    padding: 1rem 0.7rem;
+  }
+
+  .checkout-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions .secondary-btn,
+  .actions .primary-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

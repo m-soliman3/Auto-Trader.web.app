@@ -40,7 +40,6 @@ export class Settings {
   resetStatus = signal('');
   resetError = signal('');
   resetLoading = signal(false);
-  billingStatus = signal('');
   activeSection = signal<SettingsSectionId>('display');
 
   draftTheme = signal<'dark' | 'light'>(this.theme.themeName());
@@ -262,8 +261,8 @@ export class Settings {
     this.resetStatus.set('Password reset email sent. Check your inbox.');
   }
 
-  triggerDummyCheckout() {
-    this.billingStatus.set('Demo checkout only: no payment was processed. Premium activation is handled manually by admin.');
+  startPremiumCheckout() {
+    void this.router.navigate(['/billing', 'checkout']);
   }
 
   private syncDisplayDraftFromPersisted() {

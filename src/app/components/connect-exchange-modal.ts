@@ -75,8 +75,10 @@ export class ConnectExchangeModal {
       return;
     }
 
-    if (!this.subscription.canCreate('exchange', this.exchangeService.connections().length)) {
-      this.error.set('Free plan limit reached: you can connect only 1 exchange connection. Upgrade to Premium for $10/month to add more.');
+    try {
+      this.subscription.assertCanCreate('exchange', this.exchangeService.connections().length);
+    } catch (err: any) {
+      this.error.set(err?.message || 'You reached your plan limit for exchange connections.');
       return;
     }
 

@@ -207,7 +207,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li>{{ 'settings.premiumFeature2' | translate }}</li>
             <li>{{ 'settings.premiumFeature3' | translate }}</li>
           </ul>
-          <button type="button" class="display-save-btn" (click)="triggerDummyCheckout()">{{ 'settings.startPremiumDemo' | translate }}</button>
+          <button type="button" class="display-save-btn" (click)="startPremiumCheckout()">{{ 'settings.startPremiumDemo' | translate }}</button>
         </article>
       </div>
 
@@ -215,9 +215,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         {{ 'settings.billingNote' | translate }}
       </div>
 
-      @if (billingStatus()) {
-        <div class="status ok">{{ billingStatus() }}</div>
-      }
+      <div class="billing-actions-row">
+        <a routerLink="/billing/manage" class="secondary-btn">Manage Billing</a>
+      </div>
+
     </section>
     }
 

@@ -561,6 +561,42 @@
   margin: 0 auto;
 }
 
+/* ── HOW AUTOTRADER HELPS ── */
+.help-header {
+  margin-bottom: 2rem;
+}
+
+.help-keywords {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.help-keyword-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--surface-raised) 88%, var(--accent) 12%);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  border-radius: 999px;
+  min-height: 2.8rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(0, 209, 122, 0.18);
+  }
+}
+
 /* ── CTA BANNER ── */
 .cta-banner {
   background: linear-gradient(135deg, rgba(0,209,122,0.15) 0%, rgba(0,168,255,0.1) 100%);
@@ -634,11 +670,13 @@
 @media (max-width: 900px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .steps-grid { grid-template-columns: 1fr; &::before { display: none; } }
+  .help-keywords { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 600px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .features-grid { grid-template-columns: 1fr; }
+  .help-keywords { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; text-align: center; }
   .hero-graph { padding: 1.1rem 0.95rem; }
   .graph-inputs,
