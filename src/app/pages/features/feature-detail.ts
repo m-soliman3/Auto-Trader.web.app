@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, SecurityContext, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -804,9 +804,9 @@ export class FeatureDetailPage implements OnInit {
       .split('\n\n')
       .map((paragraph) => paragraph.trim())
       .filter(Boolean);
-    this.overviewParagraphs = this.overviewParagraphs.map((paragraph) => this.linkifyText(paragraph));
-    this.overviewParagraphs.push(referencesHtml);
-    this.howItWorksHtml = `${this.linkifyText(translatedHowItWorks)}<br><br>${referencesHtml}`;
+    this.overviewParagraphs = this.overviewParagraphs.map((paragraph) => this.sanitizeHtml(this.linkifyText(paragraph)));
+    this.overviewParagraphs.push(this.sanitizeHtml(referencesHtml));
+    this.howItWorksHtml = this.sanitizeHtml(`${this.linkifyText(translatedHowItWorks)}<br><br>${referencesHtml}`);
 
     this.otherFeatures = Object.values(FEATURES)
       .filter((feature) => feature.slug !== base.slug)
@@ -836,24 +836,47 @@ export class FeatureDetailPage implements OnInit {
     const exploreLabel = this.t('featureDetail.exploreAlso', 'Explore also').replace(/[:：]\s*$/u, '');
     const resources = externalLinks
       .slice(0, 2)
-      .map((link) => this.inlineAnchor(link.url, link.label))
+      .map((link) => this.inlineAnchor(link.url, link.label, true))
       .join(' · ');
     const related = relatedLinks
-      .map((link) => this.inlineAnchor(this.featurePageUrl(link.slug), link.label))
+      .map((link) => this.inlineAnchor(this.featurePageUrl(link.slug), link.label, false))
       .join(' · ');
     return `${this.escapeHtml(resourcesLabel)}: ${resources}<br>${this.escapeHtml(exploreLabel)}: ${related}`;
   }
 
-  private inlineAnchor(url: string, label: string): string {
-    return `<a href="${this.escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${this.escapeHtml(label)}</a>`;
+  private inlineAnchor(url: string, label: string, openInNewTab: boolean): string {
+    const target = openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+    return `<a href="${this.escapeHtml(url)}"${target}>${this.escapeHtml(label)}</a>`;
   }
 
   private linkifyText(text: string): string {
     const escaped = this.escapeHtml(text);
     return escaped.replace(
-      /(https?:\/\/[^\s<>"']+)/g,
-      '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+      /\bhttps?:\/\/[a-z0-9.-]+\.[a-z]{2,}(?:[^\s<>"']*)/gi,
+      (rawUrl) => {
+        const url = rawUrl.replace(/[.,!?;:)]+$/g, '');
+        const trailing = rawUrl.slice(url.length);
+        const normalizedUrl = this.normalizeUrl(url);
+        if (!normalizedUrl) {
+          return rawUrl;
+        }
+        return `<a href="${this.escapeHtml(normalizedUrl)}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
+      }
     );
+  }
+
+  private sanitizeHtml(html: string): string {
+    return this.sanitizer.sanitize(SecurityContext.HTML, html) ?? '';
+  }
+
+  private normalizeUrl(url: string): string | null {
+    const decoded = url.replaceAll('&amp;', '&');
+    try {
+      const parsed = new URL(decoded);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.href : null;
+    } catch {
+      return null;
+    }
   }
 
   private escapeHtml(text: string): string {

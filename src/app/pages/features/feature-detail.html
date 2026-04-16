@@ -32,7 +32,7 @@
       <div class="fp-related-links">
         <span class="fp-related-label">{{ 'featureDetail.exploreAlso' | translate }}</span>
         @for (link of feature.relatedLinks; track link.slug) {
-          <a [href]="featurePageUrl(link.slug)" target="_blank" rel="noopener noreferrer" class="fp-related-chip">{{ link.label }}</a>
+          <a [href]="featurePageUrl(link.slug)" class="fp-related-chip">{{ link.label }}</a>
         }
       </div>
     </div>
@@ -97,7 +97,7 @@
 
     <div class="fp-more-features-grid">
       @for (item of otherFeatures; track item.slug) {
-        <a [href]="featurePageUrl(item.slug)" target="_blank" rel="noopener noreferrer" class="fp-more-feature-card">
+        <a [href]="featurePageUrl(item.slug)" class="fp-more-feature-card">
           <span class="fp-more-feature-icon">{{ item.icon }}</span>
           <h3>{{ item.label }}</h3>
           <p>{{ item.tagline }}</p>
