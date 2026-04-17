@@ -155,6 +155,16 @@ export class Navbar {
     this.closeLangMenu();
   }
 
+  linkForLanguage(code: string): string[] {
+    const parsed = this.router.parseUrl(this.currentUrl());
+    const primary = parsed.root.children['primary'];
+    const segments = primary?.segments.map(s => s.path) ?? [];
+    const hasLangPrefix = segments.length > 0 &&
+      this.languageService.languages.some(l => l.code === segments[0]);
+    const restSegments = hasLangPrefix ? segments.slice(1) : segments;
+    return ['/', code, ...restSegments];
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickTarget = event.target;
