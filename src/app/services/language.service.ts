@@ -255,12 +255,6 @@ export class LanguageService {
       if (this.currentLang() !== first) {
         this.currentLang.set(first);
       }
-      return;
-    }
-
-    const nextUrl = this.buildUrlWithLanguage(url, this.currentLang());
-    if (nextUrl !== url) {
-      void this.router.navigateByUrl(nextUrl, { replaceUrl: true });
     }
   }
 
