@@ -1,903 +1,1954 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://invest-begin.com/en</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/login</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/login"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/login"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/login"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/login"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/login"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/signup</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/signup"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/signup"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/signup"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/signup"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/signup"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/signup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/signup"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/contact</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/contact"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/terms</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/terms"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/terms"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/privacy</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/privacy"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/disclaimer</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/disclaimer"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/exchanges</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/exchanges"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/bots</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/bots"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/bots"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/bots"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/bots"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/bots"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/bots"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/bots"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/strategies</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/strategies"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/strategies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/strategies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/strategies"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/strategies"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/strategies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/strategies"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/portfolio-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/portfolio-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/backend-runner</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/backend-runner"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/dashboard/real</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/real"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/dashboard/paper</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/paper"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/settings/display</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/display"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/settings/account</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/account"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/settings/security</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/security"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/settings/billing</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/billing"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/settings/legal</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/legal"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/ai-signals</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/ai-signals"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/multi-exchange</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/multi-exchange"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/risk-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/risk-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/backtesting</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/backtesting"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/smart-alerts</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/smart-alerts"/>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/no-code-builder</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/no-code-builder"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/login</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/login"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/login"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/login"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/login"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/login"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/signup</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/signup"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/signup"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/signup"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/signup"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/signup"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/signup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/signup"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/contact</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/contact"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/terms</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/terms"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/terms"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/privacy</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/privacy"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/disclaimer</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/disclaimer"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/exchanges</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/exchanges"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/bots</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/bots"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/bots"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/bots"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/bots"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/bots"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/bots"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/bots"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/strategies</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/strategies"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/strategies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/strategies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/strategies"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/strategies"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/strategies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/strategies"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/portfolio-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/portfolio-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/backend-runner</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/backend-runner"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/dashboard/real</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/real"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/dashboard/paper</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/paper"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/settings/display</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/display"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/settings/account</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/account"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/settings/security</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/security"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/settings/billing</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/billing"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/settings/legal</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/legal"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/features/ai-signals</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/ai-signals"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/features/multi-exchange</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/multi-exchange"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/features/risk-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/risk-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/features/backtesting</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/backtesting"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/features/smart-alerts</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/smart-alerts"/>
   </url>
   <url>
     <loc>https://invest-begin.com/de/features/no-code-builder</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/no-code-builder"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/login</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/login"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/login"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/login"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/login"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/login"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/signup</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/signup"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/signup"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/signup"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/signup"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/signup"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/signup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/signup"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/contact</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/contact"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/terms</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/terms"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/terms"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/privacy</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/privacy"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/disclaimer</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/disclaimer"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/exchanges</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/exchanges"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/bots</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/bots"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/bots"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/bots"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/bots"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/bots"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/bots"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/bots"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/strategies</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/strategies"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/strategies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/strategies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/strategies"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/strategies"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/strategies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/strategies"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/portfolio-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/portfolio-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/backend-runner</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/backend-runner"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/dashboard/real</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/real"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/dashboard/paper</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/paper"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/settings/display</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/display"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/settings/account</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/account"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/settings/security</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/security"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/settings/billing</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/billing"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/settings/legal</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/legal"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/features/ai-signals</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/ai-signals"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/features/multi-exchange</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/multi-exchange"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/features/risk-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/risk-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/features/backtesting</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/backtesting"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/features/smart-alerts</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/smart-alerts"/>
   </url>
   <url>
     <loc>https://invest-begin.com/es/features/no-code-builder</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/no-code-builder"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/login</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/login"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/login"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/login"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/login"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/login"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/signup</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/signup"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/signup"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/signup"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/signup"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/signup"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/signup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/signup"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/contact</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/contact"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/terms</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/terms"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/terms"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/privacy</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/privacy"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/disclaimer</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/disclaimer"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/exchanges</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/exchanges"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/bots</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/bots"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/bots"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/bots"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/bots"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/bots"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/bots"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/bots"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/strategies</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/strategies"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/strategies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/strategies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/strategies"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/strategies"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/strategies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/strategies"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/portfolio-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/portfolio-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/backend-runner</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/backend-runner"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/dashboard/real</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/real"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/dashboard/paper</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/paper"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/settings/display</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/display"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/settings/account</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/account"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/settings/security</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/security"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/settings/billing</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/billing"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/settings/legal</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/legal"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/features/ai-signals</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/ai-signals"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/features/multi-exchange</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/multi-exchange"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/features/risk-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/risk-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/features/backtesting</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/backtesting"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/features/smart-alerts</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/smart-alerts"/>
   </url>
   <url>
     <loc>https://invest-begin.com/fr/features/no-code-builder</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/no-code-builder"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/login</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/login"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/login"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/login"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/login"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/login"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/signup</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/signup"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/signup"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/signup"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/signup"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/signup"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/signup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/signup"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/contact</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/contact"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/terms</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/terms"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/terms"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/privacy</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/privacy"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/disclaimer</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/disclaimer"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/exchanges</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/exchanges"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/bots</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/bots"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/bots"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/bots"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/bots"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/bots"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/bots"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/bots"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/strategies</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/strategies"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/strategies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/strategies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/strategies"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/strategies"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/strategies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/strategies"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/portfolio-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/portfolio-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/backend-runner</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/backend-runner"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/dashboard/real</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/real"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/dashboard/paper</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/paper"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/settings/display</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/display"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/settings/account</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/account"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/settings/security</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/security"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/settings/billing</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/billing"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/settings/legal</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/legal"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/features/ai-signals</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/ai-signals"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/features/multi-exchange</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/multi-exchange"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/features/risk-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/risk-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/features/backtesting</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/backtesting"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/features/smart-alerts</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/smart-alerts"/>
   </url>
   <url>
     <loc>https://invest-begin.com/pt/features/no-code-builder</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/no-code-builder"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/login</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/login"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/login"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/login"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/login"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/login"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/signup</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/signup"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/signup"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/signup"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/signup"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/signup"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/signup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/signup"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/contact</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/contact"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/terms</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/terms"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/terms"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/terms"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/terms"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/privacy</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/privacy"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/disclaimer</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/disclaimer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/disclaimer"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/exchanges</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/exchanges"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/exchanges"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/bots</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/bots"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/bots"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/bots"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/bots"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/bots"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/bots"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/bots"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/strategies</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/strategies"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/strategies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/strategies"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/strategies"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/strategies"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/strategies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/strategies"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/portfolio-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/portfolio-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/portfolio-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/backend-runner</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/backend-runner"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/backend-runner"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/dashboard/real</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/real"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/real"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/dashboard/paper</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/dashboard/paper"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/dashboard/paper"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/settings/display</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/display"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/display"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/settings/account</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/account"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/account"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/settings/security</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/security"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/security"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/settings/billing</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/billing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/billing"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/settings/legal</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/settings/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/settings/legal"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/ai-signals</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/ai-signals"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/ai-signals"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/multi-exchange</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/multi-exchange"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/multi-exchange"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/risk-management</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/risk-management"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/risk-management"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/backtesting</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/backtesting"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/backtesting"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/smart-alerts</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/smart-alerts"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/smart-alerts"/>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/no-code-builder</loc>
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://invest-begin.com/en/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://invest-begin.com/de/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://invest-begin.com/es/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://invest-begin.com/fr/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://invest-begin.com/pt/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://invest-begin.com/ar/features/no-code-builder"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://invest-begin.com/en/features/no-code-builder"/>
   </url>
 </urlset>
