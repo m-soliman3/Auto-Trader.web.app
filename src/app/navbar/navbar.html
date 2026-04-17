@@ -49,7 +49,7 @@
             class="lang-selector-btn"
             (click)="toggleLangMenu()"
             [attr.aria-expanded]="langMenuOpen()"
-            aria-haspopup="listbox"
+            aria-haspopup="menu"
             [attr.aria-label]="'language.selectLanguage' | translate"
           >
             <span class="lang-flag">{{ languageService.getCurrentLanguage().flag }}</span>
@@ -58,18 +58,19 @@
           </button>
 
           @if (langMenuOpen()) {
-            <div class="lang-menu" role="listbox" [attr.aria-label]="'language.selectLanguage' | translate">
+            <div class="lang-menu" role="menu" [attr.aria-label]="'language.selectLanguage' | translate">
               @for (lang of languageService.languages; track lang.code) {
-                <button
+                <a
                   class="lang-menu-item"
-                  role="option"
+                  role="menuitem"
+                  [routerLink]="linkForLanguage(lang.code)"
                   [class.active]="languageService.currentLang() === lang.code"
-                  [attr.aria-selected]="languageService.currentLang() === lang.code"
-                  (click)="selectLanguage(lang.code)"
+                  [attr.aria-current]="languageService.currentLang() === lang.code ? 'page' : null"
+                  (click)="closeLangMenu()"
                 >
                   <span class="lang-flag">{{ lang.flag }}</span>
                   <span class="lang-name">{{ lang.label }}</span>
-                </button>
+                </a>
               }
             </div>
           }
