@@ -797,6 +797,7 @@ export class FeatureDetailPage implements OnInit {
       externalLinks: translatedExternalLinks,
       relatedLinks: translatedRelatedLinks,
     };
+    this.document.title = this.feature.metaTitle;
 
     const referencesHtml = this.inlineReferenceHtml(translatedExternalLinks, translatedRelatedLinks);
 
