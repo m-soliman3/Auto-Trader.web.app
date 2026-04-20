@@ -3,8 +3,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { LANGUAGES } from './language.service';
+import { authGuard } from '../guards/auth.guard';
 
 const BASE_URL = 'https://invest-begin.com';
+const PAYWALL_SCHEMA_SCRIPT_SELECTOR = 'script[data-schema="paywall"]';
 
 @Injectable({ providedIn: 'root' })
 export class HreflangService {
@@ -25,6 +27,7 @@ export class HreflangService {
     const canonicalPath = this.getCanonicalPath(url);
     this.setHreflangTags(canonicalPath);
     this.setCanonicalTag(url, canonicalPath);
+    this.setPaywallStructuredData(this.isCurrentRouteProtected());
   }
 
   /**
@@ -88,5 +91,39 @@ export class HreflangService {
   private removeExistingHreflangTags(): void {
     const existing = this.document.querySelectorAll('link[rel="alternate"][hreflang]');
     existing.forEach((el) => el.parentNode?.removeChild(el));
+  }
+
+  private setPaywallStructuredData(isProtectedPath: boolean): void {
+    const existing = this.document.querySelector<HTMLScriptElement>(PAYWALL_SCHEMA_SCRIPT_SELECTOR);
+
+    if (!isProtectedPath) {
+      existing?.parentNode?.removeChild(existing);
+      return;
+    }
+
+    const script = existing ?? this.document.createElement('script');
+    script.setAttribute('type', 'application/ld+json');
+    script.setAttribute('data-schema', 'paywall');
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      isAccessibleForFree: false,
+    });
+
+    if (!existing) {
+      this.document.head.appendChild(script);
+    }
+  }
+
+  private isCurrentRouteProtected(): boolean {
+    let route = this.router.routerState.snapshot.root;
+
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    return route.pathFromRoot.some((snapshot) =>
+      (snapshot.routeConfig?.canActivate ?? []).some((guard) => guard === authGuard)
+    );
   }
 }
