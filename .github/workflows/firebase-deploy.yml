@@ -25,15 +25,24 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with: 
+        with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            functions/package-lock.json
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
       - name: Build Angular app
         run: npm run build
+
+      - name: Install Functions dependencies
+        run: npm --prefix functions ci
+
+      - name: Build Functions
+        run: npm --prefix functions run build
 
       - name: Validate WIF configuration
         run: |
@@ -43,14 +52,43 @@ jobs:
             exit 1
           fi
 
+      - name: Prepare WIF inputs
+        id: wif
+        run: |
+          provider='${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          provider="${provider#//iam.googleapis.com/}"
+          provider="${provider#https://iam.googleapis.com/}"
+
+          if [[ -z "$provider" ]]; then
+            echo "GCP_WORKLOAD_IDENTITY_PROVIDER resolved to an empty value."
+            exit 1
+          fi
+
+          audience="//iam.googleapis.com/$provider"
+
+          echo "provider=$provider" >> "$GITHUB_OUTPUT"
+          echo "audience=$audience" >> "$GITHUB_OUTPUT"
+
       - name: Authenticate to Google Cloud (WIF)
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: '${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          workload_identity_provider: '${{ steps.wif.outputs.provider }}'
           service_account: '${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}'
+          audience: '${{ steps.wif.outputs.audience }}'
           create_credentials_file: true
           export_environment_variables: true
+
+      - name: WIF troubleshooting hint
+        if: ${{ failure() && steps.auth.conclusion == 'failure' }}
+        run: |
+          echo "google-github-actions/auth failed."
+          echo "If you see unauthorized_client with 'attribute condition', fix the Workload Identity Provider condition to allow this repo/branch."
+          echo "Expected repo claim: ${{ github.repository }}"
+          echo "Expected ref claim:  ${{ github.ref }}"
+          echo "Current audience:    ${{ steps.wif.outputs.audience }}"
+          echo "If your provider condition checks assertion.aud, ensure it matches the audience above."
+          exit 1
 
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
@@ -58,4 +96,4 @@ jobs:
       - name: Deploy to Firebase
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
-        run: firebase deploy --project autotrader-b8851 --non-interactive --only hosting,functions,firestore:rules
+        run: firebase deploy --project autotrader-b8851 --non-interactive --only hosting:prod,functions,firestore:rules
