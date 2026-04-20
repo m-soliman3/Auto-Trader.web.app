@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { LANGUAGES } from './language.service';
+import { authGuard } from '../guards/auth.guard';
 
 const BASE_URL = 'https://invest-begin.com';
 const PAYWALL_SCHEMA_SCRIPT_SELECTOR = 'script[data-schema="paywall"]';
@@ -121,6 +122,8 @@ export class HreflangService {
       route = route.firstChild;
     }
 
-    return route.pathFromRoot.some((snapshot) => (snapshot.routeConfig?.canActivate?.length ?? 0) > 0);
+    return route.pathFromRoot.some((snapshot) =>
+      (snapshot.routeConfig?.canActivate ?? []).some((guard) => guard === authGuard)
+    );
   }
 }
