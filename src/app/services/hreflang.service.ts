@@ -6,18 +6,6 @@ import { LANGUAGES } from './language.service';
 
 const BASE_URL = 'https://invest-begin.com';
 const PAYWALL_SCHEMA_SCRIPT_SELECTOR = 'script[data-schema="paywall"]';
-const PROTECTED_PATH_PATTERNS = [
-  /^\/exchanges(?:\/|$)/,
-  /^\/bots(?:\/|$)/,
-  /^\/strategies(?:\/|$)/,
-  /^\/portfolio-management(?:\/|$)/,
-  /^\/backend-runner(?:\/|$)/,
-  /^\/dashboard(?:\/|$)/,
-  /^\/trade(?:\/|$)/,
-  /^\/settings(?:\/|$)/,
-  /^\/billing\/checkout(?:\/|$)/,
-  /^\/billing\/manage(?:\/|$)/,
-];
 
 @Injectable({ providedIn: 'root' })
 export class HreflangService {
@@ -38,7 +26,7 @@ export class HreflangService {
     const canonicalPath = this.getCanonicalPath(url);
     this.setHreflangTags(canonicalPath);
     this.setCanonicalTag(url, canonicalPath);
-    this.setPaywallStructuredData(canonicalPath);
+    this.setPaywallStructuredData(this.isCurrentRouteProtected());
   }
 
   /**
@@ -104,10 +92,10 @@ export class HreflangService {
     existing.forEach((el) => el.parentNode?.removeChild(el));
   }
 
-  private setPaywallStructuredData(canonicalPath: string): void {
+  private setPaywallStructuredData(isProtectedPath: boolean): void {
     const existing = this.document.querySelector<HTMLScriptElement>(PAYWALL_SCHEMA_SCRIPT_SELECTOR);
 
-    if (!this.isProtectedPath(canonicalPath)) {
+    if (!isProtectedPath) {
       existing?.parentNode?.removeChild(existing);
       return;
     }
@@ -126,7 +114,13 @@ export class HreflangService {
     }
   }
 
-  private isProtectedPath(path: string): boolean {
-    return PROTECTED_PATH_PATTERNS.some((pattern) => pattern.test(path));
+  private isCurrentRouteProtected(): boolean {
+    let route = this.router.routerState.snapshot.root;
+
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+
+    return route.pathFromRoot.some((snapshot) => (snapshot.routeConfig?.canActivate?.length ?? 0) > 0);
   }
 }
