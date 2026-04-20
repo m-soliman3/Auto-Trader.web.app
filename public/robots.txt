@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /dashboard/
-Disallow: /settings/
-Disallow: /trade/
 
 Sitemap: https://invest-begin.com/sitemap.xml
