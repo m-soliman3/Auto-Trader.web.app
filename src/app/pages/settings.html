@@ -25,6 +25,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <aside class="settings-sidebar" [attr.aria-label]="'settings.sectionsAria' | translate">
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'display'" (click)="setSection($event, 'display')">{{ 'settings.display' | translate }}</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'languages'" (click)="setSection($event, 'languages')">{{ 'settings.languagesAndLocales' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'account'" (click)="setSection($event, 'account')">{{ 'settings.account' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">{{ 'settings.security' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'billing'" (click)="setSection($event, 'billing')">{{ 'settings.billing' | translate }}</button>
@@ -117,6 +118,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="display-actions">
         <button type="button" class="secondary-btn" (click)="cancelDisplaySettings()" [disabled]="!displayDirty()">{{ 'settings.cancel' | translate }}</button>
         <button type="button" class="display-save-btn" (click)="saveDisplaySettings()" [disabled]="!displayDirty()">{{ 'settings.save' | translate }}</button>
+      </div>
+    </section>
+    }
+
+    @if (activeSection() === 'languages') {
+    <section class="settings-section">
+      <h2>{{ 'settings.languageAndLocaleTitle' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.languageAndLocaleSub' | translate }}</p>
+
+      <label class="language-label">{{ 'settings.preferredLanguage' | translate }}</label>
+      <div class="language-options" role="radiogroup" [attr.aria-label]="'settings.preferredLanguage' | translate">
+        @for (languageOption of supportedLanguages(); track languageOption.code) {
+          <button
+            type="button"
+            class="language-option"
+            [class.active]="draftLanguage() === languageOption.code"
+            (click)="setDraftLanguage(languageOption.code)"
+          >
+            {{ ('language.' + languageOption.code) | translate }}
+          </button>
+        }
+      </div>
+
+      @if (languageError()) {
+        <div class="status err">{{ languageError() }}</div>
+      }
+
+      <div class="display-actions">
+        <button type="button" class="secondary-btn" (click)="cancelLanguageSettings()" [disabled]="!languageDirty() || languageSaving()">{{ 'settings.cancel' | translate }}</button>
+        <button type="button" class="display-save-btn" (click)="saveLanguageSettings()" [disabled]="!languageDirty() || languageSaving()">
+          {{ languageSaving() ? ('settings.saving' | translate) : ('settings.saveLanguage' | translate) }}
+        </button>
       </div>
     </section>
     }

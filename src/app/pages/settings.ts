@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
 import { DashboardLayoutService, DashboardSectionDefinition, DashboardSectionId } from '../services/dashboard-layout.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'connectedExchanges',
@@ -16,7 +17,7 @@ const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'portfolioPerformance',
 ];
 
-type SettingsSectionId = 'display' | 'account' | 'security' | 'billing' | 'legal';
+type SettingsSectionId = 'display' | 'languages' | 'account' | 'security' | 'billing' | 'legal';
 
 @Component({
   selector: 'app-settings',
@@ -28,6 +29,7 @@ type SettingsSectionId = 'display' | 'account' | 'security' | 'billing' | 'legal
 export class Settings {
   auth = inject(AuthService);
   theme = inject(ThemeService);
+  language = inject(LanguageService);
   dashboardLayout = inject(DashboardLayoutService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -41,6 +43,10 @@ export class Settings {
   resetError = signal('');
   resetLoading = signal(false);
   activeSection = signal<SettingsSectionId>('display');
+
+  draftLanguage = signal(this.resolvePersistedPreferredLanguage());
+  languageError = signal('');
+  languageSaving = signal(false);
 
   draftTheme = signal<'dark' | 'light'>(this.theme.themeName());
   draftDashboardSections = signal<DashboardSectionDefinition[]>(this.cloneSections(this.dashboardLayout.sections()));
@@ -63,11 +69,14 @@ export class Settings {
       return !draftSection || draftSection.id !== section.id || draftSection.visible !== section.visible;
     });
   });
+  languageDirty = computed(() => this.draftLanguage() !== this.resolvePersistedPreferredLanguage());
+  supportedLanguages = computed(() => this.language.languages);
 
   draggingSectionId = signal<DashboardSectionId | null>(null);
   dropTargetSectionId = signal<DashboardSectionId | null>(null);
   saveToastMessage = signal('');
   private saveToastTimer: ReturnType<typeof setTimeout> | null = null;
+  private reloginTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     this.route.paramMap
@@ -81,6 +90,13 @@ export class Settings {
 
         void this.router.navigate(['/settings', 'display'], { replaceUrl: true });
       });
+
+    effect(() => {
+      const preferred = this.resolvePersistedPreferredLanguage();
+      if (!this.languageDirty()) {
+        this.draftLanguage.set(preferred);
+      }
+    });
   }
 
   setTheme(theme: 'dark' | 'light') {
@@ -212,6 +228,12 @@ export class Settings {
     void this.router.navigate(['/settings', sectionId]);
   }
 
+  setDraftLanguage(code: string) {
+    if (this.language.isSupportedLanguage(code)) {
+      this.draftLanguage.set(code);
+    }
+  }
+
   saveDisplaySettings() {
     this.theme.setTheme(this.draftTheme());
     this.dashboardLayout.replaceLayout(
@@ -226,6 +248,40 @@ export class Settings {
 
   cancelDisplaySettings() {
     this.syncDisplayDraftFromPersisted();
+  }
+
+  cancelLanguageSettings() {
+    this.languageError.set('');
+    this.draftLanguage.set(this.resolvePersistedPreferredLanguage());
+  }
+
+  async saveLanguageSettings() {
+    if (!this.languageDirty()) {
+      return;
+    }
+
+    this.languageError.set('');
+    this.languageSaving.set(true);
+
+    const selectedLanguage = this.draftLanguage();
+    const saveError = await this.auth.updatePreferredLanguage(selectedLanguage);
+    this.languageSaving.set(false);
+
+    if (saveError) {
+      this.languageError.set(saveError);
+      return;
+    }
+
+    this.language.setLanguage(selectedLanguage);
+    this.showSaveToast('You will have now to re-login.');
+
+    if (this.reloginTimer) {
+      clearTimeout(this.reloginTimer);
+    }
+
+    this.reloginTimer = setTimeout(() => {
+      void this.auth.logoutToLogin();
+    }, 1500);
   }
 
   async changeEmail() {
@@ -275,6 +331,15 @@ export class Settings {
     return sections.map((section) => ({ ...section }));
   }
 
+  private resolvePersistedPreferredLanguage(): string {
+    const profileLanguage = this.auth.currentUser()?.preferredLanguage;
+    if (profileLanguage && this.language.isSupportedLanguage(profileLanguage)) {
+      return profileLanguage;
+    }
+
+    return this.language.currentLang();
+  }
+
   closeSaveToast() {
     this.saveToastMessage.set('');
     if (this.saveToastTimer) {
@@ -296,6 +361,6 @@ export class Settings {
   }
 
   private isSettingsSection(value: string | null): value is SettingsSectionId {
-    return value === 'display' || value === 'account' || value === 'security' || value === 'billing' || value === 'legal';
+    return value === 'display' || value === 'languages' || value === 'account' || value === 'security' || value === 'billing' || value === 'legal';
   }
 }
