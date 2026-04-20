@@ -15,17 +15,18 @@ import {
 } from '@angular/fire/auth';
 import {
   Firestore,
-  collection,
   doc,
   setDoc,
   getDoc,
 } from '@angular/fire/firestore';
+import { LanguageService } from './language.service';
 
 export interface User {
   id: string;
   name: string;
   email: string;
   createdAt: string;
+  preferredLanguage?: string;
   plan?: string;
   subscription?: {
     active?: boolean;
@@ -53,6 +54,7 @@ export class AuthService {
   private fireAuth = inject(Auth);
   private firestore = inject(Firestore);
   private router   = inject(Router);
+  private language = inject(LanguageService);
 
   currentUser = signal<User | null>(null);
   accountDetails = signal<AuthAccountDetails | null>(null);
@@ -71,7 +73,9 @@ export class AuthService {
         const ref = doc(this.firestore, 'users', fbUser.uid);
         const snap = await getDoc(ref);
         if (snap.exists()) {
-          this.currentUser.set(snap.data() as User);
+          const storedProfile = snap.data() as User;
+          this.currentUser.set(storedProfile);
+          this.applyPreferredLanguage(storedProfile.preferredLanguage);
         } else {
           // Create and save fallback profile to Firestore
           const fallbackProfile: User = {
@@ -79,13 +83,16 @@ export class AuthService {
             name: fbUser.displayName ?? 'User',
             email: fbUser.email ?? '',
             createdAt: new Date().toISOString(),
+            preferredLanguage: this.language.getCurrentLanguage().code,
           };
           try {
             await setDoc(ref, fallbackProfile);
             this.currentUser.set(fallbackProfile);
+            this.applyPreferredLanguage(fallbackProfile.preferredLanguage);
           } catch (err) {
             console.error('failed to create user profile', err);
             this.currentUser.set(fallbackProfile);
+            this.applyPreferredLanguage(fallbackProfile.preferredLanguage);
           }
         }
       } else {
@@ -105,6 +112,7 @@ export class AuthService {
         name,
         email,
         createdAt: new Date().toISOString(),
+        preferredLanguage: this.language.getCurrentLanguage().code,
       };
       await setDoc(doc(this.firestore, 'users', cred.user.uid), profile);
       this.currentUser.set(profile);
@@ -127,7 +135,15 @@ export class AuthService {
   async logout() {
     await signOut(this.fireAuth);
     this.currentUser.set(null);
-    this.router.navigate(['/']);
+    this.accountDetails.set(null);
+    await this.router.navigate(['/', this.language.getCurrentLanguage().code]);
+  }
+
+  async logoutToLogin() {
+    await signOut(this.fireAuth);
+    this.currentUser.set(null);
+    this.accountDetails.set(null);
+    await this.router.navigate(['/', this.language.getCurrentLanguage().code, 'login']);
   }
 
   /**
@@ -158,7 +174,40 @@ export class AuthService {
     const ref = doc(this.firestore, 'users', fbUser.uid);
     const snap = await getDoc(ref);
     if (snap.exists()) {
-      this.currentUser.set(snap.data() as User);
+      const profile = snap.data() as User;
+      this.currentUser.set(profile);
+      this.applyPreferredLanguage(profile.preferredLanguage);
+    }
+  }
+
+  async updatePreferredLanguage(languageCode: string): Promise<string | null> {
+    const fbUser = this.fireAuth.currentUser;
+    if (!fbUser) {
+      return 'Please log in again to update your language settings.';
+    }
+
+    if (!this.language.isSupportedLanguage(languageCode)) {
+      return 'Selected language is not supported.';
+    }
+
+    try {
+      await setDoc(
+        doc(this.firestore, 'users', fbUser.uid),
+        { preferredLanguage: languageCode },
+        { merge: true },
+      );
+
+      this.currentUser.update((current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          preferredLanguage: languageCode,
+        };
+      });
+
+      return null;
+    } catch {
+      return 'Could not save your language preference. Please try again.';
     }
   }
 
@@ -195,6 +244,7 @@ export class AuthService {
         name: result.user.displayName ?? 'User',
         email: result.user.email ?? '',
         createdAt: new Date().toISOString(),
+        preferredLanguage: this.language.getCurrentLanguage().code,
       };
       await setDoc(doc(this.firestore,'users',profile.id),profile, { merge: true });
       this.currentUser.set(profile);
@@ -218,6 +268,16 @@ export class AuthService {
       case 'auth/too-many-requests':     return 'Too many attempts. Please try again later.';
       case 'auth/requires-recent-login': return 'Please log out and log back in, then try again.';
       default:                           return e.message ?? 'An error occurred.';
+    }
+  }
+
+  private applyPreferredLanguage(preferredLanguage?: string): void {
+    if (!preferredLanguage || !this.language.isSupportedLanguage(preferredLanguage)) {
+      return;
+    }
+
+    if (this.language.currentLang() !== preferredLanguage) {
+      this.language.setLanguage(preferredLanguage);
     }
   }
 }

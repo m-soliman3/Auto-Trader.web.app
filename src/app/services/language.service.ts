@@ -142,6 +142,10 @@ export class LanguageService {
     return LANGUAGES.find((l) => l.code === this.currentLang()) ?? LANGUAGES[0];
   }
 
+  isSupportedLanguage(code: string): boolean {
+    return LANGUAGES.some((language) => language.code === code);
+  }
+
   private getInitialLang(): string {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
