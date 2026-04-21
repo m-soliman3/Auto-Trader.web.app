@@ -1386,5 +1386,26 @@
         }
       ]
     }
+  },
+  "pageTitle": {
+    "home": "AutoTrader — Automatisez Votre Stratégie de Trading avec des Bots Intelligents & des Signaux IA",
+    "login": "Connexion — AutoTrader | Accédez à Votre Plateforme de Trading Automatisé",
+    "signup": "Inscription — AutoTrader | Commencez à Automatiser Vos Trades Aujourd'hui",
+    "contact": "Nous Contacter — AutoTrader | Support d'Automatisation de Trading",
+    "terms": "Conditions d'Utilisation — AutoTrader | Conditions Générales de la Plateforme",
+    "privacy": "Politique de Confidentialité — AutoTrader | Comment Nous Protégeons Vos Données",
+    "disclaimer": "Avertissement sur les Risques — AutoTrader | Divulgation Importante des Risques",
+    "exchanges": "Bourses Connectées — AutoTrader | Gérez +30 Intégrations de Bourses",
+    "bots": "Bots de Trading — AutoTrader | Créez & Exécutez des Bots de Stratégie Automatisés",
+    "strategies": "Stratégies de Trading — AutoTrader | Construisez & Exécutez l'Automatisation",
+    "portfolioManagement": "Gestion de Portefeuille — AutoTrader | Suivez les Performances & Positions",
+    "backendRunner": "Exécuteur de Stratégie — AutoTrader | Surveillez les Journaux d'Exécution",
+    "dashboardPaper": "Tableau de Bord Paper Trading — AutoTrader | Simulez & Testez Vos Stratégies",
+    "dashboardReal": "Tableau de Bord Trading en Direct — AutoTrader | Exécution en Temps Réel",
+    "tradeDetails": "Détails de la Transaction — AutoTrader | Résumé d'Exécution de Stratégie",
+    "settings": "Paramètres — AutoTrader | Préférences de Compte et de Plateforme",
+    "billingCheckout": "Paiement Sécurisé — AutoTrader | Passer à Premium",
+    "billingManage": "Gestion de la Facturation — AutoTrader | Historique & Contrôles d'Abonnement",
+    "feature": "Fonctionnalité — AutoTrader"
   }
 }

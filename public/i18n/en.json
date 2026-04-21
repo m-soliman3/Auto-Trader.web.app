@@ -1386,5 +1386,26 @@
         }
       ]
     }
+  },
+  "pageTitle": {
+    "home": "AutoTrader — Automate Your Trading Strategy with Smart Bots & AI Signals",
+    "login": "Login — AutoTrader | Access Your Automated Trading Platform",
+    "signup": "Sign Up — AutoTrader | Start Automating Your Trades Today",
+    "contact": "Contact Us — AutoTrader | Trading Automation Support",
+    "terms": "Terms of Service — AutoTrader | Trading Platform Terms & Conditions",
+    "privacy": "Privacy Policy — AutoTrader | How We Protect Your Data",
+    "disclaimer": "Trading Risk Disclaimer — AutoTrader | Important Risk Disclosure",
+    "exchanges": "Connected Exchanges — AutoTrader | Manage 30+ Exchange Integrations",
+    "bots": "Trading Bots — AutoTrader | Create & Run Automated Strategy Bots",
+    "strategies": "Trading Strategies — AutoTrader | Build & Execute Strategy Automation",
+    "portfolioManagement": "Portfolio Management — AutoTrader | Track Performance & Live Holdings",
+    "backendRunner": "Strategy Runner — AutoTrader | Monitor Automated Execution Logs",
+    "dashboardPaper": "Paper Trading Dashboard — AutoTrader | Simulate & Backtest Your Strategies",
+    "dashboardReal": "Live Trading Dashboard — AutoTrader | Real-Time Strategy Execution",
+    "tradeDetails": "Trade Details — AutoTrader | Strategy Execution Summary",
+    "settings": "Settings — AutoTrader | Account & Platform Preferences",
+    "billingCheckout": "Secure Checkout — AutoTrader | Upgrade to Premium",
+    "billingManage": "Billing Management — AutoTrader | History & Subscription Controls",
+    "feature": "Feature — AutoTrader"
   }
 }
