@@ -28,6 +28,7 @@ export class UsageAnalyticsService {
   private readonly auth = inject(Auth);
   private readonly firestore = inject(Firestore);
   private readonly router = inject(Router);
+  private readonly analyticsCollection = 'userAnalytics';
 
   private readonly flushIntervalMs = 30000;
   private readonly sessionLoginRecorded = new Set<string>();
@@ -59,25 +60,32 @@ export class UsageAnalyticsService {
       }
 
       this.activeUserId = user.uid;
+      void this.ensureSummaryDocument(user.uid, user.email ?? undefined);
+
+      if (!this.sessionLoginRecorded.has(user.uid)) {
+        this.sessionLoginRecorded.add(user.uid);
+        void this.recordLogin(this.summaryRef(user.uid), this.buildAuthEventContext(), user.email ?? undefined);
+      }
+
+      this.flushPendingAnalytics();
     });
   }
 
   async recordAuthEvent(userId: string, type: AuthEventType, languageCode?: string): Promise<void> {
     if (!userId) return;
 
-    const summaryRef = doc(this.firestore, 'users', userId, 'analytics', 'summary');
+    const summaryRef = this.summaryRef(userId);
     const context = this.buildAuthEventContext(languageCode);
+    const email = this.auth.currentUser?.email ?? undefined;
 
     if (type === 'signup') {
       try {
-        await setDoc(
-          summaryRef,
-          {
-            lastSignupContext: context,
-            updatedAt: serverTimestamp(),
-          },
-          { merge: true },
-        );
+        const payload: Record<string, unknown> = {
+          lastSignupContext: context,
+          updatedAt: serverTimestamp(),
+        };
+        if (email) payload['email'] = email;
+        await setDoc(summaryRef, payload, { merge: true });
       } catch (error) {
         console.error('failed to record signup analytics', error);
       }
@@ -85,7 +93,7 @@ export class UsageAnalyticsService {
     }
 
     this.sessionLoginRecorded.add(userId);
-    await this.recordLogin(summaryRef, context);
+    await this.recordLogin(summaryRef, context, email);
   }
 
   private handleNavigation(): void {
@@ -152,7 +160,7 @@ export class UsageAnalyticsService {
     if (!this.activeUserId) return;
     if (this.pendingPageViewCounts.size === 0 && this.pendingPageDurationSeconds.size === 0) return;
 
-    const summaryRef = doc(this.firestore, 'users', this.activeUserId, 'analytics', 'summary');
+    const summaryRef = this.summaryRef(this.activeUserId);
     const updatePayload: Record<string, unknown> = {
       updatedAt: serverTimestamp(),
     };
@@ -176,6 +184,7 @@ export class UsageAnalyticsService {
   private async recordLogin(
     summaryRef: ReturnType<typeof doc>,
     loginContext: AuthEventContext,
+    email?: string,
   ): Promise<void> {
     try {
       await runTransaction(this.firestore, async (transaction) => {
@@ -189,15 +198,14 @@ export class UsageAnalyticsService {
 
         const nextHistory = [loginContext, ...history].slice(0, 10);
 
-        transaction.set(
-          summaryRef,
-          {
-            lastLogins: nextHistory,
-            lastLoginContext: loginContext,
-            updatedAt: serverTimestamp(),
-          },
-          { merge: true },
-        );
+        const payload: Record<string, unknown> = {
+          lastLogins: nextHistory,
+          lastLoginContext: loginContext,
+          updatedAt: serverTimestamp(),
+        };
+        if (email) payload['email'] = email;
+
+        transaction.set(summaryRef, payload, { merge: true });
       });
     } catch (error) {
       console.error('failed to record login analytics', error);
@@ -207,7 +215,9 @@ export class UsageAnalyticsService {
   private toPageKey(url: string): string {
     const baseUrl = url.split('?')[0]?.split('#')[0] ?? '/';
     const normalized = baseUrl.trim() || '/';
-    return encodeURIComponent(normalized);
+    if (normalized === '/') return 'home';
+    // Strip leading slash, replace remaining slashes with underscores
+    return normalized.replace(/^\//, '').replace(/\//g, '_');
   }
 
   private normalizeLoginEntry(entry: unknown): AuthEventContext | null {
@@ -331,5 +341,22 @@ export class UsageAnalyticsService {
     }
 
     return 'desktop';
+  }
+
+  private summaryRef(userId: string) {
+    return doc(this.firestore, this.analyticsCollection, userId);
+  }
+
+  private async ensureSummaryDocument(userId: string, email?: string): Promise<void> {
+    try {
+      const payload: Record<string, unknown> = {
+        updatedAt: serverTimestamp(),
+        lastSeenAt: serverTimestamp(),
+      };
+      if (email) payload['email'] = email;
+      await setDoc(this.summaryRef(userId), payload, { merge: true });
+    } catch (error) {
+      console.error('failed to ensure analytics summary document', error);
+    }
   }
 }
