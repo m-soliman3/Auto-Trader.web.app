@@ -28,7 +28,7 @@ export class Signup {
   loading       = signal(false);
   error         = signal('');
   emailTouched  = signal(false);
-  socialLoading = signal<'google' | ''>('');
+  socialLoading = signal<'google' | 'binance' | ''>('');
 
   isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -40,6 +40,12 @@ export class Signup {
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
     this.router.navigate(['/dashboard']);
+  }
+
+  loginWithBinance() {
+    this.socialLoading.set('binance');
+    this.auth.loginWithBinance();
+    // Page navigates away; no need to reset loading state.
   }
 
   onSubmit() {

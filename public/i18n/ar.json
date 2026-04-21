@@ -125,7 +125,8 @@
     "forgotSendEmail": "إرسال رابط إعادة التعيين",
     "forgotSending": "جارٍ الإرسال…",
     "forgotDoneMsg": "تم إرسال رابط إعادة تعيين كلمة المرور إلى",
-    "closeForgot": "إغلاق"
+    "closeForgot": "إغلاق",
+    "continueWithBinance": "المتابعة عبر بينانس"
   },
   "signup": {
     "createAccount": "إنشاء حسابك",
@@ -149,7 +150,8 @@
     "connecting": "جارٍ الاتصال…",
     "signUpWithGoogle": "التسجيل عبر Google",
     "alreadyHaveAccount": "لديك حساب بالفعل؟",
-    "logIn": "تسجيل الدخول"
+    "logIn": "تسجيل الدخول",
+    "signUpWithBinance": "إنشاء حساب عبر بينانس"
   },
   "contact": {
     "title": "تواصل معنا",

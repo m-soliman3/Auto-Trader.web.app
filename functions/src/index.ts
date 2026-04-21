@@ -33,12 +33,13 @@ const corsHandler = cors({
   // Allow production hosting plus local dev on any localhost/127.0.0.1 port.
   origin: [
     "https://autotrader-b8851.web.app",
+    "https://autotrader-b8851-staging.web.app",
     "https://invest-begin.com",
     "https://www.invest-begin.com",
     /^http:\/\/localhost(?::\d+)?$/,
     /^http:\/\/127\.0\.0\.1(?::\d+)?$/,
   ],
-  methods: ["POST", "OPTIONS"],
+  methods: ["POST", "OPTIONS", "GET"],
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
@@ -407,6 +408,8 @@ const STRIPE_PREMIUM_PRICE_ID = defineSecret("STRIPE_PREMIUM_PRICE_ID");
 const PAYPAL_CLIENT_ID = defineSecret("PAYPAL_CLIENT_ID");
 const PAYPAL_CLIENT_SECRET = defineSecret("PAYPAL_CLIENT_SECRET");
 const PAYPAL_PLAN_ID = defineSecret("PAYPAL_PLAN_ID");
+const BINANCE_CLIENT_ID = defineSecret("BINANCE_CLIENT_ID");
+const BINANCE_CLIENT_SECRET = defineSecret("BINANCE_CLIENT_SECRET");
 
 let stripeClient: InstanceType<typeof Stripe> | null = null;
 
@@ -1167,6 +1170,136 @@ export const confirmPayPalSubscription = functions
         }
         console.error("❌ confirmPayPalSubscription failed:", error);
         res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Binance OAuth callback handler.
+ *
+ * Receives the authorisation code from the frontend after the user approves
+ * the Binance OAuth consent screen, exchanges it for an access token, fetches
+ * the Binance user profile, creates (or reuses) a Firebase user, and returns a
+ * Firebase custom token that the frontend can use with signInWithCustomToken().
+ *
+ * Required Firebase secrets:
+ *   BINANCE_CLIENT_ID     – OAuth App Client ID from https://developers.binance.com/
+ *   BINANCE_CLIENT_SECRET – OAuth App Client Secret from the same portal
+ */
+export const binanceOAuthCallback = functions
+  .region("europe-west1")
+  .runWith({ secrets: [BINANCE_CLIENT_ID, BINANCE_CLIENT_SECRET] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") {
+        res.status(204).send("");
+        return;
+      }
+
+      if (req.method !== "POST") {
+        res.status(405).json({ error: "Method not allowed" });
+        return;
+      }
+
+      const clientId = BINANCE_CLIENT_ID.value() || process.env.BINANCE_CLIENT_ID || "";
+      const clientSecret = BINANCE_CLIENT_SECRET.value() || process.env.BINANCE_CLIENT_SECRET || "";
+
+      if (!clientId || !clientSecret) {
+        console.error("❌ binanceOAuthCallback: BINANCE_CLIENT_ID or BINANCE_CLIENT_SECRET is not configured.");
+        res.status(503).json({
+          error:
+            "Binance OAuth is not configured on this server. " +
+            "Please set the BINANCE_CLIENT_ID and BINANCE_CLIENT_SECRET Firebase secrets.",
+        });
+        return;
+      }
+
+      const { code, redirectUri } = req.body || {};
+      if (!code || !redirectUri) {
+        res.status(400).json({ error: "Missing required fields: code, redirectUri" });
+        return;
+      }
+
+      try {
+        // ── Step 1: Exchange authorisation code for access token ──────────────
+        const tokenRes = await fetch("https://accounts.binance.com/oauth/token", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            grant_type: "authorization_code",
+            code: String(code),
+            redirect_uri: String(redirectUri),
+            client_id: clientId,
+            client_secret: clientSecret,
+          }).toString(),
+        } as any);
+
+        if (!tokenRes.ok) {
+          const text = await tokenRes.text();
+          console.error("❌ Binance token exchange failed:", text);
+          res.status(400).json({ error: `Binance token exchange failed: ${text}` });
+          return;
+        }
+
+        const tokenData: any = await tokenRes.json();
+        const accessToken = String(tokenData.access_token || "").trim();
+        if (!accessToken) {
+          res.status(400).json({ error: "Binance token exchange returned no access_token." });
+          return;
+        }
+
+        // ── Step 2: Fetch Binance user profile ────────────────────────────────
+        const userRes = await fetch("https://accounts.binance.com/oauth/user-info", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        } as any);
+
+        if (!userRes.ok) {
+          const text = await userRes.text();
+          console.error("❌ Binance user-info failed:", text);
+          res.status(400).json({ error: `Failed to fetch Binance user info: ${text}` });
+          return;
+        }
+
+        const userData: any = await userRes.json();
+        const binanceUserId = String(userData.userId || userData.sub || userData.id || "").trim();
+        if (!binanceUserId) {
+          res.status(400).json({ error: "Binance user info did not contain a user ID." });
+          return;
+        }
+
+        // Use a deterministic placeholder when Binance does not expose the user's
+        // email address (e.g. the scope was not granted or the account has no
+        // verified email). The address is never exposed externally and is only
+        // used to satisfy the Firebase user-creation requirement.
+        const email = String(userData.email || `binance-${binanceUserId}@binance-oauth.local`).trim();
+        const displayName = String(userData.name || userData.username || "Binance User").trim();
+
+        // ── Step 3: Create or retrieve the Firebase user ──────────────────────
+        const uid = `binance:${binanceUserId}`;
+
+        try {
+          await admin.auth().getUser(uid);
+        } catch (e: any) {
+          if (e.code === "auth/user-not-found") {
+            await admin.auth().createUser({ uid, email, displayName, emailVerified: true });
+            await admin.firestore().collection("users").doc(uid).set({
+              id: uid,
+              name: displayName,
+              email,
+              createdAt: new Date().toISOString(),
+              preferredLanguage: "en",
+            });
+          } else {
+            throw e;
+          }
+        }
+
+        // ── Step 4: Return a Firebase custom token ────────────────────────────
+        const customToken = await admin.auth().createCustomToken(uid);
+        res.status(200).json({ customToken });
+      } catch (error: any) {
+        console.error("❌ binanceOAuthCallback error:", error);
+        res.status(500).json({ error: error?.message || "Binance OAuth sign-in failed." });
       }
     });
   });

@@ -17,4 +17,7 @@ export const environment = {
   stripePublishableKey: 'pk_live_51QDLjUCZhBElEvM6oiXno0kPFEwlv6jD1ohfH0n73Zhsineme4vEL5QzpeaiiJSVc9xABp7uTq64atUj6sFOFCw400FqkxEzkO',
   // Optional PayPal client id for showing branded PayPal checkout hint in UI.
   paypalClientId: '',
+  // Binance OAuth App Client ID. Leave empty until you register your OAuth app
+  // at https://developers.binance.com/ and obtain a Client ID.
+  binanceClientId: '',
 };

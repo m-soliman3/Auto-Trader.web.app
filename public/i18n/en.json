@@ -125,7 +125,8 @@
     "forgotSendEmail": "Send reset email",
     "forgotSending": "Sending…",
     "forgotDoneMsg": "A password reset link has been sent to",
-    "closeForgot": "Close"
+    "closeForgot": "Close",
+    "continueWithBinance": "Continue with Binance"
   },
   "signup": {
     "createAccount": "Create your account",
@@ -149,7 +150,8 @@
     "connecting": "Connecting…",
     "signUpWithGoogle": "Sign up with Google",
     "alreadyHaveAccount": "Already have an account?",
-    "logIn": "Log in"
+    "logIn": "Log in",
+    "signUpWithBinance": "Sign up with Binance"
   },
   "contact": {
     "title": "Get in touch",

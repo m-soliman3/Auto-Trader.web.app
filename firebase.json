@@ -172,6 +172,13 @@
           }
         },
         {
+          "source": "/api/binanceOAuthCallback",
+          "function": {
+            "functionId": "binanceOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",

@@ -125,7 +125,8 @@
     "forgotSendEmail": "Enviar e-mail de redefinição",
     "forgotSending": "A enviar…",
     "forgotDoneMsg": "Um link de redefinição de palavra-passe foi enviado para",
-    "closeForgot": "Fechar"
+    "closeForgot": "Fechar",
+    "continueWithBinance": "Continuar com Binance"
   },
   "signup": {
     "createAccount": "Crie a sua conta",
@@ -149,7 +150,8 @@
     "connecting": "A conectar…",
     "signUpWithGoogle": "Registar com Google",
     "alreadyHaveAccount": "Já tem conta?",
-    "logIn": "Iniciar sessão"
+    "logIn": "Iniciar sessão",
+    "signUpWithBinance": "Registrar com Binance"
   },
   "contact": {
     "title": "Contacto",

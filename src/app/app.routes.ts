@@ -17,6 +17,7 @@ import { BackendRunnerPage } from './pages/backend-runner';
 import { FeatureDetailPage } from './pages/features/feature-detail';
 import { BillingCheckoutPage } from './pages/billing-checkout';
 import { BillingManagePage } from './pages/billing-manage';
+import { BinanceCallbackPage } from './pages/binance-callback';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
@@ -64,6 +65,11 @@ const coreRoutes: Routes = [
     path: 'signup',
     component: Signup,
     title: 'Sign Up — AutoTrader | Start Automating Your Trades Today',
+  },
+  {
+    path: 'auth/binance/callback',
+    component: BinanceCallbackPage,
+    title: 'Connecting Binance — AutoTrader',
   },
   {
     path: 'contact',

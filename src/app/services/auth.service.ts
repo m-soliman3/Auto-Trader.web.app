@@ -4,6 +4,7 @@ import {
   Auth,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithCustomToken,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -20,6 +21,7 @@ import {
   getDoc,
 } from '@angular/fire/firestore';
 import { LanguageService } from './language.service';
+import { environment } from '../../environments/environment';
 
 export interface User {
   id: string;
@@ -252,6 +254,39 @@ export class AuthService {
     } catch (e: any) {
       if (e.code === 'auth/popup-closed-by-user') return null;
       return e.message ?? 'Google sign-in failed.';
+    }
+  }
+
+  /**
+   * Initiate Binance OAuth login – redirects the browser to the Binance
+   * authorisation page. The callback is handled by BinanceCallbackPage.
+   */
+  loginWithBinance(): void {
+    const clientId = environment.binanceClientId;
+    if (!clientId) {
+      console.error('Binance OAuth is not configured. Set environment.binanceClientId.');
+      return;
+    }
+    const state = crypto.randomUUID();
+    sessionStorage.setItem('binance_oauth_state', state);
+    const redirectUri = `${window.location.origin}/auth/binance/callback`;
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      response_type: 'code',
+      scope: 'user:email',
+      state,
+    });
+    window.location.href = `https://accounts.binance.com/en/oauth/authorize?${params}`;
+  }
+
+  /** Complete Binance OAuth sign-in using a Firebase custom token from our backend. */
+  async completeOAuthSignIn(customToken: string): Promise<string | null> {
+    try {
+      await signInWithCustomToken(this.fireAuth, customToken);
+      return null;
+    } catch (e: any) {
+      return this.mapError(e);
     }
   }
 

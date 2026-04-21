@@ -125,7 +125,8 @@
     "forgotSendEmail": "Reset-E-Mail senden",
     "forgotSending": "Senden…",
     "forgotDoneMsg": "Ein Link zum Zurücksetzen des Passworts wurde gesendet an",
-    "closeForgot": "Schließen"
+    "closeForgot": "Schließen",
+    "continueWithBinance": "Weiter mit Binance"
   },
   "signup": {
     "createAccount": "Konto erstellen",
@@ -149,7 +150,8 @@
     "connecting": "Verbinden…",
     "signUpWithGoogle": "Mit Google registrieren",
     "alreadyHaveAccount": "Bereits ein Konto?",
-    "logIn": "Anmelden"
+    "logIn": "Anmelden",
+    "signUpWithBinance": "Mit Binance registrieren"
   },
   "contact": {
     "title": "Kontakt",
