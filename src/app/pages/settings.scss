@@ -358,13 +358,26 @@
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 
   &.active {
     border-color: rgba(0, 209, 122, 0.42);
     background: rgba(0, 209, 122, 0.12);
     color: var(--accent);
   }
+}
+
+.language-flag {
+  font-size: 1.2rem;
+  display: inline-block;
+}
+
+.language-name {
+  display: inline-block;
 }
 
 .secondary-btn {

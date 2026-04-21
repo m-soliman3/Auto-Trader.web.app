@@ -136,7 +136,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             [class.active]="draftLanguage() === languageOption.code"
             (click)="setDraftLanguage(languageOption.code)"
           >
-            {{ ('language.' + languageOption.code) | translate }}
+            <span class="language-flag">{{ languageOption.flag }}</span>
+            <span class="language-name">{{ languageOption.label }}</span>
           </button>
         }
       </div>
