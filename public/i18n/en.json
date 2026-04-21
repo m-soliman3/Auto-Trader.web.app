@@ -116,6 +116,7 @@
     "orContinueWith": "or continue with",
     "connecting": "Connecting…",
     "continueWithGoogle": "Continue with Google",
+    "continueWithMicrosoft": "Continue with Microsoft",
     "noAccount": "Don't have an account?",
     "signUpFree": "Sign up free",
     "forgotTitle": "Reset your password",
@@ -148,6 +149,7 @@
     "orSignUpWith": "or sign up with",
     "connecting": "Connecting…",
     "signUpWithGoogle": "Sign up with Google",
+    "signUpWithMicrosoft": "Sign up with Microsoft",
     "alreadyHaveAccount": "Already have an account?",
     "logIn": "Log in"
   },

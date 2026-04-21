@@ -28,7 +28,7 @@ export class Signup {
   loading       = signal(false);
   error         = signal('');
   emailTouched  = signal(false);
-  socialLoading = signal<'google' | ''>('');
+  socialLoading = signal<'google' | 'microsoft' | ''>('');
 
   isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -37,6 +37,14 @@ export class Signup {
   async loginWithGoogle() {
     this.socialLoading.set('google');
     const err = await this.auth.loginWithGoogle();
+    this.socialLoading.set('');
+    if (err) { this.error.set(err); return; }
+    this.router.navigate(['/dashboard']);
+  }
+
+  async loginWithMicrosoft() {
+    this.socialLoading.set('microsoft');
+    const err = await this.auth.loginWithMicrosoft();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
     this.router.navigate(['/dashboard']);

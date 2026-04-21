@@ -116,6 +116,7 @@
     "orContinueWith": "ou continuer avec",
     "connecting": "Connexion…",
     "continueWithGoogle": "Continuer avec Google",
+    "continueWithMicrosoft": "Continuer avec Microsoft",
     "noAccount": "Pas encore de compte ?",
     "signUpFree": "S'inscrire gratuitement",
     "forgotTitle": "Réinitialiser votre mot de passe",
@@ -148,6 +149,7 @@
     "orSignUpWith": "ou s'inscrire avec",
     "connecting": "Connexion…",
     "signUpWithGoogle": "S'inscrire avec Google",
+    "signUpWithMicrosoft": "S'inscrire avec Microsoft",
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
     "logIn": "Se connecter"
   },

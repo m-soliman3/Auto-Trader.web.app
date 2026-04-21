@@ -116,6 +116,7 @@
     "orContinueWith": "أو المتابعة عبر",
     "connecting": "جارٍ الاتصال…",
     "continueWithGoogle": "المتابعة عبر Google",
+    "continueWithMicrosoft": "المتابعة عبر Microsoft",
     "noAccount": "ليس لديك حساب؟",
     "signUpFree": "سجّل مجانًا",
     "forgotTitle": "إعادة تعيين كلمة المرور",
@@ -148,6 +149,7 @@
     "orSignUpWith": "أو التسجيل عبر",
     "connecting": "جارٍ الاتصال…",
     "signUpWithGoogle": "التسجيل عبر Google",
+    "signUpWithMicrosoft": "التسجيل عبر Microsoft",
     "alreadyHaveAccount": "لديك حساب بالفعل؟",
     "logIn": "تسجيل الدخول"
   },
