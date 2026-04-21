@@ -44,76 +44,74 @@ export function languagePrefixMatcher(segments: UrlSegment[]): UrlMatchResult | 
 
 const dashboardTitleResolver: ResolveFn<string> = (route: ActivatedRouteSnapshot) => {
   const mode = route.paramMap.get('mode');
-  return mode === 'paper'
-    ? 'Paper Trading Dashboard — AutoTrader | Simulate & Backtest Your Strategies'
-    : 'Live Trading Dashboard — AutoTrader | Real-Time Strategy Execution';
+  return mode === 'paper' ? 'pageTitle.dashboardPaper' : 'pageTitle.dashboardReal';
 };
 
 const coreRoutes: Routes = [
   {
     path: '',
     component: Home,
-    title: 'AutoTrader — Automate Your Trading Strategy with Smart Bots & AI Signals',
+    title: 'pageTitle.home',
   },
   {
     path: 'login',
     component: Login,
-    title: 'Login — AutoTrader | Access Your Automated Trading Platform',
+    title: 'pageTitle.login',
   },
   {
     path: 'signup',
     component: Signup,
-    title: 'Sign Up — AutoTrader | Start Automating Your Trades Today',
+    title: 'pageTitle.signup',
   },
   {
     path: 'contact',
     component: Contact,
-    title: 'Contact Us — AutoTrader | Trading Automation Support',
+    title: 'pageTitle.contact',
   },
   {
     path: 'terms',
     component: TermsPage,
-    title: 'Terms of Service — AutoTrader | Trading Platform Terms & Conditions',
+    title: 'pageTitle.terms',
   },
   {
     path: 'privacy',
     component: PrivacyPage,
-    title: 'Privacy Policy — AutoTrader | How We Protect Your Data',
+    title: 'pageTitle.privacy',
   },
   {
     path: 'disclaimer',
     component: DisclaimerPage,
-    title: 'Trading Risk Disclaimer — AutoTrader | Important Risk Disclosure',
+    title: 'pageTitle.disclaimer',
   },
   {
     path: 'exchanges',
     component: ExchangesPage,
     canActivate: [authGuard],
-    title: 'Connected Exchanges — AutoTrader | Manage 30+ Exchange Integrations',
+    title: 'pageTitle.exchanges',
   },
   {
     path: 'bots',
     component: BotsPage,
     canActivate: [authGuard],
-    title: 'Trading Bots — AutoTrader | Create & Run Automated Strategy Bots',
+    title: 'pageTitle.bots',
   },
   {
     path: 'strategies',
     component: StrategiesPage,
     canActivate: [authGuard],
-    title: 'Trading Strategies — AutoTrader | Build & Execute Strategy Automation',
+    title: 'pageTitle.strategies',
   },
   {
     path: 'portfolio-management',
     component: PortfolioManagementPage,
     canActivate: [authGuard],
-    title: 'Portfolio Management — AutoTrader | Track Performance & Live Holdings',
+    title: 'pageTitle.portfolioManagement',
   },
   {
     path: 'backend-runner',
     component: BackendRunnerPage,
     canActivate: [authGuard],
-    title: 'Strategy Runner — AutoTrader | Monitor Automated Execution Logs',
+    title: 'pageTitle.backendRunner',
   },
   { path: 'dashboard', pathMatch: 'full', redirectTo: 'dashboard/real' },
   {
@@ -126,7 +124,7 @@ const coreRoutes: Routes = [
     path: 'trade/:id',
     component: TradeDetails,
     canActivate: [authGuard],
-    title: 'Trade Details — AutoTrader | Strategy Execution Summary',
+    title: 'pageTitle.tradeDetails',
   },
   {
     path: 'settings',
@@ -137,7 +135,7 @@ const coreRoutes: Routes = [
         path: ':section',
         component: Settings,
         canActivate: [authGuard],
-        title: 'Settings — AutoTrader | Account & Platform Preferences',
+        title: 'pageTitle.settings',
       },
     ],
   },
@@ -145,18 +143,18 @@ const coreRoutes: Routes = [
     path: 'billing/checkout',
     component: BillingCheckoutPage,
     canActivate: [authGuard],
-    title: 'Secure Checkout — AutoTrader | Upgrade to Premium',
+    title: 'pageTitle.billingCheckout',
   },
   {
     path: 'billing/manage',
     component: BillingManagePage,
     canActivate: [authGuard],
-    title: 'Billing Management — AutoTrader | History & Subscription Controls',
+    title: 'pageTitle.billingManage',
   },
   {
     path: 'features/:slug',
     component: FeatureDetailPage,
-    title: 'Feature — AutoTrader',
+    title: 'pageTitle.feature',
   },
 ];
 

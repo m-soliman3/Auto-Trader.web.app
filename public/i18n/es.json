@@ -1386,5 +1386,26 @@
         }
       ]
     }
+  },
+  "pageTitle": {
+    "home": "AutoTrader — Automatiza Tu Estrategia de Trading con Bots Inteligentes y Señales IA",
+    "login": "Iniciar Sesión — AutoTrader | Accede a Tu Plataforma de Trading Automatizado",
+    "signup": "Registrarse — AutoTrader | Comienza a Automatizar Tus Operaciones Hoy",
+    "contact": "Contacto — AutoTrader | Soporte de Automatización de Trading",
+    "terms": "Términos de Servicio — AutoTrader | Términos y Condiciones de la Plataforma",
+    "privacy": "Política de Privacidad — AutoTrader | Cómo Protegemos Tus Datos",
+    "disclaimer": "Descargo de Responsabilidad — AutoTrader | Divulgación Importante de Riesgos",
+    "exchanges": "Intercambios Conectados — AutoTrader | Gestiona +30 Integraciones de Exchange",
+    "bots": "Bots de Trading — AutoTrader | Crea y Ejecuta Bots de Estrategia Automatizados",
+    "strategies": "Estrategias de Trading — AutoTrader | Construye y Ejecuta Automatización",
+    "portfolioManagement": "Gestión de Cartera — AutoTrader | Seguimiento de Rendimiento y Posiciones",
+    "backendRunner": "Ejecutor de Estrategia — AutoTrader | Monitorea Registros de Ejecución",
+    "dashboardPaper": "Panel de Paper Trading — AutoTrader | Simula y Prueba Tus Estrategias",
+    "dashboardReal": "Panel de Trading en Vivo — AutoTrader | Ejecución de Estrategia en Tiempo Real",
+    "tradeDetails": "Detalles de la Operación — AutoTrader | Resumen de Ejecución de Estrategia",
+    "settings": "Configuración — AutoTrader | Preferencias de Cuenta y Plataforma",
+    "billingCheckout": "Pago Seguro — AutoTrader | Actualiza a Premium",
+    "billingManage": "Gestión de Facturación — AutoTrader | Historial y Controles de Suscripción",
+    "feature": "Característica — AutoTrader"
   }
 }
