@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {
   Auth,
   GoogleAuthProvider,
+  OAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -238,20 +239,23 @@ export class AuthService {
   async loginWithGoogle(): Promise<string | null> {
     try {
       const result = await signInWithPopup(this.fireAuth, new GoogleAuthProvider());
-      // ensure profile stored
-      const profile: User = {
-        id: result.user.uid,
-        name: result.user.displayName ?? 'User',
-        email: result.user.email ?? '',
-        createdAt: new Date().toISOString(),
-        preferredLanguage: this.language.getCurrentLanguage().code,
-      };
-      await setDoc(doc(this.firestore,'users',profile.id),profile, { merge: true });
-      this.currentUser.set(profile);
+      await this.upsertSocialProfile(result.user);
       return null;
     } catch (e: any) {
       if (e.code === 'auth/popup-closed-by-user') return null;
       return e.message ?? 'Google sign-in failed.';
+    }
+  }
+
+  /** Microsoft OAuth via Firebase – opens a popup */
+  async loginWithMicrosoft(): Promise<string | null> {
+    try {
+      const result = await signInWithPopup(this.fireAuth, new OAuthProvider('microsoft.com'));
+      await this.upsertSocialProfile(result.user);
+      return null;
+    } catch (e: any) {
+      if (e.code === 'auth/popup-closed-by-user') return null;
+      return e.message ?? 'Microsoft sign-in failed.';
     }
   }
 
@@ -279,5 +283,23 @@ export class AuthService {
     if (this.language.currentLang() !== preferredLanguage) {
       this.language.setLanguage(preferredLanguage);
     }
+  }
+
+  private async upsertSocialProfile(fbUser: FirebaseUser): Promise<void> {
+    const ref = doc(this.firestore, 'users', fbUser.uid);
+    const snap = await getDoc(ref);
+    const existing = snap.exists() ? (snap.data() as User) : null;
+
+    const profile: User = {
+      id: fbUser.uid,
+      name: fbUser.displayName ?? existing?.name ?? 'User',
+      email: fbUser.email ?? existing?.email ?? '',
+      createdAt: existing?.createdAt ?? new Date().toISOString(),
+      preferredLanguage: existing?.preferredLanguage ?? this.language.getCurrentLanguage().code,
+    };
+
+    await setDoc(ref, profile, { merge: true });
+    this.currentUser.set(profile);
+    this.applyPreferredLanguage(profile.preferredLanguage);
   }
 }

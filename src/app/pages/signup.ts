@@ -28,15 +28,26 @@ export class Signup {
   loading       = signal(false);
   error         = signal('');
   emailTouched  = signal(false);
-  socialLoading = signal<'google' | ''>('');
+  socialLoading = signal<'google' | 'microsoft' | ''>('');
 
   isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   }
 
   async loginWithGoogle() {
-    this.socialLoading.set('google');
-    const err = await this.auth.loginWithGoogle();
+    await this.runSocialLogin('google', () => this.auth.loginWithGoogle());
+  }
+
+  async loginWithMicrosoft() {
+    await this.runSocialLogin('microsoft', () => this.auth.loginWithMicrosoft());
+  }
+
+  private async runSocialLogin(
+    provider: 'google' | 'microsoft',
+    authenticate: () => Promise<string | null>,
+  ) {
+    this.socialLoading.set(provider);
+    const err = await authenticate();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
     this.router.navigate(['/dashboard']);
