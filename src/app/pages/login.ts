@@ -67,16 +67,19 @@ export class Login {
 
   // ── Social login ─────────────────────────────────────────
   async loginWithGoogle() {
-    this.socialLoading.set('google');
-    const err = await this.auth.loginWithGoogle();
-    this.socialLoading.set('');
-    if (err) { this.error.set(err); return; }
-    this.router.navigate(['/dashboard']);
+    await this.runSocialLogin('google', () => this.auth.loginWithGoogle());
   }
 
   async loginWithMicrosoft() {
-    this.socialLoading.set('microsoft');
-    const err = await this.auth.loginWithMicrosoft();
+    await this.runSocialLogin('microsoft', () => this.auth.loginWithMicrosoft());
+  }
+
+  private async runSocialLogin(
+    provider: 'google' | 'microsoft',
+    authenticate: () => Promise<string | null>,
+  ) {
+    this.socialLoading.set(provider);
+    const err = await authenticate();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
     this.router.navigate(['/dashboard']);
