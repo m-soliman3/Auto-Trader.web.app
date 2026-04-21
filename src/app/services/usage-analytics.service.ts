@@ -15,9 +15,12 @@ type AuthEventType = 'signup' | 'login';
 
 interface AuthEventContext {
   at: string;
+  localTime: string;
   language: string;
   region: string;
   timeZone: string;
+  browser: string;
+  deviceType: 'desktop' | 'mobile' | 'tablet';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -211,9 +214,12 @@ export class UsageAnalyticsService {
     if (typeof entry === 'string') {
       return {
         at: entry,
+        localTime: entry,
         language: this.detectLanguage(),
         region: this.detectRegion(),
         timeZone: this.detectTimeZone(),
+        browser: this.detectBrowser(),
+        deviceType: this.detectDeviceType(),
       };
     }
 
@@ -228,19 +234,29 @@ export class UsageAnalyticsService {
 
     return {
       at: candidate.at,
+      localTime: typeof candidate.localTime === 'string' ? candidate.localTime : candidate.at,
       language: typeof candidate.language === 'string' ? candidate.language : this.detectLanguage(),
       region: typeof candidate.region === 'string' ? candidate.region : this.detectRegion(),
       timeZone: typeof candidate.timeZone === 'string' ? candidate.timeZone : this.detectTimeZone(),
+      browser: typeof candidate.browser === 'string' ? candidate.browser : this.detectBrowser(),
+      deviceType: this.isDeviceType(candidate.deviceType) ? candidate.deviceType : this.detectDeviceType(),
     };
   }
 
   private buildAuthEventContext(languageCode?: string): AuthEventContext {
     return {
       at: new Date().toISOString(),
+      localTime: this.detectLocalTime(),
       language: languageCode?.trim() || this.detectLanguage(),
       region: this.detectRegion(),
       timeZone: this.detectTimeZone(),
+      browser: this.detectBrowser(),
+      deviceType: this.detectDeviceType(),
     };
+  }
+
+  private isDeviceType(value: unknown): value is 'desktop' | 'mobile' | 'tablet' {
+    return value === 'desktop' || value === 'mobile' || value === 'tablet';
   }
 
   private detectLanguage(): string {
@@ -276,5 +292,44 @@ export class UsageAnalyticsService {
     } catch {
       return 'UTC';
     }
+  }
+
+  private detectLocalTime(): string {
+    const now = new Date();
+    const offsetMinutes = -now.getTimezoneOffset();
+    const sign = offsetMinutes >= 0 ? '+' : '-';
+    const absoluteMinutes = Math.abs(offsetMinutes);
+    const hours = String(Math.floor(absoluteMinutes / 60)).padStart(2, '0');
+    const minutes = String(absoluteMinutes % 60).padStart(2, '0');
+
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}${sign}${hours}:${minutes}`;
+  }
+
+  private detectBrowser(): string {
+    if (typeof navigator === 'undefined') return 'Unknown';
+    const ua = navigator.userAgent;
+
+    if (ua.includes('Edg/')) return 'Edge';
+    if (ua.includes('OPR/') || ua.includes('Opera/')) return 'Opera';
+    if (ua.includes('Firefox/')) return 'Firefox';
+    if (ua.includes('Chrome/') && !ua.includes('Edg/') && !ua.includes('OPR/')) return 'Chrome';
+    if (ua.includes('Safari/') && !ua.includes('Chrome/')) return 'Safari';
+
+    return 'Unknown';
+  }
+
+  private detectDeviceType(): 'desktop' | 'mobile' | 'tablet' {
+    if (typeof navigator === 'undefined') return 'desktop';
+    const ua = navigator.userAgent.toLowerCase();
+
+    if (/(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(ua)) {
+      return 'tablet';
+    }
+
+    if (/mobile|iphone|ipod|android|blackberry|iemobile|opera mini/i.test(ua)) {
+      return 'mobile';
+    }
+
+    return 'desktop';
   }
 }
