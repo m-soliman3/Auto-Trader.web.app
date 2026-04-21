@@ -4,6 +4,7 @@ import {
   Auth,
   GoogleAuthProvider,
   OAuthProvider,
+  getAdditionalUserInfo,
   signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -21,6 +22,7 @@ import {
   getDoc,
 } from '@angular/fire/firestore';
 import { LanguageService } from './language.service';
+import { UsageAnalyticsService } from './usage-analytics.service';
 
 export interface User {
   id: string;
@@ -56,6 +58,7 @@ export class AuthService {
   private firestore = inject(Firestore);
   private router   = inject(Router);
   private language = inject(LanguageService);
+  private usageAnalytics = inject(UsageAnalyticsService);
 
   currentUser = signal<User | null>(null);
   accountDetails = signal<AuthAccountDetails | null>(null);
@@ -117,6 +120,7 @@ export class AuthService {
       };
       await setDoc(doc(this.firestore, 'users', cred.user.uid), profile);
       this.currentUser.set(profile);
+      await this.usageAnalytics.recordAuthEvent(cred.user.uid, 'signup', profile.preferredLanguage);
       return null;
     } catch (e: any) {
       return this.mapError(e);
@@ -126,7 +130,12 @@ export class AuthService {
   /** Log in via Firebase */
   async login(email: string, password: string): Promise<string | null> {
     try {
-      await signInWithEmailAndPassword(this.fireAuth, email, password);
+      const cred = await signInWithEmailAndPassword(this.fireAuth, email, password);
+      await this.usageAnalytics.recordAuthEvent(
+        cred.user.uid,
+        'login',
+        this.language.getCurrentLanguage().code,
+      );
       return null;
     } catch (e: any) {
       return this.mapError(e);
@@ -239,7 +248,13 @@ export class AuthService {
   async loginWithGoogle(): Promise<string | null> {
     try {
       const result = await signInWithPopup(this.fireAuth, new GoogleAuthProvider());
+      const additionalUserInfo = getAdditionalUserInfo(result);
       await this.upsertSocialProfile(result.user);
+      await this.usageAnalytics.recordAuthEvent(
+        result.user.uid,
+        additionalUserInfo?.isNewUser ? 'signup' : 'login',
+        this.language.getCurrentLanguage().code,
+      );
       return null;
     } catch (e: any) {
       if (e.code === 'auth/popup-closed-by-user') return null;
@@ -251,7 +266,13 @@ export class AuthService {
   async loginWithMicrosoft(): Promise<string | null> {
     try {
       const result = await signInWithPopup(this.fireAuth, new OAuthProvider('microsoft.com'));
+      const additionalUserInfo = getAdditionalUserInfo(result);
       await this.upsertSocialProfile(result.user);
+      await this.usageAnalytics.recordAuthEvent(
+        result.user.uid,
+        additionalUserInfo?.isNewUser ? 'signup' : 'login',
+        this.language.getCurrentLanguage().code,
+      );
       return null;
     } catch (e: any) {
       if (e.code === 'auth/popup-closed-by-user') return null;
