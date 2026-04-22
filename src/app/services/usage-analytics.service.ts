@@ -34,9 +34,13 @@ export class UsageAnalyticsService {
   private readonly sessionLoginRecorded = new Set<string>();
 
   private activeUserId: string | null = null;
+  private visitorId: string | null = null;
   private currentPageKey: string | null = null;
   private pageStartedAtMs = 0;
   private flushTimerId: number | null = null;
+
+  private readonly sessionStartedAtMs = Date.now();
+  private readonly sessionStartedAt = new Date().toISOString();
 
   private pendingPageViewCounts = new Map<string, number>();
   private pendingPageDurationSeconds = new Map<string, number>();
@@ -157,13 +161,19 @@ export class UsageAnalyticsService {
   }
 
   private flushPendingAnalytics(): void {
-    if (!this.activeUserId) return;
+    const effectiveId = this.getEffectiveUserId();
+    if (!effectiveId) return;
     if (this.pendingPageViewCounts.size === 0 && this.pendingPageDurationSeconds.size === 0) return;
 
-    const summaryRef = this.summaryRef(this.activeUserId);
+    const summaryRef = this.summaryRef(effectiveId);
     const updatePayload: Record<string, unknown> = {
       updatedAt: serverTimestamp(),
+      lastActivityAt: serverTimestamp(),
+      currentSessionStartedAt: this.sessionStartedAt,
+      userType: this.activeUserId ? 'user' : 'visitor',
     };
+
+    let flushingDurationSeconds = 0;
 
     for (const [pageKey, count] of this.pendingPageViewCounts.entries()) {
       updatePayload[`pageViewCounts.${pageKey}`] = increment(count);
@@ -171,6 +181,11 @@ export class UsageAnalyticsService {
 
     for (const [pageKey, seconds] of this.pendingPageDurationSeconds.entries()) {
       updatePayload[`pageDurationSeconds.${pageKey}`] = increment(seconds);
+      flushingDurationSeconds += seconds;
+    }
+
+    if (flushingDurationSeconds > 0) {
+      updatePayload['totalDurationSeconds'] = increment(flushingDurationSeconds);
     }
 
     this.pendingPageViewCounts.clear();
@@ -179,6 +194,32 @@ export class UsageAnalyticsService {
     void setDoc(summaryRef, updatePayload, { merge: true }).catch((error) => {
       console.error('failed to flush usage analytics', error);
     });
+  }
+
+  private getEffectiveUserId(): string | null {
+    return this.activeUserId ?? this.getOrCreateVisitorId();
+  }
+
+  private getOrCreateVisitorId(): string {
+    if (this.visitorId) return this.visitorId;
+
+    try {
+      const stored = sessionStorage.getItem('at_visitor_id');
+      if (stored) {
+        this.visitorId = stored;
+        return stored;
+      }
+      const newId = `visitor_${crypto.randomUUID()}`;
+      sessionStorage.setItem('at_visitor_id', newId);
+      this.visitorId = newId;
+      return newId;
+    } catch {
+      // sessionStorage may be restricted (e.g. private-browsing edge cases)
+      if (!this.visitorId) {
+        this.visitorId = `visitor_${crypto.randomUUID()}`;
+      }
+      return this.visitorId;
+    }
   }
 
   private async recordLogin(
@@ -343,8 +384,8 @@ export class UsageAnalyticsService {
     return 'desktop';
   }
 
-  private summaryRef(userId: string) {
-    return doc(this.firestore, this.analyticsCollection, userId);
+  private summaryRef(docId: string) {
+    return doc(this.firestore, this.analyticsCollection, docId);
   }
 
   private async ensureSummaryDocument(userId: string, email?: string): Promise<void> {
