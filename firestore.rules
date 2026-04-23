@@ -11,5 +11,16 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
+
+    // Analytics: authenticated users can read/write their own document.
+    match /userAnalytics/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == docId;
+    }
+
+    // Analytics: anonymous visitors can only write visitor_ prefixed documents.
+    match /userAnalytics/{docId} {
+      allow create, update: if docId.matches('visitor_.*')
+        && request.auth == null;
+    }
   }
 }

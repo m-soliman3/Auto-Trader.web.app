@@ -57,6 +57,9 @@ export class UsageAnalyticsService {
 
   private handleAuthState(): void {
     onAuthStateChanged(this.auth, (user) => {
+      // Capture elapsed time before switching identity so it isn't lost.
+      this.captureCurrentPageDuration();
+
       if (!user) {
         this.flushPendingAnalytics();
         this.activeUserId = null;
