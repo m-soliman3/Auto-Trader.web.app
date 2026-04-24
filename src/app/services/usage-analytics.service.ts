@@ -13,6 +13,15 @@ import { filter } from 'rxjs/operators';
 
 type AuthEventType = 'signup' | 'login';
 
+interface VisitorLocation {
+  city?: string;
+  country?: string;
+  countryCode?: string;
+  latitude?: number;
+  longitude?: number;
+  ip?: string;
+}
+
 interface AuthEventContext {
   at: string;
   localTime: string;
@@ -21,6 +30,7 @@ interface AuthEventContext {
   timeZone: string;
   browser: string;
   deviceType: 'desktop' | 'mobile' | 'tablet';
+  location?: VisitorLocation;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +45,7 @@ export class UsageAnalyticsService {
 
   private activeUserId: string | null = null;
   private visitorId: string | null = null;
+  private cachedLocation: VisitorLocation | null = null;
   private currentPageKey: string | null = null;
   private pageStartedAtMs = 0;
   private flushTimerId: number | null = null;
@@ -53,10 +64,11 @@ export class UsageAnalyticsService {
 
     this.startNewPage(this.router.url);
     this.startFlushTimer();
+    this.fetchLocation().then((loc) => { this.cachedLocation = loc; });
   }
 
   private handleAuthState(): void {
-    onAuthStateChanged(this.auth, (user) => {
+    onAuthStateChanged(this.auth, async (user) => {
       // Capture elapsed time before switching identity so it isn't lost.
       this.captureCurrentPageDuration();
 
@@ -71,7 +83,7 @@ export class UsageAnalyticsService {
 
       if (!this.sessionLoginRecorded.has(user.uid)) {
         this.sessionLoginRecorded.add(user.uid);
-        void this.recordLogin(this.summaryRef(user.uid), this.buildAuthEventContext(), user.email ?? undefined);
+        void this.recordLogin(this.summaryRef(user.uid), await this.buildAuthEventContext(), user.email ?? undefined);
       }
 
       this.flushPendingAnalytics();
@@ -82,7 +94,7 @@ export class UsageAnalyticsService {
     if (!userId) return;
 
     const summaryRef = this.summaryRef(userId);
-    const context = this.buildAuthEventContext(languageCode);
+    const context = await this.buildAuthEventContext(languageCode);
     const email = this.auth.currentUser?.email ?? undefined;
 
     if (type === 'signup') {
@@ -175,6 +187,10 @@ export class UsageAnalyticsService {
       currentSessionStartedAt: this.sessionStartedAt,
       userType: this.activeUserId ? 'user' : 'visitor',
     };
+
+    if (this.cachedLocation) {
+      updatePayload['location'] = this.cachedLocation;
+    }
 
     let flushingDurationSeconds = 0;
 
@@ -294,10 +310,15 @@ export class UsageAnalyticsService {
       timeZone: typeof candidate.timeZone === 'string' ? candidate.timeZone : this.detectTimeZone(),
       browser: typeof candidate.browser === 'string' ? candidate.browser : this.detectBrowser(),
       deviceType: this.isDeviceType(candidate.deviceType) ? candidate.deviceType : this.detectDeviceType(),
+      ...(candidate.location ? { location: candidate.location } : {}),
     };
   }
 
-  private buildAuthEventContext(languageCode?: string): AuthEventContext {
+  private async buildAuthEventContext(languageCode?: string): Promise<AuthEventContext> {
+    const location = this.cachedLocation ?? await this.fetchLocation().then((loc) => {
+      this.cachedLocation = loc;
+      return loc;
+    });
     return {
       at: new Date().toISOString(),
       localTime: this.detectLocalTime(),
@@ -306,7 +327,26 @@ export class UsageAnalyticsService {
       timeZone: this.detectTimeZone(),
       browser: this.detectBrowser(),
       deviceType: this.detectDeviceType(),
+      ...(location ? { location } : {}),
     };
+  }
+
+  private async fetchLocation(): Promise<VisitorLocation | null> {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      if (!response.ok) return null;
+      const data = await response.json() as Record<string, unknown>;
+      return {
+        city: typeof data['city'] === 'string' ? data['city'] : undefined,
+        country: typeof data['country_name'] === 'string' ? data['country_name'] : undefined,
+        countryCode: typeof data['country_code'] === 'string' ? data['country_code'] : undefined,
+        latitude: typeof data['latitude'] === 'number' ? data['latitude'] : undefined,
+        longitude: typeof data['longitude'] === 'number' ? data['longitude'] : undefined,
+        ip: typeof data['ip'] === 'string' ? data['ip'] : undefined,
+      };
+    } catch {
+      return null;
+    }
   }
 
   private isDeviceType(value: unknown): value is 'desktop' | 'mobile' | 'tablet' {

@@ -51,3 +51,7 @@ __pycache__/
 functions/.env
 functions/.env.*
 functions/.runtimeconfig.json
+
+# Firebase debug logs
+firebase-debug.log
+
