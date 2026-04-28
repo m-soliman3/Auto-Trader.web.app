@@ -4,126 +4,58 @@
     <header class="onboarding-header">
       <div class="onboarding-icon">🚀</div>
       <h2>Activate Real Money Trading</h2>
-      <p>Complete <strong>one</strong> of the steps below to unlock the full platform.</p>
+      <p>Choose how you'd like to get started.</p>
     </header>
 
-    <div class="onboarding-sections">
-
-      <!-- ── Section 1: Connect Exchange ─────────────────────────────── -->
-      @if (!exchangeConnected()) {
-        <section class="onboarding-section" [class.completed]="exchangeConnected()">
-          <div class="section-label">
-            <span class="step-badge">1</span>
-            <div>
-              <h3>Connect Your Broker / Exchange</h3>
-              <p>Link your crypto exchange or stock broker to start automated trading.</p>
-            </div>
+    <!-- ── Completed states ───────────────────────────────────────────── -->
+    @if (topupCompleted()) {
+      <section class="onboarding-section completed">
+        <div class="section-label">
+          <span class="step-badge done">✓</span>
+          <div>
+            <h3>Account Funded</h3>
+            <p>Your real money account has been topped up. You can now start trading.</p>
           </div>
+        </div>
+      </section>
+    }
 
-          <!-- Step 1: exchange picker -->
-          @if (exchangeStep() === 1) {
-            @if (realCryptoExchanges().length > 0) {
-              <div class="exchange-category-label">Crypto Exchanges</div>
-              <div class="exchange-grid">
-                @for (ex of realCryptoExchanges(); track ex.id) {
-                  <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
-                    <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
-                    <span class="tile-name">{{ ex.name }}</span>
-                  </button>
-                }
-              </div>
-            }
-            @if (realStockExchanges().length > 0) {
-              <div class="exchange-category-label">Stock Brokers</div>
-              <div class="exchange-grid">
-                @for (ex of realStockExchanges(); track ex.id) {
-                  <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
-                    <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
-                    <span class="tile-name">{{ ex.name }}</span>
-                  </button>
-                }
-              </div>
-            }
-          }
-
-          <!-- Step 2: API key form -->
-          @if (exchangeStep() === 2) {
-            <div class="api-form">
-              <div class="api-form-header">
-                <button class="back-btn" type="button" (click)="backToExchangeList()">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-                  Back
-                </button>
-                <span class="selected-name">
-                  <span [style.color]="selectedExchange()?.color">{{ selectedExchange()?.logo }}</span>
-                  {{ selectedExchange()?.name }}
-                </span>
-              </div>
-
-              @if (exchangeError()) {
-                <div class="form-error">{{ exchangeError() }}</div>
-              }
-
-              <div class="form-group">
-                <label for="ex-label">Account label</label>
-                <input id="ex-label" type="text" [(ngModel)]="exchangeLabel" placeholder="My Exchange" />
-              </div>
-              <div class="form-group">
-                <label for="ex-apikey">API Key</label>
-                <input id="ex-apikey" type="text" [(ngModel)]="exchangeApiKey" autocomplete="off" />
-              </div>
-              <div class="form-group">
-                <label for="ex-secret">API Secret</label>
-                <input id="ex-secret" type="password" [(ngModel)]="exchangeSecret" autocomplete="new-password" />
-              </div>
-              @if (selectedExchange()?.hasPassphrase) {
-                <div class="form-group">
-                  <label for="ex-passphrase">Passphrase</label>
-                  <input id="ex-passphrase" type="password" [(ngModel)]="exchangePassphrase" autocomplete="new-password" />
-                </div>
-              }
-
-              <button
-                class="primary-btn"
-                type="button"
-                [disabled]="exchangeSaving()"
-                (click)="saveExchange()"
-              >
-                {{ exchangeSaving() ? 'Connecting...' : 'Connect Exchange' }}
-              </button>
-            </div>
-          }
-        </section>
-      }
-
-      @if (exchangeConnected()) {
-        <section class="onboarding-section completed">
-          <div class="section-label">
-            <span class="step-badge done">✓</span>
-            <div>
-              <h3>Exchange Connected</h3>
-              <p>Your exchange is connected. You can now start trading.</p>
-            </div>
+    @if (exchangeConnected()) {
+      <section class="onboarding-section completed">
+        <div class="section-label">
+          <span class="step-badge done">✓</span>
+          <div>
+            <h3>Exchange Connected</h3>
+            <p>Your exchange is connected. You can now start trading.</p>
           </div>
-        </section>
-      }
+        </div>
+      </section>
+    }
 
-      <!-- divider -->
-      @if (!exchangeConnected() && !topupCompleted()) {
-        <div class="or-divider"><span>OR</span></div>
-      }
+    <!-- ── Tab bar (only shown while neither step is complete) ────────── -->
+    @if (!topupCompleted() && !exchangeConnected()) {
+      <div class="tab-bar">
+        <button
+          class="tab-btn"
+          type="button"
+          [class.active]="activeTab() === 'topup'"
+          (click)="activeTab.set('topup')"
+        >
+          💳 Top Up with Card
+        </button>
+        <button
+          class="tab-btn"
+          type="button"
+          [class.active]="activeTab() === 'exchange'"
+          (click)="activeTab.set('exchange')"
+        >
+          🔗 Connect Exchange
+        </button>
+      </div>
 
-      <!-- ── Section 2: Top-Up Account ────────────────────────────────── -->
-      @if (!topupCompleted() && !exchangeConnected()) {
-        <section class="onboarding-section">
-          <div class="section-label">
-            <span class="step-badge">2</span>
-            <div>
-              <h3>Top Up Your Account</h3>
-              <p>Deposit real money to start trading. Choose an amount below.</p>
-            </div>
-          </div>
-
+      <!-- ── Tab 1: Top Up ──────────────────────────────────────────── -->
+      @if (activeTab() === 'topup') {
+        <section class="onboarding-section tab-content">
           <div class="amount-grid">
             @for (amt of presetAmounts; track amt) {
               <button
@@ -208,18 +140,86 @@
         </section>
       }
 
-      @if (topupCompleted()) {
-        <section class="onboarding-section completed">
-          <div class="section-label">
-            <span class="step-badge done">✓</span>
-            <div>
-              <h3>Account Funded</h3>
-              <p>Your real money account has been topped up. You can now start trading.</p>
+      <!-- ── Tab 2: Connect Exchange ────────────────────────────────── -->
+      @if (activeTab() === 'exchange') {
+        <section class="onboarding-section tab-content">
+
+          <!-- Step 1: exchange picker -->
+          @if (exchangeStep() === 1) {
+            @if (realCryptoExchanges().length > 0) {
+              <div class="exchange-category-label">Crypto Exchanges</div>
+              <div class="exchange-grid">
+                @for (ex of realCryptoExchanges(); track ex.id) {
+                  <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
+                    <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
+                    <span class="tile-name">{{ ex.name }}</span>
+                  </button>
+                }
+              </div>
+            }
+            @if (realStockExchanges().length > 0) {
+              <div class="exchange-category-label">Stock Brokers</div>
+              <div class="exchange-grid">
+                @for (ex of realStockExchanges(); track ex.id) {
+                  <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
+                    <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
+                    <span class="tile-name">{{ ex.name }}</span>
+                  </button>
+                }
+              </div>
+            }
+          }
+
+          <!-- Step 2: API key form -->
+          @if (exchangeStep() === 2) {
+            <div class="api-form">
+              <div class="api-form-header">
+                <button class="back-btn" type="button" (click)="backToExchangeList()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                  Back
+                </button>
+                <span class="selected-name">
+                  <span [style.color]="selectedExchange()?.color">{{ selectedExchange()?.logo }}</span>
+                  {{ selectedExchange()?.name }}
+                </span>
+              </div>
+
+              @if (exchangeError()) {
+                <div class="form-error">{{ exchangeError() }}</div>
+              }
+
+              <div class="form-group">
+                <label for="ex-label">Account label</label>
+                <input id="ex-label" type="text" [(ngModel)]="exchangeLabel" placeholder="My Exchange" />
+              </div>
+              <div class="form-group">
+                <label for="ex-apikey">API Key</label>
+                <input id="ex-apikey" type="text" [(ngModel)]="exchangeApiKey" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label for="ex-secret">API Secret</label>
+                <input id="ex-secret" type="password" [(ngModel)]="exchangeSecret" autocomplete="new-password" />
+              </div>
+              @if (selectedExchange()?.hasPassphrase) {
+                <div class="form-group">
+                  <label for="ex-passphrase">Passphrase</label>
+                  <input id="ex-passphrase" type="password" [(ngModel)]="exchangePassphrase" autocomplete="new-password" />
+                </div>
+              }
+
+              <button
+                class="primary-btn"
+                type="button"
+                [disabled]="exchangeSaving()"
+                (click)="saveExchange()"
+              >
+                {{ exchangeSaving() ? 'Connecting...' : 'Connect Exchange' }}
+              </button>
             </div>
-          </div>
+          }
         </section>
       }
+    }
 
-    </div>
   </div>
 </div>
