@@ -4,6 +4,12 @@
 	flex-direction: column;
 }
 
+.app-shell.blurred-for-onboarding {
+	filter: blur(4px) brightness(0.6);
+	pointer-events: none;
+	user-select: none;
+}
+
 .app-main {
 	flex: 1;
 }

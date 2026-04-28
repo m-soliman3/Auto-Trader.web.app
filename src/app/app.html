@@ -1,4 +1,4 @@
-<div class="app-shell">
+<div class="app-shell" [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding()">
 	<app-consent-banner />
 	<app-navbar />
 	@if (showAssistantRibbon()) {
@@ -11,3 +11,7 @@
 
 	<app-site-footer />
 </div>
+
+@if (realMoneyOnboarding.needsOnboarding()) {
+	<app-real-money-onboarding-modal />
+}

@@ -27,6 +27,16 @@
 
   <!-- Step 1: Pick exchange -->
   @if (step() === 1) {
+    @if (error()) {
+      <div class="alert-error">{{ error() }}</div>
+    }
+    @if (cryptoExchanges().length > 0 && cryptoExchanges()[0].isPaper) {
+      <div class="demo-pricing-notice">
+        <span class="demo-pricing-icon">ℹ️</span>
+        Connecting demo / paper exchanges requires a <strong>Premium subscription ($10/month)</strong>.
+        Demo money (simulated balance) is always free and does not require a connection.
+      </div>
+    }
     @if (cryptoExchanges().length > 0) {
       <div class="exchange-section">
         <div class="exchange-section-label">{{ 'connectExchange.cryptoExchanges' | translate }}</div>

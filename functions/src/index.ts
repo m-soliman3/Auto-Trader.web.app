@@ -407,6 +407,8 @@ const STRIPE_PREMIUM_PRICE_ID = defineSecret("STRIPE_PREMIUM_PRICE_ID");
 const PAYPAL_CLIENT_ID = defineSecret("PAYPAL_CLIENT_ID");
 const PAYPAL_CLIENT_SECRET = defineSecret("PAYPAL_CLIENT_SECRET");
 const PAYPAL_PLAN_ID = defineSecret("PAYPAL_PLAN_ID");
+const ALPACA_BROKER_KEY = defineSecret("ALPACA_BROKER_KEY");
+const ALPACA_BROKER_SECRET = defineSecret("ALPACA_BROKER_SECRET");
 
 let stripeClient: InstanceType<typeof Stripe> | null = null;
 
@@ -1166,6 +1168,298 @@ export const confirmPayPalSubscription = functions
           return;
         }
         console.error("❌ confirmPayPalSubscription failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+// ── Real-money top-up ───────────────────────────────────────────────────────
+
+/**
+ * Creates an Alpaca Broker sandbox sub-account for the user, generates
+ * paper-trading API keys, and funds it with virtual money matching the deposit.
+ * Uses Alpaca's sandbox environment (paper-only, no real money at risk).
+ * Returns null (with a warning) on any Alpaca API error so the top-up itself
+ * is never blocked.
+ */
+async function provisionAlpacaPaperAccount(
+  uid: string,
+  email: string,
+  displayName: string,
+  depositAmountUsd: number,
+  brokerKey: string,
+  brokerSecret: string
+): Promise<{ accountId: string; apiKey: string; apiSecret: string } | null> {
+  try {
+    const ALPACA_BROKER_BASE = "https://broker-api.sandbox.alpaca.markets";
+    const authHeader = `Basic ${Buffer.from(`${brokerKey}:${brokerSecret}`).toString("base64")}`;
+    const headers: Record<string, string> = {
+      Authorization: authHeader,
+      "Content-Type": "application/json",
+    };
+
+    // Parse the user's display name into first / last.
+    const parts = displayName.trim().split(/\s+/);
+    const givenName = parts[0] || "AutoTrader";
+    const familyName = parts.slice(1).join(" ") || "User";
+
+    // 1 ── Create broker sub-account.
+    //      Alpaca sandbox accepts the test SSN "666-55-4321" documented
+    //      in their official sandbox guide.
+    const createResp = await fetch(`${ALPACA_BROKER_BASE}/v1/accounts`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        contact: {
+          email_address: email,
+          phone_number: "555-666-7788",
+          street_address: ["20 N San Mateo Dr"],
+          city: "San Mateo",
+          state: "CA",
+          postal_code: "94401",
+          country: "USA",
+        },
+        identity: {
+          given_name: givenName,
+          family_name: familyName,
+          date_of_birth: "1990-01-01",
+          tax_id: "666-55-4321",
+          tax_id_type: "USA_SSN",
+          country_of_citizenship: "USA",
+          country_of_birth: "USA",
+          country_of_tax_residence: "USA",
+          funding_source: ["employment_income"],
+        },
+        disclosures: {
+          is_control_person: false,
+          is_affiliated_exchange_or_finra: false,
+          is_politically_exposed: false,
+          immediate_family_exposed: false,
+        },
+        agreements: [
+          {
+            agreement: "customer_agreement",
+            signed_at: new Date().toISOString(),
+            ip_address: "127.0.0.1",
+          },
+        ],
+      }),
+    });
+
+    if (!createResp.ok) {
+      console.warn(`⚠️ Alpaca account creation failed for ${uid}: ${await createResp.text()}`);
+      return null;
+    }
+
+    const account = (await createResp.json()) as { id: string };
+    const accountId = account.id;
+
+    // 2 ── Generate paper-trading API keys for the sub-account.
+    const keysResp = await fetch(
+      `${ALPACA_BROKER_BASE}/v1/trading/accounts/${accountId}/access_keys`,
+      { method: "POST", headers, body: JSON.stringify({}) }
+    );
+
+    if (!keysResp.ok) {
+      console.warn(`⚠️ Alpaca key generation failed for ${uid}: ${await keysResp.text()}`);
+      return null;
+    }
+
+    const keys = (await keysResp.json()) as { id: string; secret: string };
+
+    // 3 ── Fund the paper account with virtual money matching the deposit.
+    const fundResp = await fetch(
+      `${ALPACA_BROKER_BASE}/v1/accounts/${accountId}/transactions/cash`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          amount: String(depositAmountUsd),
+          direction: "INCOMING",
+          reason: "AutoTrader user deposit",
+        }),
+      }
+    );
+
+    if (!fundResp.ok) {
+      // Funding failure is non-fatal — account + keys are still usable.
+      console.warn(`⚠️ Alpaca fund deposit warning for ${uid}: ${await fundResp.text()}`);
+    }
+
+    console.log(`✅ Alpaca paper account provisioned for ${uid}: ${accountId}`);
+    return { accountId, apiKey: keys.id, apiSecret: keys.secret };
+  } catch (err) {
+    console.warn("⚠️ provisionAlpacaPaperAccount threw:", err);
+    return null;
+  }
+}
+
+const MIN_TOPUP_USD = 1;
+const MAX_TOPUP_USD = 100_000;
+
+/**
+ * Creates a Stripe PaymentIntent for a one-time real-money top-up.
+ * The frontend confirms the payment with the returned clientSecret,
+ * then calls confirmTopUp to credit the user's account in Firestore.
+ */
+export const createTopUpIntent = functions
+  .region("europe-west1")
+  .runWith({ secrets: [STRIPE_SECRET_KEY] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+      if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const rawAmount = Number(req.body?.amountUsd ?? 0);
+
+        if (!Number.isFinite(rawAmount) || rawAmount < MIN_TOPUP_USD || rawAmount > MAX_TOPUP_USD) {
+          res.status(400).json({ error: `Amount must be between $${MIN_TOPUP_USD} and $${MAX_TOPUP_USD}.` });
+          return;
+        }
+
+        const amountCents = Math.round(rawAmount * 100);
+        const stripe = getStripeClient();
+        const customer = await getOrCreateStripeCustomer(decoded);
+
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: amountCents,
+          currency: "usd",
+          customer: customer.id,
+          description: `AutoTrader real-money account top-up — $${rawAmount}`,
+          metadata: {
+            uid: decoded.uid,
+            purpose: "real_money_topup",
+            amountUsd: String(rawAmount),
+          },
+        });
+
+        res.status(200).json({
+          clientSecret: paymentIntent.client_secret,
+          paymentIntentId: paymentIntent.id,
+        });
+      } catch (error: any) {
+        const message = error?.message || "Failed to create top-up payment";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ createTopUpIntent failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Verifies a completed top-up PaymentIntent and credits the user's
+ * real-money balance in Firestore, marking them as onboarded.
+ */
+export const confirmTopUp = functions
+  .region("europe-west1")
+  .runWith({ secrets: [STRIPE_SECRET_KEY, ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+      if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const paymentIntentId = String(req.body?.paymentIntentId || "").trim();
+
+        if (!paymentIntentId) {
+          res.status(400).json({ error: "Missing paymentIntentId" });
+          return;
+        }
+
+        const stripe = getStripeClient();
+        const intent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+        // Security: verify the intent belongs to this user.
+        if (intent.metadata?.uid !== decoded.uid) {
+          res.status(403).json({ error: "PaymentIntent does not belong to this user" });
+          return;
+        }
+
+        if (intent.status !== "succeeded") {
+          res.status(400).json({ error: `Payment has not succeeded (status: ${intent.status})` });
+          return;
+        }
+
+        // Use the authoritative amount from Stripe (cents → USD).
+        const verifiedAmountUsd = intent.amount / 100;
+
+        const userRef = admin.firestore().collection("users").doc(decoded.uid);
+        const userSnap = await userRef.get();
+        const userData = userSnap.data() ?? {};
+        const existingBalance = Number(userData.realMoneyBalance ?? 0);
+        const newBalance = Math.round((existingBalance + verifiedAmountUsd) * 100) / 100;
+
+        // Provision an Alpaca Broker sandbox paper account (only on first top-up).
+        let alpacaAccount: { accountId: string; apiKey: string; apiSecret: string } | null = null;
+        if (!userData.alpacaBrokerAccountId) {
+          const brokerKey = ALPACA_BROKER_KEY.value();
+          const brokerSecret = ALPACA_BROKER_SECRET.value();
+          if (brokerKey && brokerSecret) {
+            const userEmail = decoded.email ?? `${decoded.uid}@autotrader.app`;
+            const userDisplayName = decoded.name ?? "AutoTrader User";
+            alpacaAccount = await provisionAlpacaPaperAccount(
+              decoded.uid,
+              userEmail,
+              userDisplayName,
+              verifiedAmountUsd,
+              brokerKey,
+              brokerSecret
+            );
+          } else {
+            console.warn("⚠️ ALPACA_BROKER_KEY / ALPACA_BROKER_SECRET not set — skipping Alpaca provisioning");
+          }
+        }
+
+        const firestoreUpdate: Record<string, unknown> = {
+          realMoneyBalance: newBalance,
+          realMoneyOnboarded: true,
+        };
+        if (alpacaAccount) {
+          firestoreUpdate.alpacaBrokerAccountId = alpacaAccount.accountId;
+        }
+
+        await userRef.set(firestoreUpdate, { merge: true });
+
+        // Auto-connect the Alpaca paper account as an exchange for the user.
+        if (alpacaAccount) {
+          const exchangeRef = admin
+            .firestore()
+            .collection("users")
+            .doc(decoded.uid)
+            .collection("exchanges")
+            .doc("alpaca-paper-autotrader");
+          await exchangeRef.set({
+            exchangeId: "alpaca-paper",
+            label: "alpaca-paper-autotrader",
+            apiKey: alpacaAccount.apiKey,
+            apiSecret: alpacaAccount.apiSecret,
+            passphrase: "",
+            status: "active",
+            connectedAt: new Date().toISOString(),
+          });
+        }
+
+        console.log(`✅ Top-up confirmed for ${decoded.uid}: +$${verifiedAmountUsd}, new balance $${newBalance}`);
+
+        res.status(200).json({
+          ok: true,
+          creditedUsd: verifiedAmountUsd,
+          newBalanceUsd: newBalance,
+          alpacaProvisioned: alpacaAccount !== null,
+        });
+      } catch (error: any) {
+        const message = error?.message || "Failed to confirm top-up";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ confirmTopUp failed:", error);
         res.status(500).json({ error: message });
       }
     });
