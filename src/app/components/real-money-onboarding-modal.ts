@@ -54,6 +54,9 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     SUPPORTED_EXCHANGES.filter((e) => e.category === 'stocks' && !e.isPaper),
   );
 
+  // ── Tab state ────────────────────────────────────────────────────────────
+  activeTab = signal<'topup' | 'exchange'>('topup');
+
   // ── Exchange connection state ────────────────────────────────────────────
   exchangeStep = signal<1 | 2>(1);
   selectedExchange = signal<Exchange | null>(null);

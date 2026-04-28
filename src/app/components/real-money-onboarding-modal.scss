@@ -107,28 +107,50 @@
   background: var(--accent, #00d17a);
 }
 
-/* ── OR divider ─────────────────────────────────────────────────────────── */
-.or-divider {
-  text-align: center;
-  position: relative;
-  margin: 1rem 0;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+/* ── Tab bar ─────────────────────────────────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: calc(50% - 2rem);
-    height: 1px;
-    background: var(--border);
+.tab-btn {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  background: var(--surface);
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  & + & {
+    border-left: 1px solid var(--border);
   }
 
-  &::before { left: 0; }
-  &::after  { right: 0; }
+  &.active {
+    background: var(--accent, #00d17a);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  &:not(.active):hover {
+    background: color-mix(in srgb, var(--accent, #00d17a) 8%, var(--surface));
+    color: var(--text-primary);
+  }
+}
+
+.tab-content {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 /* ── Exchange grid ───────────────────────────────────────────────────────── */
