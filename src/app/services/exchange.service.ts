@@ -602,6 +602,12 @@ export class ExchangeService {
     }
   }
 
+  /** Reloads connected exchanges from Firestore for the current user. */
+  async reloadFromFirestore(): Promise<void> {
+    const uid = this.auth.currentUser()?.id;
+    if (uid) await this.loadFromFirestore(uid);
+  }
+
   private async loadFromFirestore(uid: string) {
     try {
       const col = collection(this.firestore, 'users', uid, 'exchanges');

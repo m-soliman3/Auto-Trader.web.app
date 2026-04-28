@@ -44,6 +44,12 @@ export interface User {
     canceledAt?: string;
     canceledBy?: string;
   };
+  /** Real-money wallet balance in USD (topped up via Stripe one-time payments). */
+  realMoneyBalance?: number;
+  /** True once the user has completed real-money onboarding (connected exchange OR topped up). */
+  realMoneyOnboarded?: boolean;
+  /** Alpaca Broker sandbox account ID auto-provisioned on first top-up. */
+  alpacaBrokerAccountId?: string;
 }
 
 export interface AuthAccountDetails {

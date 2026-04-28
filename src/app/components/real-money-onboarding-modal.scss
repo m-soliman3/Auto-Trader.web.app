@@ -1,0 +1,388 @@
+/* ── Full-page overlay ──────────────────────────────────────────────────── */
+.onboarding-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ── Panel card ─────────────────────────────────────────────────────────── */
+.onboarding-panel {
+  width: min(100%, 640px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.onboarding-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.onboarding-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.onboarding-header h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.onboarding-header p {
+  margin: 0;
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Sections container ─────────────────────────────────────────────────── */
+.onboarding-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Individual section ─────────────────────────────────────────────────── */
+.onboarding-section {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  background: var(--bg);
+  transition: border-color 0.2s;
+}
+
+.onboarding-section.completed {
+  border-color: var(--accent, #00d17a);
+  background: color-mix(in srgb, var(--accent, #00d17a) 8%, var(--bg));
+}
+
+/* ── Section label row ───────────────────────────────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-label h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.section-label p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ── Step badges ─────────────────────────────────────────────────────────── */
+.step-badge {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--accent, #00d17a);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: grid;
+  place-items: center;
+}
+
+.step-badge.done {
+  background: var(--accent, #00d17a);
+}
+
+/* ── OR divider ─────────────────────────────────────────────────────────── */
+.or-divider {
+  text-align: center;
+  position: relative;
+  margin: 1rem 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 2rem);
+    height: 1px;
+    background: var(--border);
+  }
+
+  &::before { left: 0; }
+  &::after  { right: 0; }
+}
+
+/* ── Exchange grid ───────────────────────────────────────────────────────── */
+.exchange-category-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.exchange-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.exchange-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: center;
+
+  &:hover {
+    border-color: var(--accent, #00d17a);
+    background: color-mix(in srgb, var(--accent, #00d17a) 6%, var(--surface));
+  }
+}
+
+.tile-logo {
+  font-size: 1.4rem;
+}
+
+.tile-name {
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* ── API key form ────────────────────────────────────────────────────────── */
+.api-form-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: var(--surface);
+    color: var(--text-primary);
+  }
+}
+
+.selected-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ── Amount buttons ──────────────────────────────────────────────────────── */
+.amount-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.amount-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: var(--accent, #00d17a);
+  }
+
+  &.selected {
+    border-color: var(--accent, #00d17a);
+    background: color-mix(in srgb, var(--accent, #00d17a) 12%, var(--surface));
+    color: var(--accent, #00d17a);
+    font-weight: 700;
+  }
+}
+
+/* ── Form fields ─────────────────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent, #00d17a);
+  }
+}
+
+.custom-amount-group .amount-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color 0.15s;
+
+  &:focus-within {
+    border-color: var(--accent, #00d17a);
+  }
+}
+
+.currency-prefix {
+  padding: 0.55rem 0.6rem 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  background: transparent;
+  user-select: none;
+}
+
+.custom-amount-group input {
+  border: none;
+  border-radius: 0;
+  padding-left: 0;
+
+  &:focus {
+    border-color: transparent;
+  }
+}
+
+/* ── Stripe card element ─────────────────────────────────────────────────── */
+.card-element {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.15s;
+
+  &.StripeElement--focus {
+    border-color: var(--accent, #00d17a);
+  }
+}
+
+.card-placeholder {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ── Primary button ──────────────────────────────────────────────────────── */
+.primary-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--accent, #00d17a);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 0.5rem;
+
+  &:hover:not(:disabled) {
+    opacity: 0.88;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* ── Feedback messages ───────────────────────────────────────────────────── */
+.form-error {
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, #ef4444 10%, transparent);
+  color: #ef4444;
+  margin-bottom: 0.6rem;
+  border: 1px solid color-mix(in srgb, #ef4444 25%, transparent);
+}
+
+.form-status {
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--accent, #00d17a) 10%, transparent);
+  color: var(--accent, #00d17a);
+  margin-bottom: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--accent, #00d17a) 25%, transparent);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .onboarding-panel {
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+  }
+
+  .exchange-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
+}

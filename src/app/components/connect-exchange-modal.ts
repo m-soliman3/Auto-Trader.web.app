@@ -50,6 +50,12 @@ export class ConnectExchangeModal {
   passphrase = '';
 
   select(ex: Exchange) {
+    // Demo/paper exchanges require a Premium subscription ($10/month).
+    if (ex.isPaper && !this.subscription.isPremium()) {
+      this.error.set('Demo / paper exchange connections require a Premium subscription ($10/month). Upgrade in Settings → Billing.');
+      return;
+    }
+
     this.selected.set(ex);
     this.label = ex.name;
     this.apiKey = '';
