@@ -73,6 +73,20 @@
           }
         },
         {
+          "source": "/api/createTopUpIntent",
+          "function": {
+            "functionId": "createTopUpIntent",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/confirmTopUp",
+          "function": {
+            "functionId": "confirmTopUp",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",
@@ -168,6 +182,20 @@
           "source": "/api/confirmPayPalSubscription",
           "function": {
             "functionId": "confirmPayPalSubscription",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/createTopUpIntent",
+          "function": {
+            "functionId": "createTopUpIntent",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/confirmTopUp",
+          "function": {
+            "functionId": "confirmTopUp",
             "region": "europe-west1"
           }
         },
