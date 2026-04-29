@@ -389,6 +389,20 @@
       "failedToSave": "Échec de l'enregistrement de la connexion d'échange. Veuillez réessayer."
     }
   },
+  "paperOnboarding": {
+    "title": "Configurer votre compte démo",
+    "subtitle": "Ajoutez des fonds virtuels ou connectez votre propre exchange papier pour trader sans risque.",
+    "tabTopUp": "Recharger le compte démo",
+    "tabConnectExchange": "Connecter un exchange papier",
+    "topUpDesc": "Choisissez un solde de départ pour votre compte démo. Nous configurerons automatiquement un compte papier Alpaca.",
+    "alpacaNotice": "Votre compte démo est alimenté par Alpaca Paper Trading. Les ordres sont simulés avec des données de marché réelles.",
+    "topUpBtn": "Créer un compte démo avec",
+    "settingUp": "Configuration…",
+    "demoAccountReady": "Compte démo prêt",
+    "demoAccountReadyDesc": "Votre compte démo est financé et prêt à l'emploi.",
+    "exchangeConnected": "Exchange papier connecté",
+    "exchangeConnectedDesc": "Votre exchange papier est connecté. Vous pouvez commencer le trading démo."
+  },
   "createBot": {
     "botName": "Nom du bot",
     "botNamePlaceholder": "Mon bot BTC",

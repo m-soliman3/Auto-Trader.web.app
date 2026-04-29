@@ -389,6 +389,20 @@
       "failedToSave": "Speichern der Exchange-Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut."
     }
   },
+  "paperOnboarding": {
+    "title": "Demo-Konto einrichten",
+    "subtitle": "Fügen Sie virtuelle Mittel hinzu oder verbinden Sie Ihre eigene Paper-Börse, um risikofrei zu handeln.",
+    "tabTopUp": "Demo-Konto aufladen",
+    "tabConnectExchange": "Paper-Börse verbinden",
+    "topUpDesc": "Wählen Sie ein Startguthaben für Ihr Demo-Konto. Wir richten automatisch ein Alpaca-Paper-Konto ein.",
+    "alpacaNotice": "Ihr Demo-Konto wird von Alpaca Paper Trading betrieben. Aufträge werden mit echten Marktdaten simuliert.",
+    "topUpBtn": "Demo-Konto erstellen mit",
+    "settingUp": "Wird eingerichtet…",
+    "demoAccountReady": "Demo-Konto bereit",
+    "demoAccountReadyDesc": "Ihr Demo-Konto ist aufgeladen und bereit zur Nutzung.",
+    "exchangeConnected": "Paper-Börse verbunden",
+    "exchangeConnectedDesc": "Ihre Paper-Börse ist verbunden. Sie können jetzt mit dem Demo-Handel beginnen."
+  },
   "createBot": {
     "botName": "Bot-Name",
     "botNamePlaceholder": "Mein BTC-Bot",

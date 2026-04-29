@@ -50,6 +50,12 @@ export interface User {
   realMoneyOnboarded?: boolean;
   /** Alpaca Broker sandbox account ID auto-provisioned on first top-up. */
   alpacaBrokerAccountId?: string;
+  /** True once the user has completed paper-money onboarding (topped up demo account OR connected paper exchange). */
+  paperOnboarded?: boolean;
+  /** Starting balance of the auto-provisioned Alpaca paper account (USD). */
+  alpacaPaperBalance?: number;
+  /** Alpaca paper account number (e.g. "PA12345678") assigned on demo top-up. */
+  alpacaPaperAccountNumber?: string;
 }
 
 export interface AuthAccountDetails {

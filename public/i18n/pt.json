@@ -389,6 +389,20 @@
       "failedToSave": "Falha ao salvar a conexão de câmbio. Por favor, tente novamente."
     }
   },
+  "paperOnboarding": {
+    "title": "Configure sua conta demo",
+    "subtitle": "Adicione fundos virtuais ou conecte sua própria corretora de papel para negociar sem riscos.",
+    "tabTopUp": "Recarregar conta demo",
+    "tabConnectExchange": "Conectar corretora de papel",
+    "topUpDesc": "Escolha um saldo inicial para sua conta demo. Vamos configurar automaticamente uma conta de papel Alpaca.",
+    "alpacaNotice": "Sua conta demo é alimentada pelo Alpaca Paper Trading. As ordens são simuladas com dados reais de mercado.",
+    "topUpBtn": "Criar conta demo com",
+    "settingUp": "Configurando…",
+    "demoAccountReady": "Conta demo pronta",
+    "demoAccountReadyDesc": "Sua conta demo está financiada e pronta para usar.",
+    "exchangeConnected": "Corretora de papel conectada",
+    "exchangeConnectedDesc": "Sua corretora de papel está conectada. Já pode começar a negociar em demo."
+  },
   "createBot": {
     "botName": "Nome do Bot",
     "botNamePlaceholder": "Meu Bot de BTC",
