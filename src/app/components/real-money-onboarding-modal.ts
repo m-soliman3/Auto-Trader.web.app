@@ -282,27 +282,51 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
 
   private async initStripe(): Promise<void> {
     const key = (environment.stripePublishableKey || '').trim();
-    if (!key) return;
-
-    this.topupInitializing.set(true);
-
-    this.stripe = await loadStripe(key);
-    if (!this.stripe) {
-      this.topupInitializing.set(false);
+    if (!key) {
+      this.topupError.set('Payment is not configured. Please contact support.');
       return;
     }
 
-    this.elements = this.stripe.elements({
-      appearance: { theme: 'stripe', labels: 'floating' },
-    });
-    this.cardElement = this.elements.create('card', { hidePostalCode: false });
-    this.cardElement.mount('#topup-card-element');
-    this.cardElement.on('change', (e) => {
-      if (e.error?.message) this.topupError.set(e.error.message);
-      else if (!this.topupProcessing()) this.topupError.set('');
-    });
+    this.topupInitializing.set(true);
 
-    this.topupInitializing.set(false);
+    try {
+      this.stripe = await loadStripe(key);
+      if (!this.stripe) {
+        this.topupError.set('Failed to load payment provider. Please refresh and try again.');
+        return;
+      }
+
+      this.elements = this.stripe.elements({
+        appearance: { theme: 'stripe', labels: 'floating' },
+      });
+
+      if (this.cardElement) {
+        this.cardElement.destroy();
+        this.cardElement = null;
+      }
+      this.cardElement = this.elements.create('card', { hidePostalCode: false });
+
+      // Yield to the event loop so Angular has committed the current render
+      // before we try to mount the Stripe iframe into the DOM.
+      await new Promise<void>(resolve => setTimeout(resolve, 0));
+
+      const container = document.getElementById('topup-card-element');
+      if (!container) {
+        this.topupError.set('Payment form could not initialize. Please refresh.');
+        return;
+      }
+
+      this.cardElement.mount(container);
+      this.cardElement.on('change', (e) => {
+        if (e.error?.message) this.topupError.set(e.error.message);
+        else if (!this.topupProcessing()) this.topupError.set('');
+      });
+    } catch (err: any) {
+      console.error('Stripe initialization error:', err);
+      this.topupError.set('Failed to initialize payment form. Please refresh and try again.');
+    } finally {
+      this.topupInitializing.set(false);
+    }
   }
 
   private async markOnboarded(): Promise<void> {
