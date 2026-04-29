@@ -1,15 +1,15 @@
-<div class="app-shell" [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding()">
+<div class="app-shell">
 	<app-consent-banner />
 	<app-navbar />
 	@if (showAssistantRibbon()) {
 		<app-ai-chat-ribbon />
 	}
 
-	<main class="app-main">
+	<main class="app-main" [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding()">
 		<router-outlet />
 	</main>
 
-	<app-site-footer />
+	<app-site-footer [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding()" />
 </div>
 
 @if (realMoneyOnboarding.needsOnboarding()) {
