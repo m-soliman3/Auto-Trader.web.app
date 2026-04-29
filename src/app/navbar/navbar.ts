@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 import { RealMoneyOnboardingService } from '../services/real-money-onboarding.service';
+import { TourService } from '../services/tour.service';
 
 @Component({
   selector: 'app-navbar',
@@ -28,6 +29,7 @@ export class Navbar {
   languageService = inject(LanguageService);
   uiPolicy = inject(UiPolicyService);
   realMoneyOnboarding = inject(RealMoneyOnboardingService);
+  tourService = inject(TourService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly router = inject(Router);
   private readonly viewportScroller = inject(ViewportScroller);
@@ -41,6 +43,9 @@ export class Navbar {
   showThemeToggle = computed(() => this.hasPrimarySegment('settings'));
   showAccountModeSwitch = computed(() => {
     return this.auth.currentUser() !== null && !this.hasPrimarySegment('settings');
+  });
+  showQuickGuide = computed(() => {
+    return this.auth.currentUser() !== null && this.currentUrl().includes('/dashboard');
   });
 
   constructor() {

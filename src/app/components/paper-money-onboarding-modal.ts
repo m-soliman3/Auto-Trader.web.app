@@ -127,8 +127,8 @@ export class PaperMoneyOnboardingModal {
       }
 
       this.topupCompleted.set(true);
-      // Schedule tour to start after the onboarding blur lifts.
-      setTimeout(() => this.tourService.startIfFirstVisit(), 900);
+      // Start tour after the modal closes.
+      this.tourService.scheduleTourStart();
     } catch (err: any) {
       this.topupError.set(err?.error?.error || err?.message || 'Failed to top up demo account. Please try again.');
     } finally {
@@ -202,8 +202,8 @@ export class PaperMoneyOnboardingModal {
       await this.exchangeService.add(conn);
       await this.markPaperOnboarded();
       this.exchangeConnected.set(true);
-      // Schedule tour to start after the onboarding blur lifts.
-      setTimeout(() => this.tourService.startIfFirstVisit(), 900);
+      // Start tour after the modal closes.
+      this.tourService.scheduleTourStart();
     } catch (err: any) {
       this.exchangeError.set(err?.message || 'Failed to connect exchange. Please try again.');
     } finally {
