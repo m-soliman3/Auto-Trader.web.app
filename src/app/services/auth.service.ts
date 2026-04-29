@@ -2,6 +2,7 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   Auth,
+  FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
   TwitterAuthProvider,
@@ -308,6 +309,24 @@ export class AuthService {
     } catch (e: any) {
       if (e.code === 'auth/popup-closed-by-user') return null;
       return e.message ?? 'X sign-in failed.';
+    }
+  }
+
+  /** Facebook OAuth via Firebase – opens a popup */
+  async loginWithFacebook(): Promise<string | null> {
+    try {
+      const result = await signInWithPopup(this.fireAuth, new FacebookAuthProvider());
+      const additionalUserInfo = getAdditionalUserInfo(result);
+      await this.upsertSocialProfile(result.user);
+      await this.usageAnalytics.recordAuthEvent(
+        result.user.uid,
+        additionalUserInfo?.isNewUser ? 'signup' : 'login',
+        this.language.getCurrentLanguage().code,
+      );
+      return null;
+    } catch (e: any) {
+      if (e.code === 'auth/popup-closed-by-user') return null;
+      return e.message ?? 'Facebook sign-in failed.';
     }
   }
 

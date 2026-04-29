@@ -73,6 +73,12 @@ export class TourService {
   readonly isLastStep = computed(() => this.currentIndex() === this.steps.length - 1);
   readonly isFirstStep = computed(() => this.currentIndex() === 0);
 
+  /** True once the user has completed real-money OR paper-money onboarding. */
+  readonly isOnboarded = computed(() => {
+    const user = this.auth.currentUser();
+    return !!(user?.realMoneyOnboarded || user?.paperOnboarded);
+  });
+
   /** Starts the tour from step 0. */
   start(): void {
     this.currentIndex.set(0);

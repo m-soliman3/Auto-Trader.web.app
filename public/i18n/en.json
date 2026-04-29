@@ -118,6 +118,7 @@
     "continueWithGoogle": "Continue with Google",
     "continueWithMicrosoft": "Continue with Microsoft",
     "continueWithX": "Continue with X",
+    "continueWithFacebook": "Continue with Facebook",
     "noAccount": "Don't have an account?",
     "signUpFree": "Sign up free",
     "forgotTitle": "Reset your password",
@@ -152,6 +153,7 @@
     "signUpWithGoogle": "Sign up with Google",
     "signUpWithMicrosoft": "Sign up with Microsoft",
     "signUpWithX": "Sign up with X",
+    "signUpWithFacebook": "Sign up with Facebook",
     "alreadyHaveAccount": "Already have an account?",
     "logIn": "Log in"
   },
@@ -368,6 +370,7 @@
     "enterApiCredentials": "Enter API Credentials",
     "getApiKeysFrom": "Get API keys from",
     "howToCreateApiCredentials": "How to create your own API credentials",
+    "guideToGenerateApiFor": "Guide to generate {{name}} API here",
     "keysValidated": "Your keys are securely validated with the exchange before saving",
     "noExchangesForMode": "No exchanges available for this mode yet.",
     "paperTrading": "Paper Trading",
