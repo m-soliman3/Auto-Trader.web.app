@@ -389,6 +389,20 @@
       "failedToSave": "No se pudo guardar la conexión de intercambio. Por favor, inténtelo de nuevo."
     }
   },
+  "paperOnboarding": {
+    "title": "Configura tu cuenta demo",
+    "subtitle": "Añade fondos virtuales o conecta tu propio intercambio de papel para operar sin riesgos.",
+    "tabTopUp": "Recargar cuenta demo",
+    "tabConnectExchange": "Conectar intercambio de papel",
+    "topUpDesc": "Elige un saldo inicial para tu cuenta demo. Configuraremos automáticamente una cuenta de papel de Alpaca.",
+    "alpacaNotice": "Tu cuenta demo usa Alpaca Paper Trading. Las órdenes son simuladas con datos de mercado reales.",
+    "topUpBtn": "Crear cuenta demo con",
+    "settingUp": "Configurando…",
+    "demoAccountReady": "Cuenta demo lista",
+    "demoAccountReadyDesc": "Tu cuenta demo está financiada y lista para usar.",
+    "exchangeConnected": "Intercambio de papel conectado",
+    "exchangeConnectedDesc": "Tu intercambio de papel está conectado. Ya puedes empezar a operar en demo."
+  },
   "createBot": {
     "botName": "Nombre del Bot",
     "botNamePlaceholder": "Mi Bot de BTC",

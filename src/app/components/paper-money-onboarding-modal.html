@@ -1,0 +1,199 @@
+<div class="onboarding-backdrop">
+  <div class="onboarding-panel">
+
+    <header class="onboarding-header">
+      <div class="onboarding-icon">🎮</div>
+      <h2>{{ 'paperOnboarding.title' | translate }}</h2>
+      <p>{{ 'paperOnboarding.subtitle' | translate }}</p>
+    </header>
+
+    <!-- ── Completed states ───────────────────────────────────────────── -->
+    @if (topupCompleted()) {
+      <section class="onboarding-section completed">
+        <div class="section-label">
+          <span class="step-badge done">✓</span>
+          <div>
+            <h3>{{ 'paperOnboarding.demoAccountReady' | translate }}</h3>
+            <p>{{ 'paperOnboarding.demoAccountReadyDesc' | translate }}</p>
+          </div>
+        </div>
+      </section>
+    }
+
+    @if (exchangeConnected()) {
+      <section class="onboarding-section completed">
+        <div class="section-label">
+          <span class="step-badge done">✓</span>
+          <div>
+            <h3>{{ 'paperOnboarding.exchangeConnected' | translate }}</h3>
+            <p>{{ 'paperOnboarding.exchangeConnectedDesc' | translate }}</p>
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- ── Tab bar (only shown while neither step is complete) ────────── -->
+    @if (!topupCompleted() && !exchangeConnected()) {
+      <div class="tab-bar">
+        <button
+          class="tab-btn"
+          type="button"
+          [class.active]="activeTab() === 'topup'"
+          (click)="activeTab.set('topup')"
+        >
+          💰 {{ 'paperOnboarding.tabTopUp' | translate }}
+        </button>
+        <button
+          class="tab-btn"
+          type="button"
+          [class.active]="activeTab() === 'exchange'"
+          (click)="activeTab.set('exchange')"
+        >
+          🔗 {{ 'paperOnboarding.tabConnectExchange' | translate }}
+        </button>
+      </div>
+
+      <!-- ── Tab 1: Demo Top Up ─────────────────────────────────────── -->
+      @if (activeTab() === 'topup') {
+        <section class="onboarding-section tab-content">
+
+          <p class="topup-description">{{ 'paperOnboarding.topUpDesc' | translate }}</p>
+
+          @if (topupError()) {
+            <div class="alert-error">{{ topupError() }}</div>
+          }
+
+          <div class="amount-grid">
+            @for (amt of presetAmounts; track amt) {
+              <button
+                class="amount-btn"
+                type="button"
+                [class.selected]="selectedAmount() === amt"
+                (click)="selectedAmount.set(amt)"
+              >
+                ${{ amt | number }}
+              </button>
+            }
+          </div>
+
+          <p class="alpaca-notice">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            {{ 'paperOnboarding.alpacaNotice' | translate }}
+          </p>
+
+          <button
+            class="btn-primary"
+            type="button"
+            [disabled]="topupProcessing()"
+            (click)="topUpDemoAccount()"
+          >
+            @if (topupProcessing()) {
+              <span class="spinner"></span> {{ 'paperOnboarding.settingUp' | translate }}
+            } @else {
+              {{ 'paperOnboarding.topUpBtn' | translate }} ${{ selectedAmount() | number }}
+            }
+          </button>
+
+        </section>
+      }
+
+      <!-- ── Tab 2: Connect Paper Exchange ─────────────────────────── -->
+      @if (activeTab() === 'exchange') {
+        <section class="onboarding-section tab-content">
+
+          @if (exchangeError() && exchangeStep() === 1) {
+            <div class="alert-error">{{ exchangeError() }}</div>
+          }
+
+          @if (exchangeStep() === 1) {
+            @if (paperCryptoExchanges().length > 0) {
+              <div class="exchange-category-label">{{ 'connectExchange.cryptoExchanges' | translate }}</div>
+              <div class="exchange-grid">
+                @for (ex of paperCryptoExchanges(); track ex.id) {
+                  <button class="exchange-tile" (click)="selectExchange(ex)">
+                    <span class="exchange-logo" [style.color]="ex.color">{{ ex.logo }}</span>
+                    <span class="exchange-name">{{ ex.name }}</span>
+                  </button>
+                }
+              </div>
+            }
+
+            @if (paperStockExchanges().length > 0) {
+              <div class="exchange-category-label">{{ 'connectExchange.stocksAndMultiAsset' | translate }}</div>
+              <div class="exchange-grid">
+                @for (ex of paperStockExchanges(); track ex.id) {
+                  <button class="exchange-tile" (click)="selectExchange(ex)">
+                    <span class="exchange-logo" [style.color]="ex.color">{{ ex.logo }}</span>
+                    <span class="exchange-name">{{ ex.name }}</span>
+                  </button>
+                }
+              </div>
+            }
+          }
+
+          @if (exchangeStep() === 2) {
+            <div class="step2-header">
+              <button class="back-btn" type="button" (click)="backToExchangeList()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+              </button>
+              <span class="step2-exchange-name">{{ selectedExchange()?.logo }} {{ selectedExchange()?.name }}</span>
+            </div>
+
+            @if (selectedExchange()?.apiCredentialGuideUrl) {
+              <a
+                [href]="selectedExchange()?.apiCredentialGuideUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="api-guide-link"
+              >
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                {{ 'connectExchange.howToCreateApiCredentials' | translate }}
+              </a>
+            }
+
+            @if (exchangeError()) {
+              <div class="alert-error">{{ exchangeError() }}</div>
+            }
+
+            <div class="form-group">
+              <label>{{ 'connectExchange.accountLabel' | translate }}</label>
+              <input type="text" [(ngModel)]="exchangeLabel" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />
+            </div>
+
+            <div class="form-group">
+              <label>{{ 'connectExchange.apiKey' | translate }}</label>
+              <input type="text" [(ngModel)]="exchangeApiKey" [placeholder]="'connectExchange.apiKeyPlaceholder' | translate" autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+              <label>{{ 'connectExchange.apiSecret' | translate }}</label>
+              <input type="password" [(ngModel)]="exchangeSecret" [placeholder]="'connectExchange.apiSecretPlaceholder' | translate" autocomplete="off" />
+            </div>
+
+            @if (selectedExchange()?.hasPassphrase) {
+              <div class="form-group">
+                <label>{{ 'connectExchange.passphrase' | translate }}</label>
+                <input type="password" [(ngModel)]="exchangePassphrase" [placeholder]="'connectExchange.passphrasePlaceholder' | translate" autocomplete="off" />
+              </div>
+            }
+
+            <button
+              class="btn-primary"
+              type="button"
+              [disabled]="exchangeSaving()"
+              (click)="saveExchange()"
+            >
+              @if (exchangeSaving()) {
+                <span class="spinner"></span> {{ 'connectExchange.connecting' | translate }}
+              } @else {
+                {{ 'connectExchange.connect' | translate }} {{ selectedExchange()?.name }}
+              }
+            </button>
+          }
+
+        </section>
+      }
+    }
+
+  </div>
+</div>

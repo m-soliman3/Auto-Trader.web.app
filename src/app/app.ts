@@ -13,10 +13,12 @@ import { HreflangService } from './services/hreflang.service';
 import { UsageAnalyticsService } from './services/usage-analytics.service';
 import { RealMoneyOnboardingModal } from './components/real-money-onboarding-modal';
 import { RealMoneyOnboardingService } from './services/real-money-onboarding.service';
+import { PaperMoneyOnboardingModal } from './components/paper-money-onboarding-modal';
+import { PaperOnboardingService } from './services/paper-onboarding.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent, RealMoneyOnboardingModal],
+  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent, RealMoneyOnboardingModal, PaperMoneyOnboardingModal],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -32,6 +34,7 @@ export class App {
   // Eagerly inject analytics so user usage tracking starts at app boot.
   private readonly usageAnalytics = inject(UsageAnalyticsService);
   readonly realMoneyOnboarding = inject(RealMoneyOnboardingService);
+  readonly paperOnboarding = inject(PaperOnboardingService);
 
   private readonly currentUrl = signal(this.router.url);
 

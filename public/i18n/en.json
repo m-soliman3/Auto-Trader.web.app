@@ -391,6 +391,20 @@
       "failedToSave": "Failed to save exchange connection. Please try again."
     }
   },
+  "paperOnboarding": {
+    "title": "Set Up Your Demo Account",
+    "subtitle": "Top up with virtual funds or connect your own paper exchange to start trading risk-free.",
+    "tabTopUp": "Top Up Demo Account",
+    "tabConnectExchange": "Connect Paper Exchange",
+    "topUpDesc": "Choose a starting balance for your demo account. We'll set up an Alpaca paper trading account automatically — no card required.",
+    "alpacaNotice": "Your demo account is powered by Alpaca Paper Trading. Orders are simulated with real market data.",
+    "topUpBtn": "Set Up Demo Account with",
+    "settingUp": "Setting up…",
+    "demoAccountReady": "Demo Account Ready",
+    "demoAccountReadyDesc": "Your demo account is funded and ready. You can now explore the platform with paper money.",
+    "exchangeConnected": "Paper Exchange Connected",
+    "exchangeConnectedDesc": "Your paper exchange is connected. You can now start demo trading."
+  },
   "createBot": {
     "botName": "Bot Name",
     "botNamePlaceholder": "My BTC Bot",
