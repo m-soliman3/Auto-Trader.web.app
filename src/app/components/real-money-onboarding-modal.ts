@@ -158,8 +158,8 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
       await this.exchangeService.add(conn);
       await this.markOnboarded();
       this.exchangeConnected.set(true);
-      // Schedule tour to start after the onboarding blur lifts.
-      setTimeout(() => this.tourService.startIfFirstVisit(), 900);
+      // Start tour after the modal closes.
+      this.tourService.scheduleTourStart();
     } catch (err: any) {
       this.exchangeError.set(err?.message || 'Failed to connect exchange. Please try again.');
     } finally {
@@ -274,8 +274,8 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
       await this.authService.reloadCurrentUserProfile();
       this.topupStatus.set('');
       this.topupCompleted.set(true);
-      // Schedule tour to start after the onboarding blur lifts.
-      setTimeout(() => this.tourService.startIfFirstVisit(), 900);
+      // Start tour after the modal closes.
+      this.tourService.scheduleTourStart();
     } catch (err: any) {
       const apiMsg = err?.error?.error;
       this.topupError.set(apiMsg || err?.message || 'Payment failed. Please try again.');

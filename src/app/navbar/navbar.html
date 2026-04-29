@@ -42,8 +42,23 @@
         </div>
       }
 
+      @if (showQuickGuide()) {
+        <button
+          class="quick-guide-nav-btn"
+          type="button"
+          (click)="tourService.start()"
+          [attr.aria-label]="'tour.quickGuide' | translate"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span class="quick-guide-nav-label">{{ 'tour.quickGuide' | translate }}</span>
+        </button>
+      }
+
       @if (uiPolicy.canChangeLanguage()) {
-        <!-- Language selector -->
         <div class="lang-selector-wrap">
           <button
             class="lang-selector-btn"

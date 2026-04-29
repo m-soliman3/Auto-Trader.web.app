@@ -192,7 +192,7 @@ export class Dashboard implements OnDestroy {
   constructor() {
     this.loadRunnerSummaries();
     // Auto-start the tour on first dashboard visit after onboarding.
-    setTimeout(() => this.tourService.startIfFirstVisit(), 800);
+    this.tourService.startIfFirstVisit();
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {

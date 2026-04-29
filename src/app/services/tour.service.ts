@@ -1,5 +1,7 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { AuthService } from './auth.service';
+import { PaperOnboardingService } from './paper-onboarding.service';
+import { RealMoneyOnboardingService } from './real-money-onboarding.service';
 
 export interface TourStep {
   /** DOM element ID to spotlight. Null = centered (no spotlight). */
@@ -60,6 +62,8 @@ const STORAGE_KEY_PREFIX = 'at-tour-seen-';
 @Injectable({ providedIn: 'root' })
 export class TourService {
   private readonly auth = inject(AuthService);
+  private readonly paperOnboarding = inject(PaperOnboardingService);
+  private readonly realMoneyOnboarding = inject(RealMoneyOnboardingService);
 
   readonly steps = TOUR_STEPS;
   readonly isActive = signal(false);
@@ -78,6 +82,37 @@ export class TourService {
     const user = this.auth.currentUser();
     return !!(user?.realMoneyOnboarded || user?.paperOnboarded);
   });
+
+  /** True while either onboarding modal is visible. */
+  private readonly isAnyModalOpen = computed(
+    () => this.paperOnboarding.needsOnboarding() || this.realMoneyOnboarding.needsOnboarding(),
+  );
+
+  /** Set to true by scheduleTourStart(); cleared once the modal closes and tour fires. */
+  private readonly pendingTour = signal(false);
+
+  constructor() {
+    // Fire the first-visit tour as soon as all onboarding modals are gone.
+    effect(() => {
+      if (this.pendingTour() && !this.isAnyModalOpen()) {
+        this.pendingTour.set(false);
+        this.startIfFirstVisit();
+      }
+    });
+  }
+
+  /**
+   * Request a first-visit tour start.
+   * If an onboarding modal is currently open it defers until the modal closes;
+   * otherwise starts immediately.
+   */
+  scheduleTourStart(): void {
+    if (!this.isAnyModalOpen()) {
+      this.startIfFirstVisit();
+    } else {
+      this.pendingTour.set(true);
+    }
+  }
 
   /** Starts the tour from step 0. */
   start(): void {
