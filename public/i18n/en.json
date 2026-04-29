@@ -367,6 +367,7 @@
     "enable": "Enable",
     "enterApiCredentials": "Enter API Credentials",
     "getApiKeysFrom": "Get API keys from",
+    "howToCreateApiCredentials": "How to create your own API credentials",
     "keysValidated": "Your keys are securely validated with the exchange before saving",
     "noExchangesForMode": "No exchanges available for this mode yet.",
     "paperTrading": "Paper Trading",

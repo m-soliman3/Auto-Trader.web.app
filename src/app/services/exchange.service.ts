@@ -16,6 +16,7 @@ export interface Exchange {
   isPaper?: boolean;
   description?: string;
   apiDocsUrl?: string;
+  apiCredentialGuideUrl?: string;
   category: 'crypto' | 'stocks';
 }
 
@@ -84,6 +85,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: "World's largest crypto exchange by volume",
     apiDocsUrl: 'https://binance-docs.github.io/apidocs/',
+    apiCredentialGuideUrl: 'https://www.binance.com/en/support/faq/how-to-create-api-keys-on-binance-360002502072',
   },
   {
     id: 'coinbase',
@@ -94,6 +96,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Secure US-based crypto trading platform',
     apiDocsUrl: 'https://docs.cdp.coinbase.com/advanced-trade/docs/welcome/',
+    apiCredentialGuideUrl: 'https://docs.cdp.coinbase.com/advanced-trade/docs/auth',
   },
   {
     id: 'kraken',
@@ -104,6 +107,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Regulated cryptocurrency exchange',
     apiDocsUrl: 'https://docs.kraken.com/rest/',
+    apiCredentialGuideUrl: 'https://support.kraken.com/hc/en-us/articles/360000919966-How-to-generate-an-API-key-pair',
   },
   {
     id: 'bybit',
@@ -114,6 +118,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Derivatives and spot trading platform',
     apiDocsUrl: 'https://bybit-exchange.github.io/docs/',
+    apiCredentialGuideUrl: 'https://www.bybit.com/en/help-center/article/How-to-create-your-API-keys',
   },
   {
     id: 'bybit-testnet',
@@ -125,6 +130,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Risk-free paper trading on Bybit testnet',
     apiDocsUrl: 'https://bybit-exchange.github.io/docs/',
+    apiCredentialGuideUrl: 'https://www.bybit.com/en/help-center/article/How-to-create-your-API-keys',
   },
   {
     id: 'okx',
@@ -135,6 +141,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Large derivatives and spot exchange',
     apiDocsUrl: 'https://www.okx.com/docs-v5/',
+    apiCredentialGuideUrl: 'https://www.okx.com/help/how-do-i-create-an-api-key-on-okx',
   },
   {
     id: 'okx-demo',
@@ -146,6 +153,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Risk-free simulated trading on OKX',
     apiDocsUrl: 'https://www.okx.com/docs-v5/',
+    apiCredentialGuideUrl: 'https://www.okx.com/help/how-do-i-create-an-api-key-on-okx',
   },
   {
     id: 'kucoin',
@@ -156,6 +164,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Wide altcoin selection with high liquidity',
     apiDocsUrl: 'https://docs.kucoin.com/',
+    apiCredentialGuideUrl: 'https://support.kucoin.plus/hc/en-us/articles/360015102174',
   },
   {
     id: 'kucoin-sandbox',
@@ -167,6 +176,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Risk-free paper trading on KuCoin sandbox',
     apiDocsUrl: 'https://docs.kucoin.com/',
+    apiCredentialGuideUrl: 'https://support.kucoin.plus/hc/en-us/articles/360015102174',
   },
   {
     id: 'bitfinex',
@@ -177,6 +187,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Advanced crypto exchange with margin trading',
     apiDocsUrl: 'https://docs.bitfinex.com/',
+    apiCredentialGuideUrl: 'https://support.bitfinex.com/hc/en-us/articles/115002349625',
   },
   {
     id: 'gateio',
@@ -187,6 +198,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Huge token variety with deep liquidity',
     apiDocsUrl: 'https://www.gate.io/docs/developers/apiv4/',
+    apiCredentialGuideUrl: 'https://www.gate.io/help/apiv4/create-api-key',
   },
   {
     id: 'mexc',
@@ -197,6 +209,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Low fees and extensive altcoin support',
     apiDocsUrl: 'https://mexcdevelop.github.io/apidocs/',
+    apiCredentialGuideUrl: 'https://support.mexc.com/hc/en-us/articles/360055877071',
   },
   {
     id: 'deribit',
@@ -207,6 +220,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Leading options and futures exchange',
     apiDocsUrl: 'https://docs.deribit.com/',
+    apiCredentialGuideUrl: 'https://insights.deribit.com/exchange-updates/introduction-to-the-deribit-api/',
   },
   {
     id: 'deribit-testnet',
@@ -218,6 +232,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'crypto',
     description: 'Risk-free paper trading on Deribit testnet',
     apiDocsUrl: 'https://docs.deribit.com/',
+    apiCredentialGuideUrl: 'https://insights.deribit.com/exchange-updates/introduction-to-the-deribit-api/',
   },
   // ── Stock / Equity Brokers ────────────────────────────────────────────────
   {
@@ -229,6 +244,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Commission-free stock trading API',
     apiDocsUrl: 'https://alpaca.markets/docs/',
+    apiCredentialGuideUrl: 'https://docs.alpaca.markets/docs/getting-started',
   },
   {
     id: 'alpaca-paper',
@@ -240,6 +256,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Risk-free stock trading simulation',
     apiDocsUrl: 'https://alpaca.markets/docs/',
+    apiCredentialGuideUrl: 'https://docs.alpaca.markets/docs/getting-started',
   },
   {
     id: 'interactive-brokers',
@@ -251,6 +268,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Institutional-grade multi-asset trading platform. Requires IB Gateway running locally.',
     apiDocsUrl: 'https://www.interactivebrokers.com/en/trading/ib-api.php',
+    apiCredentialGuideUrl: 'https://www.interactivebrokers.com/en/trading/ib-api.php',
   },
   {
     id: 'interactive-brokers-paper',
@@ -262,6 +280,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Risk-free paper trading via Interactive Brokers. Requires IB Gateway running locally.',
     apiDocsUrl: 'https://www.interactivebrokers.com/en/trading/ib-api.php',
+    apiCredentialGuideUrl: 'https://www.interactivebrokers.com/en/trading/ib-api.php',
   },
   {
     id: 'tradier',
@@ -272,6 +291,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Commission-free options & equities. Use API key as Access Token and account number as Secret.',
     apiDocsUrl: 'https://documentation.tradier.com/',
+    apiCredentialGuideUrl: 'https://documentation.tradier.com/brokerage-api/getting-started',
   },
   {
     id: 'tradier-sandbox',
@@ -283,6 +303,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Risk-free paper trading on Tradier sandbox. Use API key as Access Token and account number as Secret.',
     apiDocsUrl: 'https://documentation.tradier.com/',
+    apiCredentialGuideUrl: 'https://documentation.tradier.com/brokerage-api/getting-started',
   },
   {
     id: 'tastytrade',
@@ -293,6 +314,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Options-focused broker API. Use email as API Key, password as Secret, and account number as Passphrase.',
     apiDocsUrl: 'https://developer.tastytrade.com/',
+    apiCredentialGuideUrl: 'https://developer.tastytrade.com/open-api-reference/authentication/',
   },
   {
     id: 'schwab',
@@ -303,6 +325,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Full-service broker. Use OAuth access token as API Key, account number as Secret, and app key as Passphrase.',
     apiDocsUrl: 'https://developer.schwab.com/',
+    apiCredentialGuideUrl: 'https://developer.schwab.com/get-started',
   },
   {
     id: 'schwab-paper',
@@ -314,6 +337,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Risk-free paper trading via Schwab thinkorswim. Use OAuth access token as API Key, account number as Secret, and app key as Passphrase.',
     apiDocsUrl: 'https://developer.schwab.com/',
+    apiCredentialGuideUrl: 'https://developer.schwab.com/get-started',
   },
   {
     id: 'ig-group',
@@ -324,6 +348,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'CFDs, forex, stocks & indices. Use your IG API key, password as Secret, and username/identifier as Passphrase.',
     apiDocsUrl: 'https://labs.ig.com/rest-trading-api-reference',
+    apiCredentialGuideUrl: 'https://labs.ig.com/gettingstarted',
   },
   {
     id: 'ig-group-demo',
@@ -335,6 +360,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     category: 'stocks',
     description: 'Risk-free demo trading via IG Group. Use your IG demo account API key, password as Secret, and username as Passphrase.',
     apiDocsUrl: 'https://labs.ig.com/rest-trading-api-reference',
+    apiCredentialGuideUrl: 'https://labs.ig.com/gettingstarted',
   },
 ];
 
