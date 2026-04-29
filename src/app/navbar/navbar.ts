@@ -10,6 +10,7 @@ import { UiPolicyService } from '../services/ui-policy.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
+import { RealMoneyOnboardingService } from '../services/real-money-onboarding.service';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +27,7 @@ export class Navbar {
   accountMode = inject(AccountModeService);
   languageService = inject(LanguageService);
   uiPolicy = inject(UiPolicyService);
+  realMoneyOnboarding = inject(RealMoneyOnboardingService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly router = inject(Router);
   private readonly viewportScroller = inject(ViewportScroller);

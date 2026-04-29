@@ -24,7 +24,7 @@
 
     <div class="nav-actions">
       @if (showAccountModeSwitch()) {
-        <div class="account-mode-toggle" role="group" [attr.aria-label]="'nav.accountMode' | translate">
+        <div class="account-mode-toggle" role="group" [attr.aria-label]="'nav.accountMode' | translate" [class.onboarding-active]="realMoneyOnboarding.needsOnboarding()">
           <button
             class="mode-btn"
             [class.active]="accountMode.mode() === 'real'"
