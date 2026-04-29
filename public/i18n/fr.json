@@ -366,6 +366,7 @@
     "enterApiCredentials": "Entrez les identifiants API",
     "getApiKeysFrom": "Obtenez des clés API de",
     "howToCreateApiCredentials": "Comment créer vos propres identifiants API",
+    "guideToGenerateApiFor": "Guide pour générer l'API {{name}} ici",
     "keysValidated": "Vos clés sont sécuritairement validées avec l'échange avant d'être enregistrées",
     "noExchangesForMode": "Aucun échange disponible pour ce mode pour le moment.",
     "paperTrading": "Trading sur papier",

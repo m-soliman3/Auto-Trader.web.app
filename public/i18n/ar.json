@@ -366,6 +366,7 @@
     "enterApiCredentials": "أدخل بيانات اعتماد واجهة برمجة التطبيقات",
     "getApiKeysFrom": "احصل على مفاتيح API من",
     "howToCreateApiCredentials": "كيفية إنشاء بيانات اعتماد API الخاصة بك",
+    "guideToGenerateApiFor": "دليل إنشاء API الخاص بـ {{name}} هنا",
     "keysValidated": "يتم التحقق من مفاتيحك بأمان مع البورصة قبل الحفظ",
     "noExchangesForMode": "لا توجد عمليات تبادل متاحة لهذا الوضع بعد.",
     "paperTrading": "التداول الورقي",

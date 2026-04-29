@@ -366,6 +366,7 @@
     "enterApiCredentials": "Digite as credenciais da API",
     "getApiKeysFrom": "Obter chaves de API de",
     "howToCreateApiCredentials": "Como criar suas próprias credenciais de API",
+    "guideToGenerateApiFor": "Guia para gerar a API do {{name}} aqui",
     "keysValidated": "Suas chaves são validadas com segurança na exchange antes de serem salvas",
     "noExchangesForMode": "Nenhuma troca disponível para este modo ainda.",
     "paperTrading": "Negociação Simulada",
