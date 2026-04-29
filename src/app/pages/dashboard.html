@@ -576,11 +576,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="dashboard-index-current">{{ (modeLabel() | translate) }} {{ 'userPages.mode' | translate }}</div>
         <nav class="dashboard-index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
           <a class="dashboard-index-link active" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
-          <a class="dashboard-index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
-          <a class="dashboard-index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
-          <a class="dashboard-index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
+          <a id="tour-nav-exchanges" class="dashboard-index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
+          <a id="tour-nav-bots" class="dashboard-index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
+          <a id="tour-nav-strategies" class="dashboard-index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
           <a class="dashboard-index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
-          <a class="dashboard-index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
+          <a id="tour-nav-runner" class="dashboard-index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
         </nav>
       </aside>
 
@@ -592,14 +592,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h1>{{ 'dashboard.welcome' | translate: {name: auth.currentUser()?.name} }}</h1>
         <p>{{ hasVisibleExchange() ? ('dashboard.exchangesConnectedReady' | translate: {mode: (modeLabel() | translate)}) : ('dashboard.connectExchangeToTrade' | translate: {mode: (modeLabel() | translate)}) }}</p>
       </div>
-      <div class="welcome-badge">
-        <span class="badge-dot"></span>
-        <span>{{ 'dashboard.accountActive' | translate }}</span>
+      <div class="welcome-banner-actions">
+        <button class="quick-guide-btn" type="button" (click)="tourService.start()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          {{ 'tour.quickGuide' | translate }}
+        </button>
+        <div class="welcome-badge">
+          <span class="badge-dot"></span>
+          <span>{{ 'dashboard.accountActive' | translate }}</span>
+        </div>
       </div>
     </div>
 
     <!-- Portfolio Cards -->
-    <div class="cards-grid">
+    <div class="cards-grid" id="tour-portfolio">
       @for (card of portfolioCards; track card.labelKey; let i = $index) {
         <div
           class="stat-card"
@@ -819,7 +825,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="main-grid" [style.order]="dashboardSectionOrder('mainGrid')">
 
       <!-- Quick Actions -->
-      <div class="panel">
+      <div class="panel" id="tour-quick-actions">
         <h2 class="panel-title">{{ 'dashboard.quickActions' | translate }}</h2>
         <div class="actions-grid">
           @for (action of quickActions; track action.labelKey) {
@@ -888,7 +894,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       <!-- Backend Runner Monitor -->
-      <div class="panel">
+      <div class="panel" id="tour-runner-panel">
         <div class="panel-header">
           <h2 class="panel-title">{{ 'userPages.backendRunner' | translate }}</h2>
           <button class="btn-refresh-runner" (click)="refreshRunnerSummaries()" [disabled]="runnerSummariesLoading()">

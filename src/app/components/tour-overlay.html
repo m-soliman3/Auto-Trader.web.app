@@ -1,0 +1,73 @@
+@if (tour.isActive()) {
+  <!-- Dark backdrop — transparent when a spotlight element provides the darkness -->
+  <div
+    class="tour-backdrop"
+    [class.has-spotlight]="!!spotlightRect()"
+    (click)="tour.end()"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="'tour.step1Title' | translate"
+  >
+    <!-- Spotlight cutout -->
+    @if (spotlightRect(); as rect) {
+      <div
+        class="tour-spotlight"
+        [style.top.px]="rect.top"
+        [style.left.px]="rect.left"
+        [style.width.px]="rect.width"
+        [style.height.px]="rect.height"
+      ></div>
+    }
+
+    <!-- Tooltip card -->
+    <div
+      class="tour-tooltip"
+      [style.top]="tooltipPos().top"
+      [style.left]="tooltipPos().left"
+      [style.transform]="tooltipPos().transform"
+      (click)="$event.stopPropagation()"
+      role="document"
+    >
+      <!-- Progress dots -->
+      <div class="tour-progress">
+        @for (step of tour.steps; track $index) {
+          <span
+            class="tour-dot"
+            [class.active]="$index === tour.currentIndex()"
+            [class.done]="$index < tour.currentIndex()"
+          ></span>
+        }
+      </div>
+
+      <p class="tour-step-badge">
+        {{ tour.progress().current }}&nbsp;/&nbsp;{{ tour.progress().total }}
+      </p>
+
+      <h3 class="tour-title">{{ tour.currentStep().titleKey | translate }}</h3>
+      <p class="tour-desc">{{ tour.currentStep().descKey | translate }}</p>
+
+      <div class="tour-actions">
+        <button class="tour-skip" type="button" (click)="tour.end()">
+          {{ 'tour.skip' | translate }}
+        </button>
+
+        <div class="tour-nav">
+          @if (!tour.isFirstStep()) {
+            <button class="tour-btn tour-prev" type="button" (click)="tour.prev()">
+              ← {{ 'tour.prev' | translate }}
+            </button>
+          }
+          @if (!tour.isLastStep()) {
+            <button class="tour-btn tour-next" type="button" (click)="tour.next()">
+              {{ 'tour.next' | translate }} →
+            </button>
+          } @else {
+            <button class="tour-btn tour-finish" type="button" (click)="tour.end()">
+              {{ 'tour.finish' | translate }} ✓
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

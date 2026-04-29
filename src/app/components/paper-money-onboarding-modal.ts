@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
 import { ExchangeService, SUPPORTED_EXCHANGES, Exchange, ConnectedExchange } from '../services/exchange.service';
+import { TourService } from '../services/tour.service';
 
 const DEMO_PRESET_AMOUNTS = [1_000, 10_000, 100_000] as const;
 
@@ -33,6 +34,7 @@ export class PaperMoneyOnboardingModal {
   private readonly firestore = inject(Firestore);
   readonly authService = inject(AuthService);
   private readonly exchangeService = inject(ExchangeService);
+  private readonly tourService = inject(TourService);
 
   readonly presetAmounts = DEMO_PRESET_AMOUNTS;
 
@@ -125,6 +127,8 @@ export class PaperMoneyOnboardingModal {
       }
 
       this.topupCompleted.set(true);
+      // Schedule tour to start after the onboarding blur lifts.
+      setTimeout(() => this.tourService.startIfFirstVisit(), 900);
     } catch (err: any) {
       this.topupError.set(err?.error?.error || err?.message || 'Failed to top up demo account. Please try again.');
     } finally {
@@ -198,6 +202,8 @@ export class PaperMoneyOnboardingModal {
       await this.exchangeService.add(conn);
       await this.markPaperOnboarded();
       this.exchangeConnected.set(true);
+      // Schedule tour to start after the onboarding blur lifts.
+      setTimeout(() => this.tourService.startIfFirstVisit(), 900);
     } catch (err: any) {
       this.exchangeError.set(err?.message || 'Failed to connect exchange. Please try again.');
     } finally {

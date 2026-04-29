@@ -403,6 +403,27 @@
     "exchangeConnected": "Intercambio de papel conectado",
     "exchangeConnectedDesc": "Tu intercambio de papel está conectado. Ya puedes empezar a operar en demo."
   },
+  "tour": {
+    "quickGuide": "Guía rápida",
+    "skip": "Saltar tour",
+    "prev": "Atrás",
+    "next": "Siguiente",
+    "finish": "Listo",
+    "step1Title": "¡Bienvenido a Auto-Trader!",
+    "step1Desc": "Hagamos un recorrido rápido de 7 pasos para que conozcas todo. Puedes saltarlo en cualquier momento.",
+    "step2Title": "Resumen de tu cartera",
+    "step2Desc": "Estas tarjetas muestran tu saldo total, P&L abierto, posiciones activas y conteo de operaciones.",
+    "step3Title": "Exchanges",
+    "step3Desc": "Conecta tu exchange de criptos o acciones aquí. Cada bot opera a través de un exchange conectado.",
+    "step4Title": "Bots de trading",
+    "step4Desc": "Los bots son los motores de tu trading. Cada bot monitorea un símbolo y ejecuta estrategias automáticamente.",
+    "step5Title": "Estrategias",
+    "step5Desc": "Asigna estrategias de trading preconstruidas o personalizadas a tus bots. Las estrategias definen cuándo comprar y vender.",
+    "step6Title": "Acciones rápidas",
+    "step6Desc": "Usa estos atajos para conectar un exchange, crear un bot o explorar plantillas de estrategia al instante.",
+    "step7Title": "Runner y historial de ejecución",
+    "step7Desc": "Monitorea el historial de ejecución de estrategias aquí — ve qué se ejecutó, qué se omitió y cualquier error."
+  },
   "createBot": {
     "botName": "Nombre del Bot",
     "botNamePlaceholder": "Mi Bot de BTC",

@@ -403,6 +403,27 @@
     "exchangeConnected": "Exchange papier connecté",
     "exchangeConnectedDesc": "Votre exchange papier est connecté. Vous pouvez commencer le trading démo."
   },
+  "tour": {
+    "quickGuide": "Guide rapide",
+    "skip": "Passer le tour",
+    "prev": "Précédent",
+    "next": "Suivant",
+    "finish": "Terminé",
+    "step1Title": "Bienvenue sur Auto-Trader !",
+    "step1Desc": "Faisons un tour rapide en 7 étapes pour que vous sachiez où tout se trouve. Vous pouvez passer à tout moment.",
+    "step2Title": "Aperçu de votre portefeuille",
+    "step2Desc": "Ces cartes affichent votre solde total, les P&L ouverts, les positions actives et le nombre de transactions.",
+    "step3Title": "Exchanges",
+    "step3Desc": "Connectez votre exchange de cryptos ou d'actions ici. Chaque bot trade via un exchange connecté.",
+    "step4Title": "Bots de trading",
+    "step4Desc": "Les bots sont les moteurs de votre trading. Chaque bot surveille un symbole et exécute les stratégies automatiquement.",
+    "step5Title": "Stratégies",
+    "step5Desc": "Assignez des stratégies de trading prédéfinies ou personnalisées à vos bots. Les stratégies définissent quand acheter et vendre.",
+    "step6Title": "Actions rapides",
+    "step6Desc": "Utilisez ces raccourcis pour connecter un exchange, créer un bot ou parcourir des modèles de stratégie instantanément.",
+    "step7Title": "Runner et historique d'exécution",
+    "step7Desc": "Surveillez l'historique d'exécution des stratégies ici — voyez ce qui a été exécuté, ignoré et les éventuelles erreurs."
+  },
   "createBot": {
     "botName": "Nom du bot",
     "botNamePlaceholder": "Mon bot BTC",
