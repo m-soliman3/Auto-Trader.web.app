@@ -365,6 +365,7 @@
     "enable": "Habilitar",
     "enterApiCredentials": "Introducir credenciales de API",
     "getApiKeysFrom": "Obtén claves de API de",
+    "howToCreateApiCredentials": "Cómo crear tus propias credenciales de API",
     "keysValidated": "Tus llaves se validan de manera segura con el intercambio antes de guardarlas",
     "noExchangesForMode": "Aún no hay intercambios disponibles para este modo.",
     "paperTrading": "Operaciones de simulación",

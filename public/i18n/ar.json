@@ -365,6 +365,7 @@
     "enable": "تمكين",
     "enterApiCredentials": "أدخل بيانات اعتماد واجهة برمجة التطبيقات",
     "getApiKeysFrom": "احصل على مفاتيح API من",
+    "howToCreateApiCredentials": "كيفية إنشاء بيانات اعتماد API الخاصة بك",
     "keysValidated": "يتم التحقق من مفاتيحك بأمان مع البورصة قبل الحفظ",
     "noExchangesForMode": "لا توجد عمليات تبادل متاحة لهذا الوضع بعد.",
     "paperTrading": "التداول الورقي",
