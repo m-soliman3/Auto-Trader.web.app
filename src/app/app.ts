@@ -15,10 +15,11 @@ import { RealMoneyOnboardingModal } from './components/real-money-onboarding-mod
 import { RealMoneyOnboardingService } from './services/real-money-onboarding.service';
 import { PaperMoneyOnboardingModal } from './components/paper-money-onboarding-modal';
 import { PaperOnboardingService } from './services/paper-onboarding.service';
+import { TourOverlay } from './components/tour-overlay';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent, RealMoneyOnboardingModal, PaperMoneyOnboardingModal],
+  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent, RealMoneyOnboardingModal, PaperMoneyOnboardingModal, TourOverlay],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

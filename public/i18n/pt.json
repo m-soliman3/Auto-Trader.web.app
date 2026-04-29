@@ -403,6 +403,27 @@
     "exchangeConnected": "Corretora de papel conectada",
     "exchangeConnectedDesc": "Sua corretora de papel está conectada. Já pode começar a negociar em demo."
   },
+  "tour": {
+    "quickGuide": "Guia rápido",
+    "skip": "Pular tour",
+    "prev": "Voltar",
+    "next": "Próximo",
+    "finish": "Concluído",
+    "step1Title": "Bem-vindo ao Auto-Trader!",
+    "step1Desc": "Vamos fazer um tour rápido de 7 etapas para que você saiba onde tudo está. Pode pular a qualquer momento.",
+    "step2Title": "Visão geral do portfólio",
+    "step2Desc": "Estes cartões mostram seu saldo total, P&L aberto, posições ativas e contagem de negociações.",
+    "step3Title": "Corretoras",
+    "step3Desc": "Conecte sua corretora de criptos ou ações aqui. Cada bot negocia por meio de uma corretora conectada.",
+    "step4Title": "Bots de negociação",
+    "step4Desc": "Os bots são os motores da sua negociação. Cada bot monitora um símbolo e executa estratégias automaticamente.",
+    "step5Title": "Estratégias",
+    "step5Desc": "Atribua estratégias de negociação pré-construídas ou personalizadas aos seus bots. As estratégias definem quando comprar e vender.",
+    "step6Title": "Ações rápidas",
+    "step6Desc": "Use esses atalhos para conectar uma corretora, criar um bot ou explorar modelos de estratégia instantaneamente.",
+    "step7Title": "Runner e histórico de execução",
+    "step7Desc": "Monitore o histórico de execução de estratégias aqui — veja o que foi executado, ignorado e quaisquer erros."
+  },
   "createBot": {
     "botName": "Nome do Bot",
     "botNamePlaceholder": "Meu Bot de BTC",

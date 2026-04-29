@@ -403,6 +403,27 @@
     "exchangeConnected": "Paper-Börse verbunden",
     "exchangeConnectedDesc": "Ihre Paper-Börse ist verbunden. Sie können jetzt mit dem Demo-Handel beginnen."
   },
+  "tour": {
+    "quickGuide": "Schnellführung",
+    "skip": "Tour überspringen",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "finish": "Fertig",
+    "step1Title": "Willkommen bei Auto-Trader!",
+    "step1Desc": "Machen wir eine schnelle 7-Schritte-Tour, damit Sie wissen, wo alles ist. Sie können jederzeit überspringen.",
+    "step2Title": "Ihr Portfolio-Überblick",
+    "step2Desc": "Diese Karten zeigen Ihren Gesamtsaldo, offene G&V, aktive Positionen und die Anzahl der Trades.",
+    "step3Title": "Börsen",
+    "step3Desc": "Verbinden Sie hier Ihre Krypto- oder Aktienb örse. Jeder Bot handelt über eine verbundene Börse.",
+    "step4Title": "Handelsbots",
+    "step4Desc": "Bots sind die Motoren Ihres Handels. Jeder Bot überwacht ein Symbol und führt Strategien automatisch aus.",
+    "step5Title": "Strategien",
+    "step5Desc": "Weisen Sie Ihren Bots vorgefertigte oder benutzerdefinierte Handelsstrategien zu. Strategien definieren wann zu kaufen und zu verkaufen.",
+    "step6Title": "Schnellaktionen",
+    "step6Desc": "Nutzen Sie diese Shortcuts, um sofort eine Börse zu verbinden, einen Bot zu erstellen oder Strategievorlagen zu durchsuchen.",
+    "step7Title": "Runner & Ausführungsverlauf",
+    "step7Desc": "Überwachen Sie hier den Strategieausführungsverlauf — sehen Sie was ausgeführt wurde, übersprungen wurde und etwaige Fehler."
+  },
   "createBot": {
     "botName": "Bot-Name",
     "botNamePlaceholder": "Mein BTC-Bot",
