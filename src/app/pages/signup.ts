@@ -28,7 +28,7 @@ export class Signup {
   loading       = signal(false);
   error         = signal('');
   emailTouched  = signal(false);
-  socialLoading = signal<'google' | 'microsoft' | 'twitter' | ''>('');
+  socialLoading = signal<'google' | 'microsoft' | 'twitter' | 'facebook' | ''>('');
 
   isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -56,6 +56,14 @@ export class Signup {
   async loginWithTwitter() {
     this.socialLoading.set('twitter');
     const err = await this.auth.loginWithTwitter();
+    this.socialLoading.set('');
+    if (err) { this.error.set(err); return; }
+    this.router.navigate(['/dashboard']);
+  }
+
+  async loginWithFacebook() {
+    this.socialLoading.set('facebook');
+    const err = await this.auth.loginWithFacebook();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
     this.router.navigate(['/dashboard']);

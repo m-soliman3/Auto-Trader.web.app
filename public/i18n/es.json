@@ -117,6 +117,8 @@
     "connecting": "Conectando…",
     "continueWithGoogle": "Continuar con Google",
     "continueWithMicrosoft": "Continuar con Microsoft",
+    "continueWithX": "Continuar con X",
+    "continueWithFacebook": "Continuar con Facebook",
     "noAccount": "¿No tienes cuenta?",
     "signUpFree": "Regístrate gratis",
     "forgotTitle": "Restablecer contraseña",
@@ -150,6 +152,8 @@
     "connecting": "Conectando…",
     "signUpWithGoogle": "Registrarse con Google",
     "signUpWithMicrosoft": "Registrarse con Microsoft",
+    "signUpWithX": "Registrarse con X",
+    "signUpWithFacebook": "Registrarse con Facebook",
     "alreadyHaveAccount": "¿Ya tienes cuenta?",
     "logIn": "Iniciar sesión"
   },

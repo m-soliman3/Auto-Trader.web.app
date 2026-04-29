@@ -117,6 +117,8 @@
     "connecting": "جارٍ الاتصال…",
     "continueWithGoogle": "المتابعة عبر Google",
     "continueWithMicrosoft": "المتابعة عبر Microsoft",
+    "continueWithX": "المتابعة عبر X",
+    "continueWithFacebook": "المتابعة عبر Facebook",
     "noAccount": "ليس لديك حساب؟",
     "signUpFree": "سجّل مجانًا",
     "forgotTitle": "إعادة تعيين كلمة المرور",
@@ -150,6 +152,8 @@
     "connecting": "جارٍ الاتصال…",
     "signUpWithGoogle": "التسجيل عبر Google",
     "signUpWithMicrosoft": "التسجيل عبر Microsoft",
+    "signUpWithX": "التسجيل عبر X",
+    "signUpWithFacebook": "التسجيل عبر Facebook",
     "alreadyHaveAccount": "لديك حساب بالفعل؟",
     "logIn": "تسجيل الدخول"
   },
