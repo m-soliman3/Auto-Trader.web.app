@@ -99,7 +99,7 @@ export class PaperMoneyOnboardingModal {
       // Use a stable label so the same document is overwritten on re-topup.
       const conn: ConnectedExchange = {
         exchangeId: 'alpaca-paper',
-        label: 'Alpaca Paper Trading',
+        label: 'Top-up paper money',
         apiKey: result.alpacaApiKey,
         secret: result.alpacaApiSecret,
         connectedAt: new Date().toISOString(),
