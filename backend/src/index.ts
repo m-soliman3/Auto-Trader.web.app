@@ -8,7 +8,7 @@ import { executeStrategyOrder } from "./engine/execution";
 import { resolveInstrumentChart } from "./engine/chart";
 import { getRecentRunnerSummaries } from "./engine/repository";
 import { setupWebSocketServer } from "./infra/websocket";
-import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance, fetchAlpacaBrokerPortfolio } from "./api/alpaca-paper";
+import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance, fetchAlpacaBrokerPortfolio, deleteAlpacaBrokerAccount } from "./api/alpaca-paper";
 import { db, auth as firebaseAuth } from "./infra/firebase";
 
 const app = express();
@@ -164,6 +164,41 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
   } catch (error: any) {
     console.error("paper-topup error", error);
     res.status(500).json({ error: error?.message || "Failed to provision paper trading account." });
+  }
+});
+
+/**
+ * DELETE /v1/paper-account
+ *
+ * Closes the authenticated user's Alpaca Broker sandbox sub-account and
+ * removes all related fields from the Firestore user document.
+ * Called when the user disconnects their paper trading exchange.
+ */
+app.delete("/v1/paper-account", requireUserAuth, async (req, res) => {
+  try {
+    const uid = String(req.userId);
+
+    const userRef = db.collection("users").doc(uid);
+    const userSnap = await userRef.get();
+    const userData = userSnap.data() as Record<string, any> | undefined;
+    const accountId = userData?.alpacaBrokerAccountId;
+
+    if (accountId) {
+      await deleteAlpacaBrokerAccount(accountId);
+    }
+
+    // Remove paper-trading fields from the user document regardless
+    await userRef.update({
+      alpacaBrokerAccountId: null,
+      alpacaPaperApiKey: null,
+      alpacaPaperApiSecret: null,
+      alpacaPaperBalance: null,
+    });
+
+    res.status(200).json({ deleted: true });
+  } catch (error: any) {
+    console.error("paper-account delete error", error);
+    res.status(500).json({ error: error?.message || "Failed to delete paper account." });
   }
 });
 

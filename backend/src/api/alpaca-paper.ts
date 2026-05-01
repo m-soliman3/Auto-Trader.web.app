@@ -382,3 +382,33 @@ export async function fetchAlpacaBrokerPortfolio(accountId: string): Promise<Pap
     openPositions,
   };
 }
+
+/**
+ * Closes / deletes an Alpaca Broker sandbox sub-account.
+ * Called when the user disconnects their paper trading account.
+ *
+ * Alpaca docs: DELETE /v1/accounts/{account_id}
+ * The account must have no open positions and a zero balance to be closed.
+ * In sandbox this succeeds even with a balance for testing purposes.
+ */
+export async function deleteAlpacaBrokerAccount(accountId: string): Promise<void> {
+  if (!config.alpacaBrokerKeyId || !config.alpacaBrokerSecretKey) {
+    throw new Error("Alpaca Broker API credentials are not configured.");
+  }
+
+  const authHeader = await brokerAuthHeader();
+
+  const res = await fetch(`${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: authHeader,
+      Accept: "application/json",
+    },
+  });
+
+  // 204 No Content = success; 404 = already gone — both are fine
+  if (!res.ok && res.status !== 404) {
+    const err = await res.text();
+    throw new Error(`Alpaca account deletion failed (${res.status}): ${err}`);
+  }
+}
