@@ -104,7 +104,7 @@ export async function provisionAlpacaPaperAccount(
       given_name: firstName,
       family_name: lastName,
       date_of_birth: "1990-01-01",
-      tax_id: "123-45-6789",
+      tax_id: "571-36-0248",
       tax_id_type: "USA_SSN",
       country_of_citizenship: "USA",
       country_of_birth: "USA",
