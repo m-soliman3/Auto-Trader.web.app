@@ -105,4 +105,5 @@ jobs:
             --region europe-west1 \
             --project autotrader-b8851 \
             --platform managed \
+            --update-env-vars "ALPACA_BROKER_KEY_ID=${{ secrets.ALPACA_BROKER_KEY_ID }},ALPACA_BROKER_SECRET_KEY=${{ secrets.ALPACA_BROKER_SECRET_KEY }}" \
             --quiet
