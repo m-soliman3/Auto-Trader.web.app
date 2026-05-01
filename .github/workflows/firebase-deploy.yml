@@ -105,10 +105,12 @@ jobs:
           gcloud projects add-iam-policy-binding autotrader-b8851 \
             --member="serviceAccount:${SA}" \
             --role="roles/firebase.admin" \
+            --condition=None \
             --quiet
           gcloud projects add-iam-policy-binding autotrader-b8851 \
             --member="serviceAccount:${SA}" \
             --role="roles/datastore.user" \
+            --condition=None \
             --quiet
 
       - name: Deploy backend to Cloud Run
