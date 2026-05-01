@@ -9,6 +9,7 @@ import { resolveInstrumentChart } from "./engine/chart";
 import { getRecentRunnerSummaries } from "./engine/repository";
 import { setupWebSocketServer } from "./infra/websocket";
 import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance, fetchAlpacaBrokerPortfolio, deleteAlpacaBrokerAccount } from "./api/alpaca-paper";
+import { sendTopUpConfirmationEmail } from "./api/email";
 import { db, auth as firebaseAuth } from "./infra/firebase";
 
 const app = express();
@@ -121,6 +122,17 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
       const newBalance = (userData.alpacaPaperBalance ?? 0) + balanceUsd;
       await userRef.set({ alpacaPaperBalance: newBalance }, { merge: true });
 
+      // Send funding confirmation email (non-fatal)
+      const fbUserForEmail = await firebaseAuth.getUser(uid).catch(() => null);
+      if (fbUserForEmail?.email) {
+        void sendTopUpConfirmationEmail({
+          userEmail: fbUserForEmail.email,
+          userName: fbUserForEmail.displayName ?? "Trader",
+          balanceUsd,
+          accountNumber: userData.alpacaPaperAccountNumber,
+        });
+      }
+
       res.status(200).json({
         accountId: userData.alpacaBrokerAccountId,
         accountNumber: userData.alpacaPaperAccountNumber,
@@ -153,6 +165,14 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
       },
       { merge: true },
     );
+
+    // Send funding confirmation email (non-fatal)
+    void sendTopUpConfirmationEmail({
+      userEmail: email,
+      userName: displayName,
+      balanceUsd,
+      accountNumber: account.accountNumber,
+    });
 
     res.status(200).json({
       accountId: account.accountId,
