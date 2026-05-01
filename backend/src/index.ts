@@ -6,9 +6,10 @@ import { requireRunnerKey, requireUserAuth } from "./api/auth";
 import { runActiveStrategiesOnce } from "./engine/runner";
 import { executeStrategyOrder } from "./engine/execution";
 import { resolveInstrumentChart } from "./engine/chart";
-import { getRecentRunnerSummaries } from "./engine/repository";
+import { getRecentRunnerSummaries, getRecentUserRunnerSummaries } from "./engine/repository";
 import { setupWebSocketServer } from "./infra/websocket";
 import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance, fetchAlpacaBrokerPortfolio, deleteAlpacaBrokerAccount } from "./api/alpaca-paper";
+import { sendTopUpConfirmationEmail } from "./api/email";
 import { db, auth as firebaseAuth } from "./infra/firebase";
 
 const app = express();
@@ -46,8 +47,10 @@ app.get("/v1/admin/runner-summaries", requireRunnerKey, async (req, res) => {
 
 app.get("/v1/runner-summaries", requireUserAuth, async (req, res) => {
   try {
+    const uid = String(req.userId);
     const limitParam = Number.parseInt(String(req.query?.limit || "10"), 10);
-    const summaries = await getRecentRunnerSummaries(Number.isFinite(limitParam) ? limitParam : 10);
+    const limit = Number.isFinite(limitParam) ? limitParam : 10;
+    const summaries = await getRecentUserRunnerSummaries(uid, limit);
     res.status(200).json({
       count: summaries.length,
       items: summaries,
@@ -121,6 +124,17 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
       const newBalance = (userData.alpacaPaperBalance ?? 0) + balanceUsd;
       await userRef.set({ alpacaPaperBalance: newBalance }, { merge: true });
 
+      // Send funding confirmation email (non-fatal)
+      const fbUserForEmail = await firebaseAuth.getUser(uid).catch(() => null);
+      if (fbUserForEmail?.email) {
+        void sendTopUpConfirmationEmail({
+          userEmail: fbUserForEmail.email,
+          userName: fbUserForEmail.displayName ?? "Trader",
+          balanceUsd,
+          accountNumber: userData.alpacaPaperAccountNumber,
+        });
+      }
+
       res.status(200).json({
         accountId: userData.alpacaBrokerAccountId,
         accountNumber: userData.alpacaPaperAccountNumber,
@@ -153,6 +167,14 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
       },
       { merge: true },
     );
+
+    // Send funding confirmation email (non-fatal)
+    void sendTopUpConfirmationEmail({
+      userEmail: email,
+      userName: displayName,
+      balanceUsd,
+      accountNumber: account.accountNumber,
+    });
 
     res.status(200).json({
       accountId: account.accountId,
@@ -228,6 +250,40 @@ app.get("/v1/paper-portfolio", requireUserAuth, async (req, res) => {
   } catch (error: any) {
     console.error("paper-portfolio error", error);
     res.status(500).json({ error: error?.message || "Failed to fetch paper portfolio." });
+  }
+});
+
+/**
+ * GET /v1/paper-balance-status
+ *
+ * Lightweight endpoint that checks whether the Alpaca account's actual cash
+ * balance has reached the expected balance stored in Firestore.
+ * Used by the frontend to poll during ACH settlement after a top-up.
+ *
+ * Response: { confirmed: boolean, actualBalance: number, expectedBalance: number }
+ */
+app.get("/v1/paper-balance-status", requireUserAuth, async (req, res) => {
+  try {
+    const uid = String(req.userId);
+
+    const userSnap = await db.collection("users").doc(uid).get();
+    const userData = userSnap.data() as Record<string, any> | undefined;
+    const accountId = userData?.alpacaBrokerAccountId;
+    const expectedBalance = Number(userData?.alpacaPaperBalance ?? 0);
+
+    if (!accountId) {
+      res.status(404).json({ error: "No paper trading account found." });
+      return;
+    }
+
+    const portfolio = await fetchAlpacaBrokerPortfolio(accountId);
+    const actualBalance = portfolio.portfolioValue;
+    const confirmed = actualBalance >= expectedBalance * 0.99;
+
+    res.status(200).json({ confirmed, actualBalance, expectedBalance });
+  } catch (error: any) {
+    console.error("paper-balance-status error", error);
+    res.status(500).json({ error: error?.message || "Failed to check balance status." });
   }
 });
 
