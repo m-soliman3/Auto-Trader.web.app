@@ -198,54 +198,61 @@ export async function provisionAlpacaPaperAccount(
   const accountNumber = account.account_number;
 
   // ── 2. Create trading API keys for the account ─────────────────────────
-  const keyRes = await fetch(`${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/credentials`, {
-    method: "POST",
-    headers: {
-      Authorization: authHeader,
-      "Content-Type": "application/json",
-      Accept: "application/json",
+  // Correct Broker API endpoint for generating paper-trading credentials for
+  // a sub-account. Returns { id: string; secret: string }.
+  const keyRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/trading/accounts/${accountId}/access_keys`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: authHeader,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({}),
     },
-    body: JSON.stringify({}),
-  });
+  );
 
   let alpacaApiKey: string;
   let alpacaApiSecret: string;
 
   if (keyRes.ok) {
-    const keys = (await keyRes.json()) as { key: string; secret: string };
-    alpacaApiKey = keys.key;
+    const keys = (await keyRes.json()) as { id: string; secret: string };
+    alpacaApiKey = keys.id;
     alpacaApiSecret = keys.secret;
   } else {
-    // Broker API v1 may not support creating keys via REST; fall back to
-    // using the broker credentials directly (paper sandbox allows this).
+    const keyErr = await keyRes.text();
+    console.warn(`Alpaca access_keys failed (${keyRes.status}): ${keyErr}. Falling back to broker credentials.`);
+    // Fall back to broker credentials — will still allow portfolio reads via
+    // the Broker Trading API with an Alpaca-Account-ID header.
     alpacaApiKey = config.alpacaBrokerKeyId!;
     alpacaApiSecret = config.alpacaBrokerSecretKey!;
   }
 
   // ── 3. Seed the cash balance ───────────────────────────────────────────
-  // Alpaca Broker sandbox supports the /v1/accounts/{id}/activities endpoint
-  // for ACH-style funding. Use the journal transfer to credit paper cash.
-  const journalRes = await fetch(`${BROKER_SANDBOX_BASE}/v1/journals`, {
-    method: "POST",
-    headers: {
-      Authorization: authHeader,
-      "Content-Type": "application/json",
-      Accept: "application/json",
+  // The Broker sandbox exposes a direct cash-transaction endpoint that credits
+  // virtual money to a sub-account without requiring a real journal entry.
+  const fundRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/transactions/cash`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: authHeader,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        amount: String(balanceUsd),
+        direction: "INCOMING",
+        reason: `AutoTrader demo top-up $${balanceUsd}`,
+      }),
     },
-    body: JSON.stringify({
-      from_account: "ABCDEFGH-0000-0000-0000-000000000000", // Alpaca firm account
-      entry_type: "JNLC",
-      to_account: accountId,
-      amount: String(balanceUsd),
-      description: `AutoTrader demo top-up $${balanceUsd}`,
-    }),
-  });
+  );
 
-  // Journal errors are non-fatal — the account is still usable; balance will
-  // just start at zero until the operator funds it via the Broker dashboard.
-  if (!journalRes.ok) {
+  if (!fundRes.ok) {
+    // Non-fatal: account is still usable; balance starts at zero.
     console.warn(
-      `Alpaca journal credit failed (${journalRes.status}): ${await journalRes.text()}. ` +
+      `Alpaca cash funding failed (${fundRes.status}): ${await fundRes.text()}. ` +
         "Account created but balance not seeded automatically.",
     );
   }

@@ -1438,7 +1438,7 @@ export const confirmTopUp = functions
             exchangeId: "alpaca-paper",
             label: "alpaca-paper-autotrader",
             apiKey: alpacaAccount.apiKey,
-            apiSecret: alpacaAccount.apiSecret,
+            secret: alpacaAccount.apiSecret,
             passphrase: "",
             status: "active",
             connectedAt: new Date().toISOString(),

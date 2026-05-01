@@ -96,13 +96,25 @@ export class PaperMoneyOnboardingModal {
       );
 
       // Auto-connect the provisioned Alpaca paper account as an exchange.
+      // Use a stable label so the same document is overwritten on re-topup.
       const conn: ConnectedExchange = {
         exchangeId: 'alpaca-paper',
-        label: `Demo Account ($${amount.toLocaleString()})`,
+        label: 'Alpaca Paper Trading',
         apiKey: result.alpacaApiKey,
         secret: result.alpacaApiSecret,
         connectedAt: new Date().toISOString(),
+        status: 'active',
       };
+
+      // Remove any stale alpaca-paper connection before adding the fresh one,
+      // so the exchange list and portfolio always reflect the latest account.
+      const existing = this.exchangeService.connections().find(
+        (c) => c.exchangeId === 'alpaca-paper',
+      );
+      if (existing) {
+        await this.exchangeService.remove(existing.label);
+      }
+
       await this.exchangeService.add(conn);
 
       // Mark paper onboarding complete in Firestore.
@@ -125,6 +137,11 @@ export class PaperMoneyOnboardingModal {
           alpacaBrokerAccountId: result.accountId,
         });
       }
+
+      // Reload exchanges from Firestore so the dashboard reflects the
+      // newly connected paper account immediately.
+      await this.exchangeService.reloadFromFirestore();
+      void this.exchangeService.refreshPortfolioData(true);
 
       this.topupCompleted.set(true);
       // Start tour after the modal closes.
