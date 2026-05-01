@@ -8,7 +8,7 @@ import { executeStrategyOrder } from "./engine/execution";
 import { resolveInstrumentChart } from "./engine/chart";
 import { getRecentRunnerSummaries } from "./engine/repository";
 import { setupWebSocketServer } from "./infra/websocket";
-import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance } from "./api/alpaca-paper";
+import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance, fetchAlpacaBrokerPortfolio } from "./api/alpaca-paper";
 import { db, auth as firebaseAuth } from "./infra/firebase";
 
 const app = express();
@@ -164,6 +164,35 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
   } catch (error: any) {
     console.error("paper-topup error", error);
     res.status(500).json({ error: error?.message || "Failed to provision paper trading account." });
+  }
+});
+
+/**
+ * GET /v1/paper-portfolio
+ *
+ * Returns the live portfolio (equity, positions) for the authenticated user's
+ * Alpaca Broker sandbox sub-account.  Uses the broker's OAuth2 credentials so
+ * this works regardless of whether Trading API keys were generated for the
+ * sub-account.
+ */
+app.get("/v1/paper-portfolio", requireUserAuth, async (req, res) => {
+  try {
+    const uid = String(req.userId);
+
+    const userSnap = await db.collection("users").doc(uid).get();
+    const userData = userSnap.data() as Record<string, any> | undefined;
+    const accountId = userData?.alpacaBrokerAccountId;
+
+    if (!accountId) {
+      res.status(404).json({ error: "No paper trading account found. Please top up first." });
+      return;
+    }
+
+    const portfolio = await fetchAlpacaBrokerPortfolio(accountId);
+    res.status(200).json(portfolio);
+  } catch (error: any) {
+    console.error("paper-portfolio error", error);
+    res.status(500).json({ error: error?.message || "Failed to fetch paper portfolio." });
   }
 });
 
