@@ -265,3 +265,40 @@ export async function provisionAlpacaPaperAccount(
     balance: balanceUsd,
   };
 }
+
+/**
+ * Credits additional virtual cash to an existing Alpaca Broker sandbox account.
+ * Used when a user tops up their demo account balance more than once.
+ */
+export async function seedAlpacaPaperBalance(
+  accountId: string,
+  balanceUsd: number,
+): Promise<void> {
+  if (!config.alpacaBrokerKeyId || !config.alpacaBrokerSecretKey) {
+    throw new Error("Alpaca Broker API credentials are not configured.");
+  }
+
+  const authHeader = await brokerAuthHeader();
+
+  const fundRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/transactions/cash`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: authHeader,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        amount: String(balanceUsd),
+        direction: "INCOMING",
+        reason: `AutoTrader demo top-up $${balanceUsd}`,
+      }),
+    },
+  );
+
+  if (!fundRes.ok) {
+    const errBody = await fundRes.text();
+    throw new Error(`Alpaca cash funding failed (${fundRes.status}): ${errBody}`);
+  }
+}

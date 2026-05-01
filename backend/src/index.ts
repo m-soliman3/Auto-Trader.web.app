@@ -8,7 +8,7 @@ import { executeStrategyOrder } from "./engine/execution";
 import { resolveInstrumentChart } from "./engine/chart";
 import { getRecentRunnerSummaries } from "./engine/repository";
 import { setupWebSocketServer } from "./infra/websocket";
-import { provisionAlpacaPaperAccount } from "./api/alpaca-paper";
+import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance } from "./api/alpaca-paper";
 import { db, auth as firebaseAuth } from "./infra/firebase";
 
 const app = express();
@@ -115,10 +115,16 @@ app.post("/v1/paper-topup", requireUserAuth, async (req, res) => {
     const userData = userSnap.data() as Record<string, any> | undefined;
 
     if (userData?.alpacaBrokerAccountId && userData?.alpacaPaperAccountNumber) {
+      // Account exists — seed the new balance on top of what's already there.
+      await seedAlpacaPaperBalance(userData.alpacaBrokerAccountId, balanceUsd);
+
+      const newBalance = (userData.alpacaPaperBalance ?? 0) + balanceUsd;
+      await userRef.set({ alpacaPaperBalance: newBalance }, { merge: true });
+
       res.status(200).json({
         accountId: userData.alpacaBrokerAccountId,
         accountNumber: userData.alpacaPaperAccountNumber,
-        balance: userData.alpacaPaperBalance ?? balanceUsd,
+        balance: newBalance,
         alpacaApiKey: userData.alpacaPaperApiKey ?? "",
         alpacaApiSecret: userData.alpacaPaperApiSecret ?? "",
       });
