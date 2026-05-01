@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -28,7 +28,7 @@ interface PaperTopUpResponse {
   templateUrl: './paper-money-onboarding-modal.html',
   styleUrl: './paper-money-onboarding-modal.scss',
 })
-export class PaperMoneyOnboardingModal {
+export class PaperMoneyOnboardingModal implements OnDestroy {
   private readonly http = inject(HttpClient);
   private readonly firebaseAuth = inject(Auth);
   private readonly firestore = inject(Firestore);
@@ -54,6 +54,26 @@ export class PaperMoneyOnboardingModal {
   topupProcessing = signal(false);
   topupError = signal('');
   topupCompleted = signal(false);
+
+  /** True while waiting for the ACH transfer to settle on Alpaca's side. */
+  fundingPending = signal(false);
+  /** The expected balance after top-up (used to decide when ACH is confirmed). */
+  fundingExpectedBalance = signal(0);
+  /** How many polls have fired so far. */
+  fundingPollCount = signal(0);
+
+  private _pollInterval: ReturnType<typeof setInterval> | null = null;
+
+  ngOnDestroy(): void {
+    this._stopPolling();
+  }
+
+  private _stopPolling(): void {
+    if (this._pollInterval !== null) {
+      clearInterval(this._pollInterval);
+      this._pollInterval = null;
+    }
+  }
 
   // ── Exchange connection state ─────────────────────────────────────────────
   exchangeStep = signal<1 | 2>(1);
@@ -138,18 +158,54 @@ export class PaperMoneyOnboardingModal {
         });
       }
 
-      // Reload exchanges from Firestore so the dashboard reflects the
-      // newly connected paper account immediately.
-      await this.exchangeService.reloadFromFirestore();
-      void this.exchangeService.refreshPortfolioData(true);
-
-      this.topupCompleted.set(true);
-      // Start tour after the modal closes.
-      this.tourService.scheduleTourStart();
+      // ACH transfer submitted — show pending overlay and poll every 60s
+      // until Alpaca confirms the balance has settled.
+      this.fundingExpectedBalance.set(result.balance);
+      this.fundingPollCount.set(0);
+      this.fundingPending.set(true);
+      this._startPolling(await currentUser.getIdToken());
     } catch (err: any) {
       this.topupError.set(err?.error?.error || err?.message || 'Failed to top up demo account. Please try again.');
     } finally {
       this.topupProcessing.set(false);
+    }
+  }
+
+  private _startPolling(idToken: string): void {
+    this._stopPolling();
+    // Poll immediately, then every 60 seconds.
+    void this._checkBalance(idToken);
+    this._pollInterval = setInterval(() => {
+      this.fundingPollCount.update((n) => n + 1);
+      this.firebaseAuth.currentUser?.getIdToken().then((token) => this._checkBalance(token));
+    }, 60_000);
+  }
+
+  private async _checkBalance(idToken: string): Promise<void> {
+    try {
+      const statusEndpoint = this.backendBase
+        ? `${this.backendBase}/v1/paper-balance-status`
+        : '/api/paper-balance-status';
+
+      const status = await firstValueFrom(
+        this.http.get<{ confirmed: boolean; actualBalance: number; expectedBalance: number }>(
+          statusEndpoint,
+          { headers: { Authorization: `Bearer ${idToken}` } },
+        ),
+      );
+
+      if (status.confirmed) {
+        this._stopPolling();
+        // Refresh portfolio data once balance is confirmed.
+        await this.exchangeService.reloadFromFirestore();
+        void this.exchangeService.refreshPortfolioData(true);
+        this.fundingPending.set(false);
+        this.topupCompleted.set(true);
+        // Start tour after the modal closes.
+        this.tourService.scheduleTourStart();
+      }
+    } catch {
+      // Silently ignore poll errors — will retry next interval.
     }
   }
 

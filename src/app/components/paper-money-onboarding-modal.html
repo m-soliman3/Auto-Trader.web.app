@@ -1,6 +1,29 @@
 <div class="onboarding-backdrop">
   <div class="onboarding-panel">
 
+    <!-- ── ACH Funding Pending Overlay ──────────────────────────────────── -->
+    @if (fundingPending()) {
+      <div class="funding-pending-overlay">
+        <div class="funding-pending-icon">
+          <span class="spinner-large"></span>
+        </div>
+        <h3>Funding Your Demo Account…</h3>
+        <p class="funding-pending-desc">
+          Your demo account has been created and the ${{ fundingExpectedBalance() | number }} top-up is being processed.<br>
+          This usually takes a few minutes. Please wait while we confirm your balance.
+        </p>
+        <p class="funding-pending-check">
+          Checking balance… (check {{ fundingPollCount() + 1 }})
+        </p>
+        <div class="funding-pending-steps">
+          <div class="step done">✓ Account created</div>
+          <div class="step done">✓ Funding request submitted</div>
+          <div class="step active">⏳ Waiting for balance confirmation</div>
+        </div>
+      </div>
+    }
+
+    @if (!fundingPending()) {
     <header class="onboarding-header">
       <div class="onboarding-icon">🎮</div>
       <h2>{{ 'paperOnboarding.title' | translate }}</h2>
@@ -196,4 +219,5 @@
     }
 
   </div>
+  } <!-- end @if (!fundingPending()) -->
 </div>
