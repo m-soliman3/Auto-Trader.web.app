@@ -98,6 +98,21 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         run: firebase deploy --project autotrader-b8851 --non-interactive --only hosting:prod,functions,firestore:rules
 
+      - name: Grant Cloud Run service account Firebase permissions
+        run: |
+          PROJECT_NUMBER=$(gcloud projects describe autotrader-b8851 --format='value(projectNumber)')
+          SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+          gcloud projects add-iam-policy-binding autotrader-b8851 \
+            --member="serviceAccount:${SA}" \
+            --role="roles/firebase.admin" \
+            --condition=None \
+            --quiet
+          gcloud projects add-iam-policy-binding autotrader-b8851 \
+            --member="serviceAccount:${SA}" \
+            --role="roles/datastore.user" \
+            --condition=None \
+            --quiet
+
       - name: Deploy backend to Cloud Run
         run: |
           gcloud run deploy auto-trader-backend \
