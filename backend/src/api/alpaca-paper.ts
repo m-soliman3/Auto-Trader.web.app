@@ -302,3 +302,83 @@ export async function seedAlpacaPaperBalance(
     throw new Error(`Alpaca cash funding failed (${fundRes.status}): ${errBody}`);
   }
 }
+
+export interface PaperPortfolioData {
+  portfolioValue: number;
+  unrealizedPnl: number | null;
+  pnlPercentage: number | null;
+  updatedAt: string;
+  openPositions: Array<{
+    symbol: string;
+    quantity: number;
+    marketValue: number;
+    unrealizedPnl: number | null;
+    pnlPercentage: number | null;
+    entryPrice: number | null;
+    currentPrice: number | null;
+    side: "long" | "short";
+  }>;
+}
+
+/**
+ * Fetches the portfolio for an Alpaca Broker sandbox sub-account using the
+ * broker's own OAuth2 credentials and the Broker Trading API.
+ *
+ * This is the correct approach for broker-provisioned accounts — the Trading
+ * API keys generated via access_keys may not exist or be immediately active,
+ * so we always go through the Broker API which only needs the account ID.
+ */
+export async function fetchAlpacaBrokerPortfolio(accountId: string): Promise<PaperPortfolioData> {
+  if (!config.alpacaBrokerKeyId || !config.alpacaBrokerSecretKey) {
+    throw new Error("Alpaca Broker API credentials are not configured.");
+  }
+
+  const authHeader = await brokerAuthHeader();
+  const headers = {
+    Authorization: authHeader,
+    Accept: "application/json",
+  };
+
+  // ── Account (equity / cash) ────────────────────────────────────────────
+  const accountRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/trading/accounts/${accountId}/account`,
+    { headers },
+  );
+  if (!accountRes.ok) {
+    const err = await accountRes.text();
+    throw new Error(`Alpaca broker account fetch failed (${accountRes.status}): ${err}`);
+  }
+  const accountData: any = await accountRes.json();
+
+  // ── Open positions ─────────────────────────────────────────────────────
+  const posRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/trading/accounts/${accountId}/positions`,
+    { headers },
+  );
+  if (!posRes.ok) {
+    const err = await posRes.text();
+    throw new Error(`Alpaca broker positions fetch failed (${posRes.status}): ${err}`);
+  }
+  const positions: any[] = await posRes.json();
+
+  const openPositions = Array.isArray(positions)
+    ? positions.map((p: any) => ({
+        symbol: String(p.symbol || ""),
+        quantity: parseFloat(p.qty || "0"),
+        marketValue: parseFloat(p.market_value || "0"),
+        unrealizedPnl: p.unrealized_pl != null ? parseFloat(p.unrealized_pl) : null,
+        pnlPercentage: p.unrealized_plpc != null ? parseFloat(p.unrealized_plpc) * 100 : null,
+        entryPrice: p.avg_entry_price != null ? parseFloat(p.avg_entry_price) : null,
+        currentPrice: p.current_price != null ? parseFloat(p.current_price) : null,
+        side: String(p.side || "long").toLowerCase() === "short" ? "short" as const : "long" as const,
+      }))
+    : [];
+
+  return {
+    portfolioValue: parseFloat(accountData.equity || accountData.portfolio_value || "0"),
+    unrealizedPnl: accountData.unrealized_pl != null ? parseFloat(accountData.unrealized_pl) : null,
+    pnlPercentage: accountData.unrealized_plpc != null ? parseFloat(accountData.unrealized_plpc) * 100 : null,
+    updatedAt: new Date().toISOString(),
+    openPositions,
+  };
+}

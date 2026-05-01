@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { SubscriptionService } from './subscription.service';
 import { Firestore, collection, doc, setDoc, deleteDoc, getDocs } from '@angular/fire/firestore';
 import { AccountMode } from './account-mode.service';
+import { environment } from '../../environments/environment';
 
 export interface Exchange {
   id: string;
@@ -806,6 +807,30 @@ export class ExchangeService {
         throw new Error('Not authenticated');
       }
       const idToken = await currentUser.getIdToken();
+
+      // Broker-provisioned paper accounts must be queried via the Cloud Run
+      // backend (which holds OAuth2 broker credentials) rather than the
+      // Firebase function that forwards plain Trading API keys.
+      if (exchange.exchangeId === 'alpaca-paper') {
+        const backendBase = String(environment.tradingBackendBaseUrl || '').replace(/\/$/, '');
+        if (!backendBase) {
+          throw new Error('Trading backend URL is not configured.');
+        }
+        const response = await Promise.race([
+          firstValueFrom(this.http.get<PortfolioData>(
+            `${backendBase}/v1/paper-portfolio`,
+            { headers: { Authorization: `Bearer ${idToken}` } },
+          )),
+          new Promise<any>((_, reject) =>
+            setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000)
+          ),
+        ]);
+        const data = response as PortfolioData;
+        if (data && data.portfolioValue !== undefined) {
+          return data;
+        }
+        throw new Error('Invalid portfolio data response from paper-portfolio endpoint');
+      }
 
       const endpoint = '/api/getPortfolio';
 
