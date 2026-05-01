@@ -23,8 +23,8 @@ export const config: AppConfig = {
   tradingviewApiKey: process.env.TRADINGVIEW_API_KEY || "",
   alpacaBrokerKeyId: process.env.ALPACA_BROKER_KEY_ID || "",
   alpacaBrokerSecretKey: process.env.ALPACA_BROKER_SECRET_KEY || "",
-  emailjsServiceId: process.env.EMAILJS_SERVICE_ID || "",
-  emailjsPublicKey: process.env.EMAILJS_PUBLIC_KEY || "",
-  emailjsPrivateKey: process.env.EMAILJS_PRIVATE_KEY || "",
-  emailjsTopupTemplateId: process.env.EMAILJS_TOPUP_TEMPLATE_ID || "",
+  emailjsServiceId: process.env.EMAILJS_SERVICE_ID || "Auto-Trader",
+  emailjsPublicKey: process.env.EMAILJS_PUBLIC_KEY || "gLTFDfDYuNpAvYzQJ",
+  emailjsPrivateKey: process.env.EMAILJS_PRIVATE_KEY || "EATS9AlStHHuuQOzW5TbE",
+  emailjsTopupTemplateId: process.env.EMAILJS_TOPUP_TEMPLATE_ID || "template_nwywmjp",
 };
