@@ -229,30 +229,16 @@ export async function provisionAlpacaPaperAccount(
     alpacaApiSecret = config.alpacaBrokerSecretKey!;
   }
 
-  // ── 3. Seed the cash balance ───────────────────────────────────────────
-  // The Broker sandbox exposes a direct cash-transaction endpoint that credits
-  // virtual money to a sub-account without requiring a real journal entry.
-  const fundRes = await fetch(
-    `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/transactions/cash`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: authHeader,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        amount: String(balanceUsd),
-        direction: "INCOMING",
-        reason: `AutoTrader demo top-up $${balanceUsd}`,
-      }),
-    },
-  );
-
-  if (!fundRes.ok) {
-    // Non-fatal: account is still usable; balance starts at zero.
+  // ── 3. Seed the cash balance via ACH transfer ─────────────────────────
+  // The /v1/accounts/{id}/transactions/cash endpoint is no longer available (404).
+  // ACH transfers settle automatically within ~15 minutes in sandbox.
+  try {
+    await achFundAccount(authHeader, accountId, balanceUsd);
+  } catch (fundErr) {
+    // Non-fatal: account is still usable; ACH balance will appear after manual top-up or
+    // the user can retry. We log the warning and continue.
     console.warn(
-      `Alpaca cash funding failed (${fundRes.status}): ${await fundRes.text()}. ` +
+      `Alpaca ACH funding failed for new account ${accountId}: ${fundErr}. ` +
         "Account created but balance not seeded automatically.",
     );
   }
@@ -267,8 +253,97 @@ export async function provisionAlpacaPaperAccount(
 }
 
 /**
+ * Funds an Alpaca Broker sandbox account via ACH transfer using test bank credentials.
+ *
+ * The /v1/accounts/{id}/transactions/cash endpoint is no longer available (returns 404).
+ * ACH transfers are the supported funding mechanism. In the sandbox, ACH transfers
+ * settle automatically within ~15 minutes.
+ *
+ * Each call creates a new ACH relationship + INCOMING transfer. Both start as QUEUED
+ * and settle automatically by end-of-settlement in sandbox.
+ */
+async function achFundAccount(
+  authHeader: string,
+  accountId: string,
+  balanceUsd: number,
+): Promise<void> {
+  // Step A: Check for an existing ACH relationship; create one if none exists.
+  let relationshipId: string | undefined;
+
+  const existingRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/ach_relationships`,
+    { headers: { Authorization: authHeader, Accept: "application/json" } },
+  );
+
+  if (existingRes.ok) {
+    const existing = (await existingRes.json()) as Array<{ id: string; status: string }>;
+    const usable = existing.find(r => r.status === "APPROVED") ?? existing[0];
+    if (usable) relationshipId = usable.id;
+  }
+
+  if (!relationshipId) {
+    const achRelRes = await fetch(
+      `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/ach_relationships`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: authHeader,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          account_owner_name: "Demo Account Holder",
+          bank_account_type: "CHECKING",
+          bank_account_number: "32132412341234",
+          bank_routing_number: "121000358",
+          nickname: "Demo Funding Bank",
+        }),
+      },
+    );
+
+    if (!achRelRes.ok) {
+      const errBody = await achRelRes.text();
+      throw new Error(
+        `Alpaca ACH relationship creation failed (${achRelRes.status}): ${errBody}`,
+      );
+    }
+
+    const achRel = (await achRelRes.json()) as { id: string };
+    relationshipId = achRel.id;
+  }
+
+  // Step B: Submit INCOMING ACH transfer. Will be QUEUED then settle within ~15 min.
+  const transferRes = await fetch(
+    `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/transfers`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: authHeader,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        transfer_type: "ach",
+        relationship_id: relationshipId,
+        amount: String(balanceUsd),
+        direction: "INCOMING",
+      }),
+    },
+  );
+
+  if (!transferRes.ok) {
+    const errBody = await transferRes.text();
+    throw new Error(`Alpaca ACH transfer submission failed (${transferRes.status}): ${errBody}`);
+  }
+}
+
+/**
  * Credits additional virtual cash to an existing Alpaca Broker sandbox account.
  * Used when a user tops up their demo account balance more than once.
+ *
+ * Uses ACH transfer (the /v1/accounts/{id}/transactions/cash endpoint is no longer available).
+ * Funds will appear in the account within ~15 minutes after the ACH settles in sandbox.
+ * This function is non-fatal: if the ACH submission fails, it logs a warning and returns.
  */
 export async function seedAlpacaPaperBalance(
   accountId: string,
@@ -280,26 +355,13 @@ export async function seedAlpacaPaperBalance(
 
   const authHeader = await brokerAuthHeader();
 
-  const fundRes = await fetch(
-    `${BROKER_SANDBOX_BASE}/v1/accounts/${accountId}/transactions/cash`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: authHeader,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        amount: String(balanceUsd),
-        direction: "INCOMING",
-        reason: `AutoTrader demo top-up $${balanceUsd}`,
-      }),
-    },
-  );
-
-  if (!fundRes.ok) {
-    const errBody = await fundRes.text();
-    throw new Error(`Alpaca cash funding failed (${fundRes.status}): ${errBody}`);
+  try {
+    await achFundAccount(authHeader, accountId, balanceUsd);
+  } catch (fundErr) {
+    console.warn(
+      `Alpaca ACH top-up failed for account ${accountId}: ${fundErr}. ` +
+        "Balance in Firestore updated; Alpaca balance may be delayed.",
+    );
   }
 }
 
