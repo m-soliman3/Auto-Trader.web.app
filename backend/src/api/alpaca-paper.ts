@@ -16,10 +16,37 @@ import fetch from "node-fetch";
 import { config } from "../infra/config";
 
 const BROKER_SANDBOX_BASE = "https://broker-api.sandbox.alpaca.markets";
+const AUTHX_SANDBOX_BASE = "https://authx.sandbox.alpaca.markets";
 
-function brokerAuthHeader(): string {
-  const raw = `${config.alpacaBrokerKeyId}:${config.alpacaBrokerSecretKey}`;
-  return `Basic ${Buffer.from(raw).toString("base64")}`;
+/**
+ * Fetch a short-lived Bearer token via OAuth2 client_credentials flow.
+ * Alpaca's new CK-prefixed Broker API keys require this flow instead of Basic auth.
+ */
+async function getBrokerBearerToken(): Promise<string> {
+  const params = new URLSearchParams({
+    grant_type: "client_credentials",
+    client_id: config.alpacaBrokerKeyId!,
+    client_secret: config.alpacaBrokerSecretKey!,
+  });
+
+  const res = await fetch(`${AUTHX_SANDBOX_BASE}/v1/oauth2/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString(),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Alpaca auth token request failed (${res.status}): ${err}`);
+  }
+
+  const data = (await res.json()) as { access_token: string };
+  return data.access_token;
+}
+
+async function brokerAuthHeader(): Promise<string> {
+  const token = await getBrokerBearerToken();
+  return `Bearer ${token}`;
 }
 
 export interface AlpacaPaperAccount {
@@ -52,7 +79,7 @@ export async function provisionAlpacaPaperAccount(
     );
   }
 
-  const authHeader = brokerAuthHeader();
+  const authHeader = await brokerAuthHeader();
 
   // ── 1. Create the account ─────────────────────────────────────────────
   // Alpaca requires real-looking identity data in sandbox too. We use
