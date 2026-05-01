@@ -724,6 +724,27 @@ export class ExchangeService {
       return;
     }
     try {
+      // If this is an Alpaca paper trading account, delete the broker account first
+      const conn = this.connections().find(c => c.label === label);
+      if (conn?.exchangeId === 'alpaca-paper') {
+        const backendBase = String(environment.tradingBackendBaseUrl || '').replace(/\/$/, '');
+        if (backendBase) {
+          const currentUser = this.firebaseAuth.currentUser;
+          if (currentUser) {
+            const idToken = await currentUser.getIdToken();
+            try {
+              await firstValueFrom(this.http.delete(
+                `${backendBase}/v1/paper-account`,
+                { headers: { Authorization: `Bearer ${idToken}` } },
+              ));
+            } catch (deleteErr: any) {
+              // Log but don't block the local disconnect
+              console.error('Failed to delete Alpaca broker account', deleteErr);
+            }
+          }
+        }
+      }
+
       const docRef = doc(this.firestore, 'users', uid, 'exchanges', label);
       await deleteDoc(docRef);
       this.connections.update(list => list.filter(c => c.label !== label));
