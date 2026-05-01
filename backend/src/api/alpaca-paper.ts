@@ -49,6 +49,44 @@ async function brokerAuthHeader(): Promise<string> {
   return `Bearer ${token}`;
 }
 
+/**
+ * Generates a random US SSN that passes Alpaca's FINRA CAIS data validations:
+ *   - Area (first 3): not 000 or 666
+ *   - Group (middle 2): not 00
+ *   - Serial (last 4): not 0000
+ *   - Not all-same digits (e.g. 111-11-1111)
+ *   - Not strictly increasing (123-45-6789) or decreasing (987-65-4321)
+ * https://docs.alpaca.markets/docs/data-validations
+ */
+function generateSandboxSsn(): string {
+  const rand = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
+  for (;;) {
+    const area = rand(1, 899);
+    if (area === 666) continue;
+
+    const group = rand(1, 99);
+    const serial = rand(1, 9999);
+
+    const digits =
+      String(area).padStart(3, "0") +
+      String(group).padStart(2, "0") +
+      String(serial).padStart(4, "0");
+
+    // Reject all-same digits
+    if (/^(.)\1{8}$/.test(digits)) continue;
+
+    // Reject strictly increasing or decreasing sequences
+    const nums = digits.split("").map(Number);
+    const allIncreasing = nums.every((n, i) => i === 0 || n === nums[i - 1] + 1);
+    const allDecreasing = nums.every((n, i) => i === 0 || n === nums[i - 1] - 1);
+    if (allIncreasing || allDecreasing) continue;
+
+    return `${String(area).padStart(3, "0")}-${String(group).padStart(2, "0")}-${String(serial).padStart(4, "0")}`;
+  }
+}
+
 export interface AlpacaPaperAccount {
   accountId: string;
   accountNumber: string;
@@ -104,7 +142,7 @@ export async function provisionAlpacaPaperAccount(
       given_name: firstName,
       family_name: lastName,
       date_of_birth: "1990-01-01",
-      tax_id: "123-45-6789",
+      tax_id: generateSandboxSsn(),
       tax_id_type: "USA_SSN",
       country_of_citizenship: "USA",
       country_of_birth: "USA",
