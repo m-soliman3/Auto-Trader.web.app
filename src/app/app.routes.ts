@@ -17,6 +17,7 @@ import { BackendRunnerPage } from './pages/backend-runner';
 import { FeatureDetailPage } from './pages/features/feature-detail';
 import { BillingCheckoutPage } from './pages/billing-checkout';
 import { BillingManagePage } from './pages/billing-manage';
+import { CollectingDataPage } from './pages/collecting-data';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
@@ -82,6 +83,11 @@ const coreRoutes: Routes = [
     path: 'disclaimer',
     component: DisclaimerPage,
     title: 'pageTitle.disclaimer',
+  },
+  {
+    path: 'collecting-data',
+    component: CollectingDataPage,
+    title: 'pageTitle.collectingData',
   },
   {
     path: 'exchanges',

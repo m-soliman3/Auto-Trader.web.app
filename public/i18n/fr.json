@@ -254,7 +254,8 @@
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "disclaimer": "Avertissement",
-    "contact": "Contact"
+    "contact": "Contact",
+    "collectingData": "Collecte de données"
   },
   "language": {
     "selectLanguage": "Choisir la langue",
@@ -1406,6 +1407,24 @@
     "settings": "Paramètres — AutoTrader | Préférences de Compte et de Plateforme",
     "billingCheckout": "Paiement Sécurisé — AutoTrader | Passer à Premium",
     "billingManage": "Gestion de la Facturation — AutoTrader | Historique & Contrôles d'Abonnement",
-    "feature": "Fonctionnalité — AutoTrader"
+    "feature": "Fonctionnalité — AutoTrader",
+    "collectingData": "Politique de collecte de données — AutoTrader"
+  },
+  "collectingData": {
+    "title": "Politique de collecte de données",
+    "effectiveDate": "Date d’entrée en vigueur : 3 mai 2026",
+    "s1Title": "1. Données que nous collectons",
+    "s1Body": "Nous collectons les données fournies lors de l’inscription (adresse e-mail, nom), les données d’activité de trading (historique des transactions, configurations des bots, clés API chiffrées), les analyses d’utilisation et les données techniques (adresse IP, type de navigateur).",
+    "s2Title": "2. Pourquoi nous collectons vos données",
+    "s2Body": "Vos données sont utilisées pour faire fonctionner et maintenir la plateforme, authentifier votre compte, traiter les abonnements, envoyer des notifications essentielles et améliorer votre expérience. Nous n’utilisons pas vos données à des fins publicitaires.",
+    "s3Title": "3. Partage des données",
+    "s3Body": "Nous ne vendons pas vos données personnelles. Nous partageons uniquement le minimum nécessaire avec des prestataires de services de confiance pour faire fonctionner la plateforme.",
+    "s3Link": "Consulter notre politique de confidentialité complète →",
+    "s4Title": "4. Conservation des données",
+    "s4Body": "Nous conservons les données de votre compte tant qu’il est actif. Vous pouvez demander la suppression de vos données à tout moment. Les données personnelles sont supprimées dans les 30 jours suivant la fermeture du compte.",
+    "s4Link": "Nous contacter pour demander la suppression de vos données →",
+    "s5Title": "5. Vos droits",
+    "s5Body": "Selon votre juridiction, vous pouvez avoir le droit d’accéder, de corriger, d’exporter ou de supprimer vos données personnelles, ainsi que de retirer votre consentement ou de vous opposer à certains traitements à tout moment.",
+    "s5Link": "Nous contacter pour exercer vos droits →"
   }
 }

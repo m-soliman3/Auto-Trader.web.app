@@ -254,7 +254,8 @@
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "disclaimer": "Haftungsausschluss",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "collectingData": "Datenerhebung"
   },
   "language": {
     "selectLanguage": "Sprache auswählen",
@@ -1406,6 +1407,24 @@
     "settings": "Einstellungen — AutoTrader | Konto- & Plattformeinstellungen",
     "billingCheckout": "Sicherer Checkout — AutoTrader | Auf Premium upgraden",
     "billingManage": "Abrechnungsverwaltung — AutoTrader | Verlauf & Abonnementverwaltung",
-    "feature": "Funktion — AutoTrader"
+    "feature": "Funktion — AutoTrader",
+    "collectingData": "Richtlinie zur Datenerhebung — AutoTrader"
+  },
+  "collectingData": {
+    "title": "Richtlinie zur Datenerhebung",
+    "effectiveDate": "Gültig ab: 3. Mai 2026",
+    "s1Title": "1. Welche Daten wir erheben",
+    "s1Body": "Wir erheben Daten, die Sie bei der Registrierung angeben (E-Mail, Name), Handelsdaten (Transaktionsverlauf, Bot-Konfigurationen, verschlüsselte API-Schlüssel), Nutzungsanalysen sowie technische Daten (IP-Adresse, Browsertyp).",
+    "s2Title": "2. Warum wir Ihre Daten erheben",
+    "s2Body": "Ihre Daten werden verwendet, um die Plattform zu betreiben und zu warten, Ihr Konto zu authentifizieren, Abonnements zu verarbeiten, wichtige Benachrichtigungen zu senden und Ihre Erfahrung zu verbessern. Wir verwenden Ihre Daten nicht für Werbezwecke.",
+    "s3Title": "3. Datenweitergabe",
+    "s3Body": "Wir verkaufen Ihre personenbezogenen Daten nicht. Wir teilen nur das notwendige Minimum mit vertrauenswürdigen Dienstleistern, um die Plattform zu betreiben.",
+    "s3Link": "Vollständige Datenschutzerklärung ansehen →",
+    "s4Title": "4. Datenspeicherung",
+    "s4Body": "Wir speichern Ihre Kontodaten, solange Ihr Konto aktiv ist. Sie können jederzeit die Löschung Ihrer Daten beantragen. Personenbezogene Daten werden innerhalb von 30 Tagen nach Kontoschließung gelöscht.",
+    "s4Link": "Kontaktieren Sie uns zur Datenklöschung →",
+    "s5Title": "5. Ihre Rechte",
+    "s5Body": "Je nach Ihrer Rechtsordnung können Sie das Recht haben, auf Ihre personenbezogenen Daten zuzugreifen, sie zu korrigieren, zu exportieren oder zu löschen sowie Ihre Einwilligung zu widerrufen oder bestimmten Verarbeitungen zu widersprechen.",
+    "s5Link": "Kontaktieren Sie uns zur Ausübung Ihrer Rechte →"
   }
 }

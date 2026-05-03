@@ -254,7 +254,8 @@
     "privacy": "Privacidad",
     "terms": "Términos",
     "disclaimer": "Aviso legal",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "collectingData": "Recopilación de datos"
   },
   "language": {
     "selectLanguage": "Seleccionar idioma",
@@ -1406,6 +1407,24 @@
     "settings": "Configuración — AutoTrader | Preferencias de Cuenta y Plataforma",
     "billingCheckout": "Pago Seguro — AutoTrader | Actualiza a Premium",
     "billingManage": "Gestión de Facturación — AutoTrader | Historial y Controles de Suscripción",
-    "feature": "Característica — AutoTrader"
+    "feature": "Característica — AutoTrader",
+    "collectingData": "Política de recopilación de datos — AutoTrader"
+  },
+  "collectingData": {
+    "title": "Política de recopilación de datos",
+    "effectiveDate": "Fecha de entrada en vigor: 3 de mayo de 2026",
+    "s1Title": "1. Qué datos recopilamos",
+    "s1Body": "Recopilamos los datos que proporcionas durante el registro (correo electrónico, nombre), datos de actividad de trading (historial de operaciones, configuraciones de bots, claves API cifradas), análisis de uso y datos técnicos (dirección IP, tipo de navegador).",
+    "s2Title": "2. Por qué recopilamos tus datos",
+    "s2Body": "Usamos tus datos para operar y mantener la plataforma, autenticar tu cuenta, procesar suscripciones, enviar notificaciones esenciales del servicio y mejorar tu experiencia. No utilizamos tus datos con fines publicitarios.",
+    "s3Title": "3. Compartición de datos",
+    "s3Body": "No vendemos tus datos personales. Compartimos solo los datos mínimos necesarios con proveedores de servicios de confianza para operar la plataforma.",
+    "s3Link": "Ver nuestra Política de privacidad completa →",
+    "s4Title": "4. Retención de datos",
+    "s4Body": "Conservamos los datos de tu cuenta mientras esté activa. Puedes solicitar la eliminación de tus datos en cualquier momento. Los datos personales se eliminan en 30 días tras el cierre de la cuenta.",
+    "s4Link": "Contáctanos para solicitar la eliminación de datos →",
+    "s5Title": "5. Tus derechos",
+    "s5Body": "Según tu jurisdicción, puedes tener derecho a acceder, corregir, exportar o eliminar tus datos personales, así como retirar el consentimiento u oponerte a ciertos tratamientos en cualquier momento.",
+    "s5Link": "Contáctanos para ejercer tus derechos →"
   }
 }

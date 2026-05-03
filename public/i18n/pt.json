@@ -254,7 +254,8 @@
     "privacy": "Privacidade",
     "terms": "Termos",
     "disclaimer": "Aviso Legal",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "collectingData": "Coleta de dados"
   },
   "language": {
     "selectLanguage": "Selecionar idioma",
@@ -1406,6 +1407,24 @@
     "settings": "Definições — AutoTrader | Preferências de Conta e Plataforma",
     "billingCheckout": "Pagamento Seguro — AutoTrader | Atualize para Premium",
     "billingManage": "Gestão de Faturamento — AutoTrader | Histórico e Controles de Assinatura",
-    "feature": "Funcionalidade — AutoTrader"
+    "feature": "Funcionalidade — AutoTrader",
+    "collectingData": "Política de coleta de dados — AutoTrader"
+  },
+  "collectingData": {
+    "title": "Política de coleta de dados",
+    "effectiveDate": "Data de vigência: 3 de maio de 2026",
+    "s1Title": "1. Dados que coletamos",
+    "s1Body": "Coletamos dados fornecidos no cadastro (e-mail, nome), dados de atividade de trading (histórico de operações, configurações de bots, chaves de API criptografadas), análises de uso e dados técnicos (endereço IP, tipo de navegador).",
+    "s2Title": "2. Por que coletamos seus dados",
+    "s2Body": "Seus dados são usados para operar e manter a plataforma, autenticar sua conta, processar assinaturas, enviar notificações essenciais e melhorar sua experiência. Não usamos seus dados para fins publicitários.",
+    "s3Title": "3. Compartilhamento de dados",
+    "s3Body": "Não vendemos seus dados pessoais. Compartilhamos apenas o mínimo necessário com provedores de serviços confiáveis para operar a plataforma.",
+    "s3Link": "Ver nossa Política de Privacidade completa →",
+    "s4Title": "4. Retenção de dados",
+    "s4Body": "Mantemos os dados da sua conta enquanto ela estiver ativa. Você pode solicitar a exclusão dos seus dados a qualquer momento. Os dados pessoais são removidos em até 30 dias após o encerramento da conta.",
+    "s4Link": "Fale conosco para solicitar a exclusão de dados →",
+    "s5Title": "5. Seus direitos",
+    "s5Body": "Dependendo da sua jurisdição, você pode ter o direito de acessar, corrigir, exportar ou excluir seus dados pessoais, além de retirar o consentimento ou se opor a determinados tratamentos a qualquer momento.",
+    "s5Link": "Fale conosco para exercer seus direitos →"
   }
 }

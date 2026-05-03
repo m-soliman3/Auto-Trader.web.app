@@ -256,7 +256,8 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "disclaimer": "Disclaimer",
-    "contact": "Contact"
+    "contact": "Contact",
+    "collectingData": "Data Collection"
   },
   "language": {
     "selectLanguage": "Select Language",
@@ -1408,6 +1409,24 @@
     "settings": "Settings — AutoTrader | Account & Platform Preferences",
     "billingCheckout": "Secure Checkout — AutoTrader | Upgrade to Premium",
     "billingManage": "Billing Management — AutoTrader | History & Subscription Controls",
-    "feature": "Feature — AutoTrader"
+    "feature": "Feature — AutoTrader",
+    "collectingData": "Data Collection Policy — AutoTrader | What Data We Collect & Why"
+  },
+  "collectingData": {
+    "title": "Data Collection Policy",
+    "effectiveDate": "Effective date: 3 May 2026",
+    "s1Title": "1. What Data We Collect",
+    "s1Body": "We collect data you provide during registration (email address, display name), trading activity data (trade history, bot configurations, strategy settings, exchange API keys stored encrypted), usage analytics, and technical data (IP address, browser type).",
+    "s2Title": "2. Why We Collect Your Data",
+    "s2Body": "Your data is used to operate and maintain the platform, authenticate your account, process subscriptions, send essential notifications, and improve your experience. We do not use your data for advertising.",
+    "s3Title": "3. Data Sharing",
+    "s3Body": "We do not sell your personal data. We share only the minimum necessary with trusted third-party providers solely to operate the platform. All providers are contractually bound to data protection standards.",
+    "s3Link": "View our full Privacy Policy →",
+    "s4Title": "4. Data Retention",
+    "s4Body": "We retain your account data while your account is active. You may request deletion at any time. Personal data is removed within 30 days of account closure unless legal obligations require otherwise.",
+    "s4Link": "Contact us to request data deletion →",
+    "s5Title": "5. Your Rights",
+    "s5Body": "You may have the right to access, correct, export, or delete your personal data and withdraw consent at any time without affecting services already rendered.",
+    "s5Link": "Contact us to exercise your rights →"
   }
 }
