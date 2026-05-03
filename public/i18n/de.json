@@ -117,6 +117,8 @@
     "connecting": "Verbinden…",
     "continueWithGoogle": "Mit Google fortfahren",
     "continueWithMicrosoft": "Mit Microsoft fortfahren",
+    "continueWithX": "Mit X fortfahren",
+    "continueWithFacebook": "Mit Facebook fortfahren",
     "noAccount": "Kein Konto?",
     "signUpFree": "Kostenlos registrieren",
     "forgotTitle": "Passwort zurücksetzen",
@@ -150,6 +152,8 @@
     "connecting": "Verbinden…",
     "signUpWithGoogle": "Mit Google registrieren",
     "signUpWithMicrosoft": "Mit Microsoft registrieren",
+    "signUpWithX": "Mit X registrieren",
+    "signUpWithFacebook": "Mit Facebook registrieren",
     "alreadyHaveAccount": "Bereits ein Konto?",
     "logIn": "Anmelden"
   },
@@ -247,15 +251,26 @@
       "quickPanelsDescription": "Schnelle Aktionen, Erste Schritte und Backend-Läufer.",
       "portfolioPerformanceLabel": "Portfolioperformance",
       "portfolioPerformanceDescription": "Zeigt das Leistungsplatzhalter-/Zusammenfassungsfenster an."
-    }
+    },
+    "myData": "Meine Daten",
+    "myDataTitle": "Ihre gespeicherten Daten",
+    "myDataSub": "Wir speichern nur Ihre E-Mail-Adresse und Ihren ungefähren Standort, um Ihnen ein personalisiertes Handelserlebnis zu bieten.",
+    "myDataEmail": "E-Mail-Adresse",
+    "myDataLocation": "Standort",
+    "myDataLocationNote": "Ungefähre Lage (automatisch erfasst)",
+    "myDataNote": "Diese Informationen werden ausschließlich erfasst, um Ihnen besser dienen zu können.",
+    "myDataViewPolicy": "Vollständige Datenerfassungsrichtlinie anzeigen.",
+    "myDataDeleteTitle": "Datenklöschung beantragen",
+    "myDataDeleteDesc": "Sie können jederzeit die Löschung aller Ihrer persönlichen Daten beantragen.",
+    "myDataContactLink": "Kontaktieren Sie uns für einen Löschantrag"
   },
   "footer": {
     "copyright": "© 2026 auto-Trading. Alle Rechte vorbehalten.",
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "disclaimer": "Haftungsausschluss",
-    "contact": "Kontakt",
-    "collectingData": "Datenerhebung"
+    "collectingData": "Datenerfassung",
+    "contact": "Kontakt"
   },
   "language": {
     "selectLanguage": "Sprache auswählen",
@@ -366,6 +381,8 @@
     "enable": "Aktivieren",
     "enterApiCredentials": "API-Zugangsdaten eingeben",
     "getApiKeysFrom": "API-Schlüssel erhalten von",
+    "howToCreateApiCredentials": "So erstellen Sie Ihre eigenen API-Anmeldedaten",
+    "guideToGenerateApiFor": "Anleitung zur Erstellung der {{name}}-API hier",
     "keysValidated": "Ihre Schlüssel werden vor dem Speichern sicher mit der Börse überprüft",
     "noExchangesForMode": "Für diesen Modus sind noch keine Austauschmöglichkeiten verfügbar.",
     "paperTrading": "Papierhandel",
@@ -388,6 +405,41 @@
       "passphraseRequired": "Für diesen Austausch ist eine Passphrase erforderlich.",
       "failedToSave": "Speichern der Exchange-Verbindung fehlgeschlagen. Bitte versuchen Sie es erneut."
     }
+  },
+  "paperOnboarding": {
+    "title": "Demo-Konto einrichten",
+    "subtitle": "Fügen Sie virtuelle Mittel hinzu oder verbinden Sie Ihre eigene Paper-Börse, um risikofrei zu handeln.",
+    "tabTopUp": "Demo-Konto aufladen",
+    "tabConnectExchange": "Paper-Börse verbinden",
+    "topUpDesc": "Wählen Sie ein Startguthaben für Ihr Demo-Konto. Wir richten automatisch ein Alpaca-Paper-Konto ein.",
+    "alpacaNotice": "Ihr Demo-Konto wird von Alpaca Paper Trading betrieben. Aufträge werden mit echten Marktdaten simuliert.",
+    "topUpBtn": "Demo-Konto erstellen mit",
+    "settingUp": "Wird eingerichtet…",
+    "demoAccountReady": "Demo-Konto bereit",
+    "demoAccountReadyDesc": "Ihr Demo-Konto ist aufgeladen und bereit zur Nutzung.",
+    "exchangeConnected": "Paper-Börse verbunden",
+    "exchangeConnectedDesc": "Ihre Paper-Börse ist verbunden. Sie können jetzt mit dem Demo-Handel beginnen."
+  },
+  "tour": {
+    "quickGuide": "Schnellführung",
+    "skip": "Tour überspringen",
+    "prev": "Zurück",
+    "next": "Weiter",
+    "finish": "Fertig",
+    "step1Title": "Willkommen bei Auto-Trader!",
+    "step1Desc": "Machen wir eine schnelle 7-Schritte-Tour, damit Sie wissen, wo alles ist. Sie können jederzeit überspringen.",
+    "step2Title": "Ihr Portfolio-Überblick",
+    "step2Desc": "Diese Karten zeigen Ihren Gesamtsaldo, offene G&V, aktive Positionen und die Anzahl der Trades.",
+    "step3Title": "Börsen",
+    "step3Desc": "Verbinden Sie hier Ihre Krypto- oder Aktienbörse. Jeder Bot handelt über eine verbundene Börse.",
+    "step4Title": "Handelsbots",
+    "step4Desc": "Bots sind die Motoren Ihres Handels. Jeder Bot überwacht ein Symbol und führt Strategien automatisch aus.",
+    "step5Title": "Strategien",
+    "step5Desc": "Weisen Sie Ihren Bots vorgefertigte oder benutzerdefinierte Handelsstrategien zu. Strategien definieren wann zu kaufen und zu verkaufen.",
+    "step6Title": "Schnellaktionen",
+    "step6Desc": "Nutzen Sie diese Shortcuts, um sofort eine Börse zu verbinden, einen Bot zu erstellen oder Strategievorlagen zu durchsuchen.",
+    "step7Title": "Runner & Ausführungsverlauf",
+    "step7Desc": "Überwachen Sie hier den Strategieausführungsverlauf — sehen Sie was ausgeführt wurde, übersprungen wurde und etwaige Fehler."
   },
   "createBot": {
     "botName": "Bot-Name",
@@ -666,6 +718,22 @@
   "legal": {
     "home": "Startseite",
     "contact": "Kontakt"
+  },
+  "collectingData": {
+    "title": "Datenerfassung",
+    "effectiveDate": "Gültig ab: Mai 2026",
+    "s1Title": "Was wir erfassen",
+    "s1Body": "Wir erfassen nur zwei Arten von Informationen: Ihre E-Mail-Adresse und Ihren ungefähren Standort. Ihre E-Mail-Adresse dient zur Identifizierung Ihres Kontos und zum Versenden wichtiger servicebezogener Mitteilungen. Ihr Standort hilft uns, Ihr Handelserlebnis zu personalisieren und Ihnen regional relevante Informationen anzuzeigen.",
+    "s2Title": "Warum wir es erfassen",
+    "s2Body": "Wir erfassen diese Daten ausschließlich, um Ihnen besser dienen zu können — um ein personalisiertes, relevantes Handelserlebnis zu bieten und sicherzustellen, dass wir Sie mit Kontobenachrichtigungen und Sicherheitswarnungen erreichen können.",
+    "s3Title": "Ihre gespeicherten Daten anzeigen",
+    "s3Body": "Sie können die Daten, die wir über Sie gespeichert haben, jederzeit in Ihren Kontoeinstellungen einsehen.",
+    "s3Link": "Zu den Einstellungen",
+    "s4Title": "Datenklöschung beantragen",
+    "s4Body": "Sie haben das Recht, die Löschung aller Ihrer persönlichen Daten zu beantragen. Um einen Löschantrag zu stellen, kontaktieren Sie uns bitte.",
+    "s4Link": "Kontakt aufnehmen",
+    "s5Title": "Fragen?",
+    "s5Body": "Wenn Sie Fragen oder Bedenken bezüglich des Umgangs mit Ihren Daten haben, zögern Sie nicht, uns zu kontaktieren."
   },
   "terms": {
     "title": "Nutzungsbedingungen",
@@ -1396,6 +1464,7 @@
     "terms": "Nutzungsbedingungen — AutoTrader | Plattformbedingungen",
     "privacy": "Datenschutzerklärung — AutoTrader | Wie wir Ihre Daten schützen",
     "disclaimer": "Risikohinweis — AutoTrader | Wichtige Risikooffenbarung",
+    "collectingData": "Datenerfassung — AutoTrader | Was wir erfassen & Ihre Rechte",
     "exchanges": "Verbundene Börsen — AutoTrader | 30+ Börsenintegrationen verwalten",
     "bots": "Handelsbots — AutoTrader | Automatisierte Strategie-Bots erstellen & betreiben",
     "strategies": "Handelsstrategien — AutoTrader | Strategieautomatisierung aufbauen & ausführen",
@@ -1407,24 +1476,6 @@
     "settings": "Einstellungen — AutoTrader | Konto- & Plattformeinstellungen",
     "billingCheckout": "Sicherer Checkout — AutoTrader | Auf Premium upgraden",
     "billingManage": "Abrechnungsverwaltung — AutoTrader | Verlauf & Abonnementverwaltung",
-    "feature": "Funktion — AutoTrader",
-    "collectingData": "Richtlinie zur Datenerhebung — AutoTrader"
-  },
-  "collectingData": {
-    "title": "Richtlinie zur Datenerhebung",
-    "effectiveDate": "Gültig ab: 3. Mai 2026",
-    "s1Title": "1. Welche Daten wir erheben",
-    "s1Body": "Wir erheben Daten, die Sie bei der Registrierung angeben (E-Mail, Name), Handelsdaten (Transaktionsverlauf, Bot-Konfigurationen, verschlüsselte API-Schlüssel), Nutzungsanalysen sowie technische Daten (IP-Adresse, Browsertyp).",
-    "s2Title": "2. Warum wir Ihre Daten erheben",
-    "s2Body": "Ihre Daten werden verwendet, um die Plattform zu betreiben und zu warten, Ihr Konto zu authentifizieren, Abonnements zu verarbeiten, wichtige Benachrichtigungen zu senden und Ihre Erfahrung zu verbessern. Wir verwenden Ihre Daten nicht für Werbezwecke.",
-    "s3Title": "3. Datenweitergabe",
-    "s3Body": "Wir verkaufen Ihre personenbezogenen Daten nicht. Wir teilen nur das notwendige Minimum mit vertrauenswürdigen Dienstleistern, um die Plattform zu betreiben.",
-    "s3Link": "Vollständige Datenschutzerklärung ansehen →",
-    "s4Title": "4. Datenspeicherung",
-    "s4Body": "Wir speichern Ihre Kontodaten, solange Ihr Konto aktiv ist. Sie können jederzeit die Löschung Ihrer Daten beantragen. Personenbezogene Daten werden innerhalb von 30 Tagen nach Kontoschließung gelöscht.",
-    "s4Link": "Kontaktieren Sie uns zur Datenklöschung →",
-    "s5Title": "5. Ihre Rechte",
-    "s5Body": "Je nach Ihrer Rechtsordnung können Sie das Recht haben, auf Ihre personenbezogenen Daten zuzugreifen, sie zu korrigieren, zu exportieren oder zu löschen sowie Ihre Einwilligung zu widerrufen oder bestimmten Verarbeitungen zu widersprechen.",
-    "s5Link": "Kontaktieren Sie uns zur Ausübung Ihrer Rechte →"
+    "feature": "Funktion — AutoTrader"
   }
 }

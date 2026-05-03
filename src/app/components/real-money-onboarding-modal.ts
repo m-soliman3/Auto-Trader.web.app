@@ -26,6 +26,7 @@ import {
   Exchange,
   ConnectedExchange,
 } from '../services/exchange.service';
+import { TourService } from '../services/tour.service';
 
 const PRESET_AMOUNTS = [50, 100, 200, 500, 1000] as const;
 
@@ -42,6 +43,7 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   private readonly firestore = inject(Firestore);
   private readonly authService = inject(AuthService);
   private readonly exchangeService = inject(ExchangeService);
+  private readonly tourService = inject(TourService);
 
   // ── Expose helpers to template ──────────────────────────────────────────
   readonly presetAmounts = PRESET_AMOUNTS;
@@ -156,6 +158,8 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
       await this.exchangeService.add(conn);
       await this.markOnboarded();
       this.exchangeConnected.set(true);
+      // Start tour after the modal closes.
+      this.tourService.scheduleTourStart();
     } catch (err: any) {
       this.exchangeError.set(err?.message || 'Failed to connect exchange. Please try again.');
     } finally {
@@ -270,6 +274,8 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
       await this.authService.reloadCurrentUserProfile();
       this.topupStatus.set('');
       this.topupCompleted.set(true);
+      // Start tour after the modal closes.
+      this.tourService.scheduleTourStart();
     } catch (err: any) {
       const apiMsg = err?.error?.error;
       this.topupError.set(apiMsg || err?.message || 'Payment failed. Please try again.');

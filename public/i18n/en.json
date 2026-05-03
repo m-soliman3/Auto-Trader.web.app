@@ -118,6 +118,7 @@
     "continueWithGoogle": "Continue with Google",
     "continueWithMicrosoft": "Continue with Microsoft",
     "continueWithX": "Continue with X",
+    "continueWithFacebook": "Continue with Facebook",
     "noAccount": "Don't have an account?",
     "signUpFree": "Sign up free",
     "forgotTitle": "Reset your password",
@@ -152,6 +153,7 @@
     "signUpWithGoogle": "Sign up with Google",
     "signUpWithMicrosoft": "Sign up with Microsoft",
     "signUpWithX": "Sign up with X",
+    "signUpWithFacebook": "Sign up with Facebook",
     "alreadyHaveAccount": "Already have an account?",
     "logIn": "Log in"
   },
@@ -249,15 +251,26 @@
       "quickPanelsDescription": "Quick Actions, Getting Started, and Backend Runner.",
       "portfolioPerformanceLabel": "Portfolio Performance",
       "portfolioPerformanceDescription": "Shows the performance placeholder/summary panel."
-    }
+    },
+    "myData": "My Data",
+    "myDataTitle": "Your Saved Data",
+    "myDataSub": "We only store your email address and approximate location to provide you with a personalised trading experience.",
+    "myDataEmail": "Email Address",
+    "myDataLocation": "Location",
+    "myDataLocationNote": "Approximate location (collected automatically)",
+    "myDataNote": "This information is collected solely to better serve you.",
+    "myDataViewPolicy": "View our full data collection policy.",
+    "myDataDeleteTitle": "Request Data Deletion",
+    "myDataDeleteDesc": "You can request the deletion of all personal data we hold about you at any time.",
+    "myDataContactLink": "Contact us to request deletion"
   },
   "footer": {
     "copyright": "© 2026 auto-Trading. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms",
     "disclaimer": "Disclaimer",
-    "contact": "Contact",
-    "collectingData": "Data Collection"
+    "collectingData": "Collecting Data",
+    "contact": "Contact"
   },
   "language": {
     "selectLanguage": "Select Language",
@@ -368,6 +381,8 @@
     "enable": "Enable",
     "enterApiCredentials": "Enter API Credentials",
     "getApiKeysFrom": "Get API keys from",
+    "howToCreateApiCredentials": "How to create your own API credentials",
+    "guideToGenerateApiFor": "Guide to generate {{name}} API here",
     "keysValidated": "Your keys are securely validated with the exchange before saving",
     "noExchangesForMode": "No exchanges available for this mode yet.",
     "paperTrading": "Paper Trading",
@@ -390,6 +405,41 @@
       "passphraseRequired": "Passphrase is required for this exchange.",
       "failedToSave": "Failed to save exchange connection. Please try again."
     }
+  },
+  "paperOnboarding": {
+    "title": "Set Up Your Demo Account",
+    "subtitle": "Top up with virtual funds or connect your own paper exchange to start trading risk-free.",
+    "tabTopUp": "Top Up Demo Account",
+    "tabConnectExchange": "Connect Paper Exchange",
+    "topUpDesc": "Choose a starting balance for your demo account. We'll set up an Alpaca paper trading account automatically — no card required.",
+    "alpacaNotice": "Your demo account is powered by Alpaca Paper Trading. Orders are simulated with real market data.",
+    "topUpBtn": "Set Up Demo Account with",
+    "settingUp": "Setting up…",
+    "demoAccountReady": "Demo Account Ready",
+    "demoAccountReadyDesc": "Your demo account is funded and ready. You can now explore the platform with paper money.",
+    "exchangeConnected": "Paper Exchange Connected",
+    "exchangeConnectedDesc": "Your paper exchange is connected. You can now start demo trading."
+  },
+  "tour": {
+    "quickGuide": "Quick Guide",
+    "skip": "Skip tour",
+    "prev": "Back",
+    "next": "Next",
+    "finish": "Done",
+    "step1Title": "Welcome to Auto-Trader!",
+    "step1Desc": "Let's take a quick 7-step tour so you know where everything is. You can skip at any time.",
+    "step2Title": "Your Portfolio Overview",
+    "step2Desc": "These cards show your total balance, open P&L, active positions and trade count at a glance.",
+    "step3Title": "Exchanges",
+    "step3Desc": "Connect your crypto or stock exchange here. Each bot trades through a connected exchange.",
+    "step4Title": "Trading Bots",
+    "step4Desc": "Bots are the engines of your trading. Each bot monitors a symbol and executes strategies automatically.",
+    "step5Title": "Strategies",
+    "step5Desc": "Assign pre-built or custom trading strategies to your bots. Strategies define when to buy and sell.",
+    "step6Title": "Quick Actions",
+    "step6Desc": "Use these shortcuts to connect an exchange, create a bot, or browse strategy templates instantly.",
+    "step7Title": "Backend Runner & Execution History",
+    "step7Desc": "Monitor your strategy execution history here — see what ran, what was skipped, and any errors."
   },
   "createBot": {
     "botName": "Bot Name",
@@ -668,6 +718,22 @@
   "legal": {
     "home": "Home",
     "contact": "Contact"
+  },
+  "collectingData": {
+    "title": "Collecting Data",
+    "effectiveDate": "Effective: May 2026",
+    "s1Title": "What We Collect",
+    "s1Body": "We collect only two pieces of information: your email address and your approximate location. Your email is used to identify your account and send you important service-related communications. Your location helps us personalise your trading experience and show you region-relevant information.",
+    "s2Title": "Why We Collect It",
+    "s2Body": "We collect this data solely to better serve you — to provide a personalised, relevant trading experience and to ensure we can reach you with account notifications and security alerts.",
+    "s3Title": "View Your Saved Data",
+    "s3Body": "You can review the data we hold about you at any time in your account settings.",
+    "s3Link": "Go to Settings",
+    "s4Title": "Request Data Deletion",
+    "s4Body": "You have the right to request the deletion of all personal data we hold about you. To submit a deletion request, please contact us.",
+    "s4Link": "Contact Us",
+    "s5Title": "Questions?",
+    "s5Body": "If you have any questions or concerns about how we handle your data, please don't hesitate to reach out."
   },
   "terms": {
     "title": "Terms of Service",
@@ -1398,6 +1464,7 @@
     "terms": "Terms of Service — AutoTrader | Trading Platform Terms & Conditions",
     "privacy": "Privacy Policy — AutoTrader | How We Protect Your Data",
     "disclaimer": "Trading Risk Disclaimer — AutoTrader | Important Risk Disclosure",
+    "collectingData": "Collecting Data — AutoTrader | What We Collect & Your Rights",
     "exchanges": "Connected Exchanges — AutoTrader | Manage 30+ Exchange Integrations",
     "bots": "Trading Bots — AutoTrader | Create & Run Automated Strategy Bots",
     "strategies": "Trading Strategies — AutoTrader | Build & Execute Strategy Automation",
@@ -1409,24 +1476,6 @@
     "settings": "Settings — AutoTrader | Account & Platform Preferences",
     "billingCheckout": "Secure Checkout — AutoTrader | Upgrade to Premium",
     "billingManage": "Billing Management — AutoTrader | History & Subscription Controls",
-    "feature": "Feature — AutoTrader",
-    "collectingData": "Data Collection Policy — AutoTrader | What Data We Collect & Why"
-  },
-  "collectingData": {
-    "title": "Data Collection Policy",
-    "effectiveDate": "Effective date: 3 May 2026",
-    "s1Title": "1. What Data We Collect",
-    "s1Body": "We collect data you provide during registration (email address, display name), trading activity data (trade history, bot configurations, strategy settings, exchange API keys stored encrypted), usage analytics, and technical data (IP address, browser type).",
-    "s2Title": "2. Why We Collect Your Data",
-    "s2Body": "Your data is used to operate and maintain the platform, authenticate your account, process subscriptions, send essential notifications, and improve your experience. We do not use your data for advertising.",
-    "s3Title": "3. Data Sharing",
-    "s3Body": "We do not sell your personal data. We share only the minimum necessary with trusted third-party providers solely to operate the platform. All providers are contractually bound to data protection standards.",
-    "s3Link": "View our full Privacy Policy →",
-    "s4Title": "4. Data Retention",
-    "s4Body": "We retain your account data while your account is active. You may request deletion at any time. Personal data is removed within 30 days of account closure unless legal obligations require otherwise.",
-    "s4Link": "Contact us to request data deletion →",
-    "s5Title": "5. Your Rights",
-    "s5Body": "You may have the right to access, correct, export, or delete your personal data and withdraw consent at any time without affecting services already rendered.",
-    "s5Link": "Contact us to exercise your rights →"
+    "feature": "Feature — AutoTrader"
   }
 }

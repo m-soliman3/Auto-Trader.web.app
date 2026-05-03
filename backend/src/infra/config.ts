@@ -4,6 +4,15 @@ export interface AppConfig {
   marketDataProvider: "yfinance" | "native" | "tradingview";
   yfinancePythonBin: string;
   tradingviewApiKey?: string;
+  /** Alpaca Broker API credentials for auto-provisioning paper accounts. */
+  alpacaBrokerKeyId?: string;
+  alpacaBrokerSecretKey?: string;
+  /** EmailJS credentials for transactional emails (funding confirmation, etc.). */
+  emailjsServiceId?: string;
+  emailjsPublicKey?: string;
+  emailjsPrivateKey?: string;
+  /** EmailJS template ID for demo account top-up confirmation emails. */
+  emailjsTopupTemplateId?: string;
 }
 
 export const config: AppConfig = {
@@ -12,4 +21,10 @@ export const config: AppConfig = {
   marketDataProvider: String(process.env.MARKET_DATA_PROVIDER || "yfinance").toLowerCase() as "yfinance" | "native" | "tradingview",
   yfinancePythonBin: String(process.env.YFINANCE_PYTHON_BIN || "python3"),
   tradingviewApiKey: process.env.TRADINGVIEW_API_KEY || "",
+  alpacaBrokerKeyId: process.env.ALPACA_BROKER_KEY_ID || "",
+  alpacaBrokerSecretKey: process.env.ALPACA_BROKER_SECRET_KEY || "",
+  emailjsServiceId: process.env.EMAILJS_SERVICE_ID || "Auto-Trader",
+  emailjsPublicKey: process.env.EMAILJS_PUBLIC_KEY || "gLTFDfDYuNpAvYzQJ",
+  emailjsPrivateKey: process.env.EMAILJS_PRIVATE_KEY || "EATS9AlStHHuuQOzW5TbE",
+  emailjsTopupTemplateId: process.env.EMAILJS_TOPUP_TEMPLATE_ID || "template_nwywmjp",
 };

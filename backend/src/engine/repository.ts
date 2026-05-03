@@ -70,10 +70,25 @@ export async function saveRunnerSummary(summary: RunnerSummary): Promise<void> {
   await db.collection("backendRunnerSummaries").add(summary);
 }
 
+export async function saveUserRunnerSummary(uid: string, summary: RunnerSummary): Promise<void> {
+  await db.collection(`users/${uid}/runnerSummaries`).add(summary);
+}
+
 export async function getRecentRunnerSummaries(limit = 20): Promise<RunnerSummary[]> {
   const boundedLimit = Math.max(1, Math.min(limit, 100));
   const snap = await db
     .collection("backendRunnerSummaries")
+    .orderBy("ranAt", "desc")
+    .limit(boundedLimit)
+    .get();
+
+  return snap.docs.map((doc) => doc.data() as RunnerSummary);
+}
+
+export async function getRecentUserRunnerSummaries(uid: string, limit = 20): Promise<RunnerSummary[]> {
+  const boundedLimit = Math.max(1, Math.min(limit, 100));
+  const snap = await db
+    .collection(`users/${uid}/runnerSummaries`)
     .orderBy("ranAt", "desc")
     .limit(boundedLimit)
     .get();

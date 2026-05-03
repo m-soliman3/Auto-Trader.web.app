@@ -97,3 +97,13 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         run: firebase deploy --project autotrader-b8851 --non-interactive --only hosting:prod,functions,firestore:rules
+
+      - name: Deploy backend to Cloud Run
+        run: |
+          gcloud run deploy auto-trader-backend \
+            --source ./backend \
+            --region europe-west1 \
+            --project autotrader-b8851 \
+            --platform managed \
+            --update-env-vars "ALPACA_BROKER_KEY_ID=${{ secrets.ALPACA_BROKER_KEY_ID }},ALPACA_BROKER_SECRET_KEY=${{ secrets.ALPACA_BROKER_SECRET_KEY }}" \
+            --quiet

@@ -19,6 +19,7 @@ import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
 import { AccountModeService } from '../services/account-mode.service';
 import { DashboardLayoutService, DashboardSectionId } from '../services/dashboard-layout.service';
+import { TourService } from '../services/tour.service';
 import { environment } from '../../environments/environment';
 
 interface InstrumentChartResponse {
@@ -68,6 +69,7 @@ export class Dashboard implements OnDestroy {
   marketStream    = inject(MarketStreamService);
   accountMode     = inject(AccountModeService);
   dashboardLayout = inject(DashboardLayoutService);
+  tourService     = inject(TourService);
   private firebaseAuth = inject(Auth);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -189,6 +191,8 @@ export class Dashboard implements OnDestroy {
 
   constructor() {
     this.loadRunnerSummaries();
+    // Auto-start the tour on first dashboard visit after onboarding.
+    this.tourService.startIfFirstVisit();
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {

@@ -5,13 +5,21 @@
 		<app-ai-chat-ribbon />
 	}
 
-	<main class="app-main" [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding()">
+	<main class="app-main"
+		[class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding() || paperOnboarding.needsOnboarding()">
 		<router-outlet />
 	</main>
 
-	<app-site-footer [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding()" />
+	<app-site-footer
+		[class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding() || paperOnboarding.needsOnboarding()" />
 </div>
 
 @if (realMoneyOnboarding.needsOnboarding()) {
 	<app-real-money-onboarding-modal />
 }
+
+@if (paperOnboarding.needsOnboarding()) {
+	<app-paper-money-onboarding-modal />
+}
+
+<app-tour-overlay />

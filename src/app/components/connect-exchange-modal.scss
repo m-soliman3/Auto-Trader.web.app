@@ -253,6 +253,20 @@
 .sel-name { font-size: 0.875rem; font-weight: 700; color: var(--text-primary); }
 .sel-desc { font-size: 0.75rem; color: var(--text-muted); }
 
+.api-credential-guide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: 0.1rem;
+
+  svg { flex-shrink: 0; }
+  &:hover { text-decoration: underline; }
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

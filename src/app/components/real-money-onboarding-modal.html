@@ -150,10 +150,18 @@
               <div class="exchange-category-label">Crypto Exchanges</div>
               <div class="exchange-grid">
                 @for (ex of realCryptoExchanges(); track ex.id) {
-                  <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
-                    <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
-                    <span class="tile-name">{{ ex.name }}</span>
-                  </button>
+                  <div class="exchange-tile-wrap">
+                    <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
+                      <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
+                      <span class="tile-name">{{ ex.name }}</span>
+                    </button>
+                    @if (ex.apiDocsUrl) {
+                      <a class="tile-docs-link" [href]="ex.apiDocsUrl" target="_blank" rel="noopener noreferrer">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Get API keys
+                      </a>
+                    }
+                  </div>
                 }
               </div>
             }
@@ -161,10 +169,18 @@
               <div class="exchange-category-label">Stock Brokers</div>
               <div class="exchange-grid">
                 @for (ex of realStockExchanges(); track ex.id) {
-                  <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
-                    <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
-                    <span class="tile-name">{{ ex.name }}</span>
-                  </button>
+                  <div class="exchange-tile-wrap">
+                    <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
+                      <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
+                      <span class="tile-name">{{ ex.name }}</span>
+                    </button>
+                    @if (ex.apiDocsUrl) {
+                      <a class="tile-docs-link" [href]="ex.apiDocsUrl" target="_blank" rel="noopener noreferrer">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Get API keys
+                      </a>
+                    }
+                  </div>
                 }
               </div>
             }
@@ -193,7 +209,15 @@
                 <input id="ex-label" type="text" [(ngModel)]="exchangeLabel" placeholder="My Exchange" />
               </div>
               <div class="form-group">
-                <label for="ex-apikey">API Key</label>
+                <div class="api-key-label-row">
+                  <label for="ex-apikey">API Key</label>
+                  @if (selectedExchange()?.apiDocsUrl) {
+                    <a class="get-api-link" [href]="selectedExchange()?.apiDocsUrl" target="_blank" rel="noopener noreferrer">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      Get API keys from {{ selectedExchange()?.name }}
+                    </a>
+                  }
+                </div>
                 <input id="ex-apikey" type="text" [(ngModel)]="exchangeApiKey" autocomplete="off" />
               </div>
               <div class="form-group">

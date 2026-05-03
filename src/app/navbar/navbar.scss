@@ -120,6 +120,33 @@
   }
 }
 
+.quick-guide-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem 0.65rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.quick-guide-nav-label {
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
 .btn-ghost {
   padding: 0.5rem 1rem;
   border-radius: 8px;

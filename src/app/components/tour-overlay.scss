@@ -1,0 +1,196 @@
+/* ── Tour backdrop ─────────────────────────────────────────────────────── */
+.tour-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: all;
+
+  // No spotlight: solid dark overlay
+  background: rgba(0, 0, 0, 0.74);
+
+  // When spotlight element is present it provides the darkness itself.
+  &.has-spotlight {
+    background: transparent;
+  }
+}
+
+/* ── Spotlight ─────────────────────────────────────────────────────────── */
+// The spotlight element is positioned over the target.
+// Its box-shadow with a massive spread creates the dark overlay everywhere
+// EXCEPT inside the element (which shows the underlying content).
+.tour-spotlight {
+  position: fixed;
+  border-radius: 8px;
+  // The large box-shadow creates the dark "curtain" around the spotlight hole.
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.74);
+  pointer-events: none;
+  z-index: 10001;
+  transition:
+    top 0.28s ease,
+    left 0.28s ease,
+    width 0.28s ease,
+    height 0.28s ease;
+  outline: 2px solid var(--accent, #00d17a);
+  outline-offset: 0px;
+}
+
+/* ── Tooltip card ──────────────────────────────────────────────────────── */
+.tour-tooltip {
+  position: fixed;
+  z-index: 10002;
+  width: 310px;
+  max-width: calc(100vw - 24px);
+  background: var(--card-bg, #1a1d2e);
+  border: 1px solid var(--border-color, #2a2d3e);
+  border-radius: 14px;
+  padding: 20px 22px 18px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(0, 209, 122, 0.14);
+  pointer-events: all;
+  animation: tourTooltipIn 0.22s ease;
+}
+
+@keyframes tourTooltipIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) var(--tooltip-transform, translate(-50%, -50%));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) var(--tooltip-transform, translate(-50%, -50%));
+  }
+}
+
+/* Progress dots */
+.tour-progress {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.tour-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-color, #2a2d3e);
+  transition: background 0.2s, transform 0.2s;
+
+  &.active {
+    background: var(--accent, #00d17a);
+    transform: scale(1.3);
+  }
+
+  &.done {
+    background: rgba(0, 209, 122, 0.38);
+  }
+}
+
+/* Step counter badge */
+.tour-step-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent, #00d17a);
+  margin: 0 0 6px;
+}
+
+/* Title */
+.tour-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-primary, #e8eaf0);
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+/* Description */
+.tour-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #8b8fa8);
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+/* Actions row */
+.tour-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.tour-skip {
+  background: none;
+  border: none;
+  color: var(--text-secondary, #8b8fa8);
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.15s;
+
+  &:hover {
+    color: var(--text-primary, #e8eaf0);
+  }
+}
+
+.tour-nav {
+  display: flex;
+  gap: 7px;
+}
+
+.tour-btn {
+  padding: 7px 15px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.tour-prev {
+  background: var(--surface-raised, #242740);
+  color: var(--text-primary, #e8eaf0);
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.tour-next,
+.tour-finish {
+  background: var(--accent, #00d17a);
+  color: #0d0f14;
+
+  &:hover {
+    opacity: 0.88;
+  }
+}
+
+/* ── Quick-guide button (used on dashboard, defined here for reuse) ─────── */
+:host-context(body) .tour-quick-guide-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--accent, #00d17a);
+  background: transparent;
+  color: var(--accent, #00d17a);
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: var(--accent, #00d17a);
+    color: #0d0f14;
+  }
+}

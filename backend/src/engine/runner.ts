@@ -1,7 +1,7 @@
 import admin from "../infra/firebase";
 import { executeStrategyOrder, shouldRunByTimeframe } from "./execution";
 import { marketSessionForExchange } from "./marketSession";
-import { listActiveStrategies, getBot, getExchangeByLabel, saveRunnerSummary, updateStrategy } from "./repository";
+import { listActiveStrategies, getBot, getExchangeByLabel, saveRunnerSummary, saveUserRunnerSummary, updateStrategy } from "./repository";
 import { evaluateStrategySignal } from "./signals";
 
 export interface RunnerSummary {
@@ -13,8 +13,22 @@ export interface RunnerSummary {
   ranAt: string;
 }
 
+/** Per-user stat bucket accumulated during a single runner pass. */
+interface UserStats {
+  totalActiveStrategies: number;
+  executed: number;
+  skipped: number;
+  skippedMarketClosed: number;
+  failed: number;
+}
+
+function emptyUserStats(): UserStats {
+  return { totalActiveStrategies: 0, executed: 0, skipped: 0, skippedMarketClosed: 0, failed: 0 };
+}
+
 export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
   const nowMs = Date.now();
+  const ranAt = new Date().toISOString();
   const active = await listActiveStrategies();
 
   let executed = 0;
@@ -22,22 +36,36 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
   let skippedMarketClosed = 0;
   let failed = 0;
 
+  // Track per-user stats so each user sees only their own runner history.
+  const perUser = new Map<string, UserStats>();
+
   for (const item of active) {
     const { uid, strategyId, strategy } = item;
+
+    // Ensure a stats bucket exists for this user.
+    if (uid && !perUser.has(uid)) {
+      perUser.set(uid, emptyUserStats());
+    }
+    const userStats = uid ? perUser.get(uid)! : null;
+    if (userStats) userStats.totalActiveStrategies++;
+
     if (!uid || !strategyId) {
       skipped++;
+      if (userStats) userStats.skipped++;
       continue;
     }
 
     const botId = strategy.assignedBotId;
     if (!botId) {
       skipped++;
+      userStats!.skipped++;
       continue;
     }
 
     const bot = await getBot(uid, botId);
     if (!bot || bot.status !== "active") {
       skipped++;
+      userStats!.skipped++;
       continue;
     }
 
@@ -45,6 +73,7 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
     const exchangeId = String(bot.exchangeId || exchange?.exchangeId || "");
     if (!exchange || !exchangeId) {
       skipped++;
+      userStats!.skipped++;
       continue;
     }
 
@@ -52,6 +81,8 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
     if (!session.isOpen) {
       skipped++;
       skippedMarketClosed++;
+      userStats!.skipped++;
+      userStats!.skippedMarketClosed++;
       await updateStrategy(uid, strategyId, {
         lastEvaluationAt: new Date().toISOString(),
         lastEvaluationStatus: "market-closed",
@@ -63,6 +94,7 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
 
     if (!shouldRunByTimeframe(strategy, bot, nowMs)) {
       skipped++;
+      userStats!.skipped++;
       continue;
     }
 
@@ -90,6 +122,7 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
 
     if (signalSide !== "buy" && signalSide !== "sell") {
       skipped++;
+      userStats!.skipped++;
       continue;
     }
 
@@ -103,8 +136,10 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
         updatedAt: new Date().toISOString(),
       });
       executed++;
+      userStats!.executed++;
     } catch (error: any) {
       failed++;
+      userStats!.failed++;
       await updateStrategy(uid, strategyId, {
         lastEvaluationAt: new Date().toISOString(),
         lastEvaluationStatus: "execution-failed",
@@ -125,9 +160,17 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
     skipped,
     skippedMarketClosed,
     failed,
-    ranAt: new Date().toISOString(),
+    ranAt,
   };
 
-  await saveRunnerSummary(summary);
+  // Save global summary (admin view) and per-user summaries in parallel.
+  await Promise.all([
+    saveRunnerSummary(summary),
+    ...Array.from(perUser.entries()).map(([uid, stats]) =>
+      saveUserRunnerSummary(uid, { ...stats, ranAt }),
+    ),
+  ]);
+
   return summary;
 }
+

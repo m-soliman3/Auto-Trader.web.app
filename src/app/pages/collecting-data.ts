@@ -21,11 +21,33 @@ import { TranslateModule } from '@ngx-translate/core';
         <h1>{{ 'collectingData.title' | translate }}</h1>
         <p class="meta">{{ 'collectingData.effectiveDate' | translate }}</p>
 
-        <section><h2>{{ 'collectingData.s1Title' | translate }}</h2><p>{{ 'collectingData.s1Body' | translate }}</p></section>
-        <section><h2>{{ 'collectingData.s2Title' | translate }}</h2><p>{{ 'collectingData.s2Body' | translate }}</p></section>
-        <section><h2>{{ 'collectingData.s3Title' | translate }}</h2><p>{{ 'collectingData.s3Body' | translate }}</p><a routerLink="/privacy" class="section-link">{{ 'collectingData.s3Link' | translate }}</a></section>
-        <section><h2>{{ 'collectingData.s4Title' | translate }}</h2><p>{{ 'collectingData.s4Body' | translate }}</p><a routerLink="/contact" class="section-link">{{ 'collectingData.s4Link' | translate }}</a></section>
-        <section><h2>{{ 'collectingData.s5Title' | translate }}</h2><p>{{ 'collectingData.s5Body' | translate }}</p><a routerLink="/contact" class="section-link">{{ 'collectingData.s5Link' | translate }}</a></section>
+        <section>
+          <h2>{{ 'collectingData.s1Title' | translate }}</h2>
+          <p>{{ 'collectingData.s1Body' | translate }}</p>
+        </section>
+
+        <section>
+          <h2>{{ 'collectingData.s2Title' | translate }}</h2>
+          <p>{{ 'collectingData.s2Body' | translate }}</p>
+        </section>
+
+        <section>
+          <h2>{{ 'collectingData.s3Title' | translate }}</h2>
+          <p>{{ 'collectingData.s3Body' | translate }}</p>
+          <a routerLink="/settings/myData" class="action-link">{{ 'collectingData.s3Link' | translate }}</a>
+        </section>
+
+        <section>
+          <h2>{{ 'collectingData.s4Title' | translate }}</h2>
+          <p>{{ 'collectingData.s4Body' | translate }}</p>
+          <a routerLink="/contact" class="action-link">{{ 'collectingData.s4Link' | translate }}</a>
+        </section>
+
+        <section>
+          <h2>{{ 'collectingData.s5Title' | translate }}</h2>
+          <p>{{ 'collectingData.s5Body' | translate }}</p>
+          <a routerLink="/contact" class="action-link">{{ 'collectingData.s4Link' | translate }}</a>
+        </section>
       </div>
     </div>
   `,
@@ -44,8 +66,8 @@ import { TranslateModule } from '@ngx-translate/core';
       .close-btn { width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid var(--border); background: transparent; color: var(--text-primary); font-size: 0.95rem; font-weight: 700; line-height: 1; cursor: pointer; }
       .close-btn:hover { border-color: rgba(0, 209, 122, 0.45); color: var(--accent); }
       .meta { margin-top: 0.45rem !important; color: var(--text-muted) !important; font-size: 0.9rem; }
-      .section-link { display: inline-block; margin-top: 0.55rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; }
-      .section-link:hover { text-decoration: underline; }
+      .action-link { display: inline-block; margin-top: 0.75rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+      .action-link:hover { text-decoration: underline; }
       @media (max-width: 720px) { .legal-card { padding: 1rem; } .legal-card h1 { font-size: 1.6rem; } }
     `,
   ],
