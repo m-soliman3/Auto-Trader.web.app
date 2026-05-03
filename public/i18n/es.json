@@ -251,13 +251,25 @@
       "quickPanelsDescription": "Acciones rápidas, Primeros pasos y Ejecutor de backend.",
       "portfolioPerformanceLabel": "Rendimiento de la cartera",
       "portfolioPerformanceDescription": "Muestra el panel de resumen/marcador de posición de rendimiento."
-    }
+    },
+    "myData": "Mis datos",
+    "myDataTitle": "Tus datos guardados",
+    "myDataSub": "Solo almacenamos tu dirección de correo electrónico y ubicación aproximada para ofrecerte una experiencia de trading personalizada.",
+    "myDataEmail": "Dirección de correo electrónico",
+    "myDataLocation": "Ubicación",
+    "myDataLocationNote": "Ubicación aproximada (recopilada automáticamente)",
+    "myDataNote": "Esta información se recopila únicamente para servirte mejor.",
+    "myDataViewPolicy": "Ver nuestra política completa de recolección de datos.",
+    "myDataDeleteTitle": "Solicitar eliminación de datos",
+    "myDataDeleteDesc": "Puedes solicitar la eliminación de todos tus datos personales en cualquier momento.",
+    "myDataContactLink": "Contáctanos para solicitar la eliminación"
   },
   "footer": {
     "copyright": "© 2026 auto-Trading. Todos los derechos reservados.",
     "privacy": "Privacidad",
     "terms": "Términos",
     "disclaimer": "Aviso legal",
+    "collectingData": "Recolección de datos",
     "contact": "Contacto"
   },
   "language": {
@@ -706,6 +718,22 @@
   "legal": {
     "home": "Inicio",
     "contact": "Contacto"
+  },
+  "collectingData": {
+    "title": "Recolección de datos",
+    "effectiveDate": "Vigente: mayo de 2026",
+    "s1Title": "Qué recopilamos",
+    "s1Body": "Solo recopilamos dos datos: tu dirección de correo electrónico y tu ubicación aproximada. El correo electrónico se utiliza para identificar tu cuenta y enviarte comunicaciones importantes relacionadas con el servicio. Tu ubicación nos ayuda a personalizar tu experiencia de trading y mostrarte información relevante para tu región.",
+    "s2Title": "Por qué lo recopilamos",
+    "s2Body": "Recopilamos estos datos únicamente para servirte mejor: para ofrecerte una experiencia de trading personalizada y relevante, y para garantizar que podamos contactarte con notificaciones de cuenta y alertas de seguridad.",
+    "s3Title": "Ver tus datos guardados",
+    "s3Body": "Puedes revisar los datos que tenemos sobre ti en cualquier momento en la configuración de tu cuenta.",
+    "s3Link": "Ir a Configuración",
+    "s4Title": "Solicitar la eliminación de datos",
+    "s4Body": "Tienes derecho a solicitar la eliminación de todos tus datos personales. Para enviar una solicitud de eliminación, contáctanos.",
+    "s4Link": "Contáctanos",
+    "s5Title": "¿Preguntas?",
+    "s5Body": "Si tienes alguna pregunta o inquietud sobre cómo manejamos tus datos, no dudes en comunicarte con nosotros."
   },
   "terms": {
     "title": "Términos del servicio",
@@ -1436,6 +1464,7 @@
     "terms": "Términos de Servicio — AutoTrader | Términos y Condiciones de la Plataforma",
     "privacy": "Política de Privacidad — AutoTrader | Cómo Protegemos Tus Datos",
     "disclaimer": "Descargo de Responsabilidad — AutoTrader | Divulgación Importante de Riesgos",
+    "collectingData": "Recolección de datos — AutoTrader | Qué recopilamos y tus derechos",
     "exchanges": "Intercambios Conectados — AutoTrader | Gestiona +30 Integraciones de Exchange",
     "bots": "Bots de Trading — AutoTrader | Crea y Ejecuta Bots de Estrategia Automatizados",
     "strategies": "Estrategias de Trading — AutoTrader | Construye y Ejecuta Automatización",

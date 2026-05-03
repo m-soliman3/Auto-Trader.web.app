@@ -251,13 +251,25 @@
       "quickPanelsDescription": "Quick Actions, Getting Started, and Backend Runner.",
       "portfolioPerformanceLabel": "Portfolio Performance",
       "portfolioPerformanceDescription": "Shows the performance placeholder/summary panel."
-    }
+    },
+    "myData": "My Data",
+    "myDataTitle": "Your Saved Data",
+    "myDataSub": "We only store your email address and approximate location to provide you with a personalised trading experience.",
+    "myDataEmail": "Email Address",
+    "myDataLocation": "Location",
+    "myDataLocationNote": "Approximate location (collected automatically)",
+    "myDataNote": "This information is collected solely to better serve you.",
+    "myDataViewPolicy": "View our full data collection policy.",
+    "myDataDeleteTitle": "Request Data Deletion",
+    "myDataDeleteDesc": "You can request the deletion of all personal data we hold about you at any time.",
+    "myDataContactLink": "Contact us to request deletion"
   },
   "footer": {
     "copyright": "© 2026 auto-Trading. All rights reserved.",
     "privacy": "Privacy",
     "terms": "Terms",
     "disclaimer": "Disclaimer",
+    "collectingData": "Collecting Data",
     "contact": "Contact"
   },
   "language": {
@@ -706,6 +718,22 @@
   "legal": {
     "home": "Home",
     "contact": "Contact"
+  },
+  "collectingData": {
+    "title": "Collecting Data",
+    "effectiveDate": "Effective: May 2026",
+    "s1Title": "What We Collect",
+    "s1Body": "We collect only two pieces of information: your email address and your approximate location. Your email is used to identify your account and send you important service-related communications. Your location helps us personalise your trading experience and show you region-relevant information.",
+    "s2Title": "Why We Collect It",
+    "s2Body": "We collect this data solely to better serve you — to provide a personalised, relevant trading experience and to ensure we can reach you with account notifications and security alerts.",
+    "s3Title": "View Your Saved Data",
+    "s3Body": "You can review the data we hold about you at any time in your account settings.",
+    "s3Link": "Go to Settings",
+    "s4Title": "Request Data Deletion",
+    "s4Body": "You have the right to request the deletion of all personal data we hold about you. To submit a deletion request, please contact us.",
+    "s4Link": "Contact Us",
+    "s5Title": "Questions?",
+    "s5Body": "If you have any questions or concerns about how we handle your data, please don't hesitate to reach out."
   },
   "terms": {
     "title": "Terms of Service",
@@ -1436,6 +1464,7 @@
     "terms": "Terms of Service — AutoTrader | Trading Platform Terms & Conditions",
     "privacy": "Privacy Policy — AutoTrader | How We Protect Your Data",
     "disclaimer": "Trading Risk Disclaimer — AutoTrader | Important Risk Disclosure",
+    "collectingData": "Collecting Data — AutoTrader | What We Collect & Your Rights",
     "exchanges": "Connected Exchanges — AutoTrader | Manage 30+ Exchange Integrations",
     "bots": "Trading Bots — AutoTrader | Create & Run Automated Strategy Bots",
     "strategies": "Trading Strategies — AutoTrader | Build & Execute Strategy Automation",

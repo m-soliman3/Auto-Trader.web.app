@@ -251,13 +251,25 @@
       "quickPanelsDescription": "Schnelle Aktionen, Erste Schritte und Backend-Läufer.",
       "portfolioPerformanceLabel": "Portfolioperformance",
       "portfolioPerformanceDescription": "Zeigt das Leistungsplatzhalter-/Zusammenfassungsfenster an."
-    }
+    },
+    "myData": "Meine Daten",
+    "myDataTitle": "Ihre gespeicherten Daten",
+    "myDataSub": "Wir speichern nur Ihre E-Mail-Adresse und Ihren ungefähren Standort, um Ihnen ein personalisiertes Handelserlebnis zu bieten.",
+    "myDataEmail": "E-Mail-Adresse",
+    "myDataLocation": "Standort",
+    "myDataLocationNote": "Ungefähre Lage (automatisch erfasst)",
+    "myDataNote": "Diese Informationen werden ausschließlich erfasst, um Ihnen besser dienen zu können.",
+    "myDataViewPolicy": "Vollständige Datenerfassungsrichtlinie anzeigen.",
+    "myDataDeleteTitle": "Datenklöschung beantragen",
+    "myDataDeleteDesc": "Sie können jederzeit die Löschung aller Ihrer persönlichen Daten beantragen.",
+    "myDataContactLink": "Kontaktieren Sie uns für einen Löschantrag"
   },
   "footer": {
     "copyright": "© 2026 auto-Trading. Alle Rechte vorbehalten.",
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "disclaimer": "Haftungsausschluss",
+    "collectingData": "Datenerfassung",
     "contact": "Kontakt"
   },
   "language": {
@@ -706,6 +718,22 @@
   "legal": {
     "home": "Startseite",
     "contact": "Kontakt"
+  },
+  "collectingData": {
+    "title": "Datenerfassung",
+    "effectiveDate": "Gültig ab: Mai 2026",
+    "s1Title": "Was wir erfassen",
+    "s1Body": "Wir erfassen nur zwei Arten von Informationen: Ihre E-Mail-Adresse und Ihren ungefähren Standort. Ihre E-Mail-Adresse dient zur Identifizierung Ihres Kontos und zum Versenden wichtiger servicebezogener Mitteilungen. Ihr Standort hilft uns, Ihr Handelserlebnis zu personalisieren und Ihnen regional relevante Informationen anzuzeigen.",
+    "s2Title": "Warum wir es erfassen",
+    "s2Body": "Wir erfassen diese Daten ausschließlich, um Ihnen besser dienen zu können — um ein personalisiertes, relevantes Handelserlebnis zu bieten und sicherzustellen, dass wir Sie mit Kontobenachrichtigungen und Sicherheitswarnungen erreichen können.",
+    "s3Title": "Ihre gespeicherten Daten anzeigen",
+    "s3Body": "Sie können die Daten, die wir über Sie gespeichert haben, jederzeit in Ihren Kontoeinstellungen einsehen.",
+    "s3Link": "Zu den Einstellungen",
+    "s4Title": "Datenklöschung beantragen",
+    "s4Body": "Sie haben das Recht, die Löschung aller Ihrer persönlichen Daten zu beantragen. Um einen Löschantrag zu stellen, kontaktieren Sie uns bitte.",
+    "s4Link": "Kontakt aufnehmen",
+    "s5Title": "Fragen?",
+    "s5Body": "Wenn Sie Fragen oder Bedenken bezüglich des Umgangs mit Ihren Daten haben, zögern Sie nicht, uns zu kontaktieren."
   },
   "terms": {
     "title": "Nutzungsbedingungen",
@@ -1436,6 +1464,7 @@
     "terms": "Nutzungsbedingungen — AutoTrader | Plattformbedingungen",
     "privacy": "Datenschutzerklärung — AutoTrader | Wie wir Ihre Daten schützen",
     "disclaimer": "Risikohinweis — AutoTrader | Wichtige Risikooffenbarung",
+    "collectingData": "Datenerfassung — AutoTrader | Was wir erfassen & Ihre Rechte",
     "exchanges": "Verbundene Börsen — AutoTrader | 30+ Börsenintegrationen verwalten",
     "bots": "Handelsbots — AutoTrader | Automatisierte Strategie-Bots erstellen & betreiben",
     "strategies": "Handelsstrategien — AutoTrader | Strategieautomatisierung aufbauen & ausführen",
