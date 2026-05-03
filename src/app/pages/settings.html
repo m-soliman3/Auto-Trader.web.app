@@ -30,6 +30,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'security'" (click)="setSection($event, 'security')">{{ 'settings.security' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'billing'" (click)="setSection($event, 'billing')">{{ 'settings.billing' | translate }}</button>
       <button type="button" class="sidebar-link" [class.active]="activeSection() === 'legal'" (click)="setSection($event, 'legal')">{{ 'settings.legal' | translate }}</button>
+      <button type="button" class="sidebar-link" [class.active]="activeSection() === 'myData'" (click)="setSection($event, 'myData')">{{ 'settings.myData' | translate }}</button>
     </aside>
 
     <div class="settings-content">
@@ -277,6 +278,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span>{{ 'settings.disclaimerDesc' | translate }}</span>
         </a>
       </div>
+    </section>
+    }
+    @if (activeSection() === 'myData') {
+    <section class="settings-section">
+      <h2>{{ 'settings.myDataTitle' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.myDataSub' | translate }}</p>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>{{ 'settings.myDataEmail' | translate }}</label>
+          <div class="value">{{ auth.accountDetails()?.email || auth.currentUser()?.email || ('common.na' | translate) }}</div>
+        </div>
+        <div class="detail-item">
+          <label>{{ 'settings.myDataLocation' | translate }}</label>
+          <div class="value">{{ 'settings.myDataLocationNote' | translate }}</div>
+        </div>
+      </div>
+
+      <p class="section-sub" style="margin-top: 1rem;">{{ 'settings.myDataNote' | translate }}</p>
+      <a routerLink="/collecting-data" class="legal-link-card" style="margin-top: 0.75rem; display: inline-block;">{{ 'settings.myDataViewPolicy' | translate }}</a>
+
+      <div class="display-divider" style="margin: 1.5rem 0;"></div>
+
+      <h2>{{ 'settings.myDataDeleteTitle' | translate }}</h2>
+      <p class="section-sub">{{ 'settings.myDataDeleteDesc' | translate }}</p>
+      <a routerLink="/contact" class="secondary-btn" style="display: inline-block; margin-top: 0.75rem; text-decoration: none; text-align: center;">{{ 'settings.myDataContactLink' | translate }}</a>
     </section>
     }
     </div>

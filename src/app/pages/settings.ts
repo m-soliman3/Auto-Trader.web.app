@@ -17,7 +17,7 @@ const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'portfolioPerformance',
 ];
 
-type SettingsSectionId = 'display' | 'languages' | 'account' | 'security' | 'billing' | 'legal';
+type SettingsSectionId = 'display' | 'languages' | 'account' | 'security' | 'billing' | 'legal' | 'myData';
 
 @Component({
   selector: 'app-settings',
@@ -361,6 +361,6 @@ export class Settings {
   }
 
   private isSettingsSection(value: string | null): value is SettingsSectionId {
-    return value === 'display' || value === 'languages' || value === 'account' || value === 'security' || value === 'billing' || value === 'legal';
+    return value === 'display' || value === 'languages' || value === 'account' || value === 'security' || value === 'billing' || value === 'legal' || value === 'myData';
   }
 }
