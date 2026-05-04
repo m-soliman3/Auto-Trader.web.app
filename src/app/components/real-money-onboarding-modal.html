@@ -54,8 +54,7 @@
       </div>
 
       <!-- ── Tab 1: Top Up ──────────────────────────────────────────── -->
-      @if (activeTab() === 'topup') {
-        <section class="onboarding-section tab-content">
+      <section class="onboarding-section tab-content" [hidden]="activeTab() !== 'topup'">
           <div class="amount-grid">
             @for (amt of presetAmounts; track amt) {
               <button
@@ -137,12 +136,10 @@
               }
             }
           </button>
-        </section>
-      }
+      </section>
 
       <!-- ── Tab 2: Connect Exchange ────────────────────────────────── -->
-      @if (activeTab() === 'exchange') {
-        <section class="onboarding-section tab-content">
+      <section class="onboarding-section tab-content" [hidden]="activeTab() !== 'exchange'">
 
           <!-- Step 1: exchange picker -->
           @if (exchangeStep() === 1) {
@@ -242,7 +239,6 @@
             </div>
           }
         </section>
-      }
     }
 
   </div>
