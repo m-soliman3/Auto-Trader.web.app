@@ -29,6 +29,16 @@ export interface ConnectedExchange {
   passphrase?: string;
   connectedAt: string;
   status?: 'active' | 'halted';
+  /**
+   * True when this alpaca-paper connection was auto-provisioned by the
+   * top-up flow (broker sub-account). Portfolio is fetched via the
+   * backend broker API (/v1/paper-portfolio).
+   *
+   * False/absent when the user connected their own Alpaca paper trading
+   * keys via the exchange modal. Portfolio is fetched via the standard
+   * Firebase function (/api/getPortfolio) using the stored keys.
+   */
+  brokerProvisioned?: boolean;
 }
 
 export interface PortfolioData {
@@ -673,6 +683,7 @@ export class ExchangeService {
         ...(conn.passphrase && { passphrase: conn.passphrase }),
         connectedAt: conn.connectedAt,
         status: conn.status === 'halted' ? 'halted' : 'active',
+        ...(conn.brokerProvisioned !== undefined && { brokerProvisioned: conn.brokerProvisioned }),
       };
       const docRef = doc(this.firestore, 'users', uid, 'exchanges', conn.label);
       await setDoc(docRef, dataToSave);
@@ -829,10 +840,14 @@ export class ExchangeService {
       }
       const idToken = await currentUser.getIdToken();
 
-      // Broker-provisioned paper accounts must be queried via the Cloud Run
-      // backend (which holds OAuth2 broker credentials) rather than the
-      // Firebase function that forwards plain Trading API keys.
-      if (exchange.exchangeId === 'alpaca-paper') {
+      // Broker-provisioned alpaca-paper accounts (created via the top-up flow)
+      // must be queried via the Cloud Run backend broker API, which uses
+      // OAuth2 broker credentials and the stored alpacaBrokerAccountId.
+      //
+      // User-connected alpaca-paper accounts (connected via the exchange modal
+      // with the user's own Alpaca paper trading keys) use the standard
+      // /api/getPortfolio path, exactly like any other exchange.
+      if (exchange.exchangeId === 'alpaca-paper' && exchange.brokerProvisioned === true) {
         const backendBase = String(environment.tradingBackendBaseUrl || '').replace(/\/$/, '');
         if (!backendBase) {
           throw new Error('Trading backend URL is not configured.');
