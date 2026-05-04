@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { ExchangeService, SUPPORTED_EXCHANGES, Exchange, ConnectedExchange } from '../services/exchange.service';
 import { TourService } from '../services/tour.service';
 
-const DEMO_PRESET_AMOUNTS = [1_000, 10_000, 100_000] as const;
+const DEMO_PRESET_AMOUNTS = [1_000, 10_000, 50_000] as const;
 
 interface PaperTopUpResponse {
   accountId: string;
@@ -117,6 +117,9 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
 
       // Auto-connect the provisioned Alpaca paper account as an exchange.
       // Use a stable label so the same document is overwritten on re-topup.
+      // brokerProvisioned=true tells the portfolio service to use the backend
+      // broker API (/v1/paper-portfolio) instead of forwarding the stored keys
+      // to /api/getPortfolio, which only works for user-supplied keys.
       const conn: ConnectedExchange = {
         exchangeId: 'alpaca-paper',
         label: 'Top-up paper money',
@@ -124,6 +127,7 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
         secret: result.alpacaApiSecret,
         connectedAt: new Date().toISOString(),
         status: 'active',
+        brokerProvisioned: true,
       };
 
       // Remove any stale alpaca-paper connection before adding the fresh one,
