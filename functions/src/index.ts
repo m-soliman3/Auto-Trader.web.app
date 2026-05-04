@@ -42,6 +42,11 @@ const corsHandler = cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
+// Broker secrets declared here so they are available to getPortfolio/getPortfolioHttp
+// which are defined early in this file, before the top-up/payment functions.
+const ALPACA_BROKER_KEY = defineSecret("ALPACA_BROKER_KEY");
+const ALPACA_BROKER_SECRET = defineSecret("ALPACA_BROKER_SECRET");
+
 async function fetchAlpacaPortfolio(
   apiKey: string,
   apiSecret: string,
@@ -223,6 +228,82 @@ async function fetchBinancePortfolio(
   };
 }
 
+/**
+ * Fetches portfolio for an Alpaca Broker-provisioned paper account via the
+ * Broker sandbox trading proxy using an OAuth2 Bearer token.
+ *
+ * Used when the stored API key is a CK-prefixed broker sub-account key
+ * (provisioned via top-up) rather than a regular PK-prefixed trading key
+ * (manually connected). CK keys cannot be used with paper-api.alpaca.markets.
+ */
+async function fetchAlpacaBrokerPaperPortfolio(
+  brokerKey: string,
+  brokerSecret: string,
+  accountId: string
+): Promise<PortfolioData> {
+  const BROKER_BASE = "https://broker-api.sandbox.alpaca.markets";
+  const AUTHX_BASE = "https://authx.sandbox.alpaca.markets";
+
+  const tokenRes = await fetch(`${AUTHX_BASE}/v1/oauth2/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "client_credentials",
+      client_id: brokerKey,
+      client_secret: brokerSecret,
+    }).toString(),
+  } as any);
+
+  if (!tokenRes.ok) {
+    const err = await tokenRes.text();
+    throw new functions.https.HttpsError("internal", `Alpaca auth token failed (${tokenRes.status}): ${err}`);
+  }
+
+  const { access_token } = (await tokenRes.json()) as { access_token: string };
+  const auth = `Bearer ${access_token}`;
+  const headers = { Authorization: auth, Accept: "application/json" };
+
+  console.log("🔗 Alpaca Broker sandbox proxy, accountId:", accountId);
+
+  const accountRes = await fetch(`${BROKER_BASE}/v1/trading/accounts/${accountId}/account`, { headers } as any);
+  if (!accountRes.ok) {
+    const text = await accountRes.text();
+    throw new functions.https.HttpsError("internal", `Alpaca Broker account error ${accountRes.status}: ${text}`);
+  }
+  const data: any = await accountRes.json();
+
+  const posRes = await fetch(`${BROKER_BASE}/v1/trading/accounts/${accountId}/positions`, { headers } as any);
+  if (!posRes.ok) {
+    const text = await posRes.text();
+    throw new functions.https.HttpsError("internal", `Alpaca Broker positions error ${posRes.status}: ${text}`);
+  }
+  const positions: any[] = await posRes.json();
+
+  const openPositions = Array.isArray(positions)
+    ? positions.map((p: any) => {
+        const side: "long" | "short" = String(p.side || "long").toLowerCase() === "short" ? "short" : "long";
+        return {
+          symbol: String(p.symbol || ""),
+          quantity: Number.parseFloat(p.qty || "0"),
+          marketValue: Number.parseFloat(p.market_value || "0"),
+          unrealizedPnl: p.unrealized_pl != null ? Number.parseFloat(p.unrealized_pl) : null,
+          pnlPercentage: p.unrealized_plpc != null ? Number.parseFloat(p.unrealized_plpc) * 100 : null,
+          entryPrice: p.avg_entry_price != null ? Number.parseFloat(p.avg_entry_price) : null,
+          currentPrice: p.current_price != null ? Number.parseFloat(p.current_price) : null,
+          side,
+        };
+      })
+    : [];
+
+  return {
+    portfolioValue: Number.parseFloat(data.equity || data.portfolio_value || "0"),
+    unrealizedPnl: data.unrealized_pl != null ? Number.parseFloat(data.unrealized_pl) : null,
+    pnlPercentage: data.unrealized_plpc != null ? Number.parseFloat(data.unrealized_plpc) * 100 : null,
+    updatedAt: new Date().toISOString(),
+    openPositions,
+  };
+}
+
 async function resolvePortfolio(
   exchangeId: string,
   apiKey: string,
@@ -253,6 +334,7 @@ async function resolvePortfolio(
 
 export const getPortfolio = functions
   .region("europe-west1")
+  .runWith({ secrets: [ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
   .https.onCall(async (data, context) => {
     if (!context.auth) {
       throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
@@ -264,6 +346,25 @@ export const getPortfolio = functions
 
       console.log("📊 Portfolio request for:", exchangeId);
       console.log("🔑 API Key provided:", !!apiKey);
+
+      // Top-up paper accounts use CK-prefixed Broker API keys which only work
+      // against the Broker sandbox trading proxy (not paper-api.alpaca.markets).
+      // Manually connected alpaca-paper accounts use regular PK-prefixed keys
+      // and continue to use paper-api.alpaca.markets.
+      if (exchangeId === "alpaca-paper" && (apiKey || "").startsWith("CK")) {
+        const userDoc = await admin.firestore().collection("users").doc(context.auth.uid).get();
+        const brokerAccountId = userDoc.data()?.alpacaBrokerAccountId;
+        if (brokerAccountId) {
+          console.log("📊 Routing to Alpaca Broker sandbox proxy, accountId:", brokerAccountId);
+          const portfolio = await fetchAlpacaBrokerPaperPortfolio(
+            ALPACA_BROKER_KEY.value(),
+            ALPACA_BROKER_SECRET.value(),
+            brokerAccountId
+          );
+          console.log("✅ Success! Portfolio value:", portfolio.portfolioValue);
+          return portfolio;
+        }
+      }
 
       const portfolio = await resolvePortfolio(exchangeId, apiKey, apiSecret);
 
@@ -280,6 +381,7 @@ export const getPortfolio = functions
 
 export const getPortfolioHttp = functions
   .region("europe-west1")
+  .runWith({ secrets: [ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
   .https.onRequest((req, res) => {
     corsHandler(req, res, async () => {
       if (req.method === "OPTIONS") {
@@ -306,6 +408,22 @@ export const getPortfolioHttp = functions
         const { exchangeId, apiKey, apiSecret } = req.body || {};
         console.log("📊 HTTP portfolio request for:", exchangeId);
         console.log("🔑 API Key provided:", !!apiKey);
+
+        // Same CK-key routing as the callable version.
+        if (exchangeId === "alpaca-paper" && (apiKey || "").startsWith("CK")) {
+          const userDoc = await admin.firestore().collection("users").doc(decoded.uid).get();
+          const brokerAccountId = userDoc.data()?.alpacaBrokerAccountId;
+          if (brokerAccountId) {
+            console.log("📊 HTTP routing to Alpaca Broker sandbox proxy, accountId:", brokerAccountId);
+            const portfolio = await fetchAlpacaBrokerPaperPortfolio(
+              ALPACA_BROKER_KEY.value(),
+              ALPACA_BROKER_SECRET.value(),
+              brokerAccountId
+            );
+            res.status(200).json(portfolio);
+            return;
+          }
+        }
 
         const portfolio = await resolvePortfolio(exchangeId, apiKey, apiSecret);
         res.status(200).json(portfolio);
@@ -407,8 +525,6 @@ const STRIPE_PREMIUM_PRICE_ID = defineSecret("STRIPE_PREMIUM_PRICE_ID");
 const PAYPAL_CLIENT_ID = defineSecret("PAYPAL_CLIENT_ID");
 const PAYPAL_CLIENT_SECRET = defineSecret("PAYPAL_CLIENT_SECRET");
 const PAYPAL_PLAN_ID = defineSecret("PAYPAL_PLAN_ID");
-const ALPACA_BROKER_KEY = defineSecret("ALPACA_BROKER_KEY");
-const ALPACA_BROKER_SECRET = defineSecret("ALPACA_BROKER_SECRET");
 
 let stripeClient: InstanceType<typeof Stripe> | null = null;
 
