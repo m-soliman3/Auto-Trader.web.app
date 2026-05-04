@@ -238,36 +238,40 @@ export class BillingCheckoutPage implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.stripe = await loadStripe(key);
-    if (!this.stripe) {
-      this.errorMessage.set('Unable to initialize secure payment form. Please refresh and try again.');
-      this.isInitializing.set(false);
-      return;
-    }
-
-    this.elements = this.stripe.elements({
-      appearance: {
-        theme: 'stripe',
-        labels: 'floating',
-      },
-    });
-
-    this.cardElement = this.elements.create('card', {
-      hidePostalCode: false,
-    });
-
-    this.cardElement.mount('#card-element');
-    this.cardElement.on('change', (event) => {
-      if (event.error?.message) {
-        this.errorMessage.set(event.error.message);
-      } else if (!this.isProcessing()) {
-        this.errorMessage.set('');
+    try {
+      this.stripe = await loadStripe(key);
+      if (!this.stripe) {
+        this.errorMessage.set('Unable to initialize secure payment form. Please refresh and try again.');
+        return;
       }
-    });
 
-    await this.initializeWalletCheckout();
+      this.elements = this.stripe.elements({
+        appearance: {
+          theme: 'stripe',
+          labels: 'floating',
+        },
+      });
 
-    this.isInitializing.set(false);
+      this.cardElement = this.elements.create('card', {
+        hidePostalCode: false,
+      });
+
+      this.cardElement.mount('#card-element');
+      this.cardElement.on('change', (event) => {
+        if (event.error?.message) {
+          this.errorMessage.set(event.error.message);
+        } else if (!this.isProcessing()) {
+          this.errorMessage.set('');
+        }
+      });
+
+      await this.initializeWalletCheckout();
+    } catch (err: any) {
+      console.error('Stripe initialization error:', err);
+      this.errorMessage.set('Failed to initialize payment form. Please refresh and try again.');
+    } finally {
+      this.isInitializing.set(false);
+    }
   }
 
   private async initializeWalletCheckout(): Promise<void> {
