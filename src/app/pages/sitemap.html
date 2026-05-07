@@ -1,0 +1,137 @@
+<div class="sm-hero">
+  <div class="sm-hero-bg"></div>
+  <div class="sm-container">
+    <a [routerLink]="localizedLink()" [attr.href]="localizedHref()" class="sm-breadcrumb">← Back to Home</a>
+    <h1 class="sm-title">Sitemap</h1>
+    <p class="sm-sub">A complete map of every page on auto-Trading — use it to explore the platform or jump to a specific section.</p>
+  </div>
+</div>
+
+<main class="sm-main">
+  <div class="sm-container">
+
+    <!-- ── MAIN PAGES ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">🏠</span> Main Pages
+      </h2>
+      <div class="sm-grid">
+        <a [routerLink]="localizedLink()" [attr.href]="localizedHref()" class="sm-card">
+          <div class="sm-card-icon">🏠</div>
+          <div class="sm-card-title">Home</div>
+          <div class="sm-card-desc">Platform overview, features, and get-started guide.</div>
+        </a>
+        <a [routerLink]="localizedLink('login')" [attr.href]="localizedHref('login')" class="sm-card">
+          <div class="sm-card-icon">🔑</div>
+          <div class="sm-card-title">Login</div>
+          <div class="sm-card-desc">Sign in to your auto-Trading account.</div>
+        </a>
+        <a [routerLink]="localizedLink('signup')" [attr.href]="localizedHref('signup')" class="sm-card">
+          <div class="sm-card-icon">✨</div>
+          <div class="sm-card-title">Sign Up</div>
+          <div class="sm-card-desc">Create a free account and start automating.</div>
+        </a>
+        <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')" class="sm-card">
+          <div class="sm-card-icon">✉️</div>
+          <div class="sm-card-title">Contact</div>
+          <div class="sm-card-desc">Get in touch with the auto-Trading team.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── FEATURES ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">⚡</span> Platform Features
+      </h2>
+      <div class="sm-grid">
+        <a [routerLink]="localizedLink('features', 'ai-signals')" [attr.href]="localizedHref('features', 'ai-signals')" class="sm-card">
+          <div class="sm-card-icon">⚡</div>
+          <div class="sm-card-title">AI-Powered Signals</div>
+          <div class="sm-card-desc">Machine-learning trade signals in real time.</div>
+        </a>
+        <a [routerLink]="localizedLink('features', 'multi-exchange')" [attr.href]="localizedHref('features', 'multi-exchange')" class="sm-card">
+          <div class="sm-card-icon">🔗</div>
+          <div class="sm-card-title">Multi-Exchange Support</div>
+          <div class="sm-card-desc">Connect 30+ exchanges through one platform.</div>
+        </a>
+        <a [routerLink]="localizedLink('features', 'risk-management')" [attr.href]="localizedHref('features', 'risk-management')" class="sm-card">
+          <div class="sm-card-icon">🛡️</div>
+          <div class="sm-card-title">Risk Management</div>
+          <div class="sm-card-desc">Stop-loss, position sizing, and drawdown controls.</div>
+        </a>
+        <a [routerLink]="localizedLink('features', 'backtesting')" [attr.href]="localizedHref('features', 'backtesting')" class="sm-card">
+          <div class="sm-card-icon">📊</div>
+          <div class="sm-card-title">Advanced Backtesting</div>
+          <div class="sm-card-desc">Validate strategies on years of historical data.</div>
+        </a>
+        <a [routerLink]="localizedLink('features', 'smart-alerts')" [attr.href]="localizedHref('features', 'smart-alerts')" class="sm-card">
+          <div class="sm-card-icon">🔔</div>
+          <div class="sm-card-title">Smart Alerts</div>
+          <div class="sm-card-desc">Push, email, and Telegram trade notifications.</div>
+        </a>
+        <a [routerLink]="localizedLink('features', 'no-code-builder')" [attr.href]="localizedHref('features', 'no-code-builder')" class="sm-card">
+          <div class="sm-card-icon">🌐</div>
+          <div class="sm-card-title">No-Code Builder</div>
+          <div class="sm-card-desc">Build strategies without writing a single line of code.</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── LEGAL ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">📄</span> Legal & Policies
+      </h2>
+      <div class="sm-grid sm-grid-compact">
+        <a [routerLink]="localizedLink('terms')" [attr.href]="localizedHref('terms')" class="sm-card sm-card-small">
+          <div class="sm-card-title">Terms of Service</div>
+        </a>
+        <a [routerLink]="localizedLink('privacy')" [attr.href]="localizedHref('privacy')" class="sm-card sm-card-small">
+          <div class="sm-card-title">Privacy Policy</div>
+        </a>
+        <a [routerLink]="localizedLink('disclaimer')" [attr.href]="localizedHref('disclaimer')" class="sm-card sm-card-small">
+          <div class="sm-card-title">Risk Disclaimer</div>
+        </a>
+        <a [routerLink]="localizedLink('collecting-data')" [attr.href]="localizedHref('collecting-data')" class="sm-card sm-card-small">
+          <div class="sm-card-title">Collecting Data</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── TRADING STRATEGIES ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">📈</span> Trading Strategies — Learn Hub
+      </h2>
+      <p class="sm-section-desc">Educational guides to 20 professional trading strategies. Fully automated with auto-Trading.</p>
+      <div class="sm-grid">
+        @for (page of strategies; track page.slug) {
+          <a [routerLink]="localizedLink('learn', page.slug)" [attr.href]="localizedHref('learn', page.slug)" class="sm-card sm-card-learn">
+            <div class="sm-card-icon">{{ page.icon }}</div>
+            <div class="sm-card-title">{{ page.title }}</div>
+            <div class="sm-card-desc">{{ page.tagline }}</div>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- ── TRADING SIGNALS ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">📡</span> Trading Signals & Indicators — Learn Hub
+      </h2>
+      <p class="sm-section-desc">In-depth guides to 20 technical indicators used to generate trading signals.</p>
+      <div class="sm-grid">
+        @for (page of signals; track page.slug) {
+          <a [routerLink]="localizedLink('learn', page.slug)" [attr.href]="localizedHref('learn', page.slug)" class="sm-card sm-card-learn">
+            <div class="sm-card-icon">{{ page.icon }}</div>
+            <div class="sm-card-title">{{ page.title }}</div>
+            <div class="sm-card-desc">{{ page.tagline }}</div>
+          </a>
+        }
+      </div>
+    </section>
+
+  </div>
+</main>

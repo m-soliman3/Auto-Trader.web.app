@@ -26,6 +26,7 @@ import { TranslateModule } from '@ngx-translate/core';
           <a routerLink="/disclaimer">{{ 'footer.disclaimer' | translate }}</a>
           <a routerLink="/collecting-data">{{ 'footer.collectingData' | translate }}</a>
           <a routerLink="/contact">{{ 'footer.contact' | translate }}</a>
+          <a routerLink="/sitemap">{{ 'footer.sitemap' | translate }}</a>
         </div>
       </div>
     </footer>

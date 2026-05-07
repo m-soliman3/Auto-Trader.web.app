@@ -1,0 +1,149 @@
+@if (page) {
+<!-- ── HERO ── -->
+<section class="ld-hero">
+  <div class="ld-hero-bg"></div>
+  <div class="ld-container">
+    <a [routerLink]="localizedLink()" [attr.href]="localizedHref()" class="ld-breadcrumb">← Back to Home</a>
+
+    <!-- language selector -->
+    <div class="ld-language-links" aria-label="Page language variants">
+      <span class="ld-language-label">{{ 'language.selectLanguage' | translate }}:</span>
+      @for (lang of languageService.languages; track lang.code) {
+        <a
+          [routerLink]="learnLanguageLink(lang.code)"
+          [attr.href]="learnLanguageHref(lang.code)"
+          [attr.hreflang]="lang.code"
+          [attr.lang]="lang.code"
+          class="ld-language-chip"
+          [class.active]="lang.code === languageService.currentLang()"
+        >{{ lang.label }}</a>
+      }
+    </div>
+
+    <div class="ld-hero-tag">{{ page.category === 'strategy' ? 'Trading Strategy' : 'Trading Signal / Indicator' }}</div>
+    <div class="ld-hero-icon">{{ page.icon }}</div>
+    <h1 class="ld-hero-title">{{ page.title }}</h1>
+    <p class="ld-hero-tagline">{{ page.tagline }}</p>
+    <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="ld-btn-accent">Start Automating Free →</a>
+    <p class="ld-hero-note">
+      Want to automate this strategy? <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="ld-inline-link">Try auto-Trading free</a> — no credit card required.
+    </p>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<section class="ld-section">
+  <div class="ld-container ld-two-col">
+    <div class="ld-overview">
+      <p class="ld-tag">Overview</p>
+      <h2>What is {{ page.title }}?</h2>
+      @for (para of overviewParagraphs; track $index) {
+        <p class="ld-body-text" [innerHTML]="para"></p>
+      }
+      <!-- internal cross-links -->
+      @if (relatedPages.length) {
+        <div class="ld-related-chips">
+          <span class="ld-related-label">Related:</span>
+          @for (rel of relatedPages; track rel.slug) {
+            <a [routerLink]="localizedLink('learn', rel.slug)" [attr.href]="localizedHref('learn', rel.slug)" class="ld-chip">{{ rel.title }}</a>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="ld-sidebar">
+      <!-- How It Works -->
+      <div class="ld-hiw-card">
+        <p class="ld-tag">How It Works in auto-Trading</p>
+        <h3>Automate It</h3>
+        <p class="ld-body-text" [innerHTML]="howItWorksHtml"></p>
+        <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="ld-btn-secondary">Try Free →</a>
+      </div>
+
+      <!-- External References -->
+      <div class="ld-ext-card">
+        <p class="ld-tag">External Resources</p>
+        <h3>Learn from Trusted Sources</h3>
+        @for (link of page.externalLinks; track link.url) {
+          <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="ld-ext-link">
+            <div class="ld-ext-link-header">
+              <span class="ld-ext-link-title">{{ link.label }}</span>
+              <span>↗</span>
+            </div>
+            <p class="ld-ext-link-desc">{{ link.description }}</p>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section class="ld-cta-section">
+  <div class="ld-container ld-cta-inner">
+    <div>
+      <h2 class="ld-cta-title">Ready to automate {{ page.title }}?</h2>
+      <p class="ld-cta-sub">Join thousands of traders who use auto-Trading to execute this strategy automatically, 24/7.</p>
+    </div>
+    <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="ld-btn-accent">Get Started Free →</a>
+  </div>
+</section>
+
+<!-- ── RELATED STRATEGIES ── -->
+@if (relatedPages.length) {
+<section class="ld-section ld-section-alt">
+  <div class="ld-container">
+    <p class="ld-tag">Explore More</p>
+    <h2>Related {{ page.category === 'strategy' ? 'Strategies' : 'Indicators' }}</h2>
+    <div class="ld-related-grid">
+      @for (rel of relatedPages; track rel.slug) {
+        <a [routerLink]="localizedLink('learn', rel.slug)" [attr.href]="localizedHref('learn', rel.slug)" class="ld-related-card">
+          <span class="ld-related-icon">{{ rel.icon }}</span>
+          <div>
+            <div class="ld-related-title">{{ rel.title }}</div>
+            <div class="ld-related-tagline">{{ rel.tagline }}</div>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+}
+
+<!-- ── BROWSE ALL STRATEGIES / SIGNALS ── -->
+<section class="ld-section">
+  <div class="ld-container">
+    <p class="ld-tag">All Strategies & Signals</p>
+    <h2>Continue Learning</h2>
+    <div class="ld-browse-grid">
+      <div>
+        <h3 class="ld-browse-heading">Trading Strategies</h3>
+        <ul class="ld-browse-list">
+          @for (s of allStrategies; track s.slug) {
+            <li>
+              <a [routerLink]="localizedLink('learn', s.slug)" [attr.href]="localizedHref('learn', s.slug)">
+                {{ s.icon }} {{ s.title }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+      <div>
+        <h3 class="ld-browse-heading">Trading Signals & Indicators</h3>
+        <ul class="ld-browse-list">
+          @for (s of allSignals; track s.slug) {
+            <li>
+              <a [routerLink]="localizedLink('learn', s.slug)" [attr.href]="localizedHref('learn', s.slug)">
+                {{ s.icon }} {{ s.title }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+    <div class="ld-sitemap-link">
+      <a [routerLink]="localizedLink('sitemap')" [attr.href]="localizedHref('sitemap')" class="ld-inline-link">View full sitemap →</a>
+    </div>
+  </div>
+</section>
+}
