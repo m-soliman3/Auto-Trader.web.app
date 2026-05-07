@@ -270,7 +270,8 @@
     "terms": "Nutzungsbedingungen",
     "disclaimer": "Haftungsausschluss",
     "collectingData": "Datenerfassung",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "sitemap": "Sitemap"
   },
   "language": {
     "selectLanguage": "Sprache auswählen",
@@ -1476,6 +1477,8 @@
     "settings": "Einstellungen — AutoTrader | Konto- & Plattformeinstellungen",
     "billingCheckout": "Sicherer Checkout — AutoTrader | Auf Premium upgraden",
     "billingManage": "Abrechnungsverwaltung — AutoTrader | Verlauf & Abonnementverwaltung",
-    "feature": "Funktion — AutoTrader"
+    "feature": "Funktion — AutoTrader",
+    "sitemap": "Sitemap — AutoTrader | Vollständiges Seitenverzeichnis",
+    "learn": "Trading Lernen — AutoTrader"
   }
 }

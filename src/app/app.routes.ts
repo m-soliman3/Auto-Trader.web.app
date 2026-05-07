@@ -18,6 +18,8 @@ import { FeatureDetailPage } from './pages/features/feature-detail';
 import { BillingCheckoutPage } from './pages/billing-checkout';
 import { BillingManagePage } from './pages/billing-manage';
 import { CollectingDataPage } from './pages/collecting-data';
+import { SitemapPage } from './pages/sitemap';
+import { LearnDetailPage } from './pages/learn/learn-detail';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
@@ -161,6 +163,16 @@ const coreRoutes: Routes = [
     path: 'features/:slug',
     component: FeatureDetailPage,
     title: 'pageTitle.feature',
+  },
+  {
+    path: 'sitemap',
+    component: SitemapPage,
+    title: 'pageTitle.sitemap',
+  },
+  {
+    path: 'learn/:slug',
+    component: LearnDetailPage,
+    title: 'pageTitle.learn',
   },
 ];
 
