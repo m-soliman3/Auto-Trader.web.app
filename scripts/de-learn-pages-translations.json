@@ -1,0 +1,314 @@
+{
+  "ema-indicator": {
+    "title": "Exponentieller Gleitender Durchschnitt (EMA)",
+    "tagline": "Ein gewichteter Durchschnitt, der schneller auf aktuelle Preisänderungen reagiert.",
+    "metaTitle": "Exponentieller Gleitender Durchschnitt (EMA) — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den EMA-Indikator kennen: Wie er sich vom SMA unterscheidet, wie er berechnet wird und wie er für Handelssignale eingesetzt wird.",
+    "overview": "Der Exponentielle Gleitende Durchschnitt (EMA) ist eine Art des gleitenden Durchschnitts, der den jüngsten Preisdaten ein höheres Gewicht beimisst und damit empfindlicher auf aktuelle Marktveränderungen reagiert als der Einfache Gleitende Durchschnitt (SMA). Diese Sensitivität macht den EMA besonders bei kurzfristig orientierten Händlern beliebt, die Signale benötigen, die schnell auf entstehenden Schwung reagieren.\n\nDer EMA wird mithilfe eines Multiplikators berechnet: Multiplikator = 2 ÷ (N + 1), wobei N die Anzahl der Perioden ist. Jeder neue EMA-Wert ergibt sich dann aus: EMA = (Aktueller Preis × Multiplikator) + (Vorheriger EMA × (1 − Multiplikator)). Diese rekursive Formel bewirkt, dass ältere Preise nach und nach weniger Gewicht erhalten, aber niemals vollständig auf null fallen.\n\nGängige EMA-Perioden: 9 und 21 EMA für kurzfristige Momentumsignale; 20 und 50 EMA zur mittelfristigen Trenderkennung; 50 und 200 EMA zur langfristigen Trendidentifikation. Der 200er-EMA wird von institutionellen Händlern als Trennlinie zwischen einem langfristigen Bullen- und Bärenmarkt weitgehend beobachtet.\n\nEMAs erfüllen mehrere Zwecke: als dynamische Unterstützungs- und Widerstandsniveaus, als Crossover-Signale, als Trendrichtungsfilter und als Bausteine komplexerer Indikatoren wie dem MACD.",
+    "howItWorks": "In Auto-Trading werden EMA-Werte mithilfe von Streaming-Tick-Daten berechnet, um auf jedem Zeitrahmen Genauigkeit sicherzustellen. Nutzer konfigurieren die EMA-Periode im Strategy Builder und wählen, ob sie als Trendfilter, Crossover-Auslöser oder dynamisches Unterstützungs-/Widerstandsniveau verwendet werden soll. Der Builder visualisiert den EMA-Overlay in der Chartvorschau, sodass Nutzer ihre Einstellungen vor dem Einsatz validieren können.",
+    "externalLinks": [
+      { "label": "Investopedia — EMA", "description": "Vollständige Erklärung der EMA-Formel, Berechnung und Handelsanwendungen." },
+      { "label": "TradingView — EMA-Indikator", "description": "EMA-Skripte und Community-Strategien auf TradingView." },
+      { "label": "BabyPips — Gleitende Durchschnitte", "description": "BabyPips' Einführung in EMAs, SMAs und ihre Handelsanwendungen." }
+    ]
+  },
+  "sma-indicator": {
+    "title": "Einfacher Gleitender Durchschnitt (SMA)",
+    "tagline": "Der grundlegende Trendindikator, den jeder Händler kennen sollte.",
+    "metaTitle": "Einfacher Gleitender Durchschnitt (SMA) — AutoTrader Learn",
+    "metaDescription": "Verstehen Sie den SMA: wie er berechnet wird, wie er zur Trenderkennung eingesetzt wird und warum er im modernen Handel noch immer relevant ist.",
+    "overview": "Der Einfache Gleitende Durchschnitt (SMA) ist das arithmetische Mittel einer bestimmten Anzahl von Preisperioden. Er ist die grundlegendste Form des gleitenden Durchschnitts und der Ausgangspunkt für das Verständnis aller anderen Varianten. Der 200-Tage-SMA beispielsweise ist eines der meistbeachteten technischen Niveaus an den gesamten Finanzmärkten.\n\nDie Berechnung ist unkompliziert: Die Schlusskurse über N Perioden werden addiert und durch N geteilt. Wenn eine neue Kerze schließt, fällt der älteste Preis heraus und der neueste wird hinzugefügt. Dies erzeugt eine glatte Linie, die kurzfristiges Rauschen herausfiltert und die zugrunde liegende Trendrichtung aufzeigt.\n\nDer SMA reagiert langsamer auf Preisänderungen als der EMA, was ihn weniger anfällig für Fehlsignale in unruhigen Märkten macht, aber auf schnell bewegenden Trends stärker nachläuft. Für die langfristige Trendanalyse ist die Glattheit des SMA ein Vorteil.\n\nWichtige Einsatzbereiche: der 50- und 200-SMA als wesentliche Unterstützungs-/Widerstandsniveaus; der 200-SMA als Trennlinie zwischen Bullen- und Bärenmarkt; SMA-Crossovers als Trendwechselsignale.",
+    "howItWorks": "Auto-Trading unterstützt die SMA-Berechnung auf Preis (Open, High, Low, Close), Volumen und jedem abgeleiteten Indikatorwert. Im Strategy Builder konfigurieren Nutzer die SMA-Periode und -Quelle und verbinden den Ausgang mit einem Crossover-Block, einem Schwellenwertvergleich oder einem Unterstützungs-/Widerstandsmonitor. Mehrere SMAs können auf demselben Chart gestapelt werden, um Multi-Timeframe-Trendrahmen zu erstellen.",
+    "externalLinks": [
+      { "label": "Investopedia — SMA", "description": "Definition, Formel und praktische Anwendungsfälle für den SMA." },
+      { "label": "TradingView — SMA-Skripte", "description": "SMA-basierte Strategien und Indikatoren auf TradingView." },
+      { "label": "BabyPips — SMA vs. EMA", "description": "Direkter Vergleich von SMA und EMA zur Entscheidungshilfe." }
+    ]
+  },
+  "rsi-indicator": {
+    "title": "Relativer Stärkeindex (RSI)",
+    "tagline": "Momentum messen und überkaufte/überverkaufte Bedingungen erkennen.",
+    "metaTitle": "RSI — Relativer Stärkeindex — AutoTrader Learn",
+    "metaDescription": "Meistern Sie den RSI-Indikator: Wie er funktioniert, seine überkauften/überverkauften Signale, Divergenzmuster und wie er in automatisierte Strategien integriert wird.",
+    "overview": "Der Relative Stärkeindex (RSI) ist ein Momentum-Oszillator, der von J. Welles Wilder Jr. entwickelt und 1978 in seinem Buch 'New Concepts in Technical Trading Systems' vorgestellt wurde. Er misst die Geschwindigkeit und das Ausmaß jüngster Preisänderungen, um überkaufte oder überverkaufte Bedingungen auf einer Skala von 0 bis 100 zu bewerten.\n\nDie Standardberechnung verwendet 14 Perioden: RSI = 100 − (100 ÷ (1 + RS)), wobei RS der Durchschnitt der Aufwärtsschlusskurse dividiert durch den Durchschnitt der Abwärtsschlusskurse über 14 Perioden ist. Ein Wert über 70 gilt traditionell als überkauft, unter 30 als überverkauft.\n\nRSI-Divergenz ist eines der mächtigsten Signale in der technischen Analyse. Bullische Divergenz tritt auf, wenn der Preis ein tieferes Tief bildet, der RSI aber ein höheres Tief – das zeigt nachlassende Bärenstärke an. Bärische Divergenz ist das Gegenteil. Diese Divergenzen sind auf höheren Zeitrahmen (4H, täglich) am zuverlässigsten.\n\nDer RSI kann auch in Trendmärkten eingesetzt werden, indem die Schwellen angepasst werden: In Aufwärtstrends gilt 40 als überverkauft und 80 als überkauft; in Abwärtstrends gilt 60 als überkauft.",
+    "howItWorks": "Auto-Trading berechnet den RSI in Echtzeit auf jedem Zeitrahmen. Der Strategy Builder unterstützt RSI-Schwellensignale (über/unter einem Niveau), RSI-Crossovers (Überschreiten der 50er-Mittellinie für Trendausrichtung) sowie Divergenzerkennung über einen konfigurierbaren Rückblickzeitraum.",
+    "externalLinks": [
+      { "label": "Investopedia — RSI", "description": "Vollständiger Leitfaden zum RSI: Formel, Interpretation und Handelssignale." },
+      { "label": "TradingView — RSI-Indikator", "description": "RSI-Varianten und Community-Strategien auf TradingView." },
+      { "label": "BabyPips — RSI", "description": "BabyPips' einsteigerfreundliches RSI-Tutorial." }
+    ]
+  },
+  "macd-indicator": {
+    "title": "MACD — Moving Average Convergence Divergence",
+    "tagline": "Ein Momentum-Indikator, der zugleich als Trendsignal fungiert.",
+    "metaTitle": "MACD-Indikator — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den MACD: Wie dieser Doppelzweck-Indikator sowohl Momentum als auch Trendrichtung misst und wie man seine Crossover- und Divergenzsignale handelt.",
+    "overview": "Der MACD (Moving Average Convergence Divergence) ist einer der meistgenutzten technischen Indikatoren und dient sowohl als Trendfolge- als auch als Momentum-Werkzeug. Er wurde von Gerald Appel Ende der 1970er Jahre entwickelt und besteht aus drei Komponenten: der MACD-Linie (Differenz zwischen dem 12-Perioden-EMA und dem 26-Perioden-EMA), der Signallinie (9-Perioden-EMA der MACD-Linie) und dem Histogramm (MACD-Linie minus Signallinie).\n\nDie primären Handelssignale sind: (1) Die MACD-Linie überschreitet/unterschreitet die Signallinie – ein bullisches/bärisches Signal; (2) Der MACD überschreitet/unterschreitet die Nulllinie – der Mittelliniencrossover zur Bestätigung der Trendrichtung; (3) Divergenz zwischen MACD und Preis – eines der zuverlässigsten Umkehrsignale.\n\nDas Histogramm ist besonders wertvoll zur Einschätzung des Momentums: Wachsende Balken zeigen zunehmendes Momentum in Trendrichtung an, während schrumpfende Balken darauf hindeuten, dass die Bewegung an Kraft verliert. Ein Histogramm, das seinen Höhepunkt erreicht und zu schrumpfen beginnt, ist eine Frühwarnung vor einem bevorstehenden Signalliniencrossover.\n\nDer MACD funktioniert am besten als Trendbestätigungswerkzeug auf Zeitrahmen von 1H und aufwärts.",
+    "howItWorks": "Auto-Trading berechnet die MACD-Linie, Signallinie und Histogrammwerte Balken für Balken. Im Strategy Builder können Nutzer folgendes auslösen: MACD/Signal-Crossovers, Mittelliniencrossovers, Histogrammrichtungsänderungen oder Divergenzereignisse.",
+    "externalLinks": [
+      { "label": "Investopedia — MACD", "description": "Vollständige Erklärung der MACD-Berechnung, Signale und Best Practices." },
+      { "label": "TradingView — MACD", "description": "MACD-Varianten und Divergenzdetektoren auf TradingView." },
+      { "label": "BabyPips — MACD", "description": "BabyPips' MACD-Tutorial mit anschaulichen visuellen Beispielen." }
+    ]
+  },
+  "stochastic-oscillator": {
+    "title": "Stochastischer Oszillator",
+    "tagline": "Schlusskurs im Vergleich zur Kursspanne zur Erkennung von Momentumverschiebungen.",
+    "metaTitle": "Stochastischer Oszillator — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den Stochastischen Oszillator: Wie dieser Momentum-Indikator überkaufte/überverkaufte Bedingungen erkennt und %K/%D-Crossover-Signale erzeugt.",
+    "overview": "Der Stochastische Oszillator, der von George Lane in den 1950er Jahren entwickelt wurde, misst den Schlusskurs relativ zur Hoch-Tief-Spanne über einen bestimmten Zeitraum. Die Prämisse lautet: In aufwärtstrendenden Märkten neigen Preise dazu, nahe am Hoch der Spanne zu schließen, in abwärtstrendenden Märkten nahe am Tief.\n\nDer Indikator besteht aus zwei Linien: %K (der Rohoszillator = (Aktueller Schlusskurs − Niedrigstes Tief) ÷ (Höchstes Hoch − Niedrigstes Tief) × 100) und %D (ein 3-Perioden-SMA von %K, der als Signallinie fungiert). Beide oszillieren zwischen 0 und 100. Werte über 80 zeigen überkaufte Bedingungen an; unter 20 überverkaufte.\n\nHandelssignale umfassen: %K überschreitet %D von unten in der überverkauften Zone (bullisch), %K unterschreitet %D von oben in der überkauften Zone (bärisch) sowie Divergenz zwischen Oszillator und Preis. Die Stoch-RSI-Variante wendet die stochastische Formel auf RSI-Werte statt auf den Preis an.",
+    "howItWorks": "Auto-Trading berechnet sowohl den schnellen Stochastik (%K, %D) als auch den langsamen Stochastik (mit zusätzlicher Glättung). Der Strategy Builder unterstützt %K/%D-Crossover-Signale, überkaufte/überverkaufte Schwellenwertalarme und Divergenzerkennung.",
+    "externalLinks": [
+      { "label": "Investopedia — Stochastischer Oszillator", "description": "Vollständiger Leitfaden zum Stochastischen Oszillator und seinen Handelssignalen." },
+      { "label": "TradingView — Stochastik", "description": "Stochastik-Indikatorskripte und Community-Strategien." },
+      { "label": "BabyPips — Stochastik", "description": "BabyPips' zugängliche Einführung in den Stochastik-Handel." }
+    ]
+  },
+  "bollinger-bands": {
+    "title": "Bollinger-Bänder",
+    "tagline": "Dynamische Volatilitätshüllen, die Preis­extreme sichtbar machen.",
+    "metaTitle": "Bollinger-Bänder-Indikator — AutoTrader Learn",
+    "metaDescription": "Meistern Sie Bollinger-Bänder: Wie diese volatilitätsadaptiven Hüllen Squeeze-Setups, Mean-Reversion-Trades und Ausbruchssignale identifizieren.",
+    "overview": "Bollinger-Bänder, erstellt von John Bollinger in den 1980er Jahren, bestehen aus drei Linien um einen 20-Perioden-SMA: einem oberen Band bei +2 Standardabweichungen und einem unteren Band bei −2 Standardabweichungen. Unter normalen Volatilitätsbedingungen fällt etwa 95 % der Preisaktivität innerhalb der Bänder.\n\nDie Breite der Bänder ist dynamisch – sie weiten sich in hochvolatilen Phasen aus und ziehen sich in ruhigen Phasen zusammen. Der Bollinger Squeeze tritt auf, wenn die Bänder auf ungewöhnlich enge Breiten zusammenschrumpfen, was auf eine Phase komprimierter Volatilität hinweist, die historisch einer bedeutenden Bewegung vorausgeht.\n\nMean-Reversion-Strategien nutzen die Bänder als Extremzonen: Wenn der Preis das obere Band berührt oder schließt, könnte er nach oben überdehnt sein und wahrscheinlich zum mittleren Band (SMA) zurückkehren. Das %B-Indikator misst, wo sich der Preis relativ zu den Bändern auf einer Skala von 0–1 befindet.",
+    "howItWorks": "Auto-Trading berechnet den 20-SMA und die oberen/unteren Bollinger-Bänder in Echtzeit. Strategieblöcke umfassen: Bandberührungsalarme, %B-Schwellensignale, Bollinger-Squeeze-Erkennung und Bandausbruchssignale.",
+    "externalLinks": [
+      { "label": "Investopedia — Bollinger-Bänder", "description": "Maßgeblicher Leitfaden zu Bollinger-Bändern nach John Bollingers eigener Dokumentation." },
+      { "label": "TradingView — Bollinger-Bänder", "description": "Bollinger-Band-Skripte einschließlich Squeeze-Detektoren." },
+      { "label": "BabyPips — Bollinger-Bänder", "description": "BabyPips' praktischer Bollinger-Bänder-Handelsführer." }
+    ]
+  },
+  "vwap-indicator": {
+    "title": "VWAP — Volumengewichteter Durchschnittspreis",
+    "tagline": "Der Referenzpreis, den Institutionen zur Bewertung der Handelsqualität verwenden.",
+    "metaTitle": "VWAP-Indikator — AutoTrader Learn",
+    "metaDescription": "Lernen Sie VWAP: Wie Institutionen den volumengewichteten Durchschnittspreis als Handelsreferenz nutzen und wie Privatanleger ihn für Intraday-Signale verwenden.",
+    "overview": "VWAP (Volume Weighted Average Price) ist der nach Volumen gewichtete Durchschnittspreis eines Vermögenswerts, berechnet ab der Eröffnung der Handelssitzung. Er repräsentiert den wahren Durchschnittspreis, der von allen Marktteilnehmern während des Tages bezahlt wurde, und ist die primäre Referenzgröße institutioneller Händler.\n\nVWAP = Kumulatives (Preis × Volumen) ÷ Kumulatives Volumen\n\nDa VWAP zu Beginn jeder Sitzung zurückgesetzt wird, ist er primär ein Intraday-Werkzeug. Preis über VWAP gilt als bullisch; Preis unter VWAP als bärisch. Institutionelle Algorithmen zielen oft auf VWAP ab, wenn sie große Orders ausführen, was bedeutet, dass VWAP als starker Magnet für Intraday-Preise wirkt.\n\nAnchored VWAP (AVWAP) erweitert das Konzept, indem Händlern ermöglicht wird, die Berechnung an jedem bedeutenden Ereignis zu verankern: eine Gewinnmitteilung, ein Swing-Hoch, der Beginn eines Aufwärtstrends.",
+    "howItWorks": "Auto-Trading berechnet Sitzungs-VWAP und AVWAP in Echtzeit mit nutzerdefinierbaren Ankerpunkten. Strategieblöcke umfassen VWAP-Crossover-Signale, Abweichungsbandalarme und Sitzungseröffnung relativ zum VWAP.",
+    "externalLinks": [
+      { "label": "Investopedia — VWAP", "description": "Umfassender Leitfaden zur VWAP-Berechnung und institutionellen Nutzung." },
+      { "label": "TradingView — VWAP", "description": "VWAP- und Anchored-VWAP-Skripte auf TradingView." },
+      { "label": "BabyPips — VWAP-Handel", "description": "BabyPips' Einführung in VWAP für Privatanleger." }
+    ]
+  },
+  "atr-indicator": {
+    "title": "Average True Range (ATR)",
+    "tagline": "Volatilität messen und Stopps intelligent dimensionieren.",
+    "metaTitle": "ATR — Average True Range — AutoTrader Learn",
+    "metaDescription": "Lernen Sie ATR: den unverzichtbaren Volatilitätsindikator zum Setzen dynamischer Stop-Losses, zur Messung der Marktaktivität und zur Positionsgrößenbestimmung.",
+    "overview": "Die Average True Range (ATR), von J. Welles Wilder Jr. in seinem Buch von 1978 entwickelt, misst die Marktvolatilität durch Berechnung des Durchschnitts der True Range über einen bestimmten Zeitraum. Die True Range ist das Größte aus: (Aktuelles Hoch − Aktuelles Tief), (Aktuelles Hoch − Vorheriger Schlusskurs) und (Aktuelles Tief − Vorheriger Schlusskurs), wodurch auch Gaps erfasst werden.\n\nDer ATR zeigt keine Richtung an – er misst nur das Ausmaß der Preisbewegung. Ein hoher ATR deutet auf einen volatilen Markt hin; ein niedriger ATR auf einen ruhigen. Dies macht ihn für die Stop-Loss-Kalibrierung unverzichtbar: Ein 2×-ATR-Stop wird weit genug entfernt gesetzt, um nicht durch normales Marktrauschen ausgelöst zu werden.\n\nDer Chandelier Exit ist eine beliebte Trailing-Stop-Technik basierend auf ATR: Der Stop zieht bei 3× ATR unterhalb des höchsten Hochs während des Trades mit. ATR wird auch zur Positionsgrößenbestimmung eingesetzt: Positionsgröße = Risikobetrag ÷ (ATR × Multiplikator).",
+    "howItWorks": "Auto-Trading verwendet ATR zur Berechnung dynamischer Stop-Loss-Abstände für jeden Trade. Im Risikomanagement-Modul setzen Nutzer ihren Stop als ATR-Multiplikator (Standard 2× ATR). Die Positionsgröße wird automatisch anhand des Dollar-Risikos pro Trade und des ATR-Stop-Abstands berechnet.",
+    "externalLinks": [
+      { "label": "Investopedia — ATR", "description": "Wilders ATR erklärt: Formel, Interpretation und Stop-Loss-Anwendungen." },
+      { "label": "TradingView — ATR-Skripte", "description": "ATR-basierte Stop- und Trailing-Stop-Skripte auf TradingView." },
+      { "label": "BabyPips — ATR", "description": "BabyPips' Leitfaden zur ATR-Nutzung für Stop-Platzierung." }
+    ]
+  },
+  "adx-indicator": {
+    "title": "ADX — Durchschnittlicher Richtungsindex",
+    "tagline": "Trendstärke quantifizieren, um minderwertige Setups herauszufiltern.",
+    "metaTitle": "ADX — Durchschnittlicher Richtungsindex — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den ADX: Wie man die Trendstärke mit dem Durchschnittlichen Richtungsindex misst und seitwärts bedingte Fehlsignale herausfiltert.",
+    "overview": "Der Durchschnittliche Richtungsindex (ADX), ebenfalls von J. Welles Wilder Jr. entwickelt, misst, wie stark ein Trend ist – unabhängig von der Richtung. Er wird stets neben zwei Richtungsbewegungslinien dargestellt: +DI (positiver Richtungsindikator) und −DI (negativer Richtungsindikator).\n\nADX-Werte reichen von 0 bis 100. Ein Wert unter 20 deutet auf einen schwachen oder fehlenden Trend hin. Werte zwischen 20–25 markieren den Beginn eines Trends. Über 25 zeigt einen starken Trend; über 40 einen sehr starken Trend an.\n\nDie wichtigste Erkenntnis: Trendfolgestrategien performen schlecht bei niedrigem ADX. Das Hinzufügen eines ADX > 25 Filters reduziert Fehlsignale drastisch. Umgekehrt funktionieren Mean-Reversion-Strategien am besten, wenn der ADX unter 20 ist.\n\nDer +DI/−DI-Crossover liefert Richtungssignale: Wenn +DI den −DI überschreitet, stärkt sich der Markt aufwärts.",
+    "howItWorks": "Auto-Trading berechnet ADX, +DI und −DI auf jedem Zeitrahmen. Der Strategy Builder ermöglicht es, ADX als Regime-Filter zu verwenden: Trendstrategien werden nur aktiviert, wenn ADX > 25, und Mean-Reversion-Strategien nur, wenn ADX < 20.",
+    "externalLinks": [
+      { "label": "Investopedia — ADX", "description": "Vollständiger Leitfaden zu ADX, +DI und −DI mit praktischen Handelsbeispielen." },
+      { "label": "TradingView — ADX-Skripte", "description": "ADX-basierte Trendfilter-Skripte und Strategien." },
+      { "label": "BabyPips — ADX", "description": "BabyPips' Erklärung des ADX und seiner Rolle bei der Bestätigung von Trendsignalen." }
+    ]
+  },
+  "donchian-channel": {
+    "title": "Donchian-Kanäle",
+    "tagline": "Der Ausbruchsindikator hinter dem berühmten Turtle-Trading-System.",
+    "metaTitle": "Donchian-Kanäle — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Donchian-Kanäle: den Ausbruchsindikator, den die legendären Turtle Trader nutzten, um systematische Ein- und Ausstiegssignale zu erzeugen.",
+    "overview": "Donchian-Kanäle, entwickelt vom Rohstoffhändler Richard Donchian, zeigen das höchste Hoch und das niedrigste Tief über einen nutzerdefinierten Zeitraum als obere und untere Bänder mit einer Mittellinie beim Durchschnitt. Ein Preis über dem oberen Band signalisiert ein neues N-Perioden-Hoch (bullischer Ausbruch); ein Preis unter dem unteren Band ein neues N-Perioden-Tief (bärischer Ausbruch).\n\nDer Indikator wurde als Kern des Turtle-Trading-Systems bekannt, in dem Richard Dennis 20-tägige und 55-tägige Donchian-Kanal-Ausbrüche als Einstiegssignale verwendete. Die Turtle Trader – eine Gruppe unerfahrener Händler, die Dennis 1983 ausbildete – wurden durch striktes Befolgen dieser Ausbruchsregeln hochprofitabel.\n\nEin Long-Einstieg wird ausgelöst, wenn der Preis über dem 20-Tage-Oberband schließt; ein Short, wenn er unter dem Unterband schließt. Ausstiege nutzen den 10-Tage-Kanal. Die Positionsgröße basiert auf ATR gemäß dem Turtle-Regelwerk.",
+    "howItWorks": "Auto-Trading implementiert Donchian-Kanäle mit konfigurierbaren Periodeneinstellungen für Einstiege (Standard 20) und Ausstiege (Standard 10) gemäß der Turtle-Trading-Spezifikation. Der Ausbruchssignal integriert sich mit dem ATR-basierten Positionsgrößenmodul.",
+    "externalLinks": [
+      { "label": "Investopedia — Donchian-Kanäle", "description": "Leitfaden zu Donchian-Kanälen und ihrer Verwendung im Ausbruchshandel." },
+      { "label": "TradingView — Donchian", "description": "Donchian-Kanal-Skripte einschließlich Turtle-Trading-Implementierungen." },
+      { "label": "BabyPips — Donchian-Kanäle", "description": "BabyPips' Donchian-Kanal-Tutorial." }
+    ]
+  },
+  "volume-analysis": {
+    "title": "Volumenanalyse",
+    "tagline": "Preisbewegungen bestätigen, indem man dem Geld folgt.",
+    "metaTitle": "Volumenanalyse im Handel — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Volumenanalyse: Wie man das Handelsvolumen nutzt, um Preisbewegungen zu bestätigen, Distribution zu erkennen und institutionelle Aktivität zu identifizieren.",
+    "overview": "Volumen ist die Anzahl der in einem bestimmten Zeitraum gehandelten Einheiten und eines der direktesten Maße für Marktbeteiligung und Überzeugung. Das Prinzip 'Volumen geht dem Preis voraus' spiegelt die Beobachtung wider, dass bedeutende institutionelle Aktivität große Transaktionsvolumina erfordert.\n\nWichtige Konzepte: Volumenbestätigung (ein Ausbruch begleitet von überdurchschnittlichem Volumen ist wahrscheinlicher echt), Volumendivergenz (Preis erreicht neue Hochs bei sinkendem Volumen deutet auf nachlassendes Kaufinteresse hin) und Volumen-Klimaxe (extrem hohe Volumenbalken nach einem anhaltenden Trend markieren oft Erschöpfungs- und Umkehrpunkte).\n\nOn-Balance Volume (OBV) akkumuliert Volumen an Aufwärtstagen und subtrahiert es an Abwärtstagen. Das Volume Profile kartiert Volumen nach Preisniveau statt nach Zeit und enthüllt den Point of Control (POC) – das Preisniveau mit dem höchsten Handelsvolumen.",
+    "howItWorks": "Auto-Trading überwacht das Volumen relativ zum 20-Perioden-Durchschnitt auf jedem Balken. Überdurchschnittliches Volumen bei einem Ausbruch bestätigt das Signal; unterdurchschnittliches Volumen löst einen Filter aus. Der OBV-Indikator und der Volumendivergenz-Detektor sind als Signalblöcke im Strategy Builder verfügbar.",
+    "externalLinks": [
+      { "label": "Investopedia — Volumenanalyse", "description": "Überblick über das Volumen im Handel und seine analytischen Anwendungen." },
+      { "label": "TradingView — Volumen-Skripte", "description": "Community-Volumenanalyse-Indikatoren auf TradingView." },
+      { "label": "BabyPips — Handelsvolumen", "description": "BabyPips' Volumenanalyse-Leitfaden für Forex- und Krypto-Händler." }
+    ]
+  },
+  "cci-indicator": {
+    "title": "Commodity Channel Index (CCI)",
+    "tagline": "Zyklische Wendepunkte und überkaufte/überverkaufte Extreme erkennen.",
+    "metaTitle": "CCI — Commodity Channel Index — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den CCI-Indikator: Wie er die Preisabweichung vom Durchschnitt misst und überkaufte/überverkaufte sowie Divergenzsignale erzeugt.",
+    "overview": "Der Commodity Channel Index (CCI) wurde von Donald Lambert entwickelt und 1980 veröffentlicht. Trotz seines Namens wird er in allen Anlageklassen weitgehend eingesetzt. Der Indikator misst, wie weit der aktuelle typische Preis von seinem jüngsten Durchschnitt abgewichen ist, skaliert durch die mittlere absolute Abweichung.\n\nCCI = (Typischer Preis − N-Perioden-SMA des typischen Preises) ÷ (0,015 × Mittlere Absolute Abweichung)\n\nDie Konstante 0,015 wurde so gewählt, dass unter normalen Bedingungen etwa 70–80 % der CCI-Werte im ±100-Bereich liegen. Werte über +100 zeigen an, dass der Preis deutlich über seinem jüngsten Durchschnitt liegt; unter −100 darunter.\n\nHandelsanwendungen umfassen: konträre Einstiege, wenn CCI ±100 in seitwärts tendierenden Märkten überschreitet, Trendfolge-Einstiege nach CCI-Ausbrüchen, und Divergenz zwischen CCI und Preis als Umkehrsignal.",
+    "howItWorks": "Auto-Trading berechnet CCI mit dem typischen Preis ((Hoch + Tief + Schluss) ÷ 3) über den konfigurierten Zeitraum (Standard 20). Der Strategy Builder unterstützt CCI-Niveau-Crossovers, Zonen-Einstiege und Divergenzerkennung.",
+    "externalLinks": [
+      { "label": "Investopedia — CCI", "description": "Vollständiger Leitfaden zum CCI: Formel, Signale und Interpretation." },
+      { "label": "TradingView — CCI-Skripte", "description": "CCI-basierte Strategien und Skripte auf TradingView." },
+      { "label": "BabyPips — CCI", "description": "BabyPips' CCI-Tutorial mit praktischen Forex-Beispielen." }
+    ]
+  },
+  "williams-percent-r": {
+    "title": "Williams %R",
+    "tagline": "Ein schneller, empfindlicher Überkauft/Überverkauft-Indikator von Larry Williams.",
+    "metaTitle": "Williams %R Indikator — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Williams %R: Wie dieser Momentum-Oszillator überkaufte und überverkaufte Niveaus identifiziert und kurzfristige Umkehrsignale erzeugt.",
+    "overview": "Williams %R ist ein Momentum-Indikator, der von Larry Williams entwickelt wurde und dem Stochastischen Oszillator ähnelt, aber invertiert ist. Er misst den Schlusskurs relativ zum höchsten Hoch über einen Rückblickzeitraum, skaliert von −100 bis 0. Werte nahe 0 zeigen überkaufte Bedingungen an; Werte nahe −100 überverkaufte.\n\nFormel: %R = (Höchstes Hoch − Schluss) ÷ (Höchstes Hoch − Niedrigstes Tief) × −100\n\nWerte über −20 zeigen überkaufte Bedingungen an. Werte unter −80 zeigen überverkaufte Bedingungen an. Kaufsignale entstehen, wenn %R wieder über −80 von unten kreuzt; Verkaufssignale, wenn er wieder unter −20 von oben kreuzt.\n\nWilliams %R ist dafür bekannt, Umkehrungen 1–2 Perioden früher als andere Oszillatoren vorherzusagen. Der Indikator erzeugt auch starke Divergenzsignale.",
+    "howItWorks": "Auto-Trading berechnet Williams %R über einen konfigurierbaren Zeitraum (Standard 14). Der Strategy Builder unterstützt Niveau-Crossover-Signale, Divergenzerkennung und Kombination mit Trendfiltern.",
+    "externalLinks": [
+      { "label": "Investopedia — Williams %R", "description": "Vollständiger Leitfaden zu Williams %R und seinen Handelsanwendungen." },
+      { "label": "TradingView — Williams %R", "description": "Williams %R-Skripte und Strategien auf TradingView." },
+      { "label": "BabyPips — Williams %R", "description": "BabyPips' Tutorial zu Williams %R für den Forex-Handel." }
+    ]
+  },
+  "parabolic-sar": {
+    "title": "Parabolischer SAR",
+    "tagline": "Ein automatisches Trailing-Stop-System, das dem Trend folgt.",
+    "metaTitle": "Parabolischer SAR-Indikator — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den Parabolischen SAR: Wie dieser trendfolgende Indikator automatische Trailing-Stop- und Umkehrsignale für Trendmärkte erzeugt.",
+    "overview": "Der Parabolische SAR (Stop and Reverse), entwickelt von J. Welles Wilder Jr., ist ein trendfolgendes Werkzeug, das Punkte ober- oder unterhalb des Preises platziert, um Richtung und potenzielle Umkehrpunkte anzuzeigen. Wenn Punkte unterhalb des Preises sind, ist der Trend aufwärts; wenn oberhalb, abwärts.\n\nDer SAR-Wert wird mit einem Beschleunigungsfaktor (AF) berechnet, der bei 0,02 beginnt und jedes Mal um 0,02 ansteigt, wenn ein neuer Extrempreis verzeichnet wird, bis maximal 0,20. Mit steigendem AF nähert sich der SAR-Punkt dem Preis, was bedeutet, dass ein Umkehrsignal früher ausgelöst wird, wenn der Trend reift.\n\nEin Umkehrsignal entsteht, wenn der Preis den SAR-Punkt berührt oder überquert. Der SAR springt sofort auf die andere Seite des Preises und der AF wird auf 0,02 zurückgesetzt. Der Parabolische SAR ist am effektivsten in stark trendenden Märkten.",
+    "howItWorks": "Auto-Trading implementiert den Parabolischen SAR mit konfigurierbarem Start-AF, Schrittgröße und maximalem AF. Der Strategy Builder unterstützt SAR-Flip-Signale als Trade-Ein-/Ausstiegsauslöser. Der SAR-Wert wird direkt als dynamischer Trailing-Stop verwendet.",
+    "externalLinks": [
+      { "label": "Investopedia — Parabolischer SAR", "description": "Vollständige Erklärung der Parabolischen SAR-Berechnung und Handelsverwendung." },
+      { "label": "TradingView — Parabolischer SAR", "description": "Parabolische SAR-Skripte und Trendfolgestrategien auf TradingView." },
+      { "label": "BabyPips — Parabolischer SAR", "description": "BabyPips' Leitfaden zur Verwendung des Parabolischen SAR im Trendhandel." }
+    ]
+  },
+  "obv-indicator": {
+    "title": "On-Balance Volume (OBV)",
+    "tagline": "Kumulativen Kauf- und Verkaufsdruck durch den Volumenstrom verfolgen.",
+    "metaTitle": "OBV — On-Balance Volume — AutoTrader Learn",
+    "metaDescription": "Lernen Sie On-Balance Volume (OBV): Wie dieser Volumenfluss-Indikator Trends bestätigt und Divergenzen erkennt, die Preisumkehrungen signalisieren.",
+    "overview": "On-Balance Volume (OBV) wurde von Joseph Granville entwickelt und 1963 vorgestellt. Das Konzept ist elegant einfach: An Tagen, an denen der Preis höher schließt, wird das Tagesvolumen zu einer laufenden Summe addiert; an Tagen, an denen der Preis niedriger schließt, wird es subtrahiert. Das Ergebnis ist eine kumulative Volumenlinie, die parallel – und oft vor – dem Preis tendiert.\n\nDie Kernprämisse ist, dass OBV die Akkumulation (Kauf) und Distribution (Verkauf) des institutionellen Smart Money erfasst. Große Investoren akkumulieren Positionen still über einen längeren Zeitraum, was sich als konstant positiver OBV zeigt, ohne den Preis wesentlich zu bewegen.\n\nEin steigender OBV zusammen mit steigendem Preis bestätigt den Aufwärtstrend. Eine Divergenz – OBV fällt während der Preis steigt – ist eine bärische Warnung, dass die Rally nicht durch Volumen unterstützt wird.",
+    "howItWorks": "Auto-Trading berechnet OBV als laufende kumulative Summe, die bei jedem Balkenschluss aktualisiert wird. Der Strategy Builder bietet OBV-Crossover-Signale, OBV-Divergenzerkennung und OBV-Trendanalyse.",
+    "externalLinks": [
+      { "label": "Investopedia — OBV", "description": "Vollständiger Leitfaden zu Granvilles On-Balance Volume-Indikator." },
+      { "label": "TradingView — OBV-Skripte", "description": "OBV-Indikatoren und Strategien auf TradingView." },
+      { "label": "BabyPips — OBV", "description": "BabyPips' Einführung in On-Balance Volume." }
+    ]
+  },
+  "pivot-points": {
+    "title": "Pivot-Punkte",
+    "tagline": "Wichtige Unterstützungs- und Widerstandsniveaus aus der vorherigen Sitzung berechnen.",
+    "metaTitle": "Pivot-Punkte — Unterstützungs- und Widerstandsniveaus — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Pivot-Punkte: Wie Händler täglich, wöchentlich und monatlich berechnete Pivot-Niveaus nutzen, um Unterstützung, Widerstand und hochwahrscheinliche Umkehrungen zu identifizieren.",
+    "overview": "Pivot-Punkte sind eines der ältesten und am weitesten verbreiteten technischen Analysewerkzeuge. Der zentrale Pivot (P) ist der Durchschnitt des Hochs, Tiefs und Schlusskurses der vorherigen Sitzung. Von diesem Niveau werden die Unterstützungsniveaus (S1, S2, S3) und Widerstandsniveaus (R1, R2, R3) mathematisch abgeleitet.\n\nDa so viele Teilnehmer die gleichen Niveaus beobachten, werden diese Niveaus oft zu selbsterfüllenden Prophezeiungen. Preise tendieren dazu, bei Pivot-Niveaus zu reagieren – nicht aufgrund von fundamentalem Wert, sondern aufgrund der Konzentration von Orders.\n\nStandard-Pivots werden täglich berechnet, aber wöchentliche und monatliche Pivots werden von Swing- und Positionshändlern verwendet. Camarilla-Pivots und Woodie's Pivots sind beliebte Varianten.",
+    "howItWorks": "Auto-Trading berechnet alle Pivot-Varianten (Standard, Camarilla, Woodie's, Fibonacci) über alle Zeitrahmen automatisch. Sie können Strategien aufbauen, die Kauforders nahe S1/S2 mit Ziel bei P oder R1 auslösen.",
+    "externalLinks": [
+      { "label": "Investopedia — Pivot-Punkte", "description": "Umfassender Leitfaden zur Pivot-Punkt-Berechnung und zum Handel." },
+      { "label": "TradingView — Pivot-Punkte", "description": "Pivot-Punkt-Skripte und Strategien auf TradingView." },
+      { "label": "BabyPips — Pivot-Punkte", "description": "BabyPips' Einsteigerleitfaden zum Pivot-Punkt-Handel." }
+    ]
+  },
+  "keltner-channels": {
+    "title": "Keltner-Kanäle",
+    "tagline": "Volatilitätsbasierte Hüllen auf ATR-Basis zur Identifikation von Trendstärke und Ausbrüchen.",
+    "metaTitle": "Keltner-Kanäle — ATR-basierte Volatilitätsbänder — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Keltner-Kanäle: Wie dieser ATR-basierte Indikator Trendrichtung, Volatilitäts-Squeezes und hochmomentane Ausbruchsgelegenheiten identifiziert.",
+    "overview": "Keltner-Kanäle wurden ursprünglich von Chester Keltner in den 1960er Jahren entwickelt und später von Linda Bradford Raschke modernisiert. Der Indikator platziert ein oberes und unteres Band bei einem Vielfachen der Average True Range ober- und unterhalb eines Exponentiellen Gleitenden Durchschnitts.\n\nIm Gegensatz zu Bollinger-Bändern (die Standardabweichung verwenden) nutzen Keltner-Kanäle ATR, was die Bänder glatter und weniger anfällig für plötzliche Erweiterungen bei kurzen Preisspitzen macht. Wenn der Preis kontinuierlich über dem oberen Band schließt, signalisiert es einen starken Aufwärtstrend.\n\nEine der beliebtesten Strategien ist der Keltner-Bollinger Squeeze: Wenn Bollinger-Bänder innerhalb des Keltner-Kanals zusammenschrumpfen, identifiziert dies eine extreme Volatilitätskomprimierung, die oft einer explosiven Richtungsbewegung vorausgeht.",
+    "howItWorks": "Auto-Trading implementiert Keltner-Kanäle mit konfigurierbarer EMA-Periode und ATR-Multiplikator. Eingebaute Squeeze-Erkennung warnt, wenn Bollinger-Bänder innerhalb des Keltner-Kanals komprimieren.",
+    "externalLinks": [
+      { "label": "Investopedia — Keltner-Kanal", "description": "Vollständige Erklärung der Keltner-Kanal-Konstruktion und -Verwendung." },
+      { "label": "TradingView — Keltner-Skripte", "description": "Keltner-Kanal-Indikatoren auf TradingView." },
+      { "label": "StockCharts — Keltner-Kanäle", "description": "StockCharts' ausführlicher Artikel über Keltner-Kanäle." }
+    ]
+  },
+  "supertrend-indicator": {
+    "title": "Supertrend-Indikator",
+    "tagline": "Ein dynamischer Trailing-Stop und Trendrichtungsindikator auf ATR-Basis.",
+    "metaTitle": "Supertrend-Indikator — Dynamischer Trend-Trailing-Stop — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den Supertrend-Indikator: Wie dieses ATR-basierte Werkzeug die Trendrichtung signalisiert, Trailing-Stops bereitstellt und klare Kauf-/Verkaufssignale erzeugt.",
+    "overview": "Der Supertrend-Indikator, entwickelt von Olivier Seban, ist ein trendfolgendes Werkzeug, das klare Kauf- und Verkaufssignale produziert. Es zeichnet eine einzelne Linie auf dem Preis: grün unterhalb des Preises in Aufwärtstrends, rot oberhalb des Preises in Abwärtstrends. Die Linie fungiert auch als dynamischer Trailing-Stop.\n\nDas obere Band wird als (Hoch + Tief) / 2 + Multiplikator × ATR berechnet, das untere Band als (Hoch + Tief) / 2 − Multiplikator × ATR. Wenn der Preis über das obere Band kreuzt, wechselt der Supertrend zu einem Kaufsignal; wenn der Preis unter das untere Band fällt, zu einem Verkaufssignal.\n\nDie Standardeinstellungen (ATR-Periode 10, Multiplikator 3) funktionieren gut über mehrere Zeitrahmen und Anlageklassen. Der Multiplikator steuert die Empfindlichkeit: niedrigere Werte erzeugen mehr Signale mit mehr Rauschen; höhere Werte produzieren weniger, zuverlässigere Signale.",
+    "howItWorks": "Auto-Tradings Supertrend-Implementierung unterstützt alle Parameterkonfigurationen und Zeitrahmen. Strategieregeln können Einstiege bei Supertrend-Farbwechsel mit Volumenbestätigung auslösen und Ausstiege, wenn der Supertrend umkippt.",
+    "externalLinks": [
+      { "label": "Investopedia — Supertrend", "description": "Investopedia-Übersicht über den Supertrend-Indikator." },
+      { "label": "TradingView — Supertrend", "description": "Beliebte Supertrend-Skripte auf TradingView." },
+      { "label": "StockCharts — ATR", "description": "ATR-Erklärung — die Grundlage des Supertrend." }
+    ]
+  },
+  "mfi-indicator": {
+    "title": "Money Flow Index (MFI)",
+    "tagline": "Ein volumengewichteter RSI, der Kauf- und Verkaufsdruck misst.",
+    "metaTitle": "Money Flow Index (MFI) — Volumengewichteter RSI — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den Money Flow Index (MFI): einen volumengewichteten Momentum-Oszillator, der überkaufte und überverkaufte Bedingungen mit höherer Genauigkeit als rein preisbasierte Indikatoren identifiziert.",
+    "overview": "Der Money Flow Index (MFI) wurde von Gene Quong und Avrum Soudack entwickelt und wird manchmal als volumengewichteter RSI bezeichnet, weil seine Konstruktion der RSI-Logik entspricht, aber Volumen in die Berechnung jeder Periode einbezieht.\n\nDer Indikator beginnt mit dem typischen Preis (Hoch + Tief + Schluss) / 3. Wenn der typische Preis gegenüber der Vorperiode steigt, ist der Raw Money Flow der Periode (Typischer Preis × Volumen) positiv; wenn er fällt, negativ. Das Verhältnis von positivem zu negativem Geldfluss wird durch die RSI-Formel transformiert, um einen 0–100-Oszillator zu erzeugen.\n\nWie der RSI gelten Werte über 80 als überkauft und unter 20 als überverkauft – aber da das Volumen einbezogen ist, werden diese Signale als zuverlässiger als RSI allein angesehen. MFI-Divergenz ist besonders wertvoll: Wenn der Preis neue Hochs macht, aber MFI nicht bestätigt, deutet dies auf Distribution hin.",
+    "howItWorks": "Auto-Trading verwendet MFI als eigenständigen Signalgenerator und als Bestätigungsfilter. Bauen Sie Strategien auf, die überverkaufte MFI-Lesungen (< 20) in aufwärtstrendenden Vermögenswerten kaufen oder überkaufte Lesungen (> 80) in Abwärtstrends verkaufen.",
+    "externalLinks": [
+      { "label": "Investopedia — MFI", "description": "Vollständiger Leitfaden zum Money Flow Index und seiner Berechnung." },
+      { "label": "TradingView — MFI-Skripte", "description": "MFI-Indikatoren und Strategien auf TradingView." },
+      { "label": "StockCharts — MFI", "description": "StockCharts' detaillierter MFI-Artikel mit Beispielen." }
+    ]
+  },
+  "fibonacci-indicator": {
+    "title": "Fibonacci-Retracement und Extensions",
+    "tagline": "Den goldenen Schnitt nutzen, um hochwahrscheinliche Unterstützung, Widerstand und Gewinnziele zu lokalisieren.",
+    "metaTitle": "Fibonacci-Retracement und Extensions — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Fibonacci-Retracement- und Extension-Niveaus: Wie der goldene Schnitt Unterstützung, Widerstand und Gewinnziele identifiziert, die von institutionellen Händlern weltweit verwendet werden.",
+    "overview": "Die Fibonacci-Analyse im Handel leitet sich von der mathematischen Folge ab, die Leonardo Fibonacci im 13. Jahrhundert entdeckte. Die Schlüsselquotienten – 23,6%, 38,2%, 50%, 61,8% (der goldene Schnitt) und 78,6% – repräsentieren proportionale Beziehungen, die sich in natürlichen und finanziellen Systemen wiederholt zeigen.\n\nIm Handel werden Fibonacci-Retracement-Niveaus zwischen zwei signifikanten Swing-Punkten gezeichnet. Die resultierenden Niveaus identifizieren potenzielle Unterstützung bei Rücksetzern in einem Aufwärtstrend oder Widerstand bei Rallyes in einem Abwärtstrend. Die 38,2%–61,8%-Zone gilt als die goldene Zone.\n\nFibonacci-Extension-Niveaus projizieren Kursziele über die ursprüngliche Bewegung hinaus. Die 161,8%-, 261,8%- und 423,6%-Extensions bieten Gewinnziele für Ausbruchs-Trades. Smart Money Concepts verwendet die 0,79- und 0,886-Niveaus als optimale Trade-Einstiegs-Zonen.",
+    "howItWorks": "Auto-Tradings Fibonacci-Werkzeug identifiziert automatisch wichtige Swing-Punkte und zeichnet Retracement- und Extension-Niveaus. Strategiesignale können ausgelöst werden, wenn der Preis ein Fibonacci-Niveau mit einem Umkehrkerzenmuster berührt.",
+    "externalLinks": [
+      { "label": "Investopedia — Fibonacci-Retracement", "description": "Vollständiger Leitfaden zu Fibonacci-Retracement-Niveaus im Handel." },
+      { "label": "TradingView — Fibonacci-Werkzeuge", "description": "TradingView-Leitfaden zur Verwendung von Fibonacci-Zeichenwerkzeugen." },
+      { "label": "BabyPips — Fibonacci", "description": "BabyPips' umfassender Fibonacci-Handelsleitfaden." }
+    ]
+  },
+  "supply-demand-zones": {
+    "title": "Angebots- und Nachfragezonen",
+    "tagline": "Institutionelle Auftragsungleichgewichte handeln, wo die Preisumkehrwahrscheinlichkeit am höchsten ist.",
+    "metaTitle": "Angebots- und Nachfragezonen-Strategie — AutoTrader Learn",
+    "metaDescription": "Lernen Sie den Handel mit Angebots- und Nachfragezonen: Wie man institutionelle Auftragsungleichgewichte im Chart identifiziert und hochwahrscheinliche Umkehr-Trades ausführt.",
+    "overview": "Der Handel mit Angebots- und Nachfragezonen ist in grundlegender Wirtschaftslehre verwurzelt: Preise bewegen sich, wenn ein Ungleichgewicht zwischen Käufern und Verkäufern besteht. Eine Nachfragezone ist ein Preisbereich, in dem Kauforders die Verkaufsorders so intensiv überwältigten, dass der Preis schnell wegging – diese unfüllten Kauforders verbleiben theoretisch im Markt und erzeugen einen hochwahrscheinlichen Bounce-Bereich, wenn der Preis zurückkehrt.\n\nAngebotsZonen sind das Gegenteil: Bereiche, in denen massiver Verkaufsdruck Käufer überwältigte. Die visuelle Signatur einer starken Zone ist eine Basing-Kerze (oder Kerzen), gefolgt von einer explosiven Richtungsbewegung.\n\nDer Vorteil der Strategie liegt in ihrem asymmetrischen Risiko-Ertrags-Verhältnis: Einstiege werden am nahen Rand der Zone mit Stops knapp hinter dem fernen Rand platziert, mit einem Ziel von mindestens 2:1 oder 3:1 Ertrag. Eine Zone gilt als verbraucht nach mehreren Retests.",
+    "howItWorks": "Auto-Trading identifiziert Angebots- und Nachfragezonen automatisch, indem es nach Basing-Mustern sucht, gefolgt von Impulsbewegungen, die einen konfigurierbaren Schwellenwert überschreiten. Automatisierte Strategien führen Limit-Orders an den proximalen Zonenniveaus mit Stop-Losses am distalen Rand aus.",
+    "externalLinks": [
+      { "label": "Investopedia — Angebot und Nachfrage", "description": "Grundlegende Angebots- und Nachfrageökonomie angewendet auf den Handel." },
+      { "label": "TradingView — Angebots-/Nachfragezonen-Indikatoren", "description": "Angebots- und Nachfragezonen-Indikatoren auf TradingView." },
+      { "label": "BabyPips — Unterstützung und Widerstand", "description": "BabyPips-Leitfaden zu Unterstützung und Widerstand (eng verwandtes Konzept)." }
+    ]
+  },
+  "wyckoff-method": {
+    "title": "Wyckoff-Methode",
+    "tagline": "Institutionelle Akkumulations- und Distributions-Zyklen mithilfe von Preis-Volumen-Analyse entschlüsseln.",
+    "metaTitle": "Wyckoff-Methode — Institutionelle Akkumulation und Distribution — AutoTrader Learn",
+    "metaDescription": "Lernen Sie die Wyckoff-Methode: Wie man institutionelle Akkumulations-, Distributions- und Re-Akkumulationsphasen identifiziert, um mit dem Smart Money zu handeln.",
+    "overview": "Richard Wyckoff war ein Pionier der technischen Analyse im frühen 20. Jahrhundert. Als Börsenmakler und Verleger in den 1910er–1930er Jahren hatte er unvergleichliche Einblicke, wie große Operatoren – Institutionen und Market Maker – große Positionen akkumulierten und verteilten. Diese Beobachtungen destillierte er zu einem kohärenten Rahmenwerk, das heute noch von anspruchsvollen Händlern verwendet wird.\n\nDie Wyckoff-Methode identifiziert vier Marktverhaltensphasen: Akkumulation (große Operatoren kaufen still, während Privatanleger verkaufen), Aufwärtstrend (der resultierende Preisanstieg), Distribution (große Operatoren verkaufen nahe dem Hoch) und Abwärtstrend. Jede Phase enthält identifizierbare Teilereignisse wie Preliminary Support, Selling Climax, Automatic Rally und Spring.\n\nDer Spring – ein falscher Ausbruch nach unten unter die Unterstützung, der schwache Hände herausschüttelt – ist eines der handelbarsten Wyckoff-Ereignisse. Wyckoffs drei Gesetze – Angebot und Nachfrage, Ursache und Wirkung sowie Aufwand versus Ergebnis – bieten einen logischen Rahmen.",
+    "howItWorks": "Auto-Trading integriert die Wyckoff-Analyse durch Kombination von Preisstrukturerkennung mit Volumenanalyse. Die Plattform kann potenzielle Springs, Tests und Signs of Strength automatisch identifizieren.",
+    "externalLinks": [
+      { "label": "Investopedia — Wyckoff-Methode", "description": "Investopedia-Erklärung der Wyckoff-Handelsmethode." },
+      { "label": "StockCharts — Wyckoff", "description": "StockCharts' umfassende Wyckoff-Methoden-Schule." },
+      { "label": "TradingView — Wyckoff-Skripte", "description": "Wyckoff-Analysewerkzeuge und Skripte auf TradingView." }
+    ]
+  },
+  "elliott-wave": {
+    "title": "Elliott-Wellen-Theorie",
+    "tagline": "Wiederkehrende Wellenmuster erkennen, die die Massenpsychologie und Marktzyklen widerspiegeln.",
+    "metaTitle": "Elliott-Wellen-Theorie — Marktzyklus-Handel — AutoTrader Learn",
+    "metaDescription": "Lernen Sie die Elliott-Wellen-Theorie: Wie man Fünf-Wellen-Impuls- und Drei-Wellen-Korrektiv-Muster identifiziert, die Marktzyklen und hochwahrscheinliche Handels-Setups enthüllen.",
+    "overview": "Die Elliott-Wellen-Theorie wurde in den 1930er Jahren von Ralph Nelson Elliott entwickelt, der bemerkte, dass sich Finanzmärkte in repetitiven Mustern bewegen, die die kollektive Psychologie der Marktteilnehmer widerspiegeln. Das Kernprinzip ist, dass sich der Preis in einem Fünf-Wellen-Impulsmuster in Richtung des Haupttrends bewegt (Wellen 1-2-3-4-5), gefolgt von einem Drei-Wellen-Korrektivmuster entgegen dem Trend (Wellen A-B-C).\n\nInnerhalb dieser Grundstruktur sind Wellen 1, 3 und 5 Motive-Wellen in Trendrichtung, während Wellen 2 und 4 Korrektur-Wellen sind. Welle 3 ist typischerweise die längste und stärkste und niemals die kürzeste der Wellen 1, 3 und 5.\n\nElliott Wellen sind fraktal: Jede Welle besteht aus kleineren Wellen desselben Musters. Fibonacci-Quotienten bestimmen die Beziehungen zwischen Wellen – Welle 3 erstreckt sich häufig auf 1,618× die Länge von Welle 1.",
+    "howItWorks": "Auto-Trading unterstützt die Elliott-Wellen-Analyse durch automatisches Beschriften potenzieller Wellenzählungen und Hervorheben von Fibonacci-Confluenz-Zonen. Die Strategieautomatisierung kann bei bestätigten Welle-2-Abschlüssen für den Welle-3-Einstieg auslösen.",
+    "externalLinks": [
+      { "label": "Investopedia — Elliott-Wellen", "description": "Investopedias umfassender Leitfaden zur Elliott-Wellen-Theorie." },
+      { "label": "TradingView — Elliott-Wellen", "description": "Elliott-Wellen-Zählwerkzeuge auf TradingView." },
+      { "label": "EWI — Elliott Wave International", "description": "Bildungsressourcen von Elliott Wave International." }
+    ]
+  },
+  "arbitrage-strategy": {
+    "title": "Arbitrage-Strategie",
+    "tagline": "Preisunterschiede zwischen Börsen für risikofreien Gewinn ausnutzen.",
+    "metaTitle": "Arbitrage-Handelsstrategie — AutoTrader Learn",
+    "metaDescription": "Lernen Sie Arbitrage-Handel: Wie man aus Preisunterschieden über Börsen oder Vermögenswertpaare mit minimalem Richtungsrisiko profitiert.",
+    "overview": "Arbitrage ist die Praxis, denselben Vermögenswert gleichzeitig an verschiedenen Märkten zu kaufen und zu verkaufen, um von einer Preisdiskrepanz zu profitieren. Theoretisch ist sie risikolos – wenn Bitcoin an Börse A bei 50.000 USD und an Börse B bei 50.100 USD notiert, sichert ein Kauf bei A und Verkauf bei B einen Gewinn von 100 USD pro Coin.\n\nIn der Praxis bedeuten Ausführungskosten (Handelsgebühren, Auszahlungsgebühren und Finanzierungskosten) und Latenz, dass Gelegenheiten flüchtig und Margen dünn sind. Dies macht die Automatisierung unverzichtbar: Ein Bot kann Dutzende von Börsenpaaren gleichzeitig überwachen und in Millisekunden ausführen.\n\nIn Krypto-Märkten gibt es mehrere Arten von Arbitrage: Cross-Exchange-Arbitrage nutzt Preisunterschiede desselben Paares über Venues; Dreieck-Arbitrage nutzt Ineffizienzen in Wechselkursen zwischen drei Währungspaaren; Funding-Rate-Arbitrage nutzt die periodischen Finanzierungszahlungen auf Perpetual Futures.",
+    "howItWorks": "Auto-Trading überwacht Preisfeeds über alle verbundenen Börsen gleichzeitig. Wenn die Spanne zwischen demselben Paar auf zwei Börsen einen nutzerdefinierten Schwellenwert (netto der Gebühren) überschreitet, platziert das System gleichzeitig eine Kauforder an der günstigeren und eine Verkauforder an der teureren Börse.",
+    "externalLinks": [
+      { "label": "Investopedia — Arbitrage", "description": "Definition und Erklärung von Arbitrage in Finanzmärkten." },
+      { "label": "CoinGecko — Funding Rates", "description": "Live-Funding-Rate-Daten über wichtige Krypto-Derivate-Börsen." },
+      { "label": "Binance Academy — Krypto-Arbitrage", "description": "Binances Leitfaden zur Arbitrage in Kryptowährungsmärkten." }
+    ]
+  }
+}

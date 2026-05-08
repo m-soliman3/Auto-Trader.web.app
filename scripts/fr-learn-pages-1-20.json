@@ -1,0 +1,262 @@
+{
+  "moving-average-crossover": {
+    "title": "Stratégie de croisement de moyennes mobiles",
+    "tagline": "L'une des techniques de suivi de tendance les plus ancienne et les plus utilisées au monde.",
+    "metaTitle": "Stratégie de croisement de moyennes mobiles — Apprendre avec AutoTrader",
+    "metaDescription": "Découvrez la stratégie de croisement de moyennes mobiles : comment elle génère des signaux d'achat et de vente, les meilleurs paramètres selon les horizons temporels et son application au trading algorithmique.",
+    "overview": "Le croisement de moyennes mobiles est l'une des stratégies de suivi de tendance les plus simples et les plus répandues. L'idée repose sur deux moyennes mobiles : une rapide (court terme) et une lente (long terme). Lorsque la moyenne rapide croise la lente vers le haut, c'est un signal d'achat. Lorsqu'elle la croise vers le bas, c'est un signal de vente.\n\nParmi les configurations les plus connues : 9/21 pour le court terme, 50/200 pour les positions longues. Le croisement de la MM50 au-dessus de la MM200 est appelé « croix d'or » (Golden Cross) et signale un marché haussier. L'inverse s'appelle « croix de la mort » (Death Cross).\n\nMalgré sa simplicité, cette stratégie reste efficace car les moyennes mobiles constituent des niveaux de support et de résistance dynamiques suivis par des millions de traders simultanément — des prophéties auto-réalisatrices par nature.\n\nLa stratégie performe mieux dans les marchés directionnels et génère de nombreux faux signaux dans les phases de consolidation. C'est pourquoi les traders expérimentés ajoutent des filtres comme l'ADX ou la confirmation par le volume pour améliorer la qualité des signaux.",
+    "howItWorks": "Sur la plateforme Auto-Trading, le système calcule les moyennes mobiles en temps réel sur n'importe quel horizon temporel. Les utilisateurs peuvent choisir le type (simple, exponentiel ou pondéré), les périodes et des conditions de confirmation supplémentaires (volume, ADX). Les signaux sont émis dès que le croisement est confirmé sur la bougie en cours.",
+    "externalLinks": [
+      { "label": "Investopedia — Croisement de moyennes mobiles", "description": "Explication détaillée de la stratégie et de ses applications pratiques." },
+      { "label": "TradingView — Moyennes mobiles", "description": "Bibliothèque de scripts et de stratégies de moyennes mobiles sur TradingView." },
+      { "label": "BabyPips — Moyennes mobiles", "description": "Guide simplifié de BabyPips pour comprendre et trader les moyennes mobiles." }
+    ]
+  },
+  "fair-value-gap": {
+    "title": "Stratégie des écarts de valeur équitable (FVG)",
+    "tagline": "Tradez les déséquilibres laissés par les mouvements institutionnels rapides.",
+    "metaTitle": "Stratégie FVG — Écart de valeur équitable — Apprendre avec AutoTrader",
+    "metaDescription": "Découvrez les écarts de valeur équitable (FVG) : comment ces lacunes de prix se forment, pourquoi les institutions y reviennent et comment identifier des entrées à haute probabilité.",
+    "overview": "Un écart de valeur équitable (Fair Value Gap — FVG) est une zone de prix qui n'a pas été suffisamment négociée lors d'un mouvement rapide et impulsif. Il se forme lorsque le plus haut de la première bougie dépasse le plus bas de la troisième bougie, laissant une zone sans négociation. Les institutions qui n'ont pas exécuté l'intégralité de leurs ordres lors du mouvement initial reviennent souvent combler ces lacunes.\n\nLes FVG sont un pilier fondamental des concepts de Smart Money (SMC). Quand le prix revient vers la lacune, cela offre une opportunité d'entrée à faible risque. Les FVG qui se trouvent dans la direction d'une tendance haussière présentent une probabilité de rebond plus élevée, et vice versa.\n\nIl existe deux types : le FVG haussier (Bullish FVG), qui se forme dans les impulsions à la hausse et sert de zone d'achat, et le FVG baissier (Bearish FVG), qui se forme dans les impulsions à la baisse et sert de zone de vente. Plus le cadre temporel est élevé (1H, Daily), plus le FVG est fiable.",
+    "howItWorks": "La plateforme Auto-Trading détecte automatiquement les FVG sur tous les horizons temporels et en trace les limites sur le graphique. Des alertes sont envoyées quand le prix approche d'un FVG, et des ordres d'entrée peuvent être déclenchés automatiquement à la borne supérieure ou inférieure du FVG avec un stop-loss placé derrière l'extrémité opposée.",
+    "externalLinks": [
+      { "label": "Investopedia — FVG", "description": "Définition des FVG et méthodes de trading associées." },
+      { "label": "TradingView — Indicateurs FVG", "description": "Outils de détection automatique des FVG sur TradingView." },
+      { "label": "BabyPips — SMC et FVG", "description": "Explication des concepts SMC et FVG pour débutants." }
+    ]
+  },
+  "smart-money-concepts": {
+    "title": "Concepts Smart Money (SMC)",
+    "tagline": "Alignez vos trades sur le flux d'ordres des grandes institutions.",
+    "metaTitle": "Concepts Smart Money (SMC) — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez les SMC : structure de marché, balayages de liquidité, blocs d'ordres et FVG — apprenez à trader avec les institutions, pas contre elles.",
+    "overview": "Les concepts Smart Money (SMC) sont un cadre d'analyse qui postule que les grandes institutions — banques, fonds spéculatifs, teneurs de marché — manipulent systématiquement le prix pour leurs besoins d'accumulation et de distribution avant tout grand mouvement. L'objectif du trader SMC est de reconnaître ces empreintes et d'entrer dans la même direction que les institutions.\n\nLes piliers fondamentaux de ce cadre incluent : la structure de marché (sommets et creux indiquant la direction), les blocs d'ordres (Order Blocks), les écarts de valeur équitable (FVG), les balayages de liquidité (Liquidity Sweeps) et les blocs briseurs (Breaker Blocks). Ces éléments se combinent pour dresser un tableau complet des intentions du marché.\n\nLe SMC diffère de l'analyse technique classique sur un point essentiel : au lieu d'attendre la confirmation de la tendance, le trader tente de lire le scénario préparé par les grands acteurs avant qu'il ne se déroule, offrant des ratios risque/récompense excellents en entrant en début de vague.",
+    "howItWorks": "La plateforme Auto-Trading intègre les SMC dans le constructeur de stratégies : les utilisateurs peuvent créer des règles combinant structure de marché, blocs d'ordres, FVG et balayages de liquidité. Le scanner met en évidence les actifs présentant des patterns d'accumulation ou de distribution institutionnelle.",
+    "externalLinks": [
+      { "label": "Investopedia — Smart Money", "description": "Introduction au concept de Smart Money et à la théorie de manipulation institutionnelle." },
+      { "label": "TradingView — Outils SMC", "description": "Indicateurs SMC de la communauté TradingView." },
+      { "label": "BabyPips — SMC vs. analyse classique", "description": "Comparaison entre les concepts SMC et l'analyse technique traditionnelle." }
+    ]
+  },
+  "order-blocks": {
+    "title": "Stratégie des blocs d'ordres",
+    "tagline": "Identifiez les bougies où les grandes institutions ont accumulé leurs positions.",
+    "metaTitle": "Stratégie des blocs d'ordres — Apprendre avec AutoTrader",
+    "metaDescription": "Apprenez les blocs d'ordres : comment identifier les zones où les institutions ont exécuté leurs gros ordres et les utiliser comme points d'entrée à haute probabilité.",
+    "overview": "Un bloc d'ordres (Order Block) est la dernière bougie (ou groupe de bougies) dans la direction opposée avant un mouvement de prix fort et impulsif. Cette bougie représente la zone où les grandes institutions ont positionné leurs ordres avant de pousser le prix fortement. Lorsque le prix revient ultérieurement dans cette zone, les ordres institutionnels résiduels forment un solide niveau de support ou de résistance.\n\nLe bloc d'ordres haussier (Bullish OB) est la dernière bougie baissière avant une impulsion haussière forte. Le bloc d'ordres baissier (Bearish OB) est la dernière bougie haussière avant une impulsion baissière forte. L'importance du bloc augmente avec la force et la rapidité de l'impulsion résultante.\n\nPour accroître la précision, les traders identifient d'abord les blocs sur le cadre temporel supérieur, puis cherchent une confirmation d'entrée sur un cadre plus petit. Un bloc est encore plus puissant s'il coïncide avec un niveau de Fibonacci important ou un FVG.",
+    "howItWorks": "La plateforme Auto-Trading trace automatiquement les blocs d'ordres sur n'importe quel horizon temporel et les classe selon la force de l'impulsion résultante. Des alertes instantanées sont envoyées quand le prix approche d'un bloc, et des ordres limités d'achat ou de vente peuvent être placés automatiquement aux bornes du bloc avec un stop-loss derrière son milieu ou son extrémité.",
+    "externalLinks": [
+      { "label": "Investopedia — Blocs d'ordres", "description": "Explication des blocs d'ordres dans le contexte de l'analyse institutionnelle." },
+      { "label": "TradingView — Indicateurs de blocs d'ordres", "description": "Indicateurs de détection automatique des blocs d'ordres sur TradingView." },
+      { "label": "BabyPips — Blocs d'ordres", "description": "Guide simplifié pour comprendre et trader les blocs d'ordres." }
+    ]
+  },
+  "liquidity-sweeps": {
+    "title": "Stratégie des balayages de liquidité",
+    "tagline": "Tradez avec les chasses aux stops qui précèdent les grands mouvements institutionnels.",
+    "metaTitle": "Stratégie des balayages de liquidité — Apprendre avec AutoTrader",
+    "metaDescription": "Apprenez les balayages de liquidité : comment les grandes institutions déclenchent les stop-loss et récoltent la liquidité avant les grands mouvements, et comment en tirer profit.",
+    "overview": "Un balayage de liquidité est un événement où le prix se déplace intentionnellement au-dessus ou en dessous d'un niveau de liquidité évident — comme un sommet ou un creux précédent — pour déclencher les stop-loss des traders positionnés dans le sens opposé, puis s'inverse rapidement.\n\nLa liquidité s'accumule derrière les niveaux évidents parce que les traders placent leurs stops derrière les sommets et creux. Les institutions ont besoin de contreparties (acheteurs pour leur vendre, ou vendeurs pour leur acheter) ; elles poussent donc le prix vers ces niveaux pour déclencher les ordres, exécuter leurs positions massives, puis inversent la tendance.\n\nLa signature caractéristique d'un balayage de liquidité : le prix casse un niveau évident, puis repasse rapidement derrière ce niveau dans la même bougie ou la suivante. Ce signal est à haute probabilité lorsqu'il coïncide avec un bloc d'ordres ou un FVG sur un cadre temporel supérieur.",
+    "howItWorks": "La plateforme Auto-Trading identifie automatiquement les niveaux de liquidité (sommets et creux évidents, lignes équidistantes) et surveille les balayages dès qu'ils se produisent. Lorsqu'un balayage suivi d'une clôture de bougie inverse est détecté, une alerte est envoyée et une entrée en sens inverse du balayage peut être exécutée automatiquement.",
+    "externalLinks": [
+      { "label": "Investopedia — Balayages de liquidité", "description": "Explication du concept de balayage de liquidité sur les marchés financiers." },
+      { "label": "TradingView — Indicateurs de liquidité", "description": "Outils de suivi de la liquidité et des balayages sur TradingView." },
+      { "label": "BabyPips — Pièges de prix et liquidité", "description": "Guide BabyPips sur les balayages et les pièges de prix." }
+    ]
+  },
+  "breaker-blocks": {
+    "title": "Stratégie des blocs briseurs",
+    "tagline": "Tradez les blocs d'ordres défaillants qui se sont inversés de support en résistance.",
+    "metaTitle": "Stratégie des blocs briseurs — Apprendre avec AutoTrader",
+    "metaDescription": "Apprenez les blocs briseurs : comment les blocs d'ordres défaillants deviennent de puissantes zones inversées et comment les utiliser pour entrer en début de nouvelle tendance.",
+    "overview": "Un bloc briseur (Breaker Block) est un bloc d'ordres qui a échoué à maintenir son rôle de support ou de résistance et s'est inversé pour devenir l'opposé. Lorsqu'une impulsion baissière casse un bloc d'ordres haussier, ce bloc se transforme en zone de résistance. L'inverse est vrai lorsqu'une impulsion haussière casse un bloc d'ordres baissier.\n\nLes blocs briseurs sont parmi les zones de trading les plus puissantes car ils portent une double empreinte : des ordres institutionnels originaux non exécutés intégralement, et des ordres de traders coincés cherchant à sortir lors du retour du prix. Cette accumulation double d'ordres rend les réactions de prix à ces zones particulièrement vives.\n\nLes traders valident un bloc briseur en cherchant : une cassure nette d'un niveau de structure de marché, un retour du prix dans la zone du bloc d'origine, et un signal de rejet (comme un doji ou une bougie d'engouement) au niveau du bloc.",
+    "howItWorks": "La plateforme Auto-Trading surveille les blocs d'ordres qui ont été cassés et les met à jour automatiquement comme zones briseurs. Une alerte est envoyée quand le prix revient sur un bloc briseur, et l'entrée peut être conditionnée à l'apparition d'un pattern de bougie de confirmation.",
+    "externalLinks": [
+      { "label": "Investopedia — Blocs briseurs", "description": "Explication des blocs briseurs dans le cadre des concepts SMC." },
+      { "label": "TradingView — Indicateurs de blocs briseurs", "description": "Indicateurs de blocs briseurs sur TradingView." },
+      { "label": "BabyPips — Blocs briseurs vs. blocs d'ordres", "description": "Comparaison entre blocs d'ordres et blocs briseurs pour les différencier." }
+    ]
+  },
+  "trend-following": {
+    "title": "Stratégie de suivi de tendance",
+    "tagline": "Surfez sur le momentum — laissez vos trades gagnants courir.",
+    "metaTitle": "Stratégie de suivi de tendance — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le suivi de tendance : comment identifier une tendance solide, entrer en milieu de tendance et gérer vos trades pour des gains importants tout en limitant les pertes.",
+    "overview": "Le suivi de tendance est l'une des approches de trading quantitatif les plus anciennes et les plus éprouvées. L'idée fondamentale est simple : les actifs qui ont monté ont tendance à continuer de monter, et ceux qui ont baissé ont tendance à continuer de baisser. Le trader cherche donc à rejoindre la tendance et à y rester jusqu'à l'apparition de signaux d'inversion.\n\nDes grandes sociétés de trading quantitatif comme Man AHL ou Winton réalisent d'excellentes performances en appliquant cette approche sur des dizaines de marchés simultanément. Les clés du succès : les stop-loss mobiles pour protéger les gains, des positions réduites dans les marchés sans tendance, et la patience de ne pas intervenir dans les trades gagnants.\n\nOutils d'identification de tendance : moyennes mobiles, ADX (force de tendance), canaux de Donchian, et cassures de résistances. Le stop-loss mobile basé sur l'ATR est l'élément central pour protéger les gains sans sortir prématurément.",
+    "howItWorks": "La plateforme Auto-Trading propose une gamme complète d'outils de suivi de tendance : filtre ADX pour identifier les marchés en tendance, canaux de Donchian pour entrer sur cassure, et stop-loss mobile basé sur l'ATR. Une stratégie complète de suivi de tendance peut être construite en quelques minutes.",
+    "externalLinks": [
+      { "label": "Investopedia — Suivi de tendance", "description": "Introduction complète à la philosophie du suivi de tendance et ses applications." },
+      { "label": "TradingView — Stratégies de tendance", "description": "Stratégies de suivi de tendance de la communauté TradingView." },
+      { "label": "BabyPips — Suivi de tendance", "description": "Guide BabyPips pour trader les tendances avec confiance et discipline." }
+    ]
+  },
+  "mean-reversion": {
+    "title": "Stratégie de retour à la moyenne",
+    "tagline": "Achetez bas, vendez haut — profitez du retour des prix vers leur moyenne.",
+    "metaTitle": "Stratégie de retour à la moyenne — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez la stratégie de retour à la moyenne : comment identifier les conditions de surachat et de survente et cibler les zones de retour probable du prix.",
+    "overview": "La stratégie de retour à la moyenne repose sur un postulat mathématique éprouvé : les prix tendent à revenir vers leurs moyennes historiques après s'en être éloignés excessivement. Ce principe a été démontré statistiquement sur de nombreux marchés à court et moyen terme.\n\nLes critères courants pour identifier un éloignement excessif : RSI inférieur à 30 ou supérieur à 70, ou prix touchant la bande inférieure ou supérieure des Bandes de Bollinger. Le Z-Score (écart à la moyenne pondéré par l'écart-type) est également utilisé pour quantifier le degré d'éloignement.\n\nCette stratégie performe mieux dans les marchés en range ou sur des actifs fortement corrélés comme les paires de devises. En revanche, elle peut générer de grosses pertes dans les marchés fortement directionnels ; d'où l'ajout d'un filtre ADX pour éviter d'entrer à contre-tendance.",
+    "howItWorks": "La plateforme Auto-Trading calcule les indicateurs de retour à la moyenne en temps réel et envoie des alertes lorsque des niveaux critiques de surachat/survente sont atteints. Le constructeur de stratégies permet de combiner les signaux RSI et Bandes de Bollinger avec des conditions d'entrée supplémentaires comme un pattern de bougie de confirmation.",
+    "externalLinks": [
+      { "label": "Investopedia — Retour à la moyenne", "description": "Explication du principe de retour à la moyenne et de ses applications en trading." },
+      { "label": "TradingView — Stratégies de moyenne", "description": "Stratégies de retour à la moyenne de la communauté TradingView." },
+      { "label": "BabyPips — Trading en range", "description": "Guide BabyPips du trading en range et du retour des prix." }
+    ]
+  },
+  "breakout-strategy": {
+    "title": "Stratégie de cassure (Breakout)",
+    "tagline": "Captez les mouvements explosifs au moment où le prix sort de sa zone de consolidation.",
+    "metaTitle": "Stratégie de cassure (Breakout) — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez la stratégie de cassure : comment identifier les niveaux de consolidation critiques, distinguer les vraies cassures des fausses, et entrer en début des grands mouvements.",
+    "overview": "La stratégie de cassure repose sur le principe que les prix traversent des phases de consolidation avant tout grand mouvement. Lorsque le prix franchit un niveau de support ou de résistance évident — qu'il s'agisse d'une ligne horizontale, d'un triangle ou d'un canal de prix — cela constitue un signal de cassure.\n\nLe principal défi est de distinguer la vraie cassure de la fausse (False Breakout). On utilise généralement des conditions de confirmation : clôture de bougie au-delà du niveau cassé, volume supérieur à la moyenne, et absence de retour dans le range durant une ou deux bougies.\n\nLes cassures les plus puissantes se produisent sur des ranges qui ont mis du temps à se former, car plus l'attente est longue, plus les ordres s'accumulent derrière les niveaux de résistance/support. L'entrée sur le retour au niveau cassé (pullback) est souvent préférable pour un meilleur ratio risque/récompense.",
+    "howItWorks": "La plateforme Auto-Trading surveille les zones de consolidation et les niveaux de support/résistance sur tous les horizons temporels. Lorsqu'une cassure confirmée par le volume et la clôture de bougie est détectée, un signal d'entrée automatique est émis avec un stop-loss défini et une cible basée sur la largeur du range.",
+    "externalLinks": [
+      { "label": "Investopedia — Stratégie de cassure", "description": "Guide complet de la stratégie de cassure et de la gestion des trades." },
+      { "label": "TradingView — Indicateurs de cassure", "description": "Outils de détection automatique des cassures sur TradingView." },
+      { "label": "BabyPips — Trading sur cassure", "description": "Guide BabyPips pour comprendre et trader les cassures en toute sécurité." }
+    ]
+  },
+  "scalping-strategy": {
+    "title": "Stratégie de scalping",
+    "tagline": "Profiter de petits mouvements de prix avec précision et fréquence élevée.",
+    "metaTitle": "Stratégie de scalping — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le scalping : comment exécuter des dizaines de trades par jour, choisir les instruments et horizons temporels adaptés, et gérer le risque dans le trading rapide.",
+    "overview": "Le scalping est un style de trading qui consiste à réaliser des petits profits sur des micro-mouvements de prix, la multiplication du nombre de trades compensant la faiblesse de chaque gain individuel. Le trader opère sur de très petits horizons temporels — de 1 à 5 minutes — et conserve ses positions de quelques secondes à quelques minutes seulement.\n\nLes fondamentaux du scalping réussi : haute liquidité (spreads très serrés), exécution instantanée des ordres sans slippage, et discipline absolue dans le respect du stop-loss. Les spreads serrés sont une condition essentielle, car chaque pip est déduit du profit à l'entrée et à la sortie.\n\nLes styles de scalping les plus courants : tenue de marché (market making), trading sur cassure sur très petits cadres et trading sur nouvelles instantanées. Le trading automatisé est très avantageux pour le scalpeur car il élimine la fatigue physique et émotionnelle et maintient la discipline.",
+    "howItWorks": "La plateforme Auto-Trading supporte le scalping automatisé via une exécution d'ordres à faible latence. Les utilisateurs peuvent construire des bots de scalping opérant sur des horizons temporels en minutes avec des indicateurs comme RSI, MACD et Bandes de Bollinger, en définissant un maximum de trades par jour et des objectifs de profit/perte journaliers.",
+    "externalLinks": [
+      { "label": "Investopedia — Scalping", "description": "Guide complet de la stratégie de scalping et de ses conditions de réussite." },
+      { "label": "TradingView — Stratégies de scalping", "description": "Scripts et stratégies de scalping automatisé sur TradingView." },
+      { "label": "BabyPips — Scalping", "description": "Guide BabyPips du scalping sur le marché Forex." }
+    ]
+  },
+  "swing-trading": {
+    "title": "Swing trading",
+    "tagline": "Captez les mouvements multi-jours avec une approche équilibrée du risque.",
+    "metaTitle": "Swing trading — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le swing trading : comment identifier les vagues de prix sur des horizons temporels moyens, optimiser le timing d'entrée et de sortie et gérer des positions sur plusieurs jours ou semaines.",
+    "overview": "Le swing trading est un style de trading qui vise à capturer les mouvements de prix s'étalant sur un à quinze jours environ. Il se situe entre le day trading (intraday) et l'investissement à long terme, ce qui le rend adapté aux personnes ne pouvant pas surveiller les marchés en permanence.\n\nLe swing trader s'appuie sur des horizons temporels de 4H à Daily pour identifier la tendance générale, puis descend sur un cadre plus petit pour affiner le timing d'entrée. Les outils les plus courants : niveaux de Fibonacci, blocs d'ordres, et patterns de bougies japonaises comme l'engouement et le doji.\n\nL'avantage du swing trading sur les autres stratégies : des ratios risque/récompense élevés, souvent entre 1:3 et 1:5, avec un nombre de trades raisonnable permettant d'analyser chaque position. La gestion émotionnelle est plus facile qu'en scalping car la pression instantanée est moindre.",
+    "howItWorks": "La plateforme Auto-Trading permet au swing trader de construire des stratégies multi-temporelles : identification de la tendance sur le cadre supérieur, exécution de l'entrée sur le cadre inférieur. Le système supporte les ordres limités et gradués pour optimiser le prix d'entrée moyen.",
+    "externalLinks": [
+      { "label": "Investopedia — Swing trading", "description": "Guide complet du swing trading et de ses différentes approches." },
+      { "label": "TradingView — Stratégies de swing", "description": "Stratégies de swing trading de la communauté TradingView." },
+      { "label": "BabyPips — Swing trading", "description": "Guide BabyPips du swing trading sur Forex et cryptomonnaies." }
+    ]
+  },
+  "fibonacci-retracement": {
+    "title": "Stratégie de retracement de Fibonacci",
+    "tagline": "Utilisez des ratios mathématiques pour identifier des entrées à haute probabilité lors des retracements.",
+    "metaTitle": "Retracement de Fibonacci — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le retracement de Fibonacci : comment utiliser les niveaux 38,2 % et 61,8 % comme zones d'entrée à haute probabilité dans les tendances haussières et baissières.",
+    "overview": "Le retracement de Fibonacci est un outil d'analyse technique basé sur les ratios de la suite de Fibonacci pour identifier des niveaux de support et de résistance potentiels lors d'un retracement de prix. Les niveaux sont tracés entre un sommet et un creux identifiés, faisant apparaître les ratios 23,6 %, 38,2 %, 50 %, 61,8 % et 78,6 % comme zones potentielles d'arrêt du retracement.\n\nLe niveau le plus important est le 61,8 % (ratio d'or), qui constitue souvent une zone d'entrée puissante dans les tendances fortes. La plage entre 38,2 % et 61,8 % est appelée « zone d'or » (Golden Zone) — c'est là que se concentre la plus haute densité d'ordres.\n\nL'un des patterns de trading les plus populaires est l'« AB=CD » : le prix fait un mouvement (AB), retrace vers un niveau de Fibonacci (BC), puis complète un mouvement (CD) égal en longueur à (AB). Combiner les niveaux de Fibonacci avec des blocs d'ordres ou des FVG améliore notablement la précision des signaux.",
+    "howItWorks": "La plateforme Auto-Trading trace automatiquement les niveaux de Fibonacci entre les principaux sommets et creux. Des zones d'entrée automatiques peuvent être définies lorsque le prix touche un niveau de Fibonacci spécifique avec un signal de bougie de confirmation.",
+    "externalLinks": [
+      { "label": "Investopedia — Retracement de Fibonacci", "description": "Explication détaillée des niveaux de Fibonacci et de leur utilisation en trading." },
+      { "label": "TradingView — Outils Fibonacci", "description": "Guide de traçage et d'interprétation des niveaux de Fibonacci sur TradingView." },
+      { "label": "BabyPips — Fibonacci", "description": "Guide complet BabyPips pour trader les niveaux de Fibonacci." }
+    ]
+  },
+  "ichimoku-strategy": {
+    "title": "Stratégie du nuage Ichimoku",
+    "tagline": "Un système de trading complet intégré dans un seul indicateur.",
+    "metaTitle": "Stratégie Ichimoku — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez la stratégie Ichimoku : lisez le nuage et ses projections, identifiez la tendance, le momentum et le support/résistance avec un seul indicateur global.",
+    "overview": "L'Ichimoku Kinko Hyo — « vue équilibrée en un coup d'œil » — est un système d'analyse technique complet développé par le journaliste japonais Goichi Hosoda dans les années 1930 et publié en 1969. L'indicateur combine cinq éléments : Tenkan-sen, Kijun-sen, Senkou Span A et B (qui forment le nuage), et Chikou Span.\n\nLe nuage (Kumo) est le cœur de l'indicateur : quand le prix est au-dessus du nuage, la tendance est haussière ; en dessous, baissière ; à l'intérieur, il n'y a pas de tendance claire. L'épaisseur du nuage reflète la force du support ou de la résistance.\n\nLes signaux de trading les plus connus : le croisement du Tenkan-sen au-dessus du Kijun-sen dans une tendance haussière (signal d'achat) et l'inverse pour la vente. Le Chikou Span (ligne décalée) offre une confirmation supplémentaire de la force de la tendance. Beaucoup de traders Ichimoku utilisent le nuage lui-même comme stop-loss.",
+    "howItWorks": "La plateforme Auto-Trading calcule tous les composants Ichimoku en temps réel. Des stratégies peuvent être construites autour des croisements Tenkan/Kijun, des cassures du nuage, et de la confirmation du Chikou Span. Des filtres d'entrée triple (prix au-dessus du nuage, croisement TK, confirmation Chikou) produisent des signaux de haute qualité.",
+    "externalLinks": [
+      { "label": "Investopedia — Ichimoku", "description": "Guide complet pour lire et interpréter l'indicateur Ichimoku." },
+      { "label": "TradingView — Ichimoku", "description": "Stratégies Ichimoku de la communauté TradingView." },
+      { "label": "BabyPips — Ichimoku", "description": "Guide simplifié BabyPips de l'indicateur Ichimoku." }
+    ]
+  },
+  "price-action-strategy": {
+    "title": "Stratégie de price action",
+    "tagline": "Tradez à partir de graphiques bruts — laissez le prix vous raconter ce qui vient.",
+    "metaTitle": "Stratégie de price action — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le trading de price action : comment lire les patterns de bougies, la structure de marché et les niveaux clés sans aucun indicateur.",
+    "overview": "Le price action (action des prix) est une méthode d'analyse qui s'appuie exclusivement sur les données de prix et de volume, sans indicateurs mathématiques dérivés. Le trader considère que toutes les informations sont implicitement contenues dans le mouvement du prix lui-même, et que les indicateurs n'ajoutent qu'un retard superflu.\n\nLes outils de base : les patterns de bougies japonaises (engouement, doji, marteau), la structure de marché (sommets et creux définissant la tendance), et les niveaux de support et de résistance. S'y ajoutent les patterns graphiques classiques : épaules-tête-épaules, triangles, et drapeaux.\n\nLe principal atout de cette approche est la polyvalence : elle s'applique à tous les marchés et tous les horizons temporels. Cependant, elle requiert une pratique continue pour développer la capacité à lire le prix de manière autonome. Les débutants sont conseillés de commencer uniquement par l'identification de tendance et le support/résistance, puis d'ajouter les patterns progressivement.",
+    "howItWorks": "La plateforme Auto-Trading reconnaît automatiquement les patterns de bougies classiques et envoie des alertes. L'utilisateur peut construire des règles basées sur des patterns spécifiques (comme un engouement haussier sur un support avec volume supérieur à la moyenne) comme conditions d'entrée.",
+    "externalLinks": [
+      { "label": "Investopedia — Price action", "description": "Introduction complète à l'analyse de price action et ses principales méthodes." },
+      { "label": "TradingView — Patterns de prix", "description": "Outils de reconnaissance automatique des patterns de price action sur TradingView." },
+      { "label": "BabyPips — Bougies japonaises", "description": "Guide BabyPips des patterns de bougies japonaises et de leur lecture." }
+    ]
+  },
+  "grid-trading": {
+    "title": "Stratégie de trading en grille",
+    "tagline": "Générez des profits automatiques grâce à la volatilité du marché sans prédire la direction.",
+    "metaTitle": "Stratégie de trading en grille — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le trading en grille : comment placer un réseau d'ordres d'achat et de vente pour générer des profits automatiques dans les marchés en range.",
+    "overview": "Le trading en grille est une stratégie automatisée qui place des ordres d'achat et de vente à intervalles réguliers au-dessus et en dessous du prix actuel, formant une « grille » d'ordres. Lorsque le prix oscille à la hausse et à la baisse, chaque trade se clôture au niveau de son ordre opposé en réalisant un petit profit.\n\nLa meilleure configuration pour cette stratégie est un marché sans tendance claire qui évolue latéralement avec une volatilité continue. Le trader définit une plage de prix, le nombre de niveaux de grille et la distance entre chaque niveau. Plus la volatilité est grande et l'espacement petit, plus il y a de trades et plus les profits s'accumulent vite.\n\nLe principal risque : si le prix sort violemment de la plage dans une seule direction, des pertes importantes peuvent s'accumuler. Les traders définissent donc une perte maximale et ferment la grille lorsqu'elle est atteinte.",
+    "howItWorks": "Le constructeur de stratégies de la plateforme Auto-Trading crée des grilles personnalisées : définition de la plage de prix, du nombre de niveaux, de la taille de chaque trade et du stop-loss global de la grille. Un tableau de bord dédié permet de suivre la performance de chaque grille en temps réel.",
+    "externalLinks": [
+      { "label": "Investopedia — Trading en grille", "description": "Explication détaillée du trading en grille et de ses risques." },
+      { "label": "Binance Academy — Grid Trading", "description": "Guide Binance du trading en grille sur les marchés de cryptomonnaies." },
+      { "label": "TradingView — Grid Bots", "description": "Scripts de trading en grille de la communauté TradingView." }
+    ]
+  },
+  "dollar-cost-averaging": {
+    "title": "Stratégie DCA — Lissage du coût moyen",
+    "tagline": "Réduisez le risque de timing en répartissant vos achats sur une période.",
+    "metaTitle": "Stratégie DCA — Lissage du coût moyen — Apprendre avec AutoTrader",
+    "metaDescription": "Apprenez la stratégie DCA : comment réduire l'impact des fluctuations de prix sur votre coût moyen d'achat en répartissant l'investissement sur des intervalles réguliers.",
+    "overview": "Le Dollar-Cost Averaging (DCA) est une stratégie d'investissement consistant à acheter pour une valeur fixe d'un actif à intervalles réguliers — quelle que soit son prix actuel. Cela élimine le besoin de choisir le « moment idéal » pour acheter et atténue l'impact des fluctuations de prix sur le coût moyen de détention.\n\nEn achetant pour un montant fixe périodiquement, on achète plus d'unités quand les prix sont bas et moins quand ils sont élevés — ce qui fait baisser progressivement le coût moyen. Cette approche est idéale pour les investisseurs long terme sur des actifs à fort potentiel de croissance comme le Bitcoin ou les actions technologiques.\n\nLe DCA peut être développé en « DCA dynamique » : augmenter la taille de l'achat lorsque le prix baisse d'un certain pourcentage par rapport à la moyenne, accélérant ainsi la réduction du coût moyen lors des baisses importantes.",
+    "howItWorks": "La plateforme Auto-Trading automatise entièrement la stratégie DCA : définition du calendrier (quotidien, hebdomadaire, mensuel), du montant fixe d'achat, et des conditions de DCA dynamique. Le système suit le coût d'entrée moyen global et la volatilité du portefeuille en temps réel.",
+    "externalLinks": [
+      { "label": "Investopedia — DCA", "description": "Guide complet de la stratégie DCA et de ses avantages." },
+      { "label": "Coinbase — DCA en crypto", "description": "Comment appliquer le DCA sur les marchés de cryptomonnaies." },
+      { "label": "BabyPips — DCA", "description": "Guide BabyPips de la stratégie de lissage des coûts sur le Forex." }
+    ]
+  },
+  "arbitrage-strategy": {
+    "title": "Stratégie d'arbitrage",
+    "tagline": "Exploiter les écarts de prix entre bourses pour un profit à faible risque.",
+    "metaTitle": "Stratégie d'arbitrage — Apprendre avec AutoTrader",
+    "metaDescription": "Apprenez le trading d'arbitrage : comment exploiter les différences de prix entre bourses ou paires d'actifs avec un risque directionnel minimal.",
+    "overview": "L'arbitrage est l'achat et la vente simultanés d'un actif sur deux marchés différents pour profiter de l'écart de prix entre eux. En théorie, c'est sans risque : si le Bitcoin vaut 50 000 $ sur l'exchange A et 50 100 $ sur l'exchange B, acheter sur A et vendre sur B génère 100 $ de profit par unité.\n\nEn pratique, les coûts d'exécution (frais de trading, de retrait, et de financement) et le délai de transfert réduisent les marges, rendant les opportunités fugaces et les profits minimes. L'automatisation complète est donc une nécessité absolue : le bot surveille des dizaines de paires d'exchanges simultanément et exécute en fractions de seconde.\n\nSur les marchés crypto, on distingue plusieurs types : l'arbitrage simple (même paire sur deux exchanges différents), l'arbitrage triangulaire (exploiter les incohérences de taux de change entre trois paires sur le même exchange), et l'arbitrage de taux de financement sur les contrats perpétuels.",
+    "howItWorks": "La plateforme Auto-Trading surveille les flux de prix de tous les exchanges connectés simultanément. Lorsque l'écart de prix dépasse un seuil défini (après déduction des frais), des ordres d'achat et de vente sont placés simultanément. Un bot d'arbitrage de taux de financement surveille également les taux sur les contrats perpétuels et ouvre automatiquement la couverture.",
+    "externalLinks": [
+      { "label": "Investopedia — Arbitrage", "description": "Définition de l'arbitrage et ses différents types sur les marchés financiers." },
+      { "label": "CoinGecko — Taux de financement", "description": "Données en direct des taux de financement sur les principales bourses de dérivés." },
+      { "label": "Binance Academy — Arbitrage crypto", "description": "Guide Binance des stratégies d'arbitrage sur les marchés de cryptomonnaies." }
+    ]
+  },
+  "ema-indicator": {
+    "title": "Moyenne mobile exponentielle (EMA)",
+    "tagline": "Une moyenne pondérée qui réagit plus rapidement aux changements de prix récents.",
+    "metaTitle": "EMA — Moyenne mobile exponentielle — Apprendre avec AutoTrader",
+    "metaDescription": "Découvrez l'indicateur EMA : en quoi il diffère du SMA, comment il est calculé et comment il génère des signaux de trading.",
+    "overview": "La moyenne mobile exponentielle (EMA) est un type de moyenne mobile qui accorde un poids plus important aux données de prix les plus récentes, la rendant plus réactive aux changements de prix que la moyenne mobile simple (SMA). Cette sensibilité en fait l'outil préféré des traders à court terme qui ont besoin de signaux répondant rapidement au momentum émergent.\n\nL'EMA est calculée avec un multiplicateur : Multiplicateur = 2 ÷ (N + 1), où N est le nombre de périodes. Chaque nouvelle valeur EMA = (Prix actuel × Multiplicateur) + (EMA précédente × (1 − Multiplicateur)). Cette formule récursive fait que les prix anciens perdent progressivement de leur influence sans jamais être complètement éliminés.\n\nLes périodes EMA les plus populaires : 9 et 21 pour les signaux à court terme, 20 et 50 pour détecter la tendance à moyen terme, 50 et 200 pour l'analyse à long terme (croix d'or/croix de la mort). Les institutionnels surveillent l'EMA-200 comme frontière entre un marché haussier et un marché baissier à long terme.",
+    "howItWorks": "La plateforme Auto-Trading calcule les valeurs EMA depuis les données tick en temps réel pour garantir la précision sur tous les horizons temporels. L'utilisateur configure la période EMA dans le constructeur de stratégies et choisit son rôle : filtre de tendance, moteur de croisement ou niveau de support/résistance dynamique.",
+    "externalLinks": [
+      { "label": "Investopedia — EMA", "description": "Explication complète de la formule EMA, de son calcul et de ses applications en trading." },
+      { "label": "TradingView — Indicateur EMA", "description": "Scripts EMA et stratégies de la communauté sur TradingView." },
+      { "label": "BabyPips — Moyennes mobiles", "description": "Introduction BabyPips aux moyennes mobiles EMA et SMA et leurs applications." }
+    ]
+  },
+  "sma-indicator": {
+    "title": "Moyenne mobile simple (SMA)",
+    "tagline": "L'indicateur de tendance fondamental que tout trader doit connaître.",
+    "metaTitle": "SMA — Moyenne mobile simple — Apprendre avec AutoTrader",
+    "metaDescription": "Comprenez la SMA : comment elle est calculée, comment elle identifie la tendance, et pourquoi elle reste un outil essentiel dans le trading moderne.",
+    "overview": "La moyenne mobile simple (SMA) est la moyenne arithmétique d'un nombre défini de périodes de prix. Elle représente la forme la plus simple des moyennes mobiles et le point de départ pour comprendre toutes les autres formes. La SMA sur 200 jours, par exemple, est l'un des niveaux techniques les plus suivis par les traders sur les marchés financiers mondiaux.\n\nLe calcul est direct : on additionne le prix de clôture de N périodes et on divise par N. À chaque nouvelle clôture, le prix le plus ancien est supprimé et le plus récent ajouté, produisant une ligne lisse qui filtre le bruit à court terme et révèle la tendance de fond du prix.\n\nLa SMA réagit plus lentement aux changements de prix que l'EMA, la rendant moins sujette aux faux signaux dans les marchés volatils. Pour l'analyse à long terme — où l'objectif est d'identifier la tendance globale plutôt que d'affiner le timing — la lenteur de la SMA est un avantage, non un défaut.",
+    "howItWorks": "La plateforme Auto-Trading supporte le calcul de la SMA sur le prix (ouverture, plus haut, plus bas, clôture), le volume ou toute valeur d'indicateur dérivée. Dans le constructeur de stratégies, l'utilisateur règle la période et la source SMA et connecte la sortie à un bloc de croisement, de comparaison de seuil ou de surveillance support/résistance.",
+    "externalLinks": [
+      { "label": "Investopedia — SMA", "description": "Définition de la SMA, sa formule et ses cas d'utilisation pratiques." },
+      { "label": "TradingView — Scripts SMA", "description": "Stratégies et indicateurs basés sur la SMA de TradingView." },
+      { "label": "BabyPips — SMA vs. EMA", "description": "Comparaison directe entre SMA et EMA pour choisir le plus adapté." }
+    ]
+  },
+  "rsi-indicator": {
+    "title": "Indice de force relative (RSI)",
+    "tagline": "Mesurez le momentum et identifiez les conditions de surachat et survente.",
+    "metaTitle": "RSI — Indice de force relative — Apprendre avec AutoTrader",
+    "metaDescription": "Maîtrisez le RSI : comment il fonctionne, ses signaux de surachat/survente, les divergences, et comment l'intégrer dans les stratégies automatisées.",
+    "overview": "L'indice de force relative (RSI) est un oscillateur de momentum développé par J. Welles Wilder Jr. et présenté en 1978 dans son livre « New Concepts in Technical Trading Systems ». Il mesure la vitesse et l'amplitude des récents changements de prix pour évaluer les conditions de surachat ou de survente sur une échelle de 0 à 100.\n\nLa formule standard utilise 14 périodes : RSI = 100 − (100 ÷ (1 + RS)), où RS est le gain moyen divisé par la perte moyenne sur 14 périodes. Traditionnellement, une lecture au-dessus de 70 indique un surachat et en dessous de 30 une survente.\n\nLa divergence RSI est l'un de ses signaux les plus puissants : une divergence haussière (Bullish Divergence) apparaît lorsque le prix fait un creux plus bas mais le RSI fait un creux plus haut — indiquant que la force des vendeurs s'affaiblit et qu'un retournement vers le haut est probable. L'inverse vaut pour la divergence baissière. Ces divergences précèdent souvent les grands retournements de tendance et sont plus fiables sur les cadres temporels supérieurs (4H, Daily).",
+    "howItWorks": "La plateforme Auto-Trading calcule le RSI en temps réel sur n'importe quel horizon temporel. Le constructeur de stratégies supporte les signaux de seuil RSI (au-dessus/en dessous d'un niveau), les croisements RSI (passage de la ligne 50 pour définir la direction du momentum), et la détection de divergence en comparant les sommets et creux du RSI avec le prix.",
+    "externalLinks": [
+      { "label": "Investopedia — RSI", "description": "Guide complet du RSI : formule, interprétation et signaux de trading." },
+      { "label": "TradingView — RSI", "description": "Variantes RSI et stratégies de la communauté sur TradingView." },
+      { "label": "BabyPips — RSI", "description": "Leçon BabyPips simplifiée sur le RSI pour débutants." }
+    ]
+  }
+}

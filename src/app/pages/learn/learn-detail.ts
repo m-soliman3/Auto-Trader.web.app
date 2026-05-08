@@ -1035,11 +1035,17 @@ export class LearnDetailPage implements OnInit {
   allStrategies: LearnData[] = [];
   allSignals: LearnData[] = [];
 
+  private currentSlug = '';
+
   ngOnInit(): void {
     this.loadPage(this.route.snapshot.paramMap.get('slug') ?? '');
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(p => this.loadPage(p.get('slug') ?? ''));
+
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.applyTranslatedPage());
   }
 
   private loadPage(slug: string): void {
@@ -1048,12 +1054,10 @@ export class LearnDetailPage implements OnInit {
       this.router.navigate(['/']);
       return;
     }
-    this.page = data;
-    this.document.title = data.metaTitle;
 
-    // Set canonical and noindex: drive traffic to homepage instead of this page
-    this.meta.updateTag({ name: 'description', content: data.metaDescription });
-    // Canonical points to homepage so Google understands the authoritative page
+    this.currentSlug = slug;
+
+    // Set canonical: drive traffic to homepage instead of this page
     const canonicalHref = (this.document.location?.origin ?? '') + '/';
     let canonicalEl = this.document.querySelector('link[rel="canonical"]');
     if (!canonicalEl) {
@@ -1063,22 +1067,58 @@ export class LearnDetailPage implements OnInit {
     }
     canonicalEl.setAttribute('href', canonicalHref);
 
-    this.relatedPages = data.relatedSlugs
-      .map(s => LEARN_PAGES[s])
-      .filter(Boolean);
-
     this.allStrategies = Object.values(LEARN_PAGES)
       .filter(p => p.category === 'strategy' && p.slug !== slug);
     this.allSignals = Object.values(LEARN_PAGES)
       .filter(p => p.category === 'signal' && p.slug !== slug);
 
-    this.overviewParagraphs = data.overview
+    this.applyTranslatedPage();
+  }
+
+  private t(key: string, fallback: string): string {
+    const translated = this.translate.instant(key);
+    return translated === key ? fallback : translated;
+  }
+
+  private applyTranslatedPage(): void {
+    const base = LEARN_PAGES[this.currentSlug];
+    if (!base) {
+      return;
+    }
+
+    const keyRoot = `learnPages.${base.slug}`;
+    const translatedOverview = this.t(`${keyRoot}.overview`, base.overview);
+    const translatedHowItWorks = this.t(`${keyRoot}.howItWorks`, base.howItWorks);
+
+    this.page = {
+      ...base,
+      title: this.t(`${keyRoot}.title`, base.title),
+      tagline: this.t(`${keyRoot}.tagline`, base.tagline),
+      metaTitle: this.t(`${keyRoot}.metaTitle`, base.metaTitle),
+      metaDescription: this.t(`${keyRoot}.metaDescription`, base.metaDescription),
+      overview: translatedOverview,
+      howItWorks: translatedHowItWorks,
+      externalLinks: base.externalLinks.map((link, index) => ({
+        ...link,
+        label: this.t(`${keyRoot}.externalLinks.${index}.label`, link.label),
+        description: this.t(`${keyRoot}.externalLinks.${index}.description`, link.description),
+      })),
+    };
+
+    this.document.title = this.page.metaTitle;
+    this.meta.updateTag({ name: 'description', content: this.page.metaDescription });
+
+    this.relatedPages = base.relatedSlugs
+      .map(s => LEARN_PAGES[s])
+      .filter(Boolean);
+
+    this.overviewParagraphs = translatedOverview
       .split('\n\n')
       .map(p => p.trim())
       .filter(Boolean)
       .map(p => this.sanitizer.sanitize(SecurityContext.HTML, this.escapeHtml(p)) ?? '');
 
-    const howHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.escapeHtml(data.howItWorks)) ?? '';
+    const howHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.escapeHtml(translatedHowItWorks)) ?? '';
     this.howItWorksHtml = this.sanitizer.bypassSecurityTrustHtml(howHtml);
   }
 
