@@ -1,0 +1,262 @@
+{
+  "moving-average-crossover": {
+    "title": "Estratégia de cruzamento de médias móveis",
+    "tagline": "Uma das técnicas de seguimento de tendência mais antigas e utilizadas no mundo.",
+    "metaTitle": "Cruzamento de médias móveis — Aprenda com AutoTrader",
+    "metaDescription": "Descubra a estratégia de cruzamento de médias móveis: como gera sinais de compra e venda, as melhores configurações para diferentes prazos e sua aplicação no trading automatizado.",
+    "overview": "O cruzamento de médias móveis é uma das estratégias de seguimento de tendência mais simples e amplamente utilizadas. A ideia se baseia em duas médias móveis: uma rápida (curto prazo) e uma lenta (longo prazo). Quando a média rápida cruza a lenta para cima, gera um sinal de compra. Quando cruza para baixo, gera um sinal de venda.\n\nEntre as configurações mais conhecidas: 9/21 para curto prazo e 50/200 para posições mais longas. O cruzamento da MM50 acima da MM200 é chamado de \"Golden Cross\" (Cruz Dourada) e sinaliza um mercado em alta. O cruzamento inverso é chamado de \"Death Cross\" (Cruz da Morte).\n\nApesar da sua simplicidade, a estratégia continua eficaz porque as médias móveis representam níveis dinâmicos de suporte e resistência acompanhados por milhões de operadores simultaneamente, tornando-se profecia autorrealizável por natureza.\n\nFunciona melhor em mercados com tendência definida e gera muitos sinais falsos em mercados laterais. Por isso, operadores experientes adicionam filtros como o ADX ou confirmação por volume para melhorar a qualidade dos sinais.",
+    "howItWorks": "Na plataforma Auto-Trading, o sistema calcula as médias móveis em tempo real em qualquer prazo. Os usuários podem escolher o tipo (simples, exponencial ou ponderada), os períodos e condições de confirmação adicionais como volume ou ADX. Os sinais são enviados assim que o cruzamento é confirmado na vela atual.",
+    "externalLinks": [
+      { "label": "Investopedia — Cruzamento de médias móveis", "description": "Explicação detalhada da estratégia e suas aplicações práticas." },
+      { "label": "TradingView — Médias móveis", "description": "Biblioteca de scripts e estratégias de médias móveis no TradingView." },
+      { "label": "BabyPips — Médias móveis", "description": "Guia simplificado do BabyPips para entender e operar com médias móveis." }
+    ]
+  },
+  "fair-value-gap": {
+    "title": "Estratégia da lacuna de valor justo (FVG)",
+    "tagline": "Opere os desequilíbrios deixados pelos movimentos institucionais rápidos.",
+    "metaTitle": "Estratégia FVG — Lacuna de valor justo — Aprenda com AutoTrader",
+    "metaDescription": "Descubra as lacunas de valor justo (FVG): como se formam, por que as instituições retornam a elas e como identificar entradas de alta probabilidade.",
+    "overview": "Uma lacuna de valor justo (Fair Value Gap — FVG) é uma zona de preços que não foi suficientemente negociada durante um movimento rápido e impulsivo. Ela se forma quando a máxima da primeira vela supera a mínima da terceira vela, deixando uma região sem transações. As instituições que não executaram todas as suas ordens durante o movimento inicial geralmente retornam para preencher essas lacunas.\n\nAs FVGs são um pilar fundamental dos conceitos de Smart Money (SMC). Quando o preço retorna em direção à lacuna, oferece uma oportunidade de entrada com baixo risco. As FVGs situadas dentro de uma tendência de alta apresentam maior probabilidade de suporte, e vice-versa.\n\nExistem dois tipos: FVG de alta (Bullish FVG), que se forma em impulsos ascendentes e serve como zona de compra, e FVG de baixa (Bearish FVG), que se forma em impulsos descendentes e serve como zona de venda. Quanto maior for o prazo (1H, diário), mais confiável será a FVG.",
+    "howItWorks": "A plataforma Auto-Trading detecta automaticamente as FVGs em todos os prazos e traça seus limites no gráfico. Alertas são enviados quando o preço se aproxima de uma FVG, e ordens de entrada podem ser ativadas automaticamente no limite superior ou inferior com stop-loss atrás da extremidade oposta.",
+    "externalLinks": [
+      { "label": "Investopedia — FVG", "description": "Definição das FVGs e métodos de trading associados." },
+      { "label": "TradingView — Indicadores FVG", "description": "Ferramentas de detecção automática de FVG no TradingView." },
+      { "label": "BabyPips — SMC e FVG", "description": "Explicação dos conceitos SMC e FVG para iniciantes." }
+    ]
+  },
+  "smart-money-concepts": {
+    "title": "Conceitos de Smart Money (SMC)",
+    "tagline": "Alinhe suas operações com o fluxo de ordens das grandes instituições.",
+    "metaTitle": "Conceitos Smart Money (SMC) — Aprenda com AutoTrader",
+    "metaDescription": "Domine os SMC: estrutura de mercado, varreduras de liquidez, blocos de ordens e FVG — aprenda a operar com as instituições, não contra elas.",
+    "overview": "Os conceitos de Smart Money (SMC) são um framework de análise que sustenta que as grandes instituições — bancos, fundos de hedge, formadores de mercado — manipulam sistematicamente o preço para suas necessidades de acumulação e distribuição antes de qualquer grande movimento. O objetivo do operador SMC é reconhecer essas pegadas e entrar na mesma direção das instituições.\n\nOs pilares fundamentais desse framework incluem: estrutura de mercado (máximas e mínimas que indicam a direção), blocos de ordens (Order Blocks), lacunas de valor justo (FVG), varreduras de liquidez (Liquidity Sweeps) e blocos quebrados (Breaker Blocks). Esses elementos se combinam para formar um quadro completo das intenções do mercado.\n\nO SMC difere da análise técnica clássica em um ponto essencial: em vez de esperar a confirmação da tendência, o operador tenta ler o cenário que os grandes atores estão preparando antes que aconteça, oferecendo excelentes relações risco/retorno ao entrar no início da onda.",
+    "howItWorks": "A plataforma Auto-Trading integra os SMC no construtor de estratégias: os usuários podem criar regras que combinam estrutura de mercado, blocos de ordens, FVG e varreduras de liquidez. O scanner destaca os ativos que exibem padrões de acumulação ou distribuição institucional.",
+    "externalLinks": [
+      { "label": "Investopedia — Smart Money", "description": "Introdução ao conceito de Smart Money e à teoria de manipulação institucional." },
+      { "label": "TradingView — Ferramentas SMC", "description": "Indicadores SMC da comunidade TradingView." },
+      { "label": "BabyPips — SMC vs. análise clássica", "description": "Comparação entre os conceitos SMC e a análise técnica tradicional." }
+    ]
+  },
+  "order-blocks": {
+    "title": "Estratégia de blocos de ordens",
+    "tagline": "Identifique as velas onde as grandes instituições acumularam suas posições.",
+    "metaTitle": "Estratégia de blocos de ordens — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda os blocos de ordens: como identificar as zonas onde as instituições executaram suas grandes ordens e usá-las como pontos de entrada de alta probabilidade.",
+    "overview": "Um bloco de ordens (Order Block) é a última vela (ou grupo de velas) na direção oposta antes de um movimento de preço forte e impulsivo. Essa vela representa a zona onde as grandes instituições colocaram suas ordens antes de empurrar o preço com força. Quando o preço retorna a essa zona, as ordens institucionais residuais formam um sólido nível de suporte ou resistência.\n\nO bloco de ordens de alta (Bullish OB) é a última vela de baixa antes de um forte impulso de alta. O bloco de baixa (Bearish OB) é a última vela de alta antes de um forte impulso de baixa. A importância do bloco aumenta com a força e rapidez do impulso resultante.\n\nPara maior precisão, os operadores identificam primeiro os blocos no prazo superior e depois buscam confirmação de entrada em um prazo menor. Um bloco é ainda mais poderoso se coincidir com um nível importante de Fibonacci ou com uma FVG.",
+    "howItWorks": "A plataforma Auto-Trading traça automaticamente os blocos de ordens em qualquer prazo e os classifica de acordo com a força do impulso resultante. Alertas instantâneos são enviados quando o preço se aproxima de um bloco, e ordens limitadas de compra ou venda podem ser colocadas automaticamente nos limites do bloco com stop-loss atrás do seu ponto médio ou extremo.",
+    "externalLinks": [
+      { "label": "Investopedia — Blocos de ordens", "description": "Explicação dos blocos de ordens no contexto da análise institucional." },
+      { "label": "TradingView — Indicadores de blocos de ordens", "description": "Indicadores de detecção automática de blocos de ordens no TradingView." },
+      { "label": "BabyPips — Blocos de ordens", "description": "Guia simplificado para entender e operar com blocos de ordens." }
+    ]
+  },
+  "liquidity-sweeps": {
+    "title": "Estratégia de varreduras de liquidez",
+    "tagline": "Opere com as caçadas de stops que precedem os grandes movimentos institucionais.",
+    "metaTitle": "Estratégia de varreduras de liquidez — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda as varreduras de liquidez: como as grandes instituições ativam stop-losses e coletam liquidez antes dos grandes movimentos, e como aproveitar isso.",
+    "overview": "Uma varredura de liquidez é um evento em que o preço se move intencionalmente acima ou abaixo de um nível de liquidez evidente — como uma máxima ou mínima anterior — para acionar os stop-losses de operadores posicionados na direção contrária, e então reverte rapidamente.\n\nA liquidez se acumula atrás de níveis evidentes porque os operadores colocam seus stops atrás de máximas e mínimas. As instituições precisam de contrapartes (compradores para quem vender, ou vendedores de quem comprar); por isso empurram o preço até esses níveis para acionar as ordens, executar suas posições massivas e então revertem a direção.\n\nA assinatura característica de uma varredura de liquidez: o preço rompe um nível evidente e então volta rapidamente para o outro lado desse nível na mesma vela ou na seguinte. Esse sinal tem alta probabilidade quando coincide com um bloco de ordens ou FVG em um prazo superior.",
+    "howItWorks": "A plataforma Auto-Trading identifica automaticamente os níveis de liquidez (máximas e mínimas evidentes, linhas equidistantes) e monitora as varreduras assim que ocorrem. Quando é detectada uma varredura seguida de um fechamento de vela inverso, um alerta é enviado e uma entrada no sentido contrário à varredura pode ser executada automaticamente.",
+    "externalLinks": [
+      { "label": "Investopedia — Varreduras de liquidez", "description": "Explicação do conceito de varredura de liquidez nos mercados financeiros." },
+      { "label": "TradingView — Indicadores de liquidez", "description": "Ferramentas de monitoramento de liquidez e varreduras no TradingView." },
+      { "label": "BabyPips — Armadilhas de preço e liquidez", "description": "Guia do BabyPips sobre varreduras e armadilhas de preço." }
+    ]
+  },
+  "breaker-blocks": {
+    "title": "Estratégia de blocos quebradores",
+    "tagline": "Opere com blocos de ordens fracassados que se converteram de suporte em resistência.",
+    "metaTitle": "Estratégia de blocos quebradores — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda os blocos quebradores: como os blocos de ordens fracassados se tornam poderosas zonas inversas e como usá-los para entrar no início de uma nova tendência.",
+    "overview": "Um bloco quebrador (Breaker Block) é um bloco de ordens que não conseguiu manter sua função como suporte ou resistência e se inverteu para se tornar o oposto. Quando um impulso de baixa rompe um bloco de ordens de alta, esse bloco se transforma em zona de resistência. O inverso ocorre quando um impulso de alta rompe um bloco de ordens de baixa.\n\nOs blocos quebradores estão entre as zonas de trading mais poderosas porque carregam uma assinatura dupla: ordens institucionais originais não executadas na totalidade, e ordens de operadores presos que buscam sair quando o preço retorna. Essa acumulação dupla de ordens faz com que as reações do preço nessas zonas sejam especialmente marcadas.\n\nOs operadores validam um bloco quebrador buscando: uma ruptura clara de um nível de estrutura de mercado, um retorno do preço à zona do bloco original e um sinal de rejeição (como um doji ou uma vela envolvente) no bloco.",
+    "howItWorks": "A plataforma Auto-Trading monitora os blocos de ordens que foram rompidos e os atualiza automaticamente como zonas quebradoras. Um alerta é enviado quando o preço retorna a um bloco quebrador, e a entrada pode ser condicionada ao aparecimento de um padrão de vela de confirmação.",
+    "externalLinks": [
+      { "label": "Investopedia — Blocos quebradores", "description": "Explicação dos blocos quebradores no contexto dos conceitos SMC." },
+      { "label": "TradingView — Indicadores de blocos quebradores", "description": "Indicadores de blocos quebradores no TradingView." },
+      { "label": "BabyPips — Blocos quebradores vs. blocos de ordens", "description": "Comparação entre blocos de ordens e blocos quebradores para diferenciá-los." }
+    ]
+  },
+  "trend-following": {
+    "title": "Estratégia de seguimento de tendência",
+    "tagline": "Monte o impulso — deixe suas operações vencedoras correrem.",
+    "metaTitle": "Estratégia de seguimento de tendência — Aprenda com AutoTrader",
+    "metaDescription": "Domine o seguimento de tendência: como identificar uma tendência sólida, entrar no meio dela e gerenciar operações para obter grandes ganhos reduzindo perdas.",
+    "overview": "O seguimento de tendência é uma das abordagens de trading quantitativo mais antigas e comprovadas. A ideia fundamental é simples: ativos que subiram tendem a continuar subindo, e os que caíram tendem a continuar caindo. O operador busca se unir à tendência e permanecer nela até que apareçam sinais de reversão.\n\nGrandes firmas de trading quantitativo como Man AHL e Winton obtêm excelentes retornos aplicando essa abordagem em dezenas de mercados simultaneamente. As chaves do sucesso: stops móveis para proteger os ganhos, posições reduzidas em mercados sem tendência e a paciência de não intervir em operações vencedoras.\n\nFerramentas para identificar tendências: médias móveis, ADX (força de tendência), canais de Donchian e rompimentos de resistências. O stop-loss móvel baseado em ATR é o elemento central para proteger ganhos sem sair prematuramente.",
+    "howItWorks": "A plataforma Auto-Trading oferece um conjunto completo de ferramentas de seguimento de tendência: filtro ADX para identificar mercados em tendência, canais de Donchian para entrar em rompimento e stop-loss móvel baseado em ATR. Uma estratégia completa de seguimento de tendência pode ser construída em minutos.",
+    "externalLinks": [
+      { "label": "Investopedia — Seguimento de tendência", "description": "Introdução completa à filosofia do seguimento de tendência e suas aplicações." },
+      { "label": "TradingView — Estratégias de tendência", "description": "Estratégias de seguimento de tendência da comunidade TradingView." },
+      { "label": "BabyPips — Seguimento de tendência", "description": "Guia do BabyPips para operar tendências com confiança e disciplina." }
+    ]
+  },
+  "mean-reversion": {
+    "title": "Estratégia de reversão à média",
+    "tagline": "Compre na baixa, venda na alta — aproveite o retorno do preço à sua média.",
+    "metaTitle": "Estratégia de reversão à média — Aprenda com AutoTrader",
+    "metaDescription": "Domine a reversão à média: como identificar condições de sobrecompra e sobrevenda e localizar as zonas de provável retorno do preço.",
+    "overview": "A estratégia de reversão à média se baseia em um postulado matemático comprovado: os preços tendem a retornar às suas médias históricas depois de se afastarem delas em excesso. Esse princípio foi demonstrado estatisticamente em muitos mercados no curto e médio prazo.\n\nOs critérios usuais para identificar um desvio excessivo: RSI abaixo de 30 ou acima de 70, ou preço tocando a banda inferior ou superior das Bandas de Bollinger. O Z-Score (desvio da média normalizado pelo desvio padrão) também é usado para quantificar o grau de afastamento.\n\nEssa estratégia funciona melhor em mercados em consolidação ou em ativos altamente correlacionados como pares de moedas. No entanto, pode gerar grandes perdas em mercados com tendência forte; por isso, um filtro ADX é adicionado para evitar entradas contra uma tendência poderosa.",
+    "howItWorks": "A plataforma Auto-Trading calcula os indicadores de reversão à média em tempo real e envia alertas quando níveis críticos de sobrecompra/sobrevenda são atingidos. O construtor de estratégias permite combinar sinais de RSI e Bandas de Bollinger com condições de entrada adicionais como um padrão de vela de confirmação.",
+    "externalLinks": [
+      { "label": "Investopedia — Reversão à média", "description": "Explicação do princípio de reversão à média e suas aplicações em trading." },
+      { "label": "TradingView — Estratégias de média", "description": "Estratégias de reversão à média da comunidade TradingView." },
+      { "label": "BabyPips — Trading em consolidação", "description": "Guia do BabyPips para trading em intervalos laterais e reversão de preço." }
+    ]
+  },
+  "breakout-strategy": {
+    "title": "Estratégia de rompimento (Breakout)",
+    "tagline": "Capture os movimentos explosivos no momento em que o preço sai de sua consolidação.",
+    "metaTitle": "Estratégia de rompimento — Aprenda com AutoTrader",
+    "metaDescription": "Domine a estratégia de rompimento: como identificar níveis de consolidação críticos, distinguir rompimentos reais dos falsos e entrar no início dos grandes movimentos.",
+    "overview": "A estratégia de rompimento se baseia no princípio de que os preços atravessam fases de consolidação antes de qualquer grande movimento. Quando o preço ultrapassa um nível de suporte ou resistência evidente — seja uma linha horizontal, um triângulo ou um canal de preços — ocorre um sinal de rompimento.\n\nO principal desafio é distinguir o rompimento real do falso (False Breakout). Condições de confirmação são utilizadas: fechamento de vela além do nível rompido, volume superior à média e ausência de retorno ao intervalo em uma ou duas velas.\n\nOs rompimentos mais poderosos ocorrem em consolidações que levaram muito tempo para se formar, pois quanto maior a espera, mais ordens se acumulam atrás dos níveis de resistência/suporte. A entrada no pullback (retorno ao nível rompido) geralmente oferece uma melhor relação risco/retorno.",
+    "howItWorks": "A plataforma Auto-Trading monitora zonas de consolidação e níveis de suporte/resistência em todos os prazos. Quando é detectado um rompimento confirmado por volume e fechamento de vela, um sinal de entrada automático é emitido com stop-loss definido e alvo baseado na amplitude da consolidação.",
+    "externalLinks": [
+      { "label": "Investopedia — Estratégia de rompimento", "description": "Guia completo da estratégia de rompimento e gerenciamento de operações." },
+      { "label": "TradingView — Indicadores de rompimento", "description": "Ferramentas de detecção automática de rompimentos no TradingView." },
+      { "label": "BabyPips — Trading em rompimento", "description": "Guia do BabyPips para entender e operar rompimentos com segurança." }
+    ]
+  },
+  "scalping-strategy": {
+    "title": "Estratégia de scalping",
+    "tagline": "Obter lucros de pequenos movimentos de preço com precisão e alta frequência.",
+    "metaTitle": "Estratégia de scalping — Aprenda com AutoTrader",
+    "metaDescription": "Domine o scalping: como executar dezenas de operações por dia, escolher os instrumentos e prazos certos e gerenciar o risco no trading rápido.",
+    "overview": "O scalping é um estilo de trading que consiste em obter pequenos lucros de micro-movimentos de preço, compensando com o número de operações a pequenez de cada ganho individual. O operador trabalha em prazos muito curtos — de 1 a 5 minutos — e mantém posições apenas por segundos ou minutos.\n\nOs fundamentos do scalping bem-sucedido: alta liquidez (spreads muito estreitos), execução instantânea sem slippage e disciplina absoluta no respeito ao stop-loss. Spreads estreitos são essenciais, pois cada pip é descontado do lucro na entrada e na saída.\n\nOs estilos de scalping mais comuns: criação de mercado, trading de rompimento em prazos muito curtos e trading de notícias instantâneas. O trading automatizado é muito benéfico para o scalper, pois elimina a fadiga física e emocional e mantém a disciplina.",
+    "howItWorks": "A plataforma Auto-Trading suporta scalping automatizado por meio de execução de ordens de baixa latência. Os usuários podem construir bots de scalping que operam em prazos de minutos com indicadores como RSI, MACD e Bandas de Bollinger, definindo um máximo de operações diárias e metas de lucro/perda diários.",
+    "externalLinks": [
+      { "label": "Investopedia — Scalping", "description": "Guia completo da estratégia de scalping e suas condições de sucesso." },
+      { "label": "TradingView — Estratégias de scalping", "description": "Scripts e estratégias de scalping automatizado no TradingView." },
+      { "label": "BabyPips — Scalping", "description": "Guia do BabyPips sobre scalping no mercado Forex." }
+    ]
+  },
+  "swing-trading": {
+    "title": "Swing trading",
+    "tagline": "Capture movimentos de vários dias com uma abordagem equilibrada de risco.",
+    "metaTitle": "Swing trading — Aprenda com AutoTrader",
+    "metaDescription": "Domine o swing trading: como identificar oscilações de preço em prazos médios, otimizar o timing de entrada e saída e gerenciar posições durante dias ou semanas.",
+    "overview": "O swing trading é um estilo de trading que busca capturar movimentos de preço que se estendem de um a quinze dias aproximadamente. Ele se situa entre o day trading (intradiário) e o investimento de longo prazo, sendo adequado para quem não pode monitorar os mercados continuamente.\n\nO swing trader se apoia em prazos de 4H a diário para identificar a tendência geral e depois passa para um prazo menor para refinar o timing de entrada. As ferramentas mais usadas: níveis de Fibonacci, blocos de ordens e padrões de velas japonesas como o engolfo e o doji.\n\nA vantagem do swing trading em relação a outras estratégias: relações risco/retorno elevadas, frequentemente entre 1:3 e 1:5, com um número razoável de operações que permite analisar cada posição. O gerenciamento emocional é mais fácil do que no scalping porque a pressão instantânea é menor.",
+    "howItWorks": "A plataforma Auto-Trading permite ao swing trader construir estratégias multi-temporais: identificação da tendência no prazo superior e execução da entrada no prazo inferior. O sistema suporta ordens limitadas e escalonadas para otimizar o preço de entrada médio.",
+    "externalLinks": [
+      { "label": "Investopedia — Swing trading", "description": "Guia completo do swing trading e suas diferentes abordagens." },
+      { "label": "TradingView — Estratégias de swing", "description": "Estratégias de swing trading da comunidade TradingView." },
+      { "label": "BabyPips — Swing trading", "description": "Guia do BabyPips sobre swing trading em Forex e criptomoedas." }
+    ]
+  },
+  "fibonacci-retracement": {
+    "title": "Estratégia de retração de Fibonacci",
+    "tagline": "Use razões matemáticas para identificar entradas de alta probabilidade nas retrações.",
+    "metaTitle": "Retração de Fibonacci — Aprenda com AutoTrader",
+    "metaDescription": "Domine a retração de Fibonacci: como usar os níveis de 38,2% e 61,8% como zonas de entrada de alta probabilidade em tendências de alta e de baixa.",
+    "overview": "A retração de Fibonacci é uma ferramenta de análise técnica baseada nas razões da sequência de Fibonacci para identificar possíveis níveis de suporte e resistência durante uma correção de preço. Os níveis são traçados entre uma máxima e uma mínima identificadas, exibindo as razões de 23,6%, 38,2%, 50%, 61,8% e 78,6% como zonas potenciais de pausa da retração.\n\nO nível mais importante é o 61,8% (razão áurea), que frequentemente constitui uma zona de entrada poderosa em tendências fortes. O intervalo entre 38,2% e 61,8% é chamado de \"Zona Dourada\" (Golden Zone) — aqui se concentra a maior densidade de ordens.\n\nUm dos padrões de trading mais populares é o \"AB=CD\": o preço faz um movimento (AB), retrai para um nível de Fibonacci (BC) e então completa um movimento (CD) igual em comprimento a (AB). Combinar níveis de Fibonacci com blocos de ordens ou FVG melhora notavelmente a precisão dos sinais.",
+    "howItWorks": "A plataforma Auto-Trading traça automaticamente os níveis de Fibonacci entre as principais máximas e mínimas. Zonas de entrada automáticas podem ser definidas quando o preço toca um nível de Fibonacci específico com um sinal de vela de confirmação.",
+    "externalLinks": [
+      { "label": "Investopedia — Retração de Fibonacci", "description": "Explicação detalhada dos níveis de Fibonacci e seu uso em trading." },
+      { "label": "TradingView — Ferramentas Fibonacci", "description": "Guia de traçado e interpretação de Fibonacci no TradingView." },
+      { "label": "BabyPips — Fibonacci", "description": "Guia completo do BabyPips para operar com Fibonacci." }
+    ]
+  },
+  "ichimoku-strategy": {
+    "title": "Estratégia da nuvem Ichimoku",
+    "tagline": "Um sistema de trading completo integrado em um único indicador.",
+    "metaTitle": "Estratégia Ichimoku — Aprenda com AutoTrader",
+    "metaDescription": "Domine a estratégia Ichimoku: como ler a nuvem e suas projeções e identificar tendência, impulso e suporte/resistência com um único indicador abrangente.",
+    "overview": "O Ichimoku Kinko Hyo — \"equilíbrio em um olhar\" — é um sistema de análise técnica completo desenvolvido pelo jornalista japonês Goichi Hosoda nos anos 1930 e publicado em 1969. O indicador combina cinco elementos: Tenkan-sen, Kijun-sen, Senkou Span A e B (que formam a nuvem) e Chikou Span.\n\nA nuvem (Kumo) é o coração do indicador: quando o preço está acima da nuvem, a tendência é de alta; abaixo, de baixa; dentro, sem tendência definida. A espessura da nuvem reflete a força do suporte ou resistência.\n\nOs sinais de trading mais conhecidos: o cruzamento do Tenkan-sen acima do Kijun-sen em uma tendência de alta (sinal de compra) e o inverso para venda. O Chikou Span (linha atrasada) oferece uma confirmação adicional da força da tendência. Muitos operadores de Ichimoku usam a nuvem como stop-loss.",
+    "howItWorks": "A plataforma Auto-Trading calcula todos os componentes do Ichimoku em tempo real. Estratégias podem ser construídas baseadas em cruzamentos Tenkan/Kijun, rompimentos da nuvem e confirmação do Chikou Span. Os filtros de entrada tripla (preço acima da nuvem, cruzamento TK, confirmação Chikou) produzem sinais de alta qualidade.",
+    "externalLinks": [
+      { "label": "Investopedia — Ichimoku", "description": "Guia completo para ler e interpretar o indicador Ichimoku." },
+      { "label": "TradingView — Ichimoku", "description": "Estratégias Ichimoku da comunidade TradingView." },
+      { "label": "BabyPips — Ichimoku", "description": "Guia simplificado do BabyPips sobre o indicador Ichimoku." }
+    ]
+  },
+  "price-action-strategy": {
+    "title": "Estratégia de price action",
+    "tagline": "Opere a partir de gráficos puros — deixe o preço te contar o que vem a seguir.",
+    "metaTitle": "Estratégia de price action — Aprenda com AutoTrader",
+    "metaDescription": "Domine o trading de price action: como ler padrões de velas, estrutura de mercado e níveis-chave sem nenhum indicador.",
+    "overview": "O price action é um método de análise que se baseia exclusivamente nos dados de preço e volume, sem indicadores matemáticos derivados. O operador considera que toda a informação está implicitamente contida no movimento do preço e que os indicadores apenas adicionam atraso desnecessário.\n\nAs ferramentas básicas: padrões de velas japonesas (engolfo, doji, martelo), estrutura de mercado (máximas e mínimas que definem a tendência) e níveis de suporte e resistência. Somam-se os padrões gráficos clássicos: ombro-cabeça-ombro, triângulos e bandeiras.\n\nA principal vantagem dessa abordagem é a versatilidade: funciona em todos os mercados e prazos. No entanto, exige prática contínua para desenvolver a capacidade de ler o preço de forma autônoma. Recomenda-se a iniciantes começar apenas com identificação de tendência e suporte/resistência, adicionando padrões gradualmente.",
+    "howItWorks": "A plataforma Auto-Trading reconhece automaticamente os padrões de velas clássicos e envia alertas. O usuário pode construir regras baseadas em padrões específicos (como um engolfo de alta em um suporte com volume acima da média) como condições de entrada.",
+    "externalLinks": [
+      { "label": "Investopedia — Price action", "description": "Introdução completa à análise de price action e seus principais métodos." },
+      { "label": "TradingView — Padrões de preço", "description": "Ferramentas de reconhecimento automático de padrões de price action no TradingView." },
+      { "label": "BabyPips — Velas japonesas", "description": "Guia do BabyPips sobre os padrões de velas japonesas e sua leitura." }
+    ]
+  },
+  "grid-trading": {
+    "title": "Estratégia de trading em grade",
+    "tagline": "Gere lucros automáticos a partir da volatilidade do mercado sem prever a direção.",
+    "metaTitle": "Estratégia de trading em grade — Aprenda com AutoTrader",
+    "metaDescription": "Domine o trading em grade: como colocar uma rede de ordens de compra e venda para gerar lucros automáticos em mercados laterais.",
+    "overview": "O trading em grade é uma estratégia automatizada que coloca ordens de compra e venda em intervalos regulares acima e abaixo do preço atual, formando uma \"grade\" de ordens. Quando o preço oscila para cima e para baixo, cada operação é fechada em sua ordem oposta obtendo um pequeno lucro.\n\nA melhor configuração para essa estratégia é um mercado sem tendência clara que se move lateralmente com volatilidade contínua. O operador define um intervalo de preços, o número de níveis da grade e a distância entre cada nível. Quanto maior a volatilidade e menor o espaçamento, mais operações ocorrem e mais rapidamente os lucros se acumulam.\n\nO principal risco: se o preço sair violentamente do intervalo em uma única direção, podem se acumular grandes perdas. Por isso os operadores definem uma perda máxima e fecham a grade quando ela é atingida.",
+    "howItWorks": "O construtor de estratégias da plataforma Auto-Trading cria grades personalizadas: definição do intervalo de preços, número de níveis, tamanho de cada operação e stop-loss global da grade. Um painel dedicado permite acompanhar o desempenho de cada grade em tempo real.",
+    "externalLinks": [
+      { "label": "Investopedia — Trading em grade", "description": "Explicação detalhada do trading em grade e seus riscos." },
+      { "label": "Binance Academy — Grid Trading", "description": "Guia da Binance sobre trading em grade em mercados de criptomoedas." },
+      { "label": "TradingView — Grid Bots", "description": "Scripts de trading em grade da comunidade TradingView." }
+    ]
+  },
+  "dollar-cost-averaging": {
+    "title": "Preço médio de custo (DCA)",
+    "tagline": "Reduza o risco de timing distribuindo suas compras ao longo do tempo.",
+    "metaTitle": "Estratégia DCA — Preço médio de custo — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda a estratégia DCA: como reduzir o impacto das flutuações de preço no seu custo médio de compra distribuindo o investimento em intervalos regulares.",
+    "overview": "O Dollar-Cost Averaging (DCA) é uma estratégia de investimento que consiste em comprar um valor fixo de um ativo em intervalos regulares, independentemente do seu preço atual. Isso elimina a necessidade de escolher o \"momento ideal\" para comprar e amortece o impacto das flutuações no custo médio de aquisição.\n\nAo comprar por um montante fixo periodicamente, são adquiridas mais unidades quando os preços estão baixos e menos quando estão altos, o que reduz gradualmente o custo médio. Essa abordagem é ideal para investidores de longo prazo em ativos com alto potencial de crescimento, como Bitcoin ou ações de tecnologia.\n\nO DCA pode evoluir para um \"DCA dinâmico\": aumentar o tamanho da compra quando o preço cai um percentual determinado acima da média, acelerando assim a redução do custo médio em quedas importantes.",
+    "howItWorks": "A plataforma Auto-Trading automatiza completamente a estratégia DCA: definição do calendário (diário, semanal, mensal), o montante fixo de compra e as condições de DCA dinâmico. O sistema acompanha o custo de entrada médio global e a volatilidade do portfólio em tempo real.",
+    "externalLinks": [
+      { "label": "Investopedia — DCA", "description": "Guia completo da estratégia DCA e suas vantagens." },
+      { "label": "Coinbase — DCA em cripto", "description": "Como aplicar o DCA nos mercados de criptomoedas." },
+      { "label": "BabyPips — DCA", "description": "Guia do BabyPips sobre a estratégia de custo médio em Forex." }
+    ]
+  },
+  "arbitrage-strategy": {
+    "title": "Estratégia de arbitragem",
+    "tagline": "Explorar diferenças de preço entre exchanges para obter lucros com baixo risco.",
+    "metaTitle": "Estratégia de arbitragem — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o trading de arbitragem: como explorar diferenças de preço entre exchanges ou pares de ativos com risco direcional mínimo.",
+    "overview": "A arbitragem é a compra e venda simultânea de um ativo em dois mercados diferentes para aproveitar a diferença de preço entre eles. Em teoria é livre de risco: se o Bitcoin vale $ 50.000 na exchange A e $ 50.100 na B, comprar na A e vender na B gera $ 100 de lucro por unidade.\n\nNa prática, os custos de execução (taxas de trading, saques e financiamento) e o tempo de transferência reduzem as margens, tornando as oportunidades efêmeras e os lucros pequenos. Por isso a automação completa é uma necessidade: o bot monitora dezenas de pares de exchanges simultaneamente e executa em frações de segundo.\n\nNos mercados cripto, destacam-se vários tipos: arbitragem simples (mesmo par em duas exchanges distintas), arbitragem triangular (explorar inconsistências de taxas de câmbio entre três pares na mesma exchange) e arbitragem de taxa de financiamento em contratos perpétuos.",
+    "howItWorks": "A plataforma Auto-Trading monitora os fluxos de preços de todas as exchanges conectadas simultaneamente. Quando a diferença de preço supera um limite definido (após descontar taxas), ordens de compra e venda são colocadas simultaneamente. Um bot de arbitragem de taxa de financiamento também monitora as taxas em contratos perpétuos e abre automaticamente o hedge.",
+    "externalLinks": [
+      { "label": "Investopedia — Arbitragem", "description": "Definição da arbitragem e seus diferentes tipos nos mercados financeiros." },
+      { "label": "CoinGecko — Taxas de financiamento", "description": "Dados em tempo real de taxas de financiamento nas principais exchanges de derivativos." },
+      { "label": "Binance Academy — Arbitragem cripto", "description": "Guia da Binance sobre estratégias de arbitragem em criptomoedas." }
+    ]
+  },
+  "ema-indicator": {
+    "title": "Média móvel exponencial (EMA)",
+    "tagline": "Uma média ponderada que reage mais rapidamente às mudanças de preço recentes.",
+    "metaTitle": "EMA — Média móvel exponencial — Aprenda com AutoTrader",
+    "metaDescription": "Descubra o indicador EMA: em que difere do SMA, como é calculado e como gera sinais de trading.",
+    "overview": "A média móvel exponencial (EMA) é um tipo de média móvel que atribui maior peso aos dados de preço mais recentes, tornando-a mais reativa a mudanças de preço do que a média móvel simples (SMA). Essa sensibilidade a torna a ferramenta preferida dos operadores de curto prazo que precisam de sinais que respondam rapidamente ao impulso emergente.\n\nA EMA é calculada com um multiplicador: Multiplicador = 2 ÷ (N + 1), onde N é o número de períodos. Cada novo valor EMA = (Preço atual × Multiplicador) + (EMA anterior × (1 − Multiplicador)). Essa fórmula recursiva faz com que os preços antigos percam progressivamente sua influência sem serem completamente eliminados.\n\nOs períodos de EMA mais populares: 9 e 21 para sinais de curto prazo, 20 e 50 para detectar a tendência de médio prazo, 50 e 200 para análise de longo prazo (Golden Cross/Death Cross). Os institucionais observam a EMA-200 como fronteira entre um mercado em alta e em baixa a longo prazo.",
+    "howItWorks": "A plataforma Auto-Trading calcula os valores de EMA a partir de dados tick em tempo real para garantir precisão em qualquer prazo. O usuário configura o período de EMA no construtor de estratégias e escolhe seu papel: filtro de tendência, motor de cruzamento ou nível de suporte/resistência dinâmico.",
+    "externalLinks": [
+      { "label": "Investopedia — EMA", "description": "Explicação completa da fórmula EMA, seu cálculo e aplicações em trading." },
+      { "label": "TradingView — Indicador EMA", "description": "Scripts EMA e estratégias da comunidade no TradingView." },
+      { "label": "BabyPips — Médias móveis", "description": "Introdução do BabyPips às médias móveis EMA e SMA e suas aplicações." }
+    ]
+  },
+  "sma-indicator": {
+    "title": "Média móvel simples (SMA)",
+    "tagline": "O indicador de tendência fundamental que todo trader deve conhecer.",
+    "metaTitle": "SMA — Média móvel simples — Aprenda com AutoTrader",
+    "metaDescription": "Entenda a SMA: como é calculada, como identifica a tendência e por que continua sendo uma ferramenta essencial no trading moderno.",
+    "overview": "A média móvel simples (SMA) é a média aritmética de um número definido de períodos de preço. Representa a forma mais simples das médias móveis e o ponto de partida para entender todas as demais. Por exemplo, a SMA de 200 dias é um dos níveis técnicos mais acompanhados por operadores nos mercados financeiros globais.\n\nO cálculo é direto: somam-se os preços de fechamento de N períodos e divide-se por N. A cada novo fechamento, o preço mais antigo é removido e o mais recente é adicionado, produzindo uma linha suave que filtra o ruído de curto prazo e revela a tendência subjacente do preço.\n\nA SMA reage mais lentamente do que a EMA às mudanças de preço, tornando-a menos propensa a sinais falsos em mercados voláteis. Para análises de longo prazo — onde o objetivo é identificar a tendência global em vez de refinar o timing — a lentidão da SMA é uma vantagem, não uma desvantagem.",
+    "howItWorks": "A plataforma Auto-Trading suporta o cálculo da SMA sobre o preço (abertura, máxima, mínima, fechamento), o volume ou qualquer valor indicador derivado. No construtor de estratégias, o usuário ajusta o período e a fonte da SMA e conecta a saída a um bloco de cruzamento, comparação de limiar ou monitoramento de suporte/resistência.",
+    "externalLinks": [
+      { "label": "Investopedia — SMA", "description": "Definição da SMA, sua fórmula e casos de uso práticos." },
+      { "label": "TradingView — Scripts SMA", "description": "Estratégias e indicadores baseados em SMA no TradingView." },
+      { "label": "BabyPips — SMA vs. EMA", "description": "Comparação direta entre SMA e EMA para escolher a mais adequada." }
+    ]
+  },
+  "rsi-indicator": {
+    "title": "Índice de força relativa (RSI)",
+    "tagline": "Mede o impulso e identifica condições de sobrecompra e sobrevenda.",
+    "metaTitle": "RSI — Índice de força relativa — Aprenda com AutoTrader",
+    "metaDescription": "Domine o RSI: como funciona, seus sinais de sobrecompra/sobrevenda, as divergências e como integrá-lo em estratégias automatizadas.",
+    "overview": "O Índice de Força Relativa (RSI) é um oscilador de impulso desenvolvido por J. Welles Wilder Jr. e apresentado em 1978 no seu livro \"New Concepts in Technical Trading Systems\". Ele mede a velocidade e a amplitude das mudanças de preço recentes para avaliar condições de sobrecompra ou sobrevenda em uma escala de 0 a 100.\n\nA fórmula padrão usa 14 períodos: RSI = 100 − (100 ÷ (1 + RS)), onde RS é o ganho médio dividido pela perda média em 14 períodos. Tradicionalmente, uma leitura acima de 70 indica sobrecompra e abaixo de 30, sobrevenda.\n\nA divergência do RSI é um de seus sinais mais poderosos: uma divergência de alta (Bullish Divergence) aparece quando o preço marca uma mínima mais baixa, mas o RSI marca uma mínima mais alta — indicando que a força dos vendedores está enfraquecendo e que uma reversão de alta é provável. O inverso se aplica para a divergência de baixa. Essas divergências frequentemente precedem as grandes reversões de tendência e são mais confiáveis em prazos superiores (4H, diário).",
+    "howItWorks": "A plataforma Auto-Trading calcula o RSI em tempo real em qualquer prazo. O construtor de estratégias suporta sinais de limiar do RSI (acima/abaixo de um nível), cruzamentos do RSI (cruzamento da linha 50 para definir a direção do impulso) e detecção de divergência comparando máximas e mínimas do RSI com o preço.",
+    "externalLinks": [
+      { "label": "Investopedia — RSI", "description": "Guia completo do RSI: fórmula, interpretação e sinais de trading." },
+      { "label": "TradingView — RSI", "description": "Variantes de RSI e estratégias da comunidade no TradingView." },
+      { "label": "BabyPips — RSI", "description": "Lição simplificada do BabyPips sobre o RSI para iniciantes." }
+    ]
+  }
+}

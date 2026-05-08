@@ -1,0 +1,262 @@
+{
+  "macd-indicator": {
+    "title": "MACD — Convergência/Divergência de médias móveis",
+    "tagline": "Um indicador de impulso que funciona simultaneamente como sinal de tendência.",
+    "metaTitle": "MACD — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o MACD: como mede impulso e direção de tendência ao mesmo tempo, e como operar os sinais de cruzamento e divergência.",
+    "overview": "O MACD (Moving Average Convergence Divergence) é um dos indicadores técnicos mais utilizados, funcionando simultaneamente como ferramenta de seguimento de tendência e medição de impulso. Desenvolvido por Gerald Appel no final dos anos 70, compõe-se de três elementos: a linha MACD (diferença entre EMA-12 e EMA-26), a linha de sinal (EMA-9 da linha MACD) e o histograma (linha MACD menos linha de sinal).\n\nOs principais sinais de trading: (1) cruzamento da linha MACD acima ou abaixo da linha de sinal — sinal de alta ou baixa; (2) cruzamento do MACD com a linha zero — confirmação da direção do impulso; (3) divergência entre o MACD e o preço — um dos sinais de reversão mais confiáveis.\n\nO histograma é especialmente valioso para calibrar o impulso: barras crescendo sinalizam impulso crescente na direção do movimento, enquanto barras reduzindo sugerem esgotamento. Um histograma que atinge seu pico e começa a contrair é um aviso precoce de um cruzamento iminente da linha de sinal.",
+    "howItWorks": "A plataforma Auto-Trading calcula a linha MACD, a linha de sinal e o histograma vela a vela. No construtor de estratégias, os gatilhos incluem: cruzamentos MACD/sinal, cruzamentos da linha zero, mudanças de direção do histograma e eventos de divergência.",
+    "externalLinks": [
+      { "label": "Investopedia — MACD", "description": "Explicação completa do cálculo do MACD, seus sinais e melhores práticas." },
+      { "label": "TradingView — MACD", "description": "Variantes de MACD e detectores de divergência no TradingView." },
+      { "label": "BabyPips — MACD", "description": "Lição do BabyPips sobre o MACD com exemplos visuais ilustrativos." }
+    ]
+  },
+  "stochastic-oscillator": {
+    "title": "Oscilador estocástico",
+    "tagline": "Comparar o preço de fechamento com o intervalo de preços para detectar reversões de impulso.",
+    "metaTitle": "Oscilador estocástico — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o oscilador estocástico: como detecta condições de sobrecompra/sobrevenda e gera sinais de cruzamento %K/%D.",
+    "overview": "O oscilador estocástico, desenvolvido por George Lane nos anos 50, mede o preço de fechamento em relação ao intervalo máximo/mínimo de um período determinado. A hipótese: em mercados de alta os preços tendem a fechar perto da máxima do intervalo, e em mercados de baixa perto da mínima. Desviar-se desse padrão sinaliza uma possível reversão.\n\nCompõe-se de duas linhas: %K (o oscilador bruto = (Fechamento atual − Mínima recente) ÷ (Máxima recente − Mínima recente) × 100) e %D (SMA-3 de %K que atua como linha de sinal). Ambas oscilam entre 0 e 100. Acima de 80, sobrecompra; abaixo de 20, sobrevenda.\n\nSinais de trading: %K cruza %D para cima na zona de sobrevenda (alta), %K cai abaixo de %D na zona de sobrecompra (baixa), e divergência entre o oscilador e o preço. Funciona melhor em mercados em consolidação; usa-se com filtro de tendência em mercados direcionais.",
+    "howItWorks": "A plataforma Auto-Trading calcula o estocástico rápido (%K, %D) e lento (com suavização adicional). O construtor de estratégias suporta sinais de cruzamento %K/%D, alertas de limiar sobrecompra/sobrevenda e detecção de divergência.",
+    "externalLinks": [
+      { "label": "Investopedia — Estocástico", "description": "Guia completo do oscilador estocástico e seus sinais de trading." },
+      { "label": "TradingView — Estocástico", "description": "Scripts do oscilador estocástico e estratégias da comunidade." },
+      { "label": "BabyPips — Estocástico", "description": "Introdução simplificada do BabyPips ao trading com o estocástico." }
+    ]
+  },
+  "bollinger-bands": {
+    "title": "Bandas de Bollinger",
+    "tagline": "Envoltórias de volatilidade dinâmicas que revelam extremos de preço.",
+    "metaTitle": "Bandas de Bollinger — Aprenda com AutoTrader",
+    "metaDescription": "Domine as Bandas de Bollinger: como essas envoltórias adaptativas à volatilidade identificam compressões, reversões à média e sinais de rompimento.",
+    "overview": "As Bandas de Bollinger, criadas por John Bollinger nos anos 80, compõem-se de três linhas em torno de uma SMA-20: uma banda superior a +2 desvios padrão e uma banda inferior a −2 desvios padrão. Em condições normais de volatilidade, aproximadamente 95% do movimento de preço se situa dentro das duas bandas.\n\nA largura das bandas é dinâmica: se alarga em fases de alta volatilidade e se contrai em períodos tranquilos. Essa adaptação é a principal característica do indicador. O \"Squeeze de Bollinger\" aparece quando as bandas se estreitam a níveis inusitadamente reduzidos, sinalizando uma fase de volatilidade comprimida que historicamente precede um grande movimento.\n\nAs estratégias de reversão à média aproveitam as bandas como zonas extremas: quando o preço toca ou fecha na banda superior, está sobreestendido e é provável que retorne à banda central (SMA). O indicador %B (derivado de Bollinger) mede a posição do preço dentro das bandas em uma escala 0–1.",
+    "howItWorks": "A plataforma Auto-Trading calcula a SMA-20 e as duas bandas em tempo real. Os blocos de estratégia incluem: alertas de contato de banda, sinais de limiar %B, detecção do Squeeze baseada na largura das bandas em relação a razões históricas e sinais de rompimento das bandas.",
+    "externalLinks": [
+      { "label": "Investopedia — Bandas de Bollinger", "description": "Guia oficial das Bandas de Bollinger baseado na documentação de John Bollinger." },
+      { "label": "TradingView — Bandas de Bollinger", "description": "Scripts de Bandas de Bollinger incluindo detectores de Squeeze." },
+      { "label": "BabyPips — Bandas de Bollinger", "description": "Guia prático do BabyPips para operar com as Bandas de Bollinger." }
+    ]
+  },
+  "vwap-indicator": {
+    "title": "VWAP — Preço médio ponderado por volume",
+    "tagline": "O preço de referência que as instituições usam para avaliar a qualidade de execução.",
+    "metaTitle": "VWAP — Preço médio ponderado por volume — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o VWAP: como as instituições usam o preço médio ponderado por volume como referência e como traders individuais o usam para sinais intradiários.",
+    "overview": "O VWAP (Volume Weighted Average Price) é o preço médio de um ativo ponderado pelo volume, calculado desde o início da sessão. Representa o \"preço médio real\" pago por todos os participantes do mercado durante o dia e é a referência principal dos traders institucionais.\n\nVWAP = Soma acumulada (Preço × Volume) ÷ Volume acumulado\n\nComo o VWAP é recalculado no início de cada sessão, é essencialmente uma ferramenta intradiária. O preço acima do VWAP é considerado de alta (compradores dominam); abaixo, de baixa. Os algoritmos institucionais geralmente apontam para o VWAP ao executar grandes ordens, tornando-o um poderoso ímã de preço durante o dia.\n\nO VWAP ancorado (Anchored VWAP) estende o conceito permitindo aos traders ancorar o cálculo a qualquer evento importante: publicação de resultados, máxima de swing ou início de tendência. As estratégias VWAP populares incluem: comprar na retração ao VWAP em sessões de alta.",
+    "howItWorks": "A plataforma Auto-Trading calcula o VWAP de sessão e o VWAP ancorado em tempo real com pontos de ancoragem personalizáveis. Os blocos de estratégia incluem sinais de cruzamento VWAP, alertas de banda de desvio padrão e abertura de sessão em relação ao VWAP.",
+    "externalLinks": [
+      { "label": "Investopedia — VWAP", "description": "Guia completo do cálculo do VWAP e seu uso institucional." },
+      { "label": "TradingView — VWAP", "description": "Scripts de VWAP e VWAP ancorado no TradingView." },
+      { "label": "BabyPips — Trading com VWAP", "description": "Introdução do BabyPips ao VWAP para traders individuais." }
+    ]
+  },
+  "atr-indicator": {
+    "title": "Intervalo verdadeiro médio (ATR)",
+    "tagline": "Mede a volatilidade e dimensiona inteligentemente seus stop-losses.",
+    "metaTitle": "ATR — Intervalo verdadeiro médio — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o ATR: o indicador de volatilidade indispensável para calibrar stop-losses dinâmicos, medir a atividade do mercado e dimensionar posições.",
+    "overview": "O Average True Range (ATR), desenvolvido por J. Welles Wilder Jr. no seu livro de 1978, mede a volatilidade do mercado calculando a média do \"intervalo verdadeiro\" ao longo de um período definido. O intervalo verdadeiro é o maior entre: (Máxima atual − Mínima atual), o valor absoluto de (Máxima atual − Fechamento anterior) ou o valor absoluto de (Mínima atual − Fechamento anterior) — levando em conta os gaps de preço.\n\nO ATR não indica a direção — apenas mede a amplitude do movimento de preço. Um ATR alto sinaliza um mercado volátil; baixo, um mercado tranquilo. Isso o torna indispensável para calibrar stop-losses: um stop em 2×ATR está suficientemente distante para evitar o ruído normal do mercado.\n\nO ATR também é usado para dimensionar posições: Tamanho de posição = Valor arriscado ÷ (ATR × Multiplicador).",
+    "howItWorks": "A plataforma Auto-Trading usa o ATR para calcular as distâncias de stop-loss dinâmico em cada operação. No módulo de gestão de risco, o stop é definido por um multiplicador de ATR (padrão 2×ATR). O tamanho de posição é calculado automaticamente com base no dólar arriscado por operação e na distância de stop ATR.",
+    "externalLinks": [
+      { "label": "Investopedia — ATR", "description": "Explicação da fórmula ATR de Wilder, sua interpretação e aplicações em stop-loss." },
+      { "label": "TradingView — Scripts ATR", "description": "Scripts de stop e trailing stop baseados em ATR no TradingView." },
+      { "label": "BabyPips — ATR", "description": "Guia do BabyPips para usar o ATR no dimensionamento do stop-loss." }
+    ]
+  },
+  "adx-indicator": {
+    "title": "ADX — Índice de movimento direcional médio",
+    "tagline": "Mede a força de tendência para filtrar os maus setups.",
+    "metaTitle": "ADX — Índice de movimento direcional — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o ADX: como medir a força de tendência e filtrar sinais falsos em mercados laterais.",
+    "overview": "O Índice de Movimento Direcional Médio (ADX), também desenvolvido por J. Welles Wilder Jr., mede a força de uma tendência independentemente de sua direção. É sempre exibido junto a duas linhas de movimento direcional: +DI (indicador de movimento positivo) e −DI (indicador de movimento negativo).\n\nOs valores do ADX vão de 0 a 100. Abaixo de 20, tendência fraca ou inexistente (mercado lateral). Entre 20 e 25, início de tendência. Acima de 25, tendência forte; acima de 40, tendência muito forte.\n\nA lição fundamental: as estratégias de seguimento de tendência (cruzamentos de médias, rompimentos) rendem mal quando o ADX é baixo. Adicionar um filtro ADX > 25 reduz consideravelmente os sinais falsos. Por outro lado, as estratégias de reversão à média funcionam melhor quando o ADX < 20.\n\nO cruzamento +DI/−DI fornece sinais direcionais: +DI acima de −DI significa um mercado que se fortalece na alta.",
+    "howItWorks": "A plataforma Auto-Trading calcula o ADX, +DI e −DI em qualquer prazo. O construtor de estratégias permite usar o ADX como filtro de regime de mercado: as estratégias de tendência só são ativadas com ADX > 25, as de reversão só com ADX < 20.",
+    "externalLinks": [
+      { "label": "Investopedia — ADX", "description": "Guia completo do ADX, +DI e −DI com exemplos de trading práticos." },
+      { "label": "TradingView — Scripts ADX", "description": "Scripts de filtro de tendência baseados em ADX e estratégias." },
+      { "label": "BabyPips — ADX", "description": "Explicação do BabyPips sobre o ADX e seu papel na confirmação de tendência." }
+    ]
+  },
+  "donchian-channel": {
+    "title": "Canais de Donchian",
+    "tagline": "O indicador de rompimento no qual se baseia o lendário sistema Turtle Trading.",
+    "metaTitle": "Canais de Donchian — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda os canais de Donchian: o indicador de rompimento usado pelas lendárias Tartarugas para gerar sinais de entrada e saída sistemáticos.",
+    "overview": "Os canais de Donchian, desenvolvidos pelo trader de commodities Richard Donchian, exibem a máxima mais alta e a mínima mais baixa de um período definido pelo usuário como bandas superior e inferior com uma linha central no meio. O preço acima da banda superior indica uma nova máxima em N períodos (rompimento de alta); abaixo da banda inferior, uma nova mínima (rompimento de baixa).\n\nO indicador ganhou fama como pedra angular do sistema Turtle Trading, no qual Richard Dennis usou rompimentos de canais de Donchian de 20 e 55 dias como sinais de entrada em 1983. As Tartarugas — um grupo de traders sem experiência treinados por Dennis — demonstraram que o trading algorítmico disciplinado baseado em regras funciona sem intuição ou experiência prévia.\n\nA entrada comprada é disparada quando o preço fecha acima da banda superior de 20 dias; a vendida quando fecha abaixo da banda inferior. A saída usa um canal de 10 dias. O dimensionamento de posições é baseado em ATR segundo as regras Turtle.",
+    "howItWorks": "A plataforma Auto-Trading implementa os canais de Donchian com períodos configuráveis para entradas (padrão 20) e saídas (padrão 10) conforme as especificações do Turtle Trading. Os sinais de rompimento são integrados ao módulo de dimensionamento de posições baseado em ATR.",
+    "externalLinks": [
+      { "label": "Investopedia — Canais de Donchian", "description": "Guia dos canais de Donchian e seu uso no trading de rompimentos." },
+      { "label": "TradingView — Donchian", "description": "Scripts do canal de Donchian incluindo implementações do Turtle Trading." },
+      { "label": "BabyPips — Canais de Donchian", "description": "Lição do BabyPips sobre os canais de Donchian." }
+    ]
+  },
+  "volume-analysis": {
+    "title": "Análise do volume",
+    "tagline": "Confirmar movimentos de preço seguindo o dinheiro real.",
+    "metaTitle": "Análise do volume no trading — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda a análise do volume: como usar o volume de negociação para confirmar movimentos de preço, detectar distribuição e identificar atividade institucional.",
+    "overview": "O volume é o número de unidades negociadas em um período e uma das medidas mais diretas de participação no mercado. O princípio \"o volume precede o preço\" reflete a observação de que grandes atividades institucionais — que movem significativamente os preços — requerem grandes volumes de transações.\n\nOs conceitos-chave: confirmação por volume (um rompimento acompanhado de volume acima da média tem maior probabilidade de ser válido), divergência de volume (o preço marca novas máximas com volume decrescente, sinalizando interesse comprador diminuindo) e picos de volume (barras de volume muito elevadas após uma tendência prolongada sinalizam esgotamento potencial e reversão).\n\nO On-Balance Volume (OBV) acumula o volume nos dias em que o preço sobe e o subtrai nos dias em que cai, produzindo um total acumulado que atua como indicador de impulso. O perfil de volume (Volume Profile) representa o volume por nível de preço em vez de no tempo, revelando o Ponto de Controle (POC) — o nível de preço com maior volume negociado.",
+    "howItWorks": "A plataforma Auto-Trading monitora o volume em relação à média de 20 períodos em cada vela. Volume acima da média em um rompimento confirma o sinal; volume abaixo ativa um filtro que atrasa ou cancela a entrada. O OBV e o detector de divergência de volume estão disponíveis como blocos de sinal no construtor de estratégias.",
+    "externalLinks": [
+      { "label": "Investopedia — Análise do volume", "description": "Visão geral do volume no trading e suas aplicações analíticas." },
+      { "label": "TradingView — Scripts de volume", "description": "Indicadores de análise de volume da comunidade TradingView." },
+      { "label": "BabyPips — Volume de trading", "description": "Guia do BabyPips sobre análise de volume em Forex e criptomoedas." }
+    ]
+  },
+  "cci-indicator": {
+    "title": "CCI — Índice do canal de commodities",
+    "tagline": "Detectar pontos de virada cíclicos e extremos de preço.",
+    "metaTitle": "CCI — Índice do canal de commodities — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o CCI: como mede o desvio do preço em relação à sua média e gera sinais de sobrecompra/sobrevenda e divergência.",
+    "overview": "O Índice do Canal de Commodities (CCI) foi desenvolvido por Donald Lambert e publicado em 1980. Apesar do nome, é amplamente utilizado em todas as classes de ativos. O indicador mede em que medida o preço típico atual se desvia de sua média recente, normalizado pela desvio absoluto médio para padronizar o resultado.\n\nCCI = (Preço típico − SMA-N do preço típico) ÷ (0,015 × Desvio absoluto médio)\n\nA constante 0,015 foi escolhida para situar aproximadamente 70–80% dos valores do CCI dentro do intervalo ±100 em condições normais. Valores acima de +100 indicam um preço muito acima de sua média recente; abaixo de −100, muito abaixo.\n\nAplicações de trading: entradas contrárias quando o CCI supera ±100 em mercados em consolidação, entradas na direção da tendência após o CCI romper +100 ou −100, e divergência entre CCI e preço como sinal de reversão.",
+    "howItWorks": "A plataforma Auto-Trading calcula o CCI com o preço típico ((Máxima + Mínima + Fechamento) ÷ 3) no período configurado (padrão 20). O construtor de estratégias suporta cruzamentos de nível CCI, entradas de zona e detecção de divergência.",
+    "externalLinks": [
+      { "label": "Investopedia — CCI", "description": "Guia completo do CCI: fórmula, sinais e interpretação." },
+      { "label": "TradingView — Scripts CCI", "description": "Estratégias e scripts baseados em CCI no TradingView." },
+      { "label": "BabyPips — CCI", "description": "Lição do BabyPips sobre o CCI com exemplos práticos de Forex." }
+    ]
+  },
+  "williams-percent-r": {
+    "title": "Williams %R",
+    "tagline": "Um oscilador sensível e rápido de sobrecompra/sobrevenda de Larry Williams.",
+    "metaTitle": "Williams %R — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o Williams %R: como este oscilador identifica níveis de sobrecompra e sobrevenda e gera sinais de reversão de curto prazo.",
+    "overview": "O Williams %R é um indicador de impulso desenvolvido por Larry Williams, similar ao oscilador estocástico mas invertido. Mede o preço de fechamento em relação à máxima do período de observação, normalizado entre −100 e 0. Valores próximos a 0 indicam sobrecompra; próximos a −100, sobrevenda.\n\nFórmula: %R = (Máxima − Fechamento) ÷ (Máxima − Mínima) × −100\n\nValores acima de −20 sinalizam sobrecompra. Valores abaixo de −80 sinalizam sobrevenda. Sinais de compra aparecem quando %R volta acima de −80 vindo de baixo (saindo da zona de sobrevenda); de venda quando volta abaixo de −20 vindo de cima.\n\nO Williams %R é conhecido por sua capacidade de antecipar reversões 1–2 períodos antes de outros osciladores. Também gera potentes sinais de divergência.",
+    "howItWorks": "A plataforma Auto-Trading calcula o Williams %R em um período configurável (padrão 14). O construtor de estratégias suporta sinais de cruzamento de nível, detecção de divergência e combinação com filtros de tendência.",
+    "externalLinks": [
+      { "label": "Investopedia — Williams %R", "description": "Guia completo do Williams %R e suas aplicações em trading." },
+      { "label": "TradingView — Williams %R", "description": "Scripts e estratégias de Williams %R no TradingView." },
+      { "label": "BabyPips — Williams %R", "description": "Lição do BabyPips sobre o Williams %R para trading em Forex." }
+    ]
+  },
+  "parabolic-sar": {
+    "title": "SAR Parabólico",
+    "tagline": "Um stop seguidor automático que acompanha a tendência.",
+    "metaTitle": "SAR Parabólico — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o SAR Parabólico: como este indicador seguidor de tendência gera sinais de stop dinâmicos e sinais de reversão para mercados direcionais.",
+    "overview": "O SAR Parabólico (Parabolic Stop and Reverse), desenvolvido por J. Welles Wilder Jr., é um indicador de seguimento de tendência que coloca pontos acima ou abaixo do preço para indicar a direção e os possíveis pontos de reversão. Pontos abaixo do preço significam tendência de alta; acima dele, tendência de baixa.\n\nO valor SAR é calculado com um fator de aceleração (AF) que começa em 0,02 e aumenta 0,02 cada vez que uma nova extremidade de tendência é registrada, até um máximo de 0,20. À medida que o AF sobe, o ponto SAR se aproxima do preço, o que significa que um sinal de reversão é disparado mais cedo à medida que a tendência amadurece.\n\nO sinal de reversão aparece quando o preço toca ou ultrapassa o ponto SAR. O ponto SAR salta imediatamente para o outro lado do preço e o AF é reiniciado para 0,02. O SAR Parabólico é mais eficaz em mercados com tendência forte.",
+    "howItWorks": "A plataforma Auto-Trading implementa o SAR Parabólico com AF de início, passo e máximo configuráveis. O construtor de estratégias suporta sinais de reversão SAR como gatilhos de entrada/saída. O valor SAR é usado diretamente como stop-loss dinâmico e seguidor.",
+    "externalLinks": [
+      { "label": "Investopedia — SAR Parabólico", "description": "Explicação completa do cálculo do SAR Parabólico e seu uso em trading." },
+      { "label": "TradingView — SAR Parabólico", "description": "Scripts SAR Parabólico e estratégias de seguimento de tendência no TradingView." },
+      { "label": "BabyPips — SAR Parabólico", "description": "Guia do BabyPips para usar o SAR Parabólico no trading de tendência." }
+    ]
+  },
+  "obv-indicator": {
+    "title": "On-Balance Volume (OBV)",
+    "tagline": "Seguir a pressão de compra e venda acumulada através do fluxo de volume.",
+    "metaTitle": "OBV — On-Balance Volume — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o On-Balance Volume (OBV): como este indicador confirma tendências e revela divergências que sinalizam reversões de preço.",
+    "overview": "O On-Balance Volume (OBV) foi desenvolvido por Joseph Granville e apresentado em 1963. O conceito é elegante em sua simplicidade: nos dias em que o preço fecha mais alto, o volume diário é somado a um total acumulado; nos dias em que fecha mais baixo, é subtraído. O resultado é uma linha de volume acumulado que evolui em paralelo com o preço — e às vezes antes dele.\n\nA hipótese fundamental é que o OBV captura a acumulação (compra) e a distribuição (venda) das Mãos Fortes institucionais. Os grandes investidores acumulam posições discretamente durante um período prolongado, o que aparece como um OBV positivo contínuo sem mover muito o preço — até que as posições estejam completas e o preço seja empurrado para cima.\n\nUm OBV que sobe com o preço confirma a tendência de alta. A divergência — OBV caindo enquanto o preço sobe — é um aviso de baixa de que a alta não está respaldada por volume.",
+    "howItWorks": "A plataforma Auto-Trading calcula o OBV como total acumulado atualizado em cada fechamento de vela. O construtor de estratégias fornece sinais de cruzamento OBV, detecção de divergência OBV e análise de tendência OBV.",
+    "externalLinks": [
+      { "label": "Investopedia — OBV", "description": "Guia completo do On-Balance Volume de Granville." },
+      { "label": "TradingView — Scripts OBV", "description": "Indicadores e estratégias OBV no TradingView." },
+      { "label": "BabyPips — OBV", "description": "Introdução do BabyPips ao On-Balance Volume." }
+    ]
+  },
+  "pivot-points": {
+    "title": "Pontos pivô",
+    "tagline": "Calcular os principais níveis de suporte e resistência a partir da sessão anterior.",
+    "metaTitle": "Pontos pivô — Suporte e resistência — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda os pontos pivô: como os traders usam os níveis calculados diária, semanal e mensalmente para identificar suporte, resistência e reversões de alta probabilidade.",
+    "overview": "Os pontos pivô são uma das ferramentas de análise técnica mais antigas e difundidas, datando de antes da era computacional — os traders de futuros nas bolsas de valores os calculavam manualmente todas as manhãs. O ponto pivô central (P) é a média da máxima, mínima e fechamento da sessão anterior. Os níveis de suporte (S1, S2, S3) e resistência (R1, R2, R3) são derivados matematicamente dele.\n\nA lição mais importante: como muitos participantes acompanham os mesmos níveis, eles frequentemente se tornam profecias autorrealizáveis. Os preços tendem a reagir nos níveis pivô não por terem valor intrínseco, mas porque a concentração de ordens neles é alta.\n\nOs pontos pivô padrão são calculados diariamente, mas os pivôs semanais e mensais são usados por swing traders e traders de posição em horizontes mais longos. Camarilla e Woodie's são variantes populares.",
+    "howItWorks": "A plataforma Auto-Trading calcula automaticamente todas as variantes de pontos pivô (padrão, Camarilla, Woodie's, Fibonacci) em todos os prazos. Estratégias podem ser construídas para disparar ordens de compra próximas a S1/S2 com alvo em P ou R1.",
+    "externalLinks": [
+      { "label": "Investopedia — Pontos pivô", "description": "Guia completo do cálculo de pontos pivô e o trading com eles." },
+      { "label": "TradingView — Pontos pivô", "description": "Scripts de pontos pivô e suas estratégias no TradingView." },
+      { "label": "BabyPips — Pontos pivô", "description": "Guia do BabyPips para iniciantes sobre o trading com pontos pivô." }
+    ]
+  },
+  "keltner-channels": {
+    "title": "Canais de Keltner",
+    "tagline": "Envoltórias de volatilidade baseadas em ATR para identificar força de tendência e rompimentos.",
+    "metaTitle": "Canais de Keltner — Envoltórias de volatilidade ATR — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda os canais de Keltner: como este indicador baseado em ATR identifica a direção da tendência, pressões de volatilidade e oportunidades de rompimento de alto impulso.",
+    "overview": "Os canais de Keltner foram desenvolvidos originalmente por Chester Keltner nos anos 60 e modernizados por Linda Bradford Raschke — substituindo a composição original por uma linha central EMA e bandas baseadas em ATR, que é a versão usada hoje. O indicador posiciona uma banda superior e inferior a um múltiplo do Average True Range acima e abaixo de uma média móvel exponencial.\n\nAo contrário das Bandas de Bollinger (que usam o desvio padrão), os canais de Keltner usam o ATR, tornando as bandas mais suaves e menos propensas a se alargar abruptamente em picos de preço curtos. Um fechamento persistente acima da banda superior indica uma tendência de alta forte.\n\nUma das estratégias mais populares é o \"Squeeze Keltner-Bollinger\": quando as Bandas de Bollinger se contraem dentro do canal de Keltner, isso indica uma compressão extrema de volatilidade que precede um movimento direcional explosivo.",
+    "howItWorks": "A plataforma Auto-Trading implementa os canais de Keltner com período EMA e multiplicador ATR configuráveis. A detecção de Squeeze integrada alerta quando as Bandas de Bollinger se contraem dentro do canal de Keltner. Os gatilhos de estratégia incluem contatos de banda, cruzamentos EMA e rompimentos confirmados por impulso.",
+    "externalLinks": [
+      { "label": "Investopedia — Canal de Keltner", "description": "Explicação completa da composição dos canais de Keltner e seu uso." },
+      { "label": "TradingView — Scripts Keltner", "description": "Indicadores do canal de Keltner no TradingView." },
+      { "label": "StockCharts — Canais de Keltner", "description": "Artigo detalhado do StockCharts sobre os canais de Keltner." }
+    ]
+  },
+  "supertrend-indicator": {
+    "title": "Indicador Supertrend",
+    "tagline": "Um stop dinâmico baseado em ATR e um indicador de direção de tendência.",
+    "metaTitle": "Supertrend — Stop dinâmico de tendência — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o indicador Supertrend: como este indicador baseado em ATR sinaliza a direção da tendência, fornece stops dinâmicos e gera sinais claros de compra/venda.",
+    "overview": "O indicador Supertrend, desenvolvido por Olivier Seban, é uma ferramenta de seguimento de tendência que produz sinais de compra e venda notavelmente claros. Ele traça uma única linha sobre o preço: verde abaixo do preço em tendências de alta e vermelha acima em tendências de baixa. A linha também funciona como stop-loss dinâmico e seguidor.\n\nO indicador é construído com o Average True Range. A banda superior = (Máxima + Mínima) / 2 + Multiplicador × ATR; a banda inferior = (Máxima + Mínima) / 2 − Multiplicador × ATR. Quando o preço rompe a banda superior, o Supertrend passa para sinal de compra; quando rompe a inferior, para sinal de venda.\n\nOs parâmetros padrão (período ATR 10, multiplicador 3) funcionam bem em múltiplos prazos e classes de ativos. O multiplicador controla a sensibilidade: valores mais baixos produzem mais sinais com mais ruído; valores mais altos produzem menos sinais mas mais confiáveis.",
+    "howItWorks": "A implementação do Supertrend da Auto-Trading suporta todas as configurações de parâmetros e prazos. As regras de estratégia podem disparar entradas na mudança de cor do Supertrend com confirmação de volume, e saídas quando o Supertrend gira.",
+    "externalLinks": [
+      { "label": "Investopedia — Supertrend", "description": "Visão geral do indicador Supertrend pelo Investopedia." },
+      { "label": "TradingView — Supertrend", "description": "Scripts populares de Supertrend no TradingView." },
+      { "label": "StockCharts — ATR", "description": "Explicação do ATR — a base sobre a qual o Supertrend é construído." }
+    ]
+  },
+  "mfi-indicator": {
+    "title": "Índice de fluxo de dinheiro (MFI)",
+    "tagline": "O RSI ponderado por volume que mede a pressão de compra e venda.",
+    "metaTitle": "MFI — Índice de fluxo de dinheiro — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o Money Flow Index (MFI): um oscilador de impulso ponderado por volume que identifica condições de sobrecompra/sobrevenda com maior precisão do que indicadores baseados apenas no preço.",
+    "overview": "O Money Flow Index (MFI), desenvolvido por Gene Quong e Avrum Soudack, às vezes é chamado de \"RSI ponderado por volume\" porque sua construção imita a lógica do RSI mas incorpora o volume em cada cálculo de período. Isso faz do MFI uma medida mais completa do fluxo de capitais — a pressão real de compra e venda — em vez de apenas o impulso de preço.\n\nO indicador começa com o preço típico (Máxima + Mínima + Fechamento) / 3. Se o preço típico sobe em relação ao período anterior, o fluxo de dinheiro bruto (Preço típico × Volume) é positivo; se cai, negativo. A relação fluxo positivo/negativo é então convertida pela mesma fórmula do RSI para produzir um oscilador 0–100.\n\nComo o RSI, valores acima de 80 indicam sobrecompra e abaixo de 20, sobrevenda — mas a inclusão do volume torna esses sinais mais confiáveis do que o RSI sozinho. A divergência do MFI é muito valiosa: o preço marca novas máximas mas o MFI não confirma — sinaliza distribuição.",
+    "howItWorks": "A plataforma Auto-Trading usa o MFI como gerador de sinais independente e como filtro de confirmação. Estratégias podem ser construídas para comprar quando o MFI está na zona de sobrevenda (< 20) em ativos com tendência de alta, ou vender quando está na zona de sobrecompra (> 80) em uma tendência de baixa.",
+    "externalLinks": [
+      { "label": "Investopedia — MFI", "description": "Guia completo do Money Flow Index e seu método de cálculo." },
+      { "label": "TradingView — Scripts MFI", "description": "Indicadores e estratégias MFI no TradingView." },
+      { "label": "StockCharts — MFI", "description": "Artigo detalhado do StockCharts sobre o MFI com exemplos." }
+    ]
+  },
+  "fibonacci-indicator": {
+    "title": "Retrações e extensões de Fibonacci",
+    "tagline": "Usar a razão áurea para identificar suporte, resistência e alvos de lucro de alta probabilidade.",
+    "metaTitle": "Fibonacci — Retrações e extensões — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda os níveis de retração e extensão de Fibonacci: como a razão áurea identifica suporte, resistência e alvos de lucro usados por traders institucionais do mundo todo.",
+    "overview": "A análise de Fibonacci no trading deriva da sequência matemática descoberta por Leonardo Fibonacci no século XIII. As razões-chave — 23,6%, 38,2%, 50%, 61,8% (razão áurea), 78,6% — representam relações proporcionais que se repetem nos sistemas naturais e financeiros. O nível de 61,8% é o mais importante.\n\nNo trading, os níveis de retração de Fibonacci são traçados entre dois pontos de swing proeminentes (grande máxima e grande mínima). Os níveis resultantes identificam suporte potencial durante retrações em tendências de alta ou resistência nos repiques de tendências de baixa. O intervalo de 38,2%–61,8% é chamado de \"Zona Dourada\".\n\nOs níveis de extensão de Fibonacci projetam alvos de preço além do movimento inicial. As extensões de 161,8%, 261,8% e 423,6% fornecem alvos de lucro para operações de rompimento.",
+    "howItWorks": "A ferramenta Fibonacci da plataforma Auto-Trading identifica automaticamente os principais pontos de swing e traça os níveis de retração e extensão. Os sinais de estratégia podem ser disparados quando o preço toca um nível de Fibonacci com um padrão de vela inversora.",
+    "externalLinks": [
+      { "label": "Investopedia — Retração de Fibonacci", "description": "Guia completo dos níveis de retração de Fibonacci no trading." },
+      { "label": "TradingView — Ferramentas Fibonacci", "description": "Guia de traçado e interpretação de Fibonacci no TradingView." },
+      { "label": "BabyPips — Fibonacci", "description": "Guia completo do BabyPips para operar com Fibonacci." }
+    ]
+  },
+  "supply-demand-zones": {
+    "title": "Zonas de oferta e demanda",
+    "tagline": "Opere os desequilíbrios de ordens institucionais onde a probabilidade de reversão é maior.",
+    "metaTitle": "Zonas de oferta e demanda — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o trading com zonas de oferta e demanda: como identificar desequilíbrios de ordens institucionais no gráfico e executar operações de reversão de alta probabilidade.",
+    "overview": "O trading com zonas de oferta e demanda está enraizado na economia fundamental: os preços se movem quando há um desequilíbrio entre compradores e vendedores. Uma zona de demanda é um intervalo de preços onde as ordens de compra superaram muito as de venda — essas ordens não executadas permanecem teoricamente no mercado e formam uma zona de suporte de alta probabilidade quando o preço retorna a elas.\n\nAs zonas de oferta são o inverso: zonas onde uma pressão vendedora massiva superou os compradores. A assinatura visual de uma zona poderosa: uma ou mais velas de consolidação seguidas de um movimento direcional explosivo. Quanto mais rápido e forte for o movimento afastando-se da zona, mais significativas são as ordens pendentes.\n\nA vantagem da estratégia: relações risco/retorno assimétricas a favor do trader — entradas no limite próximo da zona com stop-loss atrás do limite distante e alvo de lucro de pelo menos 2:1 ou 3:1. Uma zona é considerada expirada e enfraquece após vários testes.",
+    "howItWorks": "A plataforma Auto-Trading identifica automaticamente as zonas de oferta e demanda buscando padrões de consolidação seguidos de movimentos impulsivos que superam um limite configurável. As zonas são classificadas por recência, força e distância ao preço atual. Ordens limitadas de compra são colocadas nos níveis próximos com stop-loss no nível distante de forma automática.",
+    "externalLinks": [
+      { "label": "Investopedia — Oferta e demanda", "description": "A economia da oferta e demanda aplicada ao trading." },
+      { "label": "TradingView — Indicadores de zonas", "description": "Indicadores de zonas de oferta e demanda no TradingView." },
+      { "label": "BabyPips — Suporte e resistência", "description": "Guia do BabyPips sobre suporte e resistência (conceito estreitamente relacionado)." }
+    ]
+  },
+  "wyckoff-method": {
+    "title": "Método Wyckoff",
+    "tagline": "Decodifique os ciclos de acumulação e distribuição institucional com análise preço-volume.",
+    "metaTitle": "Método Wyckoff — Acumulação e distribuição institucional — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda o método Wyckoff: como identificar as fases de acumulação, distribuição e reacumulação institucional para operar com as mãos fortes.",
+    "overview": "Richard Wyckoff foi um pioneiro da análise técnica no início do século XX. Como corretor de bolsa e editor nos anos 1910–1930, teve uma visão incomparável de como os grandes operadores — instituições e formadores de mercado — acumulavam e controlavam suas posições massivas sem afetar negativamente os mercados. Ele registrou essas observações em um framework coerente que traders avançados ainda usam hoje.\n\nO método Wyckoff identifica quatro fases do comportamento do mercado: acumulação (os grandes operadores compram discretamente enquanto os traders individuais vendem), a tendência de alta resultante, distribuição (os grandes operadores vendem na demanda dos particulares perto da máxima) e a tendência de baixa.\n\nO \"Spring\" — um falso rompimento para baixo abaixo do suporte que expulsa as mãos fracas antes que comece a fase de alta — é um dos eventos Wyckoff mais tradáveis. As três leis de Wyckoff — oferta e demanda, causa e efeito, esforço versus resultado — fornecem um framework lógico para entender por que os mercados se movem.",
+    "howItWorks": "A plataforma Auto-Trading integra a análise Wyckoff combinando o reconhecimento de estrutura de preço e a análise de volume. O sistema pode identificar automaticamente possíveis Springs, Tests e Signs of Strength. As estratégias automatizadas podem ser disparadas em padrões Spring confirmados com confirmação de volume.",
+    "externalLinks": [
+      { "label": "Investopedia — Método Wyckoff", "description": "Explicação do Investopedia sobre o método Wyckoff no trading." },
+      { "label": "StockCharts — Wyckoff", "description": "Escola Wyckoff completa do StockCharts." },
+      { "label": "TradingView — Scripts Wyckoff", "description": "Ferramentas e scripts de análise Wyckoff no TradingView." }
+    ]
+  },
+  "elliott-wave": {
+    "title": "Teoria das ondas de Elliott",
+    "tagline": "Reconhecer os padrões de ondas recorrentes que refletem a psicologia das massas e os ciclos do mercado.",
+    "metaTitle": "Teoria das ondas de Elliott — Ciclos de mercado — Aprenda com AutoTrader",
+    "metaDescription": "Aprenda a teoria das ondas de Elliott: como identificar os padrões de impulso de 5 ondas e correção de 3 ondas que revelam os ciclos do mercado e setups de alta probabilidade.",
+    "overview": "Ralph Nelson Elliott desenvolveu sua teoria das ondas nos anos 30, após observar que os mercados financeiros se movem em padrões recorrentes que refletem a psicologia coletiva dos participantes. O princípio fundamental: o preço se move em um padrão de impulso de 5 ondas na direção da tendência principal (ondas 1-2-3-4-5), seguido de um padrão de correção de 3 ondas na direção oposta (ondas A-B-C).\n\nNessa estrutura básica, as ondas 1, 3 e 5 são ondas \"motrizes\" na direção da tendência, enquanto as ondas 2 e 4 são \"correções\". A onda 3 costuma ser a mais longa e forte e nunca é a mais curta das ondas 1, 3 e 5 — uma regra fundamental na contagem de ondas.\n\nAs ondas de Elliott são fractais: cada onda se compõe de ondas menores com o mesmo padrão. As razões de Fibonacci regem as relações entre ondas — a onda 3 frequentemente se estende 1,618× o comprimento da onda 1, e as correções tipicamente retraem entre 38,2% e 61,8% do impulso anterior.",
+    "howItWorks": "A plataforma Auto-Trading suporta a análise de ondas de Elliott por meio de rotulagem automática da contagem de ondas potencial e destaque de zonas de confluência de Fibonacci. A automação pode ser disparada em correções de onda 2 confirmadas — quando a correção toca um nível de Fibonacci chave e exibe um sinal de reversão — para entrar na onda 3 com um alvo pré-calculado.",
+    "externalLinks": [
+      { "label": "Investopedia — Ondas de Elliott", "description": "Guia completo do Investopedia sobre a teoria das ondas de Elliott." },
+      { "label": "TradingView — Ondas de Elliott", "description": "Ferramentas de contagem de ondas de Elliott no TradingView." },
+      { "label": "EWI — Elliott Wave International", "description": "Recursos educacionais do Elliott Wave International." }
+    ]
+  }
+}
