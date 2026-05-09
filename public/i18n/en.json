@@ -2362,5 +2362,35 @@
         }
       ]
     }
+  },
+  "learnDetail": {
+    "backToHome": "← Back to Home",
+    "tradingStrategy": "Trading Strategy",
+    "tradingSignalIndicator": "Trading Signal / Indicator",
+    "startAutomatingFree": "Start Automating Free →",
+    "wantToAutomate": "Want to automate this strategy?",
+    "tryAutoTradingFree": "Try auto-Trading free",
+    "noCreditCardRequired": "— no credit card required.",
+    "overview": "Overview",
+    "whatIs": "What is",
+    "whatIsSuffix": "?",
+    "related": "Related:",
+    "howItWorksLabel": "How It Works in auto-Trading",
+    "automateIt": "Automate It",
+    "tryFree": "Try Free →",
+    "externalResources": "External Resources",
+    "learnFromTrustedSources": "Learn from Trusted Sources",
+    "readyToAutomatePrefix": "Ready to automate",
+    "readyToAutomateSuffix": "?",
+    "ctaSub": "Join thousands of traders who use auto-Trading to execute this strategy automatically, 24/7.",
+    "getStartedFree": "Get Started Free →",
+    "exploreMore": "Explore More",
+    "relatedStrategies": "Related Strategies",
+    "relatedIndicators": "Related Indicators",
+    "allStrategiesSignals": "All Strategies & Signals",
+    "continueLearning": "Continue Learning",
+    "tradingStrategies": "Trading Strategies",
+    "tradingSignalsIndicators": "Trading Signals & Indicators",
+    "viewFullSitemap": "View full sitemap →"
   }
 }

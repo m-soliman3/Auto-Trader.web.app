@@ -2362,5 +2362,35 @@
         }
       ]
     }
+  },
+  "learnDetail": {
+    "backToHome": "← Zurück zur Startseite",
+    "tradingStrategy": "Handelsstrategie",
+    "tradingSignalIndicator": "Handelssignal / Indikator",
+    "startAutomatingFree": "Kostenlos automatisieren →",
+    "wantToAutomate": "Diese Strategie automatisieren?",
+    "tryAutoTradingFree": "auto-Trading kostenlos testen",
+    "noCreditCardRequired": "— keine Kreditkarte erforderlich.",
+    "overview": "Überblick",
+    "whatIs": "Was ist",
+    "whatIsSuffix": "?",
+    "related": "Verwandt:",
+    "howItWorksLabel": "So funktioniert es in auto-Trading",
+    "automateIt": "Automatisieren",
+    "tryFree": "Kostenlos testen →",
+    "externalResources": "Externe Ressourcen",
+    "learnFromTrustedSources": "Von vertrauenswürdigen Quellen lernen",
+    "readyToAutomatePrefix": "Bereit,",
+    "readyToAutomateSuffix": " zu automatisieren?",
+    "ctaSub": "Schließen Sie sich Tausenden von Händlern an, die auto-Trading nutzen, um diese Strategie automatisch auszuführen, rund um die Uhr.",
+    "getStartedFree": "Kostenlos starten →",
+    "exploreMore": "Mehr entdecken",
+    "relatedStrategies": "Verwandte Strategien",
+    "relatedIndicators": "Verwandte Indikatoren",
+    "allStrategiesSignals": "Alle Strategien & Signale",
+    "continueLearning": "Weiter lernen",
+    "tradingStrategies": "Handelsstrategien",
+    "tradingSignalsIndicators": "Handelssignale & Indikatoren",
+    "viewFullSitemap": "Vollständige Sitemap ansehen →"
   }
 }

@@ -2362,5 +2362,35 @@
         }
       ]
     }
+  },
+  "learnDetail": {
+    "backToHome": "← العودة إلى الرئيسية",
+    "tradingStrategy": "استراتيجية تداول",
+    "tradingSignalIndicator": "إشارة / مؤشر تداول",
+    "startAutomatingFree": "ابدأ الأتمتة مجاناً ←",
+    "wantToAutomate": "هل تريد أتمتة هذه الاستراتيجية؟",
+    "tryAutoTradingFree": "جرب auto-Trading مجاناً",
+    "noCreditCardRequired": "— لا بطاقة ائتمان مطلوبة.",
+    "overview": "نظرة عامة",
+    "whatIs": "ما هو",
+    "whatIsSuffix": "؟",
+    "related": "ذات صلة:",
+    "howItWorksLabel": "كيف يعمل في auto-Trading",
+    "automateIt": "أتمته الآن",
+    "tryFree": "جرب مجاناً ←",
+    "externalResources": "موارد خارجية",
+    "learnFromTrustedSources": "تعلم من مصادر موثوقة",
+    "readyToAutomatePrefix": "هل أنت مستعد لأتمتة",
+    "readyToAutomateSuffix": "؟",
+    "ctaSub": "انضم إلى آلاف المتداولين الذين يستخدمون auto-Trading لتنفيذ هذه الاستراتيجية تلقائياً على مدار الساعة.",
+    "getStartedFree": "ابدأ مجاناً ←",
+    "exploreMore": "استكشف المزيد",
+    "relatedStrategies": "الاستراتيجيات ذات الصلة",
+    "relatedIndicators": "المؤشرات ذات الصلة",
+    "allStrategiesSignals": "جميع الاستراتيجيات والإشارات",
+    "continueLearning": "مواصلة التعلم",
+    "tradingStrategies": "استراتيجيات التداول",
+    "tradingSignalsIndicators": "إشارات ومؤشرات التداول",
+    "viewFullSitemap": "عرض خريطة الموقع الكاملة ←"
   }
 }
