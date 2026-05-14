@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -59,6 +59,10 @@ const corsHandler = (0, cors_1.default)({
     methods: ["POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 });
+// Broker secrets declared here so they are available to getPortfolio/getPortfolioHttp
+// which are defined early in this file, before the top-up/payment functions.
+const ALPACA_BROKER_KEY = (0, params_1.defineSecret)("ALPACA_BROKER_KEY");
+const ALPACA_BROKER_SECRET = (0, params_1.defineSecret)("ALPACA_BROKER_SECRET");
 async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
     const baseUrl = isPaper
         ? "https://paper-api.alpaca.markets"
@@ -205,6 +209,69 @@ async function fetchBinancePortfolio(apiKey, apiSecret) {
         openPositions,
     };
 }
+/**
+ * Fetches portfolio for an Alpaca Broker-provisioned paper account via the
+ * Broker sandbox trading proxy using an OAuth2 Bearer token.
+ *
+ * Used when the stored API key is a CK-prefixed broker sub-account key
+ * (provisioned via top-up) rather than a regular PK-prefixed trading key
+ * (manually connected). CK keys cannot be used with paper-api.alpaca.markets.
+ */
+async function fetchAlpacaBrokerPaperPortfolio(brokerKey, brokerSecret, accountId) {
+    const BROKER_BASE = "https://broker-api.sandbox.alpaca.markets";
+    const AUTHX_BASE = "https://authx.sandbox.alpaca.markets";
+    const tokenRes = await (0, node_fetch_1.default)(`${AUTHX_BASE}/v1/oauth2/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+            grant_type: "client_credentials",
+            client_id: brokerKey,
+            client_secret: brokerSecret,
+        }).toString(),
+    });
+    if (!tokenRes.ok) {
+        const err = await tokenRes.text();
+        throw new functions.https.HttpsError("internal", `Alpaca auth token failed (${tokenRes.status}): ${err}`);
+    }
+    const { access_token } = (await tokenRes.json());
+    const auth = `Bearer ${access_token}`;
+    const headers = { Authorization: auth, Accept: "application/json" };
+    console.log("🔗 Alpaca Broker sandbox proxy, accountId:", accountId);
+    const accountRes = await (0, node_fetch_1.default)(`${BROKER_BASE}/v1/trading/accounts/${accountId}/account`, { headers });
+    if (!accountRes.ok) {
+        const text = await accountRes.text();
+        throw new functions.https.HttpsError("internal", `Alpaca Broker account error ${accountRes.status}: ${text}`);
+    }
+    const data = await accountRes.json();
+    const posRes = await (0, node_fetch_1.default)(`${BROKER_BASE}/v1/trading/accounts/${accountId}/positions`, { headers });
+    if (!posRes.ok) {
+        const text = await posRes.text();
+        throw new functions.https.HttpsError("internal", `Alpaca Broker positions error ${posRes.status}: ${text}`);
+    }
+    const positions = await posRes.json();
+    const openPositions = Array.isArray(positions)
+        ? positions.map((p) => {
+            const side = String(p.side || "long").toLowerCase() === "short" ? "short" : "long";
+            return {
+                symbol: String(p.symbol || ""),
+                quantity: Number.parseFloat(p.qty || "0"),
+                marketValue: Number.parseFloat(p.market_value || "0"),
+                unrealizedPnl: p.unrealized_pl != null ? Number.parseFloat(p.unrealized_pl) : null,
+                pnlPercentage: p.unrealized_plpc != null ? Number.parseFloat(p.unrealized_plpc) * 100 : null,
+                entryPrice: p.avg_entry_price != null ? Number.parseFloat(p.avg_entry_price) : null,
+                currentPrice: p.current_price != null ? Number.parseFloat(p.current_price) : null,
+                side,
+            };
+        })
+        : [];
+    return {
+        portfolioValue: Number.parseFloat(data.equity || data.portfolio_value || "0"),
+        unrealizedPnl: data.unrealized_pl != null ? Number.parseFloat(data.unrealized_pl) : null,
+        pnlPercentage: data.unrealized_plpc != null ? Number.parseFloat(data.unrealized_plpc) * 100 : null,
+        updatedAt: new Date().toISOString(),
+        openPositions,
+    };
+}
 async function resolvePortfolio(exchangeId, apiKey, apiSecretFromClient) {
     const sanitizedApiKey = (apiKey || "").replace(/\s+/g, "");
     const sanitizedApiSecret = (apiSecretFromClient || "").replace(/\s+/g, "");
@@ -226,6 +293,7 @@ async function resolvePortfolio(exchangeId, apiKey, apiSecretFromClient) {
 }
 exports.getPortfolio = functions
     .region("europe-west1")
+    .runWith({ secrets: [ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
     .https.onCall(async (data, context) => {
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
@@ -235,6 +303,20 @@ exports.getPortfolio = functions
         const { exchangeId, apiKey, apiSecret } = data;
         console.log("📊 Portfolio request for:", exchangeId);
         console.log("🔑 API Key provided:", !!apiKey);
+        // Top-up paper accounts use CK-prefixed Broker API keys which only work
+        // against the Broker sandbox trading proxy (not paper-api.alpaca.markets).
+        // Manually connected alpaca-paper accounts use regular PK-prefixed keys
+        // and continue to use paper-api.alpaca.markets.
+        if (exchangeId === "alpaca-paper" && (apiKey || "").startsWith("CK")) {
+            const userDoc = await admin.firestore().collection("users").doc(context.auth.uid).get();
+            const brokerAccountId = userDoc.data()?.alpacaBrokerAccountId;
+            if (brokerAccountId) {
+                console.log("📊 Routing to Alpaca Broker sandbox proxy, accountId:", brokerAccountId);
+                const portfolio = await fetchAlpacaBrokerPaperPortfolio(ALPACA_BROKER_KEY.value(), ALPACA_BROKER_SECRET.value(), brokerAccountId);
+                console.log("✅ Success! Portfolio value:", portfolio.portfolioValue);
+                return portfolio;
+            }
+        }
         const portfolio = await resolvePortfolio(exchangeId, apiKey, apiSecret);
         console.log("✅ Success! Portfolio value:", portfolio.portfolioValue);
         return portfolio;
@@ -249,6 +331,7 @@ exports.getPortfolio = functions
 });
 exports.getPortfolioHttp = functions
     .region("europe-west1")
+    .runWith({ secrets: [ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
     .https.onRequest((req, res) => {
     corsHandler(req, res, async () => {
         if (req.method === "OPTIONS") {
@@ -271,6 +354,17 @@ exports.getPortfolioHttp = functions
             const { exchangeId, apiKey, apiSecret } = req.body || {};
             console.log("📊 HTTP portfolio request for:", exchangeId);
             console.log("🔑 API Key provided:", !!apiKey);
+            // Same CK-key routing as the callable version.
+            if (exchangeId === "alpaca-paper" && (apiKey || "").startsWith("CK")) {
+                const userDoc = await admin.firestore().collection("users").doc(decoded.uid).get();
+                const brokerAccountId = userDoc.data()?.alpacaBrokerAccountId;
+                if (brokerAccountId) {
+                    console.log("📊 HTTP routing to Alpaca Broker sandbox proxy, accountId:", brokerAccountId);
+                    const portfolio = await fetchAlpacaBrokerPaperPortfolio(ALPACA_BROKER_KEY.value(), ALPACA_BROKER_SECRET.value(), brokerAccountId);
+                    res.status(200).json(portfolio);
+                    return;
+                }
+            }
             const portfolio = await resolvePortfolio(exchangeId, apiKey, apiSecret);
             res.status(200).json(portfolio);
         }
@@ -1018,5 +1112,582 @@ exports.confirmPayPalSubscription = functions
             res.status(500).json({ error: message });
         }
     });
+});
+// ── Real-money top-up ───────────────────────────────────────────────────────
+/**
+ * Creates an Alpaca Broker sandbox sub-account for the user, generates
+ * paper-trading API keys, and funds it with virtual money matching the deposit.
+ * Uses Alpaca's sandbox environment (paper-only, no real money at risk).
+ * Returns null (with a warning) on any Alpaca API error so the top-up itself
+ * is never blocked.
+ */
+async function provisionAlpacaPaperAccount(uid, email, displayName, depositAmountUsd, brokerKey, brokerSecret) {
+    try {
+        const ALPACA_BROKER_BASE = "https://broker-api.sandbox.alpaca.markets";
+        const authHeader = `Basic ${Buffer.from(`${brokerKey}:${brokerSecret}`).toString("base64")}`;
+        const headers = {
+            Authorization: authHeader,
+            "Content-Type": "application/json",
+        };
+        // Parse the user's display name into first / last.
+        const parts = displayName.trim().split(/\s+/);
+        const givenName = parts[0] || "AutoTrader";
+        const familyName = parts.slice(1).join(" ") || "User";
+        // 1 ── Create broker sub-account.
+        //      Alpaca sandbox accepts the test SSN "666-55-4321" documented
+        //      in their official sandbox guide.
+        const createResp = await (0, node_fetch_1.default)(`${ALPACA_BROKER_BASE}/v1/accounts`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+                contact: {
+                    email_address: email,
+                    phone_number: "555-666-7788",
+                    street_address: ["20 N San Mateo Dr"],
+                    city: "San Mateo",
+                    state: "CA",
+                    postal_code: "94401",
+                    country: "USA",
+                },
+                identity: {
+                    given_name: givenName,
+                    family_name: familyName,
+                    date_of_birth: "1990-01-01",
+                    tax_id: "666-55-4321",
+                    tax_id_type: "USA_SSN",
+                    country_of_citizenship: "USA",
+                    country_of_birth: "USA",
+                    country_of_tax_residence: "USA",
+                    funding_source: ["employment_income"],
+                },
+                disclosures: {
+                    is_control_person: false,
+                    is_affiliated_exchange_or_finra: false,
+                    is_politically_exposed: false,
+                    immediate_family_exposed: false,
+                },
+                agreements: [
+                    {
+                        agreement: "customer_agreement",
+                        signed_at: new Date().toISOString(),
+                        ip_address: "127.0.0.1",
+                    },
+                ],
+            }),
+        });
+        if (!createResp.ok) {
+            console.warn(`⚠️ Alpaca account creation failed for ${uid}: ${await createResp.text()}`);
+            return null;
+        }
+        const account = (await createResp.json());
+        const accountId = account.id;
+        // 2 ── Generate paper-trading API keys for the sub-account.
+        const keysResp = await (0, node_fetch_1.default)(`${ALPACA_BROKER_BASE}/v1/trading/accounts/${accountId}/access_keys`, { method: "POST", headers, body: JSON.stringify({}) });
+        if (!keysResp.ok) {
+            console.warn(`⚠️ Alpaca key generation failed for ${uid}: ${await keysResp.text()}`);
+            return null;
+        }
+        const keys = (await keysResp.json());
+        // 3 ── Fund the paper account with virtual money matching the deposit.
+        const fundResp = await (0, node_fetch_1.default)(`${ALPACA_BROKER_BASE}/v1/accounts/${accountId}/transactions/cash`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+                amount: String(depositAmountUsd),
+                direction: "INCOMING",
+                reason: "AutoTrader user deposit",
+            }),
+        });
+        if (!fundResp.ok) {
+            // Funding failure is non-fatal — account + keys are still usable.
+            console.warn(`⚠️ Alpaca fund deposit warning for ${uid}: ${await fundResp.text()}`);
+        }
+        console.log(`✅ Alpaca paper account provisioned for ${uid}: ${accountId}`);
+        return { accountId, apiKey: keys.id, apiSecret: keys.secret };
+    }
+    catch (err) {
+        console.warn("⚠️ provisionAlpacaPaperAccount threw:", err);
+        return null;
+    }
+}
+const MIN_TOPUP_USD = 1;
+const MAX_TOPUP_USD = 100000;
+/**
+ * Creates a Stripe PaymentIntent for a one-time real-money top-up.
+ * The frontend confirms the payment with the returned clientSecret,
+ * then calls confirmTopUp to credit the user's account in Firestore.
+ */
+exports.createTopUpIntent = functions
+    .region("europe-west1")
+    .runWith({ secrets: [STRIPE_SECRET_KEY] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const rawAmount = Number(req.body?.amountUsd ?? 0);
+            if (!Number.isFinite(rawAmount) || rawAmount < MIN_TOPUP_USD || rawAmount > MAX_TOPUP_USD) {
+                res.status(400).json({ error: `Amount must be between $${MIN_TOPUP_USD} and $${MAX_TOPUP_USD}.` });
+                return;
+            }
+            const amountCents = Math.round(rawAmount * 100);
+            const stripe = getStripeClient();
+            const customer = await getOrCreateStripeCustomer(decoded);
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: amountCents,
+                currency: "usd",
+                customer: customer.id,
+                description: `AutoTrader real-money account top-up — $${rawAmount}`,
+                metadata: {
+                    uid: decoded.uid,
+                    purpose: "real_money_topup",
+                    amountUsd: String(rawAmount),
+                },
+            });
+            res.status(200).json({
+                clientSecret: paymentIntent.client_secret,
+                paymentIntentId: paymentIntent.id,
+            });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to create top-up payment";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ createTopUpIntent failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+/**
+ * Verifies a completed top-up PaymentIntent and credits the user's
+ * real-money balance in Firestore, marking them as onboarded.
+ */
+exports.confirmTopUp = functions
+    .region("europe-west1")
+    .runWith({ secrets: [STRIPE_SECRET_KEY, ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const paymentIntentId = String(req.body?.paymentIntentId || "").trim();
+            if (!paymentIntentId) {
+                res.status(400).json({ error: "Missing paymentIntentId" });
+                return;
+            }
+            const stripe = getStripeClient();
+            const intent = await stripe.paymentIntents.retrieve(paymentIntentId);
+            // Security: verify the intent belongs to this user.
+            if (intent.metadata?.uid !== decoded.uid) {
+                res.status(403).json({ error: "PaymentIntent does not belong to this user" });
+                return;
+            }
+            if (intent.status !== "succeeded") {
+                res.status(400).json({ error: `Payment has not succeeded (status: ${intent.status})` });
+                return;
+            }
+            // Use the authoritative amount from Stripe (cents → USD).
+            const verifiedAmountUsd = intent.amount / 100;
+            const userRef = admin.firestore().collection("users").doc(decoded.uid);
+            const userSnap = await userRef.get();
+            const userData = userSnap.data() ?? {};
+            const existingBalance = Number(userData.realMoneyBalance ?? 0);
+            const newBalance = Math.round((existingBalance + verifiedAmountUsd) * 100) / 100;
+            // Provision an Alpaca Broker sandbox paper account (only on first top-up).
+            let alpacaAccount = null;
+            if (!userData.alpacaBrokerAccountId) {
+                const brokerKey = ALPACA_BROKER_KEY.value();
+                const brokerSecret = ALPACA_BROKER_SECRET.value();
+                if (brokerKey && brokerSecret) {
+                    const userEmail = decoded.email ?? `${decoded.uid}@autotrader.app`;
+                    const userDisplayName = decoded.name ?? "AutoTrader User";
+                    alpacaAccount = await provisionAlpacaPaperAccount(decoded.uid, userEmail, userDisplayName, verifiedAmountUsd, brokerKey, brokerSecret);
+                }
+                else {
+                    console.warn("⚠️ ALPACA_BROKER_KEY / ALPACA_BROKER_SECRET not set — skipping Alpaca provisioning");
+                }
+            }
+            const firestoreUpdate = {
+                realMoneyBalance: newBalance,
+                realMoneyOnboarded: true,
+            };
+            if (alpacaAccount) {
+                firestoreUpdate.alpacaBrokerAccountId = alpacaAccount.accountId;
+            }
+            await userRef.set(firestoreUpdate, { merge: true });
+            // Auto-connect the Alpaca paper account as an exchange for the user.
+            if (alpacaAccount) {
+                const exchangeRef = admin
+                    .firestore()
+                    .collection("users")
+                    .doc(decoded.uid)
+                    .collection("exchanges")
+                    .doc("alpaca-paper-autotrader");
+                await exchangeRef.set({
+                    exchangeId: "alpaca-paper",
+                    label: "alpaca-paper-autotrader",
+                    apiKey: alpacaAccount.apiKey,
+                    secret: alpacaAccount.apiSecret,
+                    passphrase: "",
+                    status: "active",
+                    connectedAt: new Date().toISOString(),
+                });
+            }
+            console.log(`✅ Top-up confirmed for ${decoded.uid}: +$${verifiedAmountUsd}, new balance $${newBalance}`);
+            res.status(200).json({
+                ok: true,
+                creditedUsd: verifiedAmountUsd,
+                newBalanceUsd: newBalance,
+                alpacaProvisioned: alpacaAccount !== null,
+            });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to confirm top-up";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ confirmTopUp failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+// ── NOWPayments Cryptocurrency Top-up ──────────────────────────────────────
+const NOWPAYMENTS_API_KEY = (0, params_1.defineSecret)("NOWPAYMENTS_API_KEY");
+const NOWPAYMENTS_PUBLIC_KEY = (0, params_1.defineSecret)("NOWPAYMENTS_PUBLIC_KEY");
+const NOWPAYMENTS_BASE_URL = "https://api.nowpayments.io";
+// CORS handler that also allows GET (needed for order status polling).
+const corsHandlerGet = (0, cors_1.default)({
+    origin: [
+        "https://autotrader-b8851.web.app",
+        "https://invest-begin.com",
+        "https://www.invest-begin.com",
+        /^http:\/\/localhost(?::\d+)?$/,
+        /^http:\/\/127\.0\.0\.1(?::\d+)?$/,
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+});
+/**
+ * Creates a NOWPayments cryptocurrency payment order for a real-money top-up.
+ * Returns the hosted payment URL that the user visits to pay in crypto.
+ */
+exports.createNowPaymentsOrder = functions
+    .region("europe-west1")
+    .runWith({ secrets: [NOWPAYMENTS_API_KEY] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const rawAmount = Number(req.body?.amountUsd ?? 0);
+            if (!Number.isFinite(rawAmount) || rawAmount < MIN_TOPUP_USD || rawAmount > MAX_TOPUP_USD) {
+                res.status(400).json({ error: `Amount must be between $${MIN_TOPUP_USD} and $${MAX_TOPUP_USD}.` });
+                return;
+            }
+            // Unique internal order ID: prefix + uid + timestamp
+            const internalOrderId = `at_${decoded.uid}_${Date.now()}`;
+            // Persist a pending order so the callback can look up the user.
+            await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).set({
+                uid: decoded.uid,
+                amountUsd: rawAmount,
+                status: "pending",
+                createdAt: new Date().toISOString(),
+            });
+            const apiKey = NOWPAYMENTS_API_KEY.value().trim();
+            if (!apiKey) {
+                res.status(500).json({ error: "Crypto payment is not configured. Please contact support." });
+                return;
+            }
+            const paymentPayload = {
+                order_id: internalOrderId,
+                price_amount: rawAmount,
+                price_currency: "USD",
+                pay_currency: "btc",
+                order_description: `Real-money account top-up of $${rawAmount}`,
+                ipn_callback_url: "https://autotrader-b8851.web.app/api/nowPaymentsCallback",
+                success_url: "https://autotrader-b8851.web.app/?payment=success",
+                cancel_url: "https://autotrader-b8851.web.app/?payment=cancelled",
+            };
+            // Hosted checkout page comes from invoice flow. Payment flow may only
+            // provide an address, which can lead to an empty URL on the frontend.
+            let order = null;
+            let paymentUrl = "";
+            let lastProviderError = "";
+            const invoiceResp = await (0, node_fetch_1.default)(`${NOWPAYMENTS_BASE_URL}/v1/invoice`, {
+                method: "POST",
+                headers: {
+                    "x-api-key": apiKey,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(paymentPayload),
+            });
+            if (invoiceResp.ok) {
+                order = await invoiceResp.json();
+                paymentUrl = String(order.invoice_url || order.url || order.hosted_url || "").trim();
+            }
+            else {
+                lastProviderError = await invoiceResp.text();
+                console.warn("⚠️ NOWPayments invoice creation failed, falling back to payment API:", lastProviderError);
+            }
+            if (!paymentUrl) {
+                const paymentResp = await (0, node_fetch_1.default)(`${NOWPAYMENTS_BASE_URL}/v1/payment`, {
+                    method: "POST",
+                    headers: {
+                        "x-api-key": apiKey,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(paymentPayload),
+                });
+                if (!paymentResp.ok) {
+                    const errText = await paymentResp.text();
+                    lastProviderError = errText || lastProviderError;
+                    console.error("❌ NOWPayments order creation failed:", lastProviderError);
+                    // Try to parse provider details so we can return a useful message.
+                    let providerMessage = "Failed to create crypto payment order. Please try again.";
+                    try {
+                        const parsed = JSON.parse(lastProviderError || "{}");
+                        if (typeof parsed?.message === "string" && parsed.message.trim().length > 0) {
+                            providerMessage = parsed.message.trim();
+                        }
+                        if (Array.isArray(parsed?.errors) && parsed.errors.length > 0) {
+                            const firstError = String(parsed.errors[0] ?? "").trim();
+                            if (firstError) {
+                                providerMessage = `${providerMessage}: ${firstError}`;
+                            }
+                        }
+                    }
+                    catch {
+                        // Keep default fallback message when provider body isn't JSON.
+                    }
+                    await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({ status: "failed" });
+                    res.status(502).json({ error: providerMessage });
+                    return;
+                }
+                order = await paymentResp.json();
+                paymentUrl = String(order.payment_url || order.invoice_url || order.url || order.hosted_url || "").trim();
+            }
+            if (!paymentUrl) {
+                console.error("❌ NOWPayments returned no hosted payment URL", order);
+                await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({ status: "failed" });
+                res.status(502).json({ error: "Crypto checkout page could not be created. Please try again." });
+                return;
+            }
+            await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({
+                nowPaymentsPaymentId: String(order.payment_id || order.id || ""),
+                nowPaymentsInvoiceId: String(order.invoice_id || order.invoiceId || ""),
+                paymentUrl,
+            });
+            console.log(`✅ NOWPayments order created for ${decoded.uid}: order ${internalOrderId}`);
+            res.status(200).json({
+                orderId: internalOrderId,
+                paymentId: String(order.payment_id || order.id || ""),
+                paymentUrl,
+            });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to create crypto payment order";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ createNowPaymentsOrder failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+/**
+ * Polls the status of a pending NOWPayments order.
+ * The frontend calls this every few seconds after the user completes payment
+ * to detect when the webhook has confirmed and credited the balance.
+ */
+exports.checkNowPaymentsOrder = functions
+    .region("europe-west1")
+    .runWith({ secrets: [] })
+    .https.onRequest((req, res) => {
+    corsHandlerGet(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            // Support both GET (query param) and POST (body)
+            const orderId = String(req.query?.orderId || req.body?.orderId || "").trim();
+            if (!orderId) {
+                res.status(400).json({ error: "Missing orderId" });
+                return;
+            }
+            const orderSnap = await admin.firestore().collection("nowpayments_orders").doc(orderId).get();
+            if (!orderSnap.exists) {
+                res.status(404).json({ error: "Order not found" });
+                return;
+            }
+            const orderData = orderSnap.data();
+            // Security: only the owning user can poll their order.
+            if (orderData.uid !== decoded.uid) {
+                res.status(403).json({ error: "Forbidden" });
+                return;
+            }
+            res.status(200).json({
+                status: orderData.status,
+                amountUsd: orderData.amountUsd,
+            });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to check order status";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ checkNowPaymentsOrder failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+/**
+ * Receives NOWPayments payment webhooks (server-to-server POST).
+ * Verifies the payment against the NOWPayments API, then credits the user's
+ * real-money balance and provisions an Alpaca paper account if needed.
+ */
+exports.nowPaymentsCallback = functions
+    .region("europe-west1")
+    .runWith({ secrets: [NOWPAYMENTS_API_KEY, NOWPAYMENTS_PUBLIC_KEY, ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
+    .https.onRequest(async (req, res) => {
+    // No CORS needed — this is a server-to-server webhook from NOWPayments.
+    if (req.method !== "POST") {
+        res.status(405).send("Method not allowed");
+        return;
+    }
+    try {
+        // NOWPayments sends JSON body with payment and order details.
+        const body = req.body || {};
+        const orderId = String(body.order_id || body.orderId || "").trim();
+        const status = String(body.payment_status || body.status || "").trim().toLowerCase();
+        const paymentId = String(body.payment_id || body.id || "").trim();
+        if (!orderId || !status) {
+            res.status(400).send("Missing order_id or status");
+            return;
+        }
+        // Only process final paid statuses.
+        if (status !== "confirmed" && status !== "finished") {
+            console.log(`ℹ️ NOWPayments callback: order ${orderId} status=${status}, no action needed`);
+            res.status(200).send("OK");
+            return;
+        }
+        const orderRef = admin.firestore().collection("nowpayments_orders").doc(orderId);
+        const orderSnap = await orderRef.get();
+        if (!orderSnap.exists) {
+            console.error(`❌ NOWPayments callback: unknown order ${orderId}`);
+            res.status(404).send("Order not found");
+            return;
+        }
+        const orderData = orderSnap.data();
+        // Idempotency: skip if already processed.
+        if (orderData.status === "paid") {
+            res.status(200).send("OK");
+            return;
+        }
+        // Security: independently verify the payment with the NOWPayments API.
+        const apiKey = NOWPAYMENTS_API_KEY.value();
+        if (paymentId && apiKey) {
+            const verifyResp = await (0, node_fetch_1.default)(`${NOWPAYMENTS_BASE_URL}/v1/payment/${encodeURIComponent(paymentId)}`, {
+                headers: { "x-api-key": apiKey },
+            });
+            if (verifyResp.ok) {
+                const verifiedOrder = await verifyResp.json();
+                const verifiedStatus = String(verifiedOrder.payment_status || verifiedOrder.status || "").toLowerCase();
+                if (verifiedStatus !== "confirmed" && verifiedStatus !== "finished") {
+                    console.warn(`⚠️ NOWPayments verification: order ${paymentId} not confirmed paid`);
+                    res.status(200).send("OK");
+                    return;
+                }
+            }
+            else {
+                console.warn(`⚠️ NOWPayments order verification request failed (${verifyResp.status}), proceeding with callback data`);
+            }
+        }
+        const uid = String(orderData.uid || "").trim();
+        const amountUsd = Number(orderData.amountUsd);
+        if (!uid || !Number.isFinite(amountUsd) || amountUsd <= 0) {
+            console.error(`❌ NOWPayments callback: invalid order data for ${orderId}`);
+            res.status(400).send("Invalid order data");
+            return;
+        }
+        // Credit the user's real-money balance.
+        const userRef = admin.firestore().collection("users").doc(uid);
+        const userSnap = await userRef.get();
+        const userData = userSnap.data() ?? {};
+        const existingBalance = Number(userData.realMoneyBalance ?? 0);
+        const newBalance = Math.round((existingBalance + amountUsd) * 100) / 100;
+        // Provision Alpaca paper account on first top-up.
+        let alpacaAccount = null;
+        if (!userData.alpacaBrokerAccountId) {
+            const brokerKey = ALPACA_BROKER_KEY.value();
+            const brokerSecret = ALPACA_BROKER_SECRET.value();
+            if (brokerKey && brokerSecret) {
+                const userEmail = userData.email ?? `${uid}@autotrader.app`;
+                const userDisplayName = userData.displayName ?? "AutoTrader User";
+                alpacaAccount = await provisionAlpacaPaperAccount(uid, userEmail, userDisplayName, amountUsd, brokerKey, brokerSecret);
+            }
+        }
+        const firestoreUpdate = {
+            realMoneyBalance: newBalance,
+            realMoneyOnboarded: true,
+        };
+        if (alpacaAccount) {
+            firestoreUpdate.alpacaBrokerAccountId = alpacaAccount.accountId;
+        }
+        await userRef.set(firestoreUpdate, { merge: true });
+        if (alpacaAccount) {
+            await admin.firestore()
+                .collection("users").doc(uid)
+                .collection("exchanges").doc("alpaca-paper-autotrader")
+                .set({
+                exchangeId: "alpaca-paper",
+                label: "alpaca-paper-autotrader",
+                apiKey: alpacaAccount.apiKey,
+                secret: alpacaAccount.apiSecret,
+                passphrase: "",
+                status: "active",
+                connectedAt: new Date().toISOString(),
+            });
+        }
+        // Mark the order paid (idempotency guard for future callbacks).
+        await orderRef.update({
+            status: "paid",
+            paidAt: new Date().toISOString(),
+            nowPaymentsPaymentId: paymentId || orderData.nowPaymentsPaymentId || "",
+        });
+        console.log(`✅ NOWPayments top-up credited for ${uid}: +$${amountUsd}, new balance $${newBalance}`);
+        res.status(200).send("OK");
+    }
+    catch (error) {
+        console.error("❌ nowPaymentsCallback failed:", error);
+        res.status(500).send("Internal server error");
+    }
 });
 //# sourceMappingURL=index.js.map

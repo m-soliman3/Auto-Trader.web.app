@@ -171,6 +171,17 @@
     "sendMessage": "إرسال الرسالة",
     "backToHome": "← العودة إلى الرئيسية"
   },
+  "payments": {
+    "crypto": {
+      "title": "الدفع بالعملات المشفرة",
+      "description": "BTC وETH وUSDT والمزيد عبر NOWPayments",
+      "waiting": "بانتظار تأكيد الدفع…",
+      "reopenPaymentPage": "إعادة فتح صفحة الدفع ↗",
+      "createFailed": "تعذر إنشاء دفعة العملات المشفرة. يُرجى المحاولة مرة أخرى.",
+      "invalidAmount": "يرجى إدخال مبلغ شحن صالح (الحد الأدنى 1 دولار).",
+      "loginAgain": "يرجى تسجيل الدخول مرة أخرى للمتابعة."
+    }
+  },
   "settings": {
     "title": "الإعدادات",
     "backToDashboard": "العودة إلى لوحة التحكم",

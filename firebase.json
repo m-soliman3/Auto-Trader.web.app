@@ -87,6 +87,27 @@
           }
         },
         {
+          "source": "/api/createNowPaymentsOrder",
+          "function": {
+            "functionId": "createNowPaymentsOrder",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/checkNowPaymentsOrder",
+          "function": {
+            "functionId": "checkNowPaymentsOrder",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/nowPaymentsCallback",
+          "function": {
+            "functionId": "nowPaymentsCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",
@@ -196,6 +217,27 @@
           "source": "/api/confirmTopUp",
           "function": {
             "functionId": "confirmTopUp",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/createNowPaymentsOrder",
+          "function": {
+            "functionId": "createNowPaymentsOrder",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/checkNowPaymentsOrder",
+          "function": {
+            "functionId": "checkNowPaymentsOrder",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/nowPaymentsCallback",
+          "function": {
+            "functionId": "nowPaymentsCallback",
             "region": "europe-west1"
           }
         },

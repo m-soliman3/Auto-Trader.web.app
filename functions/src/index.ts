@@ -1581,3 +1581,353 @@ export const confirmTopUp = functions
     });
   });
 
+// ── NOWPayments Cryptocurrency Top-up ──────────────────────────────────────
+
+const NOWPAYMENTS_API_KEY = defineSecret("NOWPAYMENTS_API_KEY");
+const NOWPAYMENTS_PUBLIC_KEY = defineSecret("NOWPAYMENTS_PUBLIC_KEY");
+const NOWPAYMENTS_BASE_URL = "https://api.nowpayments.io";
+
+// CORS handler that also allows GET (needed for order status polling).
+const corsHandlerGet = cors({
+  origin: [
+    "https://autotrader-b8851.web.app",
+    "https://invest-begin.com",
+    "https://www.invest-begin.com",
+    /^http:\/\/localhost(?::\d+)?$/,
+    /^http:\/\/127\.0\.0\.1(?::\d+)?$/,
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+});
+
+/**
+ * Creates a NOWPayments cryptocurrency payment order for a real-money top-up.
+ * Returns the hosted payment URL that the user visits to pay in crypto.
+ */
+export const createNowPaymentsOrder = functions
+  .region("europe-west1")
+  .runWith({ secrets: [NOWPAYMENTS_API_KEY] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+      if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const rawAmount = Number(req.body?.amountUsd ?? 0);
+
+        if (!Number.isFinite(rawAmount) || rawAmount < MIN_TOPUP_USD || rawAmount > MAX_TOPUP_USD) {
+          res.status(400).json({ error: `Amount must be between $${MIN_TOPUP_USD} and $${MAX_TOPUP_USD}.` });
+          return;
+        }
+
+        // Unique internal order ID: prefix + uid + timestamp
+        const internalOrderId = `at_${decoded.uid}_${Date.now()}`;
+
+        // Persist a pending order so the callback can look up the user.
+        await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).set({
+          uid: decoded.uid,
+          amountUsd: rawAmount,
+          status: "pending",
+          createdAt: new Date().toISOString(),
+        });
+
+        const apiKey = NOWPAYMENTS_API_KEY.value().trim();
+        if (!apiKey) {
+          res.status(500).json({ error: "Crypto payment is not configured. Please contact support." });
+          return;
+        }
+
+        const paymentPayload = {
+          order_id: internalOrderId,
+          price_amount: rawAmount,
+          price_currency: "USD",
+          pay_currency: "btc",
+          order_description: `Real-money account top-up of $${rawAmount}`,
+          ipn_callback_url: "https://autotrader-b8851.web.app/api/nowPaymentsCallback",
+          success_url: "https://autotrader-b8851.web.app/?payment=success",
+          cancel_url: "https://autotrader-b8851.web.app/?payment=cancelled",
+        };
+
+        // Hosted checkout page comes from invoice flow. Payment flow may only
+        // provide an address, which can lead to an empty URL on the frontend.
+        let order: any = null;
+        let paymentUrl = "";
+        let lastProviderError = "";
+
+        const invoiceResp = await fetch(`${NOWPAYMENTS_BASE_URL}/v1/invoice`, {
+          method: "POST",
+          headers: {
+            "x-api-key": apiKey,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(paymentPayload),
+        } as any);
+
+        if (invoiceResp.ok) {
+          order = await invoiceResp.json();
+          paymentUrl = String(order.invoice_url || order.url || order.hosted_url || "").trim();
+        } else {
+          lastProviderError = await invoiceResp.text();
+          console.warn("⚠️ NOWPayments invoice creation failed, falling back to payment API:", lastProviderError);
+        }
+
+        if (!paymentUrl) {
+          const paymentResp = await fetch(`${NOWPAYMENTS_BASE_URL}/v1/payment`, {
+            method: "POST",
+            headers: {
+              "x-api-key": apiKey,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(paymentPayload),
+          } as any);
+
+          if (!paymentResp.ok) {
+            const errText = await paymentResp.text();
+            lastProviderError = errText || lastProviderError;
+            console.error("❌ NOWPayments order creation failed:", lastProviderError);
+
+            // Try to parse provider details so we can return a useful message.
+            let providerMessage = "Failed to create crypto payment order. Please try again.";
+            try {
+              const parsed = JSON.parse(lastProviderError || "{}");
+              if (typeof parsed?.message === "string" && parsed.message.trim().length > 0) {
+                providerMessage = parsed.message.trim();
+              }
+              if (Array.isArray(parsed?.errors) && parsed.errors.length > 0) {
+                const firstError = String(parsed.errors[0] ?? "").trim();
+                if (firstError) {
+                  providerMessage = `${providerMessage}: ${firstError}`;
+                }
+              }
+            } catch {
+              // Keep default fallback message when provider body isn't JSON.
+            }
+
+            await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({ status: "failed" });
+            res.status(502).json({ error: providerMessage });
+            return;
+          }
+
+          order = await paymentResp.json();
+          paymentUrl = String(order.payment_url || order.invoice_url || order.url || order.hosted_url || "").trim();
+        }
+
+        if (!paymentUrl) {
+          console.error("❌ NOWPayments returned no hosted payment URL", order);
+          await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({ status: "failed" });
+          res.status(502).json({ error: "Crypto checkout page could not be created. Please try again." });
+          return;
+        }
+
+        await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({
+          nowPaymentsPaymentId: String(order.payment_id || order.id || ""),
+          nowPaymentsInvoiceId: String(order.invoice_id || order.invoiceId || ""),
+          paymentUrl,
+        });
+
+        console.log(`✅ NOWPayments order created for ${decoded.uid}: order ${internalOrderId}`);
+        res.status(200).json({
+          orderId: internalOrderId,
+          paymentId: String(order.payment_id || order.id || ""),
+          paymentUrl,
+        });
+      } catch (error: any) {
+        const message = error?.message || "Failed to create crypto payment order";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ createNowPaymentsOrder failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Polls the status of a pending NOWPayments order.
+ * The frontend calls this every few seconds after the user completes payment
+ * to detect when the webhook has confirmed and credited the balance.
+ */
+export const checkNowPaymentsOrder = functions
+  .region("europe-west1")
+  .runWith({ secrets: [] })
+  .https.onRequest((req, res) => {
+    corsHandlerGet(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        // Support both GET (query param) and POST (body)
+        const orderId = String(req.query?.orderId || req.body?.orderId || "").trim();
+        if (!orderId) {
+          res.status(400).json({ error: "Missing orderId" });
+          return;
+        }
+
+        const orderSnap = await admin.firestore().collection("nowpayments_orders").doc(orderId).get();
+        if (!orderSnap.exists) {
+          res.status(404).json({ error: "Order not found" });
+          return;
+        }
+
+        const orderData = orderSnap.data()!;
+        // Security: only the owning user can poll their order.
+        if (orderData.uid !== decoded.uid) {
+          res.status(403).json({ error: "Forbidden" });
+          return;
+        }
+
+        res.status(200).json({
+          status: orderData.status,
+          amountUsd: orderData.amountUsd,
+        });
+      } catch (error: any) {
+        const message = error?.message || "Failed to check order status";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ checkNowPaymentsOrder failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Receives NOWPayments payment webhooks (server-to-server POST).
+ * Verifies the payment against the NOWPayments API, then credits the user's
+ * real-money balance and provisions an Alpaca paper account if needed.
+ */
+export const nowPaymentsCallback = functions
+  .region("europe-west1")
+  .runWith({ secrets: [NOWPAYMENTS_API_KEY, NOWPAYMENTS_PUBLIC_KEY, ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
+  .https.onRequest(async (req, res) => {
+    // No CORS needed — this is a server-to-server webhook from NOWPayments.
+    if (req.method !== "POST") { res.status(405).send("Method not allowed"); return; }
+
+    try {
+      // NOWPayments sends JSON body with payment and order details.
+      const body = req.body || {};
+      const orderId = String(body.order_id || body.orderId || "").trim();
+      const status = String(body.payment_status || body.status || "").trim().toLowerCase();
+      const paymentId = String(body.payment_id || body.id || "").trim();
+
+      if (!orderId || !status) {
+        res.status(400).send("Missing order_id or status");
+        return;
+      }
+
+      // Only process final paid statuses.
+      if (status !== "confirmed" && status !== "finished") {
+        console.log(`ℹ️ NOWPayments callback: order ${orderId} status=${status}, no action needed`);
+        res.status(200).send("OK");
+        return;
+      }
+
+      const orderRef = admin.firestore().collection("nowpayments_orders").doc(orderId);
+      const orderSnap = await orderRef.get();
+
+      if (!orderSnap.exists) {
+        console.error(`❌ NOWPayments callback: unknown order ${orderId}`);
+        res.status(404).send("Order not found");
+        return;
+      }
+
+      const orderData = orderSnap.data()!;
+
+      // Idempotency: skip if already processed.
+      if (orderData.status === "paid") {
+        res.status(200).send("OK");
+        return;
+      }
+
+      // Security: independently verify the payment with the NOWPayments API.
+      const apiKey = NOWPAYMENTS_API_KEY.value();
+      if (paymentId && apiKey) {
+        const verifyResp = await fetch(`${NOWPAYMENTS_BASE_URL}/v1/payment/${encodeURIComponent(paymentId)}`, {
+          headers: { "x-api-key": apiKey },
+        } as any);
+
+        if (verifyResp.ok) {
+          const verifiedOrder: any = await verifyResp.json();
+          const verifiedStatus = String(verifiedOrder.payment_status || verifiedOrder.status || "").toLowerCase();
+          if (verifiedStatus !== "confirmed" && verifiedStatus !== "finished") {
+            console.warn(`⚠️ NOWPayments verification: order ${paymentId} not confirmed paid`);
+            res.status(200).send("OK");
+            return;
+          }
+        } else {
+          console.warn(`⚠️ NOWPayments order verification request failed (${verifyResp.status}), proceeding with callback data`);
+        }
+      }
+
+      const uid = String(orderData.uid || "").trim();
+      const amountUsd = Number(orderData.amountUsd);
+
+      if (!uid || !Number.isFinite(amountUsd) || amountUsd <= 0) {
+        console.error(`❌ NOWPayments callback: invalid order data for ${orderId}`);
+        res.status(400).send("Invalid order data");
+        return;
+      }
+
+      // Credit the user's real-money balance.
+      const userRef = admin.firestore().collection("users").doc(uid);
+      const userSnap = await userRef.get();
+      const userData = userSnap.data() ?? {};
+      const existingBalance = Number(userData.realMoneyBalance ?? 0);
+      const newBalance = Math.round((existingBalance + amountUsd) * 100) / 100;
+
+      // Provision Alpaca paper account on first top-up.
+      let alpacaAccount: { accountId: string; apiKey: string; apiSecret: string } | null = null;
+      if (!userData.alpacaBrokerAccountId) {
+        const brokerKey = ALPACA_BROKER_KEY.value();
+        const brokerSecret = ALPACA_BROKER_SECRET.value();
+        if (brokerKey && brokerSecret) {
+          const userEmail = userData.email ?? `${uid}@autotrader.app`;
+          const userDisplayName = userData.displayName ?? "AutoTrader User";
+          alpacaAccount = await provisionAlpacaPaperAccount(
+            uid, userEmail, userDisplayName, amountUsd, brokerKey, brokerSecret
+          );
+        }
+      }
+
+      const firestoreUpdate: Record<string, unknown> = {
+        realMoneyBalance: newBalance,
+        realMoneyOnboarded: true,
+      };
+      if (alpacaAccount) {
+        firestoreUpdate.alpacaBrokerAccountId = alpacaAccount.accountId;
+      }
+
+      await userRef.set(firestoreUpdate, { merge: true });
+
+      if (alpacaAccount) {
+        await admin.firestore()
+          .collection("users").doc(uid)
+          .collection("exchanges").doc("alpaca-paper-autotrader")
+          .set({
+            exchangeId: "alpaca-paper",
+            label: "alpaca-paper-autotrader",
+            apiKey: alpacaAccount.apiKey,
+            secret: alpacaAccount.apiSecret,
+            passphrase: "",
+            status: "active",
+            connectedAt: new Date().toISOString(),
+          });
+      }
+
+      // Mark the order paid (idempotency guard for future callbacks).
+      await orderRef.update({
+        status: "paid",
+        paidAt: new Date().toISOString(),
+        nowPaymentsPaymentId: paymentId || orderData.nowPaymentsPaymentId || "",
+      });
+
+      console.log(`✅ NOWPayments top-up credited for ${uid}: +$${amountUsd}, new balance $${newBalance}`);
+      res.status(200).send("OK");
+    } catch (error: any) {
+      console.error("❌ nowPaymentsCallback failed:", error);
+      res.status(500).send("Internal server error");
+    }
+  });
