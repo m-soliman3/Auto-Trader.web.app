@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auth } from '@angular/fire/auth';
 import { Firestore, doc, updateDoc } from '@angular/fire/firestore';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   loadStripe,
   Stripe,
@@ -33,7 +34,7 @@ const PRESET_AMOUNTS = [50, 100, 200, 500, 1000] as const;
 @Component({
   selector: 'app-real-money-onboarding-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './real-money-onboarding-modal.html',
   styleUrl: './real-money-onboarding-modal.scss',
 })
@@ -44,6 +45,7 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly exchangeService = inject(ExchangeService);
   private readonly tourService = inject(TourService);
+  private readonly translate = inject(TranslateService);
 
   // ── Expose helpers to template ──────────────────────────────────────────
   readonly presetAmounts = PRESET_AMOUNTS;
@@ -58,6 +60,9 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
 
   // ── Tab state ────────────────────────────────────────────────────────────
   activeTab = signal<'topup' | 'exchange'>('topup');
+
+  // ── Payment method within the top-up tab ────────────────────────────────
+  paymentMethod = signal<'card' | 'crypto'>('card');
 
   // ── Exchange connection state ────────────────────────────────────────────
   exchangeStep = signal<1 | 2>(1);
@@ -80,6 +85,15 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   topupInitializing = signal(false);
   topupCompleted = signal(false);
 
+  // ── Crypto payment state ────────────────────────────────────────────────
+  cryptoProcessing = signal(false);
+  cryptoStatus = signal('');
+  cryptoError = signal('');
+  cryptoOrderId = signal('');
+  cryptoPaymentUrl = signal('');
+  cryptoPolling = signal(false);
+  private _cryptoPollInterval: ReturnType<typeof setInterval> | null = null;
+
   private stripe: Stripe | null = null;
   private elements: StripeElements | null = null;
   private cardElement: StripeCardElement | null = null;
@@ -90,6 +104,7 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.cardElement?.destroy();
+    this._stopCryptoPoll();
   }
 
   // ── Exchange helpers ─────────────────────────────────────────────────────
@@ -282,6 +297,104 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     } finally {
       this.topupProcessing.set(false);
     }
+  }
+
+  // ── Crypto payment ──────────────────────────────────────────────────────
+
+  async payCrypto(): Promise<void> {
+    this.cryptoError.set('');
+    this.cryptoStatus.set('');
+
+    const amount = this.resolvedTopUpAmount();
+    if (!amount || amount < 1) {
+      this.cryptoError.set(this.translate.instant('payments.crypto.invalidAmount'));
+      return;
+    }
+
+    const firebaseUser = this.firebaseAuth.currentUser;
+    if (!firebaseUser) {
+      this.cryptoError.set(this.translate.instant('payments.crypto.loginAgain'));
+      return;
+    }
+
+    this.cryptoProcessing.set(true);
+    try {
+      const idToken = await firebaseUser.getIdToken();
+
+      const resp = await firstValueFrom(
+        this.http.post<{ orderId: string; paymentId: string; paymentUrl: string }>(
+          '/api/createNowPaymentsOrder',
+          { amountUsd: amount },
+          {
+            headers: new HttpHeaders({
+              Authorization: `Bearer ${idToken}`,
+              'Content-Type': 'application/json',
+            }),
+          },
+        ),
+      );
+
+      this.cryptoOrderId.set(resp.orderId);
+      this.cryptoPaymentUrl.set(resp.paymentUrl);
+      this.cryptoStatus.set(this.translate.instant('payments.crypto.waiting'));
+
+      const paymentUrl = String(resp.paymentUrl || '').trim();
+      if (!/^https?:\/\//i.test(paymentUrl)) {
+        this.cryptoError.set(this.translate.instant('payments.crypto.createFailed'));
+        this.cryptoStatus.set('');
+        return;
+      }
+
+      // Open the hosted payment page in a new tab.
+      window.open(paymentUrl, '_blank', 'noopener,noreferrer');
+
+      // Start polling for payment confirmation.
+      this._startCryptoPoll(resp.orderId, idToken);
+    } catch (err: any) {
+      const apiMsg = err?.error?.error;
+      this.cryptoError.set(apiMsg || err?.message || this.translate.instant('payments.crypto.createFailed'));
+    } finally {
+      this.cryptoProcessing.set(false);
+    }
+  }
+
+  private _startCryptoPoll(orderId: string, idToken: string): void {
+    this._stopCryptoPoll();
+    this.cryptoPolling.set(true);
+    this._cryptoPollInterval = setInterval(async () => {
+      try {
+        const freshToken = await this.firebaseAuth.currentUser?.getIdToken() ?? idToken;
+        const result = await firstValueFrom(
+          this.http.post<{ status: string; amountUsd: number }>(
+            '/api/checkNowPaymentsOrder',
+            { orderId },
+            {
+              headers: new HttpHeaders({
+                Authorization: `Bearer ${freshToken}`,
+                'Content-Type': 'application/json',
+              }),
+            },
+          ),
+        );
+        if (result.status === 'paid') {
+          this._stopCryptoPoll();
+          await this.authService.reloadCurrentUserProfile();
+          this.cryptoStatus.set('');
+          this.topupCompleted.set(true);
+          this.tourService.scheduleTourStart();
+        }
+      } catch {
+        // Polling errors are non-fatal; keep retrying.
+      }
+    }, 5_000);
+  }
+
+  private _stopCryptoPoll(): void {
+    if (this._cryptoPollInterval !== null) {
+      clearInterval(this._cryptoPollInterval);
+      this._cryptoPollInterval = null;
+    }
+    this.cryptoPolling.set(false);
   }
 
   // ── Private helpers ──────────────────────────────────────────────────────

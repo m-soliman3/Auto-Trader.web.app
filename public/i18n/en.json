@@ -171,6 +171,17 @@
     "sendMessage": "Send Message",
     "backToHome": "← Back to home"
   },
+  "payments": {
+    "crypto": {
+      "title": "Pay with Cryptocurrency",
+      "description": "BTC, ETH, USDT, and more via NOWPayments",
+      "waiting": "Waiting for payment confirmation…",
+      "reopenPaymentPage": "Re-open payment page ↗",
+      "createFailed": "Failed to create crypto payment. Please try again.",
+      "invalidAmount": "Please enter a valid top-up amount (minimum $1).",
+      "loginAgain": "Please log in again to continue."
+    }
+  },
   "settings": {
     "title": "Settings",
     "backToDashboard": "Back to dashboard",

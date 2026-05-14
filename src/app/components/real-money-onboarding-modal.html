@@ -41,7 +41,7 @@
           [class.active]="activeTab() === 'topup'"
           (click)="activeTab.set('topup')"
         >
-          💳 Top Up with Card
+          💳 Top Up
         </button>
         <button
           class="tab-btn"
@@ -55,6 +55,27 @@
 
       <!-- ── Tab 1: Top Up ──────────────────────────────────────────── -->
       <section class="onboarding-section tab-content" [hidden]="activeTab() !== 'topup'">
+
+          <!-- ── Payment method selector ──────────────────────────── -->
+          <div class="payment-method-selector">
+            <button
+              class="method-btn"
+              type="button"
+              [class.active]="paymentMethod() === 'card'"
+              (click)="paymentMethod.set('card')"
+            >
+              💳 Card
+            </button>
+            <button
+              class="method-btn"
+              type="button"
+              [class.active]="paymentMethod() === 'crypto'"
+              (click)="paymentMethod.set('crypto')"
+            >
+              ₿ Crypto
+            </button>
+          </div>
+
           <div class="amount-grid">
             @for (amt of presetAmounts; track amt) {
               <button
@@ -94,7 +115,7 @@
             </div>
           }
 
-          <div class="form-group">
+          <div class="form-group" [hidden]="paymentMethod() !== 'card'">
             <label for="topup-name">Cardholder name</label>
             <input
               id="topup-name"
@@ -106,7 +127,7 @@
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" [hidden]="paymentMethod() !== 'card'">
             <label>Card details</label>
             @if (topupInitializing()) {
               <div class="card-placeholder">Loading payment form...</div>
@@ -124,6 +145,7 @@
           <button
             class="primary-btn"
             type="button"
+            [hidden]="paymentMethod() !== 'card'"
             [disabled]="topupInitializing() || topupProcessing()"
             (click)="payAndTopUp()"
           >
@@ -136,6 +158,55 @@
               }
             }
           </button>
+
+          <!-- ── Crypto payment panel ─────────────────────────────── -->
+          @if (paymentMethod() === 'crypto') {
+            <div class="crypto-panel">
+              <div class="crypto-info">
+                <span class="crypto-icon">₿</span>
+                <div>
+                  <div class="crypto-info-title">{{ 'payments.crypto.title' | translate }}</div>
+                  <div class="crypto-info-desc">{{ 'payments.crypto.description' | translate }}</div>
+                </div>
+              </div>
+
+              @if (cryptoError()) {
+                <div class="form-error">{{ cryptoError() }}</div>
+              }
+
+              @if (cryptoPolling()) {
+                <div class="crypto-waiting">
+                  <span class="spinner-small"></span>
+                  <span>{{ cryptoStatus() || ('payments.crypto.waiting' | translate) }}</span>
+                </div>
+                <a
+                  class="crypto-reopen-link"
+                  [href]="cryptoPaymentUrl()"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ 'payments.crypto.reopenPaymentPage' | translate }}
+                </a>
+              } @else {
+                <button
+                  class="primary-btn crypto-pay-btn"
+                  type="button"
+                  [disabled]="cryptoProcessing()"
+                  (click)="payCrypto()"
+                >
+                  @if (cryptoProcessing()) {
+                    Creating order…
+                  } @else {
+                    Pay
+                    @if (resolvedTopUpAmount()) {
+                      ${{ resolvedTopUpAmount() }}
+                    }
+                    with Crypto
+                  }
+                </button>
+              }
+            </div>
+          }
       </section>
 
       <!-- ── Tab 2: Connect Exchange ────────────────────────────────── -->

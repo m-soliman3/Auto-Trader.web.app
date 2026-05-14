@@ -171,6 +171,17 @@
     "sendMessage": "Enviar mensaje",
     "backToHome": "← Volver al inicio"
   },
+  "payments": {
+    "crypto": {
+      "title": "Paga con criptomoneda",
+      "description": "BTC, ETH, USDT y más a través de NOWPayments",
+      "waiting": "Esperando la confirmación del pago…",
+      "reopenPaymentPage": "Reabrir la página de pago ↗",
+      "createFailed": "No se pudo crear el pago en criptomoneda. Inténtalo de nuevo.",
+      "invalidAmount": "Por favor, introduce un importe de recarga válido (mínimo 1 $).",
+      "loginAgain": "Inicia sesión de nuevo para continuar."
+    }
+  },
   "settings": {
     "title": "Ajustes",
     "backToDashboard": "Volver al panel",
