@@ -173,37 +173,90 @@
               <div class="crypto-currency-picker">
                 <div class="crypto-currency-label">{{ 'payments.crypto.quickChoicesLabel' | translate }}</div>
                 <div class="crypto-quick-choice-grid">
-                  @for (currency of quickCryptoChoices; track currency) {
+                  @for (currency of fixedCryptoChoices(); track currency) {
                     <button
                       class="crypto-choice-btn"
                       type="button"
                       [class.selected]="selectedPayCurrency() === currency"
-                      (click)="selectQuickCryptoCurrency(currency)"
+                      (click)="selectFixedCryptoCurrency(currency)"
                     >
-                      {{ currency }}
+                      <span
+                        class="crypto-symbol-badge"
+                        [style.--crypto-accent]="cryptoCurrencyAccent(currency)"
+                      >
+                        {{ cryptoCurrencySymbol(currency) }}
+                      </span>
+                      <span class="crypto-choice-code">{{ currency }}</span>
                     </button>
                   }
                 </div>
 
                 <div class="form-group crypto-other-select-group">
-                  <label for="crypto-other-currency">{{ 'payments.crypto.otherCurrenciesLabel' | translate }}</label>
-                  <select
-                    id="crypto-other-currency"
-                    [disabled]="cryptoCurrenciesLoading()"
-                    [value]="selectedOtherCryptoCurrency()"
-                    (change)="selectOtherCryptoCurrency($any($event.target).value)"
-                  >
-                    <option value="">
-                      @if (cryptoCurrenciesLoading()) {
-                        {{ 'payments.crypto.loadingCurrencies' | translate }}
-                      } @else {
-                        {{ 'payments.crypto.otherCurrenciesPlaceholder' | translate }}
-                      }
-                    </option>
-                    @for (currency of otherCryptoCurrencies(); track currency) {
-                      <option [value]="currency">{{ currency }}</option>
+                  <label for="crypto-other-currency-trigger">{{ 'payments.crypto.otherCurrenciesLabel' | translate }}</label>
+                  <div class="crypto-dropdown" [class.open]="cryptoDropdownOpen()">
+                    <button
+                      id="crypto-other-currency-trigger"
+                      class="crypto-dropdown-trigger"
+                      type="button"
+                      [disabled]="cryptoCurrenciesLoading()"
+                      [attr.aria-expanded]="cryptoDropdownOpen()"
+                      (click)="toggleCryptoDropdown()"
+                    >
+                      <span class="crypto-dropdown-trigger-text">
+                        @if (selectedOtherCryptoCurrency()) {
+                          <span
+                            class="crypto-symbol-badge"
+                            [style.--crypto-accent]="cryptoCurrencyAccent(selectedOtherCryptoCurrency())"
+                          >
+                            {{ cryptoCurrencySymbol(selectedOtherCryptoCurrency()) }}
+                          </span>
+                          <span class="crypto-choice-code">{{ selectedOtherCryptoCurrency() }}</span>
+                        } @else if (cryptoCurrenciesLoading()) {
+                          {{ 'payments.crypto.loadingCurrencies' | translate }}
+                        } @else {
+                          {{ 'payments.crypto.otherCurrenciesPlaceholder' | translate }}
+                        }
+                      </span>
+                      <span class="crypto-dropdown-caret">▾</span>
+                    </button>
+
+                    @if (cryptoDropdownOpen()) {
+                      <div class="crypto-dropdown-panel">
+                        <input
+                          id="crypto-other-currency-search"
+                          class="crypto-search-input"
+                          type="search"
+                          [value]="cryptoSearchQuery()"
+                          [placeholder]="'payments.crypto.currencySearchPlaceholder' | translate"
+                          [disabled]="cryptoCurrenciesLoading()"
+                          (input)="setCryptoSearchQuery($any($event.target).value)"
+                        />
+
+                        <div class="crypto-dropdown-options">
+                          @if (filteredOtherCryptoCurrencies().length === 0) {
+                            <div class="crypto-empty-state">{{ 'payments.crypto.noCurrenciesFound' | translate }}</div>
+                          } @else {
+                            @for (currency of filteredOtherCryptoCurrencies(); track currency) {
+                              <button
+                                class="crypto-dropdown-option"
+                                type="button"
+                                [class.selected]="selectedPayCurrency() === currency"
+                                (click)="selectOtherCryptoCurrency(currency)"
+                              >
+                                <span
+                                  class="crypto-symbol-badge"
+                                  [style.--crypto-accent]="cryptoCurrencyAccent(currency)"
+                                >
+                                  {{ cryptoCurrencySymbol(currency) }}
+                                </span>
+                                <span class="crypto-choice-code">{{ currency }}</span>
+                              </button>
+                            }
+                          }
+                        </div>
+                      </div>
                     }
-                  </select>
+                  </div>
                 </div>
               </div>
 
