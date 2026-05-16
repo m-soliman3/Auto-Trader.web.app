@@ -175,11 +175,18 @@
     "crypto": {
       "title": "Mit Kryptowährung bezahlen",
       "description": "BTC, ETH, USDT und mehr über NOWPayments",
+      "quickChoicesLabel": "Beliebte Auswahl",
+      "otherCurrenciesLabel": "Andere Währungen",
+      "otherCurrenciesPlaceholder": "Andere verfügbare Währung auswählen",
+      "loadingCurrencies": "Verfügbare Währungen werden geladen...",
       "waiting": "Warten auf Zahlungsbestätigung…",
       "reopenPaymentPage": "Zahlungsseite erneut öffnen ↗",
       "createFailed": "Krypto-Zahlung konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
       "invalidAmount": "Bitte geben Sie einen gültigen Aufladebetrag ein (mindestens 1 $).",
-      "loginAgain": "Bitte melden Sie sich erneut an, um fortzufahren."
+      "loginAgain": "Bitte melden Sie sich erneut an, um fortzufahren.",
+      "creatingOrder": "Bestellung wird erstellt...",
+      "pay": "Bezahlen",
+      "withCrypto": "mit Krypto"
     }
   },
   "settings": {

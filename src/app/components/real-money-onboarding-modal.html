@@ -70,7 +70,7 @@
               class="method-btn"
               type="button"
               [class.active]="paymentMethod() === 'crypto'"
-              (click)="paymentMethod.set('crypto')"
+              (click)="paymentMethod.set('crypto'); ensureNowPaymentsCurrenciesLoaded()"
             >
               ₿ Crypto
             </button>
@@ -170,6 +170,43 @@
                 </div>
               </div>
 
+              <div class="crypto-currency-picker">
+                <div class="crypto-currency-label">{{ 'payments.crypto.quickChoicesLabel' | translate }}</div>
+                <div class="crypto-quick-choice-grid">
+                  @for (currency of quickCryptoChoices; track currency) {
+                    <button
+                      class="crypto-choice-btn"
+                      type="button"
+                      [class.selected]="selectedPayCurrency() === currency"
+                      (click)="selectQuickCryptoCurrency(currency)"
+                    >
+                      {{ currency }}
+                    </button>
+                  }
+                </div>
+
+                <div class="form-group crypto-other-select-group">
+                  <label for="crypto-other-currency">{{ 'payments.crypto.otherCurrenciesLabel' | translate }}</label>
+                  <select
+                    id="crypto-other-currency"
+                    [disabled]="cryptoCurrenciesLoading()"
+                    [value]="selectedOtherCryptoCurrency()"
+                    (change)="selectOtherCryptoCurrency($any($event.target).value)"
+                  >
+                    <option value="">
+                      @if (cryptoCurrenciesLoading()) {
+                        {{ 'payments.crypto.loadingCurrencies' | translate }}
+                      } @else {
+                        {{ 'payments.crypto.otherCurrenciesPlaceholder' | translate }}
+                      }
+                    </option>
+                    @for (currency of otherCryptoCurrencies(); track currency) {
+                      <option [value]="currency">{{ currency }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
               @if (cryptoError()) {
                 <div class="form-error">{{ cryptoError() }}</div>
               }
@@ -195,13 +232,13 @@
                   (click)="payCrypto()"
                 >
                   @if (cryptoProcessing()) {
-                    Creating order…
+                    {{ 'payments.crypto.creatingOrder' | translate }}
                   } @else {
-                    Pay
+                    {{ 'payments.crypto.pay' | translate }}
                     @if (resolvedTopUpAmount()) {
                       ${{ resolvedTopUpAmount() }}
                     }
-                    with Crypto
+                    {{ 'payments.crypto.withCrypto' | translate }}
                   }
                 </button>
               }

@@ -548,6 +548,62 @@
   line-height: 1.4;
 }
 
+.crypto-currency-picker {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.8rem;
+  background: var(--surface);
+}
+
+.crypto-currency-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.crypto-quick-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.crypto-choice-btn {
+  padding: 0.45rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+
+  &:hover {
+    border-color: var(--accent, #00d17a);
+  }
+
+  &.selected {
+    border-color: var(--accent, #00d17a);
+    color: var(--accent, #00d17a);
+    background: color-mix(in srgb, var(--accent, #00d17a) 10%, var(--surface));
+  }
+}
+
+.crypto-other-select-group {
+  margin-top: 0.6rem;
+
+  select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    padding: 0.5rem 0.6rem;
+  }
+}
+
 .crypto-pay-btn {
   margin-top: 0;
 }

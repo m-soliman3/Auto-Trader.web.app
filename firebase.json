@@ -101,6 +101,13 @@
           }
         },
         {
+          "source": "/api/listNowPaymentsCurrencies",
+          "function": {
+            "functionId": "listNowPaymentsCurrencies",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/api/nowPaymentsCallback",
           "function": {
             "functionId": "nowPaymentsCallback",
@@ -231,6 +238,13 @@
           "source": "/api/checkNowPaymentsOrder",
           "function": {
             "functionId": "checkNowPaymentsOrder",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/listNowPaymentsCurrencies",
+          "function": {
+            "functionId": "listNowPaymentsCurrencies",
             "region": "europe-west1"
           }
         },

@@ -30,6 +30,7 @@ import {
 import { TourService } from '../services/tour.service';
 
 const PRESET_AMOUNTS = [50, 100, 200, 500, 1000] as const;
+const QUICK_CRYPTO_CHOICES = ["BTC", "ETH", "USDT", "DOGE"] as const;
 
 @Component({
   selector: 'app-real-money-onboarding-modal',
@@ -49,6 +50,7 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
 
   // ── Expose helpers to template ──────────────────────────────────────────
   readonly presetAmounts = PRESET_AMOUNTS;
+  readonly quickCryptoChoices = QUICK_CRYPTO_CHOICES;
 
   /** All real (non-paper) exchanges for selection. */
   readonly realCryptoExchanges = computed(() =>
@@ -92,6 +94,10 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   cryptoOrderId = signal('');
   cryptoPaymentUrl = signal('');
   cryptoPolling = signal(false);
+  cryptoCurrenciesLoading = signal(false);
+  availableCryptoCurrencies = signal<string[]>([]);
+  selectedCryptoCurrency = signal<string>('BTC');
+  selectedOtherCryptoCurrency = signal<string>('');
   private _cryptoPollInterval: ReturnType<typeof setInterval> | null = null;
 
   private stripe: Stripe | null = null;
@@ -189,6 +195,35 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     if (amount !== 'custom') {
       this.customAmount.set('');
     }
+  }
+
+  otherCryptoCurrencies(): string[] {
+    const quick = new Set(this.quickCryptoChoices);
+    return this.availableCryptoCurrencies().filter((code) => !quick.has(code as (typeof QUICK_CRYPTO_CHOICES)[number]));
+  }
+
+  selectedPayCurrency(): string {
+    const quick = new Set(this.quickCryptoChoices);
+    const selected = this.selectedCryptoCurrency().trim().toUpperCase();
+    if (quick.has(selected as (typeof QUICK_CRYPTO_CHOICES)[number])) {
+      return selected;
+    }
+    const other = this.selectedOtherCryptoCurrency().trim().toUpperCase();
+    return other || 'BTC';
+  }
+
+  selectQuickCryptoCurrency(currency: (typeof QUICK_CRYPTO_CHOICES)[number]): void {
+    this.selectedCryptoCurrency.set(currency);
+    this.selectedOtherCryptoCurrency.set('');
+  }
+
+  selectOtherCryptoCurrency(currency: string): void {
+    const normalized = String(currency || '').trim().toUpperCase();
+    if (!normalized) {
+      return;
+    }
+    this.selectedOtherCryptoCurrency.set(normalized);
+    this.selectedCryptoCurrency.set(normalized);
   }
 
   resolvedTopUpAmount(): number | null {
@@ -320,11 +355,12 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     this.cryptoProcessing.set(true);
     try {
       const idToken = await firebaseUser.getIdToken();
+      const payCurrency = this.selectedPayCurrency();
 
       const resp = await firstValueFrom(
         this.http.post<{ orderId: string; paymentId: string; paymentUrl: string }>(
           '/api/createNowPaymentsOrder',
-          { amountUsd: amount },
+          { amountUsd: amount, payCurrency },
           {
             headers: new HttpHeaders({
               Authorization: `Bearer ${idToken}`,
@@ -355,6 +391,50 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
       this.cryptoError.set(apiMsg || err?.message || this.translate.instant('payments.crypto.createFailed'));
     } finally {
       this.cryptoProcessing.set(false);
+    }
+  }
+
+  async ensureNowPaymentsCurrenciesLoaded(): Promise<void> {
+    if (this.availableCryptoCurrencies().length > 0 || this.cryptoCurrenciesLoading()) {
+      return;
+    }
+
+    const firebaseUser = this.firebaseAuth.currentUser;
+    if (!firebaseUser) {
+      return;
+    }
+
+    this.cryptoCurrenciesLoading.set(true);
+    try {
+      const idToken = await firebaseUser.getIdToken();
+      const resp = await firstValueFrom(
+        this.http.get<{ currencies: string[] }>(
+          '/api/listNowPaymentsCurrencies',
+          {
+            headers: new HttpHeaders({
+              Authorization: `Bearer ${idToken}`,
+              'Content-Type': 'application/json',
+            }),
+          },
+        ),
+      );
+
+      const normalized = (Array.isArray(resp?.currencies) ? resp.currencies : [])
+        .map((c) => String(c || '').trim().toUpperCase())
+        .filter((c) => c.length > 0);
+
+      this.availableCryptoCurrencies.set(normalized);
+
+      if (!normalized.includes(this.selectedPayCurrency())) {
+        const fallback = normalized.find((c) => c === 'BTC') || normalized[0] || 'BTC';
+        this.selectedCryptoCurrency.set(fallback);
+        this.selectedOtherCryptoCurrency.set('');
+      }
+    } catch {
+      // Keep the quick picks even if list loading fails.
+      this.availableCryptoCurrencies.set([...this.quickCryptoChoices]);
+    } finally {
+      this.cryptoCurrenciesLoading.set(false);
     }
   }
 

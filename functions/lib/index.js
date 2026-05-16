@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -1372,6 +1372,25 @@ exports.confirmTopUp = functions
 const NOWPAYMENTS_API_KEY = (0, params_1.defineSecret)("NOWPAYMENTS_API_KEY");
 const NOWPAYMENTS_PUBLIC_KEY = (0, params_1.defineSecret)("NOWPAYMENTS_PUBLIC_KEY");
 const NOWPAYMENTS_BASE_URL = "https://api.nowpayments.io";
+async function fetchNowPaymentsMerchantCurrencies(apiKey) {
+    const resp = await (0, node_fetch_1.default)(`${NOWPAYMENTS_BASE_URL}/v1/merchant/coins`, {
+        method: "GET",
+        headers: {
+            "x-api-key": apiKey,
+            "Content-Type": "application/json",
+        },
+    });
+    if (!resp.ok) {
+        const providerErr = await resp.text();
+        throw new Error(`Failed to fetch merchant currencies (${resp.status}): ${providerErr}`);
+    }
+    const payload = await resp.json();
+    const raw = Array.isArray(payload?.selectedCurrencies) ? payload.selectedCurrencies : [];
+    return raw
+        .map((c) => String(c || "").trim().toUpperCase())
+        .filter((c) => c.length > 0)
+        .sort();
+}
 // CORS handler that also allows GET (needed for order status polling).
 const corsHandlerGet = (0, cors_1.default)({
     origin: [
@@ -1404,6 +1423,7 @@ exports.createNowPaymentsOrder = functions
         try {
             const decoded = await verifyBearerToken(req.headers.authorization);
             const rawAmount = Number(req.body?.amountUsd ?? 0);
+            const requestedCurrency = String(req.body?.payCurrency || "BTC").trim().toUpperCase();
             if (!Number.isFinite(rawAmount) || rawAmount < MIN_TOPUP_USD || rawAmount > MAX_TOPUP_USD) {
                 res.status(400).json({ error: `Amount must be between $${MIN_TOPUP_USD} and $${MAX_TOPUP_USD}.` });
                 return;
@@ -1422,11 +1442,20 @@ exports.createNowPaymentsOrder = functions
                 res.status(500).json({ error: "Crypto payment is not configured. Please contact support." });
                 return;
             }
+            const availableCurrencies = await fetchNowPaymentsMerchantCurrencies(apiKey);
+            const allowedSet = new Set(availableCurrencies);
+            if (!allowedSet.has(requestedCurrency)) {
+                res.status(400).json({
+                    error: `Unsupported pay currency: ${requestedCurrency}`,
+                    availableCurrencies,
+                });
+                return;
+            }
             const paymentPayload = {
                 order_id: internalOrderId,
                 price_amount: rawAmount,
                 price_currency: "USD",
-                pay_currency: "btc",
+                pay_currency: requestedCurrency.toLowerCase(),
                 order_description: `Real-money account top-up of $${rawAmount}`,
                 ipn_callback_url: "https://autotrader-b8851.web.app/api/nowPaymentsCallback",
                 success_url: "https://autotrader-b8851.web.app/?payment=success",
@@ -1499,6 +1528,7 @@ exports.createNowPaymentsOrder = functions
             await admin.firestore().collection("nowpayments_orders").doc(internalOrderId).update({
                 nowPaymentsPaymentId: String(order.payment_id || order.id || ""),
                 nowPaymentsInvoiceId: String(order.invoice_id || order.invoiceId || ""),
+                payCurrency: requestedCurrency,
                 paymentUrl,
             });
             console.log(`✅ NOWPayments order created for ${decoded.uid}: order ${internalOrderId}`);
@@ -1515,6 +1545,43 @@ exports.createNowPaymentsOrder = functions
                 return;
             }
             console.error("❌ createNowPaymentsOrder failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+/**
+ * Returns merchant-enabled NOWPayments currencies for crypto checkout UI.
+ */
+exports.listNowPaymentsCurrencies = functions
+    .region("europe-west1")
+    .runWith({ secrets: [NOWPAYMENTS_API_KEY] })
+    .https.onRequest((req, res) => {
+    corsHandlerGet(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "GET") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            await verifyBearerToken(req.headers.authorization);
+            const apiKey = NOWPAYMENTS_API_KEY.value().trim();
+            if (!apiKey) {
+                res.status(500).json({ error: "Crypto payment is not configured. Please contact support." });
+                return;
+            }
+            const currencies = await fetchNowPaymentsMerchantCurrencies(apiKey);
+            res.status(200).json({ currencies });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to list crypto currencies";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ listNowPaymentsCurrencies failed:", error);
             res.status(500).json({ error: message });
         }
     });
