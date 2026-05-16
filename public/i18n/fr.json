@@ -175,11 +175,18 @@
     "crypto": {
       "title": "Payer en cryptomonnaie",
       "description": "BTC, ETH, USDT et plus via NOWPayments",
+      "quickChoicesLabel": "Choix populaires",
+      "otherCurrenciesLabel": "Autres devises",
+      "otherCurrenciesPlaceholder": "Sélectionnez une autre devise disponible",
+      "loadingCurrencies": "Chargement des devises disponibles...",
       "waiting": "En attente de la confirmation du paiement…",
       "reopenPaymentPage": "Rouvrir la page de paiement ↗",
       "createFailed": "Impossible de créer le paiement crypto. Veuillez réessayer.",
       "invalidAmount": "Veuillez saisir un montant de rechargement valide (1 $ minimum).",
-      "loginAgain": "Veuillez vous reconnecter pour continuer."
+      "loginAgain": "Veuillez vous reconnecter pour continuer.",
+      "creatingOrder": "Création de la commande...",
+      "pay": "Payer",
+      "withCrypto": "en crypto"
     }
   },
   "settings": {
