@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   computed,
+  HostListener,
   inject,
   OnDestroy,
   signal,
@@ -31,6 +32,72 @@ import { TourService } from '../services/tour.service';
 
 const PRESET_AMOUNTS = [50, 100, 200, 500, 1000] as const;
 const QUICK_CRYPTO_CHOICES = ["BTC", "ETH", "USDT", "DOGE"] as const;
+const CURATED_CRYPTO_CHOICES = [
+  'BTC',
+  'ETH',
+  'USDT',
+  'DOGE',
+  'USDC',
+  'SOL',
+  'XRP',
+  'ADA',
+  'BNB',
+  'LTC',
+  'BCH',
+  'XLM',
+  'XMR',
+  'DASH',
+  'ETC',
+  'TRX',
+  'LINK',
+  'DOT',
+  'MATIC',
+  'TON',
+] as const;
+const CRYPTO_CURRENCY_SYMBOLS: Record<string, string> = {
+  ADA: '₳',
+  BCH: 'Ƀ',
+  BNB: '◇',
+  BTC: '₿',
+  DASH: 'Đ',
+  DOGE: 'Ð',
+  DOT: '●',
+  ETC: '⟠',
+  ETH: 'Ξ',
+  LINK: '⬡',
+  LTC: 'Ł',
+  MATIC: '⬟',
+  SOL: '◎',
+  TON: '✦',
+  TRX: '▲',
+  USDC: '$',
+  USDT: '₮',
+  XLM: '✧',
+  XMR: 'ɱ',
+  XRP: '✕',
+};
+const CRYPTO_CURRENCY_ACCENTS: Record<string, string> = {
+  ADA: '#246bff',
+  BCH: '#8dc351',
+  BNB: '#f0b90b',
+  BTC: '#f7931a',
+  DASH: '#1c75bc',
+  DOGE: '#c2a633',
+  DOT: '#e6007a',
+  ETC: '#3ab83a',
+  ETH: '#627eea',
+  LINK: '#2a5ada',
+  LTC: '#345d9d',
+  MATIC: '#8247e5',
+  SOL: '#14f195',
+  TON: '#0098ea',
+  TRX: '#ff060a',
+  USDC: '#2775ca',
+  USDT: '#26a17b',
+  XLM: '#111111',
+  XMR: '#ff6600',
+  XRP: '#23292f',
+};
 
 @Component({
   selector: 'app-real-money-onboarding-modal',
@@ -98,6 +165,29 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   availableCryptoCurrencies = signal<string[]>([]);
   selectedCryptoCurrency = signal<string>('BTC');
   selectedOtherCryptoCurrency = signal<string>('');
+  cryptoSearchQuery = signal('');
+  cryptoDropdownOpen = signal(false);
+  fixedCryptoChoices = computed(() => {
+    const selected = this.selectedOtherCryptoCurrency().trim().toUpperCase();
+    if (!selected || this.quickCryptoChoices.includes(selected as (typeof QUICK_CRYPTO_CHOICES)[number])) {
+      return [...this.quickCryptoChoices];
+    }
+
+    return [...this.quickCryptoChoices, selected];
+  });
+  filteredOtherCryptoCurrencies = computed(() => {
+    const query = this.cryptoSearchQuery().trim().toLowerCase();
+    const all = this.otherCryptoCurrencies();
+    if (!query) {
+      return all;
+    }
+
+    return all.filter((code) => {
+      const normalized = code.toLowerCase();
+      const symbol = this.cryptoCurrencySymbol(code).toLowerCase();
+      return normalized.includes(query) || symbol.includes(query);
+    });
+  });
   private _cryptoPollInterval: ReturnType<typeof setInterval> | null = null;
 
   private stripe: Stripe | null = null;
@@ -202,6 +292,27 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     return this.availableCryptoCurrencies().filter((code) => !quick.has(code as (typeof QUICK_CRYPTO_CHOICES)[number]));
   }
 
+  private curatedAvailableCryptoCurrencies(codes: string[]): string[] {
+    const available = new Set(codes);
+    return CURATED_CRYPTO_CHOICES.filter((code) => available.has(code));
+  }
+
+  cryptoCurrencySymbol(currency: string): string {
+    const normalized = String(currency || '').trim().toUpperCase();
+    return CRYPTO_CURRENCY_SYMBOLS[normalized] || '';
+  }
+
+  formatCryptoCurrencyLabel(currency: string): string {
+    const normalized = String(currency || '').trim().toUpperCase();
+    const symbol = this.cryptoCurrencySymbol(normalized);
+    return symbol ? `${symbol} ${normalized}` : normalized;
+  }
+
+  cryptoCurrencyAccent(currency: string): string {
+    const normalized = String(currency || '').trim().toUpperCase();
+    return CRYPTO_CURRENCY_ACCENTS[normalized] || '#5b8cff';
+  }
+
   selectedPayCurrency(): string {
     const quick = new Set(this.quickCryptoChoices);
     const selected = this.selectedCryptoCurrency().trim().toUpperCase();
@@ -215,6 +326,25 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   selectQuickCryptoCurrency(currency: (typeof QUICK_CRYPTO_CHOICES)[number]): void {
     this.selectedCryptoCurrency.set(currency);
     this.selectedOtherCryptoCurrency.set('');
+    this.cryptoSearchQuery.set('');
+    this.cryptoDropdownOpen.set(false);
+  }
+
+  selectFixedCryptoCurrency(currency: string): void {
+    const normalized = String(currency || '').trim().toUpperCase();
+    if (!normalized) {
+      return;
+    }
+
+    if (this.quickCryptoChoices.includes(normalized as (typeof QUICK_CRYPTO_CHOICES)[number])) {
+      this.selectQuickCryptoCurrency(normalized as (typeof QUICK_CRYPTO_CHOICES)[number]);
+      return;
+    }
+
+    this.selectedOtherCryptoCurrency.set(normalized);
+    this.selectedCryptoCurrency.set(normalized);
+    this.cryptoSearchQuery.set('');
+    this.cryptoDropdownOpen.set(false);
   }
 
   selectOtherCryptoCurrency(currency: string): void {
@@ -224,6 +354,34 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     }
     this.selectedOtherCryptoCurrency.set(normalized);
     this.selectedCryptoCurrency.set(normalized);
+    this.cryptoSearchQuery.set('');
+    this.cryptoDropdownOpen.set(false);
+  }
+
+  setCryptoSearchQuery(query: string): void {
+    this.cryptoSearchQuery.set(String(query || ''));
+  }
+
+  toggleCryptoDropdown(): void {
+    this.cryptoDropdownOpen.update((open) => !open);
+  }
+
+  closeCryptoDropdown(): void {
+    this.cryptoDropdownOpen.set(false);
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: Event): void {
+    if (!this.cryptoDropdownOpen()) {
+      return;
+    }
+
+    const target = event.target;
+    if (target instanceof Element && target.closest('.crypto-other-select-group')) {
+      return;
+    }
+
+    this.closeCryptoDropdown();
   }
 
   resolvedTopUpAmount(): number | null {
@@ -422,11 +580,12 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
       const normalized = (Array.isArray(resp?.currencies) ? resp.currencies : [])
         .map((c) => String(c || '').trim().toUpperCase())
         .filter((c) => c.length > 0);
+      const curated = this.curatedAvailableCryptoCurrencies(normalized);
 
-      this.availableCryptoCurrencies.set(normalized);
+      this.availableCryptoCurrencies.set(curated.length > 0 ? curated : [...this.quickCryptoChoices]);
 
-      if (!normalized.includes(this.selectedPayCurrency())) {
-        const fallback = normalized.find((c) => c === 'BTC') || normalized[0] || 'BTC';
+      if (!curated.includes(this.selectedPayCurrency())) {
+        const fallback = curated.find((c) => c === 'BTC') || curated[0] || 'BTC';
         this.selectedCryptoCurrency.set(fallback);
         this.selectedOtherCryptoCurrency.set('');
       }

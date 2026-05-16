@@ -93,17 +93,6 @@ jobs:
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Remove legacy CoinGate functions
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
-        run: |
-          for fn in createCoinGateOrder checkCoinGateOrder coinGateCallback; do
-            firebase functions:delete "$fn" \
-              --project autotrader-b8851 \
-              --region europe-west1 \
-              --force || true
-          done
-
       - name: Deploy to Firebase
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
