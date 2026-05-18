@@ -1684,7 +1684,7 @@ export class LearnDetailPage implements OnInit {
   private loadPage(slug: string): void {
     const data = LEARN_PAGES[slug];
     if (!data) {
-      this.router.navigate(['/']);
+      void this.router.navigate(['/', this.languageService.currentLang()]);
       return;
     }
 
