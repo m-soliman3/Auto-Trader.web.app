@@ -1690,16 +1690,6 @@ export class LearnDetailPage implements OnInit {
 
     this.currentSlug = slug;
 
-    // Set canonical: drive traffic to homepage instead of this page
-    const canonicalHref = (this.document.location?.origin ?? '') + '/';
-    let canonicalEl = this.document.querySelector('link[rel="canonical"]');
-    if (!canonicalEl) {
-      canonicalEl = this.document.createElement('link');
-      canonicalEl.setAttribute('rel', 'canonical');
-      this.document.head.appendChild(canonicalEl);
-    }
-    canonicalEl.setAttribute('href', canonicalHref);
-
     this.allStrategies = Object.values(LEARN_PAGES)
       .filter(p => p.category === 'strategy' && p.slug !== slug);
     this.allSignals = Object.values(LEARN_PAGES)
