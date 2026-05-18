@@ -748,7 +748,7 @@ export class FeatureDetailPage implements OnInit {
   private loadFeature(slug: string): void {
     const data = FEATURES[slug];
     if (!data) {
-      this.router.navigate(['/']);
+      void this.router.navigate(['/', this.languageService.currentLang()]);
       return;
     }
 
