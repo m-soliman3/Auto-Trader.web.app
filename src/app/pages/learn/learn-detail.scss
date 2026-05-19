@@ -512,7 +512,8 @@
 .ld-locked-tail {
   position: relative;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  overflow: hidden;
+  max-height: 420px;
+  overflow: auto;
   background: #0e1626;
 }
 
@@ -528,10 +529,12 @@
 }
 
 .ld-locked-overlay {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
   padding: 1rem;
   background: linear-gradient(
     to bottom,
@@ -539,6 +542,7 @@
     rgba(14, 22, 38, 0.42) 38%,
     rgba(14, 22, 38, 0.92) 100%
   );
+  pointer-events: none;
 }
 
 .ld-code-gate-inline {
@@ -555,6 +559,7 @@
     0 14px 36px rgba(0, 0, 0, 0.35),
     0 0 0 1px rgba(0, 209, 122, 0.2),
     0 0 22px rgba(0, 209, 122, 0.22);
+  pointer-events: auto;
 
   h3 {
     margin: 0;
