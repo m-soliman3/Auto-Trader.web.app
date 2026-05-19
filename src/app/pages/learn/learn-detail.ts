@@ -30,6 +30,15 @@ export interface LearnData {
   relatedSlugs: string[];
 }
 
+interface LearnCodeExample {
+  id: string;
+  title: string;
+  description: string;
+  code: string;
+}
+
+type CodeAccessStep = 'collect' | 'verify' | 'unlocked';
+
 export const LEARN_PAGES: Record<string, LearnData> = {
 
   // ─────────────────────────── TRADING STRATEGIES ───────────────────────────
@@ -1667,8 +1676,23 @@ export class LearnDetailPage implements OnInit {
   howItWorksHtml: SafeHtml = '';
   allStrategies: LearnData[] = [];
   allSignals: LearnData[] = [];
+  strategyCodeExamples: LearnCodeExample[] = [];
+  copiedCodeExampleId: string | null = null;
+  codeAccessStep: CodeAccessStep = 'collect';
+  codeAccessName = '';
+  codeAccessEmail = '';
+  codeAccessVerificationCode = '';
+  codeAccessNameTouched = false;
+  codeAccessEmailTouched = false;
+  codeAccessNameFieldError = '';
+  codeAccessEmailFieldError = '';
+  codeAccessBusy = false;
+  codeAccessError = '';
+  codeAccessNotice = '';
 
   private currentSlug = '';
+  private copyFeedbackTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private readonly codePreviewLines = 5;
 
   ngOnInit(): void {
     this.loadPage(this.route.snapshot.paramMap.get('slug') ?? '');
@@ -1688,6 +1712,9 @@ export class LearnDetailPage implements OnInit {
       return;
     }
 
+    if (this.currentSlug !== slug) {
+      this.resetCodeAccessState();
+    }
     this.currentSlug = slug;
 
     this.allStrategies = Object.values(LEARN_PAGES)
@@ -1731,9 +1758,30 @@ export class LearnDetailPage implements OnInit {
     this.document.title = this.page.metaTitle;
     this.meta.updateTag({ name: 'description', content: this.page.metaDescription });
 
+    const canonicalHref = this.canonicalHref();
+    this.setCanonical(canonicalHref);
+
+    this.meta.updateTag({ property: 'og:title', content: this.page.metaTitle });
+    this.meta.updateTag({ property: 'og:description', content: this.page.metaDescription });
+    this.meta.updateTag({ property: 'og:type', content: 'article' });
+    this.meta.updateTag({ property: 'og:url', content: canonicalHref });
+    this.meta.updateTag({ property: 'og:locale', content: this.ogLocale(this.languageService.currentLang()) });
+
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:title', content: this.page.metaTitle });
+    this.meta.updateTag({ name: 'twitter:description', content: this.page.metaDescription });
+
+    const keywords = [this.page.title, this.page.tagline, 'AutoTrader', 'auto-Trading'];
+    if (this.languageService.currentLang() === 'ar' && this.currentSlug === 'smart-money-concepts') {
+      keywords.push('التحليل الاستراتيجي', 'تحليل استراتيجي', 'مفاهيم الأموال الذكية', 'SMC');
+    }
+    this.meta.updateTag({ name: 'keywords', content: keywords.join(', ') });
+
     this.relatedPages = base.relatedSlugs
       .map(s => LEARN_PAGES[s])
       .filter(Boolean);
+
+    this.strategyCodeExamples = this.buildStrategyCodeExamples(base.slug);
 
     this.overviewParagraphs = translatedOverview
       .split('\n\n')
@@ -1752,6 +1800,33 @@ export class LearnDetailPage implements OnInit {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  private canonicalHref(): string {
+    const origin = this.document.location?.origin ?? '';
+    const lang = this.languageService.currentLang();
+    return `${origin}/${lang}/learn/${this.currentSlug}`;
+  }
+
+  private setCanonical(href: string): void {
+    let canonicalEl = this.document.querySelector('link[rel="canonical"]');
+    if (!canonicalEl) {
+      canonicalEl = this.document.createElement('link');
+      canonicalEl.setAttribute('rel', 'canonical');
+      this.document.head.appendChild(canonicalEl);
+    }
+    canonicalEl.setAttribute('href', href);
+  }
+
+  private ogLocale(lang: string): string {
+    switch (lang) {
+      case 'ar': return 'ar_AR';
+      case 'de': return 'de_DE';
+      case 'es': return 'es_ES';
+      case 'fr': return 'fr_FR';
+      case 'pt': return 'pt_PT';
+      default: return 'en_US';
+    }
   }
 
   localizedHref(...segments: string[]): string {
@@ -1776,5 +1851,1050 @@ export class LearnDetailPage implements OnInit {
 
   learnLanguageLink(langCode: string): string[] {
     return ['/', langCode, 'learn', this.page?.slug ?? ''];
+  }
+
+  async copyCodeExample(example: LearnCodeExample): Promise<void> {
+    if (this.codeAccessStep !== 'unlocked') {
+      return;
+    }
+
+    const navigator = this.document.defaultView?.navigator;
+    let copied = false;
+
+    if (navigator?.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(example.code);
+        copied = true;
+      } catch {
+        copied = this.copyWithTextarea(example.code);
+      }
+    } else {
+      copied = this.copyWithTextarea(example.code);
+    }
+
+    if (!copied) {
+      return;
+    }
+
+    this.copiedCodeExampleId = example.id;
+    if (this.copyFeedbackTimeoutId) {
+      clearTimeout(this.copyFeedbackTimeoutId);
+    }
+    this.copyFeedbackTimeoutId = setTimeout(() => {
+      this.copiedCodeExampleId = null;
+      this.copyFeedbackTimeoutId = null;
+    }, 2000);
+  }
+
+  private buildStrategyCodeExamples(slug: string): LearnCodeExample[] {
+    const page = LEARN_PAGES[slug];
+    if (!page) {
+      return [];
+    }
+
+    const profile = this.codeProfileForPage(page);
+    const pineCode = this.pineCodeForProfile(profile, page.title);
+    const thinkCode = this.thinkCodeForProfile(profile, page.title);
+
+    return [
+      {
+        id: `${page.slug}-pinescript`,
+        title: this.t('learnDetail.codePineScriptTitle', 'Pine Script (TradingView)'),
+        description: this.t(
+          page.category === 'signal'
+            ? 'learnDetail.codePineScriptIndicatorDescription'
+            : 'learnDetail.codePineScriptStrategyDescription',
+          page.category === 'signal'
+            ? 'This is a TradingView Pine Script example for this indicator. Paste it into the TradingView Pine Editor, add it to your chart, and adjust inputs for your market and timeframe.'
+            : 'This is a TradingView Pine Script strategy example for this page concept. Paste it into the TradingView Pine Editor, add it to your chart, and run it in the Strategy Tester.'
+        ),
+        code: pineCode,
+      },
+      {
+        id: `${page.slug}-thinkscript`,
+        title: this.t('learnDetail.codeThinkScriptTitle', 'ThinkScript (thinkorswim)'),
+        description: this.t(
+          page.category === 'signal'
+            ? 'learnDetail.codeThinkScriptIndicatorDescription'
+            : 'learnDetail.codeThinkScriptStrategyDescription',
+          page.category === 'signal'
+            ? 'This is a thinkorswim ThinkScript example for this indicator. Open thinkorswim, create a custom study, paste the script, and apply it to your chart.'
+            : 'This is a thinkorswim ThinkScript strategy example for this page concept. Open thinkorswim, create a custom strategy, paste the script, and apply it to your chart.'
+        ),
+        code: thinkCode,
+      },
+    ];
+  }
+
+  private codeProfileForPage(page: LearnData): string {
+    const bySlug: Record<string, string> = {
+      'moving-average-crossover': 'ma-crossover',
+      'fair-value-gap': 'fvg',
+      'smart-money-concepts': 'smc',
+      'order-blocks': 'order-block',
+      'liquidity-sweeps': 'liquidity-sweep',
+      'breaker-blocks': 'breaker-block',
+      'trend-following': 'trend-following',
+      'mean-reversion': 'mean-reversion',
+      'breakout-strategy': 'breakout',
+      'scalping-strategy': 'price-action',
+      'swing-trading': 'price-action',
+      'fibonacci-retracement': 'structure',
+      'ichimoku-strategy': 'ichimoku',
+      'price-action-strategy': 'price-action',
+      'grid-trading': 'grid',
+      'dollar-cost-averaging': 'dca',
+      'arbitrage-strategy': 'multi-factor',
+      'ema-indicator': 'ema',
+      'sma-indicator': 'sma',
+      'rsi-indicator': 'rsi',
+      'macd-indicator': 'macd',
+      'stochastic-oscillator': 'stochastic',
+      'bollinger-bands': 'bollinger',
+      'vwap-indicator': 'vwap',
+      'atr-indicator': 'atr',
+      'adx-indicator': 'adx',
+      'donchian-channel': 'donchian',
+      'volume-analysis': 'volume',
+      'cci-indicator': 'cci',
+      'williams-percent-r': 'williams',
+      'parabolic-sar': 'parabolic',
+      'obv-indicator': 'obv',
+      'pivot-points': 'pivot',
+      'keltner-channels': 'keltner',
+      'supertrend-indicator': 'supertrend',
+      'mfi-indicator': 'mfi',
+      'fibonacci-indicator': 'fibonacci',
+      'supply-demand-zones': 'structure',
+      'wyckoff-method': 'structure',
+      'elliott-wave': 'structure',
+      'position-trading': 'trend-following',
+      'pairs-trading': 'mean-reversion',
+      'momentum-trading': 'momentum',
+      'range-trading': 'mean-reversion',
+      'news-trading': 'price-action',
+      'harmonic-patterns': 'price-action',
+      'chart-patterns': 'price-action',
+      'carry-trade': 'momentum',
+      'gap-trading': 'volatility',
+      'triple-screen-strategy': 'triple-screen',
+      'chaikin-money-flow': 'chaikin',
+      'awesome-oscillator': 'awesome',
+      'alligator-indicator': 'alligator',
+      'hull-moving-average': 'hma',
+      'rate-of-change': 'roc',
+      'aroon-indicator': 'aroon',
+      'trix-indicator': 'trix',
+      'elder-ray': 'elder',
+      'detrended-price-oscillator': 'dpo',
+      'linear-regression': 'linear-reg',
+      'stochastic-rsi': 'stochrsi',
+      'force-index': 'force',
+      'ultimate-oscillator': 'ultimate',
+      'vortex-indicator': 'vortex',
+      'dmi-indicator': 'adx',
+      'volatility-trading': 'volatility',
+      'market-making-strategy': 'grid',
+      'counter-trend-strategy': 'mean-reversion',
+      'machine-learning-strategy': 'multi-factor',
+      'rebalancing-strategy': 'mean-reversion',
+    };
+
+    const profile = bySlug[page.slug];
+    if (!profile) {
+      throw new Error(`Missing strategy code profile mapping for learn page slug: ${page.slug}`);
+    }
+    return profile;
+  }
+
+  private pineCodeForProfile(profile: string, title: string): string {
+    const safeTitle = title.replace(/"/g, '\\"');
+    switch (profile) {
+      case 'rsi':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+rsiLen = input.int(14, "RSI Length")
+oversold = input.int(30, "Oversold")
+overbought = input.int(70, "Overbought")
+r = ta.rsi(close, rsiLen)
+longSignal = ta.crossover(r, oversold)
+exitSignal = ta.crossunder(r, overbought)
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(r, "RSI", color=color.new(color.aqua, 0))`;
+      case 'macd':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+fast = input.int(12, "Fast")
+slow = input.int(26, "Slow")
+sig = input.int(9, "Signal")
+[macdLine, signalLine, _] = ta.macd(close, fast, slow, sig)
+longSignal = ta.crossover(macdLine, signalLine)
+shortSignal = ta.crossunder(macdLine, signalLine)
+if longSignal
+    strategy.entry("Long", strategy.long)
+if shortSignal
+    strategy.close("Long")
+plot(macdLine, "MACD", color=color.teal)
+plot(signalLine, "Signal", color=color.orange)`;
+      case 'stochastic':
+      case 'stochrsi':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+length = input.int(14, "Length")
+smooth = input.int(3, "Smoothing")
+k = ta.sma(ta.stoch(close, high, low, length), smooth)
+d = ta.sma(k, smooth)
+longSignal = ta.crossover(k, d) and k < 25
+exitSignal = ta.crossunder(k, d) and k > 75
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(k, "K", color=color.aqua)
+plot(d, "D", color=color.fuchsia)`;
+      case 'bollinger':
+      case 'mean-reversion':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+len = input.int(20, "BB Length")
+mult = input.float(2.0, "Std Dev")
+basis = ta.sma(close, len)
+dev = ta.stdev(close, len) * mult
+upper = basis + dev
+lower = basis - dev
+longSignal = close < lower
+exitSignal = close > basis
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(upper, "Upper", color=color.orange)
+plot(lower, "Lower", color=color.orange)`;
+      case 'vwap':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+v = ta.vwap(close)
+emaLen = input.int(20, "Trend EMA")
+trend = ta.ema(close, emaLen)
+longSignal = ta.crossover(close, v) and close > trend
+exitSignal = ta.crossunder(close, v)
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(v, "VWAP", color=color.fuchsia)
+plot(trend, "EMA", color=color.new(color.aqua, 0))`;
+      case 'donchian':
+      case 'breakout':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+len = input.int(20, "Breakout Length")
+upper = ta.highest(high, len)
+lower = ta.lowest(low, len)
+longSignal = close > upper[1]
+exitSignal = close < lower[1]
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(upper, "Upper", color=color.lime)
+plot(lower, "Lower", color=color.red)`;
+      case 'atr':
+      case 'volatility':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+atrLen = input.int(14, "ATR Length")
+atrMult = input.float(2.0, "ATR Mult")
+emaLen = input.int(50, "Trend EMA")
+ema = ta.ema(close, emaLen)
+atr = ta.atr(atrLen)
+longSignal = ta.crossover(close, ema)
+stop = strategy.position_avg_price - atr * atrMult
+if longSignal
+    strategy.entry("Long", strategy.long)
+strategy.exit("ATR Exit", "Long", stop=stop)
+plot(ema, "EMA", color=color.new(color.orange, 0))`;
+      case 'adx':
+      case 'trend-following':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+adxLen = input.int(14, "ADX Length")
+emaLen = input.int(100, "Trend EMA")
+adx = ta.adx(adxLen)
+ema = ta.ema(close, emaLen)
+longSignal = close > ema and adx > 25
+exitSignal = close < ema
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(ema, "EMA", color=color.orange)`;
+      case 'fvg':
+      case 'smc':
+      case 'order-block':
+      case 'liquidity-sweep':
+      case 'breaker-block':
+      case 'structure':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+emaFast = ta.ema(close, 20)
+emaSlow = ta.ema(close, 50)
+bullStructure = close > emaFast and emaFast > emaSlow
+bearStructure = close < emaFast and emaFast < emaSlow
+liquidityGrab = low < ta.lowest(low, 10)[1] and close > open
+longSignal = bullStructure and liquidityGrab
+exitSignal = bearStructure
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(emaFast, "Fast", color=color.aqua)
+plot(emaSlow, "Slow", color=color.orange)`;
+      case 'ichimoku':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+conv = (ta.highest(high, 9) + ta.lowest(low, 9)) / 2
+base = (ta.highest(high, 26) + ta.lowest(low, 26)) / 2
+spanA = (conv + base) / 2
+spanB = (ta.highest(high, 52) + ta.lowest(low, 52)) / 2
+longSignal = close > math.max(spanA, spanB) and conv > base
+exitSignal = close < base
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(conv, "Conversion", color=color.aqua)
+plot(base, "Base", color=color.orange)`;
+    case 'volume':
+    return `//@version=6
+strategy("${safeTitle}", overlay=true)
+obv = ta.obv(close, volume)
+obvEma = ta.ema(obv, 21)
+trend = ta.ema(close, 50)
+longSignal = ta.crossover(obv, obvEma) and close > trend
+exitSignal = ta.crossunder(obv, obvEma) or close < trend
+if longSignal
+  strategy.entry("Long", strategy.long)
+if exitSignal
+  strategy.close("Long")
+plot(obv, "OBV", color=color.aqua)
+plot(obvEma, "OBV EMA", color=color.orange)`;
+    case 'fibonacci':
+    return `//@version=6
+strategy("${safeTitle}", overlay=true)
+lookback = input.int(100, "Swing Lookback")
+hi = ta.highest(high, lookback)
+lo = ta.lowest(low, lookback)
+range = hi - lo
+fib50 = hi - range * 0.5
+fib618 = hi - range * 0.618
+trend = ta.ema(close, 55)
+longSignal = close > trend and close < fib50 and close > fib618
+exitSignal = close > hi or close < fib618
+if longSignal
+  strategy.entry("Long", strategy.long)
+if exitSignal
+  strategy.close("Long")
+plot(fib50, "Fib 0.5", color=color.orange)
+plot(fib618, "Fib 0.618", color=color.aqua)`;
+      case 'grid':
+      case 'dca':
+      case 'price-action':
+      case 'momentum':
+      case 'triple-screen':
+      case 'multi-factor':
+      case 'ema':
+      case 'sma':
+      case 'cci':
+      case 'williams':
+      case 'parabolic':
+      case 'obv':
+      case 'pivot':
+      case 'keltner':
+      case 'supertrend':
+      case 'mfi':
+      case 'chaikin':
+      case 'awesome':
+      case 'alligator':
+      case 'hma':
+      case 'roc':
+      case 'aroon':
+      case 'trix':
+      case 'elder':
+      case 'dpo':
+      case 'linear-reg':
+      case 'force':
+      case 'ultimate':
+      case 'vortex':
+      case 'ma-crossover':
+      default:
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+fastLen = input.int(20, "Fast Length")
+slowLen = input.int(50, "Slow Length")
+fast = ta.ema(close, fastLen)
+slow = ta.ema(close, slowLen)
+longSignal = ta.crossover(fast, slow)
+exitSignal = ta.crossunder(fast, slow)
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(fast, "Fast", color=color.aqua)
+plot(slow, "Slow", color=color.orange)`;
+    }
+  }
+
+  private thinkCodeForProfile(profile: string, title: string): string {
+    const safeTitle = title.replace(/"/g, '\\"');
+    switch (profile) {
+      case 'ma-crossover':
+      case 'price-action':
+        return `input fastLength = 20;
+input slowLength = 50;
+def fastMA = ExpAverage(close, fastLength);
+def slowMA = ExpAverage(close, slowLength);
+def buySignal = fastMA crosses above slowMA;
+def sellSignal = fastMA crosses below slowMA;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "${safeTitle} Exit");
+plot FastLine = fastMA;
+FastLine.SetDefaultColor(Color.CYAN);
+plot SlowLine = slowMA;
+SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'rsi':
+        return `input length = 14;
+def r = RSI(length = length);
+def buySignal = r crosses above 30;
+def sellSignal = r crosses below 70;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "RSI Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "RSI Exit");
+plot RSI_Line = r;
+RSI_Line.SetDefaultColor(Color.CYAN);`;
+      case 'macd':
+        return `def macd = MACD()."Value";
+def signal = MACD()."Avg";
+def buySignal = macd crosses above signal;
+def sellSignal = macd crosses below signal;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "MACD Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "MACD Exit");
+plot MacdLine = macd;
+MacdLine.SetDefaultColor(Color.CYAN);
+plot SignalLine = signal;
+SignalLine.SetDefaultColor(Color.ORANGE);`;
+      case 'stochastic':
+      case 'stochrsi':
+        return `def k = StochasticFull()."FullK";
+def d = StochasticFull()."FullD";
+def buySignal = k crosses above d and k < 25;
+def sellSignal = k crosses below d and k > 75;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Stoch Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Stoch Exit");
+plot KLine = k;
+KLine.SetDefaultColor(Color.CYAN);
+plot DLine = d;
+DLine.SetDefaultColor(Color.MAGENTA);`;
+      case 'bollinger':
+      case 'mean-reversion':
+        return `input length = 20;
+input numDev = 2.0;
+def mid = Average(close, length);
+def up = mid + numDev * StDev(close, length);
+def dn = mid - numDev * StDev(close, length);
+def buySignal = close < dn;
+def sellSignal = close > mid;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "MR Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "MR Exit");
+plot Upper = up;
+plot Lower = dn;`;
+      case 'donchian':
+      case 'breakout':
+        return `input length = 20;
+def upper = Highest(high, length);
+def lower = Lowest(low, length);
+def buySignal = close > upper[1];
+def sellSignal = close < lower[1];
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Breakout Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Breakout Exit");
+plot UpperBand = upper;
+plot LowerBand = lower;`;
+      case 'adx':
+      case 'trend-following':
+        return `input adxLength = 14;
+input emaLength = 100;
+def adxVal = ADX(adxLength);
+def emaVal = ExpAverage(close, emaLength);
+def buySignal = close > emaVal and adxVal > 25;
+def sellSignal = close < emaVal;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Trend Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Trend Exit");
+plot EMA = emaVal;
+EMA.SetDefaultColor(Color.ORANGE);`;
+      case 'fvg':
+      case 'smc':
+      case 'order-block':
+      case 'liquidity-sweep':
+      case 'breaker-block':
+      case 'structure':
+        return `def fast = ExpAverage(close, 20);
+def slow = ExpAverage(close, 50);
+def liquidityGrab = low < Lowest(low, 10)[1] and close > open;
+def buySignal = close > fast and fast > slow and liquidityGrab;
+def sellSignal = close < fast;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "SMC Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "SMC Exit");
+plot FastLine = fast;
+FastLine.SetDefaultColor(Color.CYAN);
+plot SlowLine = slow;
+SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'ichimoku':
+        return `def conv = (Highest(high, 9) + Lowest(low, 9)) / 2;
+def base = (Highest(high, 26) + Lowest(low, 26)) / 2;
+def spanA = (conv + base) / 2;
+def spanB = (Highest(high, 52) + Lowest(low, 52)) / 2;
+def buySignal = close > Max(spanA, spanB) and conv > base;
+def sellSignal = close < base;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Ichimoku Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Ichimoku Exit");
+plot Conversion = conv;
+Conversion.SetDefaultColor(Color.CYAN);
+plot BaseLine = base;
+BaseLine.SetDefaultColor(Color.ORANGE);`;
+      case 'vwap':
+        return `def vwapVal = VWAP();
+def trend = ExpAverage(close, 20);
+def buySignal = close crosses above vwapVal and close > trend;
+def sellSignal = close crosses below vwapVal;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "VWAP Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "VWAP Exit");
+plot VWAPLine = vwapVal;
+VWAPLine.SetDefaultColor(Color.MAGENTA);
+plot Trend = trend;
+Trend.SetDefaultColor(Color.CYAN);`;
+      case 'atr':
+      case 'volatility':
+        return `input atrLength = 14;
+input emaLength = 50;
+def atrVal = ATR(atrLength);
+def emaVal = ExpAverage(close, emaLength);
+def buySignal = close crosses above emaVal;
+def sellSignal = close < emaVal - (2 * atrVal);
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "ATR Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "ATR Exit");
+plot EMA = emaVal;
+EMA.SetDefaultColor(Color.ORANGE);`;
+      case 'ema':
+        return `input fastLength = 12;
+input slowLength = 26;
+def fastEMA = ExpAverage(close, fastLength);
+def slowEMA = ExpAverage(close, slowLength);
+def buySignal = fastEMA crosses above slowEMA;
+def sellSignal = fastEMA crosses below slowEMA;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "EMA Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "EMA Exit");
+plot FastLine = fastEMA;
+FastLine.SetDefaultColor(Color.CYAN);
+plot SlowLine = slowEMA;
+SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'sma':
+        return `input fastLength = 20;
+input slowLength = 50;
+def fastSMA = Average(close, fastLength);
+def slowSMA = Average(close, slowLength);
+def buySignal = fastSMA crosses above slowSMA;
+def sellSignal = fastSMA crosses below slowSMA;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "SMA Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "SMA Exit");
+plot FastLine = fastSMA;
+FastLine.SetDefaultColor(Color.CYAN);
+plot SlowLine = slowSMA;
+SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'cci':
+        return `input length = 20;
+def cci = CCI(length = length);
+def buySignal = cci crosses above -100;
+def sellSignal = cci crosses below 100;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "CCI Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "CCI Exit");
+plot CCI_Line = cci;
+CCI_Line.SetDefaultColor(Color.CYAN);`;
+      case 'williams':
+        return `input length = 14;
+def wpr = WilliamsPercentR(length = length);
+def buySignal = wpr crosses above -80;
+def sellSignal = wpr crosses below -20;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "WPR Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "WPR Exit");
+plot WPR = wpr;
+WPR.SetDefaultColor(Color.CYAN);`;
+      case 'parabolic':
+        return `def sar = ParabolicSAR();
+def buySignal = close crosses above sar;
+def sellSignal = close crosses below sar;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "SAR Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "SAR Exit");
+plot SARLine = sar;
+SARLine.SetDefaultColor(Color.ORANGE);`;
+      case 'obv':
+      case 'volume':
+        return `def obv = OnBalanceVolume();
+def obvAvg = ExpAverage(obv, 21);
+def trend = ExpAverage(close, 50);
+def buySignal = obv crosses above obvAvg and close > trend;
+def sellSignal = obv crosses below obvAvg or close < trend;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Volume Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Volume Exit");
+plot OBVLine = obv;
+OBVLine.SetDefaultColor(Color.CYAN);
+plot OBVAvg = obvAvg;
+OBVAvg.SetDefaultColor(Color.ORANGE);`;
+      case 'pivot':
+        return `def pivot = (high[1] + low[1] + close[1]) / 3;
+def buySignal = close crosses above pivot;
+def sellSignal = close crosses below pivot;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Pivot Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Pivot Exit");
+plot PivotLine = pivot;
+PivotLine.SetDefaultColor(Color.YELLOW);`;
+      case 'keltner':
+        return `input length = 20;
+input atrMult = 1.5;
+def mid = ExpAverage(close, length);
+def atrVal = ATR(length);
+def upper = mid + atrMult * atrVal;
+def lower = mid - atrMult * atrVal;
+def buySignal = close crosses above upper;
+def sellSignal = close crosses below mid;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Keltner Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Keltner Exit");
+plot Mid = mid;
+Mid.SetDefaultColor(Color.CYAN);
+plot Upper = upper;
+Upper.SetDefaultColor(Color.GREEN);
+plot Lower = lower;
+Lower.SetDefaultColor(Color.RED);`;
+      case 'supertrend':
+        return `input atrLength = 10;
+input multiplier = 3.0;
+def atrVal = ATR(atrLength);
+def basis = (high + low) / 2;
+def upper = basis + multiplier * atrVal;
+def lower = basis - multiplier * atrVal;
+def buySignal = close crosses above upper;
+def sellSignal = close crosses below lower;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Supertrend Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Supertrend Exit");
+plot UpperBand = upper;
+UpperBand.SetDefaultColor(Color.GREEN);
+plot LowerBand = lower;
+LowerBand.SetDefaultColor(Color.RED);`;
+      case 'mfi':
+        return `input length = 14;
+def mfi = MoneyFlowIndex(length = length);
+def buySignal = mfi crosses above 20;
+def sellSignal = mfi crosses below 80;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "MFI Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "MFI Exit");
+plot MFI_Line = mfi;
+MFI_Line.SetDefaultColor(Color.CYAN);`;
+      case 'momentum':
+        return `input length = 10;
+def mom = Momentum(length = length);
+def trend = ExpAverage(close, 50);
+def buySignal = mom > 0 and close > trend;
+def sellSignal = mom < 0 or close < trend;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Momentum Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Momentum Exit");
+plot Mom = mom;
+Mom.SetDefaultColor(Color.CYAN);`;
+      case 'triple-screen':
+      case 'multi-factor':
+      case 'grid':
+      case 'dca':
+        return `def fast = ExpAverage(close, 13);
+def slow = ExpAverage(close, 34);
+def rsi = RSI(length = 14);
+def buySignal = fast > slow and rsi < 65;
+def sellSignal = fast < slow or rsi > 75;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "System Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "System Exit");
+plot FastLine = fast;
+FastLine.SetDefaultColor(Color.CYAN);
+plot SlowLine = slow;
+SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'chaikin':
+        return `def cmf = ChaikinMoneyFlow(length = 20);
+def buySignal = cmf crosses above 0;
+def sellSignal = cmf crosses below 0;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "CMF Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "CMF Exit");
+plot CMFLine = cmf;
+CMFLine.SetDefaultColor(Color.CYAN);`;
+      case 'awesome':
+        return `def ao = AwesomeOscillator();
+def buySignal = ao crosses above 0;
+def sellSignal = ao crosses below 0;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "AO Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "AO Exit");
+plot AO = ao;
+AO.SetDefaultColor(Color.CYAN);`;
+      case 'alligator':
+        return `def jaw = SmoothedAverage(close, 13);
+def teeth = SmoothedAverage(close, 8);
+def lips = SmoothedAverage(close, 5);
+def buySignal = lips > teeth and teeth > jaw;
+def sellSignal = lips < teeth;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Alligator Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Alligator Exit");
+plot Jaw = jaw;
+Jaw.SetDefaultColor(Color.BLUE);
+plot Teeth = teeth;
+Teeth.SetDefaultColor(Color.RED);
+plot Lips = lips;
+Lips.SetDefaultColor(Color.GREEN);`;
+      case 'hma':
+        return `input length = 21;
+def hma = HullMovingAvg(close, length);
+def buySignal = close crosses above hma;
+def sellSignal = close crosses below hma;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "HMA Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "HMA Exit");
+plot HMA_Line = hma;
+HMA_Line.SetDefaultColor(Color.CYAN);`;
+      case 'roc':
+        return `input length = 12;
+def roc = RateOfChange(length = length);
+def buySignal = roc crosses above 0;
+def sellSignal = roc crosses below 0;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "ROC Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "ROC Exit");
+plot ROCLine = roc;
+ROCLine.SetDefaultColor(Color.CYAN);`;
+      case 'aroon':
+        return `input length = 14;
+def up = AroonUp(length = length);
+def down = AroonDown(length = length);
+def buySignal = up crosses above down;
+def sellSignal = down crosses above up;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Aroon Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Aroon Exit");
+plot AroonUpLine = up;
+AroonUpLine.SetDefaultColor(Color.GREEN);
+plot AroonDownLine = down;
+AroonDownLine.SetDefaultColor(Color.RED);`;
+      case 'trix':
+        return `input length = 15;
+def trix = TRIX(length = length);
+def buySignal = trix crosses above 0;
+def sellSignal = trix crosses below 0;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "TRIX Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "TRIX Exit");
+plot TRIXLine = trix;
+TRIXLine.SetDefaultColor(Color.CYAN);`;
+      case 'elder':
+        return `input length = 13;
+def emaVal = ExpAverage(close, length);
+def bullPower = high - emaVal;
+def bearPower = low - emaVal;
+def buySignal = bullPower > 0 and bearPower > bearPower[1];
+def sellSignal = bearPower < 0 and bullPower < bullPower[1];
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Elder Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Elder Exit");
+plot Bull = bullPower;
+Bull.SetDefaultColor(Color.GREEN);
+plot Bear = bearPower;
+Bear.SetDefaultColor(Color.RED);`;
+      case 'dpo':
+        return `input length = 20;
+def dpo = DetrendedPriceOsc(length = length);
+def buySignal = dpo crosses above 0;
+def sellSignal = dpo crosses below 0;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "DPO Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "DPO Exit");
+plot DPO_Line = dpo;
+DPO_Line.SetDefaultColor(Color.CYAN);`;
+      case 'linear-reg':
+        return `input length = 50;
+def lr = Inertia(close, length);
+def buySignal = close crosses above lr;
+def sellSignal = close crosses below lr;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "LR Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "LR Exit");
+plot LRLine = lr;
+LRLine.SetDefaultColor(Color.ORANGE);`;
+      case 'force':
+        return `input length = 13;
+def fi = ForceIndex(length = length);
+def buySignal = fi crosses above 0;
+def sellSignal = fi crosses below 0;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "FI Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "FI Exit");
+plot ForceLine = fi;
+ForceLine.SetDefaultColor(Color.CYAN);`;
+      case 'ultimate':
+        return `def ult = UltimateOscillator();
+def buySignal = ult crosses above 30;
+def sellSignal = ult crosses below 70;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Ultimate Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Ultimate Exit");
+plot UltimateLine = ult;
+UltimateLine.SetDefaultColor(Color.CYAN);`;
+      case 'vortex':
+        return `input length = 14;
+def viPlus = Vortex(length = length)."VI+";
+def viMinus = Vortex(length = length)."VI-";
+def buySignal = viPlus crosses above viMinus;
+def sellSignal = viMinus crosses above viPlus;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Vortex Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Vortex Exit");
+plot VIPlus = viPlus;
+VIPlus.SetDefaultColor(Color.GREEN);
+plot VIMinus = viMinus;
+VIMinus.SetDefaultColor(Color.RED);`;
+      case 'fibonacci':
+        return `input lookback = 100;
+def hi = Highest(high, lookback);
+def lo = Lowest(low, lookback);
+def range = hi - lo;
+def fib50 = hi - range * 0.5;
+def fib618 = hi - range * 0.618;
+def trend = ExpAverage(close, 55);
+def buySignal = close > trend and close < fib50 and close > fib618;
+def sellSignal = close > hi or close < fib618;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "Fibonacci Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "Fibonacci Exit");
+plot Fib50 = fib50;
+Fib50.SetDefaultColor(Color.ORANGE);
+plot Fib618 = fib618;
+Fib618.SetDefaultColor(Color.CYAN);`;
+      default:
+        return `input fastLength = 20;
+input slowLength = 50;
+def fastMA = ExpAverage(close, fastLength);
+def slowMA = ExpAverage(close, slowLength);
+def buySignal = fastMA crosses above slowMA;
+def sellSignal = fastMA crosses below slowMA;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "${title} Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "${title} Exit");
+plot FastLine = fastMA;
+FastLine.SetDefaultColor(Color.CYAN);
+plot SlowLine = slowMA;
+SlowLine.SetDefaultColor(Color.ORANGE);`;
+    }
+  }
+
+  private copyWithTextarea(text: string): boolean {
+    const textarea = this.document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', 'true');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    this.document.body.appendChild(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, text.length);
+    const copied = this.document.execCommand('copy');
+    this.document.body.removeChild(textarea);
+    return copied;
+  }
+
+  isCodeUnlocked(): boolean {
+    return this.codeAccessStep === 'unlocked';
+  }
+
+  previewCode(example: LearnCodeExample): string {
+    if (this.isCodeUnlocked()) {
+      return example.code;
+    }
+    return example.code.split('\n').slice(0, this.codePreviewLines).join('\n');
+  }
+
+  hiddenCode(example: LearnCodeExample): string {
+    return example.code.split('\n').slice(this.codePreviewLines).join('\n');
+  }
+
+  shouldShowBlurGate(example: LearnCodeExample): boolean {
+    return !this.isCodeUnlocked() && Boolean(this.hiddenCode(example));
+  }
+
+  async requestCodeAccess(): Promise<void> {
+    if (this.codeAccessBusy) {
+      return;
+    }
+
+    this.codeAccessError = '';
+    this.codeAccessNotice = '';
+
+    const name = this.codeAccessName.trim();
+    const email = this.codeAccessEmail.trim().toLowerCase();
+
+    this.codeAccessNameTouched = true;
+    this.codeAccessEmailTouched = true;
+    this.runCodeAccessFieldValidation();
+
+    if (this.codeAccessNameFieldError || this.codeAccessEmailFieldError) {
+      return;
+    }
+
+    this.codeAccessBusy = true;
+    try {
+      const response = await fetch('/api/requestLearnCodeAccess', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          slug: this.currentSlug,
+          name,
+          email,
+        }),
+      });
+
+      const payload = await this.readApiResponse(response);
+      if (!response.ok) {
+        this.codeAccessError = payload['error'] || this.t('learnDetail.codeAccessSendFailed', 'Could not send the code right now. Please try again.');
+        return;
+      }
+
+      this.codeAccessEmail = email;
+      this.codeAccessStep = 'verify';
+      this.codeAccessNotice = this.t('learnDetail.codeAccessCodeSent', 'Code sent. Please check your inbox and enter it below.');
+    } catch {
+      this.codeAccessError = this.t('learnDetail.codeAccessSendFailed', 'Could not send the code right now. Please try again.');
+    } finally {
+      this.codeAccessBusy = false;
+    }
+  }
+
+  async verifyCodeAccess(): Promise<void> {
+    if (this.codeAccessBusy) {
+      return;
+    }
+
+    this.codeAccessError = '';
+    this.codeAccessNotice = '';
+
+    const code = this.codeAccessVerificationCode.trim();
+    if (!/^\d{6}$/.test(code)) {
+      this.codeAccessError = this.t('learnDetail.codeAccessCodeInvalid', 'Please enter the 6-digit verification code.');
+      return;
+    }
+
+    this.codeAccessBusy = true;
+    try {
+      const response = await fetch('/api/verifyLearnCodeAccess', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          slug: this.currentSlug,
+          email: this.codeAccessEmail,
+          code,
+        }),
+      });
+
+      const payload = await this.readApiResponse(response);
+      if (!response.ok) {
+        this.codeAccessError = payload['error'] || this.t('learnDetail.codeAccessVerifyFailed', 'Could not verify your code. Please try again.');
+        return;
+      }
+
+      this.codeAccessStep = 'unlocked';
+      this.codeAccessNotice = this.t('learnDetail.codeAccessThankYou', 'Thank you. You now have full code access.');
+      this.codeAccessVerificationCode = '';
+    } catch {
+      this.codeAccessError = this.t('learnDetail.codeAccessVerifyFailed', 'Could not verify your code. Please try again.');
+    } finally {
+      this.codeAccessBusy = false;
+    }
+  }
+
+  backToCodeAccessForm(): void {
+    if (this.codeAccessBusy) {
+      return;
+    }
+    this.codeAccessStep = 'collect';
+    this.codeAccessError = '';
+    this.codeAccessNotice = '';
+  }
+
+  onCodeAccessEmailInput(value: string): void {
+    this.codeAccessEmail = value;
+    if (this.codeAccessEmailTouched) {
+      this.runCodeAccessFieldValidation();
+    }
+  }
+
+  onCodeAccessNameInput(value: string): void {
+    this.codeAccessName = value;
+    if (this.codeAccessNameTouched) {
+      this.runCodeAccessFieldValidation();
+    }
+  }
+
+  onCodeAccessEmailBlur(): void {
+    this.codeAccessEmailTouched = true;
+    this.runCodeAccessFieldValidation();
+  }
+
+  onCodeAccessNameBlur(): void {
+    this.codeAccessNameTouched = true;
+    this.runCodeAccessFieldValidation();
+  }
+
+  private resetCodeAccessState(): void {
+    this.codeAccessStep = 'collect';
+    this.codeAccessName = '';
+    this.codeAccessEmail = '';
+    this.codeAccessVerificationCode = '';
+    this.codeAccessNameTouched = false;
+    this.codeAccessEmailTouched = false;
+    this.codeAccessNameFieldError = '';
+    this.codeAccessEmailFieldError = '';
+    this.codeAccessBusy = false;
+    this.codeAccessError = '';
+    this.codeAccessNotice = '';
+  }
+
+  private runCodeAccessFieldValidation(): void {
+    const name = this.codeAccessName.trim();
+    const email = this.codeAccessEmail.trim().toLowerCase();
+
+    this.codeAccessNameFieldError = '';
+    this.codeAccessEmailFieldError = '';
+
+    if (this.codeAccessNameTouched) {
+      if (!name) {
+        this.codeAccessNameFieldError = this.t('learnDetail.codeAccessNameRequired', 'Please enter your name.');
+      } else if (!this.isValidName(name)) {
+        this.codeAccessNameFieldError = this.t('learnDetail.codeAccessNameInvalid', 'Please enter a valid name (2-100 characters).');
+      }
+    }
+
+    if (this.codeAccessEmailTouched && !this.isValidEmail(email)) {
+      this.codeAccessEmailFieldError = this.t('learnDetail.codeAccessEmailInvalid', 'Please enter a valid email address.');
+    }
+  }
+
+  private isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  private isValidName(name: string): boolean {
+    if (!name || name.length < 2 || name.length > 100) {
+      return false;
+    }
+    return /^[\p{L}\p{N} .,'-]+$/u.test(name);
+  }
+
+  private async readApiResponse(response: Response): Promise<{ [key: string]: any }> {
+    try {
+      return await response.json();
+    } catch {
+      return {};
+    }
   }
 }

@@ -78,6 +78,118 @@
   </div>
 </section>
 
+@if (strategyCodeExamples.length) {
+<section class="ld-section ld-code-section">
+  <div class="ld-container">
+    <p class="ld-tag">{{ 'learnDetail.strategyCodeTitle' | translate }}</p>
+    <h2>{{ 'learnDetail.strategyCodeSubtitle' | translate }}</h2>
+
+    <div class="ld-code-grid">
+      @for (example of strategyCodeExamples; track example.id) {
+        <article class="ld-code-card">
+          <div class="ld-code-card-header">
+            <div>
+              <h3>{{ example.title }}</h3>
+              <p class="ld-code-help">{{ example.description }}</p>
+            </div>
+          </div>
+
+          <div class="ld-code-snippet">
+            @if (isCodeUnlocked()) {
+              <button type="button" class="ld-copy-btn ld-copy-btn-in-code" (click)="copyCodeExample(example)">
+                {{ (copiedCodeExampleId === example.id ? 'learnDetail.copiedCode' : 'learnDetail.copyCode') | translate }}
+              </button>
+            }
+
+            <pre class="ld-code-block"><code>{{ previewCode(example) }}</code></pre>
+
+            @if (shouldShowBlurGate(example)) {
+              <div class="ld-locked-tail">
+                <pre class="ld-code-block ld-code-block-blur" aria-hidden="true"><code>{{ hiddenCode(example) }}</code></pre>
+                <div class="ld-locked-overlay">
+                  <div class="ld-code-gate-inline">
+                    @if (codeAccessStep === 'collect') {
+                      <h3>{{ 'learnDetail.codeAccessFormTitle' | translate }}</h3>
+                      <p class="ld-code-gate-subtitle">{{ 'learnDetail.codeAccessFormSubtitle' | translate }}</p>
+                      <div class="ld-code-gate-grid">
+                        <label class="ld-code-gate-field">
+                          <span>{{ 'learnDetail.codeAccessEmailLabel' | translate }}</span>
+                          <input
+                            type="email"
+                            [value]="codeAccessEmail"
+                            (input)="onCodeAccessEmailInput($any($event.target).value)"
+                            (blur)="onCodeAccessEmailBlur()"
+                            [placeholder]="'learnDetail.codeAccessEmailPlaceholder' | translate"
+                          >
+                          @if (codeAccessEmailFieldError) {
+                            <small class="ld-code-gate-field-error">{{ codeAccessEmailFieldError }}</small>
+                          }
+                        </label>
+                        <label class="ld-code-gate-field">
+                          <span>{{ 'learnDetail.codeAccessNameLabel' | translate }}</span>
+                          <input
+                            type="text"
+                            [value]="codeAccessName"
+                            (input)="onCodeAccessNameInput($any($event.target).value)"
+                            (blur)="onCodeAccessNameBlur()"
+                            [placeholder]="'learnDetail.codeAccessNamePlaceholder' | translate"
+                          >
+                          @if (codeAccessNameFieldError) {
+                            <small class="ld-code-gate-field-error">{{ codeAccessNameFieldError }}</small>
+                          }
+                        </label>
+                      </div>
+                      <button type="button" class="ld-btn-accent ld-code-gate-btn" [disabled]="codeAccessBusy" (click)="requestCodeAccess()">
+                        {{ (codeAccessBusy ? 'learnDetail.codeAccessSending' : 'learnDetail.codeAccessSendCode') | translate }}
+                      </button>
+                    }
+
+                    @if (codeAccessStep === 'verify') {
+                      <h3>{{ 'learnDetail.codeAccessVerifyTitle' | translate }}</h3>
+                      <p class="ld-code-gate-subtitle">{{ 'learnDetail.codeAccessVerifySubtitle' | translate }}</p>
+                      <label class="ld-code-gate-field">
+                        <span>{{ 'learnDetail.codeAccessCodeLabel' | translate }}</span>
+                        <input
+                          type="text"
+                          inputmode="numeric"
+                          maxlength="6"
+                          [value]="codeAccessVerificationCode"
+                          (input)="codeAccessVerificationCode = $any($event.target).value"
+                          [placeholder]="'learnDetail.codeAccessCodePlaceholder' | translate"
+                        >
+                      </label>
+                      <div class="ld-code-gate-actions">
+                        <button type="button" class="ld-btn-accent ld-code-gate-btn" [disabled]="codeAccessBusy" (click)="verifyCodeAccess()">
+                          {{ (codeAccessBusy ? 'learnDetail.codeAccessVerifying' : 'learnDetail.codeAccessVerifyCode') | translate }}
+                        </button>
+                        <button type="button" class="ld-code-gate-link" [disabled]="codeAccessBusy" (click)="backToCodeAccessForm()">
+                          {{ 'learnDetail.codeAccessChangeEmail' | translate }}
+                        </button>
+                      </div>
+                    }
+
+                    @if (codeAccessError) {
+                      <p class="ld-code-gate-error">{{ codeAccessError }}</p>
+                    }
+                    @if (codeAccessNotice) {
+                      <p class="ld-code-gate-notice">{{ codeAccessNotice }}</p>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </article>
+      }
+    </div>
+
+    @if (isCodeUnlocked()) {
+      <p class="ld-code-thankyou">{{ 'learnDetail.codeAccessUnlockedThanks' | translate }}</p>
+    }
+  </div>
+</section>
+}
+
 <!-- ── CTA BANNER ── -->
 <section class="ld-cta-section">
   <div class="ld-container ld-cta-inner">
