@@ -31,6 +31,20 @@
           }
         },
         {
+          "source": "/api/requestLearnCodeAccess",
+          "function": {
+            "functionId": "requestLearnCodeAccess",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/verifyLearnCodeAccess",
+          "function": {
+            "functionId": "verifyLearnCodeAccess",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/api/createPremiumSubscriptionIntent",
           "function": {
             "functionId": "createPremiumSubscriptionIntent",
@@ -168,6 +182,20 @@
           "source": "/api/contact",
           "function": {
             "functionId": "sendContactMessage",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/requestLearnCodeAccess",
+          "function": {
+            "functionId": "requestLearnCodeAccess",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/verifyLearnCodeAccess",
+          "function": {
+            "functionId": "verifyLearnCodeAccess",
             "region": "europe-west1"
           }
         },

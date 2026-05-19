@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -447,6 +447,12 @@ const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || "Auto-Trader";
 const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || "template_z125ea9";
 const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY || "HYIL6fQcJSo0pHAhw";
 const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY || "";
+const EMAILJS_LEARN_CODE_TEMPLATE_ID = process.env.EMAILJS_LEARN_CODE_TEMPLATE_ID || process.env.EMAILJS_TEMPLATE_ID || "template_z125ea9";
+const LEARN_CODE_COLLECTION = "learn_code_access";
+const NEWSLETTER_SUBSCRIBERS_COLLECTION = "newsletter_subscribers";
+const LEARN_CODE_EXPIRY_MINUTES = 15;
+const LEARN_CODE_RATE_LIMIT_SECONDS = 60;
+const LEARN_CODE_MAX_ATTEMPTS = 5;
 const PREMIUM_MONTHLY_PRICE_USD = Number(process.env.PREMIUM_MONTHLY_PRICE_USD || "10");
 const PREMIUM_MONTHLY_PRICE_CENTS = Math.max(1, Math.round(PREMIUM_MONTHLY_PRICE_USD * 100));
 const PREMIUM_CURRENCY = "usd";
@@ -635,6 +641,219 @@ exports.sendContactMessage = functions
             res.status(500).json({
                 error: error?.message || "Failed to send contact message",
             });
+        }
+    });
+});
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+function isValidName(name) {
+    if (!name || name.length < 2 || name.length > 100) {
+        return false;
+    }
+    return /^[\p{L}\p{N} .,'-]+$/u.test(name);
+}
+function normalizeLearnSlug(rawSlug) {
+    return String(rawSlug || "").trim().toLowerCase().replace(/[^a-z0-9-]/g, "");
+}
+function normalizeName(rawName) {
+    return String(rawName || "").trim().replace(/\s+/g, " ").slice(0, 100);
+}
+function normalizeEmail(rawEmail) {
+    return String(rawEmail || "").trim().toLowerCase();
+}
+function buildLearnCodeDocId(slug, email) {
+    return crypto.createHash("sha256").update(`${slug}|${email}`).digest("hex");
+}
+function hashLearnCode(code) {
+    return crypto.createHash("sha256").update(code).digest("hex");
+}
+function generateLearnAccessCode() {
+    return String(Math.floor(100000 + Math.random() * 900000));
+}
+async function sendLearnAccessCodeEmail(params) {
+    const payload = {
+        service_id: EMAILJS_SERVICE_ID,
+        template_id: EMAILJS_LEARN_CODE_TEMPLATE_ID,
+        user_id: EMAILJS_PUBLIC_KEY,
+        template_params: {
+            to_email: params.recipientEmail,
+            recipient_email: params.recipientEmail,
+            user_email: params.recipientEmail,
+            user_name: params.recipientName || "Trader",
+            code: params.code,
+            verification_code: params.code,
+            subject: "Your AutoTrader code access verification code",
+            message: `Hello ${params.recipientName || "Trader"},\n\nYour verification code is: ${params.code}\n\nThis code expires in ${LEARN_CODE_EXPIRY_MINUTES} minutes.\n\nPage: ${params.slug}`,
+        },
+    };
+    if (EMAILJS_PRIVATE_KEY) {
+        payload.accessToken = EMAILJS_PRIVATE_KEY;
+    }
+    const emailjsRes = await (0, node_fetch_1.default)("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+    });
+    if (!emailjsRes.ok) {
+        const text = await emailjsRes.text();
+        throw new Error(`EmailJS send failed (${emailjsRes.status}): ${text}`);
+    }
+}
+exports.requestLearnCodeAccess = functions
+    .region("europe-west1")
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const slug = normalizeLearnSlug(req.body?.slug);
+            const name = normalizeName(req.body?.name);
+            const email = normalizeEmail(req.body?.email);
+            if (!slug || !name || !email) {
+                res.status(400).json({ error: "Missing required fields" });
+                return;
+            }
+            if (!isValidEmail(email)) {
+                res.status(400).json({ error: "Invalid email" });
+                return;
+            }
+            if (!isValidName(name)) {
+                res.status(400).json({ error: "Invalid name" });
+                return;
+            }
+            const docId = buildLearnCodeDocId(slug, email);
+            const docRef = admin.firestore().collection(LEARN_CODE_COLLECTION).doc(docId);
+            const nowMs = Date.now();
+            const now = admin.firestore.Timestamp.fromMillis(nowMs);
+            const existingSnap = await docRef.get();
+            const existing = existingSnap.exists ? existingSnap.data() : null;
+            if (existing?.lastSentAt?.toMillis) {
+                const secondsSinceSend = (nowMs - existing.lastSentAt.toMillis()) / 1000;
+                if (secondsSinceSend < LEARN_CODE_RATE_LIMIT_SECONDS) {
+                    res.status(429).json({ error: "Please wait before requesting another code." });
+                    return;
+                }
+            }
+            const code = generateLearnAccessCode();
+            const codeHash = hashLearnCode(code);
+            const expiresAt = admin.firestore.Timestamp.fromMillis(nowMs + LEARN_CODE_EXPIRY_MINUTES * 60 * 1000);
+            await docRef.set({
+                slug,
+                email,
+                name,
+                codeHash,
+                attempts: 0,
+                verifiedAt: null,
+                lastSentAt: now,
+                expiresAt,
+                updatedAt: now,
+                createdAt: existing?.createdAt || now,
+                source: "learn-code-gate",
+            }, { merge: true });
+            const subscriberId = crypto.createHash("sha256").update(email).digest("hex");
+            const subscriberRef = admin.firestore().collection(NEWSLETTER_SUBSCRIBERS_COLLECTION).doc(subscriberId);
+            await subscriberRef.set({
+                email,
+                name,
+                latestSlug: slug,
+                source: "learn-code-gate",
+                verificationStatus: "pending",
+                verified: false,
+                updatedAt: now,
+                createdAt: existing?.createdAt || now,
+            }, { merge: true });
+            await sendLearnAccessCodeEmail({
+                recipientEmail: email,
+                recipientName: name,
+                code,
+                slug,
+            });
+            res.status(200).json({ ok: true, expiresInMinutes: LEARN_CODE_EXPIRY_MINUTES });
+        }
+        catch (error) {
+            console.error("❌ requestLearnCodeAccess error:", error?.message || error);
+            res.status(500).json({ error: error?.message || "Failed to send verification code" });
+        }
+    });
+});
+exports.verifyLearnCodeAccess = functions
+    .region("europe-west1")
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const slug = normalizeLearnSlug(req.body?.slug);
+            const email = normalizeEmail(req.body?.email);
+            const code = String(req.body?.code || "").trim();
+            if (!slug || !email || !code) {
+                res.status(400).json({ error: "Missing required fields" });
+                return;
+            }
+            if (!isValidEmail(email)) {
+                res.status(400).json({ error: "Invalid email" });
+                return;
+            }
+            const docId = buildLearnCodeDocId(slug, email);
+            const docRef = admin.firestore().collection(LEARN_CODE_COLLECTION).doc(docId);
+            const snap = await docRef.get();
+            if (!snap.exists) {
+                res.status(404).json({ error: "Verification request not found." });
+                return;
+            }
+            const data = snap.data();
+            const nowMs = Date.now();
+            const now = admin.firestore.Timestamp.fromMillis(nowMs);
+            if (data?.expiresAt?.toMillis && data.expiresAt.toMillis() < nowMs) {
+                res.status(410).json({ error: "Verification code expired. Please request a new code." });
+                return;
+            }
+            const attempts = Number(data?.attempts || 0);
+            if (attempts >= LEARN_CODE_MAX_ATTEMPTS) {
+                res.status(429).json({ error: "Too many attempts. Please request a new code." });
+                return;
+            }
+            const inputHash = hashLearnCode(code);
+            if (inputHash !== String(data?.codeHash || "")) {
+                await docRef.set({
+                    attempts: attempts + 1,
+                    updatedAt: now,
+                }, { merge: true });
+                res.status(400).json({ error: "Invalid verification code." });
+                return;
+            }
+            await docRef.set({
+                verifiedAt: now,
+                updatedAt: now,
+            }, { merge: true });
+            const subscriberId = crypto.createHash("sha256").update(email).digest("hex");
+            await admin.firestore().collection(NEWSLETTER_SUBSCRIBERS_COLLECTION).doc(subscriberId).set({
+                latestSlug: slug,
+                verificationStatus: "verified",
+                verified: true,
+                verifiedAt: now,
+                updatedAt: now,
+            }, { merge: true });
+            res.status(200).json({ ok: true, verified: true });
+        }
+        catch (error) {
+            console.error("❌ verifyLearnCodeAccess error:", error?.message || error);
+            res.status(500).json({ error: error?.message || "Failed to verify code" });
         }
     });
 });
