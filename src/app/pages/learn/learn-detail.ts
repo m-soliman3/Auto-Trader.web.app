@@ -1759,7 +1759,6 @@ export class LearnDetailPage implements OnInit {
     this.meta.updateTag({ name: 'description', content: this.page.metaDescription });
 
     const canonicalHref = this.canonicalHref();
-    this.setCanonical(canonicalHref);
 
     this.meta.updateTag({ property: 'og:title', content: this.page.metaTitle });
     this.meta.updateTag({ property: 'og:description', content: this.page.metaDescription });
@@ -1806,16 +1805,6 @@ export class LearnDetailPage implements OnInit {
     const origin = this.document.location?.origin ?? '';
     const lang = this.languageService.currentLang();
     return `${origin}/${lang}/learn/${this.currentSlug}`;
-  }
-
-  private setCanonical(href: string): void {
-    let canonicalEl = this.document.querySelector('link[rel="canonical"]');
-    if (!canonicalEl) {
-      canonicalEl = this.document.createElement('link');
-      canonicalEl.setAttribute('rel', 'canonical');
-      this.document.head.appendChild(canonicalEl);
-    }
-    canonicalEl.setAttribute('href', href);
   }
 
   private ogLocale(lang: string): string {
