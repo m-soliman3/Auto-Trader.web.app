@@ -26,7 +26,6 @@ export class HreflangService {
   private updateTags(url: string): void {
     const canonicalPath = this.getCanonicalPath(url);
     this.setHreflangTags(canonicalPath);
-    this.setCanonicalTag(url, canonicalPath);
     this.setPaywallStructuredData(this.isCurrentRouteProtected());
   }
 
@@ -69,23 +68,6 @@ export class HreflangService {
     fragment.appendChild(xDefault);
 
     head.appendChild(fragment);
-  }
-
-  private setCanonicalTag(url: string, canonicalPath: string): void {
-    let canonical = this.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-
-    if (!canonical) {
-      canonical = this.document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      this.document.head.appendChild(canonical);
-    }
-
-    // Derive the active language from the URL
-    const withoutQuery = url.split('?')[0].split('#')[0];
-    const segments = withoutQuery.split('/').filter(Boolean);
-    const langCode = segments.length > 0 && LANGUAGES.some((l) => l.code === segments[0]) ? segments[0] : 'en';
-
-    canonical.setAttribute('href', `${BASE_URL}/${langCode}${canonicalPath}`);
   }
 
   private removeExistingHreflangTags(): void {
