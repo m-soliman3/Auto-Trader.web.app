@@ -328,7 +328,7 @@ Fibonacci extensions are used to project profit targets beyond the swing high, w
     externalLinks: [
       { label: 'Investopedia — Fibonacci Retracement', url: 'https://www.investopedia.com/terms/f/fibonacciretracement.asp', description: 'Detailed explanation of Fibonacci levels and their application.' },
       { label: 'TradingView — Fibonacci Tools', url: 'https://www.tradingview.com/support/solutions/43000594359-fibonacci-retracement/', description: 'How to use Fibonacci tools on TradingView charts.' },
-      { label: 'BabyPips — Fibonacci Trading', url: 'https://www.babypips.com/learn/forex/fibonacci-fan', description: "BabyPips' guide to Fibonacci analysis in forex and crypto." },
+      { label: 'BabyPips — Fibonacci Trading', url: 'https://www.babypips.com/learn/forex/fibonacci', description: "BabyPips' guide to Fibonacci analysis in forex and crypto." },
     ],
     relatedSlugs: ['swing-trading', 'trend-following', 'order-blocks', 'smart-money-concepts'],
   },
@@ -620,7 +620,7 @@ Common VWAP strategies include: buying pull-backs to VWAP in uptrending sessions
     externalLinks: [
       { label: 'Investopedia — VWAP', url: 'https://www.investopedia.com/terms/v/vwap.asp', description: 'Comprehensive guide to VWAP calculation and institutional usage.' },
       { label: 'TradingView — VWAP', url: 'https://www.tradingview.com/scripts/vwap/', description: 'VWAP and Anchored VWAP scripts on TradingView.' },
-      { label: 'BabyPips — VWAP Trading', url: 'https://www.babypips.com/learn/forex/vwap', description: "BabyPips' introduction to VWAP for retail traders." },
+      { label: 'BabyPips — VWAP Trading', url: 'https://www.babypips.com/forexpedia/vwap-algo', description: "BabyPips' introduction to VWAP for retail traders." },
     ],
     relatedSlugs: ['bollinger-bands', 'scalping-strategy', 'mean-reversion', 'volume-analysis'],
   },
@@ -668,7 +668,7 @@ The +DI/−DI crossover provides directional signals: when +DI crosses above −
     externalLinks: [
       { label: 'Investopedia — ADX', url: 'https://www.investopedia.com/terms/a/adx.asp', description: 'Full guide to ADX, +DI, and −DI with practical trading examples.' },
       { label: 'TradingView — ADX Scripts', url: 'https://www.tradingview.com/scripts/adx/', description: 'ADX-based trend filter scripts and strategies.' },
-      { label: 'BabyPips — ADX', url: 'https://www.babypips.com/learn/forex/adx', description: "BabyPips' explanation of ADX and its role in confirming trend signals." },
+      { label: 'BabyPips — ADX', url: 'https://www.babypips.com/learn/forex/average-directional-index', description: "BabyPips' explanation of ADX and its role in confirming trend signals." },
     ],
     relatedSlugs: ['trend-following', 'moving-average-crossover', 'atr-indicator', 'breakout-strategy'],
   },
@@ -692,7 +692,7 @@ Donchian Channels are equally useful as a trend-following entry mechanism and as
     externalLinks: [
       { label: 'Investopedia — Donchian Channels', url: 'https://www.investopedia.com/terms/d/donchianchannel.asp', description: 'Guide to Donchian Channels and their use in breakout trading.' },
       { label: 'TradingView — Donchian', url: 'https://www.tradingview.com/scripts/donchianchannels/', description: 'Donchian Channel scripts including Turtle Trading implementations.' },
-      { label: 'BabyPips — Donchian Channels', url: 'https://www.babypips.com/learn/forex/donchian-channels', description: "BabyPips' Donchian Channel tutorial." },
+      { label: 'BabyPips — Donchian Channels', url: 'https://www.babypips.com/forexpedia/donchian-channel', description: "BabyPips' Donchian Channel tutorial." },
     ],
     relatedSlugs: ['breakout-strategy', 'trend-following', 'atr-indicator', 'adx-indicator'],
   },
@@ -716,7 +716,7 @@ Volume Profile analysis maps volume by price level rather than by time, revealin
     externalLinks: [
       { label: 'Investopedia — Volume Analysis', url: 'https://www.investopedia.com/terms/v/volume.asp', description: 'Overview of volume in trading and its analytical uses.' },
       { label: 'TradingView — Volume Scripts', url: 'https://www.tradingview.com/scripts/volume/', description: 'Community volume analysis indicators on TradingView.' },
-      { label: 'BabyPips — Trading Volume', url: 'https://www.babypips.com/learn/forex/volume-analysis', description: "BabyPips' volume analysis guide for forex and crypto traders." },
+      { label: 'BabyPips — Trading Volume', url: 'https://www.babypips.com/forexpedia/volume-analysis', description: "BabyPips' volume analysis guide for forex and crypto traders." },
     ],
     relatedSlugs: ['breakout-strategy', 'vwap-indicator', 'trend-following', 'smart-money-concepts'],
   },
@@ -816,7 +816,7 @@ OBV is also used to detect "stealth accumulation": when price is range-bound but
     externalLinks: [
       { label: 'Investopedia — OBV', url: 'https://www.investopedia.com/terms/o/onbalancevolume.asp', description: "Complete guide to Granville's On-Balance Volume indicator." },
       { label: 'TradingView — OBV Scripts', url: 'https://www.tradingview.com/scripts/onbalancevolume/', description: 'OBV indicators and strategies on TradingView.' },
-      { label: 'BabyPips — OBV', url: 'https://www.babypips.com/learn/forex/obv', description: "BabyPips' introduction to On-Balance Volume." },
+      { label: 'BabyPips — OBV', url: 'https://www.babypips.com/forexpedia/obv', description: "BabyPips' introduction to On-Balance Volume." },
     ],
     relatedSlugs: ['volume-analysis', 'vwap-indicator', 'macd-indicator', 'trend-following'],
   },
