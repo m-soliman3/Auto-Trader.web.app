@@ -151,7 +151,7 @@
         },
         {
           "source": "**",
-          "destination": "/index.html"
+          "destination": "/index.csr.html"
         }
       ]
     },
@@ -306,7 +306,7 @@
         },
         {
           "source": "**",
-          "destination": "/index.html"
+          "destination": "/index.csr.html"
         }
       ]
     }

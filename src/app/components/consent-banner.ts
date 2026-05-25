@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -259,13 +259,16 @@ import { TranslateModule } from '@ngx-translate/core';
   `]
 })
 export class ConsentBannerComponent implements OnInit {
+  private readonly platformId = inject(PLATFORM_ID);
   showBanner: boolean = false;
   private readonly CONSENT_KEY = 'gtm-consent';
   private readonly CONSENT_TIMESTAMP_KEY = 'gtm-consent-timestamp';
   private readonly THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
 
   ngOnInit(): void {
-    this.checkConsent();
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkConsent();
+    }
   }
 
   checkConsent(): void {

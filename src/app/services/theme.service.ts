@@ -1,15 +1,20 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject, signal, effect } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
+  private readonly platformId = inject(PLATFORM_ID);
   isDark = signal<boolean>(false);
 
   constructor() {
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-      this.isDark.set(saved === 'dark');
+    if (isPlatformBrowser(this.platformId)) {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        this.isDark.set(saved === 'dark');
+      }
     }
     effect(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
       document.documentElement.setAttribute('data-theme', this.isDark() ? 'dark' : 'light');
       localStorage.setItem('theme', this.isDark() ? 'dark' : 'light');
     });

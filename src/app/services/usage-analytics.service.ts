@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import {
   Firestore,
@@ -38,6 +39,7 @@ export class UsageAnalyticsService {
   private readonly auth = inject(Auth);
   private readonly firestore = inject(Firestore);
   private readonly router = inject(Router);
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly analyticsCollection = 'userAnalytics';
 
   private readonly flushIntervalMs = 30000;
@@ -57,6 +59,7 @@ export class UsageAnalyticsService {
   private pendingPageDurationSeconds = new Map<string, number>();
 
   constructor() {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.handleAuthState();
     this.handleNavigation();
     this.handleDocumentVisibility();
