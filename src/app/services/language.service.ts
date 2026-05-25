@@ -2,6 +2,7 @@ import { Injectable, inject, signal, effect } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
 
 export interface Language {
   code: string;
@@ -96,6 +97,7 @@ const COUNTRY_LANGUAGE_MAP: Record<string, string> = {
 export class LanguageService {
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
+  private readonly document = inject(DOCUMENT);
 
   readonly languages = LANGUAGES;
   readonly currentLang = signal<string>(this.getInitialLang());
@@ -245,8 +247,8 @@ export class LanguageService {
   private applyDir(code: string): void {
     const lang = LANGUAGES.find((l) => l.code === code);
     const dir = lang?.dir ?? 'ltr';
-    document.documentElement.setAttribute('dir', dir);
-    document.documentElement.setAttribute('lang', code);
+    this.document.documentElement.setAttribute('dir', dir);
+    this.document.documentElement.setAttribute('lang', code);
   }
 
   private syncLanguageFromUrl(url: string): void {

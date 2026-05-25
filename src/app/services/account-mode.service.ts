@@ -1,10 +1,14 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, signal, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 
 export type AccountMode = 'real' | 'paper';
 
 @Injectable({ providedIn: 'root' })
 export class AccountModeService {
   private readonly storageKey = 'auto-trader-account-mode';
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
   private readonly modeSignal = signal<AccountMode>(this.readInitialMode());
 
   mode = computed(() => this.modeSignal());
@@ -16,7 +20,9 @@ export class AccountModeService {
 
   setMode(mode: AccountMode) {
     this.modeSignal.set(mode);
-    localStorage.setItem(this.storageKey, mode);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.storageKey, mode);
+    }
     this.applyModeAttribute(mode);
   }
 
@@ -25,11 +31,14 @@ export class AccountModeService {
   }
 
   private readInitialMode(): AccountMode {
-    const saved = localStorage.getItem(this.storageKey);
-    return saved === 'paper' ? 'paper' : 'real';
+    if (isPlatformBrowser(this.platformId)) {
+      const saved = localStorage.getItem(this.storageKey);
+      return saved === 'paper' ? 'paper' : 'real';
+    }
+    return 'real';
   }
 
   private applyModeAttribute(mode: AccountMode) {
-    document.documentElement.setAttribute('data-account-mode', mode);
+    this.document.documentElement.setAttribute('data-account-mode', mode);
   }
 }
