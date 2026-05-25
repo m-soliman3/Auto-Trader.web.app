@@ -26,6 +26,7 @@ export class HreflangService {
   private updateTags(url: string): void {
     const canonicalPath = this.getCanonicalPath(url);
     this.setHreflangTags(canonicalPath);
+    this.setCanonicalTag(url, canonicalPath);
     this.setPaywallStructuredData(this.isCurrentRouteProtected());
   }
 
@@ -73,6 +74,20 @@ export class HreflangService {
   private removeExistingHreflangTags(): void {
     const existing = this.document.querySelectorAll('link[rel="alternate"][hreflang]');
     existing.forEach((el) => el.parentNode?.removeChild(el));
+  }
+
+  private setCanonicalTag(url: string, canonicalPath: string): void {
+    const segments = url.split('?')[0].split('/').filter(Boolean);
+    const lang = LANGUAGES.some((l) => l.code === segments[0]) ? segments[0] : 'en';
+    const href = `${BASE_URL}/${lang}${canonicalPath}`;
+
+    let canonical = this.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = this.document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      this.document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', href);
   }
 
   private setPaywallStructuredData(isProtectedPath: boolean): void {
