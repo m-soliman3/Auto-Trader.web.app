@@ -125,8 +125,19 @@ export class LanguageService {
 
     this.syncLanguageFromUrl(this.router.url);
 
-    if (isPlatformBrowser(this.platformId) && !this.hasStoredLanguagePreference() && !this.getLanguageFromUrl(this.router.url)) {
-      void this.applyStartupLanguageByLocation();
+    // At bootstrap, router.url is still '/' while the browser is on the real deep-link URL.
+    // Use the browser pathname as the authoritative initial URL so we don't treat a
+    // language-prefixed deep-link (e.g. /ar/learn/some-page) as "no language set" and
+    // mistakenly navigate back to the language homepage.
+    if (isPlatformBrowser(this.platformId)) {
+      const initialUrl =
+        this.router.url !== '/'
+          ? this.router.url
+          : (globalThis.location?.pathname ?? '/');
+
+      if (!this.hasStoredLanguagePreference() && !this.getLanguageFromUrl(initialUrl)) {
+        void this.applyStartupLanguageByLocation();
+      }
     }
   }
 
@@ -185,7 +196,12 @@ export class LanguageService {
     const locationLanguage = await this.detectLanguageFromLocation();
 
     // Do not override a language selected while startup detection was in progress.
-    if (this.currentLang() !== startingLanguage || this.hasStoredLanguagePreference() || this.getLanguageFromUrl(this.router.url)) {
+    if (
+      this.currentLang() !== startingLanguage ||
+      this.hasStoredLanguagePreference() ||
+      this.getLanguageFromUrl(this.router.url) ||
+      this.getLanguageFromUrl(globalThis.location?.pathname ?? '')
+    ) {
       return;
     }
 
