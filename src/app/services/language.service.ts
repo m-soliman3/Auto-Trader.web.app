@@ -1,4 +1,5 @@
-import { Injectable, inject, signal, effect } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject, signal, effect } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
@@ -96,6 +97,7 @@ const COUNTRY_LANGUAGE_MAP: Record<string, string> = {
 export class LanguageService {
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
+  private readonly platformId = inject(PLATFORM_ID);
 
   readonly languages = LANGUAGES;
   readonly currentLang = signal<string>(this.getInitialLang());
@@ -127,13 +129,15 @@ export class LanguageService {
     // Use the browser pathname as the authoritative initial URL so we don't treat a
     // language-prefixed deep-link (e.g. /ar/learn/some-page) as "no language set" and
     // mistakenly navigate back to the language homepage.
-    const initialUrl =
-      this.router.url !== '/'
-        ? this.router.url
-        : (globalThis.location?.pathname ?? '/');
+    if (isPlatformBrowser(this.platformId)) {
+      const initialUrl =
+        this.router.url !== '/'
+          ? this.router.url
+          : (globalThis.location?.pathname ?? '/');
 
-    if (!this.hasStoredLanguagePreference() && !this.getLanguageFromUrl(initialUrl)) {
-      void this.applyStartupLanguageByLocation();
+      if (!this.hasStoredLanguagePreference() && !this.getLanguageFromUrl(initialUrl)) {
+        void this.applyStartupLanguageByLocation();
+      }
     }
   }
 
@@ -215,7 +219,7 @@ export class LanguageService {
   }
 
   private async getCountryCodeFromCurrentLocation(): Promise<string | null> {
-    if (!('geolocation' in navigator)) {
+    if (!isPlatformBrowser(this.platformId) || !('geolocation' in navigator)) {
       return null;
     }
 
@@ -229,7 +233,7 @@ export class LanguageService {
       });
 
       const abortController = new AbortController();
-      const timeoutId = window.setTimeout(() => abortController.abort(), REGION_LOOKUP_TIMEOUT_MS);
+      const timeoutId = globalThis.setTimeout(() => abortController.abort(), REGION_LOOKUP_TIMEOUT_MS);
 
       try {
         const response = await fetch(
@@ -249,7 +253,7 @@ export class LanguageService {
         const countryCode = (payload as { countryCode?: unknown }).countryCode;
         return typeof countryCode === 'string' && countryCode.length > 0 ? countryCode : null;
       } finally {
-        window.clearTimeout(timeoutId);
+        globalThis.clearTimeout(timeoutId);
       }
     } catch {
       return null;
@@ -257,6 +261,7 @@ export class LanguageService {
   }
 
   private applyDir(code: string): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     const lang = LANGUAGES.find((l) => l.code === code);
     const dir = lang?.dir ?? 'ltr';
     document.documentElement.setAttribute('dir', dir);

@@ -51,10 +51,13 @@ export class MarketStreamService {
       return wsUrl;
     }
 
-    // Fallback: construct from current location
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = window.location.host;
-    return `${protocol}//${host}`;
+    // Fallback: construct from current location (browser only)
+    if (typeof window !== 'undefined') {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = window.location.host;
+      return `${protocol}//${host}`;
+    }
+    return 'wss://localhost';
   }
 
   connect(): Promise<void> {
