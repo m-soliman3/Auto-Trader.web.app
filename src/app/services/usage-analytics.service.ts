@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import {
   Firestore,
@@ -38,6 +39,7 @@ export class UsageAnalyticsService {
   private readonly auth = inject(Auth);
   private readonly firestore = inject(Firestore);
   private readonly router = inject(Router);
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly analyticsCollection = 'userAnalytics';
 
   private readonly flushIntervalMs = 30000;
@@ -59,12 +61,14 @@ export class UsageAnalyticsService {
   constructor() {
     this.handleAuthState();
     this.handleNavigation();
-    this.handleDocumentVisibility();
-    this.handlePageUnload();
 
-    this.startNewPage(this.router.url);
-    this.startFlushTimer();
-    this.fetchLocation().then((loc) => { this.cachedLocation = loc; });
+    if (isPlatformBrowser(this.platformId)) {
+      this.handleDocumentVisibility();
+      this.handlePageUnload();
+      this.startNewPage(this.router.url);
+      this.startFlushTimer();
+      this.fetchLocation().then((loc) => { this.cachedLocation = loc; });
+    }
   }
 
   private handleAuthState(): void {
