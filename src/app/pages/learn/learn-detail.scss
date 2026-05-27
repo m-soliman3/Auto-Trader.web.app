@@ -156,6 +156,19 @@
   padding: 4rem 0;
 }
 
+.ld-strategy-chart {
+  margin-bottom: 2.5rem;
+}
+
+.ld-strategy-chart-img {
+  width: 100%;
+  max-width: 860px;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
 .ld-section-alt {
   background: var(--surface-2, rgba(255, 255, 255, 0.03));
   border-top: 1px solid var(--border);
