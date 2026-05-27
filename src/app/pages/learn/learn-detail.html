@@ -33,6 +33,13 @@
 
 <!-- ── OVERVIEW ── -->
 <section class="ld-section">
+  <div class="ld-container">
+    @if (page.imageUrl) {
+      <div class="ld-strategy-chart">
+        <img [src]="page.imageUrl" [alt]="page.title + ' chart'" class="ld-strategy-chart-img" loading="lazy" width="900" height="500">
+      </div>
+    }
+  </div>
   <div class="ld-container ld-two-col">
     <div class="ld-overview">
       <p class="ld-tag">{{ 'learnDetail.overview' | translate }}</p>

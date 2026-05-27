@@ -28,6 +28,7 @@ export interface LearnData {
   howItWorks: string;
   externalLinks: LearnLink[];
   relatedSlugs: string[];
+  imageUrl?: string;
 }
 
 interface LearnCodeExample {
@@ -67,6 +68,7 @@ auto-Trading allows you to automate crossover strategies using the no-code strat
       { label: 'BabyPips — MA Crossover Guide', url: 'https://www.babypips.com/learn/forex/moving-average-crossover-trading', description: "BabyPips' beginner-friendly guide to crossover trading." },
     ],
     relatedSlugs: ['ema-indicator', 'sma-indicator', 'macd-indicator', 'trend-following'],
+    imageUrl: '/images/strategies/moving-average-crossover.png',
   },
 
   'fair-value-gap': {
@@ -91,6 +93,7 @@ FVGs are particularly effective on higher timeframes (4H, daily) where instituti
       { label: 'BabyPips — Price Action', url: 'https://www.babypips.com/learn/forex/price-action', description: 'Price action foundations that underpin FVG trading.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'order-blocks', 'liquidity-sweeps', 'breaker-blocks'],
+    imageUrl: '/images/strategies/fair-value-gap.png',
   },
 
   'smart-money-concepts': {
@@ -115,6 +118,7 @@ SMC is holistic: it combines liquidity analysis, market structure, order blocks,
       { label: 'BabyPips — Market Structure', url: 'https://www.babypips.com/learn/forex/market-structure', description: 'Market structure basics essential to understanding SMC.' },
     ],
     relatedSlugs: ['fair-value-gap', 'order-blocks', 'liquidity-sweeps', 'breaker-blocks'],
+    imageUrl: '/images/strategies/smart-money-concepts.png',
   },
 
   'order-blocks': {
@@ -139,6 +143,7 @@ Order blocks are best used on higher timeframes (1H, 4H, Daily) to define the di
       { label: 'BabyPips — Candlestick Patterns', url: 'https://www.babypips.com/learn/forex/japanese-candlesticks', description: 'Candlestick literacy required for order block identification.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'fair-value-gap', 'breaker-blocks', 'liquidity-sweeps'],
+    imageUrl: '/images/strategies/order-blocks.png',
   },
 
   'liquidity-sweeps': {
@@ -163,6 +168,7 @@ Combining sweep analysis with market structure and time-of-day filters (London o
       { label: 'BabyPips — Trading Sessions', url: 'https://www.babypips.com/learn/forex/forex-trading-sessions', description: 'Session timing is critical for high-probability liquidity sweeps.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'order-blocks', 'fair-value-gap', 'breaker-blocks'],
+    imageUrl: '/images/strategies/liquidity-sweeps.png',
   },
 
   'breaker-blocks': {
@@ -187,6 +193,7 @@ Breakers are particularly powerful when they coincide with FVGs or when the init
       { label: 'BabyPips — Price Action Reversals', url: 'https://www.babypips.com/learn/forex/reversal-candlestick-patterns', description: 'Reversal candlestick patterns used to confirm breaker entries.' },
     ],
     relatedSlugs: ['order-blocks', 'smart-money-concepts', 'fair-value-gap', 'liquidity-sweeps'],
+    imageUrl: '/images/strategies/breaker-blocks.png',
   },
 
   'trend-following': {
@@ -211,6 +218,7 @@ The strategy performs best in strongly trending markets (commodities, currencies
       { label: 'BabyPips — Trading the Trend', url: 'https://www.babypips.com/learn/forex/trading-the-trend', description: "BabyPips' guide to identifying and trading with the trend." },
     ],
     relatedSlugs: ['moving-average-crossover', 'breakout-strategy', 'adx-indicator', 'donchian-channel'],
+    imageUrl: '/images/strategies/trend-following.png',
   },
 
   'mean-reversion': {
@@ -235,6 +243,7 @@ Mean reversion works best in range-bound equity markets, currency pairs with lon
       { label: 'BabyPips — RSI Strategy', url: 'https://www.babypips.com/learn/forex/rsi', description: 'RSI-based mean reversion entries on BabyPips.' },
     ],
     relatedSlugs: ['rsi-indicator', 'bollinger-bands', 'vwap-indicator', 'stochastic-oscillator'],
+    imageUrl: '/images/strategies/mean-reversion.png',
   },
 
   'breakout-strategy': {
@@ -259,6 +268,7 @@ Donchian channels, which plot the highest high and lowest low over a lookback pe
       { label: 'BabyPips — Trading Breakouts', url: 'https://www.babypips.com/learn/forex/trading-breakouts', description: "BabyPips' guide to trading price breakouts effectively." },
     ],
     relatedSlugs: ['trend-following', 'donchian-channel', 'atr-indicator', 'volume-analysis'],
+    imageUrl: '/images/strategies/breakout-strategy.png',
   },
 
   'scalping-strategy': {
@@ -283,6 +293,7 @@ Automation is particularly well-suited to scalping: manual traders struggle to m
       { label: 'BabyPips — Scalping', url: 'https://www.babypips.com/learn/forex/scalping', description: "BabyPips' introduction to forex scalping techniques." },
     ],
     relatedSlugs: ['vwap-indicator', 'rsi-indicator', 'moving-average-crossover', 'bollinger-bands'],
+    imageUrl: '/images/strategies/scalping-strategy.png',
   },
 
   'swing-trading': {
@@ -307,6 +318,7 @@ Successful swing traders develop clear rules for entry (e.g., a daily close abov
       { label: 'BabyPips — Swing Trading', url: 'https://www.babypips.com/learn/forex/swing-trading', description: "BabyPips' comprehensive guide to swing trading strategies." },
     ],
     relatedSlugs: ['trend-following', 'rsi-indicator', 'macd-indicator', 'fibonacci-retracement'],
+    imageUrl: '/images/strategies/swing-trading.png',
   },
 
   'fibonacci-retracement': {
@@ -331,6 +343,7 @@ Fibonacci extensions are used to project profit targets beyond the swing high, w
       { label: 'BabyPips — Fibonacci Trading', url: 'https://www.babypips.com/learn/forex/fibonacci', description: "BabyPips' guide to Fibonacci analysis in forex and crypto." },
     ],
     relatedSlugs: ['swing-trading', 'trend-following', 'order-blocks', 'smart-money-concepts'],
+    imageUrl: '/images/strategies/fibonacci-retracement.png',
   },
 
   'ichimoku-strategy': {
@@ -355,6 +368,7 @@ The Chikou Span — current price projected back in time — provides a final co
       { label: 'BabyPips — Ichimoku', url: 'https://www.babypips.com/learn/forex/ichimoku-kinko-hyo', description: "BabyPips' friendly introduction to the Ichimoku system." },
     ],
     relatedSlugs: ['trend-following', 'moving-average-crossover', 'adx-indicator', 'swing-trading'],
+    imageUrl: '/images/strategies/ichimoku-cloud.png',
   },
 
   'price-action-strategy': {
@@ -379,6 +393,7 @@ Pure price action strategies require no indicators beyond perhaps a volume bar a
       { label: 'BabyPips — Candlestick Patterns', url: 'https://www.babypips.com/learn/forex/japanese-candlesticks', description: "BabyPips' full candlestick encyclopedia." },
     ],
     relatedSlugs: ['smart-money-concepts', 'order-blocks', 'fair-value-gap', 'swing-trading'],
+    imageUrl: '/images/strategies/price-action-strategy.png',
   },
 
   'grid-trading': {
@@ -403,6 +418,7 @@ The main risk is a sustained directional trend: if price moves far in one direct
       { label: 'TradingView — Grid Scripts', url: 'https://www.tradingview.com/scripts/grid/', description: 'Community grid trading strategy scripts on TradingView.' },
     ],
     relatedSlugs: ['mean-reversion', 'bollinger-bands', 'scalping-strategy', 'atr-indicator'],
+    imageUrl: '/images/strategies/grid-trading.png',
   },
 
   'dollar-cost-averaging': {
@@ -427,6 +443,7 @@ DCA is most effective for assets with long-term positive growth expectations hel
       { label: 'Binance Academy — DCA', url: 'https://academy.binance.com/en/articles/dollar-cost-averaging-dca-explained', description: "Binance's guide to DCA in cryptocurrency trading." },
     ],
     relatedSlugs: ['grid-trading', 'mean-reversion', 'rsi-indicator', 'breakout-strategy'],
+    imageUrl: '/images/strategies/dollar-cost-averaging.png',
   },
 
   'arbitrage-strategy': {
@@ -451,6 +468,7 @@ The strategy is most effective during periods of high market volatility when pri
       { label: 'Binance Academy — Crypto Arbitrage', url: 'https://academy.binance.com/en/articles/what-is-arbitrage-trading', description: "Binance's guide to arbitrage in cryptocurrency markets." },
     ],
     relatedSlugs: ['grid-trading', 'scalping-strategy', 'trend-following', 'breakout-strategy'],
+    imageUrl: '/images/strategies/arbitrage-strategy.png',
   },
 
   // ─────────────────────────── TRADING SIGNALS / INDICATORS ────────────────
@@ -477,6 +495,7 @@ EMAs serve multiple purposes: as dynamic support and resistance levels (price of
       { label: 'BabyPips — Moving Averages', url: 'https://www.babypips.com/learn/forex/moving-averages', description: "BabyPips' introduction to EMAs, SMAs, and their trading uses." },
     ],
     relatedSlugs: ['sma-indicator', 'macd-indicator', 'moving-average-crossover', 'trend-following'],
+    imageUrl: '/images/strategies/ema-indicator.png',
   },
 
   'sma-indicator': {
@@ -501,6 +520,7 @@ Key uses include: the 50 and 200 SMA as major support/resistance levels; the 200
       { label: 'BabyPips — SMA vs EMA', url: 'https://www.babypips.com/learn/forex/sma-vs-ema', description: 'Side-by-side comparison of SMA and EMA to help choose the right one.' },
     ],
     relatedSlugs: ['ema-indicator', 'macd-indicator', 'moving-average-crossover', 'bollinger-bands'],
+    imageUrl: '/images/strategies/sma-indicator.png',
   },
 
   'rsi-indicator': {
@@ -525,6 +545,7 @@ RSI can also be used in trending markets by adjusting the overbought/oversold th
       { label: 'BabyPips — RSI', url: 'https://www.babypips.com/learn/forex/rsi', description: "BabyPips' beginner-friendly RSI tutorial." },
     ],
     relatedSlugs: ['macd-indicator', 'stochastic-oscillator', 'mean-reversion', 'bollinger-bands'],
+    imageUrl: '/images/strategies/rsi-indicator.png',
   },
 
   'macd-indicator': {
@@ -549,6 +570,7 @@ MACD works best as a trend-confirmation tool on timeframes of 1H and above. On l
       { label: 'BabyPips — MACD', url: 'https://www.babypips.com/learn/forex/macd', description: "BabyPips' MACD tutorial with clear visual examples." },
     ],
     relatedSlugs: ['ema-indicator', 'rsi-indicator', 'moving-average-crossover', 'trend-following'],
+    imageUrl: '/images/strategies/macd-indicator.png',
   },
 
   'stochastic-oscillator': {
@@ -573,6 +595,7 @@ Like RSI, the Stochastic works best in ranging markets and should be used with a
       { label: 'BabyPips — Stochastic', url: 'https://www.babypips.com/learn/forex/stochastic', description: "BabyPips' accessible introduction to stochastic trading." },
     ],
     relatedSlugs: ['rsi-indicator', 'macd-indicator', 'mean-reversion', 'bollinger-bands'],
+    imageUrl: '/images/strategies/stochastic-oscillator.png',
   },
 
   'bollinger-bands': {
@@ -597,6 +620,7 @@ The %B indicator (derived from Bollinger Bands) measures where price is relative
       { label: 'BabyPips — Bollinger Bands', url: 'https://www.babypips.com/learn/forex/bollinger-bands', description: "BabyPips' practical Bollinger Bands trading guide." },
     ],
     relatedSlugs: ['mean-reversion', 'rsi-indicator', 'atr-indicator', 'scalping-strategy'],
+    imageUrl: '/images/strategies/bollinger-bands.png',
   },
 
   'vwap-indicator': {
@@ -623,6 +647,7 @@ Common VWAP strategies include: buying pull-backs to VWAP in uptrending sessions
       { label: 'BabyPips — VWAP Trading', url: 'https://www.babypips.com/forexpedia/vwap-algo', description: "BabyPips' introduction to VWAP for retail traders." },
     ],
     relatedSlugs: ['bollinger-bands', 'scalping-strategy', 'mean-reversion', 'volume-analysis'],
+    imageUrl: '/images/strategies/vwap-indicator.png',
   },
 
   'atr-indicator': {
@@ -647,6 +672,7 @@ ATR is also used in position sizing: many systematic traders risk a fixed fracti
       { label: 'BabyPips — ATR', url: 'https://www.babypips.com/learn/forex/atr', description: "BabyPips' guide to using ATR for stop placement." },
     ],
     relatedSlugs: ['bollinger-bands', 'breakout-strategy', 'trend-following', 'grid-trading'],
+    imageUrl: '/images/strategies/atr-indicator.png',
   },
 
   'adx-indicator': {
@@ -671,6 +697,7 @@ The +DI/−DI crossover provides directional signals: when +DI crosses above −
       { label: 'BabyPips — ADX', url: 'https://www.babypips.com/learn/forex/average-directional-index', description: "BabyPips' explanation of ADX and its role in confirming trend signals." },
     ],
     relatedSlugs: ['trend-following', 'moving-average-crossover', 'atr-indicator', 'breakout-strategy'],
+    imageUrl: '/images/strategies/adx-indicator.png',
   },
 
   'donchian-channel': {
@@ -695,6 +722,7 @@ Donchian Channels are equally useful as a trend-following entry mechanism and as
       { label: 'BabyPips — Donchian Channels', url: 'https://www.babypips.com/forexpedia/donchian-channel', description: "BabyPips' Donchian Channel tutorial." },
     ],
     relatedSlugs: ['breakout-strategy', 'trend-following', 'atr-indicator', 'adx-indicator'],
+    imageUrl: '/images/strategies/donchian-channel.png',
   },
 
   'volume-analysis': {
@@ -719,6 +747,7 @@ Volume Profile analysis maps volume by price level rather than by time, revealin
       { label: 'BabyPips — Trading Volume', url: 'https://www.babypips.com/forexpedia/volume-analysis', description: "BabyPips' volume analysis guide for forex and crypto traders." },
     ],
     relatedSlugs: ['breakout-strategy', 'vwap-indicator', 'trend-following', 'smart-money-concepts'],
+    imageUrl: '/images/strategies/volume-analysis.png',
   },
 
   'cci-indicator': {
@@ -745,6 +774,7 @@ When used on higher timeframes (weekly or monthly), CCI is particularly effectiv
       { label: 'BabyPips — CCI', url: 'https://www.babypips.com/learn/forex/cci', description: "BabyPips' CCI tutorial with practical forex examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'stochastic-oscillator', 'mean-reversion', 'macd-indicator'],
+    imageUrl: '/images/strategies/cci-indicator.png',
   },
 
   'williams-percent-r': {
@@ -771,6 +801,7 @@ The indicator also generates powerful divergence signals: when price makes a new
       { label: 'BabyPips — Williams %R', url: 'https://www.babypips.com/learn/forex/williams-percent-r', description: "BabyPips' tutorial on Williams %R for forex trading." },
     ],
     relatedSlugs: ['stochastic-oscillator', 'rsi-indicator', 'cci-indicator', 'mean-reversion'],
+    imageUrl: '/images/strategies/williams-percent-r.png',
   },
 
   'parabolic-sar': {
@@ -795,6 +826,7 @@ Parabolic SAR is most effective in strongly trending markets. In sideways market
       { label: 'BabyPips — Parabolic SAR', url: 'https://www.babypips.com/learn/forex/parabolic-sar', description: "BabyPips' guide to using Parabolic SAR in trend trading." },
     ],
     relatedSlugs: ['adx-indicator', 'trend-following', 'atr-indicator', 'moving-average-crossover'],
+    imageUrl: '/images/strategies/parabolic-sar.png',
   },
 
   'obv-indicator': {
@@ -819,6 +851,7 @@ OBV is also used to detect "stealth accumulation": when price is range-bound but
       { label: 'BabyPips — OBV', url: 'https://www.babypips.com/forexpedia/obv', description: "BabyPips' introduction to On-Balance Volume." },
     ],
     relatedSlugs: ['volume-analysis', 'vwap-indicator', 'macd-indicator', 'trend-following'],
+    imageUrl: '/images/strategies/obv-indicator.png',
   },
 
   // ── Extra Signals ────────────────────────────────────────────────────────
@@ -845,6 +878,7 @@ Pivot points are especially effective in range-bound markets where price oscilla
       { label: 'BabyPips — Pivot Points', url: 'https://www.babypips.com/learn/forex/pivot-points', description: "BabyPips' beginner guide to pivot point trading." },
     ],
     relatedSlugs: ['fibonacci-retracement', 'rsi-indicator', 'breakout-strategy', 'price-action-strategy'],
+    imageUrl: '/images/strategies/pivot-points.png',
   },
 
   'keltner-channels': {
@@ -869,6 +903,7 @@ One of the most popular strategies is the "Keltner-Bollinger Squeeze": when Boll
       { label: 'StockCharts — Keltner Channels', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:keltner_channels', description: "StockCharts' in-depth article on Keltner Channels." },
     ],
     relatedSlugs: ['bollinger-bands', 'atr-indicator', 'breakout-strategy', 'ema-indicator'],
+    imageUrl: '/images/strategies/keltner-channels.png',
   },
 
   'supertrend-indicator': {
@@ -893,6 +928,7 @@ Supertrend is particularly effective for identifying the beginning of trending m
       { label: 'StockCharts — ATR', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:average_true_range_atr', description: 'ATR explanation — the foundation of Supertrend.' },
     ],
     relatedSlugs: ['atr-indicator', 'trend-following', 'ema-indicator', 'adx-indicator'],
+    imageUrl: '/images/strategies/supertrend-indicator.png',
   },
 
   'mfi-indicator': {
@@ -917,6 +953,7 @@ MFI divergence is particularly valued: when price makes new highs but MFI fails 
       { label: 'StockCharts — MFI', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:money_flow_index_mfi', description: "StockCharts' detailed MFI article with examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'volume-analysis', 'obv-indicator', 'cci-indicator'],
+    imageUrl: '/images/strategies/mfi-indicator.png',
   },
 
   'fibonacci-indicator': {
@@ -941,6 +978,7 @@ Smart Money Concepts heavily incorporate Fibonacci, using the 0.79 and 0.886 lev
       { label: 'BabyPips — Fibonacci', url: 'https://www.babypips.com/learn/forex/fibonacci', description: "BabyPips' comprehensive Fibonacci trading guide." },
     ],
     relatedSlugs: ['fibonacci-retracement', 'smart-money-concepts', 'price-action-strategy', 'order-blocks'],
+    imageUrl: '/images/strategies/fibonacci-indicator.png',
   },
 
   // ── Extra Strategies ─────────────────────────────────────────────────────
@@ -967,6 +1005,7 @@ Supply and Demand analysis closely overlaps with Smart Money Concepts — both l
       { label: 'BabyPips — Support & Resistance', url: 'https://www.babypips.com/learn/forex/support-and-resistance', description: 'BabyPips guide to support and resistance (closely related concept).' },
     ],
     relatedSlugs: ['order-blocks', 'smart-money-concepts', 'liquidity-sweeps', 'price-action-strategy'],
+    imageUrl: '/images/strategies/supply-demand-zones.png',
   },
 
   'wyckoff-method': {
@@ -991,6 +1030,7 @@ Wyckoff's three laws — Supply and Demand, Cause and Effect, and Effort vs. Res
       { label: 'TradingView — Wyckoff Scripts', url: 'https://www.tradingview.com/scripts/wyckoff/', description: 'Wyckoff analysis tools and scripts on TradingView.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'volume-analysis', 'order-blocks', 'supply-demand-zones'],
+    imageUrl: '/images/strategies/wyckoff-method.png',
   },
 
   'elliott-wave': {
@@ -1015,6 +1055,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'EWI — Elliott Wave International', url: 'https://www.elliottwave.com/educational', description: 'Educational resources from Elliott Wave International.' },
     ],
     relatedSlugs: ['fibonacci-retracement', 'fibonacci-indicator', 'wyckoff-method', 'trend-following'],
+    imageUrl: '/images/strategies/elliott-wave.png',
   },
 
   // ─────────────────────── NEW STRATEGIES ────────────────────────────────
@@ -1035,6 +1076,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Position Trading', url: 'https://www.babypips.com/learn/forex/position-trading', description: "BabyPips' guide to position trading in forex markets." },
     ],
     relatedSlugs: ['trend-following', 'swing-trading', 'donchian-channel', 'wyckoff-method'],
+    imageUrl: '/images/strategies/position-trading.png',
   },
 
   'pairs-trading': {
@@ -1053,6 +1095,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'TradingView — Spread Charts', url: 'https://www.tradingview.com/support/solutions/43000502079/', description: 'How to chart spreads between two assets on TradingView.' },
     ],
     relatedSlugs: ['arbitrage-strategy', 'mean-reversion', 'bollinger-bands', 'linear-regression'],
+    imageUrl: '/images/strategies/pairs-trading.png',
   },
 
   'momentum-trading': {
@@ -1071,6 +1114,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'TradingView — Momentum Indicators', url: 'https://www.tradingview.com/scripts/momentum/', description: 'Momentum indicator scripts on TradingView.' },
     ],
     relatedSlugs: ['trend-following', 'rate-of-change', 'macd-indicator', 'breakout-strategy'],
+    imageUrl: '/images/strategies/momentum-trading.png',
   },
 
   'range-trading': {
@@ -1089,6 +1133,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Trading Ranges', url: 'https://www.babypips.com/learn/forex/trading-ranges', description: "BabyPips' guide to identifying and trading sideways markets." },
     ],
     relatedSlugs: ['mean-reversion', 'bollinger-bands', 'rsi-indicator', 'stochastic-oscillator'],
+    imageUrl: '/images/strategies/range-trading.png',
   },
 
   'news-trading': {
@@ -1107,6 +1152,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Trading the News', url: 'https://www.babypips.com/learn/forex/trading-the-news', description: "BabyPips' comprehensive guide to news trading strategies." },
     ],
     relatedSlugs: ['breakout-strategy', 'volatility-trading', 'atr-indicator', 'scalping-strategy'],
+    imageUrl: '/images/strategies/news-trading.png',
   },
 
   'harmonic-patterns': {
@@ -1125,6 +1171,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Harmonic Trading', url: 'https://www.babypips.com/learn/forex/gartley-pattern', description: "BabyPips' guide to the Gartley pattern and harmonic trading." },
     ],
     relatedSlugs: ['fibonacci-retracement', 'fibonacci-indicator', 'price-action-strategy', 'smart-money-concepts'],
+    imageUrl: '/images/strategies/harmonic-patterns.png',
   },
 
   'chart-patterns': {
@@ -1143,6 +1190,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Chart School', url: 'https://school.stockcharts.com/doku.php?id=chart_analysis:chart_patterns', description: "StockCharts' classic Chart School on technical patterns." },
     ],
     relatedSlugs: ['breakout-strategy', 'price-action-strategy', 'volume-analysis', 'trend-following'],
+    imageUrl: '/images/strategies/chart-patterns.png',
   },
 
   'carry-trade': {
@@ -1161,6 +1209,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'CoinGlass — Funding Rates', url: 'https://www.coinglass.com/FundingRate', description: 'Live funding rates across all major crypto perpetual exchanges.' },
     ],
     relatedSlugs: ['arbitrage-strategy', 'mean-reversion', 'vwap-indicator', 'position-trading'],
+    imageUrl: '/images/strategies/carry-trade.png',
   },
 
   'gap-trading': {
@@ -1179,6 +1228,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Gap Analysis', url: 'https://school.stockcharts.com/doku.php?id=chart_analysis:gaps_and_gap_analysis', description: "StockCharts' detailed guide to gap analysis." },
     ],
     relatedSlugs: ['breakout-strategy', 'volume-analysis', 'news-trading', 'price-action-strategy'],
+    imageUrl: '/images/strategies/gap-trading.png',
   },
 
   'triple-screen-strategy': {
@@ -1197,6 +1247,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'Elder.com — Trading', url: 'https://www.elder.com', description: "Dr. Alexander Elder's official site with educational resources." },
     ],
     relatedSlugs: ['macd-indicator', 'stochastic-oscillator', 'trend-following', 'swing-trading'],
+    imageUrl: '/images/strategies/triple-screen-strategy.png',
   },
 
   // ─────────────────────── NEW INDICATORS ────────────────────────────────
@@ -1217,6 +1268,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — CMF', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:chaikin_money_flow_cmf', description: "StockCharts' detailed CMF tutorial with visual examples." },
     ],
     relatedSlugs: ['obv-indicator', 'mfi-indicator', 'volume-analysis', 'vwap-indicator'],
+    imageUrl: '/images/strategies/chaikin-money-flow.png',
   },
 
   'awesome-oscillator': {
@@ -1235,6 +1287,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Awesome Oscillator', url: 'https://www.babypips.com/learn/forex/awesome-oscillator', description: "BabyPips' guide to the Awesome Oscillator and its signals." },
     ],
     relatedSlugs: ['alligator-indicator', 'macd-indicator', 'momentum-trading', 'rate-of-change'],
+    imageUrl: '/images/strategies/awesome-oscillator.png',
   },
 
   'alligator-indicator': {
@@ -1253,6 +1306,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Williams Alligator', url: 'https://www.babypips.com/learn/forex/williams-alligator', description: "BabyPips' explanation of the Alligator indicator." },
     ],
     relatedSlugs: ['awesome-oscillator', 'ema-indicator', 'trend-following', 'adx-indicator'],
+    imageUrl: '/images/strategies/alligator-indicator.png',
   },
 
   'hull-moving-average': {
@@ -1271,6 +1325,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'Alan Hull\'s Site', url: 'https://alanhull.com/hull-moving-average', description: 'The original HMA documentation from its creator Alan Hull.' },
     ],
     relatedSlugs: ['ema-indicator', 'sma-indicator', 'trend-following', 'moving-average-crossover'],
+    imageUrl: '/images/strategies/hull-moving-average.png',
   },
 
   'rate-of-change': {
@@ -1289,6 +1344,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Momentum Indicators', url: 'https://www.babypips.com/learn/forex/momentum-indicators', description: "BabyPips' guide to momentum indicators including ROC." },
     ],
     relatedSlugs: ['macd-indicator', 'momentum-trading', 'rsi-indicator', 'trix-indicator'],
+    imageUrl: '/images/strategies/rate-of-change.png',
   },
 
   'aroon-indicator': {
@@ -1307,6 +1363,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Aroon', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:aroon', description: "StockCharts' Aroon tutorial with detailed examples." },
     ],
     relatedSlugs: ['adx-indicator', 'trend-following', 'donchian-channel', 'rate-of-change'],
+    imageUrl: '/images/strategies/aroon-indicator.png',
   },
 
   'trix-indicator': {
@@ -1325,6 +1382,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — TRIX', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:trix', description: "StockCharts' detailed TRIX tutorial with signal examples." },
     ],
     relatedSlugs: ['macd-indicator', 'ema-indicator', 'rate-of-change', 'momentum-trading'],
+    imageUrl: '/images/strategies/trix-indicator.png',
   },
 
   'elder-ray': {
@@ -1343,6 +1401,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'Elder.com', url: 'https://www.elder.com/trading-indicators/', description: "Dr. Elder's official resources on Bull Power and Bear Power." },
     ],
     relatedSlugs: ['triple-screen-strategy', 'macd-indicator', 'ema-indicator', 'adx-indicator'],
+    imageUrl: '/images/strategies/elder-ray.png',
   },
 
   'detrended-price-oscillator': {
@@ -1361,6 +1420,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — DPO', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:detrended_price_oscillator_dpo', description: "StockCharts' detailed DPO article with cycle examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'stochastic-oscillator', 'bollinger-bands', 'range-trading'],
+    imageUrl: '/images/strategies/detrended-price-oscillator.png',
   },
 
   'linear-regression': {
@@ -1379,6 +1439,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Linear Regression', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:linear_regression', description: "StockCharts' guide to linear regression in technical analysis." },
     ],
     relatedSlugs: ['bollinger-bands', 'pairs-trading', 'mean-reversion', 'keltner-channels'],
+    imageUrl: '/images/strategies/linear-regression.png',
   },
 
   // ─────────────────────── NEW INDICATORS (2026-05-09) ───────────────────────
@@ -1409,6 +1470,7 @@ Divergence between price and StochRSI is another high-probability signal: when p
       { label: 'BabyPips — Stochastic RSI', url: 'https://www.babypips.com/learn/forex/stochastic-rsi', description: "BabyPips' explanation of StochRSI with practical trading examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'stochastic-oscillator', 'macd-indicator', 'mean-reversion'],
+    imageUrl: '/images/strategies/stochastic-rsi.png',
   },
 
   'force-index': {
@@ -1437,6 +1499,7 @@ Divergence between the Force Index and price is a powerful reversal signal: when
       { label: 'Elder.com — Force Index', url: 'https://www.elder.com/trading-indicators/force-index/', description: "Dr. Elder's official documentation on the Force Index indicator." },
     ],
     relatedSlugs: ['elder-ray', 'triple-screen-strategy', 'obv-indicator', 'volume-analysis'],
+    imageUrl: '/images/strategies/force-index.png',
   },
 
   'ultimate-oscillator': {
@@ -1461,6 +1524,7 @@ Williams emphasised that the divergence-based signals are far more reliable than
       { label: 'StockCharts — Ultimate Oscillator', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:ultimate_oscillator', description: "StockCharts' detailed tutorial on the Ultimate Oscillator." },
     ],
     relatedSlugs: ['williams-percent-r', 'rsi-indicator', 'stochastic-oscillator', 'cci-indicator'],
+    imageUrl: '/images/strategies/ultimate-oscillator.png',
   },
 
   'vortex-indicator': {
@@ -1490,6 +1554,7 @@ The indicator performs best on daily and weekly timeframes for equity and crypto
       { label: 'StockCharts — Vortex Indicator', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:vortex_indicator', description: "StockCharts' detailed Vortex Indicator tutorial." },
     ],
     relatedSlugs: ['adx-indicator', 'dmi-indicator', 'trend-following', 'aroon-indicator'],
+    imageUrl: '/images/strategies/vortex-indicator.png',
   },
 
   'dmi-indicator': {
@@ -1516,6 +1581,7 @@ Understanding DMI separately from ADX helps traders appreciate the direction com
       { label: 'StockCharts — DMI', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:directional_movement_index', description: "StockCharts' comprehensive DMI and ADX tutorial." },
     ],
     relatedSlugs: ['adx-indicator', 'vortex-indicator', 'trend-following', 'atr-indicator'],
+    imageUrl: '/images/strategies/dmi-indicator.png',
   },
 
   // ─────────────────────── NEW STRATEGIES (2026-05-09) ───────────────────────
@@ -1544,6 +1610,7 @@ In crypto markets, perpetual futures funding rates are closely linked to volatil
       { label: 'TradingView — Volatility Indicators', url: 'https://www.tradingview.com/scripts/volatility/', description: 'Volatility measurement and squeeze detection scripts on TradingView.' },
     ],
     relatedSlugs: ['bollinger-bands', 'keltner-channels', 'atr-indicator', 'breakout-strategy'],
+    imageUrl: '/images/strategies/volatility-trading.png',
   },
 
   'market-making-strategy': {
@@ -1570,6 +1637,7 @@ In cryptocurrency markets, market making bots are especially popular on perpetua
       { label: 'Binance Academy — Market Making', url: 'https://academy.binance.com/en/articles/what-is-a-market-maker', description: "Binance's accessible introduction to market making in crypto." },
     ],
     relatedSlugs: ['arbitrage-strategy', 'grid-trading', 'scalping-strategy', 'vwap-indicator'],
+    imageUrl: '/images/strategies/market-making-strategy.png',
   },
 
   'counter-trend-strategy': {
@@ -1596,6 +1664,7 @@ The most successful counter-trend traders combine strict entry criteria (requiri
       { label: 'BabyPips — Counter-Trend Trading', url: 'https://www.babypips.com/learn/forex/counter-trend-trading', description: "BabyPips' guide to trading against the trend safely." },
     ],
     relatedSlugs: ['mean-reversion', 'rsi-indicator', 'stochastic-rsi', 'bollinger-bands'],
+    imageUrl: '/images/strategies/counter-trend-strategy.png',
   },
 
   'machine-learning-strategy': {
@@ -1622,6 +1691,7 @@ The most practical ML strategies for retail traders use gradient boosted trees w
       { label: 'TradingView — ML Scripts', url: 'https://www.tradingview.com/scripts/machinelearning/', description: 'Community machine learning indicator scripts on TradingView.' },
     ],
     relatedSlugs: ['momentum-trading', 'trend-following', 'mean-reversion', 'arbitrage-strategy'],
+    imageUrl: '/images/strategies/machine-learning-strategy.png',
   },
 
   'rebalancing-strategy': {
@@ -1648,6 +1718,7 @@ Rebalancing is particularly powerful for multi-asset crypto portfolios (e.g., BT
       { label: 'Binance Academy — Rebalancing', url: 'https://academy.binance.com/en/articles/what-is-portfolio-rebalancing', description: "Binance's guide to rebalancing a cryptocurrency portfolio." },
     ],
     relatedSlugs: ['dollar-cost-averaging', 'mean-reversion', 'grid-trading', 'momentum-trading'],
+    imageUrl: '/images/strategies/rebalancing-strategy.png',
   },
 
 };
@@ -1765,6 +1836,12 @@ export class LearnDetailPage implements OnInit {
     this.meta.updateTag({ property: 'og:type', content: 'article' });
     this.meta.updateTag({ property: 'og:url', content: canonicalHref });
     this.meta.updateTag({ property: 'og:locale', content: this.ogLocale(this.languageService.currentLang()) });
+
+    if (base.imageUrl) {
+      const imageAbsUrl = `https://invest-begin.com${base.imageUrl}`;
+      this.meta.updateTag({ property: 'og:image', content: imageAbsUrl });
+      this.meta.updateTag({ name: 'twitter:image', content: imageAbsUrl });
+    }
 
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: this.page.metaTitle });

@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.createShopifyListing = exports.shopifyCallback = exports.shopifyAuth = exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -1975,5 +1975,289 @@ exports.nowPaymentsCallback = functions
         console.error("❌ nowPaymentsCallback failed:", error);
         res.status(500).send("Internal server error");
     }
+});
+// ── Shopify OAuth ─────────────────────────────────────────────────────────────
+const SHOPIFY_SCOPES = "read_products,write_products";
+function verifyShopifyHmac(query, clientSecret) {
+    const { hmac, ...rest } = query;
+    if (!hmac)
+        return false;
+    const message = Object.keys(rest)
+        .sort()
+        .map((k) => `${k}=${rest[k]}`)
+        .join("&");
+    const expected = crypto.createHmac("sha256", clientSecret).update(message).digest("hex");
+    try {
+        return crypto.timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(hmac, "hex"));
+    }
+    catch {
+        return false;
+    }
+}
+/**
+ * Initiates the Shopify OAuth install flow.
+ * GET /api/shopify/auth?shop=my-store.myshopify.com
+ */
+exports.shopifyAuth = functions
+    .region("europe-west1")
+    .https.onRequest(async (req, res) => {
+    const shop = String(req.query.shop || "").trim().toLowerCase();
+    if (!shop || !/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(shop)) {
+        res.status(400).send("Invalid shop parameter");
+        return;
+    }
+    const clientId = process.env.SHOPIFY_CLIENT_ID;
+    if (!clientId) {
+        res.status(500).send("Shopify credentials not configured");
+        return;
+    }
+    const nonce = crypto.randomBytes(16).toString("hex");
+    const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+    await admin.firestore()
+        .collection("shopify_oauth_nonces")
+        .doc(nonce)
+        .set({ shop, expiresAt });
+    const host = req.headers.host || "";
+    const redirectUri = host.includes("localhost") || host.includes("127.0.0.1")
+        ? `http://${host}/api/shopify/callback`
+        : "https://invest-begin.com/api/shopify/callback";
+    const authUrl = new URL(`https://${shop}/admin/oauth/authorize`);
+    authUrl.searchParams.set("client_id", clientId);
+    authUrl.searchParams.set("scope", SHOPIFY_SCOPES);
+    authUrl.searchParams.set("redirect_uri", redirectUri);
+    authUrl.searchParams.set("state", nonce);
+    res.redirect(302, authUrl.toString());
+});
+/**
+ * Handles the Shopify OAuth callback.
+ * Shopify redirects here with ?code=...&hmac=...&shop=...&state=...
+ * Verifies HMAC + nonce, exchanges code for access token, stores in Firestore.
+ */
+exports.shopifyCallback = functions
+    .region("europe-west1")
+    .https.onRequest(async (req, res) => {
+    const clientId = process.env.SHOPIFY_CLIENT_ID;
+    const clientSecret = process.env.SHOPIFY_CLIENT_SECRET;
+    if (!clientId || !clientSecret) {
+        res.status(500).send("Shopify credentials not configured");
+        return;
+    }
+    const query = {};
+    for (const [k, v] of Object.entries(req.query)) {
+        query[k] = String(v);
+    }
+    // 1. Verify HMAC signature from Shopify
+    if (!verifyShopifyHmac(query, clientSecret)) {
+        res.status(401).send("HMAC validation failed");
+        return;
+    }
+    const { shop, code, state: nonce } = query;
+    if (!shop || !code || !nonce) {
+        res.status(400).send("Missing required parameters");
+        return;
+    }
+    // 2. Verify one-time nonce and that shop matches
+    const nonceRef = admin.firestore().collection("shopify_oauth_nonces").doc(nonce);
+    const nonceSnap = await nonceRef.get();
+    if (!nonceSnap.exists) {
+        res.status(401).send("Invalid or expired state");
+        return;
+    }
+    const nonceData = nonceSnap.data();
+    await nonceRef.delete(); // consumed — one-time use only
+    if (nonceData.shop !== shop || Date.now() > nonceData.expiresAt) {
+        res.status(401).send("Invalid or expired state");
+        return;
+    }
+    // 3. Exchange authorization code for a permanent access token
+    const tokenResp = await (0, node_fetch_1.default)(`https://${shop}/admin/oauth/access_token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ client_id: clientId, client_secret: clientSecret, code }),
+    });
+    if (!tokenResp.ok) {
+        const text = await tokenResp.text();
+        console.error("❌ Shopify token exchange failed:", text);
+        res.status(502).send("Token exchange failed");
+        return;
+    }
+    const tokenData = await tokenResp.json();
+    const accessToken = tokenData.access_token;
+    const scope = tokenData.scope;
+    if (!accessToken) {
+        res.status(502).send("No access token in Shopify response");
+        return;
+    }
+    // 4. Persist access token in Firestore (keyed by shop domain)
+    await admin.firestore()
+        .collection("shopify_stores")
+        .doc(shop)
+        .set({
+        shop,
+        accessToken,
+        scope,
+        connectedAt: new Date().toISOString(),
+    });
+    console.log(`✅ Shopify store connected: ${shop}`);
+    res.redirect(302, "https://invest-begin.com/?shopify=connected");
+});
+/**
+ * Creates a new product listing in the connected Shopify store.
+ *
+ * Callable function — requires Firebase Auth.
+ *
+ * Request payload:
+ * {
+ *   shop: string;           // e.g. "autotradingx.myshopify.com"
+ *   title: string;
+ *   descriptionHtml?: string;
+ *   vendor?: string;
+ *   productType?: string;
+ *   tags?: string[];
+ *   status?: "ACTIVE" | "DRAFT" | "ARCHIVED";  // defaults to "DRAFT"
+ *   options?: Array<{ name: string; values: string[] }>;
+ *   price?: string;         // e.g. "19.99" — applies to the default variant
+ *   sku?: string;
+ *   quantity?: number;
+ * }
+ */
+exports.createShopifyListing = functions
+    .region("europe-west1")
+    .https.onCall(async (data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "Must be signed in");
+    }
+    const shop = String(data.shop || "").trim().toLowerCase();
+    if (!shop || !/^[a-z0-9][a-z0-9-]*\.myshopify\.com$/.test(shop)) {
+        throw new functions.https.HttpsError("invalid-argument", "Invalid shop parameter");
+    }
+    const title = String(data.title || "").trim();
+    if (!title) {
+        throw new functions.https.HttpsError("invalid-argument", "title is required");
+    }
+    // Load access token from Firestore
+    const storeSnap = await admin.firestore().collection("shopify_stores").doc(shop).get();
+    if (!storeSnap.exists) {
+        throw new functions.https.HttpsError("not-found", `Shop ${shop} is not connected. Complete OAuth first.`);
+    }
+    const accessToken = storeSnap.data().accessToken;
+    // Build productOptions input (optional)
+    const rawOptions = Array.isArray(data.options)
+        ? data.options
+        : [];
+    const productOptionsInput = rawOptions.map((opt) => ({
+        name: opt.name,
+        values: opt.values.map((v) => ({ name: v })),
+    }));
+    // Build the productCreate GraphQL mutation
+    const mutation = `
+      mutation productCreate($product: ProductCreateInput!) {
+        productCreate(product: $product) {
+          product {
+            id
+            title
+            handle
+            status
+            onlineStoreUrl
+            variants(first: 1) {
+              edges {
+                node {
+                  id
+                  sku
+                  price
+                }
+              }
+            }
+          }
+          userErrors {
+            field
+            message
+          }
+        }
+      }
+    `;
+    const productInput = {
+        title,
+        status: String(data.status || "DRAFT").toUpperCase(),
+    };
+    if (data.descriptionHtml)
+        productInput.descriptionHtml = String(data.descriptionHtml);
+    if (data.vendor)
+        productInput.vendor = String(data.vendor);
+    if (data.productType)
+        productInput.productType = String(data.productType);
+    if (Array.isArray(data.tags) && data.tags.length > 0) {
+        productInput.tags = data.tags.map(String);
+    }
+    if (productOptionsInput.length > 0) {
+        productInput.productOptions = productOptionsInput;
+    }
+    const gqlResp = await (0, node_fetch_1.default)(`https://${shop}/admin/api/2024-04/graphql.json`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Shopify-Access-Token": accessToken,
+        },
+        body: JSON.stringify({ query: mutation, variables: { product: productInput } }),
+    });
+    if (!gqlResp.ok) {
+        const text = await gqlResp.text();
+        console.error("❌ Shopify GraphQL request failed:", text);
+        throw new functions.https.HttpsError("internal", `Shopify API error ${gqlResp.status}`);
+    }
+    const gqlData = await gqlResp.json();
+    const userErrors = gqlData?.data?.productCreate?.userErrors ?? [];
+    if (userErrors.length > 0) {
+        console.error("❌ Shopify productCreate userErrors:", userErrors);
+        throw new functions.https.HttpsError("invalid-argument", userErrors.map((e) => `${e.field}: ${e.message}`).join("; "));
+    }
+    const product = gqlData?.data?.productCreate?.product;
+    if (!product) {
+        throw new functions.https.HttpsError("internal", "No product returned from Shopify");
+    }
+    // If a price was provided, update the default variant via productVariantsBulkUpdate
+    if (data.price !== undefined || data.sku !== undefined || data.quantity !== undefined) {
+        const variantId = product.variants?.edges?.[0]?.node?.id;
+        if (variantId) {
+            const variantMutation = `
+          mutation productVariantsBulkUpdate($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+            productVariantsBulkUpdate(productId: $productId, variants: $variants) {
+              productVariants { id price sku }
+              userErrors { field message }
+            }
+          }
+        `;
+            const variantInput = { id: variantId };
+            if (data.price !== undefined)
+                variantInput.price = String(data.price);
+            if (data.sku !== undefined)
+                variantInput.sku = String(data.sku);
+            if (data.quantity !== undefined) {
+                variantInput.inventoryQuantities = [{
+                        availableQuantity: Number(data.quantity),
+                        locationId: null, // Shopify will use the primary location
+                    }];
+            }
+            await (0, node_fetch_1.default)(`https://${shop}/admin/api/2024-04/graphql.json`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Shopify-Access-Token": accessToken,
+                },
+                body: JSON.stringify({
+                    query: variantMutation,
+                    variables: { productId: product.id, variants: [variantInput] },
+                }),
+            });
+        }
+    }
+    console.log(`✅ Shopify listing created: ${product.id} — "${title}" on ${shop}`);
+    return {
+        id: product.id,
+        title: product.title,
+        handle: product.handle,
+        status: product.status,
+        onlineStoreUrl: product.onlineStoreUrl ?? null,
+    };
 });
 //# sourceMappingURL=index.js.map
