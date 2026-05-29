@@ -49,6 +49,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://invest-begin.com/en/sitemap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://invest-begin.com/en/features/ai-signals</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
@@ -370,6 +376,12 @@
     <loc>https://invest-begin.com/de/collecting-data</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/de/sitemap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
@@ -697,6 +709,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://invest-begin.com/es/sitemap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://invest-begin.com/es/features/ai-signals</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
@@ -1018,6 +1036,12 @@
     <loc>https://invest-begin.com/fr/collecting-data</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/fr/sitemap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
@@ -1345,6 +1369,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://invest-begin.com/pt/sitemap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://invest-begin.com/pt/features/ai-signals</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
@@ -1666,6 +1696,12 @@
     <loc>https://invest-begin.com/ar/collecting-data</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/ar/sitemap</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
