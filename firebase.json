@@ -8,13 +8,6 @@
         "**/.*",
         "**/node_modules/**"
       ],
-      "redirects": [
-        {
-          "source": "/",
-          "destination": "/en",
-          "type": 301
-        }
-      ],
       "rewrites": [
         {
           "source": "/api/getPortfolio",
@@ -183,13 +176,6 @@
         "firebase.json",
         "**/.*",
         "**/node_modules/**"
-      ],
-      "redirects": [
-        {
-          "source": "/",
-          "destination": "/en",
-          "type": 301
-        }
       ],
       "rewrites": [
         {
