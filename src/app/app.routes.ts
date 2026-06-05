@@ -178,11 +178,6 @@ const coreRoutes: Routes = [
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'en',
-  },
-  {
     matcher: languagePrefixMatcher,
     children: [
       ...coreRoutes,
