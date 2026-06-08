@@ -87,20 +87,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- ───── HOW IT WORKS ───── -->
-<section class="section section-alt" id="how-it-works">
+<section class="section section-alt" id="how-it-works" #howItWorksSection>
   <div class="container">
     <div class="section-header">
       <p class="section-tag">{{ 'home.howItWorksTag' | translate }}</p>
       <h2>{{ 'home.howItWorksTitle' | translate }}</h2>
     </div>
     <div class="steps-grid">
-      @for (s of steps; track s.num) {
-        <div class="step-card">
-          <div class="step-num">{{ s.num }}</div>
-          <h3>{{ s.titleKey | translate }}</h3>
-          <p>{{ s.descKey | translate }}</p>
-        </div>
-      }
+      <div class="steps-list" role="list" [attr.aria-label]="'home.howItWorksTitle' | translate">
+        @for (s of steps; track s.num; let i = $index) {
+          <button
+            type="button"
+            class="step-card"
+            [class.active]="activeStepIndex() === i"
+            (click)="setActiveHowItWorksStep(i)"
+          >
+            <div class="step-num">{{ s.num }}</div>
+            <div class="step-copy">
+              <h3>{{ s.titleKey | translate }}</h3>
+              <p>{{ s.descKey | translate }}</p>
+            </div>
+          </button>
+        }
+      </div>
+
+      <div class="steps-media">
+        <video
+          #howItWorksVideo
+          class="steps-video"
+          [src]="activeStepVideoSrc()"
+          muted
+          playsinline
+          preload="metadata"
+          disablepictureinpicture
+          controlslist="nodownload noplaybackrate noremoteplayback"
+          [attr.aria-label]="steps[activeStepIndex()].titleKey | translate"
+          (ended)="onStepVideoEnded()"
+          (error)="onStepVideoError()"
+        ></video>
+      </div>
     </div>
   </div>
 </section>
