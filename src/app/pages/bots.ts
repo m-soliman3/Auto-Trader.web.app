@@ -6,7 +6,7 @@ import { Bot, BotService } from '../services/bot.service';
 import { StrategyService } from '../services/strategy.service';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bots-page',
@@ -191,6 +191,10 @@ import { TranslateModule } from '@ngx-translate/core';
         </main>
       </div>
     </div>
+
+    @if (toastMsg()) {
+      <div class="success-toast" role="status" aria-live="polite">{{ toastMsg() | translate }}</div>
+    }
   `,
   styles: [
     `
@@ -292,6 +296,8 @@ import { TranslateModule } from '@ngx-translate/core';
         .page-header { flex-direction: column; align-items: flex-start; }
         .header-actions { width: 100%; justify-content: space-between; }
       }
+      .success-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--accent, #00d17a); color: #fff; font-size: 0.95rem; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); z-index: 9999; white-space: nowrap; animation: toastIn 0.25s ease; pointer-events: none; }
+      @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(12px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     `,
   ],
 })
@@ -301,6 +307,7 @@ export class BotsPage {
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
   readonly showAddBotModal = signal(false);
   readonly showEditBotModal = signal(false);
   readonly selectedBotId = signal<string | null>(null);
@@ -309,6 +316,7 @@ export class BotsPage {
   readonly botToDelete = signal<Bot | null>(null);
   readonly deleteConfirmed = signal(false);
   readonly deleteConfirmError = signal('');
+  readonly toastMsg = signal('');
 
   @ViewChild(EditBotModal) editBotModal!: EditBotModal;
 
@@ -400,6 +408,15 @@ export class BotsPage {
   onBotCreated(_bot: Bot): void {
     this.showAddBotModal.set(false);
     this.clearOpenQuery();
+    this.showSuccessToast('bots.successCreated');
+  }
+
+  private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
+
+  private showSuccessToast(key: string): void {
+    this.toastMsg.set(this.translate.instant(key));
+    if (this.toastTimer) globalThis.clearTimeout(this.toastTimer);
+    this.toastTimer = globalThis.setTimeout(() => this.toastMsg.set(''), 3000);
   }
 
   private clearOpenQuery(): void {

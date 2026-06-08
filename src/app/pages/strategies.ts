@@ -5,7 +5,7 @@ import { AccountModeService } from '../services/account-mode.service';
 import { BotService } from '../services/bot.service';
 import { StrategyService, StrategyTemplate, UserStrategy } from '../services/strategy.service';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-strategies-page',
@@ -183,6 +183,10 @@ import { TranslateModule } from '@ngx-translate/core';
         </main>
       </div>
     </div>
+
+    @if (toastMsg()) {
+      <div class="success-toast" role="status" aria-live="polite">{{ toastMsg() | translate }}</div>
+    }
   `,
   styles: [
     `
@@ -281,6 +285,8 @@ import { TranslateModule } from '@ngx-translate/core';
         .page-header { flex-direction: column; align-items: flex-start; }
         .header-actions { width: 100%; justify-content: space-between; }
       }
+      .success-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--accent, #00d17a); color: #fff; font-size: 0.95rem; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); z-index: 9999; white-space: nowrap; animation: toastIn 0.25s ease; pointer-events: none; }
+      @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(12px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     `,
   ],
 })
@@ -290,6 +296,7 @@ export class StrategiesPage {
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
   readonly showAddStrategyModal = signal(false);
   readonly selectedStrategyId = signal<string | null>(null);
   readonly statusSaving = signal('');
@@ -297,6 +304,7 @@ export class StrategiesPage {
   readonly strategyToDelete = signal<UserStrategy | null>(null);
   readonly deleteConfirmed = signal(false);
   readonly deleteConfirmError = signal('');
+  readonly toastMsg = signal('');
 
   readonly modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
   readonly visibleStrategies = computed(() => {
@@ -383,10 +391,19 @@ export class StrategiesPage {
 
   onStrategySelected(strategy: StrategyTemplate): void {
     this.showAddStrategyModal.set(false);
+    this.showSuccessToast('strategies.successLaunched');
 
     void this.router.navigate(['/dashboard', this.accountMode.mode()], {
       queryParams: { action: 'create-strategy', templateId: strategy.id },
     });
+  }
+
+  private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
+
+  private showSuccessToast(key: string): void {
+    this.toastMsg.set(this.translate.instant(key));
+    if (this.toastTimer) globalThis.clearTimeout(this.toastTimer);
+    this.toastTimer = globalThis.setTimeout(() => this.toastMsg.set(''), 3000);
   }
 
   private clearOpenQuery(): void {
