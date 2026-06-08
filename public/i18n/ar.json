@@ -696,7 +696,8 @@
     "noTradesForExchange": "لم يتم تسجيل أي صفقات حتى الآن في هذا التبادل.",
     "supportedProviders": "المزودون المدعومون",
     "acknowledgeRisksToContinue": "يرجى الاعتراف بالمخاطر للاستمرار",
-    "typeDisconnectToConfirmError": "يرجى كتابة \"قطع هذا التبادل\" للتأكيد"
+    "typeDisconnectToConfirmError": "يرجى كتابة \"قطع هذا التبادل\" للتأكيد",
+    "successConnected": "تم توصيل البورصة"
   },
   "bots": {
     "confirmDeletion": "تأكيد الحذف",
@@ -713,7 +714,8 @@
     "totalTrades": "إجمالي الصفقات",
     "noTradesForBot": "لم يتم تسجيل أي صفقات حتى الآن لهذا الروبوت.",
     "noBotsPrefix": "لا",
-    "noBotsSuffix": "لم يتم إنشاء أي روبوتات بعد. استخدم لوحة التحكم لإضافة روبوتك الأول."
+    "noBotsSuffix": "لم يتم إنشاء أي روبوتات بعد. استخدم لوحة التحكم لإضافة روبوتك الأول.",
+    "successCreated": "تم إنشاء الروبوت"
   },
   "strategies": {
     "confirmDeletion": "تأكيد الحذف",
@@ -734,7 +736,8 @@
     "executionLog": "سجل التنفيذ",
     "noExecutionsForStrategy": "لم يتم تسجيل أي تنفيذ بعد لهذه الاستراتيجية.",
     "noStrategiesPrefix": "لا",
-    "noStrategiesSuffix": "لا توجد استراتيجيات مكونة بعد. استخدم لوحة التحكم لإنشاء واحدة."
+    "noStrategiesSuffix": "لا توجد استراتيجيات مكونة بعد. استخدم لوحة التحكم لإنشاء واحدة.",
+    "successLaunched": "تم تشغيل الاستراتيجية"
   },
   "legal": {
     "home": "الرئيسية",

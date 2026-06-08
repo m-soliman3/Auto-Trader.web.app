@@ -696,7 +696,8 @@
     "noTradesForExchange": "Aucune transaction enregistrée pour cette bourse pour le moment.",
     "supportedProviders": "Fournisseurs pris en charge",
     "acknowledgeRisksToContinue": "Veuillez reconnaître les risques pour continuer",
-    "typeDisconnectToConfirmError": "Veuillez taper \"déconnecter cet Exchange\" pour confirmer"
+    "typeDisconnectToConfirmError": "Veuillez taper \"déconnecter cet Exchange\" pour confirmer",
+    "successConnected": "Exchange connecté"
   },
   "bots": {
     "confirmDeletion": "Confirmer la suppression",
@@ -713,7 +714,8 @@
     "totalTrades": "Total des transactions",
     "noTradesForBot": "Aucune transaction enregistrée pour ce bot pour le moment.",
     "noBotsPrefix": "Non",
-    "noBotsSuffix": "Aucun bot créé pour le moment. Utilisez le tableau de bord pour ajouter votre premier bot."
+    "noBotsSuffix": "Aucun bot créé pour le moment. Utilisez le tableau de bord pour ajouter votre premier bot.",
+    "successCreated": "Bot créé"
   },
   "strategies": {
     "confirmDeletion": "Confirmer la suppression",
@@ -734,7 +736,8 @@
     "executionLog": "Journal d'exécution",
     "noExecutionsForStrategy": "Aucune exécution enregistrée pour cette stratégie pour le moment.",
     "noStrategiesPrefix": "Non",
-    "noStrategiesSuffix": "Aucune stratégie n'est encore configurée. Utilisez le tableau de bord pour en créer une."
+    "noStrategiesSuffix": "Aucune stratégie n'est encore configurée. Utilisez le tableau de bord pour en créer une.",
+    "successLaunched": "Stratégie lancée"
   },
   "legal": {
     "home": "Accueil",

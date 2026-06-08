@@ -5,7 +5,7 @@ import { AccountModeService } from '../services/account-mode.service';
 import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { StrategyService } from '../services/strategy.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-exchanges-page',
@@ -192,6 +192,10 @@ import { TranslateModule } from '@ngx-translate/core';
         </main>
       </div>
     </div>
+
+    @if (toastMsg()) {
+      <div class="success-toast" role="status" aria-live="polite">{{ toastMsg() | translate }}</div>
+    }
   `,
   styles: [
     `
@@ -274,6 +278,8 @@ import { TranslateModule } from '@ngx-translate/core';
         .page-header { flex-direction: column; align-items: flex-start; }
         .header-actions { width: 100%; justify-content: space-between; }
       }
+      .success-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--accent, #00d17a); color: #fff; font-size: 0.95rem; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); z-index: 9999; white-space: nowrap; animation: toastIn 0.25s ease; pointer-events: none; }
+      @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(12px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     `,
   ],
 })
@@ -283,6 +289,7 @@ export class ExchangesPage {
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
   readonly showAddExchangeModal = signal(false);
   readonly selectedExchangeLabel = signal<string | null>(null);
   readonly showDisconnectModal = signal(false);
@@ -290,6 +297,7 @@ export class ExchangesPage {
   readonly disconnectRiskConfirmed = signal(false);
   readonly disconnectConfirmText = signal('');
   readonly disconnectConfirmError = signal('');
+  readonly toastMsg = signal('');
 
   readonly modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
   readonly visibleConnections = computed(() => this.exchangeService.connectionsByMode(this.accountMode.mode()));
@@ -348,6 +356,15 @@ export class ExchangesPage {
       }
     }
     this.clearOpenQuery();
+    this.showSuccessToast('exchanges.successConnected');
+  }
+
+  private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
+
+  private showSuccessToast(key: string): void {
+    this.toastMsg.set(this.translate.instant(key));
+    if (this.toastTimer) globalThis.clearTimeout(this.toastTimer);
+    this.toastTimer = globalThis.setTimeout(() => this.toastMsg.set(''), 3000);
   }
 
   selectExchange(label: string): void {
