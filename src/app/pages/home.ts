@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, ViewChild, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
@@ -12,10 +12,20 @@ import { LanguageService } from '../services/language.service';
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home {
+export class Home implements AfterViewInit, OnDestroy {
   private auth   = inject(AuthService);
   private translate = inject(TranslateService);
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
   languageService = inject(LanguageService);
+
+  @ViewChild('howItWorksSection') howItWorksSection?: ElementRef<HTMLElement>;
+  @ViewChild('howItWorksVideo') howItWorksVideo?: ElementRef<HTMLVideoElement>;
+
+  readonly activeStepIndex = signal(0);
+
+  private sectionObserver: IntersectionObserver | null = null;
+  private isHowItWorksInView = false;
 
   t(key: string, fallback: string): string {
     const value = this.translate.instant(key);
@@ -51,8 +61,126 @@ export class Home {
   ];
 
   steps = [
-    { num: '01', titleKey: 'home.steps.step1.title', descKey: 'home.steps.step1.desc' },
-    { num: '02', titleKey: 'home.steps.step2.title', descKey: 'home.steps.step2.desc' },
-    { num: '03', titleKey: 'home.steps.step3.title', descKey: 'home.steps.step3.desc' },
+    {
+      num: '01',
+      titleKey: 'home.steps.step1.title',
+      descKey: 'home.steps.step1.desc',
+      videoSrc: '/videos/Connect Exchange - 08.06.2026.mov',
+    },
+    {
+      num: '02',
+      titleKey: 'home.steps.step2.title',
+      descKey: 'home.steps.step2.desc',
+      videoSrc: '/videos/Bot Created 08.06.2026.mov',
+    },
+    {
+      num: '03',
+      titleKey: 'home.steps.step3.title',
+      descKey: 'home.steps.step3.desc',
+      videoSrc: '/videos/Strategy created 08.06.2026.mov',
+    },
   ];
+
+  activeStepVideoSrc(): string {
+    return this.steps[this.activeStepIndex()]?.videoSrc ?? '';
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.isBrowser || !this.howItWorksSection?.nativeElement) {
+      return;
+    }
+
+    if (!('IntersectionObserver' in globalThis)) {
+      this.startHowItWorksSequence();
+      return;
+    }
+
+    this.sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) {
+          return;
+        }
+
+        if (entry.isIntersecting) {
+          this.isHowItWorksInView = true;
+          this.startHowItWorksSequence();
+        } else {
+          this.isHowItWorksInView = false;
+          this.pauseHowItWorksVideo();
+        }
+      },
+      {
+        threshold: 0.45,
+      },
+    );
+
+    this.sectionObserver.observe(this.howItWorksSection.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.sectionObserver?.disconnect();
+    this.sectionObserver = null;
+  }
+
+  setActiveHowItWorksStep(index: number): void {
+    this.activeStepIndex.set(index);
+    this.playCurrentStepVideo(true);
+  }
+
+  onStepVideoEnded(): void {
+    if (!this.isHowItWorksInView) {
+      return;
+    }
+
+    const nextIndex = (this.activeStepIndex() + 1) % this.steps.length;
+    this.activeStepIndex.set(nextIndex);
+    this.playCurrentStepVideo(true);
+  }
+
+  onStepVideoError(): void {
+    if (!this.isHowItWorksInView) {
+      return;
+    }
+
+    const nextIndex = (this.activeStepIndex() + 1) % this.steps.length;
+    this.activeStepIndex.set(nextIndex);
+    this.playCurrentStepVideo(true);
+  }
+
+  private startHowItWorksSequence(): void {
+    this.activeStepIndex.set(0);
+    this.playCurrentStepVideo(true);
+  }
+
+  private pauseHowItWorksVideo(): void {
+    const video = this.howItWorksVideo?.nativeElement;
+    if (!video) {
+      return;
+    }
+
+    video.pause();
+  }
+
+  private playCurrentStepVideo(resetToStart = false): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    globalThis.setTimeout(() => {
+      const video = this.howItWorksVideo?.nativeElement;
+      if (!video) {
+        return;
+      }
+
+      if (resetToStart) {
+        video.currentTime = 0;
+      }
+
+      video.load();
+      void video.play().catch(() => {
+        // Autoplay can be blocked by browser policy until user interaction.
+      });
+    }, 0);
+  }
 }
