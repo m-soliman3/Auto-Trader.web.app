@@ -5,7 +5,7 @@ import { AccountModeService } from '../services/account-mode.service';
 import { BotService } from '../services/bot.service';
 import { StrategyService, StrategyTemplate, UserStrategy } from '../services/strategy.service';
 import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-strategies-page',
@@ -296,7 +296,6 @@ export class StrategiesPage {
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly translate = inject(TranslateService);
   readonly showAddStrategyModal = signal(false);
   readonly selectedStrategyId = signal<string | null>(null);
   readonly statusSaving = signal('');
@@ -401,7 +400,7 @@ export class StrategiesPage {
   private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
 
   private showSuccessToast(key: string): void {
-    this.toastMsg.set(this.translate.instant(key));
+    this.toastMsg.set(key);
     if (this.toastTimer) globalThis.clearTimeout(this.toastTimer);
     this.toastTimer = globalThis.setTimeout(() => this.toastMsg.set(''), 3000);
   }

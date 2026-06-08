@@ -697,7 +697,7 @@
     "supportedProviders": "Supported Providers",
     "acknowledgeRisksToContinue": "Please acknowledge the risks to continue",
     "typeDisconnectToConfirmError": "Please type \"disconnect this Exchange\" to confirm",
-    "successConnected": "Exchange connected"
+    "successConnected": "Your exchange is connected successfully."
   },
   "bots": {
     "confirmDeletion": "Confirm Deletion",
@@ -715,7 +715,7 @@
     "noTradesForBot": "No trades logged yet for this bot.",
     "noBotsPrefix": "No",
     "noBotsSuffix": "bots created yet. Use Dashboard to add your first bot.",
-    "successCreated": "Bot created"
+    "successCreated": "Your bot is ready to go."
   },
   "strategies": {
     "confirmDeletion": "Confirm Deletion",
@@ -737,7 +737,7 @@
     "noExecutionsForStrategy": "No executions logged yet for this strategy.",
     "noStrategiesPrefix": "No",
     "noStrategiesSuffix": "strategies configured yet. Use Dashboard to create one.",
-    "successLaunched": "Strategy launched"
+    "successLaunched": "Great choice. Your strategy is set up."
   },
   "legal": {
     "home": "Home",

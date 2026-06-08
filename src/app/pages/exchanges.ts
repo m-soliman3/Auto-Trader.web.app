@@ -5,7 +5,7 @@ import { AccountModeService } from '../services/account-mode.service';
 import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { StrategyService } from '../services/strategy.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-exchanges-page',
@@ -289,7 +289,6 @@ export class ExchangesPage {
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly translate = inject(TranslateService);
   readonly showAddExchangeModal = signal(false);
   readonly selectedExchangeLabel = signal<string | null>(null);
   readonly showDisconnectModal = signal(false);
@@ -362,7 +361,7 @@ export class ExchangesPage {
   private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
 
   private showSuccessToast(key: string): void {
-    this.toastMsg.set(this.translate.instant(key));
+    this.toastMsg.set(key);
     if (this.toastTimer) globalThis.clearTimeout(this.toastTimer);
     this.toastTimer = globalThis.setTimeout(() => this.toastMsg.set(''), 3000);
   }
