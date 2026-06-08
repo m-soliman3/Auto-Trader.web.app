@@ -6,7 +6,7 @@ import { Bot, BotService } from '../services/bot.service';
 import { StrategyService } from '../services/strategy.service';
 import { CreateBotModal } from '../components/create-bot-modal';
 import { EditBotModal } from '../components/edit-bot-modal';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-bots-page',
@@ -307,7 +307,6 @@ export class BotsPage {
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly translate = inject(TranslateService);
   readonly showAddBotModal = signal(false);
   readonly showEditBotModal = signal(false);
   readonly selectedBotId = signal<string | null>(null);
@@ -414,7 +413,7 @@ export class BotsPage {
   private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
 
   private showSuccessToast(key: string): void {
-    this.toastMsg.set(this.translate.instant(key));
+    this.toastMsg.set(key);
     if (this.toastTimer) globalThis.clearTimeout(this.toastTimer);
     this.toastTimer = globalThis.setTimeout(() => this.toastMsg.set(''), 3000);
   }
