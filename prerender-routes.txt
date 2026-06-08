@@ -431,7 +431,7 @@
 /en/login
 /en/privacy
 /en/signup
-/en/sitemap
+/en/knowledge-base
 /en/terms
 /de
 /de/collecting-data
@@ -446,7 +446,7 @@
 /de/login
 /de/privacy
 /de/signup
-/de/sitemap
+/de/knowledge-base
 /de/terms
 /es
 /es/collecting-data
@@ -461,7 +461,7 @@
 /es/login
 /es/privacy
 /es/signup
-/es/sitemap
+/es/knowledge-base
 /es/terms
 /fr
 /fr/collecting-data
@@ -476,7 +476,7 @@
 /fr/login
 /fr/privacy
 /fr/signup
-/fr/sitemap
+/fr/knowledge-base
 /fr/terms
 /pt
 /pt/collecting-data
@@ -491,7 +491,7 @@
 /pt/login
 /pt/privacy
 /pt/signup
-/pt/sitemap
+/pt/knowledge-base
 /pt/terms
 /ar
 /ar/collecting-data
@@ -506,5 +506,5 @@
 /ar/login
 /ar/privacy
 /ar/signup
-/ar/sitemap
+/ar/knowledge-base
 /ar/terms
