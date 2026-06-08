@@ -291,7 +291,7 @@
     "disclaimer": "Avertissement",
     "collectingData": "Collecte de données",
     "contact": "Contact",
-    "sitemap": "Plan du site"
+    "sitemap": "Knowledge Base"
   },
   "language": {
     "selectLanguage": "Choisir la langue",
@@ -1501,7 +1501,7 @@
     "billingCheckout": "Paiement Sécurisé — AutoTrader | Passer à Premium",
     "billingManage": "Gestion de la Facturation — AutoTrader | Historique & Contrôles d'Abonnement",
     "feature": "Fonctionnalité — AutoTrader",
-    "sitemap": "Plan du Site — AutoTrader | Répertoire Complet",
+    "sitemap": "Base de Connaissances — AutoTrader | Répertoire Complet",
     "learn": "Apprendre le Trading — AutoTrader"
   },
   "learnPages": {
@@ -3074,7 +3074,7 @@
     "continueLearning": "Continuer à apprendre",
     "tradingStrategies": "Stratégies de trading",
     "tradingSignalsIndicators": "Signaux et indicateurs de trading",
-    "viewFullSitemap": "Voir le plan du site complet →",
+    "viewFullSitemap": "Voir la Base de Connaissances →",
     "strategyCodeTitle": "Code de la stratégie",
     "strategyCodeSubtitle": "Choisissez un script ci-dessous, copiez-le et utilisez-le sur votre graphique.",
     "codePineScriptTitle": "Pine Script (TradingView)",

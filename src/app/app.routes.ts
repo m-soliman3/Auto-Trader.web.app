@@ -165,7 +165,7 @@ const coreRoutes: Routes = [
     title: 'pageTitle.feature',
   },
   {
-    path: 'sitemap',
+    path: 'knowledge-base',
     component: SitemapPage,
     title: 'pageTitle.sitemap',
   },

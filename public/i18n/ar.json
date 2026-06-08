@@ -291,7 +291,7 @@
     "disclaimer": "إخلاء المسؤولية",
     "collectingData": "جمع البيانات",
     "contact": "التواصل",
-    "sitemap": "خريطة الموقع"
+    "sitemap": "Knowledge Base"
   },
   "language": {
     "selectLanguage": "اختر اللغة",
@@ -1501,7 +1501,7 @@
     "billingCheckout": "دفع آمن — أوتو تريدر | الترقية إلى بريميوم",
     "billingManage": "إدارة الفواتير — أوتو تريدر | السجل والتحكم في الاشتراك",
     "feature": "ميزة — أوتو تريدر",
-    "sitemap": "خريطة الموقع — أوتو تريدر | دليل الصفحات الكامل",
+    "sitemap": "قاعدة المعرفة — أوتو تريدر | دليل الصفحات الكامل",
     "learn": "تعلم التداول — أوتو تريدر"
   },
   "learnPages": {
@@ -3074,7 +3074,7 @@
     "continueLearning": "مواصلة التعلم",
     "tradingStrategies": "استراتيجيات التداول",
     "tradingSignalsIndicators": "إشارات ومؤشرات التداول",
-    "viewFullSitemap": "عرض خريطة الموقع الكاملة ←",
+    "viewFullSitemap": "عرض قاعدة المعرفة ←",
     "strategyCodeTitle": "كود الاستراتيجية",
     "strategyCodeSubtitle": "اختر سكربت من الاسفل، وانسخه، واستخدمه مباشرة على الرسم البياني.",
     "codePineScriptTitle": "Pine Script (TradingView)",
