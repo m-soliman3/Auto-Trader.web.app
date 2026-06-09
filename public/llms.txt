@@ -1,0 +1,60 @@
+# AutoTrader
+
+> AutoTrader is an AI-powered automated trading platform that lets you build, test, and run trading bots across multiple exchanges and brokers — no coding required.
+
+AutoTrader is a web application (Angular + Firebase) that helps retail and professional traders automate their strategies. Users connect their exchange or broker accounts via API, define trading strategies using a no-code builder or pre-built templates, and deploy bots that execute trades automatically. The platform supports paper trading (simulated) and real-money modes, along with AI-generated trade signals, backtesting, risk management controls, portfolio monitoring, and smart alerts.
+
+## Features
+
+- [AI-Powered Signals](/features/ai-signals): Machine learning models continuously scan thousands of assets across crypto, equities, forex, and commodities to surface high-probability trade setups with confidence scores.
+- [Multi-Exchange Support](/features/multi-exchange): Connect to multiple exchanges and brokers simultaneously and manage all positions from one dashboard.
+- [Risk Management](/features/risk-management): Built-in stop-loss, take-profit, position sizing, and drawdown controls protect your capital automatically.
+- [Backtesting](/features/backtesting): Test strategies against historical data before deploying them with real money.
+- [Smart Alerts](/features/smart-alerts): Receive notifications via push, email, or Telegram when signals fire or bots take action.
+- [No-Code Strategy Builder](/features/no-code-builder): Drag-and-drop strategy editor — wire indicators, conditions, and actions without writing any code.
+
+## Pages
+
+- [Home](/): Landing page with feature overview, how-it-works walkthrough, and stats.
+- [Dashboard](/dashboard): Real-money and paper-trading dashboards showing open positions, P&L, and bot activity.
+- [Exchanges](/exchanges): Manage connected exchange/broker API keys.
+- [Bots](/bots): Create, configure, start, and stop trading bots.
+- [Strategies](/strategies): Browse, create, and manage trading strategies.
+- [Portfolio Management](/portfolio-management): Monitor asset allocation and overall portfolio performance.
+- [Backend Runner](/backend-runner): Launch and monitor backend bot processes.
+- [Knowledge Base](/knowledge-base): Sitemap and index of all learn articles and feature guides.
+- [Learn](/learn/moving-average-crossover): In-depth educational articles on trading strategies and signals (Moving Average Crossover, Fair Value Gap, MACD, RSI, EMA, Bollinger Bands, and more).
+- [Billing](/billing/checkout): Premium subscription management — supports Stripe, PayPal, and crypto payments via NowPayments.
+- [Settings](/settings): Account, display, notification, and security preferences.
+- [Contact](/contact): Support contact form.
+
+## Tech Stack
+
+- **Frontend**: Angular 21 (SSR-capable, Angular Universal), TypeScript, SCSS
+- **Backend**: Firebase Functions (Node.js), Google Cloud Run (AI chatbot backend)
+- **Database**: Firebase Firestore (per-user data isolation)
+- **Auth**: Firebase Authentication
+- **Hosting**: Firebase Hosting (production at `autotrader-b8851.web.app`, staging at `autotrader-b8851-staging.web.app`)
+- **Payments**: Stripe, PayPal, NowPayments (crypto)
+- **i18n**: ngx-translate, multi-language support with language prefix URLs (e.g., `/en/`, `/ar/`, `/fr/`)
+
+## API Endpoints
+
+- `GET /api/getPortfolio` — Fetch live portfolio data
+- `GET /api/getMarketData` — Fetch real-time market data
+- `POST /api/contact` — Submit a contact/support message
+- `POST /api/createPremiumSubscriptionIntent` — Initiate a premium subscription (Stripe)
+- `POST /api/confirmPremiumSubscriptionActivation` — Confirm Stripe subscription activation
+- `POST /api/getPremiumBillingOverview` — Retrieve billing summary
+- `POST /api/cancelPremiumSubscription` — Cancel premium subscription
+- `POST /api/createPayPalSubscription` — Create PayPal subscription
+- `POST /api/confirmPayPalSubscription` — Confirm PayPal subscription
+- `POST /api/createTopUpIntent` — Create a Stripe top-up payment intent
+- `POST /api/confirmTopUp` — Confirm top-up payment
+- `POST /api/createNowPaymentsOrder` — Create a crypto payment order
+- `POST /api/checkNowPaymentsOrder` — Check crypto payment status
+- `GET /api/listNowPaymentsCurrencies` — List supported crypto currencies
+- `POST /api/requestLearnCodeAccess` — Request access to learn code examples
+- `POST /api/verifyLearnCodeAccess` — Verify access token for code examples
+- `POST /v1/chat` — Authenticated AI chatbot (Cloud Run)
+- `GET /v1/public-chat` — Public AI chatbot endpoint
