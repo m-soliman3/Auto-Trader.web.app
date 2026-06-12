@@ -474,3 +474,115 @@
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Searchable Symbol Dropdown ── */
+.symbol-dropdown {
+  position: relative;
+
+  &.disabled .symbol-trigger {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.symbol-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--input-bg, var(--surface));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s;
+
+  &:hover:not(:disabled) { border-color: var(--accent); }
+
+  .sym-placeholder { color: var(--text-secondary); }
+  .sym-selected small { color: var(--text-secondary); font-size: 0.78rem; }
+
+  .chevron {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    transition: transform 0.2s;
+  }
+
+  .symbol-dropdown.open & .chevron { transform: rotate(180deg); }
+}
+
+.symbol-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.symbol-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+
+  svg { flex-shrink: 0; color: var(--text-secondary); }
+
+  input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    outline: none;
+
+    &::placeholder { color: var(--text-secondary); }
+  }
+}
+
+.symbol-list {
+  max-height: 240px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+}
+
+.symbol-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.1s;
+
+  &:hover { background: var(--hover, rgba(255,255,255,0.05)); }
+  &.active { background: var(--accent-subtle, rgba(99,102,241,0.15)); color: var(--accent); }
+
+  .sym-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sym-code { flex-shrink: 0; font-size: 0.75rem; color: var(--text-secondary); font-family: monospace; }
+}
+
+.symbol-empty {
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
