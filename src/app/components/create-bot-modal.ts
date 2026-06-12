@@ -1,8 +1,9 @@
-import { Component, inject, output, signal, computed } from '@angular/core';
+import { Component, inject, output, signal, computed, HostListener, ElementRef, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
-  BotService, STRATEGIES, SYMBOLS, TIMEFRAMES, Strategy, Bot,
+  BotService, STRATEGIES, SYMBOLS, TIMEFRAMES, Strategy, Bot, SymbolEntry,
 } from '../services/bot.service';
 import { ExchangeService } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
@@ -26,8 +27,65 @@ export class CreateBotModal {
   created = output<Bot>();
 
   strategies = STRATEGIES;
-  symbols    = SYMBOLS;
+  allSymbols: SymbolEntry[] = SYMBOLS; // starts with curated list, replaced by full JSON on open
+  displayLimit = 200;
   timeframes = TIMEFRAMES;
+
+  symbolSearch       = '';
+  symbolDropdownOpen = false;
+
+  private platformId = inject(PLATFORM_ID);
+  private elRef = inject(ElementRef);
+
+  get filteredSymbols(): SymbolEntry[] {
+    const q = this.symbolSearch.toLowerCase();
+    if (q) {
+      return this.allSymbols.filter(s =>
+        s.symbol.toLowerCase().includes(q) || s.name.toLowerCase().includes(q)
+      );
+    }
+    return this.allSymbols.slice(0, this.displayLimit);
+  }
+
+  get selectedSymbolName(): string {
+    return this.allSymbols.find(s => s.symbol === this.symbol)?.name ?? '';
+  }
+
+  private loadAllSymbols() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    fetch('/alpaca-symbols.json')
+      .then(r => r.json())
+      .then((data: SymbolEntry[]) => { this.allSymbols = data; })
+      .catch(() => { /* keep curated fallback */ });
+  }
+
+  toggleSymbolDropdown() {
+    this.symbolDropdownOpen = !this.symbolDropdownOpen;
+    if (this.symbolDropdownOpen) {
+      this.symbolSearch = '';
+      this.displayLimit = 200;
+      this.loadAllSymbols();
+    }
+  }
+
+  onSymbolListScroll(event: Event) {
+    const el = event.target as HTMLElement;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 100) {
+      this.displayLimit += 100;
+    }
+  }
+
+  selectSymbol(sym: string) {
+    this.symbol = sym;
+    this.symbolDropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.elRef.nativeElement.contains(event.target)) {
+      this.symbolDropdownOpen = false;
+    }
+  }
 
   exchanges = computed(() => this.exchangeSvc.connectionsByMode(this.accountMode.mode()));
   modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper Money' : 'Real Money');
@@ -159,7 +217,6 @@ export class CreateBotModal {
     if (!availableExchanges.some(ex => ex.label === this.exchangeLabel)) return 'Please select a valid exchange.';
 
     if (!this.symbol.trim()) return 'Please select a trading pair.';
-    if (!this.symbols.includes(this.symbol)) return 'Please select a valid trading pair.';
 
     if (!this.timeframe.trim()) return 'Please select a timeframe.';
     if (!this.timeframes.includes(this.timeframe)) return 'Please select a valid timeframe.';

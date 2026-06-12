@@ -98,12 +98,35 @@
       <div class="form-row">
         <div class="form-group">
           <label>{{ 'createBot.tradingPair' | translate }}</label>
-          <select [(ngModel)]="symbol" name="symbol" required>
-            <option value="" disabled>{{ 'createBot.selectTradingPair' | translate }}</option>
-            @for (sym of symbols; track sym) {
-              <option [value]="sym">{{ sym }}</option>
+          <div class="symbol-dropdown" [class.open]="symbolDropdownOpen" [class.disabled]="false">
+            <button type="button" class="symbol-trigger" (click)="toggleSymbolDropdown(); $event.stopPropagation()">
+              @if (symbol) {
+                <span class="sym-selected">{{ selectedSymbolName }} <small>({{ symbol }})</small></span>
+              } @else {
+                <span class="sym-placeholder">{{ 'createBot.selectTradingPair' | translate }}</span>
+              }
+              <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            @if (symbolDropdownOpen) {
+              <div class="symbol-panel" (click)="$event.stopPropagation()">
+                <div class="symbol-search">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  <input type="text" [(ngModel)]="symbolSearch" name="symbolSearch" placeholder="Search symbol or name..." autofocus />
+                </div>
+                <div class="symbol-list" (scroll)="onSymbolListScroll($event)">
+                  @for (sym of filteredSymbols; track sym.symbol) {
+                    <button type="button" class="symbol-option" [class.active]="symbol === sym.symbol" (click)="selectSymbol(sym.symbol)">
+                      <span class="sym-name">{{ sym.name }}</span>
+                      <span class="sym-code">{{ sym.symbol }}</span>
+                    </button>
+                  }
+                  @if (filteredSymbols.length === 0) {
+                    <div class="symbol-empty">No results for "{{ symbolSearch }}"</div>
+                  }
+                </div>
+              </div>
             }
-          </select>
+          </div>
         </div>
         <div class="form-group">
           <label>{{ 'createBot.timeframe' | translate }}</label>
