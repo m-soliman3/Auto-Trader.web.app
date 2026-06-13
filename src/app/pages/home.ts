@@ -177,7 +177,9 @@ export class Home implements AfterViewInit, OnDestroy {
         video.currentTime = 0;
       }
 
-      video.load();
+      // Do NOT call video.load() here: for step 1 the src is unchanged and load()
+      // drops readyState to 0, causing play() to be aborted before any data arrives.
+      // When the [src] binding changes (steps 2/3), the browser reloads automatically.
       void video.play().catch(() => {
         // Autoplay can be blocked by browser policy until user interaction.
       });
