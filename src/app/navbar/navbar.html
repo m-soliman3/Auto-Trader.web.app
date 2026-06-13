@@ -95,15 +95,17 @@
       @if (showThemeToggle()) {
         <button
           class="theme-toggle-switch"
-          [class.dark]="theme.isDark()"
+          [class.is-dark]="theme.isDark()"
           (click)="theme.toggle()"
           [attr.aria-label]="theme.isDark() ? ('nav.switchToLight' | translate) : ('nav.switchToDark' | translate)"
           role="switch"
           [attr.aria-checked]="theme.isDark()"
         >
-          <span class="theme-icon theme-icon-sun">☀️</span>
-          <span class="theme-knob"></span>
-          <span class="theme-icon theme-icon-moon">🌙</span>
+          <span class="toggle-track">
+            <span class="toggle-knob">
+              @if (theme.isDark()) { <span>🌙</span> } @else { <span>☀️</span> }
+            </span>
+          </span>
         </button>
       }
 
