@@ -8,8 +8,34 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, RouterLink, TranslateModule],
   template: `
-    <div class="consent-overlay" *ngIf="showBanner">
-      <div class="consent-banner">
+    <div class="consent-overlay" *ngIf="showBanner" [class.is-expanded]="isExpanded">
+      <!-- Collapsed single-line bar -->
+      <div class="consent-bar" *ngIf="!isExpanded">
+        <span class="consent-bar-text">{{ 'consent.title' | translate }}</span>
+        <div class="consent-bar-actions">
+          <button class="consent-btn consent-btn-decline consent-btn-sm" (click)="handleDecline()">
+            {{ 'consent.declineAll' | translate }}
+          </button>
+          <button class="consent-btn consent-btn-accept consent-btn-sm" (click)="handleAccept()">
+            {{ 'consent.acceptAll' | translate }}
+          </button>
+          <button class="consent-expand-btn" (click)="toggleExpand()" [attr.aria-label]="'consent.expandDetails' | translate">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Expanded full view -->
+      <div class="consent-banner" *ngIf="isExpanded">
+        <div class="consent-collapse-row">
+          <button class="consent-expand-btn consent-collapse-btn" (click)="toggleExpand()" [attr.aria-label]="'consent.collapseDetails' | translate">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
         <div class="consent-content">
           <h3 class="consent-title">{{ 'consent.title' | translate }}</h3>
           <p class="consent-description">
@@ -63,30 +89,84 @@ import { TranslateModule } from '@ngx-translate/core';
       bottom: 0;
       left: 0;
       right: 0;
-      top: 0;
-      background: rgba(0, 0, 0, 0.6);
-      display: flex;
-      align-items: flex-end;
       z-index: 9999;
-      animation: fadeIn 0.3s ease-in;
+      animation: slideUp 0.3s ease-out;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+    /* ── Collapsed single-line bar ── */
+    .consent-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 20px;
+      height: 48px;
+      background: var(--surface, #161a24);
+      border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+      color: var(--text-primary, #f0f2f7);
     }
 
+    .consent-bar-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary, #8b95a9);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .consent-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .consent-expand-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+      border-radius: 6px;
+      background: var(--surface-raised, #1e2330);
+      color: var(--text-secondary, #8b95a9);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .consent-expand-btn:hover {
+      border-color: var(--accent, #00d17a);
+      color: var(--accent, #00d17a);
+    }
+
+    /* ── Expand/collapse row inside full panel ── */
+    .consent-collapse-row {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0 0;
+      background: var(--surface, #161a24);
+    }
+
+    .consent-collapse-btn {
+      width: 40px;
+      height: 24px;
+      border-radius: 4px;
+    }
+
+    /* ── Expanded full panel ── */
     .consent-banner {
       background: var(--surface, #161a24);
       border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
       color: var(--text-primary, #f0f2f7);
-      animation: slideUp 0.3s ease-out;
-      max-height: 80vh;
+      max-height: 50vh;
       overflow-y: auto;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
     }
 
     @keyframes slideUp {
@@ -101,7 +181,7 @@ import { TranslateModule } from '@ngx-translate/core';
     .consent-content {
       max-width: 900px;
       margin: 0 auto;
-      padding: 32px;
+      padding: 24px 32px 32px;
     }
 
     .consent-title {
@@ -234,7 +314,21 @@ import { TranslateModule } from '@ngx-translate/core';
       box-shadow: 0 4px 12px rgba(0, 209, 122, 0.3);
     }
 
+    .consent-btn-sm {
+      padding: 6px 14px;
+      font-size: 11px;
+    }
+
     @media (max-width: 640px) {
+      .consent-bar {
+        padding: 0 12px;
+        height: 52px;
+      }
+
+      .consent-bar-text {
+        display: none;
+      }
+
       .consent-content {
         padding: 20px;
       }
@@ -261,9 +355,9 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ConsentBannerComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
   showBanner: boolean = false;
-  private readonly CONSENT_KEY = 'gtm-consent';
-  private readonly CONSENT_TIMESTAMP_KEY = 'gtm-consent-timestamp';
-  private readonly THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+  isExpanded: boolean = false;
+  private readonly COOKIE_NAME = 'gtm-consent';
+  private readonly CONSENT_DAYS = 30;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -272,39 +366,35 @@ export class ConsentBannerComponent implements OnInit {
   }
 
   checkConsent(): void {
-    const consentGiven = localStorage.getItem(this.CONSENT_KEY);
-    const consentTimestamp = localStorage.getItem(this.CONSENT_TIMESTAMP_KEY);
-
-    if (!consentGiven) {
-      // First time user - show banner
-      this.showBanner = true;
-    } else if (consentTimestamp) {
-      // User has given consent before - check if 30 days have passed
-      const lastConsentTime = parseInt(consentTimestamp, 10);
-      const currentTime = new Date().getTime();
-      const timeSinceLastConsent = currentTime - lastConsentTime;
-
-      if (timeSinceLastConsent >= this.THIRTY_DAYS_MS) {
-        // More than 30 days have passed - show banner again
-        this.showBanner = true;
-      }
-    }
+    // Cookie is absent (first visit or expired after 30 days) → show banner
+    this.showBanner = this.getCookie(this.COOKIE_NAME) === null;
   }
 
   handleAccept(): void {
-    const currentTimestamp = new Date().getTime().toString();
-    localStorage.setItem(this.CONSENT_KEY, 'accepted');
-    localStorage.setItem(this.CONSENT_TIMESTAMP_KEY, currentTimestamp);
+    this.setCookie(this.COOKIE_NAME, 'accepted', this.CONSENT_DAYS);
     this.showBanner = false;
-    // Load GTM if not already loaded
     this.loadGTM();
   }
 
   handleDecline(): void {
-    const currentTimestamp = new Date().getTime().toString();
-    localStorage.setItem(this.CONSENT_KEY, 'declined');
-    localStorage.setItem(this.CONSENT_TIMESTAMP_KEY, currentTimestamp);
+    this.setCookie(this.COOKIE_NAME, 'declined', this.CONSENT_DAYS);
     this.showBanner = false;
+  }
+
+  toggleExpand(): void {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  private getCookie(name: string): string | null {
+    const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  private setCookie(name: string, value: string, days: number): void {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie =
+      `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
   }
 
   private loadGTM(): void {
