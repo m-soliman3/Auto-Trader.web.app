@@ -27,49 +27,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="alert-error">{{ error() }}</div>
     }
 
-    <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
-      <div class="form-group">
-        <label for="email">{{ 'login.emailLabel' | translate }}</label>
-        <input
-          id="email"
-          type="email"
-          [(ngModel)]="email"
-          name="email"
-          [placeholder]="'login.emailPlaceholder' | translate"
-          autocomplete="email"
-          required
-          (blur)="emailTouched.set(true)"
-          [class.input-error]="emailTouched() && !isValidEmail(email)"
-        />
-        @if (emailTouched() && !isValidEmail(email)) {
-          <span class="field-error">{{ 'login.emailError' | translate }}</span>
-        }
-      </div>
-
-      <div class="form-group">
-        <div class="label-row">
-          <label for="password">{{ 'login.passwordLabel' | translate }}</label>
-          <button type="button" class="forgot" (click)="openForgot()">{{ 'login.forgotPassword' | translate }}</button>
-        </div>
-        <input
-          id="password"
-          type="password"
-          [(ngModel)]="password"
-          name="password"
-          placeholder="••••••••"
-          autocomplete="current-password"
-          required
-        />
-      </div>
-
-      <button type="submit" class="btn-submit" [disabled]="loading()">
-        @if (loading()) { <span class="spinner"></span> {{ 'login.loggingIn' | translate }} }
-        @else { {{ 'login.logIn' | translate }} }
-      </button>
-    </form>
-
-    <div class="social-divider"><span>{{ 'login.orContinueWith' | translate }}</span></div>
-
     <div class="social-buttons">
       <button class="btn-social" (click)="loginWithGoogle()" [disabled]="socialLoading() !== ''">
         @if (socialLoading() === 'google') {
@@ -121,6 +78,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </button>
 
     </div>
+
+    <div class="social-divider"><span>{{ 'login.orContinueWith' | translate }}</span></div>
+
+    <form (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="email">{{ 'login.emailLabel' | translate }}</label>
+        <input
+          id="email"
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          [placeholder]="'login.emailPlaceholder' | translate"
+          autocomplete="email"
+          required
+          (blur)="emailTouched.set(true)"
+          [class.input-error]="emailTouched() && !isValidEmail(email)"
+        />
+        @if (emailTouched() && !isValidEmail(email)) {
+          <span class="field-error">{{ 'login.emailError' | translate }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="password">{{ 'login.passwordLabel' | translate }}</label>
+          <button type="button" class="forgot" (click)="openForgot()">{{ 'login.forgotPassword' | translate }}</button>
+        </div>
+        <input
+          id="password"
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loading()">
+        @if (loading()) { <span class="spinner"></span> {{ 'login.loggingIn' | translate }} }
+        @else { {{ 'login.logIn' | translate }} }
+      </button>
+    </form>
 
     <p class="auth-alt">{{ 'login.noAccount' | translate }} <a routerLink="/signup">{{ 'login.signUpFree' | translate }}</a></p>
   </div>
