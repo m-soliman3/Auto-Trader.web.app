@@ -383,7 +383,61 @@
     "paused": "Angehalten",
     "created": "Erstellt",
     "updated": "Aktualisiert",
-    "saving": "Speichere..."
+    "saving": "Speichere...",
+    "back": "Zurück",
+    "next": "Weiter"
+  },
+  "signupGuide": {
+    "welcome": {
+      "title": "Wir helfen Ihnen, Ihr Konto auf AutoTrader X einzurichten"
+    },
+    "step1": {
+      "title": "Erzählen Sie uns etwas über sich",
+      "subtitle": "Sind Sie derzeit ein aktiver Trader / Investor im Aktienmarkt oder Krypto?"
+    },
+    "noTraderChoice": {
+      "message": "Wir können Sie zu den besten Brokern für die Einrichtung eines Handelskontos führen, oder Sie können Geld direkt bei AutoTrader X einzahlen und wir verwalten Ihr Portfolio.",
+      "guideBrokerLabel": "Führe mich zu Brokern / Börsen",
+      "guideBrokerDesc": "Durchsuchen Sie die unterstützten Broker und Börsen, die Sie mit AutoTrader X verbinden können",
+      "depositLabel": "Direkt bei AutoTrader X einzahlen",
+      "depositDesc": "Wir verwalten Ihr Portfolio mit minimalem Aufwand Ihrerseits"
+    },
+    "step2": {
+      "title": "Was ist Ihr wichtigstes Trading-Portfolio?",
+      "subtitle": "So können wir Ihr Erlebnis individuell gestalten",
+      "stocks": "Aktien / Anleihen",
+      "crypto": "Krypto"
+    },
+    "step3": {
+      "message": "Auto Trader automatisiert den Handel auf der Grundlage bewährter Strategien, sodass Sie nicht täglich Handelsentscheidungen treffen müssen. Wir helfen Ihnen, Ihre Handels- und Investitionsziele mit minimalem Aufwand zu erreichen. Klicken Sie auf Weiter, um fortzufahren."
+    },
+    "step4": {
+      "titleStocks": "Was ist Ihr Haupt-Aktienmakler?",
+      "titleCrypto": "Was ist Ihre Haupt-Kryptobörse?",
+      "subtitle": "Wählen Sie aus unseren unterstützten Plattformen oder wählen Sie Andere",
+      "placeholderStocks": "Broker suchen (z. B. Alpaca, Interactive Brokers…)",
+      "placeholderCrypto": "Börsen suchen (z. B. Binance, Coinbase…)",
+      "other": "Andere (nicht aufgeführt)",
+      "otherPlaceholder": "Geben Sie Ihren Broker oder Börsennamen ein",
+      "noResults": "Keine passenden Ergebnisse"
+    },
+    "saving": "Speichern…",
+    "finish": "Zum Dashboard",
+    "enterCredentials": "API-Zugangsdaten eingeben",
+    "skip": "Jetzt überspringen",
+    "credentials": {
+      "title": "Ihre Börse verbinden",
+      "subtitle": "Geben Sie Ihre API-Zugangsdaten ein. Ihre Schlüssel werden vor dem Speichern sicher validiert.",
+      "apiKey": "API-Schlüssel",
+      "apiKeyPlaceholder": "API-Schlüssel hier einfügen",
+      "apiSecret": "API-Geheimnis",
+      "apiSecretPlaceholder": "API-Geheimnis hier einfügen",
+      "passphrase": "Passphrase",
+      "passphrasePlaceholder": "Passphrase hier einfügen",
+      "howToGetKeys": "Anleitung zur Erstellung von API-Schlüsseln",
+      "connecting": "Verbinde…",
+      "connectAndContinue": "Verbinden & Zum Dashboard"
+    }
   },
   "connectExchange": {
     "accountLabel": "Kontobezeichnung",
@@ -1484,6 +1538,7 @@
     "home": "Auto Trader X - Handel mit smarten Strategien und automatischer Ausführung",
     "login": "Anmelden — AutoTrader | Zugang zu Ihrer automatisierten Handelsplattform",
     "signup": "Registrieren — AutoTrader | Beginnen Sie noch heute mit dem automatisierten Handel",
+    "signupGuide": "Erste Schritte — AutoTrader | Passen Sie Ihr Erlebnis an",
     "contact": "Kontakt — AutoTrader | Support für Handelsautomatisierung",
     "terms": "Nutzungsbedingungen — AutoTrader | Plattformbedingungen",
     "privacy": "Datenschutzerklärung — AutoTrader | Wie wir Ihre Daten schützen",

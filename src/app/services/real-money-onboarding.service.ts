@@ -19,6 +19,8 @@ export class RealMoneyOnboardingService {
     if (this.accountMode.mode() !== 'real') return false;
 
     const user = this.auth.currentUser();
+    // Don't show until the signup guide has been completed.
+    if (!user?.onboardingCompleted) return false;
     if (user?.realMoneyOnboarded === true) return false;
     if ((user?.realMoneyBalance ?? 0) > 0) return false;
 
