@@ -1,0 +1,331 @@
+<div class="guide-page">
+  <div class="guide-card">
+
+    <!-- Logo -->
+    <div class="guide-logo">
+      <a routerLink="/">
+        <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="#00d17a"/>
+          <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Step progress dots -->
+    <div class="guide-progress">
+      @for (s of [1, 2, 3, 4, 5]; track s) {
+        <div class="guide-dot" [class.active]="stepIndex() === s" [class.done]="stepIndex() > s"></div>
+      }
+    </div>
+
+    <!-- ── Welcome ────────────────────────────────────────────── -->
+    @if (currentStep() === 'welcome') {
+      @if (!translationsReady()) {
+        <div class="guide-loading">
+          <span class="spinner spinner--accent"></span>
+        </div>
+      } @else {
+        <div class="guide-step">
+          <div class="welcome-icon">🚀</div>
+          <h2>{{ 'signupGuide.welcome.title' | translate }}</h2>
+          <button class="btn-primary" (click)="goNext()" type="button">
+            {{ 'common.next' | translate }} →
+          </button>
+        </div>
+      }
+    }
+
+    <!-- ── Active trader? ─────────────────────────────────────── -->
+    @if (currentStep() === 'activeTrader') {
+      @if (!translationsReady()) {
+        <div class="guide-loading"><span class="spinner spinner--accent"></span></div>
+      } @else {
+        <div class="guide-step">
+          <p class="guide-helper">{{ 'signupGuide.welcome.title' | translate }}</p>
+          <h2>{{ 'signupGuide.step1.title' | translate }}</h2>
+          <p class="guide-question">{{ 'signupGuide.step1.subtitle' | translate }}</p>
+          <div class="choice-row">
+            <button
+              class="choice-btn"
+              [class.selected]="isActiveTrader() === 'yes'"
+              (click)="selectActiveTrader('yes')"
+              type="button"
+            >
+              <span class="choice-icon">📈</span>
+              <span class="choice-label">{{ 'common.yes' | translate }}</span>
+            </button>
+            <button
+              class="choice-btn"
+              [class.selected]="isActiveTrader() === 'no'"
+              (click)="selectActiveTrader('no')"
+              type="button"
+            >
+              <span class="choice-icon">🔰</span>
+              <span class="choice-label">{{ 'common.no' | translate }}</span>
+            </button>
+          </div>
+        </div>
+      }
+    }
+
+    <!-- ── No-trader choice ───────────────────────────────────── -->
+    @if (currentStep() === 'noTraderChoice') {
+      <div class="guide-step">
+        <p class="guide-message">{{ 'signupGuide.noTraderChoice.message' | translate }}</p>
+        <div class="path-cards">
+          <button
+            class="path-card"
+            [class.selected]="noTraderPath() === 'broker'"
+            (click)="selectNoTraderPath('broker')"
+            type="button"
+          >
+            <span class="path-icon">🏦</span>
+            <div class="path-text">
+              <span class="path-title">{{ 'signupGuide.noTraderChoice.guideBrokerLabel' | translate }}</span>
+              <span class="path-desc">{{ 'signupGuide.noTraderChoice.guideBrokerDesc' | translate }}</span>
+            </div>
+          </button>
+          <button
+            class="path-card"
+            [class.selected]="noTraderPath() === 'deposit'"
+            (click)="selectNoTraderPath('deposit')"
+            type="button"
+            [disabled]="saving()"
+          >
+            @if (saving()) {
+              <span class="spinner spinner--dark"></span>
+            } @else {
+              <span class="path-icon">💳</span>
+            }
+            <div class="path-text">
+              <span class="path-title">{{ 'signupGuide.noTraderChoice.depositLabel' | translate }}</span>
+              <span class="path-desc">{{ 'signupGuide.noTraderChoice.depositDesc' | translate }}</span>
+            </div>
+          </button>
+        </div>
+        <button class="btn-back" (click)="goBack()" type="button">
+          ← {{ 'common.back' | translate }}
+        </button>
+      </div>
+    }
+
+    <!-- ── Portfolio type (Yes path) ─────────────────────────── -->
+    @if (currentStep() === 'portfolioType') {
+      <div class="guide-step">
+        <h2>{{ 'signupGuide.step2.title' | translate }}</h2>
+        <p class="guide-sub">{{ 'signupGuide.step2.subtitle' | translate }}</p>
+        <div class="choice-row">
+          <button
+            class="choice-btn choice-btn--wide"
+            [class.selected]="portfolioType() === 'stocks'"
+            (click)="selectPortfolioType('stocks')"
+            type="button"
+          >
+            <span class="choice-icon">🏦</span>
+            <span class="choice-label">{{ 'signupGuide.step2.stocks' | translate }}</span>
+          </button>
+          <button
+            class="choice-btn choice-btn--wide"
+            [class.selected]="portfolioType() === 'crypto'"
+            (click)="selectPortfolioType('crypto')"
+            type="button"
+          >
+            <span class="choice-icon">₿</span>
+            <span class="choice-label">{{ 'signupGuide.step2.crypto' | translate }}</span>
+          </button>
+        </div>
+        <button class="btn-back" (click)="goBack()" type="button">
+          ← {{ 'common.back' | translate }}
+        </button>
+      </div>
+    }
+
+    <!-- ── Info message (Yes path) ───────────────────────────── -->
+    @if (currentStep() === 'info') {
+      <div class="guide-step">
+        <div class="info-box">
+          <div class="info-icon">🤖</div>
+          <p class="info-text">{{ 'signupGuide.step3.message' | translate }}</p>
+        </div>
+        <button class="btn-primary" (click)="currentStep.set('broker')" type="button">
+          {{ 'common.next' | translate }} →
+        </button>
+        <button class="btn-back" (click)="goBack()" type="button">
+          ← {{ 'common.back' | translate }}
+        </button>
+      </div>
+    }
+
+    <!-- ── Broker / Exchange (both paths) ────────────────────── -->
+    @if (currentStep() === 'broker') {
+      <div class="guide-step">
+        <h2>
+          {{
+            (portfolioType() === 'crypto'
+              ? 'signupGuide.step4.titleCrypto'
+              : 'signupGuide.step4.titleStocks'
+            ) | translate
+          }}
+        </h2>
+        <p class="guide-sub">{{ 'signupGuide.step4.subtitle' | translate }}</p>
+
+        <div class="autocomplete-wrapper">
+          <input
+            class="guide-input"
+            type="text"
+            [placeholder]="(portfolioType() === 'crypto'
+              ? 'signupGuide.step4.placeholderCrypto'
+              : 'signupGuide.step4.placeholderStocks') | translate"
+            [value]="brokerSearch()"
+            (input)="onBrokerInput($any($event.target).value)"
+            (focus)="onBrokerFocus()"
+            (blur)="onBrokerBlur()"
+            autocomplete="off"
+          />
+          @if (showDropdown()) {
+            <div class="autocomplete-dropdown" role="listbox">
+              @if (filteredExchanges().length === 0 && brokerSearch().trim()) {
+                <div class="dropdown-empty">{{ 'signupGuide.step4.noResults' | translate }}</div>
+              }
+              @for (ex of filteredExchanges(); track ex.id) {
+                <button
+                  class="dropdown-item"
+                  [class.selected]="selectedBroker() === ex.id"
+                  (click)="selectBroker(ex.id)"
+                  type="button"
+                  role="option"
+                >
+                  <span class="item-logo">{{ ex.logo }}</span>
+                  <span class="item-name">{{ ex.name }}</span>
+                </button>
+              }
+              <button
+                class="dropdown-item dropdown-other"
+                [class.selected]="selectedBroker() === 'other'"
+                (click)="selectOther()"
+                type="button"
+                role="option"
+              >
+                <span class="item-logo">✏️</span>
+                <span class="item-name">{{ 'signupGuide.step4.other' | translate }}</span>
+              </button>
+            </div>
+          }
+        </div>
+
+        @if (selectedBroker() === 'other') {
+          <input
+            class="guide-input guide-input--mt"
+            type="text"
+            [placeholder]="'signupGuide.step4.otherPlaceholder' | translate"
+            [value]="otherBrokerText()"
+            (input)="otherBrokerText.set($any($event.target).value)"
+          />
+        }
+
+        <button
+          class="btn-primary"
+          [disabled]="!canFinish() || saving()"
+          (click)="finish()"
+          type="button"
+        >
+          @if (saving()) {
+            <span class="spinner"></span> {{ 'signupGuide.saving' | translate }}
+          } @else if (selectedBroker() === 'other') {
+            {{ 'signupGuide.finish' | translate }} →
+          } @else {
+            {{ 'signupGuide.enterCredentials' | translate }} →
+          }
+        </button>
+        <button class="btn-back" (click)="goBack()" type="button">
+          ← {{ 'common.back' | translate }}
+        </button>
+      </div>
+    }
+
+    <!-- ── Credentials ─────────────────────────────────────────── -->
+    @if (currentStep() === 'credentials') {
+      <div class="guide-step">
+        <div class="cred-exchange-badge">
+          <span class="cred-logo">{{ selectedExchangeMeta()?.logo }}</span>
+          <span class="cred-name">{{ selectedExchangeMeta()?.name }}</span>
+        </div>
+        <h2>{{ 'signupGuide.credentials.title' | translate }}</h2>
+        <p class="guide-sub">{{ 'signupGuide.credentials.subtitle' | translate }}</p>
+
+        @if (credentialError()) {
+          <div class="cred-error">{{ credentialError() }}</div>
+        }
+
+        <div class="cred-form">
+          <div class="form-group">
+            <label>{{ 'signupGuide.credentials.apiKey' | translate }}</label>
+            <input
+              class="guide-input"
+              type="text"
+              autocomplete="off"
+              [placeholder]="'signupGuide.credentials.apiKeyPlaceholder' | translate"
+              [value]="apiKey()"
+              (input)="apiKey.set($any($event.target).value)"
+            />
+          </div>
+          <div class="form-group">
+            <label>{{ 'signupGuide.credentials.apiSecret' | translate }}</label>
+            <input
+              class="guide-input"
+              type="password"
+              autocomplete="off"
+              [placeholder]="'signupGuide.credentials.apiSecretPlaceholder' | translate"
+              [value]="apiSecret()"
+              (input)="apiSecret.set($any($event.target).value)"
+            />
+          </div>
+          @if (requiresPassphrase()) {
+            <div class="form-group">
+              <label>{{ 'signupGuide.credentials.passphrase' | translate }}</label>
+              <input
+                class="guide-input"
+                type="password"
+                autocomplete="off"
+                [placeholder]="'signupGuide.credentials.passphrasePlaceholder' | translate"
+                [value]="apiPassphrase()"
+                (input)="apiPassphrase.set($any($event.target).value)"
+              />
+            </div>
+          }
+        </div>
+
+        @if (selectedExchangeMeta()?.apiCredentialGuideUrl) {
+          <a
+            class="cred-guide-link"
+            [href]="selectedExchangeMeta()!.apiCredentialGuideUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ 'signupGuide.credentials.howToGetKeys' | translate }} ↗</a>
+        }
+
+        <button
+          class="btn-primary"
+          [disabled]="connecting() || !apiKey().trim() || !apiSecret().trim()"
+          (click)="connectExchange()"
+          type="button"
+        >
+          @if (connecting()) {
+            <span class="spinner"></span> {{ 'signupGuide.credentials.connecting' | translate }}
+          } @else {
+            {{ 'signupGuide.credentials.connectAndContinue' | translate }} →
+          }
+        </button>
+        <button class="btn-back" (click)="goBack()" type="button">
+          ← {{ 'common.back' | translate }}
+        </button>
+      </div>
+    }
+
+    <!-- Skip link -->
+    <button class="btn-skip" (click)="skipGuide()" type="button">
+      {{ 'signupGuide.skip' | translate }}
+    </button>
+
+  </div>
+</div>

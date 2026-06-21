@@ -2,6 +2,7 @@ import { Routes, UrlMatchResult, UrlSegment } from '@angular/router';
 import { Home } from './pages/home';
 import { Login } from './pages/login';
 import { Signup } from './pages/signup';
+import { SignupGuide } from './pages/signup-guide';
 import { Dashboard } from './pages/dashboard';
 import { Contact } from './pages/contact';
 import { TradeDetails } from './pages/tradeDetails';
@@ -65,6 +66,11 @@ const coreRoutes: Routes = [
     path: 'signup',
     component: Signup,
     title: 'pageTitle.signup',
+  },
+  {
+    path: 'signup-guide',
+    component: SignupGuide,
+    title: 'pageTitle.signupGuide',
   },
   {
     path: 'contact',

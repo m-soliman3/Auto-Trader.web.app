@@ -50,7 +50,8 @@ export class Signup {
     const err = await authenticate();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    this.router.navigate(['/dashboard']);
+    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
+    this.router.navigate([dest]);
   }
 
   async loginWithTwitter() {
@@ -58,7 +59,8 @@ export class Signup {
     const err = await this.auth.loginWithTwitter();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    this.router.navigate(['/dashboard']);
+    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
+    this.router.navigate([dest]);
   }
 
   async loginWithFacebook() {
@@ -66,7 +68,8 @@ export class Signup {
     const err = await this.auth.loginWithFacebook();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    this.router.navigate(['/dashboard']);
+    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
+    this.router.navigate([dest]);
   }
 
   onSubmit() {
@@ -101,7 +104,7 @@ export class Signup {
       if (err) {
         this.error.set(err);
       } else {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/signup-guide']);
       }
     }, 300);
   }

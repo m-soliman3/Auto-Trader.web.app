@@ -57,6 +57,15 @@ export interface User {
   alpacaPaperBalance?: number;
   /** Alpaca paper account number (e.g. "PA12345678") assigned on demo top-up. */
   alpacaPaperAccountNumber?: string;
+  /** True once the user has completed the post-signup onboarding guide. */
+  onboardingCompleted?: boolean;
+  /** Answers captured during the post-signup onboarding guide. */
+  signupGuide?: {
+    isActiveTrader: boolean;
+    portfolioType: 'stocks' | 'crypto';
+    broker: string;
+    otherBroker?: string;
+  };
 }
 
 export interface AuthAccountDetails {
@@ -77,6 +86,8 @@ export class AuthService {
   currentUser = signal<User | null>(null);
   accountDetails = signal<AuthAccountDetails | null>(null);
   isLoggedIn  = computed(() => this.currentUser() !== null);
+  /** Set to true when the last social sign-in created a new account. */
+  lastSigninWasNewUser = signal<boolean>(false);
 
   constructor() {
     onAuthStateChanged(this.fireAuth, async (fbUser) => {
@@ -263,6 +274,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.fireAuth, new GoogleAuthProvider());
       const additionalUserInfo = getAdditionalUserInfo(result);
+      this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
       await this.upsertSocialProfile(result.user);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
@@ -281,6 +293,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.fireAuth, new OAuthProvider('microsoft.com'));
       const additionalUserInfo = getAdditionalUserInfo(result);
+      this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
       await this.upsertSocialProfile(result.user);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
@@ -299,6 +312,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.fireAuth, new TwitterAuthProvider());
       const additionalUserInfo = getAdditionalUserInfo(result);
+      this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
       await this.upsertSocialProfile(result.user);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
@@ -317,6 +331,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.fireAuth, new FacebookAuthProvider());
       const additionalUserInfo = getAdditionalUserInfo(result);
+      this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
       await this.upsertSocialProfile(result.user);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,

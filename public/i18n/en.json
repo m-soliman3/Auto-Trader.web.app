@@ -383,7 +383,61 @@
     "paused": "Paused",
     "created": "Created",
     "updated": "Updated",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "back": "Back",
+    "next": "Next"
+  },
+  "signupGuide": {
+    "welcome": {
+      "title": "We will help you get your account set up on AutoTrader X"
+    },
+    "step1": {
+      "title": "Let us learn a bit about you",
+      "subtitle": "Are you currently an active trader / investor in Stock Market or Crypto?"
+    },
+    "noTraderChoice": {
+      "message": "We can guide you on the best brokers to set up a trading account, or you can deposit money directly with AutoTrader X and we will manage your portfolio.",
+      "guideBrokerLabel": "Guide me to brokers / exchanges",
+      "guideBrokerDesc": "Browse the supported brokers and exchanges you can connect to AutoTrader X",
+      "depositLabel": "Deposit directly with AutoTrader X",
+      "depositDesc": "We will manage your portfolio with minimum effort from you"
+    },
+    "step2": {
+      "title": "What's your main trading portfolio?",
+      "subtitle": "This helps us tailor your experience",
+      "stocks": "Stocks / Bonds",
+      "crypto": "Crypto"
+    },
+    "step3": {
+      "message": "Auto Trader automates trading based on proven strategies so that you don't have to make trading decisions every day. We can help you achieve your trading and investing goals with minimum intervention from you. Click Next to continue."
+    },
+    "step4": {
+      "titleStocks": "What's your main Stock Broker?",
+      "titleCrypto": "What's your main Crypto Exchange?",
+      "subtitle": "Select from our supported platforms or choose Other",
+      "placeholderStocks": "Search brokers (e.g. Alpaca, Interactive Brokers…)",
+      "placeholderCrypto": "Search exchanges (e.g. Binance, Coinbase…)",
+      "other": "Other (not listed)",
+      "otherPlaceholder": "Enter your broker or exchange name",
+      "noResults": "No matching results"
+    },
+    "saving": "Saving…",
+    "finish": "Go to Dashboard",
+    "enterCredentials": "Enter API Credentials",
+    "skip": "Skip for now",
+    "credentials": {
+      "title": "Connect your exchange",
+      "subtitle": "Enter your API credentials. Your keys are validated securely before saving.",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "Paste your API key here",
+      "apiSecret": "API Secret",
+      "apiSecretPlaceholder": "Paste your API secret here",
+      "passphrase": "Passphrase",
+      "passphrasePlaceholder": "Paste your passphrase here",
+      "howToGetKeys": "How to create API keys for this exchange",
+      "connecting": "Connecting…",
+      "connectAndContinue": "Connect & Go to Dashboard"
+    }
   },
   "connectExchange": {
     "accountLabel": "Account Label",
@@ -1484,6 +1538,7 @@
     "home": "Auto Trader X - Trading with Smart strategies and Auto execution",
     "login": "Login — AutoTrader | Access Your Automated Trading Platform",
     "signup": "Sign Up — AutoTrader | Start Automating Your Trades Today",
+    "signupGuide": "Getting Started — AutoTrader | Personalize Your Experience",
     "contact": "Contact Us — AutoTrader | Trading Automation Support",
     "terms": "Terms of Service — AutoTrader | Trading Platform Terms & Conditions",
     "privacy": "Privacy Policy — AutoTrader | How We Protect Your Data",

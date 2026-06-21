@@ -383,7 +383,61 @@
     "paused": "Pausado",
     "created": "Criado",
     "updated": "Atualizado",
-    "saving": "Salvando..."
+    "saving": "Salvando...",
+    "back": "Voltar",
+    "next": "Próximo"
+  },
+  "signupGuide": {
+    "welcome": {
+      "title": "Vamos ajudá-lo a configurar sua conta no AutoTrader X"
+    },
+    "step1": {
+      "title": "Conte-nos um pouco sobre você",
+      "subtitle": "Você é atualmente um trader / investidor ativo no mercado de ações ou criptomoedas?"
+    },
+    "noTraderChoice": {
+      "message": "Podemos orienta-lo sobre os melhores corretores para abrir uma conta de trading, ou você pode depositar dinheiro diretamente no AutoTrader X e nós gerenciaremos sua carteira.",
+      "guideBrokerLabel": "Oriente-me sobre corretoras / exchanges",
+      "guideBrokerDesc": "Navegue pelas corretoras e exchanges compatíveis que você pode conectar ao AutoTrader X",
+      "depositLabel": "Depositar diretamente no AutoTrader X",
+      "depositDesc": "Gerenciaremos sua carteira com o mínimo de esforço de sua parte"
+    },
+    "step2": {
+      "title": "Qual é o seu portfólio de trading principal?",
+      "subtitle": "Isso nos ajuda a personalizar sua experiência",
+      "stocks": "Ações / Títulos",
+      "crypto": "Cripto"
+    },
+    "step3": {
+      "message": "O Auto Trader automatiza o trading com base em estratégias comprovadas, para que você não precise tomar decisões de trading todos os dias. Podemos ajudá-lo a alcançar seus objetivos de trading e investimento com mínima intervenção de sua parte. Clique em Próximo para continuar."
+    },
+    "step4": {
+      "titleStocks": "Qual é a sua corretora de ações principal?",
+      "titleCrypto": "Qual é a sua principal exchange de criptomoedas?",
+      "subtitle": "Selecione entre nossas plataformas suportadas ou escolha Outro",
+      "placeholderStocks": "Buscar corretoras (ex. Alpaca, Interactive Brokers…)",
+      "placeholderCrypto": "Buscar exchanges (ex. Binance, Coinbase…)",
+      "other": "Outro (não listado)",
+      "otherPlaceholder": "Digite o nome da sua corretora ou exchange",
+      "noResults": "Nenhum resultado encontrado"
+    },
+    "saving": "Salvando…",
+    "finish": "Ir para o painel",
+    "enterCredentials": "Inserir credenciais API",
+    "skip": "Pular por agora",
+    "credentials": {
+      "title": "Conecte sua exchange",
+      "subtitle": "Insira suas credenciais API. Suas chaves são validadas com segurança antes de serem salvas.",
+      "apiKey": "Chave API",
+      "apiKeyPlaceholder": "Cole sua chave API aqui",
+      "apiSecret": "Segredo API",
+      "apiSecretPlaceholder": "Cole seu segredo API aqui",
+      "passphrase": "Frase-senha",
+      "passphrasePlaceholder": "Cole sua frase-senha aqui",
+      "howToGetKeys": "Como criar chaves API para esta exchange",
+      "connecting": "Conectando…",
+      "connectAndContinue": "Conectar e ir para o painel"
+    }
   },
   "connectExchange": {
     "accountLabel": "Etiqueta da Conta",
@@ -1484,6 +1538,7 @@
     "home": "Auto Trader X - Trading com Estratégias Inteligentes e Execução Automática",
     "login": "Entrar — AutoTrader | Acesse Sua Plataforma de Trading Automatizado",
     "signup": "Cadastrar — AutoTrader | Comece a Automatizar Suas Negociações Hoje",
+    "signupGuide": "Primeiros passos — AutoTrader | Personalize sua experiência",
     "contact": "Contacto — AutoTrader | Suporte de Automação de Trading",
     "terms": "Termos de Serviço — AutoTrader | Termos e Condições da Plataforma",
     "privacy": "Política de Privacidade — AutoTrader | Como Protegemos Seus Dados",
