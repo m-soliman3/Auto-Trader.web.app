@@ -3,12 +3,6 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-// EmailJS public credentials — safe to include in browser code (read-only sending only).
-const EMAILJS_SERVICE_ID  = 'Auto-Trader';
-const EMAILJS_TEMPLATE_ID = 'template_z125ea9';
-const EMAILJS_PUBLIC_KEY  = 'HYIL6fQcJSo0pHAhw';
-const CONTACT_RECIPIENT   = 'mohamed@investbegin.de';
-
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -26,31 +20,15 @@ export class Contact {
   errMsg  = signal('');
 
   private async postContactMessage(payload: { senderEmail: string; subject: string; message: string }) {
-    const body = {
-      service_id:   EMAILJS_SERVICE_ID,
-      template_id:  EMAILJS_TEMPLATE_ID,
-      user_id:      EMAILJS_PUBLIC_KEY,
-      template_params: {
-        to_email:       CONTACT_RECIPIENT,
-        recipient_email: CONTACT_RECIPIENT,
-        to_name:        'Mohamed',
-        from_email:     payload.senderEmail,
-        sender_email:   payload.senderEmail,
-        reply_to:       payload.senderEmail,
-        subject:        payload.subject,
-        message:        `From: ${payload.senderEmail.replace(/[\r\n]/g, '')}\n\n${payload.message}`,
-      },
-    };
-
-    const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    const res = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
-      const text = await res.text().catch(() => '');
-      throw new Error(text || 'Failed to send message. Please try again.');
+      const data = await res.json().catch(() => ({}));
+      throw new Error((data as any)?.error || 'Failed to send message. Please try again.');
     }
   }
 
