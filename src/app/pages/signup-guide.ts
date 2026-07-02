@@ -288,7 +288,21 @@ export class SignupGuide {
     this.router.navigate(['/dashboard/real']);
   }
 
-  skipGuide() {
-    this.router.navigate(['/dashboard']);
+  async skipGuide() {
+    this.saving.set(true);
+    const user = this.auth.currentUser();
+    if (!user) { this.router.navigate(['/signup']); return; }
+    try { await this.persistOnboarding(); } catch (e) { console.error(e); }
+    this.saving.set(false);
+    this.router.navigate(['/dashboard', 'paper']);
+  }
+
+  async finishWithDemo() {
+    this.saving.set(true);
+    const user = this.auth.currentUser();
+    if (!user) { this.router.navigate(['/signup']); return; }
+    try { await this.persistOnboarding(); } catch (e) { console.error(e); }
+    this.saving.set(false);
+    this.router.navigate(['/dashboard', 'paper']);
   }
 }

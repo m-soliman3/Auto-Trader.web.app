@@ -147,8 +147,12 @@
           <div class="info-icon">🤖</div>
           <p class="info-text">{{ 'signupGuide.step3.message' | translate }}</p>
         </div>
-        <button class="btn-primary" (click)="currentStep.set('broker')" type="button">
-          {{ 'common.next' | translate }} →
+        <button class="btn-primary" (click)="finishWithDemo()" [disabled]="saving()" type="button">
+          @if (saving()) {
+            <span class="spinner"></span> {{ 'signupGuide.saving' | translate }}
+          } @else {
+            {{ 'common.next' | translate }} →
+          }
         </button>
         <button class="btn-back" (click)="goBack()" type="button">
           ← {{ 'common.back' | translate }}
@@ -323,7 +327,7 @@
     }
 
     <!-- Skip link -->
-    <button class="btn-skip" (click)="skipGuide()" type="button">
+    <button class="btn-skip" (click)="skipGuide()" [disabled]="saving()" type="button">
       {{ 'signupGuide.skip' | translate }}
     </button>
 
