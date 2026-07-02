@@ -513,11 +513,7 @@ export const getMarketData = functions
   });
 
 const CONTACT_RECIPIENT = "mohamed@investbegin.de";
-const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || "Auto-Trader";
-const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || "template_z125ea9";
-const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY || "HYIL6fQcJSo0pHAhw";
-const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY || "";
-const EMAILJS_LEARN_CODE_TEMPLATE_ID = process.env.EMAILJS_LEARN_CODE_TEMPLATE_ID || process.env.EMAILJS_TEMPLATE_ID || "template_z125ea9";
+const RESEND_API_KEY = defineSecret("RESEND_API_KEY");
 const LEARN_CODE_COLLECTION = "learn_code_access";
 const NEWSLETTER_SUBSCRIBERS_COLLECTION = "newsletter_subscribers";
 const LEARN_CODE_EXPIRY_MINUTES = 15;
@@ -673,6 +669,7 @@ async function getOrCreateStripeCustomer(decoded: admin.auth.DecodedIdToken): Pr
 
 export const sendContactMessage = functions
   .region("europe-west1")
+  .runWith({ secrets: [RESEND_API_KEY] })
   .https.onRequest((req, res) => {
     corsHandler(req, res, async () => {
       if (req.method === "OPTIONS") {
@@ -703,45 +700,31 @@ export const sendContactMessage = functions
           return;
         }
 
-        if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-          console.error("❌ Missing EmailJS environment config.");
-          res.status(500).json({
-            error: "Contact service is not configured",
-          });
+        const apiKey = RESEND_API_KEY.value();
+        if (!apiKey) {
+          console.error("❌ Missing RESEND_API_KEY secret.");
+          res.status(500).json({ error: "Email service is not configured" });
           return;
         }
 
-        const payload: any = {
-          service_id: EMAILJS_SERVICE_ID,
-          template_id: EMAILJS_TEMPLATE_ID,
-          user_id: EMAILJS_PUBLIC_KEY,
-          template_params: {
-            to_email: CONTACT_RECIPIENT,
-            recipient_email: CONTACT_RECIPIENT,
-            to_name: "Mohamed",
-            from_email: sender,
-            sender_email: sender,
-            reply_to: sender,
-            subject: emailSubject,
-            message: `From: ${sender}\n\n${emailMessage}`,
-          },
-        };
-
-        if (EMAILJS_PRIVATE_KEY) {
-          payload.accessToken = EMAILJS_PRIVATE_KEY;
-        }
-
-        const emailjsRes = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        const resendRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
+            "Authorization": `Bearer ${apiKey}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            from: "AutoTrader Contact <assistant@invest-begin.com>",
+            to: [CONTACT_RECIPIENT],
+            reply_to: sender,
+            subject: `[Contact Form] ${emailSubject}`,
+            text: `From: ${sender}\n\n${emailMessage}`,
+          }),
         } as any);
 
-        if (!emailjsRes.ok) {
-          const text = await emailjsRes.text();
-          console.error("❌ EmailJS send failed:", text);
+        if (!resendRes.ok) {
+          const text = await resendRes.text();
+          console.error("❌ Resend send failed:", text);
           res.status(502).json({ error: "Failed to send message" });
           return;
         }
@@ -796,43 +779,31 @@ async function sendLearnAccessCodeEmail(params: {
   recipientName: string;
   code: string;
   slug: string;
+  apiKey: string;
 }): Promise<void> {
-  const payload: any = {
-    service_id: EMAILJS_SERVICE_ID,
-    template_id: EMAILJS_LEARN_CODE_TEMPLATE_ID,
-    user_id: EMAILJS_PUBLIC_KEY,
-    template_params: {
-      to_email: params.recipientEmail,
-      recipient_email: params.recipientEmail,
-      user_email: params.recipientEmail,
-      user_name: params.recipientName || "Trader",
-      code: params.code,
-      verification_code: params.code,
-      subject: "Your AutoTrader code access verification code",
-      message: `Hello ${params.recipientName || "Trader"},\n\nYour verification code is: ${params.code}\n\nThis code expires in ${LEARN_CODE_EXPIRY_MINUTES} minutes.\n\nPage: ${params.slug}`,
-    },
-  };
-
-  if (EMAILJS_PRIVATE_KEY) {
-    payload.accessToken = EMAILJS_PRIVATE_KEY;
-  }
-
-  const emailjsRes = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+  const resendRes = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
+      "Authorization": `Bearer ${params.apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      from: "AutoTrader <assistant@invest-begin.com>",
+      to: [params.recipientEmail],
+      subject: "Your AutoTrader verification code",
+      text: `Hello ${params.recipientName || "Trader"},\n\nYour verification code is: ${params.code}\n\nThis code expires in ${LEARN_CODE_EXPIRY_MINUTES} minutes.\n\nPage: ${params.slug}`,
+    }),
   } as any);
 
-  if (!emailjsRes.ok) {
-    const text = await emailjsRes.text();
-    throw new Error(`EmailJS send failed (${emailjsRes.status}): ${text}`);
+  if (!resendRes.ok) {
+    const text = await resendRes.text();
+    throw new Error(`Resend send failed (${resendRes.status}): ${text}`);
   }
 }
 
 export const requestLearnCodeAccess = functions
   .region("europe-west1")
+  .runWith({ secrets: [RESEND_API_KEY] })
   .https.onRequest((req, res) => {
     corsHandler(req, res, async () => {
       if (req.method === "OPTIONS") {
@@ -923,6 +894,7 @@ export const requestLearnCodeAccess = functions
           recipientName: name,
           code,
           slug,
+          apiKey: RESEND_API_KEY.value(),
         });
 
         res.status(200).json({ ok: true, expiresInMinutes: LEARN_CODE_EXPIRY_MINUTES });
