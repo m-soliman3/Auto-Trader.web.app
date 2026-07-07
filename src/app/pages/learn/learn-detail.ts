@@ -68,7 +68,7 @@ auto-Trading allows you to automate crossover strategies using the no-code strat
       { label: 'BabyPips — MA Crossover Guide', url: 'https://www.babypips.com/learn/forex/moving-average-crossover-trading', description: "BabyPips' beginner-friendly guide to crossover trading." },
     ],
     relatedSlugs: ['ema-indicator', 'sma-indicator', 'macd-indicator', 'trend-following'],
-    imageUrl: '/images/strategies/light/moving-average-crossover.png',
+    imageUrl: '/images/strategies/light/moving-average-crossover.svg',
   },
 
   'fair-value-gap': {
@@ -93,7 +93,7 @@ FVGs are particularly effective on higher timeframes (4H, daily) where instituti
       { label: 'BabyPips — Price Action', url: 'https://www.babypips.com/learn/forex/price-action', description: 'Price action foundations that underpin FVG trading.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'order-blocks', 'liquidity-sweeps', 'breaker-blocks'],
-    imageUrl: '/images/strategies/light/fair-value-gap.png',
+    imageUrl: '/images/strategies/light/fair-value-gap.svg',
   },
 
   'smart-money-concepts': {
@@ -118,7 +118,7 @@ SMC is holistic: it combines liquidity analysis, market structure, order blocks,
       { label: 'BabyPips — Market Structure', url: 'https://www.babypips.com/learn/forex/market-structure', description: 'Market structure basics essential to understanding SMC.' },
     ],
     relatedSlugs: ['fair-value-gap', 'order-blocks', 'liquidity-sweeps', 'breaker-blocks'],
-    imageUrl: '/images/strategies/light/smart-money-concepts.png',
+    imageUrl: '/images/strategies/light/smart-money-concepts.svg',
   },
 
   'order-blocks': {
@@ -143,7 +143,7 @@ Order blocks are best used on higher timeframes (1H, 4H, Daily) to define the di
       { label: 'BabyPips — Candlestick Patterns', url: 'https://www.babypips.com/learn/forex/japanese-candlesticks', description: 'Candlestick literacy required for order block identification.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'fair-value-gap', 'breaker-blocks', 'liquidity-sweeps'],
-    imageUrl: '/images/strategies/light/order-blocks.png',
+    imageUrl: '/images/strategies/light/order-blocks.svg',
   },
 
   'liquidity-sweeps': {
@@ -168,7 +168,7 @@ Combining sweep analysis with market structure and time-of-day filters (London o
       { label: 'BabyPips — Trading Sessions', url: 'https://www.babypips.com/learn/forex/forex-trading-sessions', description: 'Session timing is critical for high-probability liquidity sweeps.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'order-blocks', 'fair-value-gap', 'breaker-blocks'],
-    imageUrl: '/images/strategies/light/liquidity-sweeps.png',
+    imageUrl: '/images/strategies/light/liquidity-sweeps.svg',
   },
 
   'breaker-blocks': {
@@ -193,7 +193,7 @@ Breakers are particularly powerful when they coincide with FVGs or when the init
       { label: 'BabyPips — Price Action Reversals', url: 'https://www.babypips.com/learn/forex/reversal-candlestick-patterns', description: 'Reversal candlestick patterns used to confirm breaker entries.' },
     ],
     relatedSlugs: ['order-blocks', 'smart-money-concepts', 'fair-value-gap', 'liquidity-sweeps'],
-    imageUrl: '/images/strategies/light/breaker-blocks.png',
+    imageUrl: '/images/strategies/light/breaker-blocks.svg',
   },
 
   'trend-following': {
@@ -218,7 +218,7 @@ The strategy performs best in strongly trending markets (commodities, currencies
       { label: 'BabyPips — Trading the Trend', url: 'https://www.babypips.com/learn/forex/trading-the-trend', description: "BabyPips' guide to identifying and trading with the trend." },
     ],
     relatedSlugs: ['moving-average-crossover', 'breakout-strategy', 'adx-indicator', 'donchian-channel'],
-    imageUrl: '/images/strategies/light/trend-following.png',
+    imageUrl: '/images/strategies/light/trend-following.svg',
   },
 
   'mean-reversion': {
@@ -243,7 +243,7 @@ Mean reversion works best in range-bound equity markets, currency pairs with lon
       { label: 'BabyPips — RSI Strategy', url: 'https://www.babypips.com/learn/forex/rsi', description: 'RSI-based mean reversion entries on BabyPips.' },
     ],
     relatedSlugs: ['rsi-indicator', 'bollinger-bands', 'vwap-indicator', 'stochastic-oscillator'],
-    imageUrl: '/images/strategies/light/mean-reversion.png',
+    imageUrl: '/images/strategies/light/mean-reversion.svg',
   },
 
   'breakout-strategy': {
@@ -268,7 +268,7 @@ Donchian channels, which plot the highest high and lowest low over a lookback pe
       { label: 'BabyPips — Trading Breakouts', url: 'https://www.babypips.com/learn/forex/trading-breakouts', description: "BabyPips' guide to trading price breakouts effectively." },
     ],
     relatedSlugs: ['trend-following', 'donchian-channel', 'atr-indicator', 'volume-analysis'],
-    imageUrl: '/images/strategies/light/breakout-strategy.png',
+    imageUrl: '/images/strategies/light/breakout-strategy.svg',
   },
 
   'scalping-strategy': {
@@ -293,7 +293,7 @@ Automation is particularly well-suited to scalping: manual traders struggle to m
       { label: 'BabyPips — Scalping', url: 'https://www.babypips.com/learn/forex/scalping', description: "BabyPips' introduction to forex scalping techniques." },
     ],
     relatedSlugs: ['vwap-indicator', 'rsi-indicator', 'moving-average-crossover', 'bollinger-bands'],
-    imageUrl: '/images/strategies/light/scalping-strategy.png',
+    imageUrl: '/images/strategies/light/scalping-strategy.svg',
   },
 
   'swing-trading': {
@@ -318,7 +318,7 @@ Successful swing traders develop clear rules for entry (e.g., a daily close abov
       { label: 'BabyPips — Swing Trading', url: 'https://www.babypips.com/learn/forex/swing-trading', description: "BabyPips' comprehensive guide to swing trading strategies." },
     ],
     relatedSlugs: ['trend-following', 'rsi-indicator', 'macd-indicator', 'fibonacci-retracement'],
-    imageUrl: '/images/strategies/light/swing-trading.png',
+    imageUrl: '/images/strategies/light/swing-trading.svg',
   },
 
   'fibonacci-retracement': {
@@ -343,7 +343,7 @@ Fibonacci extensions are used to project profit targets beyond the swing high, w
       { label: 'BabyPips — Fibonacci Trading', url: 'https://www.babypips.com/learn/forex/fibonacci', description: "BabyPips' guide to Fibonacci analysis in forex and crypto." },
     ],
     relatedSlugs: ['swing-trading', 'trend-following', 'order-blocks', 'smart-money-concepts'],
-    imageUrl: '/images/strategies/light/fibonacci-retracement.png',
+    imageUrl: '/images/strategies/light/fibonacci-retracement.svg',
   },
 
   'ichimoku-strategy': {
@@ -368,7 +368,7 @@ The Chikou Span — current price projected back in time — provides a final co
       { label: 'BabyPips — Ichimoku', url: 'https://www.babypips.com/learn/forex/ichimoku-kinko-hyo', description: "BabyPips' friendly introduction to the Ichimoku system." },
     ],
     relatedSlugs: ['trend-following', 'moving-average-crossover', 'adx-indicator', 'swing-trading'],
-    imageUrl: '/images/strategies/light/ichimoku-cloud.png',
+    imageUrl: '/images/strategies/light/ichimoku-cloud.svg',
   },
 
   'price-action-strategy': {
@@ -393,7 +393,7 @@ Pure price action strategies require no indicators beyond perhaps a volume bar a
       { label: 'BabyPips — Candlestick Patterns', url: 'https://www.babypips.com/learn/forex/japanese-candlesticks', description: "BabyPips' full candlestick encyclopedia." },
     ],
     relatedSlugs: ['smart-money-concepts', 'order-blocks', 'fair-value-gap', 'swing-trading'],
-    imageUrl: '/images/strategies/light/price-action-strategy.png',
+    imageUrl: '/images/strategies/light/price-action-strategy.svg',
   },
 
   'grid-trading': {
@@ -418,7 +418,7 @@ The main risk is a sustained directional trend: if price moves far in one direct
       { label: 'TradingView — Grid Scripts', url: 'https://www.tradingview.com/scripts/grid/', description: 'Community grid trading strategy scripts on TradingView.' },
     ],
     relatedSlugs: ['mean-reversion', 'bollinger-bands', 'scalping-strategy', 'atr-indicator'],
-    imageUrl: '/images/strategies/light/grid-trading.png',
+    imageUrl: '/images/strategies/light/grid-trading.svg',
   },
 
   'dollar-cost-averaging': {
@@ -443,7 +443,7 @@ DCA is most effective for assets with long-term positive growth expectations hel
       { label: 'Binance Academy — DCA', url: 'https://academy.binance.com/en/articles/dollar-cost-averaging-dca-explained', description: "Binance's guide to DCA in cryptocurrency trading." },
     ],
     relatedSlugs: ['grid-trading', 'mean-reversion', 'rsi-indicator', 'breakout-strategy'],
-    imageUrl: '/images/strategies/light/dollar-cost-averaging.png',
+    imageUrl: '/images/strategies/light/dollar-cost-averaging.svg',
   },
 
   'arbitrage-strategy': {
@@ -468,7 +468,7 @@ The strategy is most effective during periods of high market volatility when pri
       { label: 'Binance Academy — Crypto Arbitrage', url: 'https://academy.binance.com/en/articles/what-is-arbitrage-trading', description: "Binance's guide to arbitrage in cryptocurrency markets." },
     ],
     relatedSlugs: ['grid-trading', 'scalping-strategy', 'trend-following', 'breakout-strategy'],
-    imageUrl: '/images/strategies/light/arbitrage-strategy.png',
+    imageUrl: '/images/strategies/light/arbitrage-strategy.svg',
   },
 
   // ─────────────────────────── TRADING SIGNALS / INDICATORS ────────────────
@@ -495,7 +495,7 @@ EMAs serve multiple purposes: as dynamic support and resistance levels (price of
       { label: 'BabyPips — Moving Averages', url: 'https://www.babypips.com/learn/forex/moving-averages', description: "BabyPips' introduction to EMAs, SMAs, and their trading uses." },
     ],
     relatedSlugs: ['sma-indicator', 'macd-indicator', 'moving-average-crossover', 'trend-following'],
-    imageUrl: '/images/strategies/light/ema-indicator.png',
+    imageUrl: '/images/strategies/light/ema-indicator.svg',
   },
 
   'sma-indicator': {
@@ -520,7 +520,7 @@ Key uses include: the 50 and 200 SMA as major support/resistance levels; the 200
       { label: 'BabyPips — SMA vs EMA', url: 'https://www.babypips.com/learn/forex/sma-vs-ema', description: 'Side-by-side comparison of SMA and EMA to help choose the right one.' },
     ],
     relatedSlugs: ['ema-indicator', 'macd-indicator', 'moving-average-crossover', 'bollinger-bands'],
-    imageUrl: '/images/strategies/light/sma-indicator.png',
+    imageUrl: '/images/strategies/light/sma-indicator.svg',
   },
 
   'rsi-indicator': {
@@ -545,7 +545,7 @@ RSI can also be used in trending markets by adjusting the overbought/oversold th
       { label: 'BabyPips — RSI', url: 'https://www.babypips.com/learn/forex/rsi', description: "BabyPips' beginner-friendly RSI tutorial." },
     ],
     relatedSlugs: ['macd-indicator', 'stochastic-oscillator', 'mean-reversion', 'bollinger-bands'],
-    imageUrl: '/images/strategies/light/rsi-indicator.png',
+    imageUrl: '/images/strategies/light/rsi-indicator.svg',
   },
 
   'macd-indicator': {
@@ -570,7 +570,7 @@ MACD works best as a trend-confirmation tool on timeframes of 1H and above. On l
       { label: 'BabyPips — MACD', url: 'https://www.babypips.com/learn/forex/macd', description: "BabyPips' MACD tutorial with clear visual examples." },
     ],
     relatedSlugs: ['ema-indicator', 'rsi-indicator', 'moving-average-crossover', 'trend-following'],
-    imageUrl: '/images/strategies/light/macd-indicator.png',
+    imageUrl: '/images/strategies/light/macd-indicator.svg',
   },
 
   'stochastic-oscillator': {
@@ -595,7 +595,7 @@ Like RSI, the Stochastic works best in ranging markets and should be used with a
       { label: 'BabyPips — Stochastic', url: 'https://www.babypips.com/learn/forex/stochastic', description: "BabyPips' accessible introduction to stochastic trading." },
     ],
     relatedSlugs: ['rsi-indicator', 'macd-indicator', 'mean-reversion', 'bollinger-bands'],
-    imageUrl: '/images/strategies/light/stochastic-oscillator.png',
+    imageUrl: '/images/strategies/light/stochastic-oscillator.svg',
   },
 
   'bollinger-bands': {
@@ -620,7 +620,7 @@ The %B indicator (derived from Bollinger Bands) measures where price is relative
       { label: 'BabyPips — Bollinger Bands', url: 'https://www.babypips.com/learn/forex/bollinger-bands', description: "BabyPips' practical Bollinger Bands trading guide." },
     ],
     relatedSlugs: ['mean-reversion', 'rsi-indicator', 'atr-indicator', 'scalping-strategy'],
-    imageUrl: '/images/strategies/light/bollinger-bands.png',
+    imageUrl: '/images/strategies/light/bollinger-bands.svg',
   },
 
   'vwap-indicator': {
@@ -647,7 +647,7 @@ Common VWAP strategies include: buying pull-backs to VWAP in uptrending sessions
       { label: 'BabyPips — VWAP Trading', url: 'https://www.babypips.com/forexpedia/vwap-algo', description: "BabyPips' introduction to VWAP for retail traders." },
     ],
     relatedSlugs: ['bollinger-bands', 'scalping-strategy', 'mean-reversion', 'volume-analysis'],
-    imageUrl: '/images/strategies/light/vwap-indicator.png',
+    imageUrl: '/images/strategies/light/vwap-indicator.svg',
   },
 
   'atr-indicator': {
@@ -672,7 +672,7 @@ ATR is also used in position sizing: many systematic traders risk a fixed fracti
       { label: 'BabyPips — ATR', url: 'https://www.babypips.com/learn/forex/atr', description: "BabyPips' guide to using ATR for stop placement." },
     ],
     relatedSlugs: ['bollinger-bands', 'breakout-strategy', 'trend-following', 'grid-trading'],
-    imageUrl: '/images/strategies/light/atr-indicator.png',
+    imageUrl: '/images/strategies/light/atr-indicator.svg',
   },
 
   'adx-indicator': {
@@ -697,7 +697,7 @@ The +DI/−DI crossover provides directional signals: when +DI crosses above −
       { label: 'BabyPips — ADX', url: 'https://www.babypips.com/learn/forex/average-directional-index', description: "BabyPips' explanation of ADX and its role in confirming trend signals." },
     ],
     relatedSlugs: ['trend-following', 'moving-average-crossover', 'atr-indicator', 'breakout-strategy'],
-    imageUrl: '/images/strategies/light/adx-indicator.png',
+    imageUrl: '/images/strategies/light/adx-indicator.svg',
   },
 
   'donchian-channel': {
@@ -722,7 +722,7 @@ Donchian Channels are equally useful as a trend-following entry mechanism and as
       { label: 'BabyPips — Donchian Channels', url: 'https://www.babypips.com/forexpedia/donchian-channel', description: "BabyPips' Donchian Channel tutorial." },
     ],
     relatedSlugs: ['breakout-strategy', 'trend-following', 'atr-indicator', 'adx-indicator'],
-    imageUrl: '/images/strategies/light/donchian-channel.png',
+    imageUrl: '/images/strategies/light/donchian-channel.svg',
   },
 
   'volume-analysis': {
@@ -747,7 +747,7 @@ Volume Profile analysis maps volume by price level rather than by time, revealin
       { label: 'BabyPips — Trading Volume', url: 'https://www.babypips.com/forexpedia/volume-analysis', description: "BabyPips' volume analysis guide for forex and crypto traders." },
     ],
     relatedSlugs: ['breakout-strategy', 'vwap-indicator', 'trend-following', 'smart-money-concepts'],
-    imageUrl: '/images/strategies/light/volume-analysis.png',
+    imageUrl: '/images/strategies/light/volume-analysis.svg',
   },
 
   'cci-indicator': {
@@ -774,7 +774,7 @@ When used on higher timeframes (weekly or monthly), CCI is particularly effectiv
       { label: 'BabyPips — CCI', url: 'https://www.babypips.com/learn/forex/cci', description: "BabyPips' CCI tutorial with practical forex examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'stochastic-oscillator', 'mean-reversion', 'macd-indicator'],
-    imageUrl: '/images/strategies/light/cci-indicator.png',
+    imageUrl: '/images/strategies/light/cci-indicator.svg',
   },
 
   'williams-percent-r': {
@@ -801,7 +801,7 @@ The indicator also generates powerful divergence signals: when price makes a new
       { label: 'BabyPips — Williams %R', url: 'https://www.babypips.com/learn/forex/williams-percent-r', description: "BabyPips' tutorial on Williams %R for forex trading." },
     ],
     relatedSlugs: ['stochastic-oscillator', 'rsi-indicator', 'cci-indicator', 'mean-reversion'],
-    imageUrl: '/images/strategies/light/williams-percent-r.png',
+    imageUrl: '/images/strategies/light/williams-percent-r.svg',
   },
 
   'parabolic-sar': {
@@ -826,7 +826,7 @@ Parabolic SAR is most effective in strongly trending markets. In sideways market
       { label: 'BabyPips — Parabolic SAR', url: 'https://www.babypips.com/learn/forex/parabolic-sar', description: "BabyPips' guide to using Parabolic SAR in trend trading." },
     ],
     relatedSlugs: ['adx-indicator', 'trend-following', 'atr-indicator', 'moving-average-crossover'],
-    imageUrl: '/images/strategies/light/parabolic-sar.png',
+    imageUrl: '/images/strategies/light/parabolic-sar.svg',
   },
 
   'obv-indicator': {
@@ -851,7 +851,7 @@ OBV is also used to detect "stealth accumulation": when price is range-bound but
       { label: 'BabyPips — OBV', url: 'https://www.babypips.com/forexpedia/obv', description: "BabyPips' introduction to On-Balance Volume." },
     ],
     relatedSlugs: ['volume-analysis', 'vwap-indicator', 'macd-indicator', 'trend-following'],
-    imageUrl: '/images/strategies/light/obv-indicator.png',
+    imageUrl: '/images/strategies/light/obv-indicator.svg',
   },
 
   // ── Extra Signals ────────────────────────────────────────────────────────
@@ -878,7 +878,7 @@ Pivot points are especially effective in range-bound markets where price oscilla
       { label: 'BabyPips — Pivot Points', url: 'https://www.babypips.com/learn/forex/pivot-points', description: "BabyPips' beginner guide to pivot point trading." },
     ],
     relatedSlugs: ['fibonacci-retracement', 'rsi-indicator', 'breakout-strategy', 'price-action-strategy'],
-    imageUrl: '/images/strategies/light/pivot-points.png',
+    imageUrl: '/images/strategies/light/pivot-points.svg',
   },
 
   'keltner-channels': {
@@ -903,7 +903,7 @@ One of the most popular strategies is the "Keltner-Bollinger Squeeze": when Boll
       { label: 'StockCharts — Keltner Channels', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:keltner_channels', description: "StockCharts' in-depth article on Keltner Channels." },
     ],
     relatedSlugs: ['bollinger-bands', 'atr-indicator', 'breakout-strategy', 'ema-indicator'],
-    imageUrl: '/images/strategies/light/keltner-channels.png',
+    imageUrl: '/images/strategies/light/keltner-channels.svg',
   },
 
   'supertrend-indicator': {
@@ -928,7 +928,7 @@ Supertrend is particularly effective for identifying the beginning of trending m
       { label: 'StockCharts — ATR', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:average_true_range_atr', description: 'ATR explanation — the foundation of Supertrend.' },
     ],
     relatedSlugs: ['atr-indicator', 'trend-following', 'ema-indicator', 'adx-indicator'],
-    imageUrl: '/images/strategies/light/supertrend-indicator.png',
+    imageUrl: '/images/strategies/light/supertrend-indicator.svg',
   },
 
   'mfi-indicator': {
@@ -953,7 +953,7 @@ MFI divergence is particularly valued: when price makes new highs but MFI fails 
       { label: 'StockCharts — MFI', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:money_flow_index_mfi', description: "StockCharts' detailed MFI article with examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'volume-analysis', 'obv-indicator', 'cci-indicator'],
-    imageUrl: '/images/strategies/light/mfi-indicator.png',
+    imageUrl: '/images/strategies/light/mfi-indicator.svg',
   },
 
   'fibonacci-indicator': {
@@ -978,7 +978,7 @@ Smart Money Concepts heavily incorporate Fibonacci, using the 0.79 and 0.886 lev
       { label: 'BabyPips — Fibonacci', url: 'https://www.babypips.com/learn/forex/fibonacci', description: "BabyPips' comprehensive Fibonacci trading guide." },
     ],
     relatedSlugs: ['fibonacci-retracement', 'smart-money-concepts', 'price-action-strategy', 'order-blocks'],
-    imageUrl: '/images/strategies/light/fibonacci-indicator.png',
+    imageUrl: '/images/strategies/light/fibonacci-indicator.svg',
   },
 
   // ── Extra Strategies ─────────────────────────────────────────────────────
@@ -1005,7 +1005,7 @@ Supply and Demand analysis closely overlaps with Smart Money Concepts — both l
       { label: 'BabyPips — Support & Resistance', url: 'https://www.babypips.com/learn/forex/support-and-resistance', description: 'BabyPips guide to support and resistance (closely related concept).' },
     ],
     relatedSlugs: ['order-blocks', 'smart-money-concepts', 'liquidity-sweeps', 'price-action-strategy'],
-    imageUrl: '/images/strategies/light/supply-demand-zones.png',
+    imageUrl: '/images/strategies/light/supply-demand-zones.svg',
   },
 
   'wyckoff-method': {
@@ -1030,7 +1030,7 @@ Wyckoff's three laws — Supply and Demand, Cause and Effect, and Effort vs. Res
       { label: 'TradingView — Wyckoff Scripts', url: 'https://www.tradingview.com/scripts/wyckoff/', description: 'Wyckoff analysis tools and scripts on TradingView.' },
     ],
     relatedSlugs: ['smart-money-concepts', 'volume-analysis', 'order-blocks', 'supply-demand-zones'],
-    imageUrl: '/images/strategies/light/wyckoff-method.png',
+    imageUrl: '/images/strategies/light/wyckoff-method.svg',
   },
 
   'elliott-wave': {
@@ -1055,7 +1055,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'EWI — Elliott Wave International', url: 'https://www.elliottwave.com/educational', description: 'Educational resources from Elliott Wave International.' },
     ],
     relatedSlugs: ['fibonacci-retracement', 'fibonacci-indicator', 'wyckoff-method', 'trend-following'],
-    imageUrl: '/images/strategies/light/elliott-wave.png',
+    imageUrl: '/images/strategies/light/elliott-wave.svg',
   },
 
   // ─────────────────────── NEW STRATEGIES ────────────────────────────────
@@ -1076,7 +1076,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Position Trading', url: 'https://www.babypips.com/learn/forex/position-trading', description: "BabyPips' guide to position trading in forex markets." },
     ],
     relatedSlugs: ['trend-following', 'swing-trading', 'donchian-channel', 'wyckoff-method'],
-    imageUrl: '/images/strategies/light/position-trading.png',
+    imageUrl: '/images/strategies/light/position-trading.svg',
   },
 
   'pairs-trading': {
@@ -1095,7 +1095,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'TradingView — Spread Charts', url: 'https://www.tradingview.com/support/solutions/43000502079/', description: 'How to chart spreads between two assets on TradingView.' },
     ],
     relatedSlugs: ['arbitrage-strategy', 'mean-reversion', 'bollinger-bands', 'linear-regression'],
-    imageUrl: '/images/strategies/light/pairs-trading.png',
+    imageUrl: '/images/strategies/light/pairs-trading.svg',
   },
 
   'momentum-trading': {
@@ -1114,7 +1114,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'TradingView — Momentum Indicators', url: 'https://www.tradingview.com/scripts/momentum/', description: 'Momentum indicator scripts on TradingView.' },
     ],
     relatedSlugs: ['trend-following', 'rate-of-change', 'macd-indicator', 'breakout-strategy'],
-    imageUrl: '/images/strategies/light/momentum-trading.png',
+    imageUrl: '/images/strategies/light/momentum-trading.svg',
   },
 
   'range-trading': {
@@ -1133,7 +1133,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Trading Ranges', url: 'https://www.babypips.com/learn/forex/trading-ranges', description: "BabyPips' guide to identifying and trading sideways markets." },
     ],
     relatedSlugs: ['mean-reversion', 'bollinger-bands', 'rsi-indicator', 'stochastic-oscillator'],
-    imageUrl: '/images/strategies/light/range-trading.png',
+    imageUrl: '/images/strategies/light/range-trading.svg',
   },
 
   'news-trading': {
@@ -1152,7 +1152,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Trading the News', url: 'https://www.babypips.com/learn/forex/trading-the-news', description: "BabyPips' comprehensive guide to news trading strategies." },
     ],
     relatedSlugs: ['breakout-strategy', 'volatility-trading', 'atr-indicator', 'scalping-strategy'],
-    imageUrl: '/images/strategies/light/news-trading.png',
+    imageUrl: '/images/strategies/light/news-trading.svg',
   },
 
   'harmonic-patterns': {
@@ -1171,7 +1171,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Harmonic Trading', url: 'https://www.babypips.com/learn/forex/gartley-pattern', description: "BabyPips' guide to the Gartley pattern and harmonic trading." },
     ],
     relatedSlugs: ['fibonacci-retracement', 'fibonacci-indicator', 'price-action-strategy', 'smart-money-concepts'],
-    imageUrl: '/images/strategies/light/harmonic-patterns.png',
+    imageUrl: '/images/strategies/light/harmonic-patterns.svg',
   },
 
   'chart-patterns': {
@@ -1190,7 +1190,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Chart School', url: 'https://school.stockcharts.com/doku.php?id=chart_analysis:chart_patterns', description: "StockCharts' classic Chart School on technical patterns." },
     ],
     relatedSlugs: ['breakout-strategy', 'price-action-strategy', 'volume-analysis', 'trend-following'],
-    imageUrl: '/images/strategies/light/chart-patterns.png',
+    imageUrl: '/images/strategies/light/chart-patterns.svg',
   },
 
   'carry-trade': {
@@ -1209,7 +1209,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'CoinGlass — Funding Rates', url: 'https://www.coinglass.com/FundingRate', description: 'Live funding rates across all major crypto perpetual exchanges.' },
     ],
     relatedSlugs: ['arbitrage-strategy', 'mean-reversion', 'vwap-indicator', 'position-trading'],
-    imageUrl: '/images/strategies/light/carry-trade.png',
+    imageUrl: '/images/strategies/light/carry-trade.svg',
   },
 
   'gap-trading': {
@@ -1228,7 +1228,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Gap Analysis', url: 'https://school.stockcharts.com/doku.php?id=chart_analysis:gaps_and_gap_analysis', description: "StockCharts' detailed guide to gap analysis." },
     ],
     relatedSlugs: ['breakout-strategy', 'volume-analysis', 'news-trading', 'price-action-strategy'],
-    imageUrl: '/images/strategies/light/gap-trading.png',
+    imageUrl: '/images/strategies/light/gap-trading.svg',
   },
 
   'triple-screen-strategy': {
@@ -1247,7 +1247,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'Elder.com — Trading', url: 'https://www.elder.com', description: "Dr. Alexander Elder's official site with educational resources." },
     ],
     relatedSlugs: ['macd-indicator', 'stochastic-oscillator', 'trend-following', 'swing-trading'],
-    imageUrl: '/images/strategies/light/triple-screen-strategy.png',
+    imageUrl: '/images/strategies/light/triple-screen-strategy.svg',
   },
 
   // ─────────────────────── NEW INDICATORS ────────────────────────────────
@@ -1268,7 +1268,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — CMF', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:chaikin_money_flow_cmf', description: "StockCharts' detailed CMF tutorial with visual examples." },
     ],
     relatedSlugs: ['obv-indicator', 'mfi-indicator', 'volume-analysis', 'vwap-indicator'],
-    imageUrl: '/images/strategies/light/chaikin-money-flow.png',
+    imageUrl: '/images/strategies/light/chaikin-money-flow.svg',
   },
 
   'awesome-oscillator': {
@@ -1287,7 +1287,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Awesome Oscillator', url: 'https://www.babypips.com/learn/forex/awesome-oscillator', description: "BabyPips' guide to the Awesome Oscillator and its signals." },
     ],
     relatedSlugs: ['alligator-indicator', 'macd-indicator', 'momentum-trading', 'rate-of-change'],
-    imageUrl: '/images/strategies/light/awesome-oscillator.png',
+    imageUrl: '/images/strategies/light/awesome-oscillator.svg',
   },
 
   'alligator-indicator': {
@@ -1306,7 +1306,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Williams Alligator', url: 'https://www.babypips.com/learn/forex/williams-alligator', description: "BabyPips' explanation of the Alligator indicator." },
     ],
     relatedSlugs: ['awesome-oscillator', 'ema-indicator', 'trend-following', 'adx-indicator'],
-    imageUrl: '/images/strategies/light/alligator-indicator.png',
+    imageUrl: '/images/strategies/light/alligator-indicator.svg',
   },
 
   'hull-moving-average': {
@@ -1325,7 +1325,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'Alan Hull\'s Site', url: 'https://alanhull.com/hull-moving-average', description: 'The original HMA documentation from its creator Alan Hull.' },
     ],
     relatedSlugs: ['ema-indicator', 'sma-indicator', 'trend-following', 'moving-average-crossover'],
-    imageUrl: '/images/strategies/light/hull-moving-average.png',
+    imageUrl: '/images/strategies/light/hull-moving-average.svg',
   },
 
   'rate-of-change': {
@@ -1344,7 +1344,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'BabyPips — Momentum Indicators', url: 'https://www.babypips.com/learn/forex/momentum-indicators', description: "BabyPips' guide to momentum indicators including ROC." },
     ],
     relatedSlugs: ['macd-indicator', 'momentum-trading', 'rsi-indicator', 'trix-indicator'],
-    imageUrl: '/images/strategies/light/rate-of-change.png',
+    imageUrl: '/images/strategies/light/rate-of-change.svg',
   },
 
   'aroon-indicator': {
@@ -1363,7 +1363,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Aroon', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:aroon', description: "StockCharts' Aroon tutorial with detailed examples." },
     ],
     relatedSlugs: ['adx-indicator', 'trend-following', 'donchian-channel', 'rate-of-change'],
-    imageUrl: '/images/strategies/light/aroon-indicator.png',
+    imageUrl: '/images/strategies/light/aroon-indicator.svg',
   },
 
   'trix-indicator': {
@@ -1382,7 +1382,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — TRIX', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:trix', description: "StockCharts' detailed TRIX tutorial with signal examples." },
     ],
     relatedSlugs: ['macd-indicator', 'ema-indicator', 'rate-of-change', 'momentum-trading'],
-    imageUrl: '/images/strategies/light/trix-indicator.png',
+    imageUrl: '/images/strategies/light/trix-indicator.svg',
   },
 
   'elder-ray': {
@@ -1401,7 +1401,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'Elder.com', url: 'https://www.elder.com/trading-indicators/', description: "Dr. Elder's official resources on Bull Power and Bear Power." },
     ],
     relatedSlugs: ['triple-screen-strategy', 'macd-indicator', 'ema-indicator', 'adx-indicator'],
-    imageUrl: '/images/strategies/light/elder-ray.png',
+    imageUrl: '/images/strategies/light/elder-ray.svg',
   },
 
   'detrended-price-oscillator': {
@@ -1420,7 +1420,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — DPO', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:detrended_price_oscillator_dpo', description: "StockCharts' detailed DPO article with cycle examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'stochastic-oscillator', 'bollinger-bands', 'range-trading'],
-    imageUrl: '/images/strategies/light/detrended-price-oscillator.png',
+    imageUrl: '/images/strategies/light/detrended-price-oscillator.svg',
   },
 
   'linear-regression': {
@@ -1439,7 +1439,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
       { label: 'StockCharts — Linear Regression', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:linear_regression', description: "StockCharts' guide to linear regression in technical analysis." },
     ],
     relatedSlugs: ['bollinger-bands', 'pairs-trading', 'mean-reversion', 'keltner-channels'],
-    imageUrl: '/images/strategies/light/linear-regression.png',
+    imageUrl: '/images/strategies/light/linear-regression.svg',
   },
 
   // ─────────────────────── NEW INDICATORS (2026-05-09) ───────────────────────
@@ -1470,7 +1470,7 @@ Divergence between price and StochRSI is another high-probability signal: when p
       { label: 'BabyPips — Stochastic RSI', url: 'https://www.babypips.com/learn/forex/stochastic-rsi', description: "BabyPips' explanation of StochRSI with practical trading examples." },
     ],
     relatedSlugs: ['rsi-indicator', 'stochastic-oscillator', 'macd-indicator', 'mean-reversion'],
-    imageUrl: '/images/strategies/light/stochastic-rsi.png',
+    imageUrl: '/images/strategies/light/stochastic-rsi.svg',
   },
 
   'force-index': {
@@ -1499,7 +1499,7 @@ Divergence between the Force Index and price is a powerful reversal signal: when
       { label: 'Elder.com — Force Index', url: 'https://www.elder.com/trading-indicators/force-index/', description: "Dr. Elder's official documentation on the Force Index indicator." },
     ],
     relatedSlugs: ['elder-ray', 'triple-screen-strategy', 'obv-indicator', 'volume-analysis'],
-    imageUrl: '/images/strategies/light/force-index.png',
+    imageUrl: '/images/strategies/light/force-index.svg',
   },
 
   'ultimate-oscillator': {
@@ -1524,7 +1524,7 @@ Williams emphasised that the divergence-based signals are far more reliable than
       { label: 'StockCharts — Ultimate Oscillator', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:ultimate_oscillator', description: "StockCharts' detailed tutorial on the Ultimate Oscillator." },
     ],
     relatedSlugs: ['williams-percent-r', 'rsi-indicator', 'stochastic-oscillator', 'cci-indicator'],
-    imageUrl: '/images/strategies/light/ultimate-oscillator.png',
+    imageUrl: '/images/strategies/light/ultimate-oscillator.svg',
   },
 
   'vortex-indicator': {
@@ -1554,7 +1554,7 @@ The indicator performs best on daily and weekly timeframes for equity and crypto
       { label: 'StockCharts — Vortex Indicator', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:vortex_indicator', description: "StockCharts' detailed Vortex Indicator tutorial." },
     ],
     relatedSlugs: ['adx-indicator', 'dmi-indicator', 'trend-following', 'aroon-indicator'],
-    imageUrl: '/images/strategies/light/vortex-indicator.png',
+    imageUrl: '/images/strategies/light/vortex-indicator.svg',
   },
 
   'dmi-indicator': {
@@ -1581,7 +1581,7 @@ Understanding DMI separately from ADX helps traders appreciate the direction com
       { label: 'StockCharts — DMI', url: 'https://school.stockcharts.com/doku.php?id=technical_indicators:directional_movement_index', description: "StockCharts' comprehensive DMI and ADX tutorial." },
     ],
     relatedSlugs: ['adx-indicator', 'vortex-indicator', 'trend-following', 'atr-indicator'],
-    imageUrl: '/images/strategies/light/dmi-indicator.png',
+    imageUrl: '/images/strategies/light/dmi-indicator.svg',
   },
 
   // ─────────────────────── NEW STRATEGIES (2026-05-09) ───────────────────────
@@ -1610,7 +1610,7 @@ In crypto markets, perpetual futures funding rates are closely linked to volatil
       { label: 'TradingView — Volatility Indicators', url: 'https://www.tradingview.com/scripts/volatility/', description: 'Volatility measurement and squeeze detection scripts on TradingView.' },
     ],
     relatedSlugs: ['bollinger-bands', 'keltner-channels', 'atr-indicator', 'breakout-strategy'],
-    imageUrl: '/images/strategies/light/volatility-trading.png',
+    imageUrl: '/images/strategies/light/volatility-trading.svg',
   },
 
   'market-making-strategy': {
@@ -1637,7 +1637,7 @@ In cryptocurrency markets, market making bots are especially popular on perpetua
       { label: 'Binance Academy — Market Making', url: 'https://academy.binance.com/en/articles/what-is-a-market-maker', description: "Binance's accessible introduction to market making in crypto." },
     ],
     relatedSlugs: ['arbitrage-strategy', 'grid-trading', 'scalping-strategy', 'vwap-indicator'],
-    imageUrl: '/images/strategies/light/market-making-strategy.png',
+    imageUrl: '/images/strategies/light/market-making-strategy.svg',
   },
 
   'counter-trend-strategy': {
@@ -1664,7 +1664,7 @@ The most successful counter-trend traders combine strict entry criteria (requiri
       { label: 'BabyPips — Counter-Trend Trading', url: 'https://www.babypips.com/learn/forex/counter-trend-trading', description: "BabyPips' guide to trading against the trend safely." },
     ],
     relatedSlugs: ['mean-reversion', 'rsi-indicator', 'stochastic-rsi', 'bollinger-bands'],
-    imageUrl: '/images/strategies/light/counter-trend-strategy.png',
+    imageUrl: '/images/strategies/light/counter-trend-strategy.svg',
   },
 
   'machine-learning-strategy': {
@@ -1691,7 +1691,7 @@ The most practical ML strategies for retail traders use gradient boosted trees w
       { label: 'TradingView — ML Scripts', url: 'https://www.tradingview.com/scripts/machinelearning/', description: 'Community machine learning indicator scripts on TradingView.' },
     ],
     relatedSlugs: ['momentum-trading', 'trend-following', 'mean-reversion', 'arbitrage-strategy'],
-    imageUrl: '/images/strategies/light/machine-learning-strategy.png',
+    imageUrl: '/images/strategies/light/machine-learning-strategy.svg',
   },
 
   'rebalancing-strategy': {
@@ -1718,7 +1718,7 @@ Rebalancing is particularly powerful for multi-asset crypto portfolios (e.g., BT
       { label: 'Binance Academy — Rebalancing', url: 'https://academy.binance.com/en/articles/what-is-portfolio-rebalancing', description: "Binance's guide to rebalancing a cryptocurrency portfolio." },
     ],
     relatedSlugs: ['dollar-cost-averaging', 'mean-reversion', 'grid-trading', 'momentum-trading'],
-    imageUrl: '/images/strategies/light/rebalancing-strategy.png',
+    imageUrl: '/images/strategies/light/rebalancing-strategy.svg',
   },
 
 };
@@ -1749,7 +1749,7 @@ export class LearnDetailPage implements OnInit {
   allSignals: LearnData[] = [];
   strategyCodeExamples: LearnCodeExample[] = [];
   copiedCodeExampleId: string | null = null;
-  codeAccessStep: CodeAccessStep = 'collect';
+  codeAccessStep: CodeAccessStep = 'unlocked';
   codeAccessName = '';
   codeAccessEmail = '';
   codeAccessVerificationCode = '';
@@ -2266,36 +2266,454 @@ if exitSignal
   strategy.close("Long")
 plot(fib50, "Fib 0.5", color=color.orange)
 plot(fib618, "Fib 0.618", color=color.aqua)`;
-      case 'grid':
-      case 'dca':
-      case 'price-action':
-      case 'momentum':
-      case 'triple-screen':
-      case 'multi-factor':
-      case 'ema':
-      case 'sma':
-      case 'cci':
-      case 'williams':
-      case 'parabolic':
-      case 'obv':
-      case 'pivot':
-      case 'keltner':
-      case 'supertrend':
-      case 'mfi':
-      case 'chaikin':
-      case 'awesome':
-      case 'alligator':
-      case 'hma':
-      case 'roc':
-      case 'aroon':
-      case 'trix':
-      case 'elder':
-      case 'dpo':
-      case 'linear-reg':
-      case 'force':
-      case 'ultimate':
-      case 'vortex':
       case 'ma-crossover':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+fastLen = input.int(20, "Fast Length")
+slowLen = input.int(50, "Slow Length")
+fast = ta.ema(close, fastLen)
+slow = ta.ema(close, slowLen)
+longSignal = ta.crossover(fast, slow)
+exitSignal = ta.crossunder(fast, slow)
+if longSignal
+    strategy.entry("Long", strategy.long)
+if exitSignal
+    strategy.close("Long")
+plot(fast, "Fast EMA", color=color.aqua)
+plot(slow, "Slow EMA", color=color.orange)`;
+      case 'ema':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+fastLen = input.int(12, "Fast EMA")
+slowLen = input.int(26, "Slow EMA")
+fast = ta.ema(close, fastLen)
+slow = ta.ema(close, slowLen)
+bullish = ta.crossover(fast, slow)
+bearish = ta.crossunder(fast, slow)
+plotshape(bullish, style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small, title="Buy")
+plotshape(bearish, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small, title="Sell")
+plot(fast, "EMA Fast", color=color.aqua)
+plot(slow, "EMA Slow", color=color.orange)`;
+      case 'sma':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+sma20  = ta.sma(close, 20)
+sma50  = ta.sma(close, 50)
+sma200 = ta.sma(close, 200)
+bullish = ta.crossover(sma20, sma50)
+bearish = ta.crossunder(sma20, sma50)
+plotshape(bullish, style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(bearish, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+plot(sma20,  "SMA 20",  color=color.aqua)
+plot(sma50,  "SMA 50",  color=color.orange)
+plot(sma200, "SMA 200", color=color.red, linewidth=2)`;
+      case 'cci':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(20, "CCI Length")
+r = ta.cci(close, length)
+longSignal  = ta.crossover(r, -100)
+shortSignal = ta.crossunder(r, 100)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(100,  "+100", color=color.red,   linestyle=hline.style_dashed)
+hline(0,    "Zero", color=color.gray,  linestyle=hline.style_dotted)
+hline(-100, "-100", color=color.green, linestyle=hline.style_dashed)
+plot(r, "CCI", color=color.new(color.purple, 0))`;
+      case 'williams':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(14, "Length")
+wpr = ta.wpr(length)
+longSignal  = ta.crossover(wpr, -80)
+shortSignal = ta.crossunder(wpr, -20)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(-20, "Overbought", color=color.red,   linestyle=hline.style_dashed)
+hline(-50, "Mid",        color=color.gray,  linestyle=hline.style_dotted)
+hline(-80, "Oversold",   color=color.green, linestyle=hline.style_dashed)
+plot(wpr, "Williams %R", color=color.new(color.purple, 0))`;
+      case 'parabolic':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+start  = input.float(0.02, "Start")
+inc    = input.float(0.02, "Increment")
+maxVal = input.float(0.2,  "Max")
+sar = ta.sar(start, inc, maxVal)
+longSignal  = ta.crossover(close, sar)
+shortSignal = ta.crossunder(close, sar)
+plotshape(longSignal,  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+plot(sar, "SAR", style=plot.style_cross, color=close >= sar ? color.green : color.red, linewidth=2)`;
+      case 'obv':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+emaLen  = input.int(21, "OBV EMA")
+trendLen = input.int(50, "Trend EMA")
+obvVal  = ta.obv
+obvEma  = ta.ema(obvVal, emaLen)
+trend   = ta.ema(close, trendLen)
+longSignal = ta.crossover(obvVal, obvEma) and close > trend
+exitSignal = ta.crossunder(obvVal, obvEma) or close < trend
+plotshape(longSignal, style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(exitSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+plot(obvVal, "OBV",     color=color.aqua)
+plot(obvEma, "OBV EMA", color=color.orange)`;
+      case 'pivot':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+pivot = (high[1] + low[1] + close[1]) / 3
+r1    = 2 * pivot - low[1]
+r2    = pivot + (high[1] - low[1])
+s1    = 2 * pivot - high[1]
+s2    = pivot - (high[1] - low[1])
+longSignal  = ta.crossover(close, s1)
+shortSignal = ta.crossunder(close, r1)
+plotshape(longSignal,  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+plot(pivot, "Pivot", color=color.yellow,  linewidth=2)
+plot(r1,    "R1",    color=color.red,     linestyle=plot.style_stepline_diamond)
+plot(r2,    "R2",    color=color.red,     linestyle=plot.style_stepline_diamond)
+plot(s1,    "S1",    color=color.green,   linestyle=plot.style_stepline_diamond)
+plot(s2,    "S2",    color=color.green,   linestyle=plot.style_stepline_diamond)`;
+      case 'keltner':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+length  = input.int(20,  "EMA Length")
+atrMult = input.float(1.5, "ATR Multiplier")
+atrLen  = input.int(10,  "ATR Length")
+mid   = ta.ema(close, length)
+upper = mid + atrMult * ta.atr(atrLen)
+lower = mid - atrMult * ta.atr(atrLen)
+longSignal  = ta.crossover(close, upper)
+shortSignal = ta.crossunder(close, mid)
+plotshape(longSignal,  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+p1 = plot(upper, "Upper KC", color=color.new(color.purple, 0))
+p2 = plot(lower, "Lower KC", color=color.new(color.purple, 0))
+plot(mid, "Mid KC", color=color.orange)
+fill(p1, p2, color=color.new(color.purple, 90))`;
+      case 'supertrend':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+atrLen = input.int(10,  "ATR Length")
+mult   = input.float(3.0, "ATR Multiplier")
+[st, direction] = ta.supertrend(mult, atrLen)
+longSignal  = ta.crossover(close, st)
+shortSignal = ta.crossunder(close, st)
+plotshape(longSignal,  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.normal, title="Buy")
+plotshape(shortSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.normal, title="Sell")
+plot(direction < 0 ? st : na, "Uptrend",   color=color.green, linewidth=2)
+plot(direction > 0 ? st : na, "Downtrend", color=color.red,   linewidth=2)`;
+      case 'mfi':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(14, "MFI Length")
+mfi    = ta.mfi(hlc3, length)
+longSignal  = ta.crossover(mfi, 20)
+shortSignal = ta.crossunder(mfi, 80)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(80, "Overbought", color=color.red,   linestyle=hline.style_dashed)
+hline(50, "Mid",        color=color.gray,  linestyle=hline.style_dotted)
+hline(20, "Oversold",   color=color.green, linestyle=hline.style_dashed)
+plot(mfi, "MFI", color=color.new(color.teal, 0))`;
+      case 'chaikin':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(20, "CMF Length")
+ad     = ta.accdist
+cmf    = math.sum(ad - ad[length], length) / math.sum(volume, length)
+longSignal  = ta.crossover(cmf, 0)
+shortSignal = ta.crossunder(cmf, 0)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(0.25,  "+0.25", color=color.green, linestyle=hline.style_dashed)
+hline(0,     "Zero",  color=color.gray,  linestyle=hline.style_dotted)
+hline(-0.25, "-0.25", color=color.red,   linestyle=hline.style_dashed)
+plot(cmf, "CMF", color=cmf >= 0 ? color.green : color.red)`;
+      case 'awesome':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+ao = ta.sma(hl2, 5) - ta.sma(hl2, 34)
+rising = ao > ao[1]
+plothistogram(ao, "AO", color=rising ? color.green : color.red)
+hline(0, "Zero", color=color.gray, linestyle=hline.style_dotted)
+longSignal  = ta.crossover(ao, 0)
+shortSignal = ta.crossunder(ao, 0)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)`;
+      case 'alligator':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+jaw   = ta.sma(hl2, 13)
+teeth = ta.sma(hl2, 8)
+lips  = ta.sma(hl2, 5)
+awake      = lips > teeth and teeth > jaw
+longSignal = ta.crossover(lips, teeth) and lips > jaw
+exitSignal = ta.crossunder(lips, teeth)
+plotshape(longSignal, style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(exitSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+plot(jaw,   "Jaw (13)",   color=color.blue,   linewidth=2)
+plot(teeth, "Teeth (8)",  color=color.red,    linewidth=2)
+plot(lips,  "Lips (5)",   color=color.green,  linewidth=2)`;
+      case 'hma':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+length = input.int(21, "HMA Length")
+hma    = ta.wma(2 * ta.wma(close, length / 2) - ta.wma(close, length), math.round(math.sqrt(length)))
+rising = hma > hma[1]
+longSignal  = ta.crossover(close, hma)
+shortSignal = ta.crossunder(close, hma)
+plotshape(longSignal,  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+plot(hma, "HMA", color=rising ? color.green : color.red, linewidth=2)`;
+      case 'roc':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(12, "ROC Length")
+roc    = (close - close[length]) / close[length] * 100
+longSignal  = ta.crossover(roc, 0)
+shortSignal = ta.crossunder(roc, 0)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(0, "Zero", color=color.gray, linestyle=hline.style_dotted)
+plot(roc, "ROC %", color=roc >= 0 ? color.green : color.red)`;
+      case 'aroon':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length   = input.int(14, "Aroon Length")
+aroonUp  = (ta.highestbars(high, length + 1) + length) / length * 100
+aroonDn  = (ta.lowestbars(low,  length + 1) + length) / length * 100
+longSignal  = ta.crossover(aroonUp, aroonDn)
+shortSignal = ta.crossunder(aroonUp, aroonDn)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(70, "Strong",  color=color.orange, linestyle=hline.style_dashed)
+hline(30, "Weak",    color=color.orange, linestyle=hline.style_dashed)
+plot(aroonUp, "Aroon Up",   color=color.green)
+plot(aroonDn, "Aroon Down", color=color.red)`;
+      case 'trix':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(15, "TRIX Length")
+e1     = ta.ema(close, length)
+e2     = ta.ema(e1, length)
+e3     = ta.ema(e2, length)
+trix   = (e3 - e3[1]) / e3[1] * 100
+sig    = ta.ema(trix, 9)
+longSignal  = ta.crossover(trix, sig)
+shortSignal = ta.crossunder(trix, sig)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(0, "Zero", color=color.gray, linestyle=hline.style_dotted)
+plot(trix, "TRIX",   color=color.purple)
+plot(sig,  "Signal", color=color.orange)`;
+      case 'elder':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length    = input.int(13, "EMA Length")
+emaVal    = ta.ema(close, length)
+bullPower = high - emaVal
+bearPower = low  - emaVal
+longSignal  = bullPower > 0 and bearPower > bearPower[1] and emaVal > emaVal[1]
+shortSignal = bearPower < 0 and bullPower < bullPower[1] and emaVal < emaVal[1]
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(0, "Zero", color=color.gray, linestyle=hline.style_dotted)
+plothistogram(bullPower, "Bull Power", color=color.new(color.green, 0))
+plothistogram(bearPower, "Bear Power", color=color.new(color.red,   0))`;
+      case 'dpo':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length = input.int(20, "DPO Length")
+shift  = math.round(length / 2) + 1
+dpo    = close - ta.sma(close, length)[shift]
+longSignal  = ta.crossover(dpo, 0)
+shortSignal = ta.crossunder(dpo, 0)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(0, "Zero", color=color.gray, linestyle=hline.style_dotted)
+plot(dpo, "DPO", color=dpo >= 0 ? color.teal : color.orange)`;
+      case 'linear-reg':
+        return `//@version=6
+indicator("${safeTitle}", overlay=true)
+length = input.int(50, "Regression Length")
+mult   = input.float(2.0, "Channel Std Dev")
+lr     = ta.linreg(close, length, 0)
+dev    = mult * ta.stdev(close, length)
+upper  = lr + dev
+lower  = lr - dev
+longSignal  = ta.crossover(close, lower) and close < lr
+shortSignal = ta.crossunder(close, upper) and close > lr
+plotshape(longSignal,  style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small)
+plot(lr,    "Regression", color=color.orange)
+plot(upper, "Upper",      color=color.new(color.teal, 0))
+plot(lower, "Lower",      color=color.new(color.teal, 0))`;
+      case 'force':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+shortLen = input.int(2,  "Short EMA")
+longLen  = input.int(13, "Long EMA")
+fi       = (close - close[1]) * volume
+fi2      = ta.ema(fi, shortLen)
+fi13     = ta.ema(fi, longLen)
+longSignal  = ta.crossover(fi13, 0) and fi2 < 0
+shortSignal = ta.crossunder(fi13, 0)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(0, "Zero", color=color.gray, linestyle=hline.style_dotted)
+plot(fi2,  "2-EMA Force",  color=color.aqua)
+plot(fi13, "13-EMA Force", color=color.orange, linewidth=2)`;
+      case 'ultimate':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+short  = input.int(7,  "Short Period")
+mid    = input.int(14, "Mid Period")
+long   = input.int(28, "Long Period")
+bp     = close - math.min(low, close[1])
+tr     = math.max(high, close[1]) - math.min(low, close[1])
+avg7   = math.sum(bp, short) / math.sum(tr, short)
+avg14  = math.sum(bp, mid)   / math.sum(tr, mid)
+avg28  = math.sum(bp, long)  / math.sum(tr, long)
+uo     = 100 * (4 * avg7 + 2 * avg14 + avg28) / 7
+longSignal  = ta.crossover(uo, 30)
+shortSignal = ta.crossunder(uo, 70)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(70, "Overbought", color=color.red,   linestyle=hline.style_dashed)
+hline(50, "Mid",        color=color.gray,  linestyle=hline.style_dotted)
+hline(30, "Oversold",   color=color.green, linestyle=hline.style_dashed)
+plot(uo, "Ultimate Oscillator", color=color.purple)`;
+      case 'vortex':
+        return `//@version=6
+indicator("${safeTitle}", overlay=false)
+length  = input.int(14, "Length")
+tr      = ta.tr
+vmPlus  = math.abs(high - low[1])
+vmMinus = math.abs(low  - high[1])
+viPlus  = math.sum(vmPlus,  length) / math.sum(tr, length)
+viMinus = math.sum(vmMinus, length) / math.sum(tr, length)
+longSignal  = ta.crossover(viPlus, viMinus)
+shortSignal = ta.crossunder(viPlus, viMinus)
+plotshape(longSignal,  style=shape.triangleup,   location=location.bottom, color=color.green, size=size.small)
+plotshape(shortSignal, style=shape.triangledown, location=location.top,    color=color.red,   size=size.small)
+hline(1, "1.0", color=color.gray, linestyle=hline.style_dotted)
+plot(viPlus,  "VI+", color=color.green)
+plot(viMinus, "VI-", color=color.red)`;
+      case 'grid':
+        return `//@version=6
+// Note: Full grid trading requires broker-integration; this script demonstrates
+// grid level detection and signals for manual or semi-automated grid execution.
+strategy("${safeTitle}", overlay=true)
+gridCount  = input.int(5, "Grid Levels", minval=2, maxval=20)
+rangeLow   = input.float(0.0, "Range Low (0=auto)")
+rangeHigh  = input.float(0.0, "Range High (0=auto)")
+lookback   = input.int(50, "Auto-Range Lookback")
+lo = rangeLow  > 0 ? rangeLow  : ta.lowest(low,  lookback)
+hi = rangeHigh > 0 ? rangeHigh : ta.highest(high, lookback)
+step = (hi - lo) / gridCount
+level = math.round((close - lo) / step) * step + lo
+buySignal  = ta.crossover(close, level - step * 0.1)
+sellSignal = ta.crossunder(close, level + step * 0.1)
+if buySignal
+    strategy.entry("GridBuy", strategy.long)
+if sellSignal
+    strategy.close("GridBuy")
+for i = 0 to gridCount
+    line.new(bar_index - 1, lo + i * step, bar_index, lo + i * step, extend=extend.right, color=color.new(color.teal, 50))`;
+      case 'dca':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+dropPct   = input.float(3.0,  "Buy on Drop %")
+rsiLen    = input.int(14,     "RSI Length")
+rsiOversold = input.int(35,   "RSI Oversold")
+r     = ta.rsi(close, rsiLen)
+drop  = (close - ta.highest(close, 10)) / ta.highest(close, 10) * 100
+// DCA: buy when price drops the configured % OR RSI is oversold
+dcaBuy = drop < -dropPct or r < rsiOversold
+if dcaBuy and strategy.position_size == 0
+    strategy.entry("DCA", strategy.long)
+// Take profit at +10% above average cost
+if strategy.position_size > 0 and close > strategy.position_avg_price * 1.10
+    strategy.close("DCA")
+plot(ta.ema(close, 50), "EMA 50", color=color.orange)`;
+      case 'price-action':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+// Detects pin bars and engulfing candles at key levels
+atrLen  = input.int(14, "ATR Length")
+lookback = input.int(20, "Swing Lookback")
+atr = ta.atr(atrLen)
+swingHigh = ta.highest(high, lookback)
+swingLow  = ta.lowest(low,  lookback)
+// Bullish pin bar: long lower wick, close near high, forms at/near swing low
+lowerWick   = open - low
+upperWick   = high - close
+bodySize    = math.abs(close - open)
+bullishPin  = lowerWick > 2 * bodySize and lowerWick > upperWick and low <= swingLow * 1.002
+// Bearish engulfing at swing high
+bearEngulf  = close < open and close < open[1] and open > close[1] and high >= swingHigh * 0.998
+if bullishPin
+    strategy.entry("PABuy", strategy.long, stop=low - atr * 0.5)
+if bearEngulf
+    strategy.close("PABuy")
+plotshape(bullishPin, style=shape.triangleup,   location=location.belowbar, color=color.green, size=size.small, title="Pin Bar")
+plotshape(bearEngulf, style=shape.triangledown, location=location.abovebar, color=color.red,   size=size.small, title="Bearish Engulf")`;
+      case 'momentum':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+momLen  = input.int(10,  "Momentum Length")
+trendLen = input.int(50, "Trend EMA")
+rsiLen  = input.int(14,  "RSI Length")
+mom    = close - close[momLen]
+ema50  = ta.ema(close, trendLen)
+r      = ta.rsi(close, rsiLen)
+// Buy when momentum is positive, price above trend EMA, RSI not overbought
+longSignal  = mom > 0 and close > ema50 and r > 50 and r < 70
+exitSignal  = mom < 0 or close < ema50
+if longSignal
+    strategy.entry("Mom", strategy.long)
+if exitSignal
+    strategy.close("Mom")
+plot(ema50, "Trend EMA", color=color.orange)`;
+      case 'triple-screen':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+// Screen 1: weekly MACD histogram direction (simulated on current TF × 5)
+screen1Len = input.int(5, "Screen 1 multiplier (applies to MACD)")
+[m, s, hist] = ta.macd(close, 12 * screen1Len, 26 * screen1Len, 9 * screen1Len)
+weeklyBull = hist > 0
+// Screen 2: daily Stochastic oversold/overbought
+stochK = ta.sma(ta.stoch(close, high, low, 14), 3)
+screen2Buy  = stochK < 30 and weeklyBull
+screen2Sell = stochK > 70 and not weeklyBull
+// Screen 3: trailing buy/sell stop (next bar entry)
+if screen2Buy
+    strategy.entry("TriBuy",  strategy.long)
+if screen2Sell
+    strategy.entry("TriSell", strategy.short)
+plot(ta.ema(close, 13), "EMA 13", color=color.aqua)
+plot(ta.ema(close, 34), "EMA 34", color=color.orange)`;
+      case 'multi-factor':
+        return `//@version=6
+strategy("${safeTitle}", overlay=true)
+// Multi-factor: trend + momentum + volume confluence
+trendLen = input.int(50,  "Trend EMA")
+rsiLen   = input.int(14,  "RSI Length")
+volLen   = input.int(20,  "Volume EMA")
+ema50    = ta.ema(close, trendLen)
+r        = ta.rsi(close, rsiLen)
+avgVol   = ta.ema(volume, volLen)
+// All three factors must align
+longSignal  = close > ema50 and r > 50 and r < 70 and volume > avgVol * 1.2
+shortSignal = close < ema50 and r < 50 and volume > avgVol * 1.2
+if longSignal
+    strategy.entry("Long", strategy.long)
+if shortSignal
+    strategy.close("Long")
+plot(ema50, "Trend EMA", color=color.orange)`;
       default:
         return `//@version=6
 strategy("${safeTitle}", overlay=true)
@@ -2318,7 +2736,6 @@ plot(slow, "Slow", color=color.orange)`;
     const safeTitle = title.replace(/"/g, '\\"');
     switch (profile) {
       case 'ma-crossover':
-      case 'price-action':
         return `input fastLength = 20;
 input slowLength = 50;
 def fastMA = ExpAverage(close, fastLength);
@@ -2331,6 +2748,23 @@ plot FastLine = fastMA;
 FastLine.SetDefaultColor(Color.CYAN);
 plot SlowLine = slowMA;
 SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'price-action':
+        return `input atrLength = 14;
+input swingLookback = 20;
+def atrVal = ATR(atrLength);
+def swingHigh = Highest(high, swingLookback);
+def swingLow = Lowest(low, swingLookback);
+def lowerWick = open - low;
+def upperWick = high - close;
+def bodySize = AbsValue(close - open);
+def bullishPin = lowerWick > 2 * bodySize and lowerWick > upperWick and low <= swingLow * 1.002;
+def bearEngulf = close < open and close < open[1] and open > close[1] and high >= swingHigh * 0.998;
+AddOrder(OrderType.BUY_AUTO, bullishPin, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, bearEngulf, close, 1, Color.RED, Color.RED, "${safeTitle} Exit");
+plot SwingHigh = swingHigh;
+SwingHigh.SetDefaultColor(Color.RED);
+plot SwingLow = swingLow;
+SwingLow.SetDefaultColor(Color.GREEN);`;
       case 'rsi':
         return `input length = 14;
 def r = RSI(length = length);
@@ -2578,8 +3012,6 @@ plot Mom = mom;
 Mom.SetDefaultColor(Color.CYAN);`;
       case 'triple-screen':
       case 'multi-factor':
-      case 'grid':
-      case 'dca':
         return `def fast = ExpAverage(close, 13);
 def slow = ExpAverage(close, 34);
 def rsi = RSI(length = 14);
@@ -2591,6 +3023,34 @@ plot FastLine = fast;
 FastLine.SetDefaultColor(Color.CYAN);
 plot SlowLine = slow;
 SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'grid':
+        return `input gridCount = 5;
+input lookback = 50;
+def lo = Lowest(low, lookback);
+def hi = Highest(high, lookback);
+def step = (hi - lo) / gridCount;
+def level = Round((close - lo) / step, 0) * step + lo;
+def buySignal = close crosses above level - step * 0.1;
+def sellSignal = close crosses below level + step * 0.1;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "${safeTitle} Sell");
+plot RangeLow = lo;
+RangeLow.SetDefaultColor(Color.RED);
+plot RangeHigh = hi;
+RangeHigh.SetDefaultColor(Color.GREEN);`;
+      case 'dca':
+        return `input dropPct = 3.0;
+input rsiLength = 14;
+input rsiOversold = 35;
+def r = RSI(length = rsiLength);
+def recentHigh = Highest(close, 10);
+def dropPctVal = (close - recentHigh) / recentHigh * 100;
+def dcaBuy = dropPctVal < -dropPct or r < rsiOversold;
+def tpHit = close > close[1] * 1.10;
+AddOrder(OrderType.BUY_AUTO, dcaBuy, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, tpHit, close, 1, Color.RED, Color.RED, "${safeTitle} Exit");
+plot TrendLine = ExpAverage(close, 50);
+TrendLine.SetDefaultColor(Color.ORANGE);`;
       case 'chaikin':
         return `def cmf = ChaikinMoneyFlow(length = 20);
 def buySignal = cmf crosses above 0;
@@ -2909,7 +3369,7 @@ SlowLine.SetDefaultColor(Color.ORANGE);`;
   }
 
   private resetCodeAccessState(): void {
-    this.codeAccessStep = 'collect';
+    this.codeAccessStep = 'unlocked';
     this.codeAccessName = '';
     this.codeAccessEmail = '';
     this.codeAccessVerificationCode = '';
