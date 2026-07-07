@@ -2736,7 +2736,6 @@ plot(slow, "Slow", color=color.orange)`;
     const safeTitle = title.replace(/"/g, '\\"');
     switch (profile) {
       case 'ma-crossover':
-      case 'price-action':
         return `input fastLength = 20;
 input slowLength = 50;
 def fastMA = ExpAverage(close, fastLength);
@@ -2749,6 +2748,23 @@ plot FastLine = fastMA;
 FastLine.SetDefaultColor(Color.CYAN);
 plot SlowLine = slowMA;
 SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'price-action':
+        return `input atrLength = 14;
+input swingLookback = 20;
+def atrVal = ATR(atrLength);
+def swingHigh = Highest(high, swingLookback);
+def swingLow = Lowest(low, swingLookback);
+def lowerWick = open - low;
+def upperWick = high - close;
+def bodySize = AbsValue(close - open);
+def bullishPin = lowerWick > 2 * bodySize and lowerWick > upperWick and low <= swingLow * 1.002;
+def bearEngulf = close < open and close < open[1] and open > close[1] and high >= swingHigh * 0.998;
+AddOrder(OrderType.BUY_AUTO, bullishPin, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, bearEngulf, close, 1, Color.RED, Color.RED, "${safeTitle} Exit");
+plot SwingHigh = swingHigh;
+SwingHigh.SetDefaultColor(Color.RED);
+plot SwingLow = swingLow;
+SwingLow.SetDefaultColor(Color.GREEN);`;
       case 'rsi':
         return `input length = 14;
 def r = RSI(length = length);
@@ -2996,8 +3012,6 @@ plot Mom = mom;
 Mom.SetDefaultColor(Color.CYAN);`;
       case 'triple-screen':
       case 'multi-factor':
-      case 'grid':
-      case 'dca':
         return `def fast = ExpAverage(close, 13);
 def slow = ExpAverage(close, 34);
 def rsi = RSI(length = 14);
@@ -3009,6 +3023,34 @@ plot FastLine = fast;
 FastLine.SetDefaultColor(Color.CYAN);
 plot SlowLine = slow;
 SlowLine.SetDefaultColor(Color.ORANGE);`;
+      case 'grid':
+        return `input gridCount = 5;
+input lookback = 50;
+def lo = Lowest(low, lookback);
+def hi = Highest(high, lookback);
+def step = (hi - lo) / gridCount;
+def level = Round((close - lo) / step, 0) * step + lo;
+def buySignal = close crosses above level - step * 0.1;
+def sellSignal = close crosses below level + step * 0.1;
+AddOrder(OrderType.BUY_AUTO, buySignal, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, sellSignal, close, 1, Color.RED, Color.RED, "${safeTitle} Sell");
+plot RangeLow = lo;
+RangeLow.SetDefaultColor(Color.RED);
+plot RangeHigh = hi;
+RangeHigh.SetDefaultColor(Color.GREEN);`;
+      case 'dca':
+        return `input dropPct = 3.0;
+input rsiLength = 14;
+input rsiOversold = 35;
+def r = RSI(length = rsiLength);
+def recentHigh = Highest(close, 10);
+def dropPctVal = (close - recentHigh) / recentHigh * 100;
+def dcaBuy = dropPctVal < -dropPct or r < rsiOversold;
+def tpHit = close > close[1] * 1.10;
+AddOrder(OrderType.BUY_AUTO, dcaBuy, close, 1, Color.GREEN, Color.GREEN, "${safeTitle} Buy");
+AddOrder(OrderType.SELL_AUTO, tpHit, close, 1, Color.RED, Color.RED, "${safeTitle} Exit");
+plot TrendLine = ExpAverage(close, 50);
+TrendLine.SetDefaultColor(Color.ORANGE);`;
       case 'chaikin':
         return `def cmf = ChaikinMoneyFlow(length = 20);
 def buySignal = cmf crosses above 0;
