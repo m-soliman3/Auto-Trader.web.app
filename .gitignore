@@ -58,4 +58,5 @@ firebase-debug.log
 .firebase/hosting.ZGlzdC9hdXRvLXRyYWRpbmcvYnJvd3Nlcg.cache
 
 # Local product/strategy images (stored on Shopify and locally, not in repo)
-public/images/
+# Note: public/images/strategies/ SVG charts are tracked — only exclude non-SVG product images
+public/images/products/
