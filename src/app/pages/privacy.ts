@@ -80,8 +80,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
         <section><h2>{{ 'privacy.s13Title' | translate }}</h2>
         <p><strong>{{ 'privacy.dataController' | translate }}</strong> Auto-Trading<br>
-        <strong>{{ 'privacy.email' | translate }}</strong> support@auto-trading.app<br>
-        <strong>{{ 'privacy.website' | translate }}</strong> https://auto-trading.app<br>
+        <strong>{{ 'privacy.email' | translate }}</strong> <a routerLink="/contact" class="back-link">{{ 'legal.contact' | translate }}</a><br>
+        <strong>{{ 'privacy.website' | translate }}</strong> www.invest-begin.com<br>
         <strong>{{ 'privacy.forComplaints' | translate }}</strong> {{ 'privacy.s13ComplaintsBody' | translate }}</p>
         </section>
       </div>
