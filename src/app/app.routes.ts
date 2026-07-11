@@ -180,6 +180,11 @@ const coreRoutes: Routes = [
     component: LearnDetailPage,
     title: 'pageTitle.learn',
   },
+  {
+    path: 'blog/:slug',
+    component: LearnDetailPage,
+    title: 'pageTitle.blog',
+  },
 ];
 
 export const routes: Routes = [

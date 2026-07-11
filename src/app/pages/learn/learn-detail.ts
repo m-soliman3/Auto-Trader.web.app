@@ -2038,10 +2038,15 @@ export class LearnDetailPage implements OnInit {
       .replace(/'/g, '&#39;');
   }
 
+  private routePrefix(): string {
+    const page = LEARN_PAGES[this.currentSlug];
+    return page?.category === 'blog' ? 'blog' : 'learn';
+  }
+
   private canonicalHref(): string {
     const origin = this.document.location?.origin ?? '';
     const lang = this.languageService.currentLang();
-    return `${origin}/${lang}/learn/${this.currentSlug}`;
+    return `${origin}/${lang}/${this.routePrefix()}/${this.currentSlug}`;
   }
 
   private ogLocale(lang: string): string {
@@ -2072,11 +2077,11 @@ export class LearnDetailPage implements OnInit {
   }
 
   learnLanguageHref(langCode: string): string {
-    return `/${langCode}/learn/${this.page?.slug ?? ''}`;
+    return `/${langCode}/${this.routePrefix()}/${this.page?.slug ?? ''}`;
   }
 
   learnLanguageLink(langCode: string): string[] {
-    return ['/', langCode, 'learn', this.page?.slug ?? ''];
+    return ['/', langCode, this.routePrefix(), this.page?.slug ?? ''];
   }
 
   async copyCodeExample(example: LearnCodeExample): Promise<void> {
