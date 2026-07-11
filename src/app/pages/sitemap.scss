@@ -142,6 +142,43 @@
   line-height: 1.5;
 }
 
+.sm-card-blog {
+  padding: 0;
+  overflow: hidden;
+
+  .sm-card-img-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .sm-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  &:hover .sm-card-img {
+    transform: scale(1.04);
+  }
+
+  .sm-card-icon,
+  .sm-card-title,
+  .sm-card-desc {
+    padding: 0 1.1rem;
+  }
+
+  .sm-card-icon {
+    padding-top: 0.9rem;
+  }
+
+  .sm-card-desc {
+    padding-bottom: 1.1rem;
+  }
+}
+
 @media (max-width: 600px) {
   .sm-grid { grid-template-columns: 1fr 1fr; }
   .sm-grid-compact { grid-template-columns: 1fr 1fr; }

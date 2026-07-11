@@ -8,7 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
 
-export type LearnCategory = 'strategy' | 'signal';
+export type LearnCategory = 'strategy' | 'signal' | 'blog';
 
 export interface LearnLink {
   label: string;
@@ -1719,6 +1719,166 @@ Rebalancing is particularly powerful for multi-asset crypto portfolios (e.g., BT
     ],
     relatedSlugs: ['dollar-cost-averaging', 'mean-reversion', 'grid-trading', 'momentum-trading'],
     imageUrl: '/images/strategies/light/rebalancing-strategy.svg',
+  },
+
+  // ─────────────────────────── BLOG POSTS ───────────────────────────
+
+  'ai-tech-stocks-june-2026': {
+    slug: 'ai-tech-stocks-june-2026',
+    category: 'blog',
+    icon: '🤖',
+    title: 'AI & Technology Stocks Power the S&P 500 to New Highs in June 2026',
+    tagline: 'A wave of AI earnings beats and infrastructure investment drove a broad-based tech rally throughout June 2026.',
+    metaTitle: 'AI & Tech Stocks Power S&P 500 to New Highs — June 2026 | AutoTrader Blog',
+    metaDescription: 'In June 2026, AI-driven earnings beats from mega-cap tech companies sent the S&P 500 to all-time highs. Explore the key drivers, top performers, and what it means for automated traders.',
+    overview: `June 2026 marked another milestone month for technology stocks as the S&P 500 surged past 6,500 — propelled almost entirely by a fresh wave of artificial intelligence optimism. Mega-cap technology companies including NVIDIA, Microsoft, Alphabet, and Meta all delivered quarterly earnings results that beat Wall Street expectations by wide margins, with AI-related revenue lines growing at triple-digit year-over-year rates.
+
+NVIDIA's data-centre segment — the bellwether for AI infrastructure spend — reported record revenues once again, fuelled by insatiable demand from cloud hyperscalers racing to expand their GPU clusters ahead of the next generation of large language model training runs. The stock climbed over 18% in June alone, briefly reclaiming its position as the world's most valuable public company.
+
+Microsoft's Azure division similarly surprised to the upside, reporting that AI-augmented cloud services now account for more than 40% of its cloud revenue. The company's Copilot suite reached 200 million monthly active business users during the quarter, far ahead of analyst forecasts. Alphabet reported that its Gemini AI model had materially improved Google Search ad click-through rates, adding billions in incremental advertising revenue.
+
+The rally was not confined to the largest names. A broad group of mid-cap AI infrastructure plays — chipmakers, cooling-system manufacturers, and energy providers supplying data centres — also rose sharply. The Philadelphia Semiconductor Index (SOX) ended June up 14.7%, its best monthly performance since late 2023.
+
+Market breadth, however, remained a point of debate among analysts. While the S&P 500 hit new all-time highs, the equal-weighted version of the index lagged significantly — suggesting that the gains were concentrated in a relatively small number of very large technology companies rather than reflecting a broad economic expansion.
+
+From a technical standpoint, the S&P 500 broke out of a multi-month consolidation range at 6,200 in the second week of June, triggering momentum signals across algorithmic trading systems. Volume on breakout days was well above average, confirming institutional participation. The CBOE Volatility Index (VIX) fell to its lowest level since January 2025 by the end of the month, reflecting investor complacency — a condition that historically precedes short-term corrections even in bull markets.
+
+For automated traders, June 2026 underscored the continued importance of sector rotation awareness and earnings-catalyst strategies. Bots configured with momentum-following logic on technology ETFs (QQQ, SOXX) captured substantial gains, while mean-reversion strategies on individual high-beta names benefited from the elevated intraday volatility that accompanied earnings announcements.`,
+    howItWorks: `auto-Trading's sector rotation module monitors relative strength across S&P 500 sectors in real time. When technology sector momentum diverges positively from the broad market — as it did throughout June 2026 — the system can automatically overweight tech exposure in portfolio allocation strategies. Earnings-event bots can also be configured to avoid holding positions through scheduled announcements or to trade the implied volatility crush using options strategies.`,
+    externalLinks: [
+      { label: 'CNBC — AI Stocks June 2026', url: 'https://www.cnbc.com/technology/', description: 'CNBC Technology section covering the latest AI stock moves and earnings analysis.' },
+      { label: 'Reuters — S&P 500 All-Time Highs', url: 'https://www.reuters.com/markets/', description: "Reuters Markets hub tracking the S&P 500's record-breaking performance." },
+      { label: 'Bloomberg — NVIDIA Earnings', url: 'https://www.bloomberg.com/technology', description: 'Bloomberg Technology coverage of semiconductor and AI infrastructure stocks.' },
+      { label: 'The Wall Street Journal — Tech Rally Analysis', url: 'https://www.wsj.com/market-data/stocks', description: 'WSJ market data and analysis on the June 2026 technology rally.' },
+    ],
+    relatedSlugs: ['momentum-trading', 'trend-following', 'breakout-strategy', 'moving-average-crossover'],
+    imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'fed-rate-pause-june-2026': {
+    slug: 'fed-rate-pause-june-2026',
+    category: 'blog',
+    icon: '🏦',
+    title: 'Fed Holds Rates in June 2026: How Equity and Bond Markets Responded',
+    tagline: 'The Federal Reserve\'s decision to hold rates steady in June 2026 sparked a cross-asset rally — but divergent signals from the dot plot introduced fresh uncertainty.',
+    metaTitle: 'Fed Holds Rates June 2026: Market Reaction & Analysis | AutoTrader Blog',
+    metaDescription: 'The Federal Reserve kept its benchmark rate unchanged at its June 2026 FOMC meeting. We break down how equities, bonds, and currencies reacted and what traders should watch next.',
+    overview: `At its June 2026 Federal Open Market Committee (FOMC) meeting, the Federal Reserve voted unanimously to hold the federal funds rate in the 4.25%–4.50% target range — a decision that had been widely anticipated by bond markets but still prompted a significant cross-asset response driven by the nuances of the accompanying statement and updated "dot plot" projections.
+
+The Fed's statement acknowledged that inflation had continued to make "modest further progress" toward the 2% target, with the core Personal Consumption Expenditures (PCE) price index running at approximately 2.4% year-over-year entering the month. However, Chair Jerome Powell — or his successor, depending on the political landscape by this date — struck a notably cautious tone in the press conference, emphasising that the labour market remained "stronger than expected" and that the committee wanted to see sustained evidence of disinflation before initiating any additional rate cuts.
+
+The updated dot plot showed that the median FOMC participant expected just one 25-basis-point rate cut in the remainder of 2026 — fewer than the two cuts markets had been pricing in. This hawkish surprise in the projections initially caused a brief equity sell-off and a spike in two-year Treasury yields. However, within 48 hours of the announcement, equities reversed sharply as investors focused on the fact that the broader easing cycle was still intact.
+
+The U.S. 10-year Treasury yield, which had been hovering around 4.1% going into the meeting, rose to 4.3% immediately after the dot plot was published before settling back to 4.15% by month-end as subsequent economic data — including a softer-than-expected jobs report — reinforced the case for gradual policy easing.
+
+The U.S. dollar index (DXY) initially strengthened following the hawkish dot plot surprise but gave back gains over the following two weeks as global risk appetite recovered. The dollar's weakness was particularly pronounced against emerging market currencies, supporting a strong month for EM equities.
+
+Equity sector rotation was pronounced. Rate-sensitive sectors including utilities and real estate investment trusts (REITs) initially sold off on the hawkish dot plot but recovered as the 10-year yield retreated. Financials — banks and insurance companies — were notable outperformers for the month as the steepening yield curve improved net interest margin outlooks.
+
+For yield-curve traders and interest-rate-sensitive equity strategies, the June 2026 Fed meeting was a reminder that the relationship between monetary policy statements and market moves is rarely linear. The initial reaction to the dot plot was quickly faded, and traders who positioned for a sustained rate sell-off were caught offside.`,
+    howItWorks: `auto-Trading's macro-event calendar module flags FOMC meeting dates and can automatically reduce position sizes or switch to neutral in the 24 hours around announcements to avoid adverse event-driven volatility. Post-announcement, momentum strategies can be configured to capture the directional move that typically establishes itself within two to four hours of the Fed's press conference.`,
+    externalLinks: [
+      { label: 'CNN Business — Federal Reserve News', url: 'https://edition.cnn.com/business/economy', description: "CNN Business coverage of the Federal Reserve's June 2026 rate decision and market impact." },
+      { label: 'Reuters — Fed Policy Tracker', url: 'https://www.reuters.com/markets/us/', description: "Reuters' comprehensive tracker of Federal Reserve policy decisions and analysis." },
+      { label: 'CNBC — Fed Press Conference', url: 'https://www.cnbc.com/federal-reserve/', description: 'CNBC live coverage and analysis of FOMC meetings and press conferences.' },
+      { label: 'Financial Times — Bond Markets', url: 'https://www.ft.com/markets', description: 'FT Markets section covering US Treasury yields and global bond market reactions.' },
+    ],
+    relatedSlugs: ['mean-reversion', 'trend-following', 'rsi-indicator', 'bollinger-bands'],
+    imageUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'options-market-boom-june-2026': {
+    slug: 'options-market-boom-june-2026',
+    category: 'blog',
+    icon: '📊',
+    title: 'The Options Market Explosion: Retail Traders Dominate Derivatives in June 2026',
+    tagline: 'Zero-days-to-expiry (0DTE) options volume hit record highs in June 2026 as retail participation in derivatives markets reached all-time levels.',
+    metaTitle: 'Retail Options Trading Boom — June 2026 Market Trends | AutoTrader Blog',
+    metaDescription: 'In June 2026, retail options trading hit record levels. Explore the rise of 0DTE contracts, the role of AI-powered trading apps, and the volatility implications for equity markets.',
+    overview: `June 2026 saw options market activity reach historic proportions, with total daily options volume on US exchanges exceeding 60 million contracts on multiple occasions — levels that would have been unimaginable just five years earlier. The dominant driver was the continued explosion of zero-days-to-expiry (0DTE) options trading, a phenomenon that has fundamentally changed the relationship between options markets and underlying equity volatility.
+
+0DTE contracts — options that expire on the same day they are traded — now account for an estimated 55% to 60% of total S&P 500 index options volume, according to data compiled by the Options Clearing Corporation (OCC). The attraction is clear: maximum leverage with a defined-loss structure, extreme sensitivity to intraday price moves, and the daily "reset" that prevents overnight gap risk. For retail traders armed with commission-free platforms and AI-powered strategy assistants, 0DTE options have become the preferred instrument for expressing short-term market views.
+
+The growth of retail participation has been turbo-charged by the proliferation of AI-powered options screeners and strategy generators embedded directly into brokerage platforms. In June 2026, multiple major brokers reported that their AI trade suggestion tools had seen user engagement double year-over-year, with options strategies being the most requested outputs. The tools' ability to suggest probability-adjusted entry points, optimal strike selection, and risk/reward scenarios in natural language has dramatically lowered the knowledge barrier.
+
+However, the structural implications of the 0DTE boom have been a subject of intense debate among market structure researchers and professional traders. Critics argue that the massive daily concentration of gamma exposure at near-the-money strikes creates a "rubber band" effect on the S&P 500: as market makers hedge their 0DTE book throughout the day, they are forced to buy when the market rises and sell when it falls — amplifying intraday swings rather than dampening them. This phenomenon, known as negative gamma, is thought to contribute to the whipsaw price action increasingly common during regular US trading hours.
+
+The CBOE's SKEW index — which measures the cost of downside protection relative to upside exposure — reached multi-year highs in mid-June, suggesting that institutional players were paying up for tail-risk hedges even as the VIX remained low. This divergence between realised and implied volatility measures was a hallmark of June 2026 and presents both opportunities and risks for automated trading strategies.
+
+For systematic traders, the 0DTE environment demands intraday strategies that are calibrated to the specific gamma-driven patterns that now characterise S&P 500 price action. Breakout strategies that rely on clean, sustained moves away from opening ranges have become more challenging; mean-reversion approaches that exploit the rubber-band snapbacks within tight intraday ranges have gained appeal.`,
+    howItWorks: `auto-Trading's intraday strategy engine supports gamma-aware position sizing that adjusts exposure based on the estimated market maker hedge flow at key strike levels. The platform integrates with market microstructure data feeds to detect when 0DTE gamma concentration creates predictable intraday support and resistance levels, enabling strategies to be calibrated to the specific dynamics of each trading day.`,
+    externalLinks: [
+      { label: 'CNBC — Options Market Analysis', url: 'https://www.cnbc.com/options-market/', description: 'CNBC coverage of retail options trading trends and market structure analysis.' },
+      { label: 'Reuters — Derivatives Markets', url: 'https://www.reuters.com/markets/deals/', description: "Reuters' coverage of derivatives markets, options volumes, and volatility dynamics." },
+      { label: 'MarketWatch — 0DTE Options Explained', url: 'https://www.marketwatch.com/investing/options', description: "MarketWatch's educational and news coverage of zero-days-to-expiry options trading." },
+      { label: 'Bloomberg — Market Microstructure', url: 'https://www.bloomberg.com/markets', description: "Bloomberg's in-depth market structure analysis covering gamma exposure and volatility." },
+    ],
+    relatedSlugs: ['volatility-breakout', 'mean-reversion', 'bollinger-bands', 'atr-indicator'],
+    imageUrl: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'emerging-markets-rally-june-2026': {
+    slug: 'emerging-markets-rally-june-2026',
+    category: 'blog',
+    icon: '🌍',
+    title: 'Dollar Weakness Fuels an Emerging Markets Equity Surge in June 2026',
+    tagline: 'As the US dollar softened mid-year, EM equities in Asia and Latin America staged their strongest monthly rally in over two years.',
+    metaTitle: 'Emerging Markets Rally June 2026: Dollar Weakness & EM Equities | AutoTrader Blog',
+    metaDescription: 'Emerging market stocks surged in June 2026 as a weakening US dollar and improving global growth outlook drove capital flows into Asia and Latin America. Full analysis inside.',
+    overview: `Emerging market (EM) equities staged one of their most impressive runs of the mid-2020s in June 2026, driven by a confluence of a weakening US dollar, resilient Chinese economic data, and improving commodity prices that boosted Latin American exporters. The MSCI Emerging Markets Index rose 8.3% in June, significantly outpacing the MSCI World (developed markets) Index's 3.1% gain over the same period.
+
+The primary catalyst was currency dynamics. As the US Federal Reserve's June FOMC meeting confirmed a cautious, data-dependent approach to future rate cuts — and subsequent economic data prints came in softer than expected — the US Dollar Index (DXY) fell approximately 2.5% over the month. For EM economies that carry significant dollar-denominated debt or whose exports are priced in dollars, a weaker greenback is an unambiguous positive: it reduces the real cost of debt service and improves the competitiveness of exports.
+
+China was a significant driver of the EM rally. After months of subdued economic activity, June 2026 brought better-than-expected industrial production and retail sales data. Authorities also announced a targeted fiscal stimulus package focused on domestic consumption — a move that had been widely anticipated but whose execution exceeded expectations in scope. The MSCI China Index rose 11.2% in June, its best month since late 2022, and dragged broader Asian EM indices higher with it.
+
+India continued to be the structural growth story of the EM world. The Nifty 50 reached another all-time high in June, fuelled by strong foreign institutional investor inflows and domestically driven economic momentum. India's younger demographic profile, growing middle class, and ongoing digital infrastructure build-out have made it the preferred destination for long-term EM allocations.
+
+In Latin America, Brazil's Bovespa benefited from a combination of rising iron ore and soy prices — key Brazilian export commodities — and a relatively stable domestic political environment. Mexico's IPC index also gained, supported by continued nearshoring investment from US companies seeking to reduce supply-chain dependence on China.
+
+The rally came with caveats. EM equities remain sensitive to any reversal in the dollar or a deterioration in Chinese economic momentum. Political risk in several key markets — including Turkey, South Africa, and several Southeast Asian economies — remains elevated. Currency carry trades, which benefit from the current environment of relatively high EM interest rates versus a falling dollar, added fuel to the rally but can unwind rapidly if global risk sentiment deteriorates.
+
+For global macro traders and portfolio managers with cross-asset mandates, June 2026 demonstrated the importance of monitoring FX dynamics as the primary driver of EM asset returns. The month also validated diversification into EM equities as a hedge against late-cycle US market concentration risk.`,
+    howItWorks: `auto-Trading supports multi-asset and multi-currency portfolio strategies, enabling traders to allocate across global equity indices, currency pairs, and emerging market ETFs within a single automated framework. Sector rotation algorithms can be configured to shift weight toward EM when the DXY trend turns bearish and EM relative strength crosses above a defined threshold.`,
+    externalLinks: [
+      { label: 'Reuters — Emerging Markets Hub', url: 'https://www.reuters.com/markets/emerging/', description: "Reuters' dedicated emerging markets coverage including equity, FX, and macro analysis." },
+      { label: 'CNN Business — Global Markets', url: 'https://edition.cnn.com/business/markets', description: 'CNN Business global markets overview covering EM equity and currency performance.' },
+      { label: 'Financial Times — EM Investing', url: 'https://www.ft.com/emerging-markets', description: "FT's emerging markets section with in-depth analysis from regional correspondents." },
+      { label: 'Bloomberg — EM Economics', url: 'https://www.bloomberg.com/economics', description: 'Bloomberg Economics coverage of emerging market growth, inflation, and capital flows.' },
+    ],
+    relatedSlugs: ['trend-following', 'momentum-trading', 'moving-average-crossover', 'rsi-indicator'],
+    imageUrl: 'https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'clean-energy-stocks-june-2026': {
+    slug: 'clean-energy-stocks-june-2026',
+    category: 'blog',
+    icon: '⚡',
+    title: 'Clean Energy Stocks: The June 2026 Green Investment Wave',
+    tagline: 'New federal incentives, record solar deployments, and surging AI data-centre power demand drove a major re-rating of renewable energy stocks in June 2026.',
+    metaTitle: 'Clean Energy Stocks June 2026: Solar, Wind & AI Power Demand | AutoTrader Blog',
+    metaDescription: 'Clean energy stocks surged in June 2026 as new federal incentives, record solar installations, and AI data-centre power demand converged to create a powerful tailwind for the renewables sector.',
+    overview: `The clean energy sector experienced a significant re-rating in June 2026, with the Invesco Solar ETF (TAN) surging 21% and the iShares Global Clean Energy ETF (ICLN) rising 16% — both substantially outperforming the broader market. The catalyst was a confluence of policy, demand, and economics that many analysts described as a structural inflection point rather than a cyclical bounce.
+
+On the policy front, the administration announced in early June an extension and expansion of the Investment Tax Credit (ITC) for utility-scale solar and wind projects, alongside new incentives for long-duration battery storage. The announcement removed a major near-term uncertainty that had been weighing on project financing decisions across the sector, and triggered a wave of large-scale renewable energy project announcements from utilities, independent power producers, and corporate buyers.
+
+The demand side of the equation was equally compelling. The insatiable power appetite of AI data centres — now the fastest-growing component of US electricity demand — has created an urgent need for new generation capacity. The data centre build-out requires electricity that is available 24/7, which presents a challenge for intermittent renewables like solar and wind. This has accelerated interest in pairing renewable generation with grid-scale battery storage and, in some cases, has renewed serious conversations about the role of nuclear power in the AI-era energy mix.
+
+Several technology companies — including major hyperscalers — signed record-breaking Power Purchase Agreements (PPAs) in June 2026, committing to buy renewable electricity from projects that haven't yet been built. These deals provide the long-term revenue visibility that allows developers to finance projects, and their size and structure were markedly more favourable to developers than PPAs signed in prior years — reflecting the tightening supply of shovel-ready renewable capacity relative to demand.
+
+Solar installation figures released in June for Q1 2026 confirmed the sector's exceptional momentum. US utility-scale solar additions reached a quarterly record, with the pipeline of projects under development now stretching out five years. Module prices, which had been a headwind for economics in the early 2020s, have stabilised at levels that make large-scale solar among the cheapest form of new generation capacity in most US markets.
+
+Within the clean energy universe, the June 2026 rally was not uniform. Pure-play solar developers and storage companies outperformed wind-focused names, which face somewhat longer permitting timelines. Offshore wind stocks, which had been battered by supply chain and financing challenges in 2024 and 2025, showed early signs of stabilisation but lagged the sector recovery.
+
+For equity investors and systematic traders, the clean energy sector's June rally highlighted the importance of monitoring policy catalysts as binary event triggers. The sector's extreme sensitivity to regulatory announcements makes it well-suited to event-driven trading strategies, while its strong underlying growth fundamentals support longer-term momentum approaches.`,
+    howItWorks: `auto-Trading's event-driven module monitors legislative and regulatory news feeds for keyword triggers related to energy policy and ITC/PTC announcements. When a high-confidence policy catalyst is detected, the system can automatically scan the clean energy ETF universe for the highest-momentum names and generate an entry signal weighted by sector relative strength. Post-event trailing stops lock in gains as the re-rating unfolds.`,
+    externalLinks: [
+      { label: 'CNBC — Energy Stocks', url: 'https://www.cnbc.com/energy/', description: "CNBC's energy sector coverage including clean energy stocks, policy news, and market analysis." },
+      { label: 'Reuters — Energy Transition', url: 'https://www.reuters.com/sustainability/energy-transition/', description: "Reuters' energy transition hub covering renewables investment, policy, and markets." },
+      { label: 'CNN — Green Energy News', url: 'https://edition.cnn.com/business/energy', description: 'CNN Business energy section covering clean energy policy and investment trends.' },
+      { label: 'Bloomberg Green', url: 'https://www.bloomberg.com/green', description: "Bloomberg Green's dedicated clean energy finance and policy coverage." },
+    ],
+    relatedSlugs: ['breakout-strategy', 'trend-following', 'momentum-trading', 'volume-weighted-average-price'],
+    imageUrl: 'https://images.unsplash.com/photo-1466951561471-9a9a7b99cd77?w=900&h=500&fit=crop&auto=format',
   },
 
 };

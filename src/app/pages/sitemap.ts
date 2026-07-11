@@ -17,6 +17,7 @@ export class SitemapPage {
 
   strategies = Object.values(LEARN_PAGES).filter(p => p.category === 'strategy');
   signals    = Object.values(LEARN_PAGES).filter(p => p.category === 'signal');
+  blogPosts  = Object.values(LEARN_PAGES).filter(p => p.category === 'blog');
 
   localizedHref(...segments: string[]): string {
     return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
