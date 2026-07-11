@@ -99,6 +99,28 @@
       </div>
     </section>
 
+    <!-- ── BLOG POSTS ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">📰</span> Blog Posts
+      </h2>
+      <p class="sm-section-desc">In-depth articles on recent stock market trends, macro events, and trading insights — updated regularly.</p>
+      <div class="sm-grid">
+        @for (page of blogPosts; track page.slug) {
+          <a [routerLink]="localizedLink('blog', page.slug)" [attr.href]="localizedHref('blog', page.slug)" class="sm-card sm-card-learn sm-card-blog">
+            @if (page.imageUrl) {
+              <div class="sm-card-img-wrap">
+                <img [src]="page.imageUrl" [alt]="page.title" class="sm-card-img" loading="lazy" width="360" height="200">
+              </div>
+            }
+            <div class="sm-card-icon">{{ page.icon }}</div>
+            <div class="sm-card-title">{{ page.title }}</div>
+            <div class="sm-card-desc">{{ page.tagline }}</div>
+          </a>
+        }
+      </div>
+    </section>
+
     <!-- ── TRADING STRATEGIES ── -->
     <section class="sm-section">
       <h2 class="sm-section-title">
