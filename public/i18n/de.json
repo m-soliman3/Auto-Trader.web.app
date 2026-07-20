@@ -3099,6 +3099,136 @@
           "description": "Binances Leitfaden zum Rebalancing eines Kryptowährungsportfolios."
         }
       ]
+    },
+    "ethereum-layer2-explosion-july-2026": {
+      "title": "Ethereum-Layer-2-Netzwerke erreichen im Juli 2026 Rekordumsätze",
+      "tagline": "Base, Arbitrum und Optimism übertrafen im Juli 2026 gemeinsam das Transaktionsvolumen des Ethereum-Mainnets, während die Gebühren auf nahezu null sanken.",
+      "metaTitle": "Ethereum Layer 2 Rekordaktivität — Juli 2026 | AutoTrader Blog",
+      "metaDescription": "Im Juli 2026 erreichten Ethereum-Layer-2-Netzwerke einschließlich Base, Arbitrum und Optimism Allzeithochs bei täglichen Transaktionen, TVL und Entwickleraktivität.",
+      "overview": "Der Juli 2026 markierte einen historischen Wendepunkt für Ethereums Layer-2-Ökosystem. Erstmals überstieg das kombinierte tägliche Transaktionsvolumen aller Layer-2-Netzwerke — darunter Base, Arbitrum, Optimism, zkSync Era und Starknet — den Ethereum-Mainnet-Durchsatz um mehr als das Zwölffache. Dieser Meilenstein bestätigte die langgehegt Überzeugung, dass L2-Skalierung die nächste Phase der Ethereum-Adoption vorantreiben würde.\n\nBase, das Layer-2-Netzwerk von Coinbase auf dem OP Stack, war der herausragende Performer des Monats. Die täglich aktiven Adressen auf Base überschritten 4,2 Millionen — weit vor dem Ethereum-Mainnet mit 1,1 Millionen. Der Total Value Locked (TVL) des Netzwerks wuchs auf über 24 Milliarden Dollar, womit es sich als zweitgrößtes L2 nach TVL hinter Arbitrum festigte.\n\nArbitrum behauptete seine Position als größtes Ethereum-L2 nach TVL mit 31 Milliarden Dollar. Die Aktivierung von EIP-7691 verdoppelte die Blob-Anzahl pro Block, was die L2-Transaktionskosten direkt senkte. Die durchschnittlichen Transaktionsgebühren auf Base und Arbitrum fielen auf ca. 0,002–0,004 Dollar pro Transaktion.\n\nDas kombinierte tägliche DEX-Handelsvolumen über alle wichtigen L2s überstieg an Spitzentagen im Juli 18 Milliarden Dollar — ein Anstieg von 340 % im Jahresvergleich. ETH stieg im Juli um etwa 19 % und übertraf damit sowohl Bitcoin als auch den breiteren Kryptomarkt.",
+      "howItWorks": "Die Multi-Exchange-Strategie-Engine von auto-Trading kann Assets über mehrere Blockchain-Ökosysteme gleichzeitig überwachen und handeln. Für L2-native Token wie ARB und OP können Strategien so konfiguriert werden, dass sie On-Chain-Aktivitätsmetriken als führende Indikatoren für Preismomentum verfolgen.",
+      "externalLinks": [
+        {
+          "label": "L2Beat — Layer 2 TVL Tracker",
+          "description": "Umfassende Echtzeit-Daten zu Ethereum Layer 2 TVL, Aktivität und Sicherheitsmetriken."
+        },
+        {
+          "label": "The Block — Ethereum L2 Analyse",
+          "description": "Ausführliche Berichte zur Entwicklung des Ethereum-Layer-2-Ökosystems."
+        },
+        {
+          "label": "Coindesk — Base Netzwerkwachstum",
+          "description": "CoinDesk-Technologieberichterstattung über Base und andere Coinbase-verknüpfte L2-Entwicklungen."
+        },
+        {
+          "label": "Messari — Ethereum Ökosystembericht",
+          "description": "Messari-Forschungsberichte zur Performance von Ethereum und seinem Layer-2-Ökosystem."
+        }
+      ]
+    },
+    "solana-institutional-surge-july-2026": {
+      "title": "Solana gewinnt institutionellen Schwung im Juli 2026: ETF-Anträge und Rekordzuflüsse",
+      "tagline": "Mehrere Vermögensverwalter stellten im Juli 2026 Anträge auf Spot-Solana-ETFs, während institutionelle Anleger die Durchsatz- und Gebührenvorteile des Netzwerks entdeckten.",
+      "metaTitle": "Solana Institutioneller Aufschwung Juli 2026: ETF-Anträge und Preisanalyse | AutoTrader Blog",
+      "metaDescription": "Im Juli 2026 stellten große Vermögensverwalter Spot-Solana-ETF-Anträge, während SOL-Preise um 32 % stiegen. Analyse des institutionellen Interesses und der On-Chain-Metriken.",
+      "overview": "Solana erlebte im Juli 2026 seine bedeutendste institutionelle Anerkennung, als eine Welle von Spot-ETF-Anträgen großer Vermögensverwalter kombiniert mit Rekord-Netzwerkmetriken SOL auf neue Allzeithochs trieb. Die Anträge zitierten Solanas wachsende Nutzung in der realen Finanzinfrastruktur, seine Energieeffizienzvorteile gegenüber Proof-of-Work-Netzwerken und den durch frühere Bitcoin- und Ethereum-ETF-Genehmigungen geschaffenen Präzedenzfall.\n\nSolanas Netzwerkleistung beeindruckte Analysten im gesamten Juli. Das Netzwerk verarbeitete in einem Peak von 68.000 Transaktionen pro Sekunde — eine Zahl, die den Durchsatz konkurrierender Layer-1- und Layer-2-Netzwerke bei weitem übertraf. Die durchschnittlichen Transaktionsgebühren blieben unter 0,001 Dollar.\n\nSolanas DeFi-Ökosystem wuchs im Juli schnell. Der TVL des Netzwerks stieg auf 18,4 Milliarden Dollar, ein Anstieg von 67 % im Jahresvergleich. Raydium und Orca berichteten von kombiniertem täglichem Handelsvolumen von über 3,5 Milliarden Dollar an Spitzentagen.\n\nSOL wertete im Juli um 32 % auf und überstieg eine Marktkapitalisierung von 180 Milliarden Dollar, womit es seine Position als drittgrößte Kryptowährung nach Marktkapitalisierung festigte.",
+      "howItWorks": "auto-Trading unterstützt den Handel mit SOL und Solana-nativen Assets über mehrere zentralisierte und dezentralisierte Exchange-Integrationen. Momentum-Strategien auf SOL können mit höheren Volatilitätsschwellenwerten konfiguriert werden.",
+      "externalLinks": [
+        {
+          "label": "CoinDesk — Solana ETF Berichterstattung",
+          "description": "CoinDesk-Richtlinien- und Regulierungsberichterstattung über Solana-ETF-Anträge und SEC-Entwicklungen."
+        },
+        {
+          "label": "Solana Foundation — Netzwerkstatistiken",
+          "description": "Offizielle Solana Foundation-Daten zu Netzwerkleistung, Validatoren und Staking."
+        },
+        {
+          "label": "The Block — Solana DeFi Daten",
+          "description": "DeFi-Daten-Tracker von The Block mit Solana DEX-Volumina und TVL-Metriken."
+        },
+        {
+          "label": "Bloomberg — Krypto ETF Tracker",
+          "description": "Bloombergs Kryptowährungs- und digitale Assets-Hub mit ETF-Anträgen und Genehmigungen."
+        }
+      ]
+    },
+    "apple-alphabet-q2-earnings-july-2026": {
+      "title": "Apple und Alphabet übertreffen Q2-2026-Gewinnschätzungen und heben den Markt",
+      "tagline": "Außergewöhnliche Q2-Ergebnisse von zwei der weltgrößten Unternehmen — angetrieben durch KI-Monetarisierung und Dienstleistungswachstum — trieben den S&P 500 im Juli 2026 auf neue Rekorde.",
+      "metaTitle": "Apple & Alphabet Q2 2026 Gewinne schlagen Erwartungen: Marktanalyse | AutoTrader Blog",
+      "metaDescription": "Apple und Alphabet übertrafen beide Q2-2026-Gewinnschätzungen im Juli 2026 deutlich, angetrieben durch KI-gestützte Dienste und Werbung. Analyse der Marktauswirkungen.",
+      "overview": "Die dritte Juliwoche 2026 brachte zwei der meistbeachteten Gewinnberichte des Jahres, als Apple und Alphabet beide Quartalsergebnisse lieferten, die die Analystenerwartungen deutlich übertrafen und eine breit angelegte Aktienrallye auslösten, die den S&P 500 auf sein viertes Allzeithoch des Monats trieb.\n\nApples Fiskales Q3 2026-Ergebnisse übertraschten am meisten. Der Umsatz belief sich auf 103,2 Milliarden Dollar — 4,6 % über der Konsensschätzung von 98,7 Milliarden Dollar. Der Dienstleistungsbereich erzielte 27,4 Milliarden Dollar Umsatz, ein Anstieg von 18,3 % im Jahresvergleich, mit einer Betriebsmarge von 76,2 %. Apple Intelligence trug messbar zu iPhone-Upgrade-Zyklen bei, mit iPhone-17-Aktivierungsraten, die etwa 9 % vor dem iPhone-16-Zyklus lagen.\n\nAlphabets Q2-2026-Ergebnisse waren ebenfalls beeindruckend. Der Umsatz erreichte 112,4 Milliarden Dollar — 14,8 % Jahreswachstum — und übertraf den Konsens um 3,2 %. Google Cloud meldete 14,6 Milliarden Dollar Umsatz, 24,9 % im Jahresvergleich.\n\nApple-Aktien stiegen im nachbörslichen Handel um 5,3 %, Alphabet gewann 6,1 %. Der kombinierte Marktkapitalisierungszuwachs beider Unternehmen in den 48 Stunden rund um ihre Gewinne betrug etwa 380 Milliarden Dollar.",
+      "howItWorks": "Das Gewinnsereignis-Modul von auto-Trading kann so konfiguriert werden, dass Positionen in den 48 Stunden vor einem großen Gewinnbericht reduziert werden, um binäres Ereignisrisiko zu vermeiden, und danach Momentum-Strategien neu einsetzt.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Apple Q2 2026 Gewinne",
+          "description": "CNBCs umfassende Berichterstattung über Apples Fiskales Q3 2026-Gewinnsergebnisse."
+        },
+        {
+          "label": "Reuters — Alphabet Q2-Ergebnisse",
+          "description": "Reuters-Technologie-Hub mit vollständiger Analyse von Alphabets Q2-2026-Gewinnschlag."
+        },
+        {
+          "label": "Seeking Alpha — Tech-Gewinnanalyse",
+          "description": "Seeking Alphas eingehende Gewinnanalyse und Anlegerkommentare zu großen Technologieunternehmen."
+        },
+        {
+          "label": "The Wall Street Journal — Q2-Gewinnsaison",
+          "description": "WSJ-Gewinn-Tracker für Q2-2026-Ergebnisse im S&P 500."
+        }
+      ]
+    },
+    "crypto-etf-record-inflows-july-2026": {
+      "title": "Bitcoin- und Ethereum-ETFs verzeichnen im Juli 2026 die größten wöchentlichen Zuflüsse aller Zeiten",
+      "tagline": "Spot-Krypto-ETFs zogen in einer einzigen Woche im Juli 2026 über 4,2 Milliarden Dollar an Nettomittelzuflüssen an, als Rentenfonds und Staatsfonds erstmals in digitale Assets investierten.",
+      "metaTitle": "Bitcoin & Ethereum ETF Rekordzuflüsse Juli 2026: Analyse | AutoTrader Blog",
+      "metaDescription": "Bitcoin- und Ethereum-Spot-ETFs verzeichneten im Juli 2026 die größten wöchentlichen Zuflüsse aller Zeiten mit insgesamt 4,2 Milliarden Dollar. Was das für Kryptomärkte bedeutet.",
+      "overview": "Die Woche vom 14.–18. Juli 2026 ging in die Geschichte des Kryptowährungsmarkts ein, als Spot-Bitcoin- und Ethereum-ETFs zusammen 4,2 Milliarden Dollar an Nettomittelzuflüssen anzogen — die größte wöchentliche Zuflussgesamtmenge seit der Bitcoin-Spot-ETF-Genehmigung im Januar 2024. Der Meilenstein spiegelte eine qualitative Verschiebung der Arten von Institutionen wider, die Kapital in Krypto allokieren: Erstmals offenbarten mehrere Rentenfonds und Staatsfonds öffentlich Kryptowährungs-ETF-Positionen in Regulierungsunterlagen.\n\nDer iShares Bitcoin Trust (IBIT) von BlackRock führte alle Produkte mit 1,68 Milliarden Dollar Zuflüssen an. Die Gesamtvermögen unter Verwaltung aller Spot-Bitcoin-ETFs überstiegen erstmals 145 Milliarden Dollar, was etwa 6,8 % von Bitcoins Gesamtmarktkapitalisierung darstellt.\n\nDie Zuflussquoten hatten direkte Auswirkungen auf Kryptopreise. Bitcoin stieg in der Rekordzuflusswoche um 8,3 %, während Ethereum um 11,4 % zulegte. On-Chain-Analysten schätzten, dass ETF-Bestände nun etwa 7,4 % des umlaufenden Bitcoin-Angebots ausmachen.\n\nFür Krypto-Trader und automatisierte Strategien unterstrichen die Rekordzuflüsse die zunehmende Bedeutung der Überwachung institutioneller Flussdaten als führenden Indikator.",
+      "howItWorks": "Die Strategie-Engine von auto-Trading kann ETF-Flussdaten als Signaleingabe für Krypto-Momentum-Strategien einbeziehen. Wenn wöchentliche Nettomittelzuflüsse positiv und beschleunigend sind, können Trend-Following-Bots ihre Long-Exposition erhöhen.",
+      "externalLinks": [
+        {
+          "label": "Bloomberg — Bitcoin ETF Flow Tracker",
+          "description": "Bloombergs täglicher Tracker für Bitcoin- und Ethereum-ETF-Zu- und Abflüsse."
+        },
+        {
+          "label": "CoinDesk — Spot ETF Berichterstattung",
+          "description": "CoinDesk-Märkte mit umfassenden Daten zur Spot-Krypto-ETF-Performance."
+        },
+        {
+          "label": "The Block — ETF Daten-Dashboard",
+          "description": "Daten-Dashboard von The Block mit allen US-notierten Spot-Bitcoin- und Ethereum-ETF-Flüssen."
+        },
+        {
+          "label": "Reuters — Institutionelle Krypto-Adoption",
+          "description": "Reuters Krypto- und digitale Assets-Berichterstattung einschließlich institutioneller Allokationstrends."
+        }
+      ]
+    },
+    "gold-3500-record-july-2026": {
+      "title": "Gold überschreitet im Juli 2026 erstmals 3.500 Dollar pro Unze",
+      "tagline": "Nachfrage nach sicheren Häfen, Zentralbankkäufe und ein schwächerer US-Dollar trieben Gold im Juli 2026 über die psychologische 3.500-Dollar-Marke.",
+      "metaTitle": "Gold erreicht Allzeithoch von 3.500 Dollar — Juli 2026 Analyse | AutoTrader Blog",
+      "metaDescription": "Gold durchbrach im Juli 2026 zum ersten Mal die 3.500-Dollar-Marke pro Unze, angetrieben durch Zentralbankkäufe, Dollar-Schwäche und geopolitische Unsicherheit.",
+      "overview": "Golds jahrhundertealte Rolle als weltbedeutendster Wertspeicher erreichte am 17. Juli 2026 ein neues Kapitel, als der Spot-Goldpreis erstmals in der Geschichte 3.500 Dollar pro Feinunze im Intraday-Handel überschritt. Der Meilenstein spiegelte ein Zusammenspiel von Makrokräften wider: anhaltende Zentralbank-Goldakkumulation, ein schwächelnder US-Dollar, anhaltende geopolitische Unsicherheit und eine Welle von Retail- und institutionellem Anlegerinteresse.\n\nZentralbankkäufe blieben der dominante strukturelle Treiber der Goldnachfrage. Daten des World Gold Council zeigten, dass Zentralbanken weltweit im ersten Halbjahr 2026 netto 320 Tonnen Gold kauften. Die Chinesische Volksbank meldete zum 19. aufeinanderfolgenden Monat eine Goldreservensteigerung.\n\nDer DXY-Index fiel im Juli 2026 um 3,8 % — sein größtes monatliches Minus seit zwei Jahren. Globale goldgedeckte ETFs verzeichneten Nettomittelzuflüsse von 68 Tonnen im Juli — die größten monatlichen Zuflüsse seit der pandemiebedingten Goldrallye 2020.\n\nSilber übertraf Gold in der zweiten Julihälfte. Der VanEck Gold Miners ETF (GDX) stieg im Monat um 18 %. Für systematische Trader lieferten Gold-Trend-Following-Strategien einige ihrer besten monatlichen Performances seit der COVID-Ära-Rallye.",
+      "howItWorks": "Die Multi-Asset-Strategie-Engine von auto-Trading unterstützt den Goldhandel über Rohstoff-CFDs und goldgedeckte ETFs (GLD, IAU, SGOL). Trend-Following-Strategien auf Gold können mit wöchentlichen oder monatlichen Lookback-Perioden konfiguriert werden.",
+      "externalLinks": [
+        {
+          "label": "World Gold Council — Marktaktualisierungen",
+          "description": "Maßgebliche Forschungen des World Gold Council zu Goldnachfrage, Zentralbankkäufen und ETF-Flüssen."
+        },
+        {
+          "label": "Reuters — Goldmarktnachrichten",
+          "description": "Reuters Rohstoff-Hub mit Live-Goldpreisdaten und Marktanalyse."
+        },
+        {
+          "label": "Bloomberg — Gold Preis Tracker",
+          "description": "Bloomberg Rohstoffe mit Gold-Spotpreisen, Futures und institutionellen Flussdaten."
+        },
+        {
+          "label": "Financial Times — Rohstoffe",
+          "description": "FT Rohstoffe mit Expertenanalyse von Golds rekordverdächtiger Juli-2026-Rallye."
+        }
+      ]
     }
   },
   "learnDetail": {

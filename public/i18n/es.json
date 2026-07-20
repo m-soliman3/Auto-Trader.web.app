@@ -3099,6 +3099,136 @@
           "description": "Guía de Binance para reequilibrar una cartera de criptomonedas."
         }
       ]
+    },
+    "ethereum-layer2-explosion-july-2026": {
+      "title": "Las redes Ethereum de Capa 2 alcanzan actividad récord en julio de 2026",
+      "tagline": "Base, Arbitrum y Optimism superaron conjuntamente los volúmenes de transacciones de la red principal de Ethereum en julio de 2026, con tarifas cayendo a casi cero.",
+      "metaTitle": "Redes Ethereum Capa 2 alcanzan actividad récord — julio 2026 | Blog AutoTrader",
+      "metaDescription": "En julio de 2026, las redes Ethereum de Capa 2 incluyendo Base, Arbitrum y Optimism alcanzaron máximos históricos en transacciones diarias, TVL y actividad de desarrolladores.",
+      "overview": "Julio de 2026 marcó un punto de inflexión histórico para el ecosistema de Capa 2 de Ethereum. Por primera vez, el volumen de transacciones diarias combinado de todas las redes de Capa 2 — incluyendo Base, Arbitrum, Optimism, zkSync Era y Starknet — superó el rendimiento de la red principal de Ethereum por un factor de más de 12 a 1. Este hito validó la apuesta de larga data de que el escalado L2 impulsaría la próxima fase de adopción de Ethereum.\n\nBase, la red de Capa 2 de Coinbase construida sobre el OP Stack, fue el destacado del mes. Las direcciones activas diarias en Base cruzaron los 4,2 millones, superando los 1,1 millones de la red principal de Ethereum. El valor total bloqueado (TVL) de la red creció a más de 24 mil millones de dólares.\n\nLa activación de EIP-7691 duplicó el conteo de blobs por bloque, reduciendo directamente los costos de transacción L2. Las tarifas promedio en Base y Arbitrum cayeron a aproximadamente 0,002–0,004 dólares por transacción.\n\nEl volumen de negociación DEX combinado en todos los L2 principales superó los 18 mil millones de dólares en días pico en julio, un aumento del 340 % interanual. ETH subió aproximadamente un 19 % durante julio, superando a Bitcoin y al mercado cripto en general.",
+      "howItWorks": "El motor de estrategia multi-exchange de auto-Trading puede monitorear y operar activos en múltiples ecosistemas blockchain simultáneamente. Para tokens nativos de L2 como ARB y OP, las estrategias pueden configurarse para rastrear métricas de actividad en cadena como indicadores líderes del momentum de precios.",
+      "externalLinks": [
+        {
+          "label": "L2Beat — Rastreador TVL de Capa 2",
+          "description": "Datos en tiempo real completos sobre TVL de Ethereum Capa 2, actividad y métricas de seguridad."
+        },
+        {
+          "label": "The Block — Análisis Ethereum L2",
+          "description": "Informes detallados sobre los desarrollos del ecosistema Ethereum Capa 2."
+        },
+        {
+          "label": "Coindesk — Crecimiento de la red Base",
+          "description": "Cobertura tecnológica de CoinDesk sobre Base y otros desarrollos L2 vinculados a Coinbase."
+        },
+        {
+          "label": "Messari — Informe del ecosistema Ethereum",
+          "description": "Informes de investigación de Messari sobre el rendimiento de Ethereum y su ecosistema de Capa 2."
+        }
+      ]
+    },
+    "solana-institutional-surge-july-2026": {
+      "title": "Solana captura impulso institucional en julio de 2026: Solicitudes de ETF y entradas récord",
+      "tagline": "Múltiples gestores de activos presentaron solicitudes de ETF spot de Solana en julio de 2026, mientras los inversores institucionales descubrían las ventajas de rendimiento y tarifas de la red.",
+      "metaTitle": "Solana: Impulso Institucional julio 2026: Solicitudes ETF y análisis de precios | Blog AutoTrader",
+      "metaDescription": "En julio de 2026, grandes gestores de activos presentaron solicitudes de ETF spot de Solana mientras los precios SOL subieron un 32%. Análisis del interés institucional y métricas en cadena.",
+      "overview": "Solana experimentó su validación institucional más significativa en julio de 2026, cuando una ola de solicitudes de ETF spot de grandes gestores de activos, combinada con métricas de red récord y un fuerte aumento en la actividad de desarrolladores, llevó a SOL a nuevos máximos históricos. Las solicitudes citaron el uso creciente de Solana en infraestructura financiera del mundo real, sus ventajas de eficiencia energética frente a las redes de prueba de trabajo y el precedente establecido por las aprobaciones anteriores de ETF de Bitcoin y Ethereum.\n\nEl rendimiento de la red de Solana continuó impresionando a los analistas. La red procesó un pico de 68.000 transacciones por segundo. Las tarifas promedio de transacción se mantuvieron por debajo de 0,001 dólares.\n\nEl ecosistema DeFi de Solana continuó creciendo rápidamente. El TVL de la red subió a 18,4 mil millones de dólares, un aumento del 67 % interanual. Raydium y Orca reportaron volúmenes de negociación diarios combinados que superaron los 3.500 millones de dólares en días pico.\n\nSOL se apreció un 32 % durante julio, llevando su capitalización de mercado por encima de los 180 mil millones de dólares, consolidando su posición como la tercera criptomoneda más grande por capitalización de mercado.",
+      "howItWorks": "auto-Trading soporta el trading de SOL y activos nativos de Solana a través de múltiples integraciones de exchanges centralizados y descentralizados. Las estrategias de momentum en SOL pueden configurarse con umbrales de volatilidad más altos.",
+      "externalLinks": [
+        {
+          "label": "CoinDesk — Cobertura del ETF de Solana",
+          "description": "Cobertura de política y regulación de CoinDesk sobre las solicitudes de ETF de Solana y desarrollos de la SEC."
+        },
+        {
+          "label": "Solana Foundation — Estadísticas de red",
+          "description": "Datos oficiales de la Solana Foundation sobre rendimiento de red, validadores y staking."
+        },
+        {
+          "label": "The Block — Datos DeFi de Solana",
+          "description": "Rastreador de datos DeFi de The Block con volúmenes DEX de Solana y métricas TVL."
+        },
+        {
+          "label": "Bloomberg — Rastreador de ETF cripto",
+          "description": "El hub de criptomonedas y activos digitales de Bloomberg con solicitudes y aprobaciones de ETF."
+        }
+      ]
+    },
+    "apple-alphabet-q2-earnings-july-2026": {
+      "title": "Apple y Alphabet superan ampliamente las estimaciones de ganancias del Q2 2026, impulsando el mercado",
+      "tagline": "Resultados excepcionales del Q2 de dos de las mayores empresas del mundo — impulsados por la monetización de IA y el crecimiento de servicios — llevaron al S&P 500 a nuevos máximos en julio de 2026.",
+      "metaTitle": "Ganancias Q2 2026 de Apple y Alphabet superan estimaciones: Análisis de mercado | Blog AutoTrader",
+      "metaDescription": "Apple y Alphabet superaron ampliamente las estimaciones de ganancias del Q2 2026 en julio de 2026, impulsados por servicios y publicidad potenciados por IA. Análisis del impacto en el mercado.",
+      "overview": "La tercera semana de julio de 2026 trajo dos de los informes de ganancias más seguidos del año, cuando Apple y Alphabet entregaron resultados trimestrales que superaron significativamente las expectativas de los analistas, desencadenando una amplia corriente alcista que llevó al S&P 500 a su cuarto máximo histórico del mes.\n\nLos resultados del Q3 fiscal 2026 de Apple fueron los más sorprendentes. Los ingresos ascendieron a 103.200 millones de dólares, superando la estimación consenso de 98.700 millones en un 4,6 %. El segmento de Servicios generó 27.400 millones de dólares en ingresos, un aumento del 18,3 % interanual, con un margen operativo del 76,2 %. Apple Intelligence contribuyó significativamente a los ciclos de actualización del iPhone, con tasas de activación del iPhone 17 aproximadamente un 9 % por delante del ciclo del iPhone 16.\n\nLos resultados del Q2 2026 de Alphabet también impresionaron. Los ingresos alcanzaron los 112.400 millones de dólares — 14,8 % de crecimiento interanual. Google Cloud reportó ingresos de 14.600 millones de dólares, 24,9 % interanual.\n\nLas acciones de Apple subieron un 5,3 % en el mercado fuera de hora, Alphabet ganó un 6,1 %. El aumento combinado de capitalización de mercado de ambas empresas en las 48 horas alrededor de sus ganancias fue de aproximadamente 380 mil millones de dólares.",
+      "howItWorks": "El módulo de eventos de ganancias de auto-Trading puede configurarse para gestionar la exposición en torno a informes trimestrales programados, reduciendo el tamaño de posiciones antes de los anuncios y reactivando estrategias de momentum después de los resultados.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Ganancias Q2 2026 de Apple",
+          "description": "Cobertura completa de CNBC sobre los resultados del Q3 fiscal 2026 de Apple."
+        },
+        {
+          "label": "Reuters — Resultados Q2 de Alphabet",
+          "description": "Hub de tecnología de Reuters con análisis completo del récord de ganancias Q2 2026 de Alphabet."
+        },
+        {
+          "label": "Seeking Alpha — Análisis de ganancias tecnológicas",
+          "description": "Análisis detallado de ganancias de Seeking Alpha y comentarios de inversores sobre grandes tecnológicas."
+        },
+        {
+          "label": "The Wall Street Journal — Temporada de ganancias Q2",
+          "description": "Rastreador de ganancias WSJ para resultados Q2 2026 del S&P 500."
+        }
+      ]
+    },
+    "crypto-etf-record-inflows-july-2026": {
+      "title": "Los ETF de Bitcoin y Ethereum registran las mayores entradas semanales de la historia en julio de 2026",
+      "tagline": "Los ETF cripto spot atrajeron más de 4.200 millones de dólares en entradas netas durante una sola semana en julio de 2026, cuando fondos de pensiones y fondos soberanos comenzaron a asignar activos digitales por primera vez.",
+      "metaTitle": "ETF Bitcoin y Ethereum: Entradas récord julio 2026: Análisis | Blog AutoTrader",
+      "metaDescription": "Los ETF spot de Bitcoin y Ethereum registraron las mayores entradas semanales de la historia en julio de 2026, totalizando 4.200 millones de dólares. Qué significa para los mercados cripto.",
+      "overview": "La semana del 14 al 18 de julio de 2026 pasó a la historia del mercado de criptomonedas cuando los ETF spot de Bitcoin y Ethereum atrajeron colectivamente 4.200 millones de dólares en entradas netas — la mayor cantidad semanal total desde la aprobación del ETF spot de Bitcoin en enero de 2024. El hito reflejó un cambio cualitativo en los tipos de instituciones que asignan capital a cripto: por primera vez, múltiples fondos de pensiones y fondos soberanos revelaron posiciones en ETF de criptomonedas en registros regulatorios.\n\nEl iShares Bitcoin Trust (IBIT) de BlackRock lideró todos los productos con 1.680 millones de dólares en entradas. Los activos bajo gestión totales de todos los ETF spot de Bitcoin superaron los 145.000 millones de dólares por primera vez, representando aproximadamente el 6,8 % de la capitalización total de mercado de Bitcoin.\n\nEl impacto en los precios fue inmediato. Bitcoin subió un 8,3 % durante la semana de entradas récord, mientras Ethereum ganó un 11,4 %. Los analistas on-chain estimaron que las tenencias de ETF ahora representan aproximadamente el 7,4 % del suministro circulante de Bitcoin.",
+      "howItWorks": "El motor de estrategia de auto-Trading puede incorporar datos de flujo de ETF como entrada de señal para estrategias de momentum cripto. Cuando las entradas netas semanales son positivas y se aceleran, los bots de seguimiento de tendencias pueden aumentar su exposición larga.",
+      "externalLinks": [
+        {
+          "label": "Bloomberg — Rastreador de flujo ETF de Bitcoin",
+          "description": "Rastreador diario de Bloomberg para entradas y salidas de ETF de Bitcoin y Ethereum."
+        },
+        {
+          "label": "CoinDesk — Cobertura ETF spot",
+          "description": "Mercados de CoinDesk con datos completos sobre rendimiento de ETF cripto spot."
+        },
+        {
+          "label": "The Block — Panel de datos ETF",
+          "description": "Panel de datos de The Block que rastrea todos los flujos de ETF spot de Bitcoin y Ethereum cotizados en EE.UU."
+        },
+        {
+          "label": "Reuters — Adopción institucional de cripto",
+          "description": "Cobertura de cripto y activos digitales de Reuters incluyendo tendencias de asignación institucional."
+        }
+      ]
+    },
+    "gold-3500-record-july-2026": {
+      "title": "El oro supera los 3.500 dólares por onza por primera vez en julio de 2026",
+      "tagline": "La demanda de refugio seguro, las compras de bancos centrales y un dólar estadounidense más débil combinados llevaron al oro a través de la barrera psicológica de los 3.500 dólares en julio de 2026.",
+      "metaTitle": "El oro alcanza máximo histórico de 3.500 dólares — Análisis julio 2026 | Blog AutoTrader",
+      "metaDescription": "El oro superó los 3.500 dólares por onza por primera vez en julio de 2026, impulsado por compras de bancos centrales, debilidad del dólar e incertidumbre geopolítica.",
+      "overview": "El papel milenario del oro como principal reserva de valor del mundo alcanzó un nuevo capítulo el 17 de julio de 2026, cuando el precio spot del oro superó los 3.500 dólares por onza troy por primera vez en la historia durante las negociaciones intradiarias. El hito reflejó una confluencia de fuerzas macroeconómicas: acumulación sostenida de oro por parte de los bancos centrales, un dólar estadounidense debilitado, persistente incertidumbre geopolítica y una ola de demanda de inversores minoristas e institucionales.\n\nLas compras de los bancos centrales siguieron siendo el principal impulsor estructural de la demanda de oro. El World Gold Council mostró que los bancos centrales mundiales compraron neto 320 toneladas de oro en el primer semestre de 2026. El Banco Popular de China divulgó un aumento de reservas de oro por decimonoveno mes consecutivo.\n\nEl índice DXY cayó un 3,8 % en julio de 2026, su mayor caída mensual en dos años. Los ETF globales respaldados por oro registraron entradas netas de 68 toneladas en julio — las mayores entradas mensuales desde la corriente alcista del oro de la época pandémica de 2020.\n\nLa plata superó al oro durante la segunda mitad de julio. El ETF VanEck Gold Miners (GDX) subió un 18 % durante el mes. Para los traders sistemáticos, las estrategias de seguimiento de tendencias en oro ofrecieron algunas de sus mejores actuaciones mensuales desde la corriente alcista de la era COVID.",
+      "howItWorks": "El motor de estrategia multi-activo de auto-Trading soporta el trading de oro a través de CFDs de materias primas y ETF respaldados por oro (GLD, IAU, SGOL). Las estrategias de seguimiento de tendencias en oro pueden configurarse con períodos de retrospectiva semanales o mensuales.",
+      "externalLinks": [
+        {
+          "label": "World Gold Council — Actualizaciones de mercado",
+          "description": "Investigación autorizada del World Gold Council sobre demanda de oro, compras de bancos centrales y flujos de ETF."
+        },
+        {
+          "label": "Reuters — Noticias del mercado del oro",
+          "description": "Hub de materias primas de Reuters con datos de precios del oro en vivo y análisis de mercado."
+        },
+        {
+          "label": "Bloomberg — Rastreador de precios del oro",
+          "description": "Sección de materias primas de Bloomberg con precios spot del oro, futuros y datos de flujo institucional."
+        },
+        {
+          "label": "Financial Times — Materias primas",
+          "description": "Sección de materias primas del FT con análisis experto de la corriente alcista récord del oro en julio de 2026."
+        }
+      ]
     }
   },
   "learnDetail": {
