@@ -35,8 +35,21 @@ export interface UserStrategy {
   templateName: string;
   templateIcon: string;
   name: string;
+  /** @deprecated use botName */
   assignedBotId: string;
+  /** @deprecated use botName */
   assignedBotName: string;
+  // ── Bot configuration fields (unified model) ──────────────────────────────
+  botName: string;
+  exchangeId: string;
+  exchangeLabel: string;
+  symbol: string;
+  timeframe: string;
+  investment: number;
+  stopLoss: number;
+  takeProfit: number;
+  accountMode: 'paper' | 'real';
+  // ─────────────────────────────────────────────────────────────────────────
   status: 'active' | 'paused';
   tradeSide: 'buy' | 'sell';
   notes: string;
@@ -373,6 +386,7 @@ export class StrategyService {
       const snap = await getDocs(col);
       this.userStrategies.set(snap.docs.map(d => {
         const data = d.data() as Partial<UserStrategy>;
+        const legacyBotName = data.assignedBotName ?? '';
         return {
           id: data.id ?? d.id,
           templateId: data.templateId ?? '',
@@ -380,7 +394,16 @@ export class StrategyService {
           templateIcon: data.templateIcon ?? '📊',
           name: data.name ?? 'Untitled Strategy',
           assignedBotId: data.assignedBotId ?? '',
-          assignedBotName: data.assignedBotName ?? 'Unknown Bot',
+          assignedBotName: legacyBotName,
+          botName: data.botName ?? legacyBotName,
+          exchangeId: data.exchangeId ?? '',
+          exchangeLabel: data.exchangeLabel ?? '',
+          symbol: data.symbol ?? '',
+          timeframe: data.timeframe ?? '',
+          investment: Number(data.investment ?? 0),
+          stopLoss: Number(data.stopLoss ?? 0),
+          takeProfit: Number(data.takeProfit ?? 0),
+          accountMode: data.accountMode ?? 'paper',
           status: data.status ?? 'active',
           tradeSide: data.tradeSide ?? 'buy',
           notes: data.notes ?? '',
@@ -455,8 +478,19 @@ export class StrategyService {
     templateName: string;
     templateIcon: string;
     name: string;
-    assignedBotId: string;
-    assignedBotName: string;
+    // legacy
+    assignedBotId?: string;
+    assignedBotName?: string;
+    // unified bot fields
+    botName?: string;
+    exchangeId?: string;
+    exchangeLabel?: string;
+    symbol?: string;
+    timeframe?: string;
+    investment?: number;
+    stopLoss?: number;
+    takeProfit?: number;
+    accountMode?: 'paper' | 'real';
     status?: 'active' | 'paused';
     tradeSide?: 'buy' | 'sell';
     notes?: string;
@@ -470,14 +504,24 @@ export class StrategyService {
 
     const now = new Date().toISOString();
     const initialStatus = input.status ?? 'active';
+    const resolvedBotName = input.botName ?? input.assignedBotName ?? '';
     const strategy: UserStrategy = {
       id: crypto.randomUUID(),
       templateId: input.templateId,
       templateName: input.templateName,
       templateIcon: input.templateIcon,
       name: input.name.trim(),
-      assignedBotId: input.assignedBotId,
-      assignedBotName: input.assignedBotName,
+      assignedBotId: input.assignedBotId ?? '',
+      assignedBotName: input.assignedBotName ?? resolvedBotName,
+      botName: resolvedBotName,
+      exchangeId: input.exchangeId ?? '',
+      exchangeLabel: input.exchangeLabel ?? '',
+      symbol: input.symbol ?? '',
+      timeframe: input.timeframe ?? '',
+      investment: input.investment ?? 0,
+      stopLoss: input.stopLoss ?? 0,
+      takeProfit: input.takeProfit ?? 0,
+      accountMode: input.accountMode ?? 'paper',
       status: initialStatus,
       tradeSide: input.tradeSide ?? 'buy',
       notes: input.notes?.trim() ?? '',
@@ -494,8 +538,17 @@ export class StrategyService {
 
   async updateUserStrategy(id: string, updates: {
     name: string;
-    assignedBotId: string;
-    assignedBotName: string;
+    assignedBotId?: string;
+    assignedBotName?: string;
+    botName?: string;
+    exchangeId?: string;
+    exchangeLabel?: string;
+    symbol?: string;
+    timeframe?: string;
+    investment?: number;
+    stopLoss?: number;
+    takeProfit?: number;
+    accountMode?: 'paper' | 'real';
     status: 'active' | 'paused';
     tradeSide: 'buy' | 'sell';
     notes?: string;
@@ -510,12 +563,22 @@ export class StrategyService {
       throw new Error('strategy not found');
     }
 
+    const resolvedBotName = updates.botName ?? updates.assignedBotName ?? existing.botName;
     const now = new Date().toISOString();
     const next: UserStrategy = {
       ...existing,
       name: updates.name.trim(),
-      assignedBotId: updates.assignedBotId,
-      assignedBotName: updates.assignedBotName,
+      assignedBotId: updates.assignedBotId ?? existing.assignedBotId,
+      assignedBotName: updates.assignedBotName ?? resolvedBotName,
+      botName: resolvedBotName,
+      exchangeId: updates.exchangeId ?? existing.exchangeId,
+      exchangeLabel: updates.exchangeLabel ?? existing.exchangeLabel,
+      symbol: updates.symbol ?? existing.symbol,
+      timeframe: updates.timeframe ?? existing.timeframe,
+      investment: updates.investment ?? existing.investment,
+      stopLoss: updates.stopLoss ?? existing.stopLoss,
+      takeProfit: updates.takeProfit ?? existing.takeProfit,
+      accountMode: updates.accountMode ?? existing.accountMode,
       status: updates.status,
       tradeSide: updates.tradeSide,
       notes: updates.notes?.trim() ?? '',

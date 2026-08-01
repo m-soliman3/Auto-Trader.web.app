@@ -2,21 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AccountModeService } from '../services/account-mode.service';
-import { BotService } from '../services/bot.service';
-import { StrategyService, StrategyTemplate, UserStrategy } from '../services/strategy.service';
-import { BrowseStrategiesModal } from '../components/browse-strategies-modal';
+import { StrategyService, UserStrategy } from '../services/strategy.service';
+import { CreateStrategyModal } from '../components/create-strategy-modal';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-strategies-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, BrowseStrategiesModal, TranslateModule],
+  imports: [CommonModule, RouterLink, CreateStrategyModal, TranslateModule],
   template: `
     <div class="user-page">
       @if (showAddStrategyModal()) {
-        <app-browse-strategies-modal
+        <app-create-strategy-modal
           (closed)="closeAddStrategy()"
-          (selected)="onStrategySelected($event)"
+          (created)="onStrategyCreated()"
         />
       }
 
@@ -73,7 +72,6 @@ import { TranslateModule } from '@ngx-translate/core';
           <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
             <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
             <a class="index-link" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
-            <a class="index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
             <a class="index-link active" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
             <a class="index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
             <a class="index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>
@@ -97,7 +95,7 @@ import { TranslateModule } from '@ngx-translate/core';
                     <button type="button" class="row" [class.selected]="selectedStrategyId() === strategy.id" (click)="selectStrategy(strategy.id)">
                       <div>
                         <div class="row-title">{{ strategy.name }}</div>
-                        <div class="row-sub">{{ strategy.templateIcon }} {{ strategy.templateName }} · {{ strategy.assignedBotName }}</div>
+                        <div class="row-sub">{{ strategy.templateIcon }} {{ strategy.templateName }}@if (strategy.symbol) { · {{ strategy.symbol }}}@if (strategy.exchangeLabel) { · {{ strategy.exchangeLabel }}}</div>
                       </div>
                       <span class="badge" [class.active]="strategy.status === 'active'" [class.paused]="strategy.status !== 'active'">
                          {{ strategy.status === 'active' ? ('common.active' | translate) : ('common.paused' | translate) }}
@@ -136,10 +134,28 @@ import { TranslateModule } from '@ngx-translate/core';
                    </div>
 
                    <div class="details-grid">
-                     <div class="detail-card"><div class="detail-label">{{ 'strategies.assignedBot' | translate }}</div><div class="detail-value">{{ strategy.assignedBotName }}</div></div>
+                     <div class="detail-card"><div class="detail-label">{{ 'strategies.botName' | translate }}</div><div class="detail-value">{{ strategy.botName || strategy.assignedBotName || '—' }}</div></div>
                      <div class="detail-card"><div class="detail-label">{{ 'strategies.tradeSide' | translate }}</div><div class="detail-value">{{ strategy.tradeSide.toUpperCase() }}</div></div>
                      <div class="detail-card"><div class="detail-label">{{ 'strategies.status' | translate }}</div><div class="detail-value">{{ strategy.status | titlecase }}</div></div>
                      <div class="detail-card"><div class="detail-label">{{ 'common.created' | translate }}</div><div class="detail-value">{{ strategy.createdAt | date:'mediumDate' }}</div></div>
+                     @if (strategy.symbol) {
+                       <div class="detail-card"><div class="detail-label">{{ 'strategies.tradingPair' | translate }}</div><div class="detail-value">{{ strategy.symbol }}</div></div>
+                     }
+                     @if (strategy.timeframe) {
+                       <div class="detail-card"><div class="detail-label">{{ 'strategies.timeframe' | translate }}</div><div class="detail-value">{{ strategy.timeframe }}</div></div>
+                     }
+                     @if (strategy.investment) {
+                       <div class="detail-card"><div class="detail-label">{{ 'strategies.investmentAmount' | translate }}</div><div class="detail-value">{{ '$' + (strategy.investment | number:'1.2-2') }}</div></div>
+                     }
+                     @if (strategy.exchangeLabel) {
+                       <div class="detail-card"><div class="detail-label">{{ 'strategies.exchange' | translate }}</div><div class="detail-value">{{ strategy.exchangeLabel }}</div></div>
+                     }
+                     @if (strategy.stopLoss) {
+                       <div class="detail-card"><div class="detail-label">{{ 'strategies.stopLoss' | translate }}</div><div class="detail-value">{{ strategy.stopLoss }}%</div></div>
+                     }
+                     @if (strategy.takeProfit) {
+                       <div class="detail-card"><div class="detail-label">{{ 'strategies.takeProfit' | translate }}</div><div class="detail-value">{{ strategy.takeProfit }}%</div></div>
+                     }
                    </div>
 
                    @if (strategy.notes) {
@@ -256,7 +272,7 @@ import { TranslateModule } from '@ngx-translate/core';
       .delete-strategy-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
       .delete-btn { border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.12); color: #ef4444; border-radius: 10px; padding: 0.46rem 0.72rem; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
       .delete-btn:hover { background: rgba(239, 68, 68, 0.2); }
-      .details-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; margin-bottom: 0.9rem; }
+      .details-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.6rem; margin-bottom: 0.9rem; }
       .detail-card { border: 1px solid var(--border); border-radius: 10px; background: var(--bg); padding: 0.65rem; }
       .detail-label { color: var(--text-secondary); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
       .detail-value { margin-top: 0.18rem; color: var(--text-primary); font-size: 0.88rem; font-weight: 700; }
@@ -292,7 +308,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class StrategiesPage {
   readonly accountMode = inject(AccountModeService);
-  readonly botService = inject(BotService);
   readonly strategyService = inject(StrategyService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -307,8 +322,13 @@ export class StrategiesPage {
 
   readonly modeLabel = computed(() => this.accountMode.mode() === 'paper' ? 'Paper' : 'Real');
   readonly visibleStrategies = computed(() => {
-    const visibleBotIds = new Set(this.botService.botsByMode(this.accountMode.mode()).map((bot) => bot.id));
-    return this.strategyService.userStrategies().filter((strategy) => visibleBotIds.has(strategy.assignedBotId));
+    const mode = this.accountMode.mode();
+    return this.strategyService.userStrategies().filter(s => {
+      // New unified strategies have accountMode set
+      if (s.accountMode) return s.accountMode === mode;
+      // Legacy strategies without accountMode: show in paper mode as fallback
+      return mode === 'paper';
+    });
   });
   readonly selectedStrategy = computed(() => {
     const id = this.selectedStrategyId();
@@ -388,13 +408,10 @@ export class StrategiesPage {
     this.clearOpenQuery();
   }
 
-  onStrategySelected(strategy: StrategyTemplate): void {
+  onStrategyCreated(): void {
     this.showAddStrategyModal.set(false);
-    this.showSuccessToast('strategies.successLaunched');
-
-    void this.router.navigate(['/dashboard', this.accountMode.mode()], {
-      queryParams: { action: 'create-strategy', templateId: strategy.id },
-    });
+    this.clearOpenQuery();
+    this.showSuccessToast('strategies.successCreated');
   }
 
   private toastTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
