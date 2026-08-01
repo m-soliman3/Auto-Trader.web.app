@@ -84,7 +84,6 @@ import { TranslateModule } from '@ngx-translate/core';
           <nav class="index-nav" [attr.aria-label]="'userPages.mainPages' | translate">
             <a class="index-link" [routerLink]="['/dashboard', accountMode.mode()]">{{ 'userPages.dashboard' | translate }}</a>
             <a class="index-link active" routerLink="/exchanges">{{ 'userPages.exchanges' | translate }}</a>
-            <a class="index-link" routerLink="/bots">{{ 'userPages.bots' | translate }}</a>
             <a class="index-link" routerLink="/strategies">{{ 'userPages.strategies' | translate }}</a>
             <a class="index-link" routerLink="/portfolio-management">{{ 'userPages.portfolio' | translate }}</a>
             <a class="index-link" routerLink="/backend-runner">{{ 'userPages.backendRunner' | translate }}</a>

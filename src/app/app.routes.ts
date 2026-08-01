@@ -11,7 +11,6 @@ import { TermsPage } from './pages/terms';
 import { PrivacyPage } from './pages/privacy';
 import { DisclaimerPage } from './pages/disclaimer';
 import { ExchangesPage } from './pages/exchanges';
-import { BotsPage } from './pages/bots';
 import { StrategiesPage } from './pages/strategies';
 import { PortfolioManagementPage } from './pages/portfolio-management';
 import { BackendRunnerPage } from './pages/backend-runner';
@@ -105,9 +104,8 @@ const coreRoutes: Routes = [
   },
   {
     path: 'bots',
-    component: BotsPage,
-    canActivate: [authGuard],
-    title: 'pageTitle.bots',
+    redirectTo: 'strategies',
+    pathMatch: 'full',
   },
   {
     path: 'strategies',
