@@ -51,7 +51,7 @@ export interface UserStrategy {
   accountMode: 'paper' | 'real';
   // ─────────────────────────────────────────────────────────────────────────
   status: 'active' | 'paused';
-  tradeSide: 'buy' | 'sell';
+  tradeSide: 'buy' | 'sell' | 'buySell';
   notes: string;
   createdAt: string;
   updatedAt: string;
@@ -492,7 +492,7 @@ export class StrategyService {
     takeProfit?: number;
     accountMode?: 'paper' | 'real';
     status?: 'active' | 'paused';
-    tradeSide?: 'buy' | 'sell';
+    tradeSide?: 'buy' | 'sell' | 'buySell';
     notes?: string;
   }): Promise<UserStrategy> {
     const uid = this.auth.currentUser()?.id;
@@ -550,7 +550,7 @@ export class StrategyService {
     takeProfit?: number;
     accountMode?: 'paper' | 'real';
     status: 'active' | 'paused';
-    tradeSide: 'buy' | 'sell';
+    tradeSide: 'buy' | 'sell' | 'buySell';
     notes?: string;
   }): Promise<UserStrategy> {
     const uid = this.auth.currentUser()?.id;
