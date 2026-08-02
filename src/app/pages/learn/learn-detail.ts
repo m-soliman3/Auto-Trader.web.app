@@ -2561,6 +2561,21 @@ export class LearnDetailPage implements OnInit {
       'counter-trend-strategy': 'mean-reversion',
       'machine-learning-strategy': 'multi-factor',
       'rebalancing-strategy': 'mean-reversion',
+      'ai-tech-stocks-june-2026': 'momentum',
+      'options-market-boom-june-2026': 'volatility',
+      'clean-energy-stocks-june-2026': 'momentum',
+      'sp500-q2-earnings-july-2026': 'price-action',
+      'us-jobs-report-july-2026': 'price-action',
+      'ethereum-layer2-explosion-july-2026': 'momentum',
+      'apple-alphabet-q2-earnings-july-2026': 'price-action',
+      'gold-3500-record-july-2026': 'momentum',
+      'solana-institutional-surge-july-2026': 'momentum',
+      'crypto-etf-record-inflows-july-2026': 'momentum',
+      'bitcoin-ath-july-2026': 'momentum',
+      'china-stimulus-markets-july-2026': 'momentum',
+      'emerging-markets-rally-june-2026': 'trend-following',
+      'fed-rate-pause-june-2026': 'price-action',
+      'gold-commodities-july-2026': 'momentum',
     };
 
     const profile = bySlug[page.slug];
