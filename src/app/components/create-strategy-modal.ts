@@ -218,6 +218,9 @@ type Step = 1 | 2 | 3 | 4;
                 <button type="button" class="csm-toggle-btn sell" [class.active]="tradeSide === 'sell'" (click)="tradeSide = 'sell'">
                   ↓ {{ 'strategies.sell' | translate }}
                 </button>
+                <button type="button" class="csm-toggle-btn buy-sell" [class.active]="tradeSide === 'buySell'" (click)="tradeSide = 'buySell'">
+                  ↕ {{ 'strategies.buySell' | translate }}
+                </button>
               </div>
             </div>
 
@@ -292,7 +295,7 @@ type Step = 1 | 2 | 3 | 4;
                 <div class="csm-review-item">
                   <span class="csm-review-key">{{ 'strategies.tradeSide' | translate }}</span>
                   <span class="csm-review-val" [class.buy-text]="tradeSide === 'buy'" [class.sell-text]="tradeSide === 'sell'">
-                    {{ tradeSide === 'buy' ? ('strategies.buy' | translate) : ('strategies.sell' | translate) }}
+                    {{ tradeSide === 'buy' ? ('strategies.buy' | translate) : tradeSide === 'sell' ? ('strategies.sell' | translate) : ('strategies.buySell' | translate) }}
                   </span>
                 </div>
               </div>
@@ -446,7 +449,7 @@ export class CreateStrategyModal {
 
   // Step 3 — Strategy fields
   strategyName = '';
-  tradeSide: 'buy' | 'sell' = 'buy';
+  tradeSide: 'buy' | 'sell' | 'buySell' = 'buy';
 
   // Step 4
   strategyStatus: 'active' | 'paused' = 'active';

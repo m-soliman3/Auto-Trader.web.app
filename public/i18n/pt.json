@@ -787,6 +787,7 @@
     "tradeSide": "Lado do Trade",
     "buy": "Comprar",
     "sell": "Vender",
+    "buySell": "Comprar/Vender",
     "status": "Situação",
     "initialStatus": "Status inicial",
     "notes": "Notas",

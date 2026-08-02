@@ -787,6 +787,7 @@
     "tradeSide": "Sens de trading",
     "buy": "Acheter",
     "sell": "Vendre",
+    "buySell": "Acheter/Vendre",
     "status": "Statut",
     "initialStatus": "Statut initial",
     "notes": "Commentaires",

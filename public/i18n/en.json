@@ -787,6 +787,7 @@
     "tradeSide": "Trade Side",
     "buy": "Buy",
     "sell": "Sell",
+    "buySell": "Buy/Sell",
     "status": "Status",
     "initialStatus": "Initial Status",
     "notes": "Notes",
