@@ -192,9 +192,11 @@ export class Dashboard implements OnDestroy {
   constructor() {
     // Reactively redirect to the signup guide whenever auth resolves
     // and the user hasn't completed it yet (handles async Firebase restore).
+    // Only redirect if Firebase confirmed this was a brand-new account (isNewUser)
+    // to avoid forcing existing users who lack the onboardingCompleted flag through the guide.
     effect(() => {
       const user = this.auth.currentUser();
-      if (user && !user.onboardingCompleted) {
+      if (user && !user.onboardingCompleted && this.auth.lastSigninWasNewUser()) {
         void this.router.navigate(['/signup-guide'], { replaceUrl: true });
       }
     });
