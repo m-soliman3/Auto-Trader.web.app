@@ -107,7 +107,7 @@ export class Dashboard implements OnDestroy {
   strategyNameInput = signal('');
   strategyAssignedBotId = signal('');
   strategyStatusInput = signal<'active' | 'paused'>('active');
-  strategyTradeSideInput = signal<'buy' | 'sell'>('buy');
+  strategyTradeSideInput = signal<'buy' | 'sell' | 'buySell'>('buy');
   strategyNotes = signal('');
   strategyFormError = signal('');
   botToDelete = signal<Bot | null>(null);
