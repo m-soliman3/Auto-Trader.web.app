@@ -122,7 +122,7 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
   const session = marketSessionForExchange(exchangeId, symbol, new Date());
   if (!session.isOpen) throw new Error(`Execution blocked: ${session.reason}`);
 
-  const configuredSide: TradeSide = strategy.tradeSide === "sell" ? "sell" : "buy";
+  const configuredSide: TradeSide = strategy.tradeSide === "sell" ? "sell" : "buy"; // "buySell" falls back to "buy"; runner always passes a concrete sideOverride for buySell strategies
   const side: TradeSide = sideOverride === "sell" || sideOverride === "buy" ? sideOverride : configuredSide;
 
   const passphrase = String(exchange.passphrase || "").trim();

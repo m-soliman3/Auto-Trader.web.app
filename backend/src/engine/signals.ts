@@ -1,11 +1,11 @@
-import { BotDoc, ExchangeDoc, Signal, StrategyDoc } from "../types/domain";
+import { BotDoc, ExchangeDoc, Signal, StrategyDoc, TradeSide } from "../types/domain";
 import { fetchAlpacaStockBars, fetchBinanceCandles, fetchCandlesViaYfinance } from "./marketData";
 import { buildMarketContext } from "./indicators";
 import { isCryptoLikeSymbol } from "./marketSession";
 
-function signalByPreferredSide(candidate: "buy" | "sell", preferred: "buy" | "sell", reason: string): Signal | null {
-  if (candidate !== preferred) return null;
-  return { side: candidate, reason };
+function signalByPreferredSide(candidate: TradeSide, preferred: TradeSide | null, reason: string): Signal | null {
+  if (preferred !== null && candidate !== preferred) return null;
+  return { side: candidate as TradeSide, reason };
 }
 
 // Exchanges that trade crypto assets 24/7 — use Binance/yfinance for market data
@@ -37,7 +37,7 @@ export async function evaluateStrategySignal(
   exchangeId: string,
   exchange: ExchangeDoc,
 ): Promise<Signal | null> {
-  const preferredSide: "buy" | "sell" = strategy.tradeSide === "sell" ? "sell" : "buy";
+  const preferredSide: TradeSide | null = strategy.tradeSide === "buySell" ? null : strategy.tradeSide === "sell" ? "sell" : "buy";
   const templateId = String(strategy.templateId || "");
 
   let candles;

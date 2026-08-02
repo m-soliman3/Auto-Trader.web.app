@@ -1,12 +1,13 @@
 export type StrategyStatus = "active" | "paused";
 export type TradeSide = "buy" | "sell";
+export type StrategyTradeSide = "buy" | "sell" | "buySell";
 
 export interface StrategyDoc {
   id: string;
   name: string;
   templateId: string;
   status: StrategyStatus;
-  tradeSide: TradeSide;
+  tradeSide: StrategyTradeSide;
   assignedBotId: string;
   updatedAt?: string;
   createdAt?: string;
