@@ -113,6 +113,7 @@ export class AuthService {
             email: fbUser.email ?? '',
             createdAt: new Date().toISOString(),
             preferredLanguage: this.language.getCurrentLanguage().code,
+            onboardingCompleted: false,
           };
           try {
             await setDoc(ref, fallbackProfile);
@@ -142,6 +143,7 @@ export class AuthService {
         email,
         createdAt: new Date().toISOString(),
         preferredLanguage: this.language.getCurrentLanguage().code,
+        onboardingCompleted: false,
       };
       await setDoc(doc(this.firestore, 'users', cred.user.uid), profile);
       this.currentUser.set(profile);
