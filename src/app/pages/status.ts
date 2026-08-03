@@ -106,15 +106,15 @@ interface ServiceCheck {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background: var(--background, #0f1117);
-      color: var(--text-primary, #e2e8f0);
+      background: var(--bg);
+      color: var(--text-primary);
       font-family: inherit;
     }
 
     .status-header {
       text-align: center;
       padding: 3rem 1.5rem 2rem;
-      border-bottom: 1px solid var(--border, rgba(255,255,255,0.08));
+      border-bottom: 1px solid var(--border);
     }
 
     .status-logo {
@@ -126,11 +126,11 @@ interface ServiceCheck {
       font-size: 2rem;
       font-weight: 700;
       margin: 0 0 0.5rem;
-      color: var(--text-primary, #e2e8f0);
+      color: var(--text-primary);
     }
 
     .status-subtitle {
-      color: var(--text-secondary, #94a3b8);
+      color: var(--text-secondary);
       margin: 0 0 1.5rem;
       font-size: 0.95rem;
     }
@@ -161,9 +161,9 @@ interface ServiceCheck {
       border: 1px solid rgba(239,68,68,0.3);
     }
     .overall-banner.checking {
-      background: rgba(148,163,184,0.1);
-      color: #94a3b8;
-      border: 1px solid rgba(148,163,184,0.2);
+      background: var(--surface-raised);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
     }
 
     .overall-dot {
@@ -193,14 +193,14 @@ interface ServiceCheck {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--text-secondary, #94a3b8);
+      color: var(--text-secondary);
       margin: 0 0 1rem;
     }
 
     /* ── Service rows ── */
     .services-list {
-      background: var(--card-bg, rgba(255,255,255,0.04));
-      border: 1px solid var(--border, rgba(255,255,255,0.08));
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
     }
@@ -211,7 +211,7 @@ interface ServiceCheck {
       align-items: center;
       gap: 1.5rem;
       padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--border, rgba(255,255,255,0.06));
+      border-bottom: 1px solid var(--border);
     }
     .service-row:last-child { border-bottom: none; }
 
@@ -226,7 +226,7 @@ interface ServiceCheck {
     }
     .service-desc {
       font-size: 0.8rem;
-      color: var(--text-secondary, #94a3b8);
+      color: var(--text-secondary);
     }
 
     /* ── Status bar ── */
@@ -241,7 +241,7 @@ interface ServiceCheck {
     .status-bar-wrap {
       width: 100%;
       height: 8px;
-      background: rgba(255,255,255,0.06);
+      background: var(--surface-raised);
       border-radius: 999px;
       overflow: hidden;
     }
@@ -254,7 +254,7 @@ interface ServiceCheck {
     .bar-degraded    { background: #eab308; width: 60%; }
     .bar-down        { background: #ef4444; width: 25%; }
     .bar-checking    {
-      background: linear-gradient(90deg, transparent, #94a3b8, transparent);
+      background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
       background-size: 200% 100%;
       animation: shimmer 1.4s infinite;
       width: 100%;
@@ -272,7 +272,7 @@ interface ServiceCheck {
     .label-operational { color: #22c55e; }
     .label-degraded    { color: #eab308; }
     .label-down        { color: #ef4444; }
-    .label-checking    { color: #94a3b8; }
+    .label-checking    { color: var(--text-muted); }
 
     /* ── Meta ── */
     .service-meta {
@@ -285,11 +285,11 @@ interface ServiceCheck {
     .latency {
       font-size: 0.8rem;
       font-weight: 600;
-      color: var(--text-primary, #e2e8f0);
+      color: var(--text-primary);
     }
     .checked-at {
       font-size: 0.72rem;
-      color: var(--text-secondary, #94a3b8);
+      color: var(--text-secondary);
     }
     .detail-msg {
       font-size: 0.72rem;
@@ -308,15 +308,15 @@ interface ServiceCheck {
     .refresh-btn {
       padding: 0.5rem 1.25rem;
       border-radius: 8px;
-      border: 1px solid var(--border, rgba(255,255,255,0.12));
+      border: 1px solid var(--border);
       background: transparent;
-      color: var(--text-primary, #e2e8f0);
+      color: var(--text-primary);
       cursor: pointer;
       font-size: 0.875rem;
       transition: background 0.2s;
     }
     .refresh-btn:hover:not(:disabled) {
-      background: rgba(255,255,255,0.06);
+      background: var(--surface-raised);
     }
     .refresh-btn:disabled {
       opacity: 0.5;
@@ -324,7 +324,7 @@ interface ServiceCheck {
     }
     .last-check {
       font-size: 0.8rem;
-      color: var(--text-secondary, #94a3b8);
+      color: var(--text-secondary);
     }
 
     /* ── Footer ── */
@@ -332,8 +332,8 @@ interface ServiceCheck {
       text-align: center;
       padding: 1.5rem;
       font-size: 0.85rem;
-      color: var(--text-secondary, #94a3b8);
-      border-top: 1px solid var(--border, rgba(255,255,255,0.08));
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
       display: flex;
       justify-content: center;
       gap: 0.75rem;
@@ -342,7 +342,7 @@ interface ServiceCheck {
       color: inherit;
       text-decoration: none;
     }
-    .status-footer a:hover { color: var(--text-primary, #e2e8f0); }
+    .status-footer a:hover { color: var(--text-primary); }
 
     @media (max-width: 600px) {
       .service-row {
