@@ -12,7 +12,7 @@ export const environment = {
   // Set to your Cloud Run URL to route supported endpoints there.
   tradingBackendBaseUrl: 'https://auto-trader-backend-zcypdnoyqa-ew.a.run.app',
   // Set to your chatbot backend URL. Leave empty only when proxied on the same origin.
-  chatbotBackendBaseUrl: '',
+  chatbotBackendBaseUrl: 'https://auto-trader-chatbot-backend-zcypdnoyqa-ew.a.run.app',
   // Stripe publishable key for the embedded payment form.
   stripePublishableKey: 'pk_live_51QDLjUCZhBElEvM6oiXno0kPFEwlv6jD1ohfH0n73Zhsineme4vEL5QzpeaiiJSVc9xABp7uTq64atUj6sFOFCw400FqkxEzkO',
   // Optional PayPal client id for showing branded PayPal checkout hint in UI.

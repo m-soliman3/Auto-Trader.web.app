@@ -20,6 +20,7 @@ import { BillingManagePage } from './pages/billing-manage';
 import { CollectingDataPage } from './pages/collecting-data';
 import { SitemapPage } from './pages/sitemap';
 import { LearnDetailPage } from './pages/learn/learn-detail';
+import { StatusPage } from './pages/status';
 import { authGuard } from './guards/auth.guard';
 import { ResolveFn } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router';
@@ -182,6 +183,11 @@ const coreRoutes: Routes = [
     path: 'blog/:slug',
     component: LearnDetailPage,
     title: 'pageTitle.blog',
+  },
+  {
+    path: 'system-health',
+    component: StatusPage,
+    title: 'pageTitle.status',
   },
 ];
 

@@ -1604,7 +1604,8 @@
     "billingManage": "إدارة الفواتير — أوتو تريدر | السجل والتحكم في الاشتراك",
     "feature": "ميزة — أوتو تريدر",
     "sitemap": "قاعدة المعرفة — أوتو تريدر | دليل الصفحات الكامل",
-    "learn": "تعلم التداول — أوتو تريدر"
+    "learn": "تعلم التداول — أوتو تريدر",
+    "status": "حالة النظام — AutoTrader | لوحة صحة الخدمات"
   },
   "learnPages": {
     "moving-average-crossover": {
@@ -3342,5 +3343,33 @@
     "codeAccessVerifyFailed": "تعذر التحقق من الرمز. حاول مرة اخرى.",
     "codeAccessThankYou": "شكرا لك. لديك الان وصول كامل الى الكود.",
     "codeAccessUnlockedThanks": "شكرا لاشتراكك. تم فتح الكود الكامل الان."
+  },
+  "status": {
+    "title": "حالة النظام",
+    "subtitle": "الصحة الفورية لجميع خدمات AutoTrader الخلفية.",
+    "servicesTitle": "الخدمات",
+    "checking": "جارٍ التحقق…",
+    "operational": "يعمل",
+    "degraded": "متدهور",
+    "down": "متوقف",
+    "checkedAt": "تم الفحص في",
+    "refresh": "تحديث الآن",
+    "lastFullCheck": "آخر فحص:",
+    "overallChecking": "جارٍ فحص الخدمات…",
+    "overallOperational": "جميع الأنظمة تعمل",
+    "overallSomeIssues": "بعض الأنظمة متدهورة",
+    "overallMajorOutage": "تم اكتشاف عطل رئيسي",
+    "backHome": "العودة إلى الرئيسية",
+    "contactSupport": "التواصل مع الدعم",
+    "services": {
+      "tradingBackend": {
+        "name": "الخادم الخلفي للتداول",
+        "desc": "تنفيذ الاستراتيجيات وبيانات المحفظة والتداول الورقي."
+      },
+      "chatbotBackend": {
+        "name": "مساعد الذكاء الاصطناعي",
+        "desc": "الدردشة الآلية وإرشادات التداول بالذكاء الاصطناعي."
+      }
+    }
   }
 }

@@ -1604,7 +1604,8 @@
     "billingManage": "Billing Management — AutoTrader | History & Subscription Controls",
     "feature": "Feature — AutoTrader",
     "sitemap": "Knowledge Base — AutoTrader | Full Page Directory",
-    "learn": "Learn Trading — AutoTrader"
+    "learn": "Learn Trading — AutoTrader",
+    "status": "System Status — AutoTrader | Service Health Dashboard"
   },
   "learnPages": {
     "moving-average-crossover": {
@@ -3212,5 +3213,33 @@
     "codeAccessVerifyFailed": "Could not verify your code. Please try again.",
     "codeAccessThankYou": "Thank you. You now have full code access.",
     "codeAccessUnlockedThanks": "Thank you for subscribing. The complete code is now unlocked."
+  },
+  "status": {
+    "title": "System Status",
+    "subtitle": "Real-time health of all AutoTrader backend services.",
+    "servicesTitle": "Services",
+    "checking": "Checking…",
+    "operational": "Operational",
+    "degraded": "Degraded",
+    "down": "Down",
+    "checkedAt": "Checked at",
+    "refresh": "Refresh now",
+    "lastFullCheck": "Last checked:",
+    "overallChecking": "Checking services…",
+    "overallOperational": "All systems operational",
+    "overallSomeIssues": "Some systems degraded",
+    "overallMajorOutage": "Major outage detected",
+    "backHome": "Back to Home",
+    "contactSupport": "Contact Support",
+    "services": {
+      "tradingBackend": {
+        "name": "Trading Backend",
+        "desc": "Strategy execution, portfolio data, and paper trading."
+      },
+      "chatbotBackend": {
+        "name": "AI Assistant",
+        "desc": "Chatbot and AI-powered trading guidance."
+      }
+    }
   }
 }
