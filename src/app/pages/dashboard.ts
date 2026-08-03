@@ -155,12 +155,13 @@ export class Dashboard implements OnDestroy {
   previewBots = computed(() => this.visibleBots().slice(0, 2));
   remainingBotsCount = computed(() => Math.max(0, this.visibleBots().length - 2));
   visibleActiveBots = computed(() => this.botService.activeBotsByMode(this.accountMode.mode()));
+  visibleActiveStrategies = computed(() => this.strategyService.userStrategies().filter(s => (s.status ?? 'active') === 'active'));
   hasVisibleExchange = computed(() => this.visibleConnections().length > 0);
   showGettingStartedChecklist = computed(() => {
     const hasExchange = this.hasVisibleExchange();
-    const hasBot = this.visibleBots().length > 0;
-    const hasActiveBot = this.visibleActiveBots().length > 0;
-    return !(hasExchange && hasBot && hasActiveBot);
+    const hasStrategy = this.visibleStrategies().length > 0;
+    const hasActiveStrategy = this.visibleActiveStrategies().length > 0;
+    return !(hasExchange && hasStrategy && hasActiveStrategy);
   });
   visibleStrategies = computed(() => {
     const visibleBotIds = new Set(this.visibleBots().map(bot => bot.id));
@@ -472,10 +473,9 @@ export class Dashboard implements OnDestroy {
   }
 
   quickActions = [
-    { labelKey: 'dashboard.qaConnectLabel',       icon: '🔗', descKey: 'dashboard.qaConnectDesc',       action: 'connect' },
-    { labelKey: 'dashboard.qaCreateBotLabel',     icon: '🤖', descKey: 'dashboard.qaCreateBotDesc',     action: 'bot' },
-    { labelKey: 'dashboard.qaCreateStrategyLabel',icon: '📊', descKey: 'dashboard.qaCreateStrategyDesc',action: 'strategies' },
-    { labelKey: 'dashboard.qaRunBacktestLabel',   icon: '🔬', descKey: 'dashboard.qaRunBacktestDesc',   action: 'backtest' },
+    { labelKey: 'dashboard.qaConnectLabel',          icon: '🔗', descKey: 'dashboard.qaConnectDesc',          action: 'connect' },
+    { labelKey: 'dashboard.qaCreateStrategyLabel',    icon: '📊', descKey: 'dashboard.qaCreateStrategyDesc',   action: 'strategies' },
+    { labelKey: 'dashboard.qaRunBacktestLabel',       icon: '🔬', descKey: 'dashboard.qaRunBacktestDesc',      action: 'backtest' },
   ];
 
   handleAction(action: string) {
