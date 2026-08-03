@@ -1604,7 +1604,8 @@
     "billingManage": "Abrechnungsverwaltung — AutoTrader | Verlauf & Abonnementverwaltung",
     "feature": "Funktion — AutoTrader",
     "sitemap": "Wissensdatenbank — AutoTrader | Vollständiges Seitenverzeichnis",
-    "learn": "Trading Lernen — AutoTrader"
+    "learn": "Trading Lernen — AutoTrader",
+    "status": "Systemstatus — AutoTrader | Dienst-Gesundheits-Dashboard"
   },
   "learnPages": {
     "moving-average-crossover": {
@@ -3342,5 +3343,33 @@
     "codeAccessVerifyFailed": "Ihr Code konnte nicht bestatigt werden. Bitte versuchen Sie es erneut.",
     "codeAccessThankYou": "Danke. Sie haben jetzt vollen Codezugriff.",
     "codeAccessUnlockedThanks": "Danke fur Ihr Abo. Der vollstandige Code ist jetzt freigeschaltet."
+  },
+  "status": {
+    "title": "Systemstatus",
+    "subtitle": "Echtzeit-Gesundheit aller AutoTrader-Backend-Dienste.",
+    "servicesTitle": "Dienste",
+    "checking": "Wird geprüft…",
+    "operational": "Betriebsbereit",
+    "degraded": "Eingeschränkt",
+    "down": "Nicht verfügbar",
+    "checkedAt": "Geprüft um",
+    "refresh": "Jetzt aktualisieren",
+    "lastFullCheck": "Zuletzt geprüft:",
+    "overallChecking": "Dienste werden geprüft…",
+    "overallOperational": "Alle Systeme in Betrieb",
+    "overallSomeIssues": "Einige Systeme eingeschränkt",
+    "overallMajorOutage": "Größerer Ausfall erkannt",
+    "backHome": "Zurück zur Startseite",
+    "contactSupport": "Support kontaktieren",
+    "services": {
+      "tradingBackend": {
+        "name": "Trading-Backend",
+        "desc": "Strategieausführung, Portfoliodaten und Papierhandel."
+      },
+      "chatbotBackend": {
+        "name": "KI-Assistent",
+        "desc": "Chatbot und KI-gestützte Trading-Beratung."
+      }
+    }
   }
 }

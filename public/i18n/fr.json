@@ -1604,7 +1604,8 @@
     "billingManage": "Gestion de la Facturation — AutoTrader | Historique & Contrôles d'Abonnement",
     "feature": "Fonctionnalité — AutoTrader",
     "sitemap": "Base de Connaissances — AutoTrader | Répertoire Complet",
-    "learn": "Apprendre le Trading — AutoTrader"
+    "learn": "Apprendre le Trading — AutoTrader",
+    "status": "État du Système — AutoTrader | Tableau de Bord de Santé des Services"
   },
   "learnPages": {
     "moving-average-crossover": {
@@ -3342,5 +3343,33 @@
     "codeAccessVerifyFailed": "Impossible de verifier votre code. Veuillez reessayer.",
     "codeAccessThankYou": "Merci. Vous avez maintenant acces au code complet.",
     "codeAccessUnlockedThanks": "Merci pour votre abonnement. Le code complet est maintenant debloque."
+  },
+  "status": {
+    "title": "État du Système",
+    "subtitle": "Santé en temps réel de tous les services backend AutoTrader.",
+    "servicesTitle": "Services",
+    "checking": "Vérification…",
+    "operational": "Opérationnel",
+    "degraded": "Dégradé",
+    "down": "Hors service",
+    "checkedAt": "Vérifié à",
+    "refresh": "Actualiser maintenant",
+    "lastFullCheck": "Dernière vérification :",
+    "overallChecking": "Vérification des services…",
+    "overallOperational": "Tous les systèmes opérationnels",
+    "overallSomeIssues": "Certains systèmes dégradés",
+    "overallMajorOutage": "Panne majeure détectée",
+    "backHome": "Retour à l’accueil",
+    "contactSupport": "Contacter le support",
+    "services": {
+      "tradingBackend": {
+        "name": "Backend Trading",
+        "desc": "Exécution des stratégies, données de portefeuille et trading papier."
+      },
+      "chatbotBackend": {
+        "name": "Assistant IA",
+        "desc": "Chatbot et conseils de trading alimentés par l’IA."
+      }
+    }
   }
 }
