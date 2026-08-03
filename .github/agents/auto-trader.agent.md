@@ -27,7 +27,17 @@ All Shopify scripts live in `scripts/` and require `SHOPIFY_SHOP` and `SHOPIFY_A
 - `scripts/generate-pro-charts.mjs` — generates pro-tier chart images for products.
 - `scripts/publish-products-to-channels.mjs` — publishes all products to the first N sales channels (default 5). Run with `--list-only` to preview channels without publishing.
 
-Run any script with: `node scripts/<script-name>.mjs`
+## Architecture
+
+- Bots and Strategies are merged: the strategy creation wizard (4-step `create-strategy-modal`) handles both bot settings and strategy settings in one flow. There is no standalone "Create Bot" flow for users.
+- The "Getting Started" checklist on the dashboard tracks: account creation → exchange connection → first strategy created → first active strategy. It does not reference bots directly.
+- `tradeSide` on a strategy supports three values: `'buy'` (buy-only), `'sell'` (sell-only, including shorts), and `'buySell'` (both directions). Backend `engine/signals.ts` passes `preferredSide = null` for `buySell`, allowing both signal directions through.
+
+## Security Expectations
+
+- New user Firestore profiles always include `onboardingCompleted: false` (set explicitly at registration and in `onAuthStateChanged` fallback). The dashboard redirects to the signup guide only when `user.onboardingCompleted === false` (strict equality), never for `undefined`. This prevents existing users whose profiles predate the field from being sent to the questionnaire.
+
+
 
 ## IndexNow (SEO Indexing)
 IndexNow allows instant URL submission to Bing and other search engines.

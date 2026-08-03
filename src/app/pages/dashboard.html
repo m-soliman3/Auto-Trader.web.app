@@ -864,27 +864,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             </div>
           </li>
-          <li class="check-item" [class.done]="visibleBots().length > 0">
-            <span class="check-icon" [class.check-done]="visibleBots().length > 0" [class.check-todo]="visibleBots().length === 0">
-              {{ visibleBots().length > 0 ? '✓' : '3' }}
+          <li class="check-item" [class.done]="visibleStrategies().length > 0">
+            <span class="check-icon" [class.check-done]="visibleStrategies().length > 0" [class.check-todo]="visibleStrategies().length === 0">
+              {{ visibleStrategies().length > 0 ? '✓' : '3' }}
             </span>
             <div>
-              <div class="check-title">{{ 'dashboard.createFirstBotChecklist' | translate }}</div>
+              <div class="check-title">{{ 'dashboard.createFirstStrategyChecklist' | translate }}</div>
               <div class="check-sub">
-                @if (visibleBots().length > 0) { {{ 'dashboard.botsCreated' | translate: {count: visibleBots().length} }} }
-                @else { <button class="inline-link" (click)="goToAddBot()">{{ 'dashboard.buildFirstBot' | translate }}</button> }
+                @if (visibleStrategies().length > 0) { {{ 'dashboard.strategiesCreated' | translate: {count: visibleStrategies().length} }} }
+                @else { <button class="inline-link" (click)="goToAddStrategy()">{{ 'dashboard.buildFirstStrategy' | translate }}</button> }
               </div>
             </div>
           </li>
-          <li class="check-item" [class.done]="visibleActiveBots().length > 0">
-            <span class="check-icon" [class.check-done]="visibleActiveBots().length > 0" [class.check-todo]="visibleActiveBots().length === 0">
-              {{ visibleActiveBots().length > 0 ? '✓' : '4' }}
+          <li class="check-item" [class.done]="visibleActiveStrategies().length > 0">
+            <span class="check-icon" [class.check-done]="visibleActiveStrategies().length > 0" [class.check-todo]="visibleActiveStrategies().length === 0">
+              {{ visibleActiveStrategies().length > 0 ? '✓' : '4' }}
             </span>
             <div>
               <div class="check-title">{{ 'dashboard.goLive' | translate }}</div>
               <div class="check-sub">
-                @if (visibleActiveBots().length > 0) { {{ 'dashboard.botsRunning' | translate: {count: visibleActiveBots().length} }} }
-                @else { {{ 'dashboard.activateBot' | translate }} }
+                @if (visibleActiveStrategies().length > 0) { {{ 'dashboard.strategiesRunning' | translate: {count: visibleActiveStrategies().length} }} }
+                @else { {{ 'dashboard.activateStrategy' | translate }} }
               </div>
             </div>
           </li>
