@@ -280,8 +280,96 @@ export async function placeAlpacaOrder(input: {
   symbol: string;
   side: "buy" | "sell";
   investment: number;
+  brokerProvisioned?: boolean;
+  brokerAccountId?: string;
 }): Promise<{ orderId: string; raw: any }> {
   const isPaper = input.exchangeId === "alpaca-paper";
+  const useBrokerSandbox = isPaper && (input.brokerProvisioned === true || input.apiKey.startsWith("CK"));
+
+  if (useBrokerSandbox) {
+    const brokerAccountId = String(input.brokerAccountId || "").trim();
+    if (!brokerAccountId) {
+      throw new Error("Alpaca broker account is missing for this paper strategy.");
+    }
+    if (!config.alpacaBrokerKeyId || !config.alpacaBrokerSecretKey) {
+      throw new Error("Alpaca Broker credentials are not configured in backend env.");
+    }
+
+    const authBody = new URLSearchParams({
+      grant_type: "client_credentials",
+      client_id: config.alpacaBrokerKeyId,
+      client_secret: config.alpacaBrokerSecretKey,
+    });
+    const tokenRes = await fetch("https://authx.sandbox.alpaca.markets/v1/oauth2/token" as any, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: authBody.toString(),
+    } as any);
+
+    const tokenText = await tokenRes.text();
+    const tokenPayload = tokenText ? JSON.parse(tokenText) : {};
+    if (!tokenRes.ok || !tokenPayload?.access_token) {
+      throw new Error(`Alpaca broker auth error ${tokenRes.status}: ${tokenText}`);
+    }
+
+    const accessToken = String(tokenPayload.access_token);
+    const baseUrl = "https://broker-api.sandbox.alpaca.markets";
+    const symbol = String(input.symbol || "").toUpperCase().trim();
+    const response = await fetch(`${baseUrl}/v1/trading/accounts/${encodeURIComponent(brokerAccountId)}/orders` as any, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        symbol,
+        side: input.side,
+        type: "market",
+        time_in_force: symbol.includes("/") ? "gtc" : "day",
+        notional: Number(input.investment).toFixed(2),
+      }),
+    } as any);
+
+    const payloadText = await response.text();
+    const payload = payloadText ? JSON.parse(payloadText) : {};
+    if (!response.ok) {
+      throw new Error(`Alpaca broker order error ${response.status}: ${payloadText}`);
+    }
+
+    const orderId = String(payload.id || "alpaca-broker-order");
+    let enrichedPayload = payload;
+    if (orderId && orderId !== "alpaca-broker-order") {
+      for (let attempt = 0; attempt < 4; attempt++) {
+        if (attempt > 0) {
+          await new Promise(resolve => setTimeout(resolve, 400));
+        }
+
+        const detailResponse = await fetch(`${baseUrl}/v1/trading/accounts/${encodeURIComponent(brokerAccountId)}/orders/${encodeURIComponent(orderId)}` as any, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        } as any);
+
+        const detailText = await detailResponse.text();
+        const detail = detailText ? JSON.parse(detailText) : null;
+        if (!detailResponse.ok || !detail) {
+          continue;
+        }
+
+        enrichedPayload = detail;
+        const filledAvgPrice = Number(detail.filled_avg_price || 0);
+        const filledQty = Number(detail.filled_qty || 0);
+        if (filledAvgPrice > 0 || filledQty > 0) {
+          break;
+        }
+      }
+    }
+
+    return { orderId, raw: enrichedPayload };
+  }
+
   const baseUrl = isPaper ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
   const symbol = String(input.symbol || "").toUpperCase().trim();
 

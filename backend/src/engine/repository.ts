@@ -36,6 +36,11 @@ export async function getExchangeByLabel(uid: string, exchangeLabel: string): Pr
   return snap.exists ? (snap.data() as ExchangeDoc) : null;
 }
 
+export async function getUserProfile(uid: string): Promise<Record<string, unknown> | null> {
+  const snap = await db.doc(`users/${uid}`).get();
+  return snap.exists ? (snap.data() as Record<string, unknown>) : null;
+}
+
 export async function writeExecution(
   uid: string,
   payload: {
