@@ -17,7 +17,7 @@ import {
   placeIgGroupOrder,
   placeSchwabOrder,
 } from "./marketData";
-import { getBot, getExchangeByLabel, getStrategy, updateBot, updateStrategy, writeExecution } from "./repository";
+import { getBot, getExchangeByLabel, getStrategy, getUserProfile, updateBot, updateStrategy, writeExecution } from "./repository";
 
 function toFiniteNumber(value: unknown): number | null {
   const parsed = Number(value);
@@ -131,7 +131,24 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
   if (exchangeId === "binance") {
     orderResult = await placeBinanceOrder({ apiKey, apiSecret, symbol, side, investment });
   } else if (exchangeId === "alpaca" || exchangeId === "alpaca-paper") {
-    orderResult = await placeAlpacaOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
+    const isBrokerPaper = exchangeId === "alpaca-paper" && (
+      (exchange.brokerProvisioned === true) || apiKey.startsWith("CK")
+    );
+    let brokerAccountId: string | undefined;
+    if (isBrokerPaper) {
+      const userProfile = await getUserProfile(uid);
+      brokerAccountId = String(userProfile?.["alpacaBrokerAccountId"] || "").trim() || undefined;
+    }
+    orderResult = await placeAlpacaOrder({
+      exchangeId,
+      apiKey,
+      apiSecret,
+      symbol,
+      side,
+      investment,
+      brokerProvisioned: isBrokerPaper,
+      brokerAccountId,
+    });
   } else if (exchangeId === "bybit" || exchangeId === "bybit-testnet") {
     orderResult = await placeBybitOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
   } else if (exchangeId === "kraken") {

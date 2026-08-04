@@ -32,6 +32,7 @@ All Shopify scripts live in `scripts/` and require `SHOPIFY_SHOP` and `SHOPIFY_A
 - Bots and Strategies are merged: the strategy creation wizard (4-step `create-strategy-modal`) handles both bot settings and strategy settings in one flow. There is no standalone "Create Bot" flow for users.
 - The "Getting Started" checklist on the dashboard tracks: account creation → exchange connection → first strategy created → first active strategy. It does not reference bots directly.
 - `tradeSide` on a strategy supports three values: `'buy'` (buy-only), `'sell'` (sell-only, including shorts), and `'buySell'` (both directions). Backend `engine/signals.ts` passes `preferredSide = null` for `buySell`, allowing both signal directions through.
+- Broker-provisioned `alpaca-paper` strategies (CK credentials or `brokerProvisioned=true`) must execute orders via Alpaca Broker sandbox trading endpoints with OAuth and `alpacaBrokerAccountId`; do not route these orders to `paper-api.alpaca.markets`.
 
 ## Security Expectations
 

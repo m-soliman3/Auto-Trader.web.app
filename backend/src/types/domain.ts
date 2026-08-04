@@ -39,6 +39,7 @@ export interface ExchangeDoc {
   apiKey: string;
   secret: string;
   passphrase?: string;
+  brokerProvisioned?: boolean;
 }
 
 export interface Candle {

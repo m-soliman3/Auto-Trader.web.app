@@ -155,7 +155,7 @@ export class Dashboard implements OnDestroy {
   previewBots = computed(() => this.visibleBots().slice(0, 2));
   remainingBotsCount = computed(() => Math.max(0, this.visibleBots().length - 2));
   visibleActiveBots = computed(() => this.botService.activeBotsByMode(this.accountMode.mode()));
-  visibleActiveStrategies = computed(() => this.strategyService.userStrategies().filter(s => (s.status ?? 'active') === 'active'));
+  visibleActiveStrategies = computed(() => this.visibleStrategies().filter(s => (s.status ?? 'active') === 'active'));
   hasVisibleExchange = computed(() => this.visibleConnections().length > 0);
   showGettingStartedChecklist = computed(() => {
     const hasExchange = this.hasVisibleExchange();
@@ -164,8 +164,15 @@ export class Dashboard implements OnDestroy {
     return !(hasExchange && hasStrategy && hasActiveStrategy);
   });
   visibleStrategies = computed(() => {
-    const visibleBotIds = new Set(this.visibleBots().map(bot => bot.id));
-    return this.strategyService.userStrategies().filter(strategy => visibleBotIds.has(strategy.assignedBotId));
+    const mode = this.accountMode.mode();
+    return this.strategyService.userStrategies().filter((strategy) => {
+      // Match Strategies page behavior: legacy strategies without accountMode
+      // are treated as paper-mode strategies.
+      if (strategy.accountMode) {
+        return strategy.accountMode === mode;
+      }
+      return mode === 'paper';
+    });
   });
   previewStrategies = computed(() => this.visibleStrategies().slice(0, 2));
   remainingStrategiesCount = computed(() => Math.max(0, this.visibleStrategies().length - 2));
