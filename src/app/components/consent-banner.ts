@@ -356,8 +356,12 @@ export class ConsentBannerComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
   showBanner: boolean = false;
   isExpanded: boolean = false;
+  private readonly STORAGE_KEY = 'gtm-consent';
   private readonly COOKIE_NAME = 'gtm-consent';
-  private readonly CONSENT_DAYS = 30;
+  /** Accepted consent never expires; declined consent expires after this many days. */
+  private readonly DECLINE_DAYS = 30;
+  /** ~10 years in days — effectively permanent for accepted consent. */
+  private readonly ACCEPT_DAYS = 3650;
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -366,18 +370,21 @@ export class ConsentBannerComponent implements OnInit {
   }
 
   checkConsent(): void {
-    // Cookie is absent (first visit or expired after 30 days) → show banner
-    this.showBanner = this.getCookie(this.COOKIE_NAME) === null;
+    // Check localStorage first (most reliable), then fall back to cookie.
+    const stored = this.readStorage();
+    this.showBanner = stored === null;
   }
 
   handleAccept(): void {
-    this.setCookie(this.COOKIE_NAME, 'accepted', this.CONSENT_DAYS);
+    this.writeStorage('accepted');
+    this.setCookie(this.COOKIE_NAME, 'accepted', this.ACCEPT_DAYS);
     this.showBanner = false;
     this.loadGTM();
   }
 
   handleDecline(): void {
-    this.setCookie(this.COOKIE_NAME, 'declined', this.CONSENT_DAYS);
+    this.writeStorage('declined');
+    this.setCookie(this.COOKIE_NAME, 'declined', this.DECLINE_DAYS);
     this.showBanner = false;
   }
 
@@ -385,8 +392,25 @@ export class ConsentBannerComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
+  /** Read consent from localStorage (primary) or cookie (fallback). */
+  private readStorage(): string | null {
+    try {
+      const ls = localStorage.getItem(this.STORAGE_KEY);
+      if (ls !== null) return ls;
+    } catch (_) { /* localStorage blocked */ }
+    return this.getCookie(this.COOKIE_NAME);
+  }
+
+  /** Persist consent to localStorage (primary). */
+  private writeStorage(value: string): void {
+    try {
+      localStorage.setItem(this.STORAGE_KEY, value);
+    } catch (_) { /* localStorage blocked — cookie-only fallback */ }
+  }
+
   private getCookie(name: string): string | null {
-    const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = document.cookie.match(new RegExp('(?:^|;\\s*)' + escapedName + '=([^;]*)'));
     return match ? decodeURIComponent(match[1]) : null;
   }
 
@@ -398,8 +422,6 @@ export class ConsentBannerComponent implements OnInit {
   }
 
   private loadGTM(): void {
-    // GTM is already in the index.html, this is just for reference
-    // In a real implementation, you might conditionally load GTM based on consent
     if ((window as any).dataLayer) {
       (window as any).dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
     }
