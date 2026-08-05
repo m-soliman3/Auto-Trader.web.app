@@ -20,8 +20,10 @@ import {
 import {
   Firestore,
   doc,
-  setDoc,
   getDoc,
+  onSnapshot,
+  setDoc,
+  Unsubscribe,
 } from '@angular/fire/firestore';
 import { LanguageService } from './language.service';
 import { UsageAnalyticsService } from './usage-analytics.service';
@@ -88,9 +90,15 @@ export class AuthService {
   isLoggedIn  = computed(() => this.currentUser() !== null);
   /** Set to true when the last social sign-in created a new account. */
   lastSigninWasNewUser = signal<boolean>(false);
+  private profileListenerUnsub: Unsubscribe | null = null;
 
   constructor() {
     onAuthStateChanged(this.fireAuth, async (fbUser) => {
+      if (this.profileListenerUnsub) {
+        this.profileListenerUnsub();
+        this.profileListenerUnsub = null;
+      }
+
       if (fbUser) {
         this.accountDetails.set({
           email: fbUser.email ?? '',
@@ -125,6 +133,19 @@ export class AuthService {
             this.applyPreferredLanguage(fallbackProfile.preferredLanguage);
           }
         }
+
+        this.profileListenerUnsub = onSnapshot(
+          ref,
+          (snapshot) => {
+            if (!snapshot.exists()) return;
+            const latestProfile = snapshot.data() as User;
+            this.currentUser.set(latestProfile);
+            this.applyPreferredLanguage(latestProfile.preferredLanguage);
+          },
+          (error) => {
+            console.error('failed to listen for user profile updates', error);
+          },
+        );
       } else {
         this.currentUser.set(null);
         this.accountDetails.set(null);
