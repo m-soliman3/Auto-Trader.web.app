@@ -2213,6 +2213,148 @@ From an investment and trading perspective, gold's $3,500 breakthrough reinforce
     imageUrl: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?w=900&h=500&fit=crop&auto=format',
   },
 
+  'bitcoin-nasdaq-correlation-aug-2026': {
+    slug: 'bitcoin-nasdaq-correlation-aug-2026',
+    category: 'blog',
+    icon: 'B',
+    title: 'Bitcoin and Nasdaq Move Together Again in August 2026: Correlation Returns to the Spotlight',
+    tagline: 'As liquidity expectations improved, Bitcoin and US growth stocks rallied in tandem, reviving the risk-on correlation trade.',
+    metaTitle: 'Bitcoin-Nasdaq Correlation August 2026: What Traders Need to Know | AutoTrader Blog',
+    metaDescription: 'Bitcoin and the Nasdaq 100 traded in lockstep through August 2026 as risk appetite returned. Learn what drove the correlation and how to adapt automated strategies.',
+    overview: `August 2026 saw a familiar market regime return: Bitcoin and US technology equities moved in the same direction on most sessions, with the 30-day rolling correlation between BTC and the Nasdaq 100 rising above 0.60 for the first time in several months. For cross-asset traders, this mattered because it confirmed that macro liquidity expectations were once again dominating both digital assets and long-duration growth equities.
+
+The core driver was policy sensitivity. Softer US inflation prints and a moderation in wage growth reinforced expectations that monetary conditions would continue easing into year-end. In that environment, assets with higher duration and higher beta tend to outperform. Bitcoin benefited through ETF demand and crypto-native momentum, while the Nasdaq benefited through multiple expansion in AI and software leaders.
+
+Market internals also supported the move. Nasdaq breadth improved compared with early summer, and crypto market depth on major exchanges expanded, reducing slippage during directional breakouts. That combination made trend continuation cleaner than during choppy, low-liquidity phases.
+
+For traders, the key lesson was regime detection. When BTC-NDX correlation is rising, portfolio risk can become concentrated even when positions appear diversified across asset classes. A long-BTC plus long-growth-equity book may effectively be one macro bet on easier financial conditions.
+
+Systematic strategies that monitor cross-asset correlation and volatility can respond by tightening gross exposure caps, reducing redundant positions, or rotating toward less correlated themes when thresholds are breached. August 2026 demonstrated that correlation is not static - and risk systems must be dynamic enough to follow it.`,
+    howItWorks: `auto-Trading's cross-asset monitor can track rolling correlation between Bitcoin and major equity indices in real time. When correlation rises above a configured threshold, the risk engine can automatically reduce overlapping long exposure, widen diversification constraints, or rebalance allocation toward lower-correlation strategies. This helps prevent hidden concentration when crypto and tech stocks begin moving as one trade.`,
+    externalLinks: [
+      { label: 'Reuters - US Markets', url: 'https://www.reuters.com/markets/us/', description: 'Coverage of US equities, rates expectations, and risk sentiment shifts.' },
+      { label: 'Nasdaq Market Activity', url: 'https://www.nasdaq.com/market-activity', description: 'Official Nasdaq market data and index tracking resources.' },
+      { label: 'CoinDesk Markets', url: 'https://www.coindesk.com/markets/', description: 'Crypto market coverage focused on Bitcoin price action and institutional flows.' },
+      { label: 'CME FedWatch Tool', url: 'https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html', description: 'Market-implied Federal Reserve policy probabilities used by macro traders.' },
+    ],
+    relatedSlugs: ['bitcoin-ath-july-2026', 'ai-tech-stocks-june-2026', 'momentum-trading', 'trend-following'],
+    imageUrl: 'https://images.unsplash.com/photo-1642543348745-6b4f6f8fe8f3?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'bitcoin-etf-flows-vs-sp500-aug-2026': {
+    slug: 'bitcoin-etf-flows-vs-sp500-aug-2026',
+    category: 'blog',
+    icon: 'BTC',
+    title: 'Bitcoin ETF Inflows vs S&P 500 Positioning in August 2026',
+    tagline: 'Record spot-Bitcoin ETF subscriptions contrasted with cautious equity positioning, creating a notable divergence in risk appetite.',
+    metaTitle: 'Bitcoin ETF Flows vs S&P 500 Positioning - August 2026 | AutoTrader Blog',
+    metaDescription: 'August 2026 featured strong Bitcoin ETF demand while S&P 500 institutional positioning remained selective. Explore the divergence and strategy implications.',
+    overview: `One of the clearest cross-market stories in August 2026 was divergence: Bitcoin ETFs continued to attract strong net inflows while positioning in broad US equities stayed selective and concentrated in a narrow set of sectors. The split challenged the assumption that all risk assets move together all the time.
+
+Bitcoin demand was driven by structurally sticky allocators. Wealth platforms and model portfolios expanded strategic crypto sleeves, and regular ETF creation activity provided steady buy-side pressure in spot markets. In contrast, many equity managers remained cautious on index-wide exposure due to elevated valuations and mixed earnings guidance outside mega-cap technology.
+
+This produced an interesting setup. Bitcoin advanced on flow persistence, while the S&P 500 advanced more unevenly through leadership concentration. Traders who assumed symmetrical risk behavior between crypto and equities were repeatedly wrong on relative performance.
+
+The practical takeaway is that flow matters as much as macro. In crypto, ETF creation/redemption data has become a first-order signal for short-term direction and medium-term trend confirmation. In equities, breadth, sector rotation, and earnings revision trends remain critical context around index performance.
+
+August highlighted the value of running relative-strength models across asset classes instead of making static assumptions. When one market has stronger marginal buyers, it can outperform even under the same macro headline backdrop.`,
+    howItWorks: `auto-Trading can ingest external flow and breadth proxies into custom strategy filters. Traders can require positive ETF-flow confirmation for Bitcoin longs while simultaneously gating S&P 500 exposure by market breadth or sector leadership thresholds. This allows the system to treat crypto and equities as related but distinct opportunity sets rather than forcing one-direction exposure across both.`,
+    externalLinks: [
+      { label: 'Bloomberg Crypto', url: 'https://www.bloomberg.com/crypto', description: 'Institutional flow updates and ETF-related market analysis.' },
+      { label: 'S&P Dow Jones Indices', url: 'https://www.spglobal.com/spdji/en/', description: 'Official index data and methodology for S&P benchmarks.' },
+      { label: 'The Block ETF Data', url: 'https://www.theblock.co/data', description: 'Data dashboards for crypto ETF flows and market structure metrics.' },
+      { label: 'CBOE Market Statistics', url: 'https://www.cboe.com/us/equities/market_statistics/', description: 'Breadth and volatility context useful for equity positioning analysis.' },
+    ],
+    relatedSlugs: ['crypto-etf-record-inflows-july-2026', 'sp500-q2-earnings-july-2026', 'breakout-strategy', 'mean-reversion'],
+    imageUrl: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'bitcoin-miner-stocks-aug-2026': {
+    slug: 'bitcoin-miner-stocks-aug-2026',
+    category: 'blog',
+    icon: 'M',
+    title: 'Bitcoin Miner Stocks Outperform in August 2026 as BTC Stabilizes Above Six Figures',
+    tagline: 'With Bitcoin holding high levels and power costs easing, listed miner equities delivered leveraged upside versus spot BTC.',
+    metaTitle: 'Bitcoin Miner Stocks Rally August 2026: Equity Leverage to Crypto | AutoTrader Blog',
+    metaDescription: 'Bitcoin mining equities outperformed in August 2026 as BTC consolidated at elevated levels and operating margins improved. Full market breakdown.',
+    overview: `Bitcoin mining equities became a high-conviction theme in August 2026. After the explosive July crypto rally, Bitcoin spent much of August consolidating at elevated prices rather than reversing sharply lower. That stability, combined with easing regional energy costs and improved fleet efficiency, supported a strong rebound in publicly listed miner stocks.
+
+Miner equities are effectively leveraged plays on three variables: Bitcoin price, network difficulty, and operating cost per mined coin. In August, the first variable stayed favorable while the third improved modestly for several operators. Investors responded by re-rating miners that had cleaner balance sheets and clearer post-halving capital discipline.
+
+Another tailwind came from treasury strategy transparency. Companies that published disciplined coin-holding policies and hedging frameworks attracted stronger inflows than peers relying on opportunistic communication. In an environment where institutional capital is increasingly involved in crypto-adjacent equities, governance quality became a direct valuation input.
+
+Volatility remained high. Miner stocks regularly moved multiple percentage points intraday, often exceeding Bitcoin's own realized volatility. That made them attractive for momentum and breakout systems, but only when paired with strict risk controls and event filters around earnings, debt issuance, and network difficulty updates.
+
+The broader implication is that crypto exposure in equity markets is becoming more nuanced. Not all "crypto stocks" behave alike, and factor-sensitive selection can materially improve outcomes over naive basket approaches.`,
+    howItWorks: `auto-Trading can run basket strategies across selected miner equities with volatility-normalized sizing and a Bitcoin trend filter. When BTC remains above a key moving-average regime and miner relative strength improves versus the Nasdaq, the system can scale into the strongest names while enforcing maximum single-name and sector-level risk caps.`,
+    externalLinks: [
+      { label: 'Nasdaq - Crypto Mining Stocks', url: 'https://www.nasdaq.com/articles', description: 'Market commentary and listed-company updates relevant to mining equities.' },
+      { label: 'CompaniesMarketCap - Bitcoin Miners', url: 'https://companiesmarketcap.com/bitcoin-mining/largest-bitcoin-mining-companies-by-market-cap/', description: 'Snapshot view of public mining-company market caps.' },
+      { label: 'Cointelegraph Markets', url: 'https://cointelegraph.com/markets', description: 'Crypto and crypto-equity newsflow with a focus on miners and market structure.' },
+      { label: 'TradingView - BTC Dominance', url: 'https://www.tradingview.com/symbols/CRYPTOCAP-BTC.D/', description: 'Useful context for relative performance between Bitcoin and crypto-adjacent equities.' },
+    ],
+    relatedSlugs: ['bitcoin-ath-july-2026', 'solana-institutional-surge-july-2026', 'momentum-trading', 'volatility-trading'],
+    imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'wall-street-crypto-risk-models-aug-2026': {
+    slug: 'wall-street-crypto-risk-models-aug-2026',
+    category: 'blog',
+    icon: 'R',
+    title: 'Wall Street Risk Models Add Crypto Signals in August 2026',
+    tagline: 'Institutional desks increasingly blended Bitcoin volatility and ETF flow signals into equity risk frameworks.',
+    metaTitle: 'Wall Street Adds Crypto Signals to Equity Risk Models - August 2026 | AutoTrader Blog',
+    metaDescription: 'By August 2026, institutional risk teams increasingly incorporated crypto market signals into stock-market positioning models. Here is why it matters.',
+    overview: `August 2026 marked a notable institutional shift: several multi-asset desks publicly described integrating crypto-derived inputs into their core risk models for equities. The change was less about "crypto hype" and more about signal utility. Bitcoin now trades with sufficient depth, global participation, and round-the-clock liquidity that its volatility and flow dynamics can inform broader risk appetite measures.
+
+Historically, equity risk models emphasized rates, credit spreads, FX, and volatility indices. In 2026, crypto entered that stack as a supplemental early-warning layer. Intraday spikes in Bitcoin implied volatility, abrupt ETF outflow regimes, or unstable perpetual-futures funding often preceded shifts in risk sentiment that later appeared in US equity futures.
+
+This does not mean crypto always leads stocks. Causality is regime-dependent, and false positives remain common. But as adoption deepens, ignoring crypto entirely creates blind spots for desks managing technology-heavy equity books and macro-sensitive sector exposure.
+
+For systematic traders, the opportunity lies in conditional modeling. Crypto signals should not be standalone triggers for equity trades; they perform better as context filters that modify confidence, size, or holding period for existing stock strategies.
+
+August reinforced an institutional reality: market structure is converging. Traders who treat crypto and equities as separate universes risk missing cross-venue information that is increasingly priced in by professionals.`,
+    howItWorks: `auto-Trading supports meta-filters that adjust strategy behavior based on external market state. A stock strategy can reduce size when Bitcoin volatility exceeds a threshold, or require confirmation when crypto flow momentum turns negative. This creates an adaptive framework where crypto signals refine, rather than replace, primary equity entries and exits.`,
+    externalLinks: [
+      { label: 'CFA Institute Research', url: 'https://www.cfainstitute.org/insights', description: 'Institutional research perspectives on cross-asset risk and portfolio construction.' },
+      { label: 'FRED Financial Data', url: 'https://fred.stlouisfed.org/', description: 'Macro and rates data used alongside cross-asset risk models.' },
+      { label: 'Deribit Insights', url: 'https://insights.deribit.com/', description: 'Crypto derivatives metrics including implied volatility and positioning context.' },
+      { label: 'Chicago Fed - Financial Conditions', url: 'https://www.chicagofed.org/research/data/nfci', description: 'Financial conditions index often used in systematic macro overlays.' },
+    ],
+    relatedSlugs: ['bitcoin-nasdaq-correlation-aug-2026', 'options-market-boom-june-2026', 'volatility-trading', 'market-making-strategy'],
+    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'bitcoin-stocks-volatility-playbook-aug-2026': {
+    slug: 'bitcoin-stocks-volatility-playbook-aug-2026',
+    category: 'blog',
+    icon: 'V',
+    title: 'A Volatility Playbook for Trading Bitcoin and Stocks Together',
+    tagline: 'August 2026 price action showed why unified volatility controls are essential when trading BTC and equities in one portfolio.',
+    metaTitle: 'Bitcoin + Stock Market Volatility Playbook (August 2026) | AutoTrader Blog',
+    metaDescription: 'Learn a practical volatility playbook for trading Bitcoin and stocks together, based on August 2026 cross-asset behavior and risk-management lessons.',
+    overview: `August 2026 delivered repeated examples of cross-asset volatility spillover: a sharp crypto move during US off-hours would often be followed by pre-market repricing in equity futures, and equity event risk would feed back into crypto by the next Asia session. For traders running both books, siloed risk controls proved inadequate.
+
+The first principle is unified risk budgeting. Instead of assigning separate max drawdowns to "crypto" and "stocks" buckets, advanced desks increasingly use a combined portfolio volatility target and allow allocations to flex inside that envelope. This avoids accidental overexposure when both sleeves become highly correlated.
+
+The second principle is regime-aware sizing. In stable conditions, traders can run wider participation across momentum and mean-reversion signals. When realized volatility and cross-asset correlation rise together, the playbook shifts toward fewer positions, shorter holding windows, and tighter stop logic.
+
+Third, event mapping matters. A calendar that includes FOMC, CPI, mega-cap earnings, and major crypto policy or ETF dates materially improves execution quality. Many poor trades in August were not bad signals; they were good signals deployed at structurally bad times.
+
+Finally, execution discipline remains non-negotiable. Multi-asset opportunities are most valuable when paired with strict slippage controls, pre-defined invalidation levels, and post-trade analytics that separate alpha quality from market noise.
+
+The broad message from August 2026 is simple: opportunity increased, but so did complexity. Traders who integrated risk, timing, and execution across both Bitcoin and equities captured cleaner outcomes than those treating each market in isolation.`,
+    howItWorks: `auto-Trading can enforce a portfolio-level volatility target across crypto and equity strategies. When combined realized volatility exceeds the configured limit, the platform can automatically de-leverage, pause lower-conviction setups, and prioritize signals with stronger trend or liquidity confirmation. The same framework can re-risk gradually as conditions normalize.`,
+    externalLinks: [
+      { label: 'NYSE Market Volatility Resources', url: 'https://www.nyse.com/market-data', description: 'US equity market data and volatility context for execution planning.' },
+      { label: 'Cboe VIX Overview', url: 'https://www.cboe.com/tradable_products/vix/', description: 'Reference for implied-volatility conditions in US equities.' },
+      { label: 'CoinGlass Data', url: 'https://www.coinglass.com/', description: 'Crypto derivatives and liquidation metrics relevant to short-term volatility analysis.' },
+      { label: 'Investopedia - Position Sizing', url: 'https://www.investopedia.com/terms/p/positionsizing.asp', description: 'Practical overview of position-sizing principles used in systematic trading.' },
+    ],
+    relatedSlugs: ['bitcoin-nasdaq-correlation-aug-2026', 'us-jobs-report-july-2026', 'atr-indicator', 'volatility-trading'],
+    imageUrl: 'https://images.unsplash.com/photo-1642790551116-18e150f248f5?w=900&h=500&fit=crop&auto=format',
+  },
+
 };
 
 @Component({
@@ -2572,6 +2714,11 @@ export class LearnDetailPage implements OnInit {
       'solana-institutional-surge-july-2026': 'momentum',
       'crypto-etf-record-inflows-july-2026': 'momentum',
       'bitcoin-ath-july-2026': 'momentum',
+      'bitcoin-nasdaq-correlation-aug-2026': 'momentum',
+      'bitcoin-etf-flows-vs-sp500-aug-2026': 'momentum',
+      'bitcoin-miner-stocks-aug-2026': 'volatility',
+      'wall-street-crypto-risk-models-aug-2026': 'multi-factor',
+      'bitcoin-stocks-volatility-playbook-aug-2026': 'volatility',
       'china-stimulus-markets-july-2026': 'momentum',
       'emerging-markets-rally-june-2026': 'trend-following',
       'fed-rate-pause-june-2026': 'price-action',
