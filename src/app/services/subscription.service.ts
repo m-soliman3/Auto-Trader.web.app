@@ -10,9 +10,9 @@ const FREE_LIMITS: Record<LimitedResource, number> = {
 };
 
 const PREMIUM_LIMITS: Record<LimitedResource, number> = {
-  exchange: 4,
-  bot: 10,
-  strategy: 5,
+  exchange: 10,
+  bot: 25,
+  strategy: 25,
 };
 
 const PREMIUM_MONTHLY_PRICE_USD = 10;
