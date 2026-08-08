@@ -169,7 +169,9 @@
     "messagePlaceholder": "اكتب رسالتك هنا…",
     "sending": "جارٍ الإرسال…",
     "sendMessage": "إرسال الرسالة",
-    "backToHome": "← العودة إلى الرئيسية"
+    "backToHome": "← العودة إلى الرئيسية",
+    "address": "كابشتات رينج 7أ، 22297 هامبورغ، ألمانيا",
+    "mapTitle": "خريطة موقع المكتب"
   },
   "payments": {
     "crypto": {

@@ -131,6 +131,43 @@
   to { transform: rotate(360deg); }
 }
 
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+
+  svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+.contact-map {
+  margin-bottom: 1.75rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+
+  iframe { display: block; }
+}
+
 .contact-alt {
   text-align: center;
   margin: 1.5rem 0 0;

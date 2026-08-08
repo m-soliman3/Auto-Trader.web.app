@@ -169,7 +169,9 @@
     "messagePlaceholder": "Escreva a sua mensagem aqui…",
     "sending": "A enviar…",
     "sendMessage": "Enviar mensagem",
-    "backToHome": "← Voltar ao início"
+    "backToHome": "← Voltar ao início",
+    "address": "Kapstadt Ring 7a, 22297 Hamburgo, Alemanha",
+    "mapTitle": "Mapa da localização do escritório"
   },
   "payments": {
     "crypto": {

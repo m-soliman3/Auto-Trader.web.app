@@ -169,7 +169,9 @@
     "messagePlaceholder": "Écrivez votre message ici…",
     "sending": "Envoi…",
     "sendMessage": "Envoyer le message",
-    "backToHome": "← Retour à l'accueil"
+    "backToHome": "← Retour à l'accueil",
+    "address": "Kapstadt Ring 7a, 22297 Hambourg, Allemagne",
+    "mapTitle": "Carte de l'emplacement du bureau"
   },
   "payments": {
     "crypto": {
