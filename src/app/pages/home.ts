@@ -45,10 +45,10 @@ export class Home implements AfterViewInit, OnDestroy {
   }
 
   stats = [
-    { value: '125K+', labelKey: 'home.stats.activeTraders' },
-    { value: '$4.2B', labelKey: 'home.stats.volumeTraded' },
+    { value: '50+', labelKey: 'home.stats.activeTraders' },
+    { value: '$2,969,028', labelKey: 'home.stats.volumeTraded' },
     { value: '99.9%', labelKey: 'home.stats.uptime' },
-    { value: '38%', labelKey: 'home.stats.avgReturn' },
+    { value: '10%', labelKey: 'home.stats.avgReturn' },
   ];
 
   features = [
