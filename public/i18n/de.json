@@ -169,7 +169,9 @@
     "messagePlaceholder": "Schreiben Sie hier Ihre Nachricht…",
     "sending": "Senden…",
     "sendMessage": "Nachricht senden",
-    "backToHome": "← Zurück zur Startseite"
+    "backToHome": "← Zurück zur Startseite",
+    "address": "Kapstadt Ring 7a, 22297 Hamburg, Deutschland",
+    "mapTitle": "Karte des Bürostandorts"
   },
   "payments": {
     "crypto": {
