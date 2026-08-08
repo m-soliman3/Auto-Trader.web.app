@@ -60,3 +60,6 @@ firebase-debug.log
 # Local product/strategy images (stored on Shopify and locally, not in repo)
 # Note: public/images/strategies/ SVG charts are tracked — only exclude non-SVG product images
 public/images/products/
+
+# Backend build output
+backend/dist/
