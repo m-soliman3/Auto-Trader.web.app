@@ -101,11 +101,27 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
   if ((strategy.status || "active") !== "active") throw new Error("Strategy must be active before execution");
 
   const botId = strategy.assignedBotId;
-  if (!botId) throw new Error("Strategy has no assigned bot");
 
-  const bot = await getBot(uid, botId);
-  if (!bot) throw new Error("Assigned bot not found");
-  if ((bot.status || "paused") !== "active") throw new Error("Bot must be active before execution");
+  // ── Resolve bot: prefer a linked bot doc; fall back to inline strategy fields ──
+  let bot: import("../types/domain").BotDoc | null = null;
+  if (botId) {
+    bot = await getBot(uid, botId);
+    if (!bot) throw new Error("Assigned bot not found");
+    if ((bot.status || "paused") !== "active") throw new Error("Bot must be active before execution");
+  } else if (strategy.exchangeId && strategy.symbol) {
+    bot = {
+      id: strategyId,
+      name: strategy.name,
+      status: "active",
+      exchangeLabel: String(strategy.exchangeLabel || strategy.exchangeId || ""),
+      exchangeId: String(strategy.exchangeId || ""),
+      symbol: String(strategy.symbol || ""),
+      timeframe: String(strategy.timeframe || "1h"),
+      investment: Number(strategy.investment || 0),
+    };
+  } else {
+    throw new Error("Strategy has no assigned bot and no inline exchange configuration");
+  }
 
   const exchange = await getExchangeByLabel(uid, bot.exchangeLabel);
   if (!exchange) throw new Error("Exchange connection not found");
@@ -185,12 +201,15 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
 
   const now = new Date().toISOString();
   const metrics = normalizeExecutionMetrics(orderResult.raw, investment);
-  await updateBot(uid, botId, { trades: Number(bot.trades || 0) + 1, updatedAt: now });
+  // Only update the separate bot document when one actually exists (legacy model).
+  if (botId) {
+    await updateBot(uid, botId, { trades: Number(bot.trades || 0) + 1, updatedAt: now });
+  }
   await updateStrategy(uid, strategyId, { lastExecutionAt: now, updatedAt: now });
   await writeExecution(uid, {
     strategyId,
     strategyName: strategy.name || "Strategy",
-    botId,
+    botId: botId || strategyId,
     botName: bot.name || "Bot",
     exchangeId,
     side,

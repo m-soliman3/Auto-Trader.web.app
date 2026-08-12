@@ -56,13 +56,25 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
     }
 
     const botId = strategy.assignedBotId;
-    if (!botId) {
-      skipped++;
-      userStats!.skipped++;
-      continue;
+
+    // ── Resolve bot: prefer a linked bot doc; fall back to inline strategy fields ──
+    let bot: import("../types/domain").BotDoc | null = null;
+    if (botId) {
+      bot = await getBot(uid, botId);
+    } else if (strategy.exchangeId && strategy.symbol) {
+      // Unified model: bot config is embedded in the strategy itself.
+      bot = {
+        id: strategyId,
+        name: strategy.name,
+        status: "active",
+        exchangeLabel: String(strategy.exchangeLabel || strategy.exchangeId || ""),
+        exchangeId: String(strategy.exchangeId || ""),
+        symbol: String(strategy.symbol || ""),
+        timeframe: String(strategy.timeframe || "1h"),
+        investment: Number(strategy.investment || 0),
+      };
     }
 
-    const bot = await getBot(uid, botId);
     if (!bot || bot.status !== "active") {
       skipped++;
       userStats!.skipped++;

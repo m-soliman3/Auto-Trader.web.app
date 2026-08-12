@@ -8,7 +8,15 @@ export interface StrategyDoc {
   templateId: string;
   status: StrategyStatus;
   tradeSide: StrategyTradeSide;
-  assignedBotId: string;
+  /** Legacy: ID of a separately-stored bot document. May be absent in the unified model. */
+  assignedBotId?: string;
+  /** Unified model: bot config stored inline on the strategy. */
+  exchangeId?: string;
+  exchangeLabel?: string;
+  symbol?: string;
+  timeframe?: string;
+  investment?: number;
+  accountMode?: "paper" | "real";
   updatedAt?: string;
   createdAt?: string;
   activatedAt?: string;
