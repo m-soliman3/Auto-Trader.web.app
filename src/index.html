@@ -34,6 +34,23 @@
 
     gtag('config', 'G-XVJCCPT86B');
   </script>
+  <!-- Google tag (gtag.js) event - delayed navigation helper -->
+  <script>
+    // Helper function to delay opening a URL until a gtag event is sent.
+    // Call it in response to an action that should navigate to a URL.
+    function gtagSendEvent(url) {
+      var callback = function () {
+        if (typeof url === 'string') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'Signup_ads_conversion', {
+        'event_callback': callback,
+        'event_timeout': 2000,
+      });
+      return false;
+    }
+  </script>
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="GMYSHYMlj3Eap/fuQa2yMw" async></script>
 </head>
 <body>
