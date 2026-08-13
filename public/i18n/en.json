@@ -1287,7 +1287,10 @@
     "emailLine": "Email: support@auto-trading.app",
     "websiteLine": "Website: https://auto-trading.app",
     "lastUpdatedLabel": "Last Updated:",
-    "lastUpdatedDate": "March 22, 2026"
+    "lastUpdatedDate": "March 22, 2026",
+    "odrTitle": "12. Online Dispute Resolution",
+    "odrBody": "The European Commission provides an Online Dispute Resolution (ODR) platform for consumers who have a complaint about a product or service purchased online. If you wish to raise a complaint, you can do so via the ODR platform:",
+    "odrLinkText": "EU Online Dispute Resolution Platform"
   },
   "featurePages": {
     "ai-signals": {
