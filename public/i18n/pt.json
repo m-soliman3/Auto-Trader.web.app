@@ -988,6 +988,9 @@
     "email": "Email:",
     "website": "Site:",
     "forComplaints": "Para reclamações:",
+    "odrTitle": "14. Resolução de Litígios em Linha",
+    "odrBody": "A Comissão Europeia disponibiliza uma plataforma de Resolução de Litígios em Linha (RLL) para consumidores que tenham uma reclamação sobre um produto ou serviço adquirido online. Se pretender apresentar uma reclamação, pode fazê-lo através da plataforma RLL:",
+    "odrLinkText": "Plataforma europeia de resolução de litígios em linha",
     "s13ComplaintsBody": "Você tem o direito de apresentar uma reclamação à autoridade local de proteção de dados."
   },
   "dashboard": {

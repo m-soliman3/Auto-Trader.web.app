@@ -988,6 +988,9 @@
     "email": "Correo electrónico:",
     "website": "Sitio web:",
     "forComplaints": "Para quejas:",
+    "odrTitle": "14. Resolución de disputas en línea",
+    "odrBody": "La Comisión Europea ofrece una plataforma de Resolución de Disputas en Línea (ODR) para los consumidores que tengan una queja sobre un producto o servicio comprado en línea. Si desea presentar una queja, puede hacerlo a través de la plataforma ODR:",
+    "odrLinkText": "Plataforma de resolución de disputas en línea de la UE",
     "s13ComplaintsBody": "Tiene derecho a presentar una queja ante su autoridad local de protección de datos."
   },
   "dashboard": {

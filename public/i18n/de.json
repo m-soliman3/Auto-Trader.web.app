@@ -988,6 +988,9 @@
     "email": "E-Mail:",
     "website": "Website:",
     "forComplaints": "Für Beschwerden:",
+    "odrTitle": "14. Online-Streitbeilegung",
+    "odrBody": "Die Europäische Kommission stellt eine Online-Streitbeilegungsplattform (OS-Plattform) für Verbraucher bereit, die eine Beschwerde über ein online gekauftes Produkt oder eine online in Anspruch genommene Dienstleistung einreichen möchten. Wenn Sie eine Beschwerde einreichen möchten, können Sie dies über die OS-Plattform tun:",
+    "odrLinkText": "EU-Plattform zur Online-Streitbeilegung",
     "s13ComplaintsBody": "Sie haben das Recht, bei Ihrer örtlichen Datenschutzbehörde eine Beschwerde einzureichen."
   },
   "dashboard": {
