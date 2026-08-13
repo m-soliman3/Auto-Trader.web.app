@@ -1286,6 +1286,9 @@
     "companyName": "Trading automatique",
     "emailLine": "Email : support@auto-trading.app",
     "websiteLine": "Site web : https://auto-trading.app",
+    "odrTitle": "12. Règlement des litiges en ligne",
+    "odrBody": "La Commission européenne met à disposition une plateforme de règlement des litiges en ligne (RLL) pour les consommateurs souhaitant déposer une réclamation concernant un produit ou service acheté en ligne. Si vous souhaitez déposer une réclamation, vous pouvez le faire via la plateforme RLL :",
+    "odrLinkText": "Plateforme européenne de règlement des litiges en ligne",
     "lastUpdatedLabel": "Dernière mise à jour :",
     "lastUpdatedDate": "22 mars 2026"
   },

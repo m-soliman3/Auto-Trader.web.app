@@ -1286,6 +1286,9 @@
     "companyName": "Auto-Handel",
     "emailLine": "E-Mail: support@auto-trading.app",
     "websiteLine": "Website: https://auto-trading.app",
+    "odrTitle": "12. Online-Streitbeilegung",
+    "odrBody": "Die Europäische Kommission stellt eine Online-Streitbeilegungsplattform (OS-Plattform) für Verbraucher bereit, die eine Beschwerde über ein online gekauftes Produkt oder eine online in Anspruch genommene Dienstleistung einreichen möchten. Wenn Sie eine Beschwerde einreichen möchten, können Sie dies über die OS-Plattform tun:",
+    "odrLinkText": "EU-Plattform zur Online-Streitbeilegung",
     "lastUpdatedLabel": "Zuletzt aktualisiert:",
     "lastUpdatedDate": "22. März 2026"
   },

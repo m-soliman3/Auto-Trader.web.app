@@ -1286,6 +1286,9 @@
     "companyName": "Negociação Automática",
     "emailLine": "Email: support@auto-trading.app",
     "websiteLine": "Site: https://auto-trading.app",
+    "odrTitle": "12. Resolução de Litígios em Linha",
+    "odrBody": "A Comissão Europeia disponibiliza uma plataforma de Resolução de Litígios em Linha (RLL) para consumidores que tenham uma reclamação sobre um produto ou serviço adquirido online. Se pretender apresentar uma reclamação, pode fazê-lo através da plataforma RLL:",
+    "odrLinkText": "Plataforma europeia de resolução de litígios em linha",
     "lastUpdatedLabel": "Última atualização:",
     "lastUpdatedDate": "22 de março de 2026"
   },

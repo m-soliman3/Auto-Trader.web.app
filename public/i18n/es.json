@@ -1286,6 +1286,9 @@
     "companyName": "Auto-comercio",
     "emailLine": "Correo electrónico: support@auto-trading.app",
     "websiteLine": "Sitio web: https://auto-trading.app",
+    "odrTitle": "12. Resolución de disputas en línea",
+    "odrBody": "La Comisión Europea ofrece una plataforma de Resolución de Disputas en Línea (ODR) para los consumidores que tengan una queja sobre un producto o servicio comprado en línea. Si desea presentar una queja, puede hacerlo a través de la plataforma ODR:",
+    "odrLinkText": "Plataforma de resolución de disputas en línea de la UE",
     "lastUpdatedLabel": "Última actualización:",
     "lastUpdatedDate": "22 de marzo de 2026"
   },
