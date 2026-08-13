@@ -84,6 +84,11 @@ import { TranslateModule } from '@ngx-translate/core';
         <strong>{{ 'privacy.website' | translate }}</strong> www.invest-begin.com<br>
         <strong>{{ 'privacy.forComplaints' | translate }}</strong> {{ 'privacy.s13ComplaintsBody' | translate }}</p>
         </section>
+
+        <section><h2>{{ 'privacy.odrTitle' | translate }}</h2>
+        <p>{{ 'privacy.odrBody' | translate }}</p>
+        <p><a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">{{ 'privacy.odrLinkText' | translate }}</a></p>
+        </section>
       </div>
     </div>
   `,

@@ -988,6 +988,9 @@
     "email": "E-mail :",
     "website": "Site web :",
     "forComplaints": "Pour les plaintes :",
+    "odrTitle": "14. Règlement des litiges en ligne",
+    "odrBody": "La Commission européenne met à disposition une plateforme de règlement des litiges en ligne (RLL) pour les consommateurs souhaitant déposer une réclamation concernant un produit ou service acheté en ligne. Si vous souhaitez déposer une réclamation, vous pouvez le faire via la plateforme RLL :",
+    "odrLinkText": "Plateforme européenne de règlement des litiges en ligne",
     "s13ComplaintsBody": "Vous avez le droit de déposer une plainte auprès de votre autorité locale de protection des données."
   },
   "dashboard": {

@@ -988,7 +988,10 @@
     "email": "Email:",
     "website": "Website:",
     "forComplaints": "For complaints:",
-    "s13ComplaintsBody": "You have the right to lodge a complaint with your local data protection authority."
+    "s13ComplaintsBody": "You have the right to lodge a complaint with your local data protection authority.",
+    "odrTitle": "14. Online Dispute Resolution",
+    "odrBody": "The European Commission provides an Online Dispute Resolution (ODR) platform for consumers who have a complaint about a product or service purchased online. If you wish to raise a complaint, you can do so via the ODR platform:",
+    "odrLinkText": "EU Online Dispute Resolution Platform"
   },
   "dashboard": {
     "realStrategyTemplate": "Real strategy template",
