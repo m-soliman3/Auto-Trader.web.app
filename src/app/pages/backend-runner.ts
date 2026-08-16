@@ -22,6 +22,15 @@ interface RunnerSummariesResponse {
   items: RunnerSummary[];
 }
 
+interface BucketedSummary {
+  bucketTime: Date;
+  executed: number;
+  failed: number;
+  skipped: number;
+  totalActiveStrategies: number;
+  entryCount: number;
+}
+
 type RunnerExecutionFilter = 'all' | 'executed' | 'not-executed';
 type RunnerDatePreset = 'today' | 'yesterday' | 'this-week' | 'last-week' | 'this-month' | 'last-month' | 'custom';
 
@@ -118,16 +127,19 @@ type RunnerDatePreset = 'today' | 'yesterday' | 'this-week' | 'last-week' | 'thi
               <div class="runner-empty">{{ 'backendRunner.noSummariesMatch' | translate }}</div>
             } @else {
               <div class="runner-list">
-                @for (summary of filteredRunnerSummaries(); track summary.ranAt) {
+                @for (bucket of bucketedSummaries(); track bucket.bucketTime.toISOString()) {
                   <div class="runner-row">
                     <div class="runner-left">
-                      <div class="runner-time">{{ summary.ranAt | date:'medium' }}</div>
+                      <div class="runner-time">{{ bucketTimeLabel(bucket.bucketTime) }}</div>
                       <div class="runner-stats">
-                        {{ 'backendRunner.active' | translate }}: {{ summary.totalActiveStrategies }} · {{ 'backendRunner.executed' | translate }}: {{ summary.executed }} · {{ 'backendRunner.failed' | translate }}: {{ summary.failed }}
+                        {{ 'backendRunner.active' | translate }}: {{ bucket.totalActiveStrategies }} · {{ 'backendRunner.executed' | translate }}: {{ bucket.executed }} · {{ 'backendRunner.failed' | translate }}: {{ bucket.failed }}
                       </div>
                     </div>
-                    <span class="runner-badge" [class.runner-ok]="runnerStatusClass(summary) === 'runner-ok'" [class.runner-warn]="runnerStatusClass(summary) === 'runner-warn'" [class.runner-quiet]="runnerStatusClass(summary) === 'runner-quiet'">
-                      {{ runnerStatusLabel(summary) | translate }}
+                    <span class="runner-badge"
+                      [class.runner-ok]="bucket.failed === 0 && bucket.executed > 0"
+                      [class.runner-warn]="bucket.failed > 0"
+                      [class.runner-quiet]="bucket.failed === 0 && bucket.executed === 0">
+                      {{ bucket.failed > 0 ? ('backendRunner.hasFailures' | translate) : bucket.executed > 0 ? ('backendRunner.executed' | translate) : ('backendRunner.noExecutions' | translate) }}
                     </span>
                   </div>
                 }
@@ -225,39 +237,33 @@ export class BackendRunnerPage {
       || this.pendingStatusFilter() !== this.statusFilter();
   });
   readonly filteredRunnerSummaries = computed(() => {
-    const fromDateFilter = this.selectedFromDateFilter();
-    const toDateFilter = this.selectedToDateFilter();
     const statusFilter = this.statusFilter();
-
     return this.runnerSummaries().filter((summary) => {
-      const summaryDate = this.toDateInputValue(summary.ranAt);
-
-      if (fromDateFilter && toDateFilter) {
-        const rangeStart = fromDateFilter <= toDateFilter ? fromDateFilter : toDateFilter;
-        const rangeEnd = fromDateFilter <= toDateFilter ? toDateFilter : fromDateFilter;
-        if (summaryDate < rangeStart || summaryDate > rangeEnd) {
-          return false;
-        }
-      } else if (fromDateFilter) {
-        if (summaryDate !== fromDateFilter) {
-          return false;
-        }
-      } else if (toDateFilter) {
-        if (summaryDate !== toDateFilter) {
-          return false;
-        }
-      }
-
-      if (statusFilter === 'executed' && summary.executed <= 0) {
-        return false;
-      }
-
-      if (statusFilter === 'not-executed' && summary.executed > 0) {
-        return false;
-      }
-
+      if (statusFilter === 'executed' && summary.executed <= 0) return false;
+      if (statusFilter === 'not-executed' && summary.executed > 0) return false;
       return true;
     });
+  });
+
+  readonly bucketedSummaries = computed((): BucketedSummary[] => {
+    const buckets = new Map<string, BucketedSummary>();
+    for (const s of this.filteredRunnerSummaries()) {
+      const dt = new Date(s.ranAt);
+      if (Number.isNaN(dt.getTime())) continue;
+      const minutes = Math.floor(dt.getMinutes() / 15) * 15;
+      const bucketDt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), dt.getHours(), minutes, 0, 0);
+      const key = bucketDt.toISOString();
+      if (!buckets.has(key)) {
+        buckets.set(key, { bucketTime: bucketDt, executed: 0, failed: 0, skipped: 0, totalActiveStrategies: 0, entryCount: 0 });
+      }
+      const bucket = buckets.get(key)!;
+      bucket.executed += s.executed;
+      bucket.failed += s.failed;
+      bucket.skipped += s.skipped;
+      bucket.totalActiveStrategies = Math.max(bucket.totalActiveStrategies, s.totalActiveStrategies);
+      bucket.entryCount++;
+    }
+    return Array.from(buckets.values()).sort((a, b) => b.bucketTime.getTime() - a.bucketTime.getTime());
   });
 
   constructor() {
@@ -274,6 +280,13 @@ export class BackendRunnerPage {
     if (summary.failed > 0) return 'backendRunner.hasFailures';
     if (summary.executed > 0) return 'backendRunner.executed';
     return 'backendRunner.noExecutions';
+  }
+
+  bucketTimeLabel(start: Date): string {
+    const end = new Date(start.getTime() + 15 * 60 * 1000);
+    const fmt = (d: Date) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const datePart = start.toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' });
+    return `${datePart}, ${fmt(start)} – ${fmt(end)}`;
   }
 
   refresh(): void {
@@ -308,6 +321,7 @@ export class BackendRunnerPage {
     this.selectedFromDateFilter.set(this.pendingFromDateFilter());
     this.selectedToDateFilter.set(this.pendingToDateFilter());
     this.statusFilter.set(this.pendingStatusFilter());
+    void this.loadRunnerSummaries(true);
   }
 
   clearFilters(): void {
@@ -319,6 +333,7 @@ export class BackendRunnerPage {
     this.selectedFromDateFilter.set('');
     this.selectedToDateFilter.set('');
     this.statusFilter.set('all');
+    void this.loadRunnerSummaries(true);
   }
 
   private runnerSummariesEndpoint(): string {
@@ -349,8 +364,17 @@ export class BackendRunnerPage {
 
     try {
       const idToken = await currentUser.getIdToken();
+      const from = this.selectedFromDateFilter();
+      const to = this.selectedToDateFilter();
+      let url = `${this.runnerSummariesEndpoint()}?limit=100`;
+      if (from) {
+        url += `&from=${encodeURIComponent(new Date(from + 'T00:00:00.000Z').toISOString())}`;
+      }
+      if (to) {
+        url += `&to=${encodeURIComponent(new Date(to + 'T23:59:59.999Z').toISOString())}`;
+      }
       const payload = await firstValueFrom(this.http.get<RunnerSummariesResponse>(
-        `${this.runnerSummariesEndpoint()}?limit=50`,
+        url,
         {
           headers: {
             Authorization: `Bearer ${idToken}`,

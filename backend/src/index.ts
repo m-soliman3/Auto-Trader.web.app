@@ -50,7 +50,11 @@ app.get("/v1/runner-summaries", requireUserAuth, async (req, res) => {
     const uid = String(req.userId);
     const limitParam = Number.parseInt(String(req.query?.limit || "10"), 10);
     const limit = Number.isFinite(limitParam) ? limitParam : 10;
-    const summaries = await getRecentUserRunnerSummaries(uid, limit);
+    const fromParam = req.query?.from ? String(req.query.from) : undefined;
+    const toParam = req.query?.to ? String(req.query.to) : undefined;
+    const from = fromParam ? new Date(fromParam) : undefined;
+    const to = toParam ? new Date(toParam) : undefined;
+    const summaries = await getRecentUserRunnerSummaries(uid, limit, from, to);
     res.status(200).json({
       count: summaries.length,
       items: summaries,

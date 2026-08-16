@@ -319,6 +319,13 @@ export class Dashboard implements OnDestroy {
     return `${this.tradingBackendBaseUrl}/v1/runner-summaries`;
   }
 
+  private todayDateRangeIso(): { from: string; to: string } {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+    const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+    return { from: start.toISOString(), to: end.toISOString() };
+  }
+
   async refreshRunnerSummaries() {
     await this.loadRunnerSummaries(true);
   }
@@ -343,8 +350,9 @@ export class Dashboard implements OnDestroy {
 
     try {
       const idToken = await currentUser.getIdToken();
+      const { from, to } = this.todayDateRangeIso();
       const payload = await firstValueFrom(this.http.get<RunnerSummariesResponse>(
-        `${this.runnerSummariesEndpoint()}?limit=10`,
+        `${this.runnerSummariesEndpoint()}?limit=1000&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
         {
           headers: {
             Authorization: `Bearer ${idToken}`,
@@ -423,7 +431,7 @@ export class Dashboard implements OnDestroy {
 
   get portfolioCards() {
     const hasEx = this.hasVisibleExchange();
-    const active = this.visibleActiveBots().length;
+    const active = this.visibleActiveStrategies().length;
     const total = this.visibleBots().length;
     const selectedMode = this.accountMode.mode();
     const portfolioByType = this.exchangeService.portfolioValuesByType();
@@ -473,8 +481,8 @@ export class Dashboard implements OnDestroy {
     
     return [
       { labelKey: 'dashboard.portfolioValue', value: selectedMode === 'paper' ? paperMoneyValue : realMoneyValue, secondaryValue: '', changeKey: '', changeParams: {}, positive: true, icon: '💼' },
-      { labelKey: 'dashboard.activeBots',     value: String(active),                  secondaryValue: '', changeKey: 'dashboard.botsRunningCount', changeParams: {count: active}, positive: true,  icon: '🤖' },
-      { labelKey: 'dashboard.totalTrades',    value: String(this.visibleBots().reduce((a,b)=>a+b.trades,0)), secondaryValue: '', changeKey: total ? 'dashboard.botsCount' : 'dashboard.getStarted', changeParams: {count: total}, positive: true,  icon: '📈' },
+      { labelKey: 'dashboard.activeStrategies', value: String(active),                  secondaryValue: '', changeKey: 'dashboard.strategiesRunningCount', changeParams: {count: active}, positive: true,  icon: '🤖' },
+      { labelKey: 'dashboard.totalTrades',    value: String(this.runnerSummaries().reduce((a,b)=>a+b.executed,0)), secondaryValue: '', changeKey: total ? 'dashboard.botsCount' : 'dashboard.getStarted', changeParams: {count: total}, positive: true,  icon: '📈' },
       { labelKey: 'dashboard.todayPnl', value: selectedMode === 'paper' ? paperPnlValue : realPnlValue, secondaryValue: '', changeKey: '', changeParams: {}, positive: true, icon: '⚡' },
     ];
   }

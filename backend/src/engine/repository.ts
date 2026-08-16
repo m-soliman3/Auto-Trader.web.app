@@ -90,13 +90,24 @@ export async function getRecentRunnerSummaries(limit = 20): Promise<RunnerSummar
   return snap.docs.map((doc) => doc.data() as RunnerSummary);
 }
 
-export async function getRecentUserRunnerSummaries(uid: string, limit = 20): Promise<RunnerSummary[]> {
-  const boundedLimit = Math.max(1, Math.min(limit, 100));
-  const snap = await db
+export async function getRecentUserRunnerSummaries(uid: string, limit = 20, from?: Date, to?: Date): Promise<RunnerSummary[]> {
+  let query: FirebaseFirestore.Query = db
     .collection(`users/${uid}/runnerSummaries`)
-    .orderBy("ranAt", "desc")
-    .limit(boundedLimit)
-    .get();
+    .orderBy("ranAt", "desc");
 
+  if (from) {
+    query = query.where("ranAt", ">=", from.toISOString());
+  }
+  if (to) {
+    query = query.where("ranAt", "<=", to.toISOString());
+  }
+
+  if (from || to) {
+    query = query.limit(10000);
+  } else {
+    query = query.limit(Math.max(1, Math.min(limit, 100)));
+  }
+
+  const snap = await query.get();
   return snap.docs.map((doc) => doc.data() as RunnerSummary);
 }
