@@ -3287,6 +3287,136 @@
           "description": "FT Rohstoffe mit Expertenanalyse von Golds rekordverdächtiger Juli-2026-Rallye."
         }
       ]
+    },
+    "retail-earnings-consumer-strength-aug-2026": {
+      "title": "Walmart, Target und Home Depot signalisieren im August 2026 einen widerstandsfähigen US-Verbraucher",
+      "tagline": "Die Einzelhandels-Gewinnsaison im August zeigte, dass Verbraucher zwar auf günstigere Optionen umsteigen, ihre Ausgaben insgesamt aber nicht zurückfahren — ein frisches Signal für die Aktienmärkte.",
+      "metaTitle": "Einzelhandels-Gewinne August 2026: Walmart, Target, Home Depot | AutoTrader Blog",
+      "metaDescription": "Die Ergebnisse von Walmart, Target und Home Depot im August 2026 lieferten einen Echtzeit-Indikator für die US-Verbrauchernachfrage. Was das für Aktien und automatisierte Strategien bedeutet.",
+      "overview": "Mitte August 2026 stand eine der meistbeachteten Wochen im Aktienkalender an: die Quartalszahlen der größten US-Einzelhändler. Nach mehr als einem Jahr hartnäckiger Inflation und einer zögerlichen Federal Reserve nutzten Anleger die Ergebnisse von Walmart, Target und Home Depot als Echtzeit-Indikator für die Verfassung des US-Konsumenten — oft aussagekräftiger als die verzögerten offiziellen Wirtschaftsdaten.\n\nWalmart übertraf sowohl beim Umsatz als auch beim Gewinn die Erwartungen, getragen vom Lebensmittelsegment und weiteren Marktanteilsgewinnen bei einkommensstärkeren Haushalten, die zu Discountern wechseln. Target lieferte ein gemischtes Bild: Diskretionäre Kategorien wie Wohnaccessoires und Bekleidung blieben schwach, während Online- und Same-Day-Lieferservice zweistellig wuchsen. Home Depot überraschte positiv bei Profi- und Handwerkerausgaben, obwohl sich der Immobilienmarkt weiter abkühlt.\n\nInsgesamt bestätigte die Woche das Bild eines „K-förmigen“, aber insgesamt stabilen Konsumklimas, in dem Value-Einzelhändler und Heimwerkerkategorien besser abschneiden als diskretionäre und Luxussegmente. Die Widerstandsfähigkeit der Verbraucherausgaben nahm der Fed zugleich etwas Dringlichkeit für aggressive Zinssenkungen — ein Thema, das auch die Devisen- und Anleihemärkte in diesem Monat beschäftigte.",
+      "howItWorks": "Das Ergebniskalender-Modul von auto-Trading kann wichtige Einzelhandels-Berichtstermine automatisch markieren und die Positionsgrößen auf Sektor-ETFs (XRT, XLY, XLP) vor der Veröffentlichung anpassen. Nach der Veröffentlichung können Momentum-Strategien die anfängliche Kursbewegung erfassen, während Mean-Reversion-Bots bis zum Abklingen der Nachrichten-Volatilität abwarten.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Einzelhandel",
+          "description": "CNBCs Berichterstattung über den Einzelhandelssektor, einschließlich Quartalszahlen und Verbraucherausgabentrends."
+        },
+        {
+          "label": "Reuters — Einzelhandel & Konsum",
+          "description": "Reuters' Hub für Einzelhandel und Konsum mit den wichtigsten Einzelhändler-Ergebnissen und Prognosen."
+        },
+        {
+          "label": "CNN Business",
+          "description": "CNN Business-Berichterstattung über US-Verbraucherausgabentrends und Reaktionen auf Einzelhandelsergebnisse."
+        },
+        {
+          "label": "The Wall Street Journal — Märkte",
+          "description": "WSJ-Marktdaten und Analysen zur Performance des Einzelhandelssektors."
+        }
+      ]
+    },
+    "ethereum-6000-institutional-staking-aug-2026": {
+      "title": "Ethereum nähert sich im August 2026 der 6.000-Dollar-Marke dank steigender institutioneller Staking-Nachfrage",
+      "tagline": "Eine Welle von Unternehmensbilanzen und ETF-Anbietern, die auf gestaktes ETH setzen, trieb Ethereum im August 2026 auf neue Mehrjahreshochs.",
+      "metaTitle": "Ethereum nähert sich 6.000 Dollar dank institutioneller Staking-Nachfrage — August 2026 | AutoTrader Blog",
+      "metaDescription": "Ethereum stieg im August 2026 in Richtung 6.000 Dollar, angetrieben von staking-fähigen ETFs und Unternehmensreserven. Vollständige Analyse der Treiber und Bedeutung für Krypto-Trader.",
+      "overview": "Die Kursentwicklung von Ethereum im August 2026 war der stärkste anhaltende Lauf seit der Bullenmarktphase 2021: ETH näherte sich erstmals in der Geschichte der Marke von 6.000 Dollar. Anders als frühere, überwiegend spekulative Rallyes wurde diese Bewegung von einer strukturellen Verschiebung getragen — dem institutionellen Zugang zur nativen Rendite von Ethereum über Staking.\n\nNach der Zulassung von In-Kind-Rücknahmen und Staking-Weitergabestrukturen für Spot-Ethereum-ETFs lieferten sich Anbieter wie BlackRock und Fidelity einen intensiven Wettbewerb um die Staking-Rendite-Ausschüttung und machten ihre ETF-Produkte damit effektiv zu verzinslichen Instrumenten. Der Anteil des in Staking-Verträgen gebundenen ETH-Angebots erreichte im Monat ein neues Allzeithoch, was das an Börsen verfügbare liquide Angebot verknappte.\n\nUnterstützt wurde die Rallye durch das anhaltende Wachstum des Ethereum-Layer-2-Ökosystems mit steigendem Transaktionsdurchsatz und Gesamtwert. Nicht jedes Signal war eindeutig bullisch: Regulierungsbehörden prüften weiterhin, ob über ETF-Wrapper ausgeschüttete Staking-Renditen zusätzliche Offenlegungspflichten auslösen — ein anhaltendes regulatorisches Risiko.",
+      "howItWorks": "Die Krypto-Momentum-Strategien von auto-Trading können das ETH/BTC-Verhältnis als Rotationssignal nutzen und das Ethereum-Engagement erhöhen, wenn die Quote gemeinsam mit steigender Staking-Beteiligung zunimmt. Die Korrelations-Engine der Plattform kann zudem die Performance von Layer-2-Token als Bestätigungssignal einbeziehen, während die Risikokontrollen das Engagement vor anstehenden regulatorischen Entscheidungen reduzieren.",
+      "externalLinks": [
+        {
+          "label": "CoinDesk — Märkte",
+          "description": "CoinDesks Marktbereich mit Ethereum-Kursdaten und Berichterstattung zu Staking-Renditen."
+        },
+        {
+          "label": "Reuters — Kryptowerte",
+          "description": "Reuters' Hub für Kryptowerte und digitale Assets mit Berichterstattung zur institutionellen Ethereum-Adoption."
+        },
+        {
+          "label": "Bloomberg — Krypto",
+          "description": "Bloomberg Krypto-Berichterstattung zu Ethereum-ETF-Zuflüssen und Staking-Rendite-Produkten."
+        },
+        {
+          "label": "The Block",
+          "description": "Detaillierte Daten und Recherchen zur Ethereum-Staking-Beteiligung und zum Layer-2-Wachstum."
+        }
+      ]
+    },
+    "dollar-slides-fed-cut-bets-aug-2026": {
+      "title": "US-Dollar fällt 2026 auf Jahrestief, da Händler eine Fed-Zinssenkung im September einpreisen",
+      "tagline": "Der Dollar-Index fiel im August 2026 auf seinen niedrigsten Stand des Jahres, nachdem schwache Arbeitsmarktdaten die Erwartungen an eine Zinssenkung im September zementierten und EUR/USD sowie Schwellenländerwährungen beflügelten.",
+      "metaTitle": "Dollar fällt 2026 auf Jahrestief wegen Fed-Zinssenkungserwartungen — August 2026 | AutoTrader Blog",
+      "metaDescription": "Der US-Dollar-Index fiel im August auf sein Jahrestief 2026, da die Märkte eine Zinssenkung der Fed im September einpreisten. Wie EUR/USD, USD/JPY und Schwellenländerwährungen reagierten.",
+      "overview": "Der US-Dollar-Index (DXY) fiel Mitte August auf sein Jahrestief 2026 und setzte damit einen Abwärtstrend fort, der seit einem schwächer als erwarteten Arbeitsmarktbericht im Sommer im Gange war. Die Fed-Funds-Futures preisten eine Wahrscheinlichkeit von deutlich über 90 % für eine Zinssenkung auf der September-Sitzung ein, was den Dollar breit belastete.\n\nEUR/USD gehörte zu den größten Profiteuren und durchbrach ein wichtiges technisches Widerstandsniveau, unterstützt durch eine vergleichsweise restriktivere Haltung der EZB. USD/JPY erzählte die Geschichte von der anderen Seite: Der Yen legte zu, da die Bank of Japan ihren Kurs der geldpolitischen Normalisierung fortsetzte und die Zinsdifferenz schrumpfte — mit dem Risiko einer ungeordneten Auflösung von Carry-Trade-Positionen.\n\nSchwellenländerwährungen profitierten breit von der Risk-on-Stimmung, während Gold seine mehrmonatige Rallye fortsetzte. Für Devisenhändler zeigte der Monat, wie schnell sich der Konsens ändern kann, sobald eine geldpolitische Wende wahrscheinlicher wird — trendfolgende Systeme mussten ihre Dollar-Positionierung rasch anpassen.",
+      "howItWorks": "Das Devisenmodul von auto-Trading kann Trendfilter auf den DXY und wichtige Dollarpaare anwenden und die Positionsgröße entsprechend der von Fed-Funds-Futures implizierten Zinssenkungswahrscheinlichkeit skalieren. Die Korrelations-Engine der Plattform markiert das Risiko einer Carry-Trade-Auflösung bei Paaren wie USD/JPY, und der Makro-Kalender kann das Engagement vor NFP-, VPI- und FOMC-Terminen automatisch reduzieren.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Währungen",
+          "description": "Reuters' Devisen-Hub mit Live-Berichterstattung zum Dollar-Index und wichtigen Währungspaaren."
+        },
+        {
+          "label": "CNBC — Währungen",
+          "description": "CNBCs Devisenbereich mit Berichterstattung zu Fed-Zinserwartungen und Devisenmarktreaktionen."
+        },
+        {
+          "label": "Financial Times — Währungen",
+          "description": "FT-Devisenbereich mit Expertenanalysen zur Dollarschwäche und Zinsdifferenz-Trends."
+        },
+        {
+          "label": "Bloomberg — Märkte",
+          "description": "Bloomberg-Devisenberichterstattung zu EUR/USD, USD/JPY und Schwellenländerwährungen."
+        }
+      ]
+    },
+    "jackson-hole-2026-powell-speech": {
+      "title": "Jackson Hole 2026: Rede des Fed-Vorsitzenden löst breite Rallye bei Aktien und Anleihen aus",
+      "tagline": "Aktien und Anleihen legten nach der jährlichen Jackson-Hole-Rede der Federal Reserve zu, die Offenheit für ein schnelleres Tempo bei Zinssenkungen signalisierte.",
+      "metaTitle": "Jackson Hole 2026: Fed-Rede löst Aktien- und Anleihen-Rallye aus | AutoTrader Blog",
+      "metaDescription": "Die Rede der Federal Reserve beim Jackson-Hole-Symposium im August 2026 löste eine starke Rallye bei Aktien und Anleihen aus. Vollständige Analyse der Rede, Marktreaktion und Handelsimplikationen.",
+      "overview": "Das jährliche Jackson-Hole-Wirtschaftssymposium der Federal Reserve, ausgerichtet von der Kansas City Fed in Wyoming, gehört seit Langem zu den am genauesten beobachteten Terminen im Makrokalender — und die Ausgabe 2026 wurde dieser Reputation gerecht. Die Grundsatzrede des Fed-Vorsitzenden löste eine der schärfsten Tagesrallyes bei Aktien und Staatsanleihen des Jahres aus.\n\nIm Kern signalisierte die Rede eine subtile, aber bedeutsame Verschiebung: Angesichts eines stärker als gewünscht abgekühlten Arbeitsmarktes zeigte sich der Vorsitzende bereit, die Beschäftigung stärker zu gewichten als schrittweise Inflationsfortschritte — und öffnete damit die Tür für Zinssenkungen auf aufeinanderfolgenden Sitzungen statt des zuvor erwarteten vorsichtigeren, quartalsweisen Tempos.\n\nDie Aktienmärkte reagierten sofort und breit, wobei besonders Nebenwerte überproportional zulegten. Die Zweijahresrendite fiel deutlich, die Zinskurve versteilte sich, der Dollar schwächte sich weiter ab und Gold sowie Kryptomärkte profitierten von den gestiegenen Liquiditätserwartungen. Historisch bewegt Jackson Hole die Märkte oft überproportional zu seinem formalen geldpolitischen Gewicht — ein Risiko, das auch nach der euphorischen Reaktion 2026 nicht unterschätzt werden sollte.",
+      "howItWorks": "Der Makro-Ereigniskalender von auto-Trading markiert automatisch die Termine des Jackson-Hole-Symposiums und kann die Positionsgrößen rund um die Grundsatzrede reduzieren, um ereignisbedingte Volatilität zu steuern. Nach der Rede können Momentum-Strategien die typische Kursbewegung der folgenden ein bis zwei Handelstage erfassen, während die Risikokontrollen das Engagement schrittweise wieder erhöhen.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Federal Reserve",
+          "description": "CNBCs Live-Berichterstattung und Analyse zum Jackson-Hole-Symposium und geldpolitischen Signalen der Fed."
+        },
+        {
+          "label": "Reuters — Fed-Politik-Tracker",
+          "description": "Reuters' umfassender Tracker für Reden und geldpolitische Entscheidungen der Federal Reserve."
+        },
+        {
+          "label": "CNN Business — Wirtschaft",
+          "description": "CNN Business-Berichterstattung über die Jackson-Hole-Rede der Fed und die Marktreaktion über Anlageklassen hinweg."
+        },
+        {
+          "label": "Bloomberg — Wirtschaft",
+          "description": "Bloomberg-Wirtschaftsanalysen zu geldpolitischen Verschiebungen der Fed und der resultierenden Reaktion an Anleihen- und Aktienmärkten."
+        }
+      ]
+    },
+    "stablecoin-market-300-billion-aug-2026": {
+      "title": "Stablecoin-Markt übersteigt 300 Milliarden Dollar, da bankenemittierte Token den Mainstream erreichen",
+      "tagline": "Regulatorische Klarheit und eine Welle bankenemittierter Dollar-Token trieben den gesamten Stablecoin-Markt im August 2026 über 300 Milliarden Dollar.",
+      "metaTitle": "Stablecoin-Markt erreicht 300 Milliarden Dollar — Analyse August 2026 | AutoTrader Blog",
+      "metaDescription": "Der globale Stablecoin-Markt überschritt im August 2026 die Marke von 300 Milliarden Dollar, da Banken unter neuer Regulierung dollarbesicherte Token einführten. Was das für Krypto- und Devisenmärkte bedeutet.",
+      "overview": "Die gesamte Marktkapitalisierung dollarbesicherter Stablecoins überschritt im August 2026 die Marke von 300 Milliarden Dollar — ein Meilenstein, der noch vor wenigen Jahren unwahrscheinlich erschien. Angeführt wurde das Wachstum von den etablierten Anbietern Tether (USDT) und Circles USDC, die bedeutendere Entwicklung war jedoch das Auftreten einer neuen Gruppe bankenemittierter Dollar-Token unter einem inzwischen ausgereiften US-Bundesrahmen für Stablecoin-Lizenzen.\n\nMehrere große Bankenkonsortien brachten im Laufe des Monats zulassungspflichtige Dollar-Stablecoins auf den Markt, die gezielt auf institutionelle Abwicklung und Unternehmenstreasury-Anwendungen abzielen. Das Wachstum hat auch eine direkte Devisendimension: dollarbesicherte Token werden zunehmend für grenzüberschreitende Abwicklungen genutzt, insbesondere in Märkten mit eingeschränktem Zugang zu US-Dollar-Liquidität über traditionelle Korrespondenzbank-Kanäle.\n\nDie regulatorische Harmonisierung schritt parallel voran, wobei sich Standards für Reserveprüfungen und Offenlegungspflichten zwischen dem US-Rahmen, der EU-Verordnung MiCA und vergleichbaren Regeln in Asien annäherten. Für Kryptomärkte insgesamt gilt das Wachstum des Stablecoin-Angebots inzwischen als vielbeachteter Frühindikator für die Risikobereitschaft der Anleger.",
+      "howItWorks": "Das Liquiditätsüberwachungsmodul von auto-Trading verfolgt das gesamte Stablecoin-Angebot und Netto-Börsenzuflüsse als Frühindikator für die Risikobereitschaft im Kryptomarkt, sodass Momentum-Strategien bei wachsendem Angebot mit größerer Überzeugung agieren können. Cross-Exchange-Arbitrage-Bots profitieren zudem direkt von den erweiterten Stablecoin-Abwicklungswegen, die Reibungsverluste und Slippage beim Rebalancing zwischen Handelsplätzen verringern.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Kryptowerte",
+          "description": "Reuters' Hub für Kryptowerte mit Berichterstattung zu Stablecoin-Regulierung und Marktkapitalisierungs-Meilensteinen."
+        },
+        {
+          "label": "CoinDesk — Regulierung",
+          "description": "CoinDesks Regulierungsbereich mit Berichterstattung zu globalen Stablecoin-Regulierungsentwicklungen."
+        },
+        {
+          "label": "CNBC — Kryptowährungen",
+          "description": "CNBCs Kryptowährungsberichterstattung, einschließlich bankenemittierter Stablecoin-Einführungen."
+        },
+        {
+          "label": "Financial Times — Kryptowährungen",
+          "description": "FT-Berichterstattung zum Wachstum des Stablecoin-Marktes und grenzüberschreitenden Abwicklungsanwendungen."
+        }
+      ]
     }
   },
   "learnDetail": {

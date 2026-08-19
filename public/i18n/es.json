@@ -3287,6 +3287,136 @@
           "description": "Sección de materias primas del FT con análisis experto de la corriente alcista récord del oro en julio de 2026."
         }
       ]
+    },
+    "retail-earnings-consumer-strength-aug-2026": {
+      "title": "Walmart, Target y Home Depot muestran un consumidor estadounidense resiliente en agosto de 2026",
+      "tagline": "La temporada de resultados minoristas de agosto mostró que los consumidores optan por precios más bajos sin recortar el gasto general, ofreciendo una nueva señal para los mercados bursátiles.",
+      "metaTitle": "Resultados minoristas agosto 2026: Walmart, Target, Home Depot | Blog AutoTrader",
+      "metaDescription": "Los resultados de Walmart, Target y Home Depot en agosto de 2026 ofrecieron un indicador en tiempo real de la salud del consumidor estadounidense. Qué significa para las acciones y las estrategias automatizadas.",
+      "overview": "Mediados de agosto de 2026 trajo una de las semanas más vigiladas del calendario bursátil: los resultados trimestrales de los mayores minoristas estadounidenses. Tras más de un año de inflación persistente y una Reserva Federal reacia a comprometerse con recortes rápidos, los inversores usaron los resultados de Walmart, Target y Home Depot como un indicador en tiempo real de la salud del consumidor — a menudo más revelador que los datos macroeconómicos oficiales, que llegan con retraso.\n\nWalmart superó tanto los ingresos como las ganancias esperadas, impulsado por su segmento de comestibles y nuevas ganancias de cuota de mercado entre hogares de mayores ingresos que optan por el descuento. Target presentó resultados mixtos: las categorías discrecionales, como artículos para el hogar y ropa, siguieron débiles, mientras que las ventas digitales y la entrega el mismo día crecieron con fuerza. Home Depot sorprendió positivamente en el gasto de profesionales y contratistas, pese a la desaceleración del mercado inmobiliario.\n\nEn conjunto, la semana reforzó la narrativa de un consumidor «en forma de K» pero resiliente en general, con los minoristas de valor y las categorías de mejoras del hogar superando a las discrecionales y de lujo. La resiliencia del gasto también restó algo de urgencia a la Fed para recortes agresivos, un tema que también dominó los mercados de divisas y bonos ese mes.",
+      "howItWorks": "El módulo de calendario de resultados de auto-Trading puede marcar automáticamente las fechas clave de publicación de resultados minoristas y ajustar el tamaño de las posiciones en ETF sectoriales (XRT, XLY, XLP) antes de la publicación. Tras la publicación, las estrategias de momentum pueden capturar el movimiento direccional inicial, mientras que los bots de reversión a la media pueden esperar a que se disipe la volatilidad post-resultados.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Minoristas",
+          "description": "Cobertura de CNBC del sector minorista, incluidos los resultados trimestrales y las tendencias de gasto del consumidor."
+        },
+        {
+          "label": "Reuters — Minoristas y consumo",
+          "description": "Centro de Reuters sobre minoristas y consumo con los principales resultados y previsiones de los grandes minoristas."
+        },
+        {
+          "label": "CNN Business",
+          "description": "Cobertura de CNN Business sobre las tendencias de gasto del consumidor estadounidense y las reacciones a los resultados minoristas."
+        },
+        {
+          "label": "The Wall Street Journal — Mercados",
+          "description": "Datos de mercado y análisis del WSJ sobre el desempeño del sector minorista."
+        }
+      ]
+    },
+    "ethereum-6000-institutional-staking-aug-2026": {
+      "title": "Ethereum se acerca a los 6.000 dólares en agosto de 2026 impulsado por la demanda institucional de staking",
+      "tagline": "Una ola de tesorerías corporativas y emisores de ETF que adoptan ETH en staking llevó a Ethereum a nuevos máximos plurianuales en agosto de 2026.",
+      "metaTitle": "Ethereum se acerca a los 6.000 dólares por la demanda institucional de staking — agosto 2026 | Blog AutoTrader",
+      "metaDescription": "Ethereum repuntó hacia los 6.000 dólares en agosto de 2026 impulsado por ETF con staking y tesorerías corporativas. Análisis completo de los factores y su significado para los traders de cripto.",
+      "overview": "El movimiento de precio de Ethereum en agosto de 2026 marcó su racha sostenida más fuerte desde el mercado alcista de 2021, con ETH acercándose por primera vez en su historia a los 6.000 dólares. A diferencia de rallies anteriores impulsados principalmente por la especulación, este movimiento estuvo respaldado por un cambio estructural: el acceso institucional al rendimiento nativo de Ethereum a través del staking.\n\nTras la aprobación de estructuras de canje en especie y transferencia de recompensas de staking para los ETF spot de Ethereum, emisores como BlackRock y Fidelity compitieron intensamente por la distribución del rendimiento de staking, convirtiendo efectivamente sus productos ETF en instrumentos que generan interés. El porcentaje de la oferta de ETH bloqueada en contratos de staking alcanzó un nuevo máximo histórico durante el mes, reduciendo el flotante líquido disponible en los exchanges.\n\nEl repunte se vio reforzado por el crecimiento continuo del ecosistema de Layer-2 de Ethereum, con un aumento del rendimiento de transacciones y del valor total bloqueado. No todas las señales fueron inequívocamente alcistas: los reguladores de varias jurisdicciones siguieron examinando si las recompensas de staking distribuidas a través de envoltorios ETF requieren obligaciones de divulgación adicionales, un riesgo regulatorio persistente.",
+      "howItWorks": "Las estrategias de momentum cripto de auto-Trading pueden incorporar la relación ETH/BTC como señal de rotación, aumentando la exposición a Ethereum cuando la ratio sube junto con una mayor participación en staking. El motor de correlación de la plataforma también puede considerar el desempeño de los tokens de Layer-2 como señal de confirmación, mientras que los controles de riesgo reducen la exposición antes de decisiones regulatorias programadas.",
+      "externalLinks": [
+        {
+          "label": "CoinDesk — Mercados",
+          "description": "Sección de mercados de CoinDesk con datos de precios de Ethereum y cobertura del rendimiento por staking."
+        },
+        {
+          "label": "Reuters — Criptoactivos",
+          "description": "Centro de criptoactivos de Reuters con cobertura de la adopción institucional de Ethereum."
+        },
+        {
+          "label": "Bloomberg — Cripto",
+          "description": "Cobertura de Bloomberg Cripto sobre flujos de ETF de Ethereum y productos de rendimiento por staking."
+        },
+        {
+          "label": "The Block",
+          "description": "Datos e investigación detallados sobre la participación en staking de Ethereum y el crecimiento de Layer-2."
+        }
+      ]
+    },
+    "dollar-slides-fed-cut-bets-aug-2026": {
+      "title": "El dólar estadounidense cae a mínimos de 2026 mientras los operadores descuentan un recorte de la Fed en septiembre",
+      "tagline": "El índice del dólar cayó a su nivel más débil del año en agosto de 2026 después de que datos laborales débiles reforzaran las expectativas de un recorte de tipos en septiembre, impulsando el EUR/USD y las divisas de mercados emergentes.",
+      "metaTitle": "El dólar cae a mínimos de 2026 por las apuestas de recorte de la Fed — agosto 2026 | Blog AutoTrader",
+      "metaDescription": "El índice del dólar estadounidense cayó a su nivel más bajo de 2026 en agosto mientras los mercados descontaban un recorte de tipos de la Fed en septiembre. Cómo reaccionaron el EUR/USD, el USD/JPY y las divisas emergentes.",
+      "overview": "El Índice del Dólar Estadounidense (DXY) cayó a mínimos de 2026 a mediados de agosto, extendiendo una caída que venía gestándose desde un informe de empleo más débil de lo esperado a principios del verano. Los futuros de fondos federales pasaron a descontar una probabilidad muy superior al 90 % de un recorte de tipos en la reunión de septiembre, lo que pesó ampliamente sobre el dólar.\n\nEl EUR/USD fue uno de los mayores beneficiados, rompiendo un nivel técnico de resistencia clave, respaldado por una postura relativamente más restrictiva del BCE. El USD/JPY contó la historia desde el otro lado: el yen se fortaleció a medida que el Banco de Japón continuaba su normalización de política monetaria, estrechando el diferencial de tipos, con el riesgo de una desordenada liquidación de posiciones de carry trade.\n\nLas divisas de mercados emergentes repuntaron ampliamente dentro de la misma dinámica de apetito por el riesgo, mientras el oro extendía su rally de varios meses. Para los operadores de divisas, el mes demostró lo rápido que puede cambiar el consenso una vez que un giro de política se vuelve probable — los sistemas de seguimiento de tendencia tuvieron que ajustar rápidamente su posicionamiento en dólares.",
+      "howItWorks": "El módulo de divisas de auto-Trading puede aplicar filtros de tendencia sobre el DXY y los principales pares del dólar, ajustando el tamaño de posición según las probabilidades de recorte implícitas en los futuros de fondos federales. El motor de correlación de la plataforma señala el riesgo de liquidación de carry trade en pares como el USD/JPY, y el calendario macroeconómico puede reducir automáticamente la exposición antes de las publicaciones de nóminas, IPC y FOMC.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Divisas",
+          "description": "Centro de divisas de Reuters con cobertura en vivo del índice del dólar y los principales pares de divisas."
+        },
+        {
+          "label": "CNBC — Divisas",
+          "description": "Sección de divisas de CNBC con cobertura de las expectativas de política de la Fed y las reacciones del mercado de divisas."
+        },
+        {
+          "label": "Financial Times — Divisas",
+          "description": "Sección de divisas del FT con análisis experto sobre la debilidad del dólar y las tendencias de diferencial de tipos."
+        },
+        {
+          "label": "Bloomberg — Mercados",
+          "description": "Cobertura de divisas de Bloomberg sobre el EUR/USD, USD/JPY y las divisas de mercados emergentes."
+        }
+      ]
+    },
+    "jackson-hole-2026-powell-speech": {
+      "title": "Jackson Hole 2026: el discurso del presidente de la Fed desata un amplio repunte en acciones y bonos",
+      "tagline": "Las acciones y los bonos repuntaron tras el discurso anual de Jackson Hole de la Reserva Federal, que señaló apertura a un ritmo más rápido de recortes de tipos.",
+      "metaTitle": "Jackson Hole 2026: el discurso de la Fed desata un repunte en acciones y bonos | Blog AutoTrader",
+      "metaDescription": "El discurso de la Reserva Federal en el Simposio de Jackson Hole de agosto de 2026 desató un fuerte repunte en acciones y bonos. Análisis completo del discurso, la reacción del mercado y sus implicaciones para el trading.",
+      "overview": "El Simposio Económico anual de Jackson Hole de la Reserva Federal, organizado por la Fed de Kansas City en Wyoming, ha sido durante mucho tiempo uno de los eventos más vigilados del calendario macroeconómico — y la edición de 2026 estuvo a la altura de esa reputación. El discurso principal del presidente de la Fed desató uno de los repuntes diarios más marcados del año tanto en acciones como en bonos del Tesoro.\n\nEl mensaje central reflejó un cambio sutil pero significativo: al reconocer que las condiciones del mercado laboral se habían enfriado más de lo deseado, el presidente mostró disposición a priorizar el empleo sobre el progreso gradual en inflación, abriendo la puerta a recortes de tipos en reuniones consecutivas en lugar del ritmo trimestral más cauteloso que esperaban los mercados.\n\nLos mercados bursátiles reaccionaron de inmediato y ampliamente, con las acciones de pequeña capitalización subiendo de forma desproporcionada. El rendimiento a dos años cayó con fuerza, la curva de tipos se empinó, el dólar se debilitó aún más y el oro y las criptomonedas se beneficiaron de las mayores expectativas de liquidez. Históricamente, Jackson Hole mueve los mercados de forma desproporcionada respecto a su peso formal en política monetaria — un riesgo que no debe subestimarse incluso tras la eufórica reacción de 2026.",
+      "howItWorks": "El calendario de eventos macroeconómicos de auto-Trading marca automáticamente las fechas del Simposio de Jackson Hole y puede reducir el tamaño de las posiciones en las horas cercanas al discurso principal para gestionar la volatilidad ligada al evento. Tras el discurso, las estrategias de momentum pueden capturar el movimiento direccional que suele consolidarse en las siguientes una o dos sesiones, mientras los controles de riesgo aumentan gradualmente la exposición.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Reserva Federal",
+          "description": "Cobertura en vivo y análisis de CNBC sobre el Simposio de Jackson Hole y las señales de política de la Fed."
+        },
+        {
+          "label": "Reuters — Seguimiento de política de la Fed",
+          "description": "El completo rastreador de Reuters de discursos y decisiones de política de la Reserva Federal."
+        },
+        {
+          "label": "CNN Business — Economía",
+          "description": "Cobertura de CNN Business sobre el discurso de la Fed en Jackson Hole y la reacción del mercado entre clases de activos."
+        },
+        {
+          "label": "Bloomberg — Economía",
+          "description": "Análisis económico de Bloomberg sobre los cambios de política de la Fed y la reacción resultante en los mercados de bonos y acciones."
+        }
+      ]
+    },
+    "stablecoin-market-300-billion-aug-2026": {
+      "title": "El mercado de stablecoins supera los 300.000 millones de dólares con los tokens emitidos por bancos volviéndose habituales",
+      "tagline": "La claridad regulatoria y una ola de tokens en dólares emitidos por bancos llevaron el mercado total de stablecoins por encima de los 300.000 millones de dólares en agosto de 2026.",
+      "metaTitle": "El mercado de stablecoins alcanza los 300.000 millones de dólares — Análisis agosto 2026 | Blog AutoTrader",
+      "metaDescription": "El mercado global de stablecoins superó los 300.000 millones de dólares en agosto de 2026 mientras los bancos lanzaban tokens vinculados al dólar bajo nueva regulación. Qué significa para los mercados de cripto y divisas.",
+      "overview": "La capitalización total de mercado de las stablecoins vinculadas al dólar superó los 300.000 millones de dólares en agosto de 2026, un hito que hace pocos años parecía improbable. El crecimiento estuvo liderado por los emisores establecidos Tether (USDT) y USDC de Circle, pero el desarrollo más relevante fue la aparición de un nuevo grupo de tokens en dólares emitidos por bancos bajo un marco federal estadounidense de licencias para stablecoins ya maduro.\n\nVarios grandes consorcios bancarios lanzaron durante el mes stablecoins en dólares con permiso regulatorio, dirigidos específicamente a la liquidación institucional y usos de tesorería corporativa. El crecimiento también tiene una dimensión cambiaria directa: los tokens vinculados al dólar se usan cada vez más para liquidaciones transfronterizas, especialmente en mercados con acceso limitado a la liquidez en dólares a través de los canales bancarios corresponsales tradicionales.\n\nLa armonización regulatoria avanzó en paralelo, con estándares de auditoría de reservas y obligaciones de divulgación convergiendo entre el marco estadounidense, el reglamento MiCA de la UE y normas comparables en Asia. Para los mercados de cripto en general, el crecimiento de la oferta de stablecoins se ha convertido en un indicador adelantado muy seguido del apetito de riesgo de los inversores.",
+      "howItWorks": "El módulo de monitoreo de liquidez de auto-Trading rastrea la oferta agregada de stablecoins y las entradas netas en exchanges como indicador adelantado del apetito de riesgo cripto, permitiendo que las estrategias de momentum actúen con más convicción en regímenes de oferta creciente. Los bots de arbitraje entre exchanges también se benefician directamente de las vías de liquidación de stablecoins ampliadas, que reducen la fricción y el deslizamiento al reequilibrar posiciones entre plataformas.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Criptoactivos",
+          "description": "Centro de criptoactivos de Reuters con cobertura de la regulación de stablecoins y los hitos de capitalización de mercado."
+        },
+        {
+          "label": "CoinDesk — Regulación",
+          "description": "Sección de regulación de CoinDesk con cobertura de los desarrollos regulatorios globales sobre stablecoins."
+        },
+        {
+          "label": "CNBC — Criptomonedas",
+          "description": "Cobertura de criptomonedas de CNBC, incluidos los lanzamientos de stablecoins emitidas por bancos."
+        },
+        {
+          "label": "Financial Times — Criptomonedas",
+          "description": "Cobertura del FT sobre el crecimiento del mercado de stablecoins y los casos de uso de liquidación transfronteriza."
+        }
+      ]
     }
   },
   "learnDetail": {
