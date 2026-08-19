@@ -2355,6 +2355,146 @@ The broad message from August 2026 is simple: opportunity increased, but so did 
     imageUrl: 'https://images.unsplash.com/photo-1642790551116-18e150f248f5?w=900&h=500&fit=crop&auto=format',
   },
 
+  'retail-earnings-consumer-strength-aug-2026': {
+    slug: 'retail-earnings-consumer-strength-aug-2026',
+    category: 'blog',
+    icon: '🛍️',
+    title: 'Walmart, Target and Home Depot Earnings Signal a Resilient US Consumer in August 2026',
+    tagline: 'August\'s retail earnings season showed shoppers trading down on price but not pulling back on spending, giving equity markets a fresh read on economic momentum.',
+    metaTitle: 'Retail Earnings August 2026: Walmart, Target, Home Depot | AutoTrader Blog',
+    metaDescription: 'August 2026 retail earnings from Walmart, Target and Home Depot offered a real-time gauge of US consumer health. Here is what the results mean for stocks and automated strategies.',
+    overview: `Mid-August 2026 brought one of the most closely watched weeks on the equity calendar: quarterly results from the largest US retailers. After more than a year of sticky inflation readings and a Federal Reserve reluctant to commit to a rapid easing path, investors leaned on Walmart, Target, and Home Depot earnings as a real-time proxy for the health of the American consumer — arguably a more timely signal than the lagging government data releases that dominate macro headlines.
+
+Walmart beat both revenue and earnings expectations, with comparable sales growth driven heavily by its grocery segment and continued market-share gains from higher-income households trading down to discount retail. Management's cautious tone on full-year guidance nonetheless reminded investors that value-seeking behaviour, while good for Walmart's top line, is itself a signal of continued budget pressure on lower- and middle-income shoppers.
+
+Target's results were more mixed. Discretionary categories such as home goods and apparel remained soft, extending a multi-quarter trend, but digital sales and same-day delivery volumes posted double-digit growth, partially offsetting brick-and-mortar softness. The stock swung sharply intraday as traders debated whether margin improvement from supply-chain efficiencies could offset continued top-line weakness in discretionary categories.
+
+Home Depot's results carried particular significance for rate-sensitive sectors. Professional and contractor spending held up better than analysts expected despite an ongoing slowdown in existing-home sales, suggesting renovation and repair activity remains resilient even as the broader housing market cools under still-elevated mortgage rates. The read-through extended to homebuilder stocks and building-materials suppliers, which rallied alongside Home Depot shares.
+
+Taken together, the week reinforced a narrative equity markets have leaned on for much of 2026: a "K-shaped" but overall resilient consumer, with value retailers and home-improvement categories outperforming discretionary and luxury segments. Sector rotation followed, with consumer staples and value-oriented retail ETFs outperforming growth-heavy discretionary names. For rate-policy watchers, the resilience of consumer spending also removed some of the urgency for aggressive Fed easing, feeding directly into the same rate debate that dominated forex and bond markets that month.`,
+    howItWorks: `auto-Trading's earnings-calendar module can automatically flag major retail reporting dates and adjust position sizing on sector ETFs (XRT, XLY, XLP) ahead of the print to avoid uncompensated event risk. Following the release, momentum strategies can be configured to capture the initial directional move once the market has digested guidance commentary, while mean-reversion bots can be set to stand aside until the post-earnings volatility crush has largely played out.`,
+    externalLinks: [
+      { label: 'CNBC — Retail', url: 'https://www.cnbc.com/retail/', description: "CNBC's retail sector coverage including earnings reports and consumer-spending trends." },
+      { label: 'Reuters — Retail & Consumer', url: 'https://www.reuters.com/business/retail-consumer/', description: "Reuters' Retail & Consumer hub tracking major retailer earnings and guidance." },
+      { label: 'CNN Business', url: 'https://edition.cnn.com/business', description: 'CNN Business coverage of US consumer spending trends and retail earnings reactions.' },
+      { label: 'The Wall Street Journal — Markets', url: 'https://www.wsj.com/market-data/stocks', description: 'WSJ market data and analysis on retail-sector stock performance.' },
+    ],
+    relatedSlugs: ['sp500-q2-earnings-july-2026', 'apple-alphabet-q2-earnings-july-2026', 'us-jobs-report-july-2026', 'momentum-trading'],
+    imageUrl: 'https://images.unsplash.com/photo-1590479773265-7464e5d48118?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'ethereum-6000-institutional-staking-aug-2026': {
+    slug: 'ethereum-6000-institutional-staking-aug-2026',
+    category: 'blog',
+    icon: '💠',
+    title: 'Ethereum Climbs Toward $6,000 as Institutional Staking Demand Accelerates in August 2026',
+    tagline: 'A wave of corporate treasuries and ETF issuers embracing staked ETH pushed Ethereum to fresh multi-year highs in August 2026.',
+    metaTitle: 'Ethereum Nears $6,000 on Institutional Staking Demand — August 2026 | AutoTrader Blog',
+    metaDescription: 'Ethereum rallied toward $6,000 in August 2026 as staking-enabled ETFs and corporate treasuries accelerated demand. Full analysis of the drivers and what it means for crypto traders.',
+    overview: `Ethereum's price action in August 2026 marked its strongest sustained run since the 2021 bull market, with ETH climbing toward the $6,000 level for the first time in the asset's history. Unlike prior rallies driven primarily by speculative leverage, this move was underpinned by a structural shift in how institutions access Ethereum's underlying yield: staking.
+
+Following the SEC's earlier approval of in-kind redemption and staking pass-through structures for spot Ethereum ETFs, issuers including BlackRock and Fidelity spent the second half of the summer competing aggressively on staking-yield distribution, effectively turning their ETF products into interest-bearing instruments backed by a major digital asset. That combination — spot price exposure plus a native yield — proved attractive to allocators who had previously viewed Ethereum purely as a speculative growth asset rather than a yield-generating one.
+
+The percentage of ETH supply locked in staking contracts reached a new all-time high during the month, shrinking the liquid float available on exchanges. A small but growing cohort of publicly listed companies began adding staked ETH to corporate treasuries as a yield-bearing reserve asset, drawing comparisons to how some firms had earlier adopted Bitcoin as a non-yielding store-of-value reserve.
+
+The rally was reinforced by continued growth across Ethereum's Layer-2 ecosystem, where transaction throughput and total value locked both expanded, lending fundamental support to the yield and fee-generation story that underpins ETH's valuation case. Network activity metrics — active addresses, gas usage, and stablecoin settlement volume — all trended higher through the month.
+
+Not every signal was unambiguously bullish. Regulators in several jurisdictions continued to scrutinise whether staking rewards distributed through ETF wrappers constitute a security-like yield product requiring additional disclosure, introducing a lingering overhang of regulatory uncertainty. The ETH/BTC ratio, closely watched by crypto traders as a barometer of relative strength, rose meaningfully during the month, reflecting Ethereum's outperformance relative to Bitcoin.`,
+    howItWorks: `auto-Trading's crypto momentum strategies can incorporate ETH/BTC relative-strength as a rotation signal, increasing Ethereum exposure when the ratio trends higher alongside rising staking participation. The platform's correlation engine can also factor in Layer-2 token performance as a confirming signal, while risk controls scale down exposure heading into scheduled regulatory decisions that could affect staking-yield ETF structures.`,
+    externalLinks: [
+      { label: 'CoinDesk — Markets', url: 'https://www.coindesk.com/markets/', description: "CoinDesk's markets section with Ethereum price data and staking-yield coverage." },
+      { label: 'Reuters — Cryptoassets', url: 'https://www.reuters.com/technology/cryptoassets/', description: "Reuters' crypto and digital-assets hub covering institutional Ethereum adoption." },
+      { label: 'Bloomberg — Crypto', url: 'https://www.bloomberg.com/crypto', description: 'Bloomberg Crypto coverage of Ethereum ETF flows and staking-yield products.' },
+      { label: 'The Block', url: 'https://www.theblock.co/', description: 'In-depth data and research on Ethereum staking participation and Layer-2 growth.' },
+    ],
+    relatedSlugs: ['ethereum-layer2-explosion-july-2026', 'crypto-etf-record-inflows-july-2026', 'solana-institutional-surge-july-2026', 'trend-following'],
+    imageUrl: 'https://images.unsplash.com/photo-1621504450181-5d356f61d307?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'dollar-slides-fed-cut-bets-aug-2026': {
+    slug: 'dollar-slides-fed-cut-bets-aug-2026',
+    category: 'blog',
+    icon: '💵',
+    title: 'US Dollar Slides to 2026 Lows as Traders Price In a September Fed Rate Cut',
+    tagline: 'The dollar index fell to its weakest level of the year in August 2026 as soft labour data cemented expectations for a September rate cut, lifting EUR/USD and emerging-market currencies.',
+    metaTitle: 'Dollar Slides to 2026 Lows on Fed Rate-Cut Bets — August 2026 | AutoTrader Blog',
+    metaDescription: 'The US dollar index dropped to its lowest level of 2026 in August as markets priced in a September Fed rate cut. Here is how EUR/USD, USD/JPY and emerging-market currencies reacted.',
+    overview: `The US Dollar Index (DXY) fell to its lowest level of 2026 in mid-August, extending a decline that had been building since a softer-than-expected jobs report earlier in the summer. Fed funds futures markets moved to price in a probability of well above 90% for a rate cut at the September FOMC meeting, and the resulting shift in expected rate differentials weighed broadly on the greenback against every major currency pair.
+
+EUR/USD was among the biggest beneficiaries, breaking decisively above a technical resistance level that had capped rallies for much of the year. The move reflected not only dollar weakness but a relatively more hawkish tone from the European Central Bank, which had signalled it was in no hurry to follow the Fed with additional cuts of its own given still-firm eurozone service-sector inflation.
+
+USD/JPY told a similar story from the other side of the pair: the yen strengthened as the Bank of Japan continued its gradual policy-normalisation path, narrowing the interest-rate differential that had underpinned years of yen weakness and popular carry-trade positioning. Analysts flagged renewed risk of a disorderly carry-trade unwind if the narrowing continued at pace, echoing volatility spikes seen in prior years when similar dynamics played out.
+
+Emerging-market currencies rallied broadly as part of the same risk-on, dollar-down dynamic, with capital flowing into EM local-currency bonds and equities. The weaker dollar also fed through to commodities: gold extended its multi-month rally to fresh highs, and dollar-denominated oil and industrial metals firmed as their effective price fell for buyers holding other currencies.
+
+For forex traders, the month underscored how quickly consensus positioning can build once a policy inflection becomes probable rather than merely possible. Trend-following systems that had been positioned for continued dollar strength earlier in the year were forced to reverse, while systems already aligned with the dollar-down thesis captured a clean, sustained move.`,
+    howItWorks: `auto-Trading's forex module can apply trend filters across DXY and major dollar pairs, scaling position size as rate-cut probabilities implied by Fed funds futures shift. The platform's correlation engine flags carry-trade unwind risk on pairs like USD/JPY by monitoring interest-rate-differential trends, and the macro-event calendar can automatically reduce exposure ahead of NFP, CPI, and FOMC releases to limit event-driven slippage.`,
+    externalLinks: [
+      { label: 'Reuters — Currencies', url: 'https://www.reuters.com/markets/currencies/', description: "Reuters' currencies hub with live coverage of dollar index and major FX pair movements." },
+      { label: 'CNBC — Currencies', url: 'https://www.cnbc.com/currencies/', description: "CNBC's currencies section covering Fed policy expectations and FX market reactions." },
+      { label: 'Financial Times — Currencies', url: 'https://www.ft.com/currencies', description: 'FT Currencies section with expert analysis of dollar weakness and rate-differential trends.' },
+      { label: 'Bloomberg — Markets', url: 'https://www.bloomberg.com/markets/currencies', description: 'Bloomberg Currencies coverage of EUR/USD, USD/JPY, and emerging-market FX performance.' },
+    ],
+    relatedSlugs: ['fed-rate-pause-june-2026', 'us-jobs-report-july-2026', 'gold-3500-record-july-2026', 'carry-trade'],
+    imageUrl: 'https://images.unsplash.com/photo-1518183214770-9cffbec72538?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'jackson-hole-2026-powell-speech': {
+    slug: 'jackson-hole-2026-powell-speech',
+    category: 'blog',
+    icon: '🏔️',
+    title: "Jackson Hole 2026: Fed Chair's Speech Sparks a Broad Stock and Bond Rally",
+    tagline: "Markets rallied across equities and bonds after the Federal Reserve's annual Jackson Hole address signalled openness to a faster pace of rate cuts.",
+    metaTitle: 'Jackson Hole 2026: Fed Speech Sparks Stock & Bond Rally | AutoTrader Blog',
+    metaDescription: "The Federal Reserve's August 2026 Jackson Hole Economic Symposium speech triggered a sharp rally in stocks and bonds. Full breakdown of the speech, market reaction, and trading implications.",
+    overview: `The Federal Reserve's annual Jackson Hole Economic Symposium, hosted by the Kansas City Fed in Wyoming each August, has long been one of the most closely scrutinised events on the macro calendar — and the 2026 edition lived up to that reputation. The Fed Chair's keynote address triggered one of the sharpest single-day rallies in both equities and Treasuries seen so far in the year.
+
+The core message centred on a subtle but significant shift in emphasis: acknowledging that labour-market conditions had cooled more than the Fed's dual mandate would prefer, the Chair signalled a willingness to prioritise employment support over incremental inflation progress, opening the door to the possibility of rate cuts at consecutive meetings rather than the more cautious, quarterly cadence markets had previously assumed.
+
+Equity markets reacted immediately and broadly. The S&P 500 and Nasdaq both posted strong single-day gains, but the most pronounced move came in small-capitalisation stocks, which are typically more sensitive to financing costs and rallied disproportionately on the prospect of a faster easing cycle. Treasury markets moved in lockstep: the two-year yield fell sharply as short-end rate expectations repriced lower, steepening the yield curve.
+
+The dollar, already under pressure from the rate-cut repricing described earlier in the month, weakened further in the hours following the speech, while gold extended its record-breaking rally and crypto markets — sensitive to broader liquidity expectations — also caught a bid.
+
+Jackson Hole has a long history of moving markets disproportionately relative to its formal policy weight, since the symposium is not itself a policy-setting meeting. Traders who treat the speech as a hard policy commitment rather than a signal of directional intent have historically been caught offside when subsequent data forced a more nuanced follow-through — a risk worth weighing even after the enthusiastic 2026 reaction.`,
+    howItWorks: `auto-Trading's macro-event calendar automatically flags the Jackson Hole Symposium dates each year and can reduce position sizing in the hours surrounding the keynote address to manage event-driven volatility. Once the speech has been delivered, momentum strategies can be configured to capture the directional move that typically consolidates within the following one to two trading sessions, while risk controls scale exposure back up gradually as realised volatility normalises.`,
+    externalLinks: [
+      { label: 'CNBC — Federal Reserve', url: 'https://www.cnbc.com/federal-reserve/', description: "CNBC's live coverage and analysis of the Jackson Hole Economic Symposium and Fed policy signals." },
+      { label: 'Reuters — Fed Policy Tracker', url: 'https://www.reuters.com/markets/us/', description: "Reuters' comprehensive tracker of Federal Reserve speeches and policy decisions." },
+      { label: 'CNN Business — Economy', url: 'https://edition.cnn.com/business/economy', description: "CNN Business coverage of the Fed's Jackson Hole address and cross-asset market reaction." },
+      { label: 'Bloomberg — Economics', url: 'https://www.bloomberg.com/economics', description: 'Bloomberg Economics analysis of Fed policy shifts and the resulting bond and equity market response.' },
+    ],
+    relatedSlugs: ['fed-rate-pause-june-2026', 'dollar-slides-fed-cut-bets-aug-2026', 'sp500-q2-earnings-july-2026', 'news-trading'],
+    imageUrl: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=900&h=500&fit=crop&auto=format',
+  },
+
+  'stablecoin-market-300-billion-aug-2026': {
+    slug: 'stablecoin-market-300-billion-aug-2026',
+    category: 'blog',
+    icon: '🪙',
+    title: 'Stablecoin Market Surpasses $300 Billion as Bank-Issued Tokens Go Mainstream',
+    tagline: 'Regulatory clarity and a wave of bank-issued dollar tokens pushed the total stablecoin market above $300 billion in August 2026.',
+    metaTitle: 'Stablecoin Market Hits $300 Billion — August 2026 Analysis | AutoTrader Blog',
+    metaDescription: 'The global stablecoin market surpassed $300 billion in August 2026 as banks launched dollar-pegged tokens under new regulation. What it means for crypto and forex markets.',
+    overview: `The total market capitalisation of US dollar-pegged stablecoins crossed $300 billion in August 2026, a milestone that would have seemed improbable just a few years earlier when the sector was dominated by a handful of crypto-native issuers operating in a largely unregulated environment. The growth was led by incumbents Tether (USDT) and Circle's USDC, but the more consequential development was the arrival of a new cohort of bank-issued dollar tokens operating under a matured US federal stablecoin licensing framework.
+
+Several major banking consortiums launched permissioned dollar stablecoins during the month aimed squarely at institutional settlement and corporate treasury use cases, positioning themselves as regulated alternatives to crypto-native issuers for businesses that require auditable reserves and clear legal recourse. The competitive response from Circle and Tether included enhanced reserve transparency reporting and, in some cases, yield-sharing arrangements with large holders — a notable shift for a product category historically defined by non-interest-bearing reserves.
+
+The growth of stablecoins carries a direct forex dimension: dollar-pegged tokens are increasingly used for cross-border settlement, particularly in markets where access to US dollar liquidity through traditional correspondent banking channels is constrained or costly. This usage pattern effectively extends dollar demand into new corners of the global economy through rails that bypass the traditional banking system, a trend regulators in both the US and abroad have been monitoring closely.
+
+Regulatory harmonisation continued to advance in parallel, with reserve-auditing standards, redemption-rights requirements, and disclosure obligations converging across the US framework, the EU's MiCA regime, and comparable rules taking shape in several Asian financial centres. That convergence reduced regulatory arbitrage opportunities but also gave institutional users greater confidence to hold larger stablecoin balances for operational purposes.
+
+For crypto markets more broadly, stablecoin supply growth has become a widely tracked leading indicator of risk appetite: rising stablecoin issuance typically precedes increased buying capacity on exchanges, while contraction often foreshadows reduced risk-taking. The record supply levels reached in August therefore drew significant attention from traders positioning for the remainder of the year.`,
+    howItWorks: `auto-Trading's liquidity-monitoring module tracks aggregate stablecoin supply and net exchange inflows as a leading indicator for crypto risk appetite, allowing momentum strategies to lean into rising-supply regimes with greater conviction. Cross-exchange arbitrage bots also benefit directly from the expanded stablecoin settlement rails, which reduce friction and slippage when rebalancing positions across venues.`,
+    externalLinks: [
+      { label: 'Reuters — Cryptoassets', url: 'https://www.reuters.com/technology/cryptoassets/', description: "Reuters' cryptoassets hub covering stablecoin regulation and market-cap milestones." },
+      { label: 'CoinDesk — Policy', url: 'https://www.coindesk.com/policy/', description: "CoinDesk's policy section tracking global stablecoin regulatory developments." },
+      { label: 'CNBC — Cryptocurrency', url: 'https://www.cnbc.com/cryptocurrency/', description: "CNBC's cryptocurrency coverage including bank-issued stablecoin launches." },
+      { label: 'Financial Times — Cryptocurrencies', url: 'https://www.ft.com/cryptocurrencies', description: 'FT coverage of stablecoin market growth and cross-border settlement use cases.' },
+    ],
+    relatedSlugs: ['crypto-etf-record-inflows-july-2026', 'dollar-slides-fed-cut-bets-aug-2026', 'wall-street-crypto-risk-models-aug-2026', 'arbitrage-strategy'],
+    imageUrl: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=900&h=500&fit=crop&auto=format',
+  },
+
 };
 
 @Component({
@@ -2723,6 +2863,11 @@ export class LearnDetailPage implements OnInit {
       'emerging-markets-rally-june-2026': 'trend-following',
       'fed-rate-pause-june-2026': 'price-action',
       'gold-commodities-july-2026': 'momentum',
+      'retail-earnings-consumer-strength-aug-2026': 'price-action',
+      'ethereum-6000-institutional-staking-aug-2026': 'momentum',
+      'dollar-slides-fed-cut-bets-aug-2026': 'price-action',
+      'jackson-hole-2026-powell-speech': 'price-action',
+      'stablecoin-market-300-billion-aug-2026': 'multi-factor',
     };
 
     const profile = bySlug[page.slug];

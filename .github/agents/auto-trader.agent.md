@@ -33,6 +33,9 @@ All Shopify scripts live in `scripts/` and require `SHOPIFY_SHOP` and `SHOPIFY_A
 - The "Getting Started" checklist on the dashboard tracks: account creation → exchange connection → first strategy created → first active strategy. It does not reference bots directly.
 - `tradeSide` on a strategy supports three values: `'buy'` (buy-only), `'sell'` (sell-only, including shorts), and `'buySell'` (both directions). Backend `engine/signals.ts` passes `preferredSide = null` for `buySell`, allowing both signal directions through.
 - Broker-provisioned `alpaca-paper` strategies (CK credentials or `brokerProvisioned=true`) must execute orders via Alpaca Broker sandbox trading endpoints with OAuth and `alpacaBrokerAccountId`; do not route these orders to `paper-api.alpaca.markets`.
+- Every entry in `LEARN_PAGES` (`src/app/pages/learn/learn-detail.ts`), including `blog` category pages, must have a matching slug entry in the `bySlug` map inside `codeProfileForPage()`. A missing mapping throws a runtime error ("Missing strategy code profile mapping for learn page slug: ..."), so add the mapping in the same change whenever a new learn/blog page is added.
+- Blog post content lives only in the base `LEARN_PAGES` TypeScript object for English; `public/i18n/en.json` does not contain `learnPages.<slug>` keys for blog posts. Only the 5 non-English locale files (de/es/fr/pt/ar.json) carry explicit `learnPages.<slug>` translation objects (title, tagline, metaTitle, metaDescription, overview, howItWorks, externalLinks as `{label, description}` — no `url`, since URLs are sourced only from the English TS object).
+- New blog posts require entries in `prerender-routes.txt` (one line per locale per slug, e.g. `/en/blog/<slug>`) so the page is statically prerendered by `@angular/ssr`, and corresponding `<url>` entries in `public/sitemap.xml` for each locale/slug combination.
 
 ## Security Expectations
 
