@@ -29,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
         <section><h2>{{ 'disclaimer.s6Title' | translate }}</h2><p>{{ 'disclaimer.s6Body' | translate }}</p></section>
         <section><h2>{{ 'disclaimer.s7Title' | translate }}</h2><p>{{ 'disclaimer.s7Body' | translate }}</p></section>
         <section><h2>{{ 'disclaimer.s8Title' | translate }}</h2><p>{{ 'disclaimer.s8Body' | translate }}</p></section>
+        <!-- TODO: Add regulatory status statement here once confirmed (e.g. "Planck Software is / is not a regulated financial advisor…"). Do NOT publish placeholder language — the founder will draft this section. -->
       </div>
     </div>
   `,
