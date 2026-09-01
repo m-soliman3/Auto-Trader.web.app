@@ -827,9 +827,7 @@ export class FeatureDetailPage implements OnInit {
   }
 
   featurePageUrl(slug: string): string {
-    const path = `/${this.languageService.currentLang()}/features/${slug}`;
-    const origin = this.document.location?.origin ?? '';
-    return origin ? `${origin}${path}` : path;
+    return `/${this.languageService.currentLang()}/features/${slug}`;
   }
 
   localizedHref(...segments: string[]): string {
