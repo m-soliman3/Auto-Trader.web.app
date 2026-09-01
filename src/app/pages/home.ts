@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
+import { SUPPORTED_EXCHANGES } from '../services/exchange.service';
 
 @Component({
   selector: 'app-home',
@@ -80,6 +81,11 @@ export class Home implements AfterViewInit, OnDestroy {
       videoSrc: '/videos/Strategy created 08.06.2026.mov',
     },
   ];
+
+  /** Unique (non-paper/testnet/sandbox/demo) exchanges & brokers for the marquee. */
+  partnerBrokerages = SUPPORTED_EXCHANGES
+    .filter(e => !e.isPaper)
+    .map(e => ({ name: e.name, logo: e.logo, color: e.color }));
 
   activeStepVideoSrc(): string {
     return this.steps[this.activeStepIndex()]?.videoSrc ?? '';

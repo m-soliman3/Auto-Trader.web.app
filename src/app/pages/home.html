@@ -65,6 +65,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ───── PARTNER BROKERAGES ───── -->
+<section class="partners-section">
+  <div class="container">
+    <p class="section-tag partners-tag">{{ t('home.partners.tag', 'Partner Brokerages') }}</p>
+  </div>
+  <div class="partners-marquee" aria-label="Partner brokerages">
+    <div class="partners-track">
+      @for (b of partnerBrokerages; track b.name) {
+        <span class="partner-item">
+          <span class="partner-logo">{{ b.logo }}</span>
+          <span class="partner-name">{{ b.name }}</span>
+        </span>
+      }
+      <!-- duplicate set for seamless loop -->
+      @for (b of partnerBrokerages; track b.name) {
+        <span class="partner-item" aria-hidden="true">
+          <span class="partner-logo">{{ b.logo }}</span>
+          <span class="partner-name">{{ b.name }}</span>
+        </span>
+      }
+    </div>
+  </div>
+</section>
+
 <!-- ───── FEATURES ───── -->
 <section class="section" id="features">
   <div class="container">
