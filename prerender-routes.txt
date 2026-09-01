@@ -658,3 +658,8 @@
 /ar/signup
 /ar/knowledge-base
 /ar/terms
+/contact
+/disclaimer
+/privacy
+/terms
+/collecting-data
