@@ -29,6 +29,21 @@
   text-align: left;
 }
 
+/* ── AD BANNER (skyscraper) ── */
+.ad-banner-skyscraper {
+  position: fixed;
+  top: 96px;
+  left: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
+  width: 120px;
+  height: 600px;
+  z-index: 999;
+  display: none;
+}
+
+@media (min-width: 1400px) {
+  .ad-banner-skyscraper { display: block; }
+}
+
 .hero-badge {
   display: inline-block;
   background: rgba(0,209,122,0.12);
