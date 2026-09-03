@@ -5,11 +5,12 @@ import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 import { SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { AdBannerSkyscraper } from '../components/ad-banner-skyscraper';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, TranslateModule],
+  imports: [RouterLink, CommonModule, TranslateModule, AdBannerSkyscraper],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
