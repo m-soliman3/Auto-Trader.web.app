@@ -3671,6 +3671,162 @@
           "description": "Análisis completo de temporada de ganancias y noticias corporativas del S&P 500 de Bloomberg."
         }
       ]
+    },
+    "bitcoin-miner-stocks-aug-2026": {
+      "title": "Las acciones de mineras de Bitcoin destacan en agosto de 2026 mientras BTC se estabiliza por encima de las seis cifras",
+      "tagline": "Con Bitcoin sosteniendo niveles altos y los costes energéticos cediendo, las mineras cotizadas ofrecieron una subida apalancada frente al BTC al contado.",
+      "metaTitle": "Rally de mineras de Bitcoin agosto 2026 | AutoTrader Blog",
+      "metaDescription": "Las acciones de minería de Bitcoin destacaron en agosto de 2026 al consolidar BTC en niveles elevados y mejorar los márgenes operativos. Análisis completo.",
+      "overview": "Las acciones de minería de Bitcoin se convirtieron en una temática de alta convicción en agosto de 2026. Tras el explosivo rally cripto de julio, Bitcoin pasó buena parte de agosto consolidando en precios elevados en lugar de girar bruscamente a la baja. Esa estabilidad, unida a la moderación de los costes energéticos regionales y a una mayor eficiencia de las flotas de equipos, sostuvo un fuerte rebote de las mineras cotizadas.\n\nLas acciones mineras son, en la práctica, apuestas apalancadas sobre tres variables: el precio de Bitcoin, la dificultad de la red y el coste operativo por moneda minada. En agosto, la primera se mantuvo favorable mientras la tercera mejoraba de forma moderada en varios operadores. Los inversores respondieron revalorizando a las mineras con balances más saneados y una disciplina de capital más clara tras el halving.\n\nOtro viento de cola llegó de la transparencia en la estrategia de tesorería. Las compañías que publicaron políticas disciplinadas de tenencia de monedas y marcos de cobertura atrajeron mayores flujos que aquellas que dependían de una comunicación oportunista. En un entorno en el que el capital institucional participa cada vez más en las acciones ligadas al cripto, la calidad del gobierno corporativo pasó a ser un insumo directo de valoración.\n\nLa volatilidad siguió siendo alta. Las mineras se movían con regularidad varios puntos porcentuales en la sesión, superando a menudo la volatilidad realizada del propio Bitcoin. Eso las hizo atractivas para sistemas de momentum y ruptura, pero solo acompañadas de controles de riesgo estrictos y filtros de eventos en torno a resultados, emisiones de deuda y ajustes de dificultad de la red.\n\nLa implicación más amplia es que la exposición al cripto en los mercados de renta variable se está volviendo más matizada. No todas las «acciones cripto» se comportan igual, y una selección sensible a factores puede mejorar de forma sustancial los resultados frente a enfoques de cesta ingenuos.",
+      "howItWorks": "auto-Trading puede ejecutar estrategias de cesta sobre una selección de mineras cotizadas, con dimensionamiento normalizado por volatilidad y un filtro de tendencia de Bitcoin. Mientras BTC se mantenga por encima de un régimen clave de medias móviles y la fuerza relativa de las mineras mejore frente al Nasdaq, el sistema puede ir escalando posiciones en los valores más fuertes, aplicando límites máximos de riesgo por valor individual y a nivel de sector.",
+      "externalLinks": [
+        {
+          "label": "Nasdaq — Acciones de minería cripto",
+          "description": "Comentario de mercado y actualizaciones de compañías cotizadas relevantes para las mineras."
+        },
+        {
+          "label": "CompaniesMarketCap — Mineras de Bitcoin",
+          "description": "Vista general de la capitalización bursátil de las mineras cotizadas."
+        },
+        {
+          "label": "Cointelegraph Markets",
+          "description": "Noticias de cripto y de acciones ligadas al cripto, centradas en mineras y estructura de mercado."
+        },
+        {
+          "label": "TradingView — Dominancia de BTC",
+          "description": "Contexto útil para el rendimiento relativo entre Bitcoin y las acciones ligadas al cripto."
+        }
+      ]
+    },
+    "wall-street-crypto-risk-models-aug-2026": {
+      "title": "Los modelos de riesgo de Wall Street incorporan señales cripto en agosto de 2026",
+      "tagline": "Las mesas institucionales combinaron cada vez más la volatilidad de Bitcoin y las señales de flujos de ETF en sus marcos de riesgo de renta variable.",
+      "metaTitle": "Wall Street suma cripto a sus modelos de riesgo | AutoTrader",
+      "metaDescription": "En agosto de 2026, los equipos de riesgo institucionales incorporaron cada vez más señales del mercado cripto a sus modelos de posicionamiento en bolsa.",
+      "overview": "Agosto de 2026 marcó un cambio institucional destacado: varias mesas multiactivo describieron públicamente cómo integraban insumos derivados del cripto en sus modelos centrales de riesgo para renta variable. El cambio tenía menos que ver con la «euforia cripto» que con la utilidad de la señal. Bitcoin cotiza hoy con suficiente profundidad, participación global y liquidez ininterrumpida como para que su volatilidad y su dinámica de flujos informen medidas más amplias de apetito por el riesgo.\n\nHistóricamente, los modelos de riesgo de renta variable priorizaban los tipos, los diferenciales de crédito, las divisas y los índices de volatilidad. En 2026, el cripto entró en ese conjunto como una capa suplementaria de alerta temprana. Los repuntes intradía de la volatilidad implícita de Bitcoin, los regímenes bruscos de salidas de ETF o una financiación inestable en los futuros perpetuos precedían a menudo giros del sentimiento de riesgo que después aparecían en los futuros sobre acciones estadounidenses.\n\nEsto no significa que el cripto anticipe siempre a la bolsa. La causalidad depende del régimen y los falsos positivos siguen siendo frecuentes. Pero, a medida que la adopción se profundiza, ignorar el cripto por completo genera puntos ciegos para las mesas que gestionan carteras de renta variable con mucho peso tecnológico y exposición sectorial sensible a la macro.\n\nPara el operador sistemático, la oportunidad está en el modelado condicional. Las señales cripto no deberían ser disparadores autónomos de operaciones en bolsa; funcionan mejor como filtros de contexto que modifican la confianza, el tamaño o el horizonte de las estrategias de acciones ya existentes.\n\nAgosto reforzó una realidad institucional: la estructura de mercado está convergiendo. Quien trate el cripto y la renta variable como universos separados se arriesga a perderse información entre plazas que los profesionales descuentan cada vez más.",
+      "howItWorks": "auto-Trading admite metafiltros que ajustan el comportamiento de una estrategia según el estado externo del mercado. Una estrategia de acciones puede reducir el tamaño cuando la volatilidad de Bitcoin supera un umbral, o exigir confirmación adicional cuando el momentum de los flujos cripto se vuelve negativo. Se crea así un marco adaptativo en el que las señales cripto afinan, en lugar de sustituir, las entradas y salidas principales en renta variable.",
+      "externalLinks": [
+        {
+          "label": "CFA Institute Research",
+          "description": "Perspectivas de investigación institucional sobre riesgo multiactivo y construcción de carteras."
+        },
+        {
+          "label": "FRED Datos financieros",
+          "description": "Datos macro y de tipos utilizados junto a los modelos de riesgo multiactivo."
+        },
+        {
+          "label": "Deribit Insights",
+          "description": "Métricas de derivados cripto, incluida la volatilidad implícita y el contexto de posicionamiento."
+        },
+        {
+          "label": "Fed de Chicago — Condiciones financieras",
+          "description": "Índice de condiciones financieras usado con frecuencia en superposiciones macro sistemáticas."
+        }
+      ]
+    },
+    "bitcoin-stocks-volatility-playbook-aug-2026": {
+      "title": "Un manual de volatilidad para operar Bitcoin y acciones a la vez",
+      "tagline": "El comportamiento de los precios en agosto de 2026 mostró por qué los controles de volatilidad unificados son esenciales al operar BTC y acciones en una sola cartera.",
+      "metaTitle": "Manual de volatilidad: Bitcoin y acciones | AutoTrader Blog",
+      "metaDescription": "Un manual práctico de volatilidad para operar Bitcoin y acciones a la vez, basado en el comportamiento multiactivo de agosto de 2026 y su gestión de riesgo.",
+      "overview": "Agosto de 2026 ofreció ejemplos repetidos de contagio de volatilidad entre activos: un movimiento brusco del cripto fuera del horario estadounidense solía ir seguido de una revalorización de los futuros bursátiles en preapertura, y el riesgo de eventos en bolsa se retroalimentaba en el cripto en la sesión asiática siguiente. Para quienes gestionan ambas carteras, los controles de riesgo aislados resultaron insuficientes.\n\nEl primer principio es la presupuestación unificada del riesgo. En lugar de asignar caídas máximas separadas a los compartimentos de «cripto» y «acciones», las mesas avanzadas emplean cada vez más un objetivo combinado de volatilidad de cartera y permiten que las asignaciones fluctúen dentro de esa envolvente. Así se evita una sobreexposición accidental cuando ambos bloques pasan a estar muy correlacionados.\n\nEl segundo principio es el dimensionamiento consciente del régimen. En condiciones estables, el operador puede participar de forma más amplia en señales de momentum y de reversión a la media. Cuando la volatilidad realizada y la correlación entre activos suben a la vez, el manual se desplaza hacia menos posiciones, ventanas de tenencia más cortas y una lógica de stops más ajustada.\n\nEn tercer lugar, importa el mapeo de eventos. Un calendario que incluya reuniones del FOMC, datos de IPC, resultados de las grandes tecnológicas y fechas clave de regulación o ETF en cripto mejora sensiblemente la calidad de ejecución. Muchas malas operaciones de agosto no partían de señales malas: eran buenas señales desplegadas en momentos estructuralmente inadecuados.\n\nPor último, la disciplina de ejecución sigue siendo innegociable. Las oportunidades multiactivo resultan más valiosas cuando se acompañan de controles estrictos de deslizamiento, niveles de invalidación definidos de antemano y una analítica posterior a la operación que separe la calidad del alfa del ruido de mercado.\n\nEl mensaje general de agosto de 2026 es sencillo: aumentaron las oportunidades, pero también la complejidad. Los operadores que integraron riesgo, temporización y ejecución entre Bitcoin y renta variable obtuvieron resultados más limpios que quienes trataron cada mercado por separado.",
+      "howItWorks": "auto-Trading puede imponer un objetivo de volatilidad a nivel de cartera que abarque las estrategias de cripto y de renta variable. Cuando la volatilidad realizada combinada supera el límite configurado, la plataforma puede desapalancar automáticamente, pausar los planteamientos de menor convicción y priorizar las señales con una confirmación de tendencia o liquidez más sólida. El mismo marco permite volver a asumir riesgo de forma gradual a medida que las condiciones se normalizan.",
+      "externalLinks": [
+        {
+          "label": "NYSE — Recursos sobre volatilidad de mercado",
+          "description": "Datos del mercado bursátil estadounidense y contexto de volatilidad para planificar la ejecución."
+        },
+        {
+          "label": "Cboe — Visión general del VIX",
+          "description": "Referencia sobre las condiciones de volatilidad implícita en la renta variable estadounidense."
+        },
+        {
+          "label": "CoinGlass Data",
+          "description": "Métricas de derivados y liquidaciones cripto relevantes para el análisis de volatilidad a corto plazo."
+        },
+        {
+          "label": "Investopedia — Dimensionamiento de posiciones",
+          "description": "Panorama práctico de los principios de dimensionamiento de posiciones usados en el trading sistemático."
+        }
+      ]
+    },
+    "gold-commodities-july-2026": {
+      "title": "El oro alcanza los 3.400 dólares: las materias primas se disparan mientras el dólar se debilita en julio de 2026",
+      "tagline": "El oro superó los 3.400 dólares por onza en julio de 2026, impulsado por la debilidad del dólar, la incertidumbre geopolítica y unas compras récord de los bancos centrales, arrastrando al alza a todo el complejo de materias primas.",
+      "metaTitle": "Rally del oro a 3.400 dólares en julio 2026 | AutoTrader",
+      "metaDescription": "El oro alcanzó los 3.400 dólares por onza en julio de 2026 al debilitarse el dólar, mantenerse alta la demanda de los bancos centrales y persistir la incertidumbre.",
+      "overview": "El oro prolongó su mercado alcista plurianual en julio de 2026, superando por primera vez en la historia los 3.400 dólares por onza troy y anotándose una revalorización cercana al 8,5 % en el mes, uno de sus mejores comportamientos mensuales en la memoria reciente. El movimiento consolidó su condición de activo refugio por excelencia y de reserva de valor en una era de elevada incertidumbre geopolítica, déficits fiscales persistentes y un dólar estadounidense a la baja.\n\nEl principal motor macroeconómico fue el continuo debilitamiento del índice del dólar (DXY), que en julio cayó a su nivel más bajo desde finales de 2023. Para el oro, cotizado en dólares, un billete verde más débil abarata el metal para los compradores de fuera de Estados Unidos y estimula directamente la demanda. La debilidad del dólar reflejaba la combinación de una postura prudente y dependiente de los datos por parte de la Reserva Federal, un estrechamiento del diferencial de tipos estadounidense frente a otras economías del G10 y una creciente preocupación internacional por la sostenibilidad fiscal de EE. UU. a largo plazo, dada la trayectoria de la deuda federal.\n\nLa demanda de los bancos centrales, pilar estructural del mercado alcista del oro desde 2022, no dio señales de remitir. Los datos de mitad de año del World Gold Council revelaron que los bancos centrales de todo el mundo habían comprado en conjunto más de 700 toneladas métricas de oro en el primer semestre de 2026, en camino de igualar o superar los años récord de 2022 y 2023. Los compradores se concentraron en bancos centrales de mercados emergentes —en especial los de China, India, Polonia y Turquía, además de varios fondos soberanos de Oriente Medio—, que buscaban diversificar sus reservas alejándose de la deuda del Tesoro estadounidense y reducir su exposición a posibles sanciones en dólares.\n\nLas primas de riesgo geopolítico también influyeron. Las tensiones persistentes en Oriente Medio, la continua inestabilidad en Europa del Este y la creciente incertidumbre en la política comercial entre Estados Unidos y China contribuyeron a una demanda elevada de activos refugio. El doble papel del oro, como refugio financiero y como materia prima física sin riesgo de contraparte, lo convirtió en una posición atractiva para los inversores institucionales que gestionan riesgos de cola geopolíticos.\n\nEl conjunto de las materias primas también se comportó bien en julio, aunque las ganancias fueron más selectivas que el avance generalizado del oro. La plata, que tiende a amplificar los movimientos del oro en fases alcistas, subió un 12,3 % —su mejor mes en más de un año—, impulsada tanto por la demanda inversora como por el creciente uso industrial en paneles solares y baterías de vehículos eléctricos. El cobre avanzó ligeramente al apuntar las medidas de estímulo chinas y la mejora de los índices PMI manufactureros globales hacia una recuperación de la demanda industrial.\n\nLos precios del petróleo fueron el rezagado destacado dentro del complejo. El crudo Brent se movió en el rango de 74 a 79 dólares por barril durante todo julio, limitado por el aumento de la producción estadounidense, una gestión prudente de la oferta por parte de la OPEP+ y las dudas sobre el ritmo de crecimiento de la demanda global procedente del transporte, amenazada a su vez por la aceleración de la adopción del vehículo eléctrico. La desconexión entre la fortaleza del oro y la relativa debilidad del petróleo puso de relieve la importancia de distinguir entre materias primas impulsadas por la demanda financiera (oro, plata) y materias primas industriales sensibles al ciclo (petróleo, cobre) al construir exposición al sector.\n\nPara el operador sistemático, julio de 2026 demostró el valor de las estrategias de seguimiento de tendencia aplicadas al complejo de metales preciosos. La tendencia alcista de varios meses del oro —identificable mediante simples señales de medias móviles o rupturas de canal de Donchian— venía generando entradas largas consistentes desde principios de año. El reto estaba en el dimensionamiento de la posición ante la elevada volatilidad del oro, que exigía una colocación dinámica de stops basada en el ATR en lugar de stops porcentuales fijos.",
+      "howItWorks": "auto-Trading permite operar materias primas mediante CFD y ETF de referencia (GLD, SLV, GDX) en los brókeres conectados. Las estrategias de seguimiento de tendencia sobre el oro con medias móviles de periodo largo (EMA de 50 y 200 días) han funcionado históricamente bien durante fases alcistas prolongadas. El módulo de dimensionamiento de posiciones basado en ATR ajusta automáticamente el tamaño de la operación al régimen de volatilidad vigente del oro, evitando que un mes volátil como julio de 2026 provoque caídas desproporcionadas aunque la tendencia de fondo siga intacta.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Mercado del oro",
+          "description": "El centro de materias primas de Reuters sobre la evolución del precio del oro, las compras de bancos centrales y los motores macro."
+        },
+        {
+          "label": "World Gold Council",
+          "description": "Datos oficiales del precio del oro, estadísticas de demanda de bancos centrales y análisis de mercado del World Gold Council."
+        },
+        {
+          "label": "Bloomberg — Materias primas",
+          "description": "La cobertura de mercados de materias primas de Bloomberg, incluidos oro, plata, petróleo y metales industriales."
+        },
+        {
+          "label": "CNBC — Oro y metales",
+          "description": "La cobertura de metales preciosos de CNBC con seguimiento en tiempo real del precio del oro y análisis de expertos."
+        }
+      ]
+    },
+    "us-jobs-report-july-2026": {
+      "title": "Informe de empleo de EE. UU. de julio de 2026: el mercado laboral se enfría y crecen las expectativas de recortes",
+      "tagline": "Las nóminas no agrícolas de julio quedaron por debajo de lo previsto por tercer mes consecutivo, alimentando el rally del mercado de bonos y elevando las expectativas de recortes de tipos de la Fed en septiembre de 2026.",
+      "metaTitle": "Empleo EE. UU. julio 2026: perspectiva de recortes | AutoTrader",
+      "metaDescription": "El informe de nóminas no agrícolas de julio de 2026 mostró un tercer mes de creación de empleo por debajo del consenso, hundiendo los rendimientos de los bonos.",
+      "overview": "El informe de nóminas no agrícolas (NFP) de julio de 2026 del Bureau of Labor Statistics, publicado el primer viernes de agosto, deparó una sorpresa de gran calado que resonó en los mercados de renta fija, renta variable y divisas durante el resto de la jornada y hasta la semana siguiente. La cifra principal de 112.000 empleos creados quedó muy por debajo de la previsión de consenso de 165.000 y marcó el tercer mes consecutivo de creación de empleo por debajo del consenso, un patrón que los economistas interpretaron como prueba clara de un mercado laboral estadounidense que se debilita, aunque no se desploma.\n\nLa tasa de paro repuntó hasta el 4,3 % —su nivel más alto desde el periodo de normalización pospandemia de 2021— desde el 4,1 % de junio. El alza se debió en parte a un aumento de la tasa de actividad, al reincorporarse más trabajadores al mercado, pero la combinación de contrataciones más lentas y desempleo al alza envió una señal inequívoca a la Reserva Federal de que el largamente anticipado «enfriamiento» del mercado laboral se estaba materializando.\n\nEl detalle sectorial dibujó un cuadro matizado. El empleo público —una fuente persistente de creación de puestos en meses anteriores— se contrajo por primera vez en 18 meses, al empezar a trasladarse a las cifras de empleo los efectos de las iniciativas de eficiencia del gasto federal. La sanidad siguió creando empleo a buen ritmo, en línea con su tendencia de crecimiento estructural impulsada por la demografía. El empleo en el sector tecnológico cayó por segundo mes consecutivo, ya que las mejoras de productividad impulsadas por la IA permitieron a las empresas mantener o aumentar su producción con menos empleados, una dinámica que varios economistas describieron como una manifestación temprana de sustitución de trabajo por tecnología. Las nóminas manufactureras mostraron avances modestos, coherentes con el ciclo de inversión en nearshoring en curso.\n\nEl crecimiento salarial se moderó hasta el 3,8 % interanual en julio, frente al 4,1 % de junio, una evolución que la Reserva Federal buscaba activamente como prueba de que el canal de costes salariales de la inflación seguía normalizándose. La combinación de menor creación de empleo, mayor desempleo y salarios más contenidos ofreció el argumento más claro hasta la fecha para que la Fed iniciara una nueva ronda de recortes de tipos.\n\nLos mercados de bonos reaccionaron con contundencia. El rendimiento del bono del Tesoro estadounidense a 2 años —el vencimiento más sensible a la Fed— cayó 18 puntos básicos el día del informe hasta el 3,82 %, su nivel más bajo desde principios de 2024. El rendimiento a 10 años bajó 12 puntos básicos hasta el 4,03 %, perforando brevemente el psicológicamente relevante umbral del 4 % por primera vez en más de dos años. Los futuros sobre los fondos federales, que antes del informe descontaban una probabilidad cercana al 50 % de recorte en septiembre de 2026, pasaron de inmediato a descontar un 85 %.\n\nLa renta variable protagonizó un fuerte giro intradía. La reacción inicial fue de ventas por temor al crecimiento —con los cíclicos y las pequeñas capitalizaciones como más castigados—, pero en las dos horas siguientes a la apertura el mercado se dio la vuelta y cerró al alza, al centrarse los inversores en el viento de cola de los recortes más que en la señal de debilidad económica. El Nasdaq, con su elevada concentración de tecnológicas de larga duración que se benefician de menores tasas de descuento, destacó y cerró la sesión con una subida del 1,2 %.\n\nPara los operadores atentos a la macroeconomía, el informe NFP de julio de 2026 fue un ejemplo de manual de la dinámica de «las malas noticias son buenas noticias» que suele dominar en las fases tardías del ciclo, cuando se percibe que el banco central tiene margen para responder a la debilidad. El informe reforzó el valor de mantener calendarios de eventos macro y de entender la función condicional de respuesta del mercado: no solo si el dato es fuerte o débil, sino cómo es probable que el mercado lo interprete frente a sus expectativas de política monetaria vigentes.",
+      "howItWorks": "El módulo de calendario de eventos macro de auto-Trading sigue todas las grandes publicaciones de datos económicos estadounidenses —incluidos el informe mensual de NFP, el IPC, el IPP, el PCE, los PMI del ISM y los anuncios del FOMC— y puede reducir automáticamente la exposición en los 30 minutos previos a una publicación programada para evitar la volatilidad adversa del evento. Tras la publicación, estrategias de ruptura sin sesgo direccional pueden capturar el primer movimiento de momentum. La plataforma también permite configurar respuestas sectoriales concretas: por ejemplo, abrir automáticamente posiciones largas en sectores sensibles a los tipos, como utilities y REITs, cuando el dato de NFP queda por debajo de lo previsto y los rendimientos caen con fuerza.",
+      "externalLinks": [
+        {
+          "label": "Bureau of Labor Statistics — Datos NFP",
+          "description": "El resumen oficial de la situación del empleo del BLS con el informe completo de nóminas no agrícolas."
+        },
+        {
+          "label": "Reuters — Economía de EE. UU.",
+          "description": "La cobertura de Reuters sobre la economía estadounidense, con análisis de los informes de empleo y de la política de la Fed."
+        },
+        {
+          "label": "CNBC — Cobertura del informe de empleo",
+          "description": "La cobertura en directo de CNBC del informe NFP con reacción inmediata del mercado y comentarios de expertos."
+        },
+        {
+          "label": "Bloomberg — Fed Watch",
+          "description": "El seguimiento de Bloomberg de las expectativas de tipos de la Reserva Federal y el análisis del mercado de deuda estadounidense."
+        }
+      ]
+    },
+    "china-stimulus-markets-july-2026": {
+      "title": "El megapaquete de estímulo de China reconfigura los mercados globales en julio de 2026",
+      "tagline": "El anuncio por parte de Pekín de un paquete de estímulo fiscal de 3 billones de yuanes a finales de julio de 2026 sacudió los mercados globales de renta variable, materias primas y divisas, con efectos desde Shanghái hasta São Paulo.",
+      "metaTitle": "Estímulo de China julio 2026: impacto de mercado | AutoTrader",
+      "metaDescription": "China anunció un paquete de estímulo de 3 billones de yuanes en julio de 2026, desatando un fuerte rally en la bolsa china, las materias primas y los emergentes.",
+      "overview": "El 22 de julio de 2026, el Gobierno chino anunció lo que los analistas describieron de inmediato como su paquete de estímulo fiscal más ambicioso desde la crisis financiera global de 2008: un programa de 3 billones de yuanes (415.000 millones de dólares) dirigido al consumo interno, la estabilización del mercado inmobiliario, la manufactura avanzada y la infraestructura verde. El anuncio desencadenó una respuesta de mercado inmediata y espectacular que se propagó por los mercados globales de renta variable, materias primas, divisas y bonos en los días y semanas siguientes.\n\nLas bolsas chinas fueron las primeras y más claras beneficiadas. El índice CSI 300 se disparó un 9,4 % en las dos sesiones posteriores al anuncio —su mayor avance en dos días en cinco años—, mientras que el Hang Seng, con fuerte exposición al sector tecnológico chino, subió un 11,2 % en el mismo periodo. Los inversores institucionales extranjeros, muchos de los cuales mantenían posiciones infraponderadas en bolsa china tras años de incertidumbre regulatoria y crecimiento decepcionante, se apresuraron a reequilibrar su exposición al superar el tamaño y la composición del paquete las expectativas previas.\n\nEl paquete destacaba no solo por su tamaño, sino por su estructura. A diferencia de rondas anteriores de estímulo chino, centradas sobre todo en la inversión en infraestructuras —carreteras, ferrocarriles y promoción inmobiliaria—, el paquete de julio de 2026 apuntaba explícitamente a impulsar la demanda interna de los consumidores. Las medidas incluían transferencias directas de efectivo a hogares de rentas bajas, subvenciones para la compra de electrónica de consumo y electrodomésticos, un programa ampliado de achatarramiento de vehículos antiguos (diseñado para acelerar la adopción del vehículo eléctrico) y apoyo específico a los sectores de viajes y hostelería. Este enfoque orientado al consumo respondía a una crítica estructural de larga data al modelo de crecimiento chino —su excesiva dependencia de la inversión y las exportaciones frente al consumo interno— y fue interpretado por los observadores internacionales como un giro estratégicamente relevante.\n\nEl sector inmobiliario recibió un paquete de apoyo separado y específico que incluía nuevas rebajas de los tipos hipotecarios, una relajación de las restricciones de compra en las grandes ciudades y un programa respaldado por el Gobierno para adquirir inventario no vendido de promotores en dificultades financieras. Aunque el consenso del mercado era que el ajuste estructural del sector inmobiliario desde sus máximos es un proceso plurianual que ningún paquete aislado puede revertir, el anuncio eliminó riesgos de cola a corto plazo y puso un suelo al sentimiento.\n\nEl complejo global de materias primas reaccionó con fuerza. El cobre —considerado el mejor barómetro de la actividad económica china— se disparó un 7,3 % el día del anuncio, su mayor subida diaria en años, al anticipar los operadores que una reaceleración de la construcción y la manufactura chinas impulsaría sustancialmente la demanda de metales industriales. Los futuros del mineral de hierro se dispararon un 11 %, beneficiando a las grandes mineras cotizadas en las bolsas de Londres y Australia. El aluminio, el zinc y el níquel subieron por simpatía.\n\nLos mercados de divisas estuvieron igual de activos. El yuan chino (CNY) se apreció con fuerza frente al dólar al intensificarse los flujos de capital hacia activos chinos, con el yuan offshore (CNH) ganando un 1,8 % frente al dólar en los dos días posteriores al anuncio. Las divisas emergentes se fortalecieron en general, con el dólar australiano —muy expuesto a la demanda china de materias primas— avanzando un 2,4 % y ampliando sus ganancias de julio a más del 4 % frente al dólar.\n\nLas bolsas occidentales respondieron inicialmente al alza, con fuertes subidas en las compañías expuestas a la demanda del consumidor chino: marcas de lujo, fabricantes de semiconductores que suministran a los OEM chinos y productores de equipamiento industrial. Sin embargo, algunos estrategas advirtieron de que una reaceleración de la demanda en China podría añadir presión alcista a los precios globales de las materias primas y complicar el relato desinflacionista en las economías occidentales, moderando potencialmente el ritmo de los recortes de tipos de la Reserva Federal.\n\nPara los operadores macro globales, el anuncio de estímulo de julio de 2026 fue un recordatorio de la influencia desproporcionada que las decisiones de política china siguen ejerciendo sobre los mercados multiactivo. El episodio demostró la importancia de seguir las comunicaciones de política económica china y de disponer de marcos de escenarios preconstruidos para responder a los anuncios de estímulo en varias clases de activos a la vez.",
+      "howItWorks": "El motor de estrategias multiactivo de auto-Trading permite construir estrategias que responden a catalizadores macro simultáneamente en renta variable, materias primas y divisas. Una estrategia para un evento de estímulo chino podría incluir: posiciones largas en ETF de cobre y metales industriales, posiciones largas en pares de divisas emergentes (AUD/USD, NZD/USD) y exposición larga a ETF de renta variable china, todas activadas por una señal macro común y gestionadas con parámetros de riesgo coordinados. El dimensionamiento de posiciones consciente de la correlación evita una concentración excesiva en riesgos que se mueven en la misma dirección.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Economía de China",
+          "description": "La cobertura de Reuters sobre la economía china, con los anuncios de política del Gobierno y las reacciones del mercado."
+        },
+        {
+          "label": "Bloomberg — Mercados de China",
+          "description": "El centro Asia-Pacífico de Bloomberg con análisis en profundidad del estímulo chino y su impacto en los mercados."
+        },
+        {
+          "label": "Financial Times — China Business",
+          "description": "La sección de China del FT con análisis experto de la política económica de Pekín y sus implicaciones globales."
+        },
+        {
+          "label": "CNBC — Mercados de Asia",
+          "description": "CNBC Asia Markets cubriendo la respuesta de la bolsa, las divisas y las materias primas chinas a las noticias de estímulo."
+        }
+      ]
     }
   },
   "learnDetail": {
