@@ -38,6 +38,7 @@ import { LanguageService } from '../services/language.service';
         background: var(--surface);
         border-top: 1px solid var(--border);
         padding: 2rem 1rem;
+        padding-bottom: calc(2rem + var(--consent-bar-height, 0px));
       }
 
       .footer-container {
@@ -83,6 +84,7 @@ import { LanguageService } from '../services/language.service';
       @media (max-width: 600px) {
         .site-footer {
           padding: 1.2rem 0.8rem;
+          padding-bottom: calc(1.2rem + var(--consent-bar-height, 0px));
         }
 
         .footer-container {

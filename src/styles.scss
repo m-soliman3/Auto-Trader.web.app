@@ -70,3 +70,15 @@ img { max-width: 100%; }
 
 /* Smooth anchor scroll offset for fixed navbar */
 section[id] { scroll-margin-top: 80px; }
+
+/* The consent bar is `position: fixed; bottom: 0`, so it sits on top of whatever
+   ends the page — in practice the footer's last row of links. Publish its height
+   as a custom property while it is on screen; the footer adds it to its own
+   bottom padding. Scoped to :has() so the space disappears once the visitor
+   accepts or declines and the bar is removed from the DOM, rather than leaving a
+   permanent gap for everyone who has already chosen. Heights mirror .consent-bar. */
+body:has(.consent-overlay) { --consent-bar-height: 48px; }
+
+@media (max-width: 640px) {
+  body:has(.consent-overlay) { --consent-bar-height: 52px; }
+}
