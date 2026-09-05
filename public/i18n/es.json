@@ -3671,6 +3671,84 @@
           "description": "Análisis completo de temporada de ganancias y noticias corporativas del S&P 500 de Bloomberg."
         }
       ]
+    },
+    "bitcoin-miner-stocks-aug-2026": {
+      "title": "Las acciones de mineras de Bitcoin destacan en agosto de 2026 mientras BTC se estabiliza por encima de las seis cifras",
+      "tagline": "Con Bitcoin sosteniendo niveles altos y los costes energéticos cediendo, las mineras cotizadas ofrecieron una subida apalancada frente al BTC al contado.",
+      "metaTitle": "Rally de mineras de Bitcoin agosto 2026 | AutoTrader Blog",
+      "metaDescription": "Las acciones de minería de Bitcoin destacaron en agosto de 2026 al consolidar BTC en niveles elevados y mejorar los márgenes operativos. Análisis completo.",
+      "overview": "Las acciones de minería de Bitcoin se convirtieron en una temática de alta convicción en agosto de 2026. Tras el explosivo rally cripto de julio, Bitcoin pasó buena parte de agosto consolidando en precios elevados en lugar de girar bruscamente a la baja. Esa estabilidad, unida a la moderación de los costes energéticos regionales y a una mayor eficiencia de las flotas de equipos, sostuvo un fuerte rebote de las mineras cotizadas.\n\nLas acciones mineras son, en la práctica, apuestas apalancadas sobre tres variables: el precio de Bitcoin, la dificultad de la red y el coste operativo por moneda minada. En agosto, la primera se mantuvo favorable mientras la tercera mejoraba de forma moderada en varios operadores. Los inversores respondieron revalorizando a las mineras con balances más saneados y una disciplina de capital más clara tras el halving.\n\nOtro viento de cola llegó de la transparencia en la estrategia de tesorería. Las compañías que publicaron políticas disciplinadas de tenencia de monedas y marcos de cobertura atrajeron mayores flujos que aquellas que dependían de una comunicación oportunista. En un entorno en el que el capital institucional participa cada vez más en las acciones ligadas al cripto, la calidad del gobierno corporativo pasó a ser un insumo directo de valoración.\n\nLa volatilidad siguió siendo alta. Las mineras se movían con regularidad varios puntos porcentuales en la sesión, superando a menudo la volatilidad realizada del propio Bitcoin. Eso las hizo atractivas para sistemas de momentum y ruptura, pero solo acompañadas de controles de riesgo estrictos y filtros de eventos en torno a resultados, emisiones de deuda y ajustes de dificultad de la red.\n\nLa implicación más amplia es que la exposición al cripto en los mercados de renta variable se está volviendo más matizada. No todas las «acciones cripto» se comportan igual, y una selección sensible a factores puede mejorar de forma sustancial los resultados frente a enfoques de cesta ingenuos.",
+      "howItWorks": "auto-Trading puede ejecutar estrategias de cesta sobre una selección de mineras cotizadas, con dimensionamiento normalizado por volatilidad y un filtro de tendencia de Bitcoin. Mientras BTC se mantenga por encima de un régimen clave de medias móviles y la fuerza relativa de las mineras mejore frente al Nasdaq, el sistema puede ir escalando posiciones en los valores más fuertes, aplicando límites máximos de riesgo por valor individual y a nivel de sector.",
+      "externalLinks": [
+        {
+          "label": "Nasdaq — Acciones de minería cripto",
+          "description": "Comentario de mercado y actualizaciones de compañías cotizadas relevantes para las mineras."
+        },
+        {
+          "label": "CompaniesMarketCap — Mineras de Bitcoin",
+          "description": "Vista general de la capitalización bursátil de las mineras cotizadas."
+        },
+        {
+          "label": "Cointelegraph Markets",
+          "description": "Noticias de cripto y de acciones ligadas al cripto, centradas en mineras y estructura de mercado."
+        },
+        {
+          "label": "TradingView — Dominancia de BTC",
+          "description": "Contexto útil para el rendimiento relativo entre Bitcoin y las acciones ligadas al cripto."
+        }
+      ]
+    },
+    "wall-street-crypto-risk-models-aug-2026": {
+      "title": "Los modelos de riesgo de Wall Street incorporan señales cripto en agosto de 2026",
+      "tagline": "Las mesas institucionales combinaron cada vez más la volatilidad de Bitcoin y las señales de flujos de ETF en sus marcos de riesgo de renta variable.",
+      "metaTitle": "Wall Street suma cripto a sus modelos de riesgo | AutoTrader",
+      "metaDescription": "En agosto de 2026, los equipos de riesgo institucionales incorporaron cada vez más señales del mercado cripto a sus modelos de posicionamiento en bolsa.",
+      "overview": "Agosto de 2026 marcó un cambio institucional destacado: varias mesas multiactivo describieron públicamente cómo integraban insumos derivados del cripto en sus modelos centrales de riesgo para renta variable. El cambio tenía menos que ver con la «euforia cripto» que con la utilidad de la señal. Bitcoin cotiza hoy con suficiente profundidad, participación global y liquidez ininterrumpida como para que su volatilidad y su dinámica de flujos informen medidas más amplias de apetito por el riesgo.\n\nHistóricamente, los modelos de riesgo de renta variable priorizaban los tipos, los diferenciales de crédito, las divisas y los índices de volatilidad. En 2026, el cripto entró en ese conjunto como una capa suplementaria de alerta temprana. Los repuntes intradía de la volatilidad implícita de Bitcoin, los regímenes bruscos de salidas de ETF o una financiación inestable en los futuros perpetuos precedían a menudo giros del sentimiento de riesgo que después aparecían en los futuros sobre acciones estadounidenses.\n\nEsto no significa que el cripto anticipe siempre a la bolsa. La causalidad depende del régimen y los falsos positivos siguen siendo frecuentes. Pero, a medida que la adopción se profundiza, ignorar el cripto por completo genera puntos ciegos para las mesas que gestionan carteras de renta variable con mucho peso tecnológico y exposición sectorial sensible a la macro.\n\nPara el operador sistemático, la oportunidad está en el modelado condicional. Las señales cripto no deberían ser disparadores autónomos de operaciones en bolsa; funcionan mejor como filtros de contexto que modifican la confianza, el tamaño o el horizonte de las estrategias de acciones ya existentes.\n\nAgosto reforzó una realidad institucional: la estructura de mercado está convergiendo. Quien trate el cripto y la renta variable como universos separados se arriesga a perderse información entre plazas que los profesionales descuentan cada vez más.",
+      "howItWorks": "auto-Trading admite metafiltros que ajustan el comportamiento de una estrategia según el estado externo del mercado. Una estrategia de acciones puede reducir el tamaño cuando la volatilidad de Bitcoin supera un umbral, o exigir confirmación adicional cuando el momentum de los flujos cripto se vuelve negativo. Se crea así un marco adaptativo en el que las señales cripto afinan, en lugar de sustituir, las entradas y salidas principales en renta variable.",
+      "externalLinks": [
+        {
+          "label": "CFA Institute Research",
+          "description": "Perspectivas de investigación institucional sobre riesgo multiactivo y construcción de carteras."
+        },
+        {
+          "label": "FRED Datos financieros",
+          "description": "Datos macro y de tipos utilizados junto a los modelos de riesgo multiactivo."
+        },
+        {
+          "label": "Deribit Insights",
+          "description": "Métricas de derivados cripto, incluida la volatilidad implícita y el contexto de posicionamiento."
+        },
+        {
+          "label": "Fed de Chicago — Condiciones financieras",
+          "description": "Índice de condiciones financieras usado con frecuencia en superposiciones macro sistemáticas."
+        }
+      ]
+    },
+    "bitcoin-stocks-volatility-playbook-aug-2026": {
+      "title": "Un manual de volatilidad para operar Bitcoin y acciones a la vez",
+      "tagline": "El comportamiento de los precios en agosto de 2026 mostró por qué los controles de volatilidad unificados son esenciales al operar BTC y acciones en una sola cartera.",
+      "metaTitle": "Manual de volatilidad: Bitcoin y acciones | AutoTrader Blog",
+      "metaDescription": "Un manual práctico de volatilidad para operar Bitcoin y acciones a la vez, basado en el comportamiento multiactivo de agosto de 2026 y su gestión de riesgo.",
+      "overview": "Agosto de 2026 ofreció ejemplos repetidos de contagio de volatilidad entre activos: un movimiento brusco del cripto fuera del horario estadounidense solía ir seguido de una revalorización de los futuros bursátiles en preapertura, y el riesgo de eventos en bolsa se retroalimentaba en el cripto en la sesión asiática siguiente. Para quienes gestionan ambas carteras, los controles de riesgo aislados resultaron insuficientes.\n\nEl primer principio es la presupuestación unificada del riesgo. En lugar de asignar caídas máximas separadas a los compartimentos de «cripto» y «acciones», las mesas avanzadas emplean cada vez más un objetivo combinado de volatilidad de cartera y permiten que las asignaciones fluctúen dentro de esa envolvente. Así se evita una sobreexposición accidental cuando ambos bloques pasan a estar muy correlacionados.\n\nEl segundo principio es el dimensionamiento consciente del régimen. En condiciones estables, el operador puede participar de forma más amplia en señales de momentum y de reversión a la media. Cuando la volatilidad realizada y la correlación entre activos suben a la vez, el manual se desplaza hacia menos posiciones, ventanas de tenencia más cortas y una lógica de stops más ajustada.\n\nEn tercer lugar, importa el mapeo de eventos. Un calendario que incluya reuniones del FOMC, datos de IPC, resultados de las grandes tecnológicas y fechas clave de regulación o ETF en cripto mejora sensiblemente la calidad de ejecución. Muchas malas operaciones de agosto no partían de señales malas: eran buenas señales desplegadas en momentos estructuralmente inadecuados.\n\nPor último, la disciplina de ejecución sigue siendo innegociable. Las oportunidades multiactivo resultan más valiosas cuando se acompañan de controles estrictos de deslizamiento, niveles de invalidación definidos de antemano y una analítica posterior a la operación que separe la calidad del alfa del ruido de mercado.\n\nEl mensaje general de agosto de 2026 es sencillo: aumentaron las oportunidades, pero también la complejidad. Los operadores que integraron riesgo, temporización y ejecución entre Bitcoin y renta variable obtuvieron resultados más limpios que quienes trataron cada mercado por separado.",
+      "howItWorks": "auto-Trading puede imponer un objetivo de volatilidad a nivel de cartera que abarque las estrategias de cripto y de renta variable. Cuando la volatilidad realizada combinada supera el límite configurado, la plataforma puede desapalancar automáticamente, pausar los planteamientos de menor convicción y priorizar las señales con una confirmación de tendencia o liquidez más sólida. El mismo marco permite volver a asumir riesgo de forma gradual a medida que las condiciones se normalizan.",
+      "externalLinks": [
+        {
+          "label": "NYSE — Recursos sobre volatilidad de mercado",
+          "description": "Datos del mercado bursátil estadounidense y contexto de volatilidad para planificar la ejecución."
+        },
+        {
+          "label": "Cboe — Visión general del VIX",
+          "description": "Referencia sobre las condiciones de volatilidad implícita en la renta variable estadounidense."
+        },
+        {
+          "label": "CoinGlass Data",
+          "description": "Métricas de derivados y liquidaciones cripto relevantes para el análisis de volatilidad a corto plazo."
+        },
+        {
+          "label": "Investopedia — Dimensionamiento de posiciones",
+          "description": "Panorama práctico de los principios de dimensionamiento de posiciones usados en el trading sistemático."
+        }
+      ]
     }
   },
   "learnDetail": {

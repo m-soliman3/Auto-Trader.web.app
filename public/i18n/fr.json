@@ -3671,6 +3671,84 @@
           "description": "Analyse complète de la saison des résultats et actualité d'entreprises du S&P 500 par Bloomberg."
         }
       ]
+    },
+    "bitcoin-miner-stocks-aug-2026": {
+      "title": "Les valeurs minières Bitcoin surperforment en août 2026 alors que le BTC se stabilise au-dessus des six chiffres",
+      "tagline": "Le Bitcoin se maintenant à des niveaux élevés et les coûts de l'électricité refluant, les mineurs cotés ont offert une hausse à effet de levier face au BTC au comptant.",
+      "metaTitle": "Rally des mineurs de Bitcoin août 2026 | AutoTrader Blog",
+      "metaDescription": "Les actions minières Bitcoin ont surperformé en août 2026, le BTC consolidant à des niveaux élevés et les marges opérationnelles s'améliorant. Analyse complète.",
+      "overview": "Les actions de minage de Bitcoin sont devenues un thème à forte conviction en août 2026. Après l'explosif rally crypto de juillet, le Bitcoin a passé une grande partie du mois d'août à consolider sur des niveaux élevés plutôt qu'à se retourner brutalement à la baisse. Cette stabilité, conjuguée au reflux des coûts régionaux de l'énergie et à une meilleure efficacité des parcs de machines, a soutenu un net rebond des mineurs cotés.\n\nLes valeurs minières sont en pratique des paris à effet de levier sur trois variables : le cours du Bitcoin, la difficulté du réseau et le coût d'exploitation par jeton miné. En août, la première est restée favorable tandis que la troisième s'améliorait modestement chez plusieurs opérateurs. Les investisseurs ont réagi en revalorisant les mineurs affichant des bilans plus sains et une discipline de capital plus claire depuis le halving.\n\nUn autre soutien est venu de la transparence des stratégies de trésorerie. Les sociétés ayant publié des politiques disciplinées de détention de jetons et des cadres de couverture ont attiré des flux plus importants que leurs pairs misant sur une communication opportuniste. Dans un environnement où le capital institutionnel s'implique de plus en plus dans les actions liées à la crypto, la qualité de la gouvernance est devenue un intrant direct de la valorisation.\n\nLa volatilité est restée élevée. Les valeurs minières se déplaçaient régulièrement de plusieurs points de pourcentage en séance, dépassant souvent la volatilité réalisée du Bitcoin lui-même. Cela les a rendues attrayantes pour les systèmes de momentum et de cassure, mais uniquement associées à des contrôles de risque stricts et à des filtres d'événements autour des résultats, des émissions de dette et des ajustements de difficulté du réseau.\n\nL'implication plus large est que l'exposition à la crypto sur les marchés actions devient plus nuancée. Toutes les « valeurs crypto » ne se comportent pas de la même façon, et une sélection sensible aux facteurs peut sensiblement améliorer les résultats par rapport à des approches de panier naïves.",
+      "howItWorks": "auto-Trading peut exécuter des stratégies de panier sur une sélection de mineurs cotés, avec un dimensionnement normalisé par la volatilité et un filtre de tendance sur le Bitcoin. Tant que le BTC reste au-dessus d'un régime clé de moyennes mobiles et que la force relative des mineurs s'améliore face au Nasdaq, le système peut renforcer progressivement les titres les plus solides, tout en imposant des plafonds de risque maximaux par valeur et au niveau sectoriel.",
+      "externalLinks": [
+        {
+          "label": "Nasdaq — Valeurs du minage crypto",
+          "description": "Commentaires de marché et actualités des sociétés cotées pertinentes pour les valeurs minières."
+        },
+        {
+          "label": "CompaniesMarketCap — Mineurs de Bitcoin",
+          "description": "Vue d'ensemble des capitalisations boursières des sociétés de minage cotées."
+        },
+        {
+          "label": "Cointelegraph Markets",
+          "description": "Actualité crypto et des actions liées à la crypto, axée sur les mineurs et la structure de marché."
+        },
+        {
+          "label": "TradingView — Dominance du BTC",
+          "description": "Contexte utile pour la performance relative entre le Bitcoin et les actions liées à la crypto."
+        }
+      ]
+    },
+    "wall-street-crypto-risk-models-aug-2026": {
+      "title": "Les modèles de risque de Wall Street intègrent des signaux crypto en août 2026",
+      "tagline": "Les desks institutionnels ont de plus en plus mêlé la volatilité du Bitcoin et les signaux de flux d'ETF à leurs cadres de risque actions.",
+      "metaTitle": "Wall Street intègre la crypto à ses modèles de risque | AutoTrader",
+      "metaDescription": "En août 2026, les équipes de risque institutionnelles ont de plus en plus intégré les signaux du marché crypto à leurs modèles de positionnement actions.",
+      "overview": "Août 2026 a marqué un basculement institutionnel notable : plusieurs desks multi-actifs ont décrit publiquement l'intégration d'intrants issus de la crypto dans leurs modèles de risque actions. Ce changement relevait moins de l'« engouement crypto » que de l'utilité du signal. Le Bitcoin se négocie désormais avec une profondeur, une participation mondiale et une liquidité continue suffisantes pour que sa volatilité et sa dynamique de flux renseignent des mesures plus larges d'appétit pour le risque.\n\nHistoriquement, les modèles de risque actions privilégiaient les taux, les écarts de crédit, le change et les indices de volatilité. En 2026, la crypto est entrée dans cet arsenal comme couche supplémentaire d'alerte précoce. Les pics intraséance de volatilité implicite du Bitcoin, les régimes brutaux de décollecte des ETF ou un financement instable sur les contrats perpétuels précédaient souvent des inflexions du sentiment de risque qui apparaissaient ensuite sur les futures actions américaines.\n\nCela ne signifie pas que la crypto précède toujours les actions. La causalité dépend du régime et les faux positifs restent fréquents. Mais à mesure que l'adoption s'approfondit, ignorer totalement la crypto crée des angles morts pour les desks gérant des portefeuilles actions à forte teneur technologique et une exposition sectorielle sensible à la macroéconomie.\n\nPour les traders systématiques, l'opportunité réside dans la modélisation conditionnelle. Les signaux crypto ne devraient pas être des déclencheurs autonomes d'opérations sur actions ; ils fonctionnent mieux comme filtres de contexte modifiant la confiance, la taille ou la durée de détention des stratégies actions existantes.\n\nAoût a confirmé une réalité institutionnelle : la structure de marché converge. Ceux qui traitent la crypto et les actions comme des univers séparés risquent de manquer une information inter-plateformes que les professionnels intègrent de plus en plus dans les prix.",
+      "howItWorks": "auto-Trading prend en charge des méta-filtres qui ajustent le comportement d'une stratégie selon l'état externe du marché. Une stratégie actions peut réduire sa taille lorsque la volatilité du Bitcoin dépasse un seuil, ou exiger une confirmation supplémentaire lorsque le momentum des flux crypto devient négatif. Il en résulte un cadre adaptatif où les signaux crypto affinent, plutôt qu'ils ne remplacent, les entrées et sorties principales en actions.",
+      "externalLinks": [
+        {
+          "label": "CFA Institute Research",
+          "description": "Perspectives de recherche institutionnelle sur le risque multi-actifs et la construction de portefeuille."
+        },
+        {
+          "label": "FRED Données financières",
+          "description": "Données macroéconomiques et de taux utilisées avec les modèles de risque multi-actifs."
+        },
+        {
+          "label": "Deribit Insights",
+          "description": "Indicateurs des dérivés crypto, dont la volatilité implicite et le contexte de positionnement."
+        },
+        {
+          "label": "Fed de Chicago — Conditions financières",
+          "description": "Indice des conditions financières souvent utilisé dans les surcouches macro systématiques."
+        }
+      ]
+    },
+    "bitcoin-stocks-volatility-playbook-aug-2026": {
+      "title": "Un manuel de volatilité pour négocier ensemble le Bitcoin et les actions",
+      "tagline": "L'évolution des cours en août 2026 a montré pourquoi des contrôles de volatilité unifiés sont indispensables quand BTC et actions cohabitent dans un même portefeuille.",
+      "metaTitle": "Manuel de volatilité : Bitcoin et actions | AutoTrader Blog",
+      "metaDescription": "Un manuel pratique de volatilité pour négocier ensemble le Bitcoin et les actions, fondé sur le comportement multi-actifs d'août 2026 et la gestion du risque.",
+      "overview": "Août 2026 a fourni des exemples répétés de contagion de volatilité entre classes d'actifs : un mouvement crypto brutal en dehors des heures américaines était souvent suivi d'une revalorisation des futures actions en préouverture, et le risque événementiel actions se répercutait sur la crypto dès la séance asiatique suivante. Pour les traders gérant les deux portefeuilles, des contrôles de risque cloisonnés se sont révélés insuffisants.\n\nLe premier principe est la budgétisation unifiée du risque. Plutôt que d'attribuer des pertes maximales distinctes aux poches « crypto » et « actions », les desks avancés utilisent de plus en plus une cible de volatilité combinée au niveau du portefeuille et laissent les allocations fluctuer à l'intérieur de cette enveloppe. Cela évite une surexposition accidentelle lorsque les deux compartiments deviennent fortement corrélés.\n\nLe deuxième principe est un dimensionnement conscient du régime. En conditions stables, le trader peut participer plus largement aux signaux de momentum et de retour à la moyenne. Lorsque la volatilité réalisée et la corrélation inter-actifs augmentent de concert, le manuel bascule vers moins de positions, des fenêtres de détention plus courtes et une logique de stops plus serrée.\n\nTroisièmement, la cartographie des événements compte. Un calendrier incluant les réunions du FOMC, les chiffres d'inflation, les résultats des mégacapitalisations et les grandes échéances réglementaires ou d'ETF côté crypto améliore sensiblement la qualité d'exécution. Beaucoup de mauvaises transactions d'août ne reposaient pas sur de mauvais signaux : c'étaient de bons signaux déployés à des moments structurellement défavorables.\n\nEnfin, la discipline d'exécution reste non négociable. Les opportunités multi-actifs prennent toute leur valeur lorsqu'elles s'accompagnent de contrôles stricts du slippage, de niveaux d'invalidation définis à l'avance et d'analyses post-transaction séparant la qualité de l'alpha du bruit de marché.\n\nLe message général d'août 2026 est simple : les opportunités ont augmenté, la complexité aussi. Les traders ayant intégré risque, timing et exécution entre Bitcoin et actions ont obtenu des résultats plus nets que ceux traitant chaque marché isolément.",
+      "howItWorks": "auto-Trading peut imposer une cible de volatilité au niveau du portefeuille, couvrant les stratégies crypto et actions. Lorsque la volatilité réalisée combinée dépasse la limite configurée, la plateforme peut automatiquement réduire le levier, mettre en pause les configurations à moindre conviction et privilégier les signaux bénéficiant d'une confirmation de tendance ou de liquidité plus solide. Le même cadre permet de reprendre du risque progressivement à mesure que les conditions se normalisent.",
+      "externalLinks": [
+        {
+          "label": "NYSE — Ressources sur la volatilité de marché",
+          "description": "Données du marché actions américain et contexte de volatilité pour planifier l'exécution."
+        },
+        {
+          "label": "Cboe — Présentation du VIX",
+          "description": "Référence sur les conditions de volatilité implicite des actions américaines."
+        },
+        {
+          "label": "CoinGlass Data",
+          "description": "Indicateurs de dérivés et de liquidations crypto pertinents pour l'analyse de volatilité à court terme."
+        },
+        {
+          "label": "Investopedia — Dimensionnement des positions",
+          "description": "Panorama pratique des principes de dimensionnement de position utilisés en trading systématique."
+        }
+      ]
     }
   },
   "learnDetail": {
