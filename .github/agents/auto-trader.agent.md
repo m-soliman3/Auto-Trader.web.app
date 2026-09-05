@@ -107,9 +107,10 @@ The homepage carries two affiliate ad slots, rendered in `src/app/pages/home.htm
 - **Left — AvaTrade skyscraper** (`src/app/components/ad-banner-skyscraper.ts`), 120x600. Injects an
   AvaPartner tracking iframe client-side, so it needs `ngSkipHydration` and an `afterNextRender` +
   `isPlatformBrowser` guard. Accepts a `side` input (`'left' | 'right'`, default `'left'`).
-- **Right — eToro banner** (`src/app/components/ad-widget-etoro.ts`), 300x600. A **static** anchor +
-  `<img>` creative served from `med.etoro.com` (creative `B21392_A122755`). Because it is plain
-  markup it needs no browser guard and no `ngSkipHydration` — it prerenders and hydrates normally.
+- **Right — eToro banner** (`src/app/components/ad-widget-etoro.ts`), 300x600 native. A **static**
+  anchor + `<img>` creative served from `med.etoro.com` (creative `B20158_A122755`, a ~513KB
+  animated GIF). Because it is plain markup it needs no browser guard and no `ngSkipHydration` — it
+  prerenders and hydrates normally.
 
 Do **not** reintroduce eToro's `iframe-creator.js` popular-investor widget. Its host
 `pages.etoro.com` returns HTTP 530 (Cloudflare Error 1016, origin DNS failure) on every path, so the
@@ -127,9 +128,15 @@ Rules:
   are absolutely positioned, so percentages resolve against the initial containing block, which
   excludes the scrollbar. Never add the gutter (`+ 1.5rem`) instead of subtracting the banner width:
   that places the creative *inside* the content column, on top of the hero.
-- Each banner is shown only at widths where it fits beside the column without overlapping:
-  AvaTrade `@media (min-width: 1480px)`, eToro `@media (min-width: 1840px)`. If a banner's size
-  changes, recompute as `1200 + 2 x (width + ~16px)`.
+- Both banners appear at `@media (min-width: 1480px)` so they show and hide together. A
+  fixed-width banner needs `1200 + 2 x (width + ~16px)` of viewport, which is why eToro is **not**
+  fixed-width: at its native 300px that would be 1840px, hiding it on every laptop (a 14" MacBook is
+  1512px, a 16" is 1728px) so in practice almost nobody saw it. Instead its host spans the whole
+  gutter (`right: 0; width: calc((100% - 1200px) / 2)`) and the creative is centred inside with
+  `width: 100%; max-width: 300px; height: auto` — filling the gutter, never exceeding native size,
+  and holding the 1:2 ratio. It renders ~108px wide at 1480px and reaches full 300x600 from 1920px.
+  Keep the `width`/`height` attributes on the `<img>` so that ratio is known before the image loads.
+  Prefer this pattern over raising the breakpoint when a creative is too wide for the gutter.
 - The absolute offsets resolve against the initial containing block, so never introduce a
   `transform`, `filter`, `contain`, or non-static `position` on an ancestor of `<app-home>` without
   re-checking the banner positions.
