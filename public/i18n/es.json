@@ -3437,6 +3437,58 @@
           "description": "Cobertura del FT sobre el crecimiento del mercado de stablecoins y los casos de uso de liquidación transfronteriza."
         }
       ]
+    },
+    "fed-rate-pause-june-2026": {
+      "title": "La Fed mantiene los tipos en junio de 2026: cómo respondieron la renta variable y los bonos",
+      "tagline": "La decisión de la Reserva Federal de mantener los tipos sin cambios en junio de 2026 desencadenó un repunte en todos los activos, pero las señales divergentes del dot plot introdujeron nueva incertidumbre.",
+      "metaTitle": "La Fed mantiene los tipos en junio de 2026: reacción | AutoTrader",
+      "metaDescription": "La Reserva Federal mantuvo su tipo de referencia sin cambios en la reunión del FOMC de junio de 2026. Analizamos la reacción de acciones, bonos y divisas.",
+      "overview": "En su reunión del Comité Federal de Mercado Abierto (FOMC) de junio de 2026, la Reserva Federal votó por unanimidad mantener el tipo de los fondos federales en el rango objetivo del 4,25 % al 4,50 %, una decisión ampliamente anticipada por el mercado de bonos que aun así provocó una respuesta significativa en todos los activos, impulsada por los matices del comunicado y de las proyecciones actualizadas del «dot plot».\n\nEl comunicado de la Fed reconoció que la inflación había seguido logrando «un modesto avance adicional» hacia el objetivo del 2 %, con el índice subyacente de precios del gasto en consumo personal (PCE) en torno al 2,4 % interanual al entrar el mes. Sin embargo, el presidente Jerome Powell —o su sucesor, según el panorama político en esa fecha— adoptó un tono notablemente cauto en la rueda de prensa, subrayando que el mercado laboral seguía «más fuerte de lo esperado» y que el comité quería ver pruebas sostenidas de desinflación antes de iniciar nuevos recortes.\n\nEl dot plot actualizado mostró que el participante mediano del FOMC esperaba un solo recorte de 25 puntos básicos en lo que restaba de 2026, menos que los dos que descontaba el mercado. Esta sorpresa restrictiva en las proyecciones provocó al principio una breve caída de la renta variable y un repunte de los rendimientos del Tesoro a dos años. No obstante, en las 48 horas siguientes al anuncio las bolsas se dieron la vuelta con fuerza, al centrarse los inversores en que el ciclo general de relajación seguía intacto.\n\nEl rendimiento del bono del Tesoro estadounidense a 10 años, que rondaba el 4,1 % antes de la reunión, subió al 4,3 % justo después de publicarse el dot plot, para volver al 4,15 % a final de mes cuando los datos económicos posteriores —incluido un informe de empleo más débil de lo previsto— reforzaron los argumentos a favor de una relajación gradual.\n\nEl índice del dólar estadounidense (DXY) se fortaleció inicialmente tras la sorpresa restrictiva del dot plot, pero devolvió las ganancias en las dos semanas siguientes a medida que se recuperaba el apetito global por el riesgo. La debilidad del dólar fue especialmente marcada frente a las divisas emergentes, lo que apoyó un mes sólido para la renta variable emergente.\n\nLa rotación sectorial en bolsa fue pronunciada. Los sectores sensibles a los tipos, como las utilities y los fondos de inversión inmobiliaria (REITs), cayeron al principio con el dot plot restrictivo, pero se recuperaron cuando el rendimiento a 10 años retrocedió. El sector financiero —bancos y aseguradoras— destacó durante el mes, ya que el empinamiento de la curva de tipos mejoró las perspectivas del margen de intereses.\n\nPara los operadores de curva de tipos y las estrategias de renta variable sensibles a los tipos, la reunión de la Fed de junio de 2026 recordó que la relación entre los comunicados de política monetaria y los movimientos del mercado rara vez es lineal. La primera reacción al dot plot se revirtió con rapidez, y quienes se posicionaron para una caída sostenida por tipos quedaron a contrapié.",
+      "howItWorks": "El módulo de calendario de eventos macro de auto-Trading marca las fechas de las reuniones del FOMC y puede reducir automáticamente el tamaño de las posiciones o pasar a neutral en las 24 horas previas y posteriores a los anuncios, para evitar la volatilidad adversa provocada por el evento. Tras el anuncio, las estrategias de momentum pueden configurarse para capturar el movimiento direccional que suele establecerse entre dos y cuatro horas después de la rueda de prensa de la Fed.",
+      "externalLinks": [
+        {
+          "label": "CNN Business — Noticias de la Reserva Federal",
+          "description": "Cobertura de CNN Business sobre la decisión de tipos de la Fed de junio de 2026 y su impacto en el mercado."
+        },
+        {
+          "label": "Reuters — Seguimiento de la política de la Fed",
+          "description": "Seguimiento completo de Reuters sobre las decisiones de política monetaria de la Reserva Federal y su análisis."
+        },
+        {
+          "label": "CNBC — Rueda de prensa de la Fed",
+          "description": "Cobertura y análisis en directo de CNBC sobre las reuniones y ruedas de prensa del FOMC."
+        },
+        {
+          "label": "Financial Times — Mercados de bonos",
+          "description": "La sección de mercados del FT sobre los rendimientos del Tesoro de EE. UU. y la reacción de los mercados de bonos."
+        }
+      ]
+    },
+    "ai-tech-stocks-june-2026": {
+      "title": "La IA y las tecnológicas llevan al S&P 500 a nuevos máximos en junio de 2026",
+      "tagline": "Una oleada de resultados de IA por encima de lo previsto y una fuerte inversión en infraestructura impulsaron un rally tecnológico amplio durante junio de 2026.",
+      "metaTitle": "La IA lleva el S&P 500 a nuevos máximos | AutoTrader Blog",
+      "metaDescription": "En junio de 2026, los resultados impulsados por la IA de las grandes tecnológicas llevaron el S&P 500 a máximos históricos. Claves, líderes y lecturas para el trading.",
+      "overview": "Junio de 2026 fue otro mes histórico para las tecnológicas: el S&P 500 superó los 6.500 puntos, impulsado casi por completo por una nueva oleada de optimismo en torno a la inteligencia artificial. Las grandes tecnológicas —NVIDIA, Microsoft, Alphabet y Meta— presentaron resultados trimestrales que superaron con holgura las previsiones de Wall Street, con líneas de ingresos ligadas a la IA creciendo a tasas de tres dígitos interanuales.\n\nEl segmento de centros de datos de NVIDIA —el termómetro del gasto en infraestructura de IA— volvió a registrar ingresos récord, alimentado por la demanda insaciable de los hiperescaladores de la nube, que corren por ampliar sus clústeres de GPU antes de la próxima generación de entrenamientos de grandes modelos de lenguaje. Solo en junio la acción subió más del 18 % y recuperó brevemente el puesto de compañía cotizada más valiosa del mundo.\n\nLa división Azure de Microsoft también sorprendió al alza e informó de que los servicios en la nube potenciados con IA ya suponen más del 40 % de sus ingresos cloud. Su familia Copilot alcanzó 200 millones de usuarios empresariales activos mensuales durante el trimestre, muy por encima de las previsiones de los analistas. Alphabet indicó que su modelo Gemini había mejorado de forma apreciable la tasa de clics de los anuncios en Google Search, aportando miles de millones en ingresos publicitarios adicionales.\n\nEl rally no se limitó a los mayores valores. Un amplio grupo de compañías medianas ligadas a la infraestructura de IA —fabricantes de chips, de sistemas de refrigeración y proveedores de energía para centros de datos— también subió con fuerza. El índice de semiconductores de Filadelfia (SOX) cerró junio con un alza del 14,7 %, su mejor comportamiento mensual desde finales de 2023.\n\nLa amplitud del mercado, sin embargo, siguió siendo objeto de debate entre los analistas. Mientras el S&P 500 marcaba nuevos máximos históricos, su versión equiponderada se quedaba muy atrás, lo que sugiere que las ganancias se concentraron en un número relativamente reducido de grandes tecnológicas y no reflejaban una expansión económica generalizada.\n\nDesde el punto de vista técnico, el S&P 500 rompió en la segunda semana de junio un rango de consolidación de varios meses en los 6.200 puntos, activando señales de momentum en los sistemas de trading algorítmico. El volumen en las jornadas de ruptura fue muy superior a la media, confirmando la participación institucional. El índice de volatilidad CBOE (VIX) cayó a final de mes a su nivel más bajo desde enero de 2025, reflejando la complacencia inversora, una condición que históricamente precede a correcciones de corto plazo incluso en mercados alcistas.\n\nPara los traders automatizados, junio de 2026 subrayó la importancia de vigilar la rotación sectorial y de las estrategias ligadas a catalizadores de resultados. Los bots con lógica de seguimiento de momentum sobre ETF tecnológicos (QQQ, SOXX) capturaron ganancias notables, mientras que las estrategias de reversión a la media sobre valores individuales de beta alta se beneficiaron de la elevada volatilidad intradía que acompañó a las publicaciones de resultados.",
+      "howItWorks": "El módulo de rotación sectorial de auto-Trading vigila en tiempo real la fuerza relativa de los sectores del S&P 500. Cuando el momentum del sector tecnológico diverge al alza respecto al mercado general —como ocurrió durante todo junio de 2026—, el sistema puede sobreponderar automáticamente la exposición tecnológica en las estrategias de asignación. Los bots de resultados también pueden configurarse para evitar mantener posiciones durante los anuncios programados o para operar la caída de la volatilidad implícita mediante estrategias con opciones.",
+      "externalLinks": [
+        {
+          "label": "CNBC — Acciones de IA en junio de 2026",
+          "description": "La sección de tecnología de CNBC con los últimos movimientos de las acciones de IA y el análisis de resultados."
+        },
+        {
+          "label": "Reuters — Máximos históricos del S&P 500",
+          "description": "El centro de mercados de Reuters que sigue el comportamiento récord del S&P 500."
+        },
+        {
+          "label": "Bloomberg — Resultados de NVIDIA",
+          "description": "La cobertura de Bloomberg Technology sobre semiconductores y acciones de infraestructura de IA."
+        },
+        {
+          "label": "The Wall Street Journal — Análisis del rally tecnológico",
+          "description": "Datos de mercado y análisis del WSJ sobre el rally tecnológico de junio de 2026."
+        }
+      ]
     }
   },
   "learnDetail": {
