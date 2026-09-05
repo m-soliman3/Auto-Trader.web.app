@@ -3489,6 +3489,58 @@
           "description": "Dados de mercado e análises do WSJ sobre a subida tecnológica de junho de 2026."
         }
       ]
+    },
+    "bitcoin-nasdaq-correlation-aug-2026": {
+      "title": "Bitcoin e Nasdaq voltam a mover-se em conjunto em agosto de 2026: a correlação regressa ao centro das atenções",
+      "tagline": "Com a melhoria das expectativas de liquidez, o Bitcoin e as ações de crescimento norte-americanas subiram em conjunto, reavivando a operação de correlação risk-on.",
+      "metaTitle": "Correlação Bitcoin-Nasdaq — agosto de 2026 | AutoTrader",
+      "metaDescription": "O Bitcoin e o Nasdaq 100 moveram-se em sintonia em agosto de 2026 com o regresso do apetite pelo risco. O que impulsionou a correlação e como adaptar estratégias.",
+      "overview": "Agosto de 2026 assistiu ao regresso de um regime de mercado familiar: o Bitcoin e as ações tecnológicas norte-americanas moveram-se na mesma direção na maioria das sessões, com a correlação móvel de 30 dias entre o BTC e o Nasdaq 100 a subir acima de 0,60 pela primeira vez em vários meses. Para quem negoceia em vários ativos, isto foi relevante porque confirmou que as expectativas macro de liquidez voltavam a dominar tanto os ativos digitais como as ações de crescimento de longa duração.\n\nO principal motor foi a sensibilidade à política monetária. Dados de inflação mais fracos nos EUA e uma moderação do crescimento salarial reforçaram a expectativa de que as condições monetárias continuariam a suavizar-se até ao final do ano. Nesse contexto, os ativos de maior duração e maior beta tendem a destacar-se. O Bitcoin beneficiou da procura por ETF e do momentum próprio do setor cripto, enquanto o Nasdaq beneficiou da expansão de múltiplos nos líderes de IA e software.\n\nOs indicadores internos do mercado também apoiaram o movimento. A amplitude do Nasdaq melhorou face ao início do verão e a profundidade do mercado cripto nas principais bolsas aumentou, reduzindo o deslizamento durante as ruturas direcionais. Essa combinação tornou a continuação de tendência mais limpa do que nas fases irregulares e de baixa liquidez.\n\nPara os traders, a lição essencial foi a deteção de regime. Quando a correlação BTC-NDX sobe, o risco da carteira pode concentrar-se mesmo quando as posições parecem diversificadas entre classes de ativos. Uma carteira longa em BTC e longa em ações de crescimento é, na prática, uma única aposta macro em condições financeiras mais folgadas.\n\nAs estratégias sistemáticas que acompanham a correlação entre ativos e a volatilidade podem responder apertando os limites de exposição bruta, reduzindo posições redundantes ou rodando para temas menos correlacionados quando os limiares são ultrapassados. Agosto de 2026 demonstrou que a correlação não é estática — e que os sistemas de risco têm de ser suficientemente dinâmicos para a acompanhar.",
+      "howItWorks": "O monitor multiativo da auto-Trading pode acompanhar em tempo real a correlação móvel entre o Bitcoin e os principais índices acionistas. Quando a correlação sobe acima de um limiar configurado, o motor de risco pode reduzir automaticamente a exposição longa sobreposta, apertar as restrições de diversificação ou reequilibrar a alocação para estratégias de menor correlação. Isto ajuda a evitar concentração oculta quando o cripto e as tecnológicas começam a mover-se como uma só operação.",
+      "externalLinks": [
+        {
+          "label": "Reuters — Mercados dos EUA",
+          "description": "Cobertura das ações norte-americanas, das expectativas de taxas e das mudanças no sentimento de risco."
+        },
+        {
+          "label": "Nasdaq — Atividade de mercado",
+          "description": "Dados oficiais de mercado da Nasdaq e recursos de acompanhamento de índices."
+        },
+        {
+          "label": "CoinDesk — Mercados",
+          "description": "Cobertura do mercado cripto centrada na evolução do preço do Bitcoin e nos fluxos institucionais."
+        },
+        {
+          "label": "Ferramenta FedWatch da CME",
+          "description": "Probabilidades de política da Reserva Federal implícitas no mercado, usadas por traders macro."
+        }
+      ]
+    },
+    "bitcoin-etf-flows-vs-sp500-aug-2026": {
+      "title": "Entradas em ETF de Bitcoin face ao posicionamento no S&P 500 em agosto de 2026",
+      "tagline": "As subscrições recorde em ETF de Bitcoin à vista contrastaram com um posicionamento prudente em ações, criando uma divergência notória no apetite pelo risco.",
+      "metaTitle": "Fluxos de ETF de Bitcoin vs S&P 500 — ago. 2026 | AutoTrader",
+      "metaDescription": "Agosto de 2026 juntou forte procura por ETF de Bitcoin a um posicionamento institucional seletivo no S&P 500. Analisamos a divergência e as suas implicações.",
+      "overview": "Uma das histórias entre mercados mais claras de agosto de 2026 foi a divergência: os ETF de Bitcoin continuaram a atrair fortes entradas líquidas, enquanto o posicionamento nas ações norte-americanas em geral se manteve seletivo e concentrado num conjunto restrito de setores. Essa separação pôs em causa o pressuposto de que todos os ativos de risco se movem sempre em conjunto.\n\nA procura por Bitcoin partiu de alocadores estruturalmente persistentes. As plataformas de gestão de património e as carteiras-modelo alargaram as suas componentes estratégicas de cripto, e a criação regular de unidades de ETF garantiu uma pressão compradora constante no mercado à vista. Em contrapartida, muitos gestores de ações mantiveram-se cautelosos quanto à exposição ao índice global, devido a avaliações elevadas e a orientações de resultados mistas fora das grandes tecnológicas.\n\nDaí resultou uma configuração interessante. O Bitcoin avançou pela persistência dos fluxos, enquanto o S&P 500 subiu de forma mais irregular, apoiado numa liderança concentrada. Quem assumiu um comportamento de risco simétrico entre cripto e ações errou repetidamente no desempenho relativo.\n\nA conclusão prática é que os fluxos importam tanto como a macroeconomia. No cripto, os dados de criação e resgate de ETF tornaram-se um sinal de primeira ordem para a direção de curto prazo e a confirmação de tendência de médio prazo. Nas ações, a amplitude, a rotação setorial e as revisões de resultados continuam a ser o contexto crítico do desempenho do índice.\n\nAgosto realçou o valor de usar modelos de força relativa entre classes de ativos, em vez de partir de pressupostos estáticos. Quando um mercado tem compradores marginais mais fortes, pode destacar-se mesmo com o mesmo pano de fundo macroeconómico.",
+      "howItWorks": "A auto-Trading pode incorporar indicadores externos de fluxos e amplitude em filtros de estratégia personalizados. O trader pode exigir confirmação de fluxos positivos em ETF para posições longas em Bitcoin e, em simultâneo, condicionar a exposição ao S&P 500 a limiares de amplitude de mercado ou de liderança setorial. Assim, o sistema trata o cripto e as ações como conjuntos de oportunidades relacionados mas distintos, em vez de forçar exposição na mesma direção.",
+      "externalLinks": [
+        {
+          "label": "Bloomberg Crypto",
+          "description": "Atualizações sobre fluxos institucionais e análise de mercado relacionada com ETF."
+        },
+        {
+          "label": "S&P Dow Jones Indices",
+          "description": "Dados oficiais e metodologia dos índices de referência da S&P."
+        },
+        {
+          "label": "The Block — Dados de ETF",
+          "description": "Painéis de dados sobre fluxos de ETF cripto e métricas de estrutura de mercado."
+        },
+        {
+          "label": "CBOE — Estatísticas de mercado",
+          "description": "Contexto de amplitude e volatilidade útil para analisar o posicionamento em ações."
+        }
+      ]
     }
   },
   "learnDetail": {

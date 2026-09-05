@@ -3489,6 +3489,58 @@
           "description": "Marktdaten und Analysen des WSJ zur Technologie-Rally im Juni 2026."
         }
       ]
+    },
+    "bitcoin-nasdaq-correlation-aug-2026": {
+      "title": "Bitcoin und Nasdaq laufen im August 2026 wieder im Gleichschritt: Korrelation rückt in den Fokus",
+      "tagline": "Mit besseren Liquiditätserwartungen stiegen Bitcoin und US-Wachstumsaktien im Tandem und belebten den Risk-on-Korrelationstrade neu.",
+      "metaTitle": "Korrelation Bitcoin–Nasdaq — August 2026 | AutoTrader Blog",
+      "metaDescription": "Bitcoin und der Nasdaq 100 liefen im August 2026 im Gleichschritt, als die Risikofreude zurückkehrte. Was die Korrelation trieb und wie Strategien reagieren.",
+      "overview": "Im August 2026 kehrte ein vertrautes Marktregime zurück: Bitcoin und US-Technologieaktien bewegten sich an den meisten Handelstagen in dieselbe Richtung, wobei die rollierende 30-Tage-Korrelation zwischen BTC und dem Nasdaq 100 erstmals seit mehreren Monaten über 0,60 stieg. Für Cross-Asset-Trader war das bedeutsam, weil es bestätigte, dass makroökonomische Liquiditätserwartungen erneut sowohl digitale Vermögenswerte als auch langlaufende Wachstumsaktien dominierten.\n\nHaupttreiber war die Sensitivität gegenüber der Geldpolitik. Schwächere US-Inflationsdaten und ein moderateres Lohnwachstum stützten die Erwartung, dass sich die monetären Bedingungen bis zum Jahresende weiter lockern würden. In einem solchen Umfeld schneiden Anlagen mit höherer Duration und höherem Beta tendenziell besser ab. Bitcoin profitierte von der ETF-Nachfrage und kryptonativem Momentum, der Nasdaq von der Bewertungsausweitung bei führenden KI- und Softwarewerten.\n\nAuch die Marktinterna stützten die Bewegung. Die Marktbreite im Nasdaq verbesserte sich gegenüber dem Frühsommer, und die Markttiefe im Kryptobereich an den großen Börsen nahm zu, was die Slippage bei gerichteten Ausbrüchen verringerte. Diese Kombination machte die Trendfortsetzung sauberer als in volatilen Phasen mit geringer Liquidität.\n\nFür Trader lautete die zentrale Lehre: Regime erkennen. Wenn die Korrelation zwischen BTC und NDX steigt, kann sich das Portfoliorisiko konzentrieren, selbst wenn die Positionen über Anlageklassen hinweg diversifiziert erscheinen. Ein Buch aus Long-BTC plus Long-Wachstumsaktien ist faktisch eine einzige Makrowette auf lockerere Finanzierungsbedingungen.\n\nSystematische Strategien, die Cross-Asset-Korrelation und Volatilität überwachen, können darauf reagieren, indem sie Obergrenzen für das Bruttoexposure senken, redundante Positionen abbauen oder bei Überschreiten von Schwellenwerten in weniger korrelierte Themen rotieren. Der August 2026 zeigte, dass Korrelation nicht statisch ist — und Risikosysteme dynamisch genug sein müssen, um ihr zu folgen.",
+      "howItWorks": "Der Cross-Asset-Monitor von auto-Trading kann die rollierende Korrelation zwischen Bitcoin und großen Aktienindizes in Echtzeit verfolgen. Steigt die Korrelation über einen konfigurierten Schwellenwert, kann die Risiko-Engine überlappendes Long-Exposure automatisch reduzieren, Diversifikationsvorgaben verschärfen oder die Allokation in Strategien mit geringerer Korrelation umschichten. Das verhindert verdeckte Konzentration, wenn Krypto- und Techwerte beginnen, wie ein einziger Trade zu laufen.",
+      "externalLinks": [
+        {
+          "label": "Reuters — US-Märkte",
+          "description": "Berichterstattung zu US-Aktien, Zinserwartungen und Verschiebungen der Risikostimmung."
+        },
+        {
+          "label": "Nasdaq — Marktaktivität",
+          "description": "Offizielle Marktdaten der Nasdaq und Ressourcen zur Indexverfolgung."
+        },
+        {
+          "label": "CoinDesk — Märkte",
+          "description": "Krypto-Marktberichterstattung mit Fokus auf die Kursbewegung von Bitcoin und institutionelle Zuflüsse."
+        },
+        {
+          "label": "CME FedWatch Tool",
+          "description": "Vom Markt eingepreiste Wahrscheinlichkeiten zur Fed-Politik, genutzt von Makro-Tradern."
+        }
+      ]
+    },
+    "bitcoin-etf-flows-vs-sp500-aug-2026": {
+      "title": "Bitcoin-ETF-Zuflüsse versus S&P-500-Positionierung im August 2026",
+      "tagline": "Rekordzeichnungen bei Spot-Bitcoin-ETFs standen einer vorsichtigen Aktienpositionierung gegenüber und erzeugten eine bemerkenswerte Divergenz der Risikobereitschaft.",
+      "metaTitle": "Bitcoin-ETF-Flüsse vs. S&P 500 — Aug. 2026 | AutoTrader",
+      "metaDescription": "Der August 2026 brachte starke Nachfrage nach Bitcoin-ETFs, während die institutionelle Positionierung im S&P 500 selektiv blieb. Divergenz und Strategiefolgen.",
+      "overview": "Eine der klarsten marktübergreifenden Geschichten im August 2026 war die Divergenz: Bitcoin-ETFs zogen weiterhin kräftige Nettomittel an, während die Positionierung in breiten US-Aktien selektiv blieb und sich auf wenige Sektoren konzentrierte. Diese Spaltung stellte die Annahme infrage, dass sich alle Risikoanlagen stets im Gleichschritt bewegen.\n\nDie Bitcoin-Nachfrage kam von strukturell beständigen Allokatoren. Vermögensplattformen und Modellportfolios bauten ihre strategischen Krypto-Bausteine aus, und die regelmäßige Emission von ETF-Anteilen sorgte für stetigen Kaufdruck an den Spotmärkten. Viele Aktienmanager blieben demgegenüber bei indexweiten Engagements zurückhaltend, angesichts hoher Bewertungen und uneinheitlicher Gewinnprognosen außerhalb der Mega-Cap-Technologiewerte.\n\nDaraus ergab sich eine interessante Konstellation. Bitcoin stieg getragen von anhaltenden Zuflüssen, während der S&P 500 ungleichmäßiger avancierte, getrieben von einer konzentrierten Führungsriege. Trader, die von symmetrischem Risikoverhalten zwischen Krypto und Aktien ausgingen, lagen bei der relativen Wertentwicklung wiederholt falsch.\n\nDie praktische Lehre lautet: Flüsse zählen ebenso viel wie Makrodaten. Im Kryptobereich sind Daten zur Emission und Rücknahme von ETF-Anteilen zu einem erstrangigen Signal für die kurzfristige Richtung und die mittelfristige Trendbestätigung geworden. Bei Aktien bleiben Marktbreite, Sektorrotation und Trends bei Gewinnrevisionen der entscheidende Kontext rund um die Indexentwicklung.\n\nDer August unterstrich den Wert von Relative-Stärke-Modellen über Anlageklassen hinweg statt statischer Annahmen. Wenn ein Markt stärkere Grenzkäufer hat, kann er selbst bei identischer Makro-Nachrichtenlage besser abschneiden.",
+      "howItWorks": "auto-Trading kann externe Fluss- und Marktbreiten-Proxys in individuelle Strategiefilter einspeisen. Trader können für Bitcoin-Longs eine Bestätigung durch positive ETF-Zuflüsse verlangen und gleichzeitig das S&P-500-Engagement über Schwellenwerte für Marktbreite oder Sektorführerschaft steuern. So behandelt das System Krypto und Aktien als verwandte, aber eigenständige Chancenfelder, statt beide in dieselbe Richtung zu zwingen.",
+      "externalLinks": [
+        {
+          "label": "Bloomberg Crypto",
+          "description": "Aktuelles zu institutionellen Zuflüssen und Marktanalysen rund um ETFs."
+        },
+        {
+          "label": "S&P Dow Jones Indices",
+          "description": "Offizielle Indexdaten und Methodik der S&P-Benchmarks."
+        },
+        {
+          "label": "The Block — ETF-Daten",
+          "description": "Daten-Dashboards zu Krypto-ETF-Flüssen und Kennzahlen der Marktstruktur."
+        },
+        {
+          "label": "CBOE — Marktstatistiken",
+          "description": "Kontext zu Marktbreite und Volatilität, nützlich für die Analyse der Aktienpositionierung."
+        }
+      ]
     }
   },
   "learnDetail": {
