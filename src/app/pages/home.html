@@ -53,8 +53,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
 </section>
-<app-ad-banner-skyscraper ngSkipHydration />
-<app-ad-widget-etoro ngSkipHydration />
+<!-- Side ad banners: AvaTrade (left, >=1480px), eToro (right, >=1840px). Positioned in the
+     gutter outside the content column; see each component's :host styles. -->
+<app-ad-banner-skyscraper side="left" ngSkipHydration />
+<app-ad-widget-etoro />
 
 <!-- ───── STATS ───── -->
 <section class="stats-bar">
