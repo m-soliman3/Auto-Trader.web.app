@@ -56,46 +56,55 @@ const coreRoutes: Routes = [
     path: '',
     component: Home,
     title: 'pageTitle.home',
+    data: { description: 'metaDescription.home' },
   },
   {
     path: 'login',
     component: Login,
     title: 'pageTitle.login',
+    data: { description: 'metaDescription.login' },
   },
   {
     path: 'signup',
     component: Signup,
     title: 'pageTitle.signup',
+    data: { description: 'metaDescription.signup' },
   },
   {
     path: 'signup-guide',
     component: SignupGuide,
     title: 'pageTitle.signupGuide',
+    data: { description: 'metaDescription.signupGuide' },
   },
   {
     path: 'contact',
     component: Contact,
     title: 'pageTitle.contact',
+    data: { description: 'metaDescription.contact' },
   },
   {
     path: 'terms',
     component: TermsPage,
     title: 'pageTitle.terms',
+    data: { description: 'metaDescription.terms' },
   },
   {
     path: 'privacy',
     component: PrivacyPage,
     title: 'pageTitle.privacy',
+    data: { description: 'metaDescription.privacy' },
   },
   {
     path: 'disclaimer',
     component: DisclaimerPage,
     title: 'pageTitle.disclaimer',
+    data: { description: 'metaDescription.disclaimer' },
   },
   {
     path: 'collecting-data',
     component: CollectingDataPage,
     title: 'pageTitle.collectingData',
+    data: { description: 'metaDescription.collectingData' },
   },
   {
     path: 'exchanges',
@@ -168,26 +177,31 @@ const coreRoutes: Routes = [
     path: 'features/:slug',
     component: FeatureDetailPage,
     title: 'pageTitle.feature',
+    data: { selfDescribed: true },
   },
   {
     path: 'knowledge-base',
     component: SitemapPage,
     title: 'pageTitle.sitemap',
+    data: { description: 'metaDescription.knowledgeBase' },
   },
   {
     path: 'learn/:slug',
     component: LearnDetailPage,
     title: 'pageTitle.learn',
+    data: { selfDescribed: true },
   },
   {
     path: 'blog/:slug',
     component: LearnDetailPage,
     title: 'pageTitle.blog',
+    data: { selfDescribed: true },
   },
   {
     path: 'system-health',
     component: StatusPage,
     title: 'pageTitle.status',
+    data: { description: 'metaDescription.systemHealth' },
   },
 ];
 

@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit, SecurityContext, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, Meta } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { LanguageService } from '../../services/language.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -37,6 +37,7 @@ export interface FeatureData {
   relatedLinks: RelatedPageLink[];
   svgIllustration: string;
   metaTitle: string;
+  metaDescription: string;
 }
 
 interface FeatureNavLink {
@@ -53,6 +54,8 @@ const FEATURES: Record<string, FeatureData> = {
     title: 'AI-Powered Signals',
     tagline: 'Let machine intelligence find your next trade.',
     metaTitle: 'AI-Powered Signals — AutoTrader',
+    metaDescription:
+      'Machine-learning models scan thousands of assets around the clock and surface high-probability setups with entry, stop-loss, and take-profit levels.',
     heroDescription:
       'Harness the power of machine learning to detect high-probability trade setups across thousands of assets — before the market moves.',
     overview: `Artificial intelligence has fundamentally changed the way professional traders approach the markets. At auto-Trading, our AI-powered signals engine continuously scans thousands of assets across equities, cryptocurrencies, forex pairs, and commodities — 24 hours a day, 7 days a week — to identify patterns that human analysts would take days to spot manually.
@@ -163,6 +166,8 @@ Every signal is back-tested against out-of-sample historical data before it is p
     title: 'Multi-Exchange Support',
     tagline: 'One platform. Every major exchange. Zero friction.',
     metaTitle: 'Multi-Exchange Support — AutoTrader',
+    metaDescription:
+      'Trade 30+ crypto exchanges and stock brokers through one unified API. Connect accounts once and route every strategy without rewriting a thing.',
     heroDescription:
       'Connect Binance, Coinbase, Kraken, Bybit, and 30+ more exchanges through a single unified API and manage everything from one dashboard.',
     overview: `Managing trading accounts across multiple exchanges has traditionally been a nightmare. Each platform has its own interface, its own API quirks, and its own risk model. auto-Trading eliminates that complexity by providing a single, unified integration layer that speaks the native language of every major exchange.
@@ -278,6 +283,8 @@ Once connected, you can run multiple bots on the same exchange simultaneously, e
     title: 'Risk Management',
     tagline: 'Protect your capital with institutional-grade controls.',
     metaTitle: 'Risk Management — AutoTrader',
+    metaDescription:
+      'Institutional-grade controls for your capital: stop-loss, take-profit, position sizing, and portfolio exposure limits enforced on every trade.',
     heroDescription:
       'Customisable stop-loss, take-profit, position sizing, and portfolio exposure limits protect your capital around the clock — so one bad trade can never sink your account.',
     overview: `Risk management is the single most important discipline in trading — more important than any signal, strategy, or system. Even the best entry logic will fail over time without a robust framework for controlling losses. auto-Trading puts institutional-grade risk controls directly in your hands, regardless of your experience level.
@@ -373,6 +380,8 @@ Margin users benefit from additional safeguards including maximum leverage caps 
     title: 'Advanced Backtesting',
     tagline: 'Prove your strategy before risking a single dollar.',
     metaTitle: 'Advanced Backtesting — AutoTrader',
+    metaDescription:
+      'Test any strategy against years of historical market data before risking real money. Review win rate, drawdown, and expectancy in one report.',
     heroDescription:
       'Test your strategies against years of tick-level historical data before committing a single dollar to live trading.',
     overview: `Backtesting is the process of applying a trading strategy to historical market data to evaluate how it would have performed in the past. While past performance is never a guarantee of future results, rigorous backtesting is an indispensable step in validating that a strategy has genuine statistical edge — rather than being a lucky pattern that happened to fit one particular market period.
@@ -488,6 +497,8 @@ Strategy optimisation lets you sweep a range of parameter values (e.g., moving a
     title: 'Smart Alerts',
     tagline: 'Stay informed, wherever you are.',
     metaTitle: 'Smart Alerts — AutoTrader',
+    metaDescription:
+      'Real-time notifications for fills, signals, and risk events, delivered where you actually read them so nothing important slips past you.',
     heroDescription:
       'Get real-time push, email, or Telegram notifications the moment trade conditions are met, positions open or close, or drawdown limits are breached.',
     overview: `In automated trading, staying informed is just as important as executing correctly. Markets move fast, and you need to know the moment something significant happens — whether that is a new signal firing, a position being opened or closed, a stop-loss being hit, or a bot encountering an unexpected error.
@@ -597,6 +608,8 @@ Custom Webhook Alerts let power users route notifications to any third-party sys
     title: 'No-Code Strategy Builder',
     tagline: 'Build powerful trading strategies without writing a single line of code.',
     metaTitle: 'No-Code Strategy Builder — AutoTrader',
+    metaDescription:
+      'Build, test, and deploy automated trading strategies visually. Combine indicators, conditions, and risk rules without writing a line of code.',
     heroDescription:
       'Our drag-and-drop strategy builder lets you automate complex trading logic — entry conditions, filters, risk rules, and exit signals — without any programming knowledge.',
     overview: `Algorithmic trading was once the exclusive domain of software engineers and quant researchers. Writing robust, production-ready trading code requires expertise in programming languages, API integrations, concurrency management, error handling, and real-time data processing. auto-Trading's No-Code Strategy Builder changes all of that by providing a powerful visual interface that lets any trader — regardless of technical background — build, test, and deploy automated strategies.
@@ -722,6 +735,7 @@ export class FeatureDetailPage implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private translate = inject(TranslateService);
   private document = inject(DOCUMENT);
+  private meta = inject(Meta);
 
   private baseFeature: FeatureData | null = null;
   feature: FeatureData | null = null;
@@ -786,6 +800,7 @@ export class FeatureDetailPage implements OnInit {
       title: this.t(`${keyRoot}.title`, base.title),
       tagline: this.t(`${keyRoot}.tagline`, base.tagline),
       metaTitle: this.t(`${keyRoot}.metaTitle`, base.metaTitle),
+      metaDescription: this.t(`${keyRoot}.metaDescription`, base.metaDescription),
       heroDescription: this.t(`${keyRoot}.heroDescription`, base.heroDescription),
       overview: translatedOverview,
       howItWorks: translatedHowItWorks,
@@ -798,6 +813,9 @@ export class FeatureDetailPage implements OnInit {
       relatedLinks: translatedRelatedLinks,
     };
     this.document.title = this.feature.metaTitle;
+    this.meta.updateTag({ name: 'description', content: this.feature.metaDescription });
+    this.meta.updateTag({ property: 'og:title', content: this.feature.metaTitle });
+    this.meta.updateTag({ property: 'og:description', content: this.feature.metaDescription });
 
     const referencesHtml = this.inlineReferenceHtml(translatedExternalLinks, translatedRelatedLinks);
 
