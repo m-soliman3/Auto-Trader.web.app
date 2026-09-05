@@ -53,7 +53,7 @@ const FEATURES: Record<string, FeatureData> = {
     icon: '⚡',
     title: 'AI-Powered Signals',
     tagline: 'Let machine intelligence find your next trade.',
-    metaTitle: 'AI-Powered Signals — AutoTrader',
+    metaTitle: 'AI-Powered Signals — Invest-Begin',
     metaDescription:
       'Machine-learning models scan thousands of assets around the clock and surface high-probability setups with entry, stop-loss, and take-profit levels.',
     heroDescription:
@@ -165,7 +165,7 @@ Every signal is back-tested against out-of-sample historical data before it is p
     icon: '🔗',
     title: 'Multi-Exchange Support',
     tagline: 'One platform. Every major exchange. Zero friction.',
-    metaTitle: 'Multi-Exchange Support — AutoTrader',
+    metaTitle: 'Multi-Exchange Support — Invest-Begin',
     metaDescription:
       'Trade 30+ crypto exchanges and stock brokers through one unified API. Connect accounts once and route every strategy without rewriting a thing.',
     heroDescription:
@@ -282,7 +282,7 @@ Once connected, you can run multiple bots on the same exchange simultaneously, e
     icon: '🛡️',
     title: 'Risk Management',
     tagline: 'Protect your capital with institutional-grade controls.',
-    metaTitle: 'Risk Management — AutoTrader',
+    metaTitle: 'Risk Management — Invest-Begin',
     metaDescription:
       'Institutional-grade controls for your capital: stop-loss, take-profit, position sizing, and portfolio exposure limits enforced on every trade.',
     heroDescription:
@@ -379,7 +379,7 @@ Margin users benefit from additional safeguards including maximum leverage caps 
     icon: '📊',
     title: 'Advanced Backtesting',
     tagline: 'Prove your strategy before risking a single dollar.',
-    metaTitle: 'Advanced Backtesting — AutoTrader',
+    metaTitle: 'Advanced Backtesting — Invest-Begin',
     metaDescription:
       'Test any strategy against years of historical market data before risking real money. Review win rate, drawdown, and expectancy in one report.',
     heroDescription:
@@ -496,7 +496,7 @@ Strategy optimisation lets you sweep a range of parameter values (e.g., moving a
     icon: '🔔',
     title: 'Smart Alerts',
     tagline: 'Stay informed, wherever you are.',
-    metaTitle: 'Smart Alerts — AutoTrader',
+    metaTitle: 'Smart Alerts — Invest-Begin',
     metaDescription:
       'Real-time notifications for fills, signals, and risk events, delivered where you actually read them so nothing important slips past you.',
     heroDescription:
@@ -607,7 +607,7 @@ Custom Webhook Alerts let power users route notifications to any third-party sys
     icon: '🌐',
     title: 'No-Code Strategy Builder',
     tagline: 'Build powerful trading strategies without writing a single line of code.',
-    metaTitle: 'No-Code Strategy Builder — AutoTrader',
+    metaTitle: 'No-Code Strategy Builder — Invest-Begin',
     metaDescription:
       'Build, test, and deploy automated trading strategies visually. Combine indicators, conditions, and risk rules without writing a line of code.',
     heroDescription:
