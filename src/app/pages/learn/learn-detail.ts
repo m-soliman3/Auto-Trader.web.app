@@ -50,8 +50,8 @@ export const LEARN_PAGES: Record<string, LearnData> = {
     icon: '📈',
     title: 'Moving Average Crossover Strategy',
     tagline: 'One of the oldest and most widely used trend-following techniques.',
-    metaTitle: 'Moving Average Crossover Strategy — AutoTrader Learn',
-    metaDescription: 'Learn the moving average crossover strategy: how it works, when to use it, and how to automate it with auto-Trading.',
+    metaTitle: 'Moving Average Crossover Strategy — Invest-Begin Learn',
+    metaDescription: 'Learn the moving average crossover strategy: how it works, when to use it, and how to automate it with Invest-Begin.',
     overview: `The moving average crossover is among the most widely taught trend-following strategies in technical analysis. The core idea is straightforward: you plot two moving averages of different lengths on a price chart and generate a trade signal whenever the faster average crosses above or below the slower one.
 
 A bullish crossover — sometimes called a "golden cross" when the 50-day MA crosses above the 200-day MA — occurs when the short-period average rises above the long-period average. This indicates that recent prices are climbing faster than the longer-term trend and is interpreted as a buy signal. The opposite, a bearish or "death cross", occurs when the short-period average falls below the long-period average.
@@ -77,7 +77,7 @@ auto-Trading allows you to automate crossover strategies using the no-code strat
     icon: '🕳️',
     title: 'Fair Value Gap (FVG) Strategy',
     tagline: 'Trade imbalances left behind by rapid institutional moves.',
-    metaTitle: 'Fair Value Gap (FVG) Strategy — AutoTrader Learn',
+    metaTitle: 'Fair Value Gap (FVG) Strategy — Invest-Begin Learn',
     metaDescription: 'Understand the Fair Value Gap strategy: how institutional order imbalances create high-probability trade setups.',
     overview: `A Fair Value Gap (FVG) is a three-candle price imbalance pattern that forms when price moves so aggressively in one direction that the wicks of the first and third candles do not overlap. The resulting gap represents a zone where no two-sided trading took place — in other words, supply and demand never had a chance to reach equilibrium.
 
@@ -102,7 +102,7 @@ FVGs are particularly effective on higher timeframes (4H, daily) where instituti
     icon: '🧠',
     title: 'Smart Money Concepts (SMC)',
     tagline: 'Align your trades with institutional order flow.',
-    metaTitle: 'Smart Money Concepts (SMC) Strategy — AutoTrader Learn',
+    metaTitle: 'Smart Money Concepts (SMC) Strategy — Invest-Begin Learn',
     metaDescription: 'Learn Smart Money Concepts: how to read institutional order flow, identify order blocks, and trade with the big players.',
     overview: `Smart Money Concepts (SMC) is a trading framework that attempts to model the behaviour of large institutional participants — banks, hedge funds, and market makers — who collectively move prices in search of liquidity. Unlike retail-oriented approaches that focus on lagging indicators, SMC emphasises reading raw price action to understand where institutions are accumulating or distributing positions.
 
@@ -127,7 +127,7 @@ SMC is holistic: it combines liquidity analysis, market structure, order blocks,
     icon: '🧱',
     title: 'Order Blocks Strategy',
     tagline: 'Identify the candles where institutions loaded their positions.',
-    metaTitle: 'Order Blocks Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Order Blocks Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn how to trade order blocks: identify institutional candles and use them as high-probability support and resistance zones.',
     overview: `An Order Block (OB) is the last bearish candle before a bullish impulse move, or the last bullish candle before a bearish impulse move. The logic is that large institutions must execute their orders over time and often return to the price zone where they began their initial entry to add to or complete their position.
 
@@ -152,7 +152,7 @@ Order blocks are best used on higher timeframes (1H, 4H, Daily) to define the di
     icon: '🌊',
     title: 'Liquidity Sweeps Strategy',
     tagline: 'Trade the stop hunts that precede major institutional moves.',
-    metaTitle: 'Liquidity Sweeps Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Liquidity Sweeps Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn liquidity sweeps: how smart money hunts retail stops above highs and below lows before reversing price sharply.',
     overview: `Liquidity Sweeps — also called stop hunts or liquidity grabs — are a cornerstone of the Smart Money Concepts framework. Retail traders tend to place their stop-loss orders at obvious levels: just below a swing low or just above a swing high. This creates a predictable cluster of orders that institutional players actively seek to trigger.
 
@@ -177,7 +177,7 @@ Combining sweep analysis with market structure and time-of-day filters (London o
     icon: '⚡',
     title: 'Breaker Blocks Strategy',
     tagline: 'Trade failed order blocks that flip from support to resistance.',
-    metaTitle: 'Breaker Blocks Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Breaker Blocks Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Understand breaker blocks: when order blocks fail and flip polarity, creating new high-probability trade zones.',
     overview: `A Breaker Block is a failed Order Block. When an order block is violated — price trades through it without reversing — it flips polarity and becomes a breaker: what was support becomes resistance, and vice versa. This flip occurs because the institutional orders that originally defended the order block have now been absorbed or reversed.
 
@@ -202,7 +202,7 @@ Breakers are particularly powerful when they coincide with FVGs or when the init
     icon: '📊',
     title: 'Trend Following Strategy',
     tagline: 'Ride the momentum — let your winners run.',
-    metaTitle: 'Trend Following Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Trend Following Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn trend following: one of the most time-tested strategies in trading, used by CTAs, hedge funds, and systematic traders worldwide.',
     overview: `Trend following is one of the oldest and most rigorously tested systematic trading approaches. Its core principle is simple: identify an established trend and trade in its direction until evidence of reversal emerges. The philosophy is captured in the adage "the trend is your friend — until it ends."
 
@@ -227,7 +227,7 @@ The strategy performs best in strongly trending markets (commodities, currencies
     icon: '🔄',
     title: 'Mean Reversion Strategy',
     tagline: 'Buy the dip, sell the rip — profit from price returning to average.',
-    metaTitle: 'Mean Reversion Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Mean Reversion Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Discover mean reversion trading: how to profit when overextended prices snap back to their statistical average.',
     overview: `Mean reversion is based on the statistical observation that extreme price deviations from a long-run average tend to be temporary. Just as a stretched rubber band snaps back, overextended prices tend to return to their mean over time. This principle is especially reliable in markets that exhibit stationary or co-integrated behaviour.
 
@@ -252,7 +252,7 @@ Mean reversion works best in range-bound equity markets, currency pairs with lon
     icon: '🚀',
     title: 'Breakout Trading Strategy',
     tagline: 'Catch explosive moves the moment price escapes its range.',
-    metaTitle: 'Breakout Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Breakout Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn breakout trading: how to identify consolidation zones and trade the explosive moves when price breaks free.',
     overview: `Breakout trading seeks to capture explosive price moves that occur when price escapes a period of consolidation or breaks through a significant technical level. The premise is that periods of low volatility and tight ranges compress potential energy, and when price eventually breaks out, the resulting move is often large and fast.
 
@@ -277,7 +277,7 @@ Donchian channels, which plot the highest high and lowest low over a lookback pe
     icon: '⚡',
     title: 'Scalping Strategy',
     tagline: 'Profit from tiny price moves with high-frequency precision.',
-    metaTitle: 'Scalping Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Scalping Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Understand scalping: the high-frequency strategy that targets small profits on many trades, demanding speed and strict discipline.',
     overview: `Scalping is a short-term trading strategy that seeks to profit from small price movements, typically holding positions for seconds to a few minutes. A scalper makes dozens or even hundreds of trades per day, targeting a small number of pips or ticks on each, with the goal of accumulating significant gains through volume.
 
@@ -302,7 +302,7 @@ Automation is particularly well-suited to scalping: manual traders struggle to m
     icon: '🏌️',
     title: 'Swing Trading Strategy',
     tagline: 'Capture multi-day price swings with a balanced risk approach.',
-    metaTitle: 'Swing Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Swing Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn swing trading: capturing price moves over days to weeks, balancing technical analysis with disciplined position management.',
     overview: `Swing trading sits between scalping and position trading, targeting price moves that develop over one to several days or weeks. Swing traders aim to capture a single "swing" — the move from a swing low to a swing high or vice versa — and exit before the move reverses.
 
@@ -327,7 +327,7 @@ Successful swing traders develop clear rules for entry (e.g., a daily close abov
     icon: '🐚',
     title: 'Fibonacci Retracement Strategy',
     tagline: 'Use mathematical ratios to identify high-probability pull-back entries.',
-    metaTitle: 'Fibonacci Retracement Strategy — AutoTrader Learn',
+    metaTitle: 'Fibonacci Retracement Strategy — Invest-Begin Learn',
     metaDescription: 'Master Fibonacci retracement: how to use the 38.2%, 50%, and 61.8% levels to time pull-back entries in trending markets.',
     overview: `Fibonacci retracement is a technical analysis tool based on the mathematical ratios derived from the Fibonacci sequence: 23.6%, 38.2%, 50%, 61.8%, and 78.6%. Traders draw retracement levels between a significant swing high and swing low (or vice versa) and use these levels to anticipate where a pull-back might find support or resistance before the trend resumes.
 
@@ -352,7 +352,7 @@ Fibonacci extensions are used to project profit targets beyond the swing high, w
     icon: '🗻',
     title: 'Ichimoku Cloud Strategy',
     tagline: 'A complete trading system built from a single indicator.',
-    metaTitle: 'Ichimoku Cloud Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Ichimoku Cloud Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn the Ichimoku Cloud strategy: a complete all-in-one trend, support/resistance, and momentum system from Japan.',
     overview: `The Ichimoku Cloud (Ichimoku Kinko Hyo) is a comprehensive technical indicator developed by Japanese journalist Goichi Hosoda in the 1960s. Unlike most indicators that provide a single line of information, Ichimoku delivers trend direction, momentum, support and resistance levels, and even future price projections — all in one view.
 
@@ -377,7 +377,7 @@ The Chikou Span — current price projected back in time — provides a final co
     icon: '🕯️',
     title: 'Price Action Strategy',
     tagline: 'Trade naked charts — let price tell you what to do next.',
-    metaTitle: 'Price Action Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Price Action Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn price action trading: read candles, patterns, and structure without indicators to identify high-probability trade setups.',
     overview: `Price action trading is the discipline of making trading decisions based solely on the movement of price — without the use of lagging indicators. Practitioners argue that all relevant market information is already reflected in the price, and that indicators simply repackage this information with an added delay.
 
@@ -402,7 +402,7 @@ Pure price action strategies require no indicators beyond perhaps a volume bar a
     icon: '🗂️',
     title: 'Grid Trading Strategy',
     tagline: 'Profit automatically from market volatility without predicting direction.',
-    metaTitle: 'Grid Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Grid Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn grid trading: how placing a grid of buy and sell orders captures profits from price oscillations in any market condition.',
     overview: `Grid trading is an automated strategy that places a series of buy and sell orders at preset price intervals above and below a central price level, forming a grid. As price oscillates up and down within the grid, the bot continuously buys at lower levels and sells at higher ones, accumulating profits from each completed buy-sell cycle.
 
@@ -427,7 +427,7 @@ The main risk is a sustained directional trend: if price moves far in one direct
     icon: '💰',
     title: 'Dollar-Cost Averaging (DCA) Strategy',
     tagline: 'Reduce timing risk by spreading purchases over time.',
-    metaTitle: 'Dollar-Cost Averaging (DCA) Strategy — AutoTrader Learn',
+    metaTitle: 'Dollar-Cost Averaging (DCA) Strategy — Invest-Begin Learn',
     metaDescription: 'Understand dollar-cost averaging (DCA): the disciplined strategy of buying fixed amounts at regular intervals to reduce timing risk.',
     overview: `Dollar-Cost Averaging (DCA) is an investment strategy where a fixed dollar amount is invested at regular intervals regardless of the asset's price. By buying more units when prices are low and fewer when prices are high, DCA reduces the impact of short-term volatility on the average cost basis.
 
@@ -452,7 +452,7 @@ DCA is most effective for assets with long-term positive growth expectations hel
     icon: '⚖️',
     title: 'Arbitrage Strategy',
     tagline: 'Exploit price differences across exchanges for risk-free profit.',
-    metaTitle: 'Arbitrage Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Arbitrage Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn arbitrage trading: how to profit from price discrepancies across exchanges or asset pairs with minimal directional risk.',
     overview: `Arbitrage is the practice of simultaneously buying and selling the same asset (or economically equivalent assets) in different markets to profit from a price discrepancy. In theory, it is risk-free — if Bitcoin is priced at $50,000 on Exchange A and $50,100 on Exchange B, buying on A and selling on B locks in a $100 profit per coin.
 
@@ -479,7 +479,7 @@ The strategy is most effective during periods of high market volatility when pri
     icon: '📉',
     title: 'Exponential Moving Average (EMA)',
     tagline: 'A weighted average that reacts faster to recent price changes.',
-    metaTitle: 'Exponential Moving Average (EMA) — AutoTrader Learn',
+    metaTitle: 'Exponential Moving Average (EMA) — Invest-Begin Learn',
     metaDescription: 'Learn the EMA indicator: how it differs from SMA, how to calculate it, and how to use it for trading signals.',
     overview: `The Exponential Moving Average (EMA) is a type of moving average that places greater weight on the most recent price data, making it more responsive to recent market changes than the Simple Moving Average (SMA). This sensitivity makes the EMA especially popular among shorter-term traders who need signals that react quickly to developing momentum.
 
@@ -504,7 +504,7 @@ EMAs serve multiple purposes: as dynamic support and resistance levels (price of
     icon: '📊',
     title: 'Simple Moving Average (SMA)',
     tagline: 'The foundational trend indicator every trader should know.',
-    metaTitle: 'Simple Moving Average (SMA) — AutoTrader Learn',
+    metaTitle: 'Simple Moving Average (SMA) — Invest-Begin Learn',
     metaDescription: 'Understand the SMA: how to calculate it, how to use it for trend detection, and why it is still relevant in modern trading.',
     overview: `The Simple Moving Average (SMA) is the arithmetic mean of a specified number of price periods. It is the most basic form of moving average and the starting point for understanding all other moving average derivatives. The 200-day SMA, for example, is one of the most widely cited technical levels in all of financial markets.
 
@@ -529,7 +529,7 @@ Key uses include: the 50 and 200 SMA as major support/resistance levels; the 200
     icon: '🔋',
     title: 'Relative Strength Index (RSI)',
     tagline: 'Measure momentum and identify overbought/oversold conditions.',
-    metaTitle: 'RSI — Relative Strength Index — AutoTrader Learn',
+    metaTitle: 'RSI — Relative Strength Index — Invest-Begin Learn',
     metaDescription: 'Master the RSI indicator: how it works, its overbought/oversold signals, divergence patterns, and how to integrate it in automated strategies.',
     overview: `The Relative Strength Index (RSI) is a momentum oscillator developed by J. Welles Wilder Jr. and introduced in his 1978 book "New Concepts in Technical Trading Systems." It measures the speed and magnitude of recent price changes to evaluate overbought or oversold conditions on a scale of 0 to 100.
 
@@ -554,7 +554,7 @@ RSI can also be used in trending markets by adjusting the overbought/oversold th
     icon: '🌊',
     title: 'MACD — Moving Average Convergence Divergence',
     tagline: 'A momentum indicator that doubles as a trend signal.',
-    metaTitle: 'MACD Indicator — AutoTrader Learn',
+    metaTitle: 'MACD Indicator — Invest-Begin Learn',
     metaDescription: 'Learn MACD: how this dual-purpose indicator measures both momentum and trend direction, and how to trade its crossover and divergence signals.',
     overview: `The MACD (Moving Average Convergence Divergence) is one of the most widely used technical indicators, serving as both a trend-following and momentum tool. Developed by Gerald Appel in the late 1970s, it is built from three components: the MACD line (difference between the 12-period EMA and 26-period EMA), the signal line (9-period EMA of the MACD line), and the histogram (MACD line minus signal line).
 
@@ -579,7 +579,7 @@ MACD works best as a trend-confirmation tool on timeframes of 1H and above. On l
     icon: '🎢',
     title: 'Stochastic Oscillator',
     tagline: 'Compare closing price to its range to detect momentum shifts.',
-    metaTitle: 'Stochastic Oscillator — AutoTrader Learn',
+    metaTitle: 'Stochastic Oscillator — Invest-Begin Learn',
     metaDescription: 'Learn the Stochastic Oscillator: how this momentum indicator identifies overbought/oversold conditions and generates %K/%D crossover signals.',
     overview: `The Stochastic Oscillator, developed by George Lane in the 1950s, measures the closing price relative to the high-low range over a specified period. The premise is that in uptrending markets, prices tend to close near the high of the range, and in downtrending markets near the low. Divergence from this pattern signals a potential reversal.
 
@@ -604,7 +604,7 @@ Like RSI, the Stochastic works best in ranging markets and should be used with a
     icon: '📏',
     title: 'Bollinger Bands',
     tagline: 'Dynamic volatility envelopes that reveal price extremes.',
-    metaTitle: 'Bollinger Bands Indicator — AutoTrader Learn',
+    metaTitle: 'Bollinger Bands Indicator — Invest-Begin Learn',
     metaDescription: 'Master Bollinger Bands: how these volatility-adaptive envelopes identify squeeze setups, mean reversion trades, and breakout signals.',
     overview: `Bollinger Bands, created by John Bollinger in the 1980s, consist of three lines plotted around a 20-period SMA: an upper band at +2 standard deviations and a lower band at −2 standard deviations. Approximately 95% of price action falls within the bands under normal volatility conditions.
 
@@ -629,7 +629,7 @@ The %B indicator (derived from Bollinger Bands) measures where price is relative
     icon: '⚖️',
     title: 'VWAP — Volume Weighted Average Price',
     tagline: 'The benchmark price that institutions use to evaluate trade quality.',
-    metaTitle: 'VWAP Indicator — AutoTrader Learn',
+    metaTitle: 'VWAP Indicator — Invest-Begin Learn',
     metaDescription: 'Learn VWAP: how institutions use volume-weighted average price as a trading benchmark and how retail traders use it for intraday signals.',
     overview: `VWAP (Volume Weighted Average Price) is the average price of an asset weighted by volume, calculated from the open of the trading session. It represents the "true average price" paid by all market participants during the day and is the primary benchmark used by institutional traders to evaluate whether they executed their orders at a good price.
 
@@ -656,7 +656,7 @@ Common VWAP strategies include: buying pull-backs to VWAP in uptrending sessions
     icon: '📐',
     title: 'Average True Range (ATR)',
     tagline: 'Measure volatility and size your stops intelligently.',
-    metaTitle: 'ATR — Average True Range — AutoTrader Learn',
+    metaTitle: 'ATR — Average True Range — Invest-Begin Learn',
     metaDescription: 'Learn ATR: the go-to volatility indicator for setting dynamic stop-losses, measuring market activity, and sizing positions.',
     overview: `The Average True Range (ATR), developed by J. Welles Wilder Jr. in his 1978 book, measures market volatility by calculating the average of the "true range" over a specified period. The true range is the greatest of: (current high − current low), (|current high − previous close|), and (|current low − previous close|), ensuring gaps are captured.
 
@@ -681,7 +681,7 @@ ATR is also used in position sizing: many systematic traders risk a fixed fracti
     icon: '🧭',
     title: 'ADX — Average Directional Index',
     tagline: 'Quantify trend strength to filter low-quality setups.',
-    metaTitle: 'ADX — Average Directional Index — AutoTrader Learn',
+    metaTitle: 'ADX — Average Directional Index — Invest-Begin Learn',
     metaDescription: 'Learn ADX: how to measure trend strength with the Average Directional Index and filter out range-bound false signals.',
     overview: `The Average Directional Index (ADX) is a trend strength indicator, also developed by J. Welles Wilder Jr., that measures how strong a trend is — regardless of direction. It is always plotted alongside two directional movement lines: +DI (positive directional indicator) and −DI (negative directional indicator).
 
@@ -706,7 +706,7 @@ The +DI/−DI crossover provides directional signals: when +DI crosses above −
     icon: '🏛️',
     title: 'Donchian Channels',
     tagline: 'The breakout indicator behind the famous Turtle Trading system.',
-    metaTitle: 'Donchian Channels — AutoTrader Learn',
+    metaTitle: 'Donchian Channels — Invest-Begin Learn',
     metaDescription: 'Learn Donchian Channels: the breakout indicator used by the legendary Turtle Traders to generate systematic entry and exit signals.',
     overview: `Donchian Channels, developed by commodity trader Richard Donchian, plot the highest high and lowest low over a user-defined period as upper and lower bands, with a midline at the average. Price above the upper band signals a new N-period high (bullish breakout); price below the lower band signals a new N-period low (bearish breakout).
 
@@ -731,7 +731,7 @@ Donchian Channels are equally useful as a trend-following entry mechanism and as
     icon: '📦',
     title: 'Volume Analysis',
     tagline: 'Confirm price moves by following the money.',
-    metaTitle: 'Volume Analysis in Trading — AutoTrader Learn',
+    metaTitle: 'Volume Analysis in Trading — Invest-Begin Learn',
     metaDescription: 'Learn volume analysis: how to use trading volume to confirm price moves, detect distribution, and identify institutional activity.',
     overview: `Volume is the number of units traded in a given period, and it is one of the most direct measures of market participation and conviction. The principle of "volume precedes price" reflects the observation that significant institutional activity — which drives major price moves — must involve large transaction volumes.
 
@@ -756,7 +756,7 @@ Volume Profile analysis maps volume by price level rather than by time, revealin
     icon: '🔭',
     title: 'Commodity Channel Index (CCI)',
     tagline: 'Identify cyclical turns and overbought/oversold extremes.',
-    metaTitle: 'CCI — Commodity Channel Index — AutoTrader Learn',
+    metaTitle: 'CCI — Commodity Channel Index — Invest-Begin Learn',
     metaDescription: 'Learn the CCI indicator: how it measures price deviation from its average and generates overbought/oversold and divergence signals.',
     overview: `The Commodity Channel Index (CCI) was developed by Donald Lambert and published in 1980. Despite its name, it is widely used across all asset classes. The indicator measures how far the current typical price has deviated from its recent average, scaled by the mean absolute deviation to normalise the result.
 
@@ -783,7 +783,7 @@ When used on higher timeframes (weekly or monthly), CCI is particularly effectiv
     icon: '📡',
     title: 'Williams %R',
     tagline: 'A fast, sensitive overbought/oversold indicator by Larry Williams.',
-    metaTitle: 'Williams %R Indicator — AutoTrader Learn',
+    metaTitle: 'Williams %R Indicator — Invest-Begin Learn',
     metaDescription: 'Learn Williams %R: how this momentum oscillator identifies overbought and oversold levels and generates short-term reversal signals.',
     overview: `Williams %R (pronounced "Williams Percent R") is a momentum indicator developed by Larry Williams, similar to the Stochastic Oscillator but inverted. It measures the close price relative to the highest high over a lookback period, scaled from −100 to 0. Values near 0 indicate overbought conditions; values near −100 indicate oversold.
 
@@ -810,7 +810,7 @@ The indicator also generates powerful divergence signals: when price makes a new
     icon: '🌀',
     title: 'Parabolic SAR',
     tagline: 'An automatic trailing stop system that follows the trend.',
-    metaTitle: 'Parabolic SAR Indicator — AutoTrader Learn',
+    metaTitle: 'Parabolic SAR Indicator — Invest-Begin Learn',
     metaDescription: 'Learn Parabolic SAR: how this trend-following indicator generates automatic trailing stop and reversal signals for trending markets.',
     overview: `The Parabolic SAR (Stop and Reverse), developed by J. Welles Wilder Jr., is a trend-following indicator that places dots above or below price to indicate direction and potential reversal points. When dots are below price, the trend is up; when dots are above price, the trend is down. The indicator is named for the parabolic curve the dots trace as a trend accelerates.
 
@@ -835,7 +835,7 @@ Parabolic SAR is most effective in strongly trending markets. In sideways market
     icon: '🔊',
     title: 'On-Balance Volume (OBV)',
     tagline: 'Track cumulative buying and selling pressure through volume flow.',
-    metaTitle: 'OBV — On-Balance Volume — AutoTrader Learn',
+    metaTitle: 'OBV — On-Balance Volume — Invest-Begin Learn',
     metaDescription: 'Learn On-Balance Volume (OBV): how this volume flow indicator confirms trends and detects divergences that signal price reversals.',
     overview: `On-Balance Volume (OBV) was developed by Joseph Granville and introduced in his 1963 book "Granville's New Key to Stock Market Profits." The concept is elegantly simple: on days when price closes higher, the day's volume is added to a running total; on days when price closes lower, the volume is subtracted. The result is a cumulative volume line that trends alongside — and often ahead of — price.
 
@@ -862,7 +862,7 @@ OBV is also used to detect "stealth accumulation": when price is range-bound but
     icon: '🔵',
     title: 'Pivot Points',
     tagline: 'Calculate key support and resistance levels from the previous session.',
-    metaTitle: 'Pivot Points — AutoTrader Learn',
+    metaTitle: 'Pivot Points — Invest-Begin Learn',
     metaDescription: 'Learn Pivot Points: how traders use daily, weekly, and monthly pivot levels to identify support, resistance, and high-probability reversals.',
     overview: `Pivot Points are one of the oldest and most widely used technical analysis tools, predating the computer era — floor traders in futures pits calculated them by hand each morning. The central pivot (P) is the average of the prior session's high, low, and close. From that single level, support levels (S1, S2, S3) and resistance levels (R1, R2, R3) are derived mathematically.
 
@@ -887,7 +887,7 @@ Pivot points are especially effective in range-bound markets where price oscilla
     icon: '🌊',
     title: 'Keltner Channels',
     tagline: 'Volatility-based envelopes built on ATR to identify trend strength and breakouts.',
-    metaTitle: 'Keltner Channels — AutoTrader Learn',
+    metaTitle: 'Keltner Channels — Invest-Begin Learn',
     metaDescription: 'Learn Keltner Channels: how this ATR-based indicator identifies trend direction, volatility squeezes, and high-momentum breakout opportunities.',
     overview: `Keltner Channels were originally developed by Chester Keltner in the 1960s and later modernized by Linda Bradford Raschke, who replaced Keltner's original construction with an EMA center-line and ATR-based bands — the version used today. The indicator places an upper and lower band at a multiple of the Average True Range above and below an Exponential Moving Average.
 
@@ -912,7 +912,7 @@ One of the most popular strategies is the "Keltner-Bollinger Squeeze": when Boll
     icon: '🚀',
     title: 'Supertrend Indicator',
     tagline: 'A dynamic trailing stop and trend-direction indicator built on ATR.',
-    metaTitle: 'Supertrend Indicator — AutoTrader Learn',
+    metaTitle: 'Supertrend Indicator — Invest-Begin Learn',
     metaDescription: 'Learn the Supertrend Indicator: how this ATR-based tool signals trend direction, provides trailing stops, and generates clear buy/sell signals.',
     overview: `The Supertrend Indicator, developed by Olivier Seban, is a deceptively simple trend-following tool that produces remarkably clean buy and sell signals. It plots a single line on price: green below price during uptrends, red above price during downtrends. The line also functions as a dynamic trailing stop.
 
@@ -937,7 +937,7 @@ Supertrend is particularly effective for identifying the beginning of trending m
     icon: '💰',
     title: 'Money Flow Index (MFI)',
     tagline: 'A volume-weighted RSI that measures buying and selling pressure.',
-    metaTitle: 'Money Flow Index (MFI) — AutoTrader Learn',
+    metaTitle: 'Money Flow Index (MFI) — Invest-Begin Learn',
     metaDescription: 'Learn the Money Flow Index (MFI): a volume-weighted momentum oscillator that identifies overbought and oversold conditions with greater accuracy than price-only indicators.',
     overview: `The Money Flow Index (MFI) was developed by Gene Quong and Avrum Soudack and is sometimes called the "volume-weighted RSI" because its construction mirrors RSI's logic but incorporates volume into each period's calculation. This makes MFI a more comprehensive measure of money flow — the actual buying and selling pressure — rather than just price momentum.
 
@@ -962,7 +962,7 @@ MFI divergence is particularly valued: when price makes new highs but MFI fails 
     icon: '🌀',
     title: 'Fibonacci Retracement & Extensions',
     tagline: 'Use the golden ratio to locate high-probability support, resistance, and profit targets.',
-    metaTitle: 'Fibonacci Retracement & Extensions — AutoTrader Learn',
+    metaTitle: 'Fibonacci Retracement & Extensions — Invest-Begin Learn',
     metaDescription: 'Learn Fibonacci Retracement and Extension levels: how the golden ratio identifies support, resistance, and profit targets used by institutional traders worldwide.',
     overview: `Fibonacci analysis in trading derives from the mathematical sequence discovered by Leonardo Fibonacci in the 13th century. The key ratios — 23.6%, 38.2%, 50%, 61.8% (the "golden ratio"), and 78.6% — represent proportional relationships that appear repeatedly in natural and financial systems. The 61.8% level, derived from dividing a Fibonacci number by the next, is considered the most significant.
 
@@ -989,7 +989,7 @@ Smart Money Concepts heavily incorporate Fibonacci, using the 0.79 and 0.886 lev
     icon: '⚖️',
     title: 'Supply & Demand Zones',
     tagline: 'Trade institutional order imbalances where price reversal probability is highest.',
-    metaTitle: 'Supply & Demand Zones Strategy — AutoTrader Learn',
+    metaTitle: 'Supply & Demand Zones Strategy — Invest-Begin Learn',
     metaDescription: 'Learn Supply and Demand Zone trading: how to identify institutional order imbalances on the chart and execute high-probability reversal trades.',
     overview: `Supply and Demand Zone trading is one of the most robust forms of technical analysis because it is rooted in basic economics: price moves when there is an imbalance between buyers and sellers. A Demand Zone is a price area where buying orders overwhelmed selling orders so intensely that price left rapidly — these unfilled buy orders are theorized to remain in the market, creating a high-probability bounce area when price returns.
 
@@ -1014,7 +1014,7 @@ Supply and Demand analysis closely overlaps with Smart Money Concepts — both l
     icon: '🏛️',
     title: 'Wyckoff Method',
     tagline: 'Decode institutional accumulation and distribution cycles using price-volume analysis.',
-    metaTitle: 'Wyckoff Method — AutoTrader Learn',
+    metaTitle: 'Wyckoff Method — Invest-Begin Learn',
     metaDescription: 'Learn the Wyckoff Method: how to identify institutional accumulation, distribution, and re-accumulation phases to trade with the smart money.',
     overview: `Richard Wyckoff was a pioneer of technical analysis in the early 20th century. Working as a stockbroker and publisher in the 1910s-1930s, he had unparalleled insight into how large operators — institutions and market makers — accumulated and distributed large positions without moving markets adversely. He distilled these observations into a coherent framework still used by sophisticated traders today.
 
@@ -1039,7 +1039,7 @@ Wyckoff's three laws — Supply and Demand, Cause and Effect, and Effort vs. Res
     icon: '🌊',
     title: 'Elliott Wave Theory',
     tagline: 'Identify recurring wave patterns that reflect crowd psychology and market cycles.',
-    metaTitle: 'Elliott Wave Theory — AutoTrader Learn',
+    metaTitle: 'Elliott Wave Theory — Invest-Begin Learn',
     metaDescription: 'Learn Elliott Wave Theory: how to identify five-wave impulse and three-wave corrective patterns that reveal market cycles and high-probability trade setups.',
     overview: `Elliott Wave Theory was developed by Ralph Nelson Elliott in the 1930s, who noticed that financial markets move in repetitive patterns that reflect the collective psychology of market participants. The core principle is that price moves in a five-wave impulse pattern in the direction of the main trend (waves 1-2-3-4-5), followed by a three-wave corrective pattern against the trend (waves A-B-C).
 
@@ -1066,7 +1066,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🏦',
     title: 'Position Trading Strategy',
     tagline: 'Hold for weeks or months and let fundamentals drive large gains.',
-    metaTitle: 'Position Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Position Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn position trading: the long-term strategy used by professional fund managers to capture major market moves while minimising transaction costs.',
     overview: `Position trading is the longest-duration active trading style, with trades held from several weeks to multiple months or even years. Unlike day traders and swing traders who focus on short-term technical patterns, position traders combine fundamental analysis with high-timeframe technical analysis to identify major trend turning points and ride them for substantial gains.\n\nThe strategy suits traders who cannot monitor markets constantly. Positions are sized conservatively — typically 5–10% of portfolio per trade — and risk is managed by wide stop-losses placed at major technical levels such as the 200-day SMA, a multi-month swing low, or a key Fibonacci level.\n\nEntry timing uses weekly and monthly charts to identify trend resumption signals: golden cross formations, breakouts from multi-month bases, or Wyckoff accumulation completions. Fundamental catalysts — earnings growth, sector rotation, macro regime changes — provide the underlying reason for the trade; technicals provide the entry timing.\n\nPosition trading has one of the best risk-reward profiles of any trading style when executed correctly: entry costs are low (few trades), and winners can run for hundreds of percent, while losers are cut at defined technical levels. The main challenge is psychological — holding through normal pullbacks of 10–20% requires conviction in the original thesis.`,
     howItWorks: `auto-Trading's position trading module monitors weekly and monthly chart signals using long-period EMAs (50 and 200), ADX trend strength, and Donchian channel breakouts. Entry signals are filtered by fundamental momentum screens. Trailing stops are set at ATR multiples on the weekly chart to allow the position to breathe through normal fluctuations while protecting the bulk of accumulated gains.`,
@@ -1085,7 +1085,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🔄',
     title: 'Pairs Trading Strategy',
     tagline: 'Profit from diverging co-integrated assets regardless of market direction.',
-    metaTitle: 'Pairs Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Pairs Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn pairs trading: a market-neutral strategy that profits when two co-integrated assets temporarily diverge from their historical price relationship.',
     overview: `Pairs trading is a market-neutral strategy that simultaneously buys one asset and short-sells a closely related asset when their price ratio or spread diverges significantly from its historical mean. Because the position is hedged (long one, short the other), it is largely insulated from broad market moves — the trade profits purely from the relative movement between the two assets.\n\nThe strategy requires identifying two assets with a strong co-integration relationship — meaning their prices tend to move together over time due to shared fundamentals. Classic pairs include: Coca-Cola vs Pepsi, Gold vs Silver, two ETFs tracking the same index, or a stock vs its sector ETF. Statistical tests (Augmented Dickey-Fuller, Johansen) verify co-integration before deploying capital.\n\nWhen the spread between the two assets exceeds a threshold (typically 2 standard deviations from the historical mean), the trader shorts the outperformer and buys the underperformer, betting on mean reversion of the spread. The position is closed when the spread reverts to the mean.\n\nRisk management focuses on the spread — not the individual assets. A stop-loss is placed at a further standard deviation expansion (e.g., 3 SD) to protect against co-integration breakdown, which occurs when the fundamental relationship between the two assets changes permanently.`,
     howItWorks: `auto-Trading's pairs trading module runs co-integration tests on user-specified asset pairs and monitors the rolling spread Z-score continuously. When the Z-score exceeds the configured entry threshold, the system simultaneously places long and short orders with position sizes matched by beta or dollar value. The exit trigger and stop-loss are set at configurable Z-score levels.`,
@@ -1104,7 +1104,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '⚡',
     title: 'Momentum Trading Strategy',
     tagline: 'Buy the strongest assets, sell the weakest — let relative strength guide you.',
-    metaTitle: 'Momentum Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Momentum Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn momentum trading: how to identify and trade the strongest-performing assets using relative strength, rate of change, and momentum signals.',
     overview: `Momentum trading is based on the empirical observation that assets which have performed well recently tend to continue outperforming in the near term, and vice versa. This "momentum effect" is one of the most consistently documented anomalies in financial markets, identified across equities, currencies, commodities, and crypto.\n\nThe strategy comes in two forms. Cross-sectional momentum ranks a universe of assets by recent return (e.g., 12-month return minus the most recent month) and buys the top decile while selling or avoiding the bottom decile. Time-series (absolute) momentum, popularised by AQR Capital, simply buys an asset if its recent return is positive and sells or holds cash if it is negative.\n\nKey momentum indicators include: Rate of Change (ROC), which measures percentage price change over N periods; Relative Strength (not RSI, but comparing asset return to a benchmark); and moving average momentum (price above a long-period moving average = positive momentum). MACD and the Awesome Oscillator also serve as momentum indicators.\n\nMomentum strategies are subject to "momentum crashes" — sharp, fast reversals that occur when market regimes change suddenly. Proper risk management uses volatility targeting to reduce position size when volatility spikes, and mean-reversion filters to avoid entering at extreme overextension.`,
     howItWorks: `auto-Trading's momentum module calculates 1-month, 3-month, 6-month, and 12-month returns for all instruments in your portfolio universe and ranks them dynamically. The bot rebalances the portfolio at a configured frequency, buying the top-ranked assets and reducing or exiting the bottom-ranked ones. Volatility-adjusted position sizing ensures each asset contributes equal risk.`,
@@ -1123,7 +1123,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '↔️',
     title: 'Range Trading Strategy',
     tagline: 'Profit from oscillating prices between well-defined support and resistance.',
-    metaTitle: 'Range Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Range Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn range trading: how to identify consolidation ranges and profitably trade price bounces between support and resistance in sideways markets.',
     overview: `Range trading is a strategy that profits when an asset's price oscillates back and forth within a well-defined horizontal channel. It is most effective when the broader market is in a consolidation phase — after a significant move, when price digests by trading sideways between a support floor and a resistance ceiling.\n\nIdentifying a valid range requires the price to have touched support and resistance at least twice each, with the touches being relatively equal (not a series of declining highs or rising lows, which would indicate a trend). The range should be wide enough relative to transaction costs to allow profitable trades — typically at least 2–3% between support and resistance in crypto and 0.5–1% in liquid forex pairs.\n\nThe standard entry is to buy near support and sell near resistance. Confirmation techniques include: waiting for a bounce candle (a rejection wick or engulfing pattern at the level), requiring RSI to be oversold at support (below 40) and overbought at resistance (above 60), or using Stochastic crossovers at the extremes.\n\nRange trades are exited when price closes convincingly beyond one of the range boundaries — a signal that a breakout (or breakdown) is underway and the range has been invalidated. Alternatively, a fixed take-profit near the opposite boundary locks in the gain before risk increases.`,
     howItWorks: `auto-Trading detects ranges by scanning for instruments where price has oscillated within a defined band for a configurable number of bars, with ADX below 20 (confirming low trend strength). The bot places limit buy orders near support and limit sell orders near resistance, with stop-losses just outside the range boundaries. Range invalidation automatically cancels pending orders.`,
@@ -1142,7 +1142,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '📰',
     title: 'News Trading Strategy',
     tagline: 'Capitalise on price volatility triggered by scheduled and surprise news events.',
-    metaTitle: 'News Trading Strategy — AutoTrader Learn',
+    metaTitle: 'News Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn news trading: how to trade economic data releases, earnings announcements, and central bank decisions for fast, volatility-driven profits.',
     overview: `News trading exploits the sharp price movements that follow significant economic, corporate, or geopolitical events. Markets price in expectations before announcements, and when the actual data deviates from consensus forecasts, the repricing can be rapid and violent — creating opportunities for traders who act quickly.\n\nThe two main approaches are "trade the release" (entering immediately after the announcement) and "trade the reaction" (waiting for the initial knee-jerk move to exhaust before entering in a more considered direction). The latter is often more reliable, as initial reactions are frequently reversed within minutes as algorithms re-price and human traders panic-cover.\n\nKey event types include: central bank rate decisions and forward guidance (Fed, ECB, BoE, BoJ), major economic releases (Non-Farm Payrolls, CPI, GDP, PMI), corporate earnings announcements, and geopolitical shocks. Economic calendars rank releases by expected market impact — "high impact" events (3-star releases on Forex Factory or equivalent) are the primary targets.\n\nRisk management is critical: position sizes should be reduced before major news to avoid being caught on the wrong side of a binary outcome. Slippage can be severe during the first few seconds after a release, so limit orders are generally preferable to market orders in the immediate post-release window.`,
     howItWorks: `auto-Trading integrates a live economic calendar that automatically flags upcoming high-impact events. Users configure pre-event position reduction rules (e.g., reduce size by 50% 30 minutes before NFP), post-event breakout entry rules (enter if price moves more than X pips/ATR within the first 60 seconds), and volatility filters to avoid entering in the initial chaotic spike.`,
@@ -1161,7 +1161,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🎯',
     title: 'Harmonic Pattern Strategy',
     tagline: 'Trade precise geometric price patterns defined by Fibonacci ratios.',
-    metaTitle: 'Harmonic Pattern Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Harmonic Pattern Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn harmonic pattern trading: how Gartley, Bat, Butterfly, and Crab patterns use Fibonacci ratios to identify high-probability reversal zones.',
     overview: `Harmonic patterns are geometric price structures that incorporate Fibonacci ratios to identify potential reversal zones with exceptional precision. Developed by H.M. Gartley in 1935 and later extended by Scott Carney, these patterns require every leg of the structure to conform to specific Fibonacci relationships — making them one of the most objective pattern-based trading approaches.\n\nThe four most traded harmonic patterns are: the Gartley (38.2% XA retracement at B, 61.8–78.6% at D — the "Potential Reversal Zone"); the Bat (50% retracement at B, 88.6% at D — a deep, precise pattern); the Butterfly (78.6% at B, 127.2–161.8% extension at D — trades beyond the original X point); and the Crab (61.8% at B, 161.8% at D — the most extreme pattern, offering the widest reversal zones).\n\nAll patterns follow the same XABCD structure. Point X is the origin; A is the first significant move; B retraces A; C retraces B; D is the completion point (the Potential Reversal Zone) where the trade is entered. The critical measurement is the XA leg: all other legs are defined as Fibonacci ratios of XA.\n\nThe PRZ (Potential Reversal Zone) at point D is the entry area. Traders look for reversal confirmation candles (pin bars, engulfing patterns) within the PRZ before entering. Stop-losses are placed beyond the outer boundary of the PRZ. Targets are the BC leg midpoint and the A level.`,
     howItWorks: `auto-Trading's harmonic pattern scanner automatically detects XABCD structures across all timeframes and instruments, comparing each leg's Fibonacci ratio against the tolerances for Gartley, Bat, Butterfly, and Crab patterns. When a valid PRZ is identified, the system alerts you and can automatically place a limit entry order within the PRZ with pre-calculated stop and target levels.`,
@@ -1180,7 +1180,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '📐',
     title: 'Chart Pattern Trading Strategy',
     tagline: 'Trade classical formations — triangles, flags, and head & shoulders — with precision.',
-    metaTitle: 'Chart Pattern Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Chart Pattern Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn chart pattern trading: how to identify and trade classical formations including head and shoulders, triangles, flags, and wedges for high-probability breakouts.',
     overview: `Chart patterns are recurring formations in price action that have been documented and studied since the early 20th century. They represent predictable behavioural cycles of market participants — accumulation, indecision, and resolution — and provide structured, objective trade setups with clear entry, stop, and target levels.\n\nContinuation patterns suggest the existing trend will resume after a brief consolidation. Key types: Bull and Bear Flags (tight, parallel consolidation against the trend), Pennants (converging consolidation), Ascending and Descending Triangles (breakout in the direction of the flat side), and Rectangles (horizontal consolidation).\n\nReversal patterns signal a potential trend change. The most reliable: Head and Shoulders (three-peak structure with the middle peak highest, signalling bearish reversal), Inverse Head and Shoulders (bullish reversal), Double Top and Bottom (two failed attempts at an extreme), and Rounding Bottom (long-term bullish accumulation arc).\n\nThe "measured move" technique provides price targets: for most patterns, the target distance equals the height of the pattern projected from the breakout point. Volume is critical — genuine breakouts are accompanied by a significant surge in volume, confirming that new participants are entering in the breakout direction.`,
     howItWorks: `auto-Trading scans for classical chart patterns using structural recognition algorithms that identify converging trendlines, support/resistance retests, and neckline formations. When a high-probability pattern is detected, the system places a breakout order above (or below) the pattern's boundary with volume confirmation. The measured-move target and ATR-based stop are calculated automatically.`,
@@ -1199,7 +1199,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '💱',
     title: 'Carry Trade Strategy',
     tagline: 'Earn interest rate differentials while holding currency positions overnight.',
-    metaTitle: 'Carry Trade Strategy — Forex & Crypto — AutoTrader Learn',
+    metaTitle: 'Carry Trade Strategy — Forex & Crypto — Invest-Begin Learn',
     metaDescription: 'Learn the carry trade: how to profit from interest rate differentials by holding high-yielding currencies against low-yielding ones, and its crypto equivalent.',
     overview: `The carry trade is one of the most consistently profitable strategies in foreign exchange markets over long periods. The basic concept: borrow in a low interest-rate currency (the "funding currency"), convert to a high interest-rate currency (the "target currency"), and collect the interest rate differential (the "carry") as daily profit.\n\nClassic carry trades involve borrowing Japanese Yen (historically near 0% rates) or Swiss Francs to fund positions in Australian Dollars, New Zealand Dollars, or emerging market currencies with significantly higher rates. The profit accumulates each day the position is held, making it especially appealing in stable, low-volatility market environments.\n\nThe strategy's primary risk is the "carry trade unwind" — a sudden rush to close all carry positions simultaneously during risk-off episodes. When volatility spikes (a global crisis, a central bank surprise), carry traders rush to exit, causing the funding currency to appreciate sharply against the target currency. These unwinds can wipe out months of accumulated carry income in a single day.\n\nIn crypto, the carry trade equivalent is the funding rate arbitrage on perpetual futures: when the perpetual trades at a premium to spot (positive funding rate), short the perpetual and hold spot to collect the funding rate as income. Rates can be extremely high during bull markets, making this one of the most lucrative low-risk crypto strategies.`,
     howItWorks: `auto-Trading monitors funding rate data across all connected exchanges for perpetual futures carry opportunities. When the annualised funding rate exceeds a user-defined threshold, the system simultaneously opens a short perpetual position and a long spot position of equal notional value, delta-neutralising the trade. The strategy automatically closes when funding rates normalise below the exit threshold.`,
@@ -1218,7 +1218,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🕳️',
     title: 'Gap Trading Strategy',
     tagline: 'Trade the market opening gaps that signal overnight conviction or overreaction.',
-    metaTitle: 'Gap Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Gap Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn gap trading: how to identify and trade opening price gaps in stocks and crypto, distinguishing gap fills from continuation gaps.',
     overview: `A price gap occurs when an asset opens significantly higher or lower than the previous close, leaving an empty zone on the chart where no trading took place. Gaps are among the most emotionally charged price events, representing overnight conviction (sentiment shifts, news, earnings) that materialises the moment markets reopen.\n\nThere are four types of gaps: Common gaps (routine, fill quickly, no trading significance), Breakaway gaps (occur at the start of a new trend, high volume, rarely fill), Runaway/Continuation gaps (occur mid-trend, confirm momentum), and Exhaustion gaps (occur at trend extremes on declining volume, quickly fill).\n\nGap fill strategies exploit the tendency of gaps to be "filled" — meaning price returns to the pre-gap level. Studies show that approximately 70% of gaps eventually fill, making fade strategies statistically sound. The trade: if price gaps up at open, short near the gap high and target the previous close. If it gaps down, buy near the gap low and target the fill.\n\nGap continuation strategies (particularly for breakaway and runaway gaps) take the opposite approach: buy the gap-up open after a valid breakout, holding for a continuation move. These gaps often mark the beginning or middle of strong trending moves and should not be faded.`,
     howItWorks: `auto-Trading detects opening gaps by comparing the current candle open to the previous candle close. The system classifies gaps using volume and trend context: low-volume gaps in ranging markets trigger gap-fill limit orders; high-volume breakaway gaps trigger momentum continuation signals. Users configure minimum gap size (as percentage or ATR multiple) to filter noise.`,
@@ -1237,7 +1237,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🖥️',
     title: 'Triple Screen Trading System',
     tagline: 'Alexander Elder\'s three-timeframe system that filters trades with military precision.',
-    metaTitle: 'Triple Screen Trading System — AutoTrader Learn',
+    metaTitle: 'Triple Screen Trading System — Invest-Begin Learn',
     metaDescription: 'Learn the Triple Screen Trading System: Dr. Alexander Elder\'s three-timeframe approach that combines trend following with oscillator timing for high-probability entries.',
     overview: `The Triple Screen Trading System was developed by Dr. Alexander Elder and first published in Futures magazine in 1986. It addresses one of trading's fundamental paradoxes: trend-following indicators and oscillators often give conflicting signals. The solution is to use different indicator types on multiple timeframes, each serving a distinct purpose.\n\nScreen 1 (Weekly / Long Timeframe): Apply a trend-following indicator such as the MACD histogram or a 13-week EMA slope to a timeframe five times longer than your intended trading timeframe. This screen defines the tide — the major direction you must trade with. If the weekly MACD histogram is rising, only look for buy signals. If falling, only look for shorts.\n\nScreen 2 (Daily / Intermediate Timeframe): Apply an oscillator (Stochastic, Force Index, Williams %R) to the trading timeframe. The oscillator hunts for pullbacks against the weekly trend: buy when the daily oscillator dips to oversold in a weekly uptrend; sell when it rises to overbought in a weekly downtrend.\n\nScreen 3 (Intraday Entry): A trailing buy-stop is placed one tick above the high of the previous bar (for longs) after Screens 1 and 2 are aligned. The stop trails, so if the trade doesn't immediately move in your favour, the order is never triggered. This makes Screen 3 unique — it is a "hard" entry that only fills when price confirms the anticipated move is beginning.`,
     howItWorks: `auto-Trading implements Triple Screen by running two simultaneous indicator calculations — a trend indicator on the weekly timeframe and an oscillator on the daily — and only generating entry signals when both align. Trailing buy/sell stop orders are automatically managed for Screen 3 entries, updating with each new bar until filled or invalidated by a counter-signal.`,
@@ -1258,7 +1258,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '💧',
     title: 'Chaikin Money Flow (CMF)',
     tagline: 'Measure institutional buying and selling pressure using price and volume.',
-    metaTitle: 'Chaikin Money Flow (CMF) Indicator — AutoTrader Learn',
+    metaTitle: 'Chaikin Money Flow (CMF) Indicator — Invest-Begin Learn',
     metaDescription: 'Learn the Chaikin Money Flow indicator: how it combines price and volume to measure accumulation and distribution pressure over a rolling period.',
     overview: `The Chaikin Money Flow (CMF) indicator, developed by Marc Chaikin, measures the amount of money flow volume over a specific period (typically 20 or 21 periods). It combines price location within the daily range with volume to determine whether a security is under accumulation (buying pressure) or distribution (selling pressure).\n\nThe calculation involves two steps. First, the Money Flow Multiplier = ((Close − Low) − (High − Close)) ÷ (High − Low). This places the close relative to the daily range on a scale from −1 (close at the low) to +1 (close at the high). Second, the Money Flow Volume = Multiplier × Volume. CMF = Sum of Money Flow Volumes over N periods ÷ Sum of Volumes over N periods.\n\nThe result oscillates between −1 and +1. Values above 0 indicate net buying pressure (accumulation); below 0 indicate net selling pressure (distribution). Sustained CMF above +0.25 signals strong institutional buying; below −0.25 signals strong distribution. The zero-line crossover is the primary signal.\n\nDivergence is a powerful application: if price makes new highs but CMF fails to confirm (remains in negative territory or declines), it signals that the rally is not backed by real buying pressure — a bearish warning. The reverse applies for bullish divergence.`,
     howItWorks: `auto-Trading computes CMF using configurable periods (default 20). Strategy blocks include: CMF zero-line crossovers, threshold breach alerts (+0.25/−0.25), and divergence detection against price. CMF is particularly effective as a confirmation filter — entries are only taken when CMF is positive (for longs) or negative (for shorts), ensuring institutional money flow aligns with the trade direction.`,
@@ -1277,7 +1277,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '⚡',
     title: 'Awesome Oscillator',
     tagline: 'Bill Williams\' momentum indicator that detects market driving force.',
-    metaTitle: 'Awesome Oscillator — AutoTrader Learn',
+    metaTitle: 'Awesome Oscillator — Invest-Begin Learn',
     metaDescription: 'Learn the Awesome Oscillator: Bill Williams\' momentum indicator that measures market driving force and generates saucer, zero-line cross, and twin peaks signals.',
     overview: `The Awesome Oscillator (AO), developed by Bill Williams, measures the difference between a 5-period and 34-period simple moving average of the bar's midpoint ((High + Low) ÷ 2). This produces a histogram that oscillates above and below zero, visualising the momentum of the market driving force.\n\nAO belongs to Bill Williams' trading system described in his books "Trading Chaos" and "New Trading Dimensions," which includes the Alligator indicator, Fractals, and the Accelerator Oscillator. Together these indicators form a complete trading system that Williams used to identify the beginning and end of trends.\n\nThe three primary AO signals are: (1) The Saucer — the histogram is above zero and forms a two-bar dip (two bars lower than the previous, then back up), signalling a continuation buy; (2) Zero-line Crossover — the histogram crosses from negative to positive (buy) or positive to negative (sell), confirming a trend change; and (3) Twin Peaks — two successive negative histogram peaks (for a bullish signal) where the second peak is higher than the first, indicating diminishing bearish momentum.\n\nAO works best in trending markets for identifying pullback entries and momentum confirmation. In ranging markets, zero-line crossovers generate excessive false signals. Combining AO with the Alligator (for trend direction) and Fractals (for entry timing) creates the complete Williams trading system.`,
     howItWorks: `auto-Trading computes the Awesome Oscillator and supports all three signal types: Saucer alerts (configurable sensitivity), zero-line crossover triggers, and Twin Peaks detection. AO can be used standalone or combined with the Alligator indicator and Fractal blocks in the strategy builder to implement the complete Bill Williams trading system.`,
@@ -1296,7 +1296,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🐊',
     title: 'Williams Alligator Indicator',
     tagline: 'Three smoothed moving averages that identify when the market is trending or sleeping.',
-    metaTitle: 'Williams Alligator Indicator — AutoTrader Learn',
+    metaTitle: 'Williams Alligator Indicator — Invest-Begin Learn',
     metaDescription: 'Learn the Williams Alligator: how three offset smoothed moving averages identify trending (eating) and non-trending (sleeping) market conditions.',
     overview: `The Alligator indicator, developed by Bill Williams, consists of three Smoothed Moving Averages (SMAs) with distinct periods and forward offsets, each named after parts of an alligator: the Jaw (13-period SMMA, shifted 8 bars forward), the Teeth (8-period SMMA, shifted 5 bars forward), and the Lips (5-period SMMA, shifted 3 bars forward).\n\nThe metaphor is apt: when all three lines are intertwined and flat, the alligator is "sleeping" — the market is ranging and not suitable for trend-following strategies. When the lines diverge and begin to separate, the alligator is "awakening" — a trend is beginning. When the lines are widely spread and moving together, the alligator is "eating" — the trend is in full swing and momentum is strongest.\n\nTrading rules: enter long when the Lips cross above the Teeth, which crosses above the Jaw (all three lines fanning upward). Enter short when the Lips cross below the Teeth, which crosses below the Jaw. Exit when the lines begin to converge again (the alligator is "sated"). The beauty of the indicator is that it simultaneously identifies both trend direction and trend strength.\n\nThe offset feature is key: the forward shift means each line represents what would have been the average of those bars projected forward in time — making the Alligator a unique leading/confirming indicator hybrid rather than a purely lagging one.`,
     howItWorks: `auto-Trading computes all three Alligator lines with their correct SMMA periods and forward offsets. The strategy builder supports crossover triggers between Lips/Teeth/Jaw for entries, convergence detection for exits, and sleeping/eating market state classification. The Alligator integrates natively with the Awesome Oscillator and Fractal blocks for a complete Bill Williams system.`,
@@ -1315,7 +1315,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🌊',
     title: 'Hull Moving Average (HMA)',
     tagline: 'A fast, smooth moving average that nearly eliminates lag.',
-    metaTitle: 'Hull Moving Average (HMA) — AutoTrader Learn',
+    metaTitle: 'Hull Moving Average (HMA) — Invest-Begin Learn',
     metaDescription: 'Learn the Hull Moving Average: Alan Hull\'s innovative formula that dramatically reduces lag while maintaining smoothness, making it ideal for precise trend entry signals.',
     overview: `The Hull Moving Average (HMA), created by Alan Hull in 2005, is designed to address the fundamental flaw of all traditional moving averages: lag. Standard SMAs and EMAs are inherently backward-looking, causing entries and exits to occur well after trends have already begun. The HMA dramatically reduces this lag while maintaining a smooth output line.\n\nThe formula is: HMA(n) = WMA(2 × WMA(n/2) − WMA(n), sqrt(n)), where WMA is a Weighted Moving Average. By computing the WMA of half the period, doubling it, subtracting the full-period WMA, and then taking the WMA of the square root of the period on the result, Hull created an average that can actually anticipate trends rather than just follow them.\n\nThe key difference is visual: while an SMA or EMA turns after the price has already moved, the HMA begins turning at or sometimes before the price reversal. This makes the HMA more suitable for entries and exits than traditional MAs, particularly for swing and intraday traders who prioritise speed.\n\nThe HMA also stays smooth even with shorter periods — a 9-period HMA tracks price closely without the noise of a 9-period SMA or EMA. This makes it excellent for identifying momentum shifts at pivotal price levels. Color-coded HMAs (green when rising, red when falling) provide instant visual trend context.`,
     howItWorks: `auto-Trading implements the Hull Moving Average for any period and price source. Strategy triggers include: HMA direction changes (rising to falling or vice versa), price crossing the HMA, and HMA crossovers with other moving averages. The HMA is particularly effective as a dynamic stop-loss reference — stops placed at the current HMA value trail the trend cleanly.`,
@@ -1334,7 +1334,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '📈',
     title: 'Rate of Change (ROC)',
     tagline: 'Measure price momentum as a percentage change over a defined lookback period.',
-    metaTitle: 'Rate of Change (ROC) — AutoTrader Learn',
+    metaTitle: 'Rate of Change (ROC) — Invest-Begin Learn',
     metaDescription: 'Learn the Rate of Change indicator: how ROC measures the speed of price movement and generates overbought/oversold and divergence signals for momentum traders.',
     overview: `The Rate of Change (ROC) indicator measures the percentage change in price between the current period and a specified number of periods ago. It is one of the purest expressions of price momentum — directly answering the question: "How much has this asset moved in the last N periods?"\n\nFormula: ROC = ((Current Close − Close N Periods Ago) ÷ Close N Periods Ago) × 100\n\nROC oscillates around zero. A positive ROC indicates prices are higher than N periods ago (upward momentum); a negative ROC indicates prices are lower (downward momentum). The magnitude indicates the speed of the move: a ROC of +20% means price is 20% higher than it was N periods ago, indicating strong momentum.\n\nCommon applications include: overbought/oversold signals (ROC reaching extreme positive values often precedes a pullback), divergence analysis (price making new highs while ROC makes lower highs signals weakening momentum), and zero-line crossovers as trend change signals.\n\nROC is mathematically equivalent to Momentum (price difference rather than percentage difference), and is closely related to the 12-period minus 26-period EMA difference that underlies MACD. For cross-asset momentum strategies, ROC is the preferred metric for ranking assets by their relative return over a standard lookback period.`,
     howItWorks: `auto-Trading computes ROC for any period and price source. In the strategy builder, ROC can be used for: cross-asset momentum ranking (selecting the highest ROC assets for long positions), overbought/oversold threshold alerts, zero-line crossovers, and divergence detection. The multi-asset momentum scanner uses ROC to rank instruments and rebalance the portfolio toward the strongest-performing assets.`,
@@ -1353,7 +1353,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🌅',
     title: 'Aroon Indicator',
     tagline: 'Identify new trend emergence and trend strength with precision timing.',
-    metaTitle: 'Aroon Indicator — AutoTrader Learn',
+    metaTitle: 'Aroon Indicator — Invest-Begin Learn',
     metaDescription: 'Learn the Aroon indicator: how Aroon Up and Aroon Down identify the timing of new highs and lows to detect trend emergence and measure trend strength.',
     overview: `The Aroon indicator, developed by Tushar Chande in 1995, measures how recently a new high or low has been recorded within a lookback period. "Aroon" is a Sanskrit word meaning "dawn's early light" — appropriate for an indicator designed to detect the earliest signs of a new trend.\n\nThe indicator has two lines: Aroon Up = ((N − Bars Since N-Period High) ÷ N) × 100 and Aroon Down = ((N − Bars Since N-Period Low) ÷ N) × 100. Both range from 0 to 100. The default period is 25.\n\nHigh Aroon Up (above 70) indicates that price recently made a high near the top of the lookback period — bullish strength. High Aroon Down (above 70) indicates a recent low — bearish strength. When Aroon Up is above 70 and Aroon Down is below 30 simultaneously, a strong uptrend is likely in place.\n\nThe Aroon Oscillator (Aroon Up − Aroon Down) simplifies interpretation: positive values indicate bullishness, negative values bearishness. Crossovers of the two Aroon lines provide trend change signals — when Aroon Up crosses above Aroon Down, a bullish trend may be emerging; the reverse for a bearish trend.\n\nAroon is particularly useful for identifying the very early stages of a trend — before most momentum indicators confirm. This makes it valuable for position traders and trend followers looking to enter at the earliest possible point with controlled risk.`,
     howItWorks: `auto-Trading computes Aroon Up, Aroon Down, and the Aroon Oscillator for any period. The strategy builder supports crossover signals, high/low threshold alerts (above 70 / below 30), and oscillator zero-line crossovers. Aroon is effectively used as a regime filter: activate trend-following strategies only when Aroon Up is dominant.`,
@@ -1372,7 +1372,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '📊',
     title: 'TRIX Indicator',
     tagline: 'A triple-smoothed momentum oscillator that filters out short-term noise.',
-    metaTitle: 'TRIX Indicator — AutoTrader Learn',
+    metaTitle: 'TRIX Indicator — Invest-Begin Learn',
     metaDescription: 'Learn the TRIX indicator: a triple-smoothed momentum oscillator that filters minor price cycles and generates reliable trend change and divergence signals.',
     overview: `TRIX (Triple Exponential Average) is a momentum oscillator developed by Jack Hutson and published in Technical Analysis of Stocks & Commodities magazine in 1983. It calculates the percentage rate of change of a triple-smoothed EMA, making it exceptionally effective at filtering out short-term price cycles that cause false signals in single or double-smoothed oscillators.\n\nCalculation: Apply an EMA of period N to price. Apply a second EMA of period N to the first EMA. Apply a third EMA of period N to the second EMA. TRIX = Percentage change in the triple EMA from the previous period.\n\nThe triple smoothing removes noise so effectively that TRIX can be used as a slow, reliable trend indicator or as a faster oscillator depending on the period chosen. A 12-period TRIX behaves as a smooth MACD-like oscillator; a 30-period TRIX provides long-term trend confirmation.\n\nSignals: Zero-line crossovers indicate trend changes (above zero = bullish momentum, below zero = bearish). Divergence between TRIX and price is among the most reliable reversal signals — particularly on higher timeframes. A signal line (9-period SMA of TRIX) is often added to generate crossover signals analogous to MACD's signal line.\n\nTRIX is particularly effective for identifying the trend's strength: a TRIX that is rising steeply indicates strong momentum, while a TRIX that is flat or turning indicates momentum exhaustion.`,
     howItWorks: `auto-Trading computes TRIX and its signal line with configurable period settings. The strategy builder supports TRIX/signal line crossovers (faster signals), TRIX zero-line crossovers (slower, more reliable trend changes), and divergence detection. TRIX is effective as a standalone signal generator and as a confirmation filter alongside price breakout signals.`,
@@ -1391,7 +1391,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '☀️',
     title: 'Elder Ray Index (Bull & Bear Power)',
     tagline: 'Measure the strength of buyers and sellers relative to the trend.',
-    metaTitle: 'Elder Ray Index — Bull Power & Bear Power — AutoTrader Learn',
+    metaTitle: 'Elder Ray Index — Bull Power & Bear Power — Invest-Begin Learn',
     metaDescription: 'Learn the Elder Ray Index: Dr. Alexander Elder\'s Bull Power and Bear Power indicators that measure buying and selling strength relative to an exponential moving average.',
     overview: `The Elder Ray Index, developed by Dr. Alexander Elder and introduced in his landmark book "Trading for a Living" (1993), consists of two separate indicators: Bull Power and Bear Power. Together, they measure how far above or below a 13-period EMA the daily high and low reach — capturing the relative strength of buyers and sellers.\n\nBull Power = Daily High − 13-period EMA. A positive Bull Power indicates buyers are strong enough to push price above the average; negative Bull Power indicates buyers are unusually weak. Bear Power = Daily Low − 13-period EMA. A negative Bear Power indicates sellers can push price below the average; a positive Bear Power indicates sellers are unusually weak.\n\nElder's trading rules combine both components with the EMA trend direction: in an uptrend (rising 13-EMA), buy when Bear Power is negative (sellers are active but buyers have structural control) and Bear Power is rising from its lowest recent value (selling pressure is diminishing). In a downtrend (falling 13-EMA), sell when Bull Power is positive but declining.\n\nThe genius of Elder Ray is that it identifies the ideal entry point: the brief, temporary weakness within a strong trend where risk is minimised. A slight pullback in Bull Power during an uptrend is exactly where long entries should be considered, not at peaks of bullish momentum.`,
     howItWorks: `auto-Trading computes Bull Power and Bear Power with a configurable EMA period (default 13). The strategy builder supports conditional triggers: Bull Power crossing above/below zero, Bear Power divergence from price, and combined Elder Rule signals (EMA trend + oscillator position). Elder Ray signals integrate natively with the Triple Screen system for refined entry timing.`,
@@ -1410,7 +1410,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '📉',
     title: 'Detrended Price Oscillator (DPO)',
     tagline: 'Isolate short-term price cycles by removing the long-term trend.',
-    metaTitle: 'Detrended Price Oscillator (DPO) — AutoTrader Learn',
+    metaTitle: 'Detrended Price Oscillator (DPO) — Invest-Begin Learn',
     metaDescription: 'Learn the Detrended Price Oscillator: how DPO removes the long-term trend from price to reveal short-term cycles and identify overbought/oversold conditions within the cycle.',
     overview: `The Detrended Price Oscillator (DPO) is a unique indicator that removes the long-term trend from price action to isolate short-term price cycles. Unlike most oscillators that measure momentum relative to recent price action, the DPO shifts a moving average backward in time and subtracts it from price — effectively "detrending" the data to reveal the natural price cycle.\n\nFormula: DPO = Close − Simple Moving Average(N/2 + 1 periods ago). By using a displaced (shifted back) moving average, the DPO aligns the cycle peaks and troughs with the actual price peaks and troughs — making it easier to identify the cycle length and time entries at cycle lows.\n\nThe primary use is cycle timing: count the number of bars between consecutive DPO peaks (or troughs) to determine the dominant cycle length of an instrument. Once the cycle is known, traders anticipate when the next cycle low will occur and position for a bounce. This is particularly valuable for instruments with consistent seasonal patterns or well-defined trading cycles.\n\nDPO also identifies overbought/oversold conditions relative to the cycle: when DPO reaches its historically highest readings, price is at a cycle peak and a correction is likely. When DPO is at its historically lowest readings, price is at a cycle trough and a bounce is expected.\n\nImportant note: the DPO is not designed as a momentum indicator for trend trading — it is a cycle analysis tool. Using it to trade against strong trends will result in many premature entries.`,
     howItWorks: `auto-Trading implements DPO with configurable period and displacement. The strategy builder supports DPO overbought/oversold threshold signals, zero-line crossovers, and peak/trough detection for cycle analysis. DPO is most effective when combined with a trend filter (trade DPO cycle lows only when the 200 EMA is rising) to avoid counter-trend entries in strong moves.`,
@@ -1429,7 +1429,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '📏',
     title: 'Linear Regression Channel',
     tagline: 'Project statistical price trends and identify deviation extremes.',
-    metaTitle: 'Linear Regression Channel — AutoTrader Learn',
+    metaTitle: 'Linear Regression Channel — Invest-Begin Learn',
     metaDescription: 'Learn the Linear Regression Channel: how statistical regression fits a trend line through price data and identifies overbought/oversold deviations for high-probability mean reversion trades.',
     overview: `The Linear Regression Channel is a statistical tool that fits the best-fit straight line through a specified number of price bars using the least-squares method, then draws parallel channel lines at one and two standard deviations above and below the regression line. Unlike hand-drawn trend channels that rely on connecting specific highs/lows, the linear regression is mathematically objective — it is the statistically optimal trend line for the selected data.\n\nThe centre line (regression line) represents the statistical "fair value" of price during the selected period. The outer channel bands represent how far price typically deviates from this mean. Prices that reach the +2 SD upper channel are considered statistically overextended and likely to revert toward the centre; prices at −2 SD are oversold on the same basis.\n\nThe slope of the regression line quantifies the trend: a steeply positive slope indicates strong upward momentum; a near-flat slope indicates consolidation; a steep negative slope indicates a downtrend. The slope can be used as a quantitative momentum signal in algorithmic strategies.\n\nThe "R-squared" value (coefficient of determination) measures how well the regression fits the price data. A high R² (above 0.8) means price is trending cleanly along the regression line — ideal for trend-following strategies. A low R² means price is choppy and not well-described by a linear model — better suited for range-based approaches.\n\nLinear regression is also used in the Kirshenbaum Bands, the Raff Regression Channel, and various quantitative pairs trading implementations.`,
     howItWorks: `auto-Trading's linear regression tool calculates the regression line, standard deviation channels, slope, and R² value dynamically on any timeframe and lookback period. Strategy blocks include: price crossing the upper/lower channel bands (mean reversion signals), slope-based momentum filters, and R² regime classification (high R² enables trend following; low R² enables range trading).`,
@@ -1450,7 +1450,7 @@ The most actionable trade in Elliott Wave is entering Wave 3 after Wave 2's corr
     icon: '🔬',
     title: 'Stochastic RSI (StochRSI)',
     tagline: 'Ultra-sensitive momentum oscillator combining RSI and Stochastic for faster signals.',
-    metaTitle: 'Stochastic RSI (StochRSI) — AutoTrader Learn',
+    metaTitle: 'Stochastic RSI (StochRSI) — Invest-Begin Learn',
     metaDescription: 'Learn Stochastic RSI: how this double-smoothed momentum indicator generates faster overbought/oversold signals than standard RSI for precise entry timing.',
     overview: `The Stochastic RSI (StochRSI) was developed by Tushar Chande and Stanley Kroll and introduced in their 1994 book "The New Technical Trader." Rather than applying the Stochastic formula to price (as the classic Stochastic Oscillator does), StochRSI applies it to RSI values — creating a double-filtered oscillator that is far more sensitive and faster-acting than either indicator alone.
 
@@ -1479,7 +1479,7 @@ Divergence between price and StochRSI is another high-probability signal: when p
     icon: '⚡',
     title: 'Force Index',
     tagline: 'Quantify the actual power behind price moves using price change and volume.',
-    metaTitle: 'Force Index — Power Behind Price Moves — AutoTrader Learn',
+    metaTitle: 'Force Index — Power Behind Price Moves — Invest-Begin Learn',
     metaDescription: 'Learn the Force Index indicator: Dr. Alexander Elder\'s measure of buying and selling force that combines price change direction, magnitude, and volume into one clear signal.',
     overview: `The Force Index was developed by Dr. Alexander Elder and introduced in his seminal 1993 book "Trading for a Living." It is one of the most logically satisfying indicators in technical analysis because it directly measures the three elements that determine market force: the direction of price change, the magnitude of price change, and the trading volume that accompanied the move.
 
@@ -1508,7 +1508,7 @@ Divergence between the Force Index and price is a powerful reversal signal: when
     icon: '🎯',
     title: 'Ultimate Oscillator',
     tagline: 'Larry Williams\' multi-timeframe momentum oscillator that reduces false signals.',
-    metaTitle: 'Ultimate Oscillator — AutoTrader Learn',
+    metaTitle: 'Ultimate Oscillator — Invest-Begin Learn',
     metaDescription: 'Learn the Ultimate Oscillator: Larry Williams\' three-timeframe momentum indicator that reduces whipsaws and generates reliable divergence signals across short, medium, and long cycles.',
     overview: `The Ultimate Oscillator was developed by Larry Williams and published in Technical Analysis of Stocks & Commodities magazine in 1985. Williams designed it to solve a persistent flaw in single-period oscillators: the tendency to produce conflicting signals depending on which lookback period is chosen. By incorporating three different timeframes simultaneously — short (7 periods), medium (14 periods), and long (28 periods) — the Ultimate Oscillator produces a more balanced, less whipsaw-prone reading.
 
@@ -1533,7 +1533,7 @@ Williams emphasised that the divergence-based signals are far more reliable than
     icon: '🌀',
     title: 'Vortex Indicator',
     tagline: 'Two oscillating lines that identify new trend initiation with remarkable clarity.',
-    metaTitle: 'Vortex Indicator — AutoTrader Learn',
+    metaTitle: 'Vortex Indicator — Invest-Begin Learn',
     metaDescription: 'Learn the Vortex Indicator: how VI+ and VI− lines identify the start of new trends and trend reversals by measuring the relationship between current and prior highs and lows.',
     overview: `The Vortex Indicator was developed by Etienne Botes and Douglas Siepman and introduced in Technical Analysis of Stocks & Commodities magazine in January 2010. Inspired by the movement of water in a vortex, the indicator uses the relationship between the current bar's range and the prior bar's extreme points to measure upward and downward trend movements.
 
@@ -1563,7 +1563,7 @@ The indicator performs best on daily and weekly timeframes for equity and crypto
     icon: '🧭',
     title: 'Directional Movement Index (DMI)',
     tagline: 'The foundation of ADX: identify trend direction with +DI and −DI crossovers.',
-    metaTitle: 'Directional Movement Index (DMI) — AutoTrader Learn',
+    metaTitle: 'Directional Movement Index (DMI) — Invest-Begin Learn',
     metaDescription: 'Learn the Directional Movement Index: how +DI and −DI measure directional force, generate crossover signals, and form the basis of the ADX trend strength indicator.',
     overview: `The Directional Movement Index (DMI) was developed by J. Welles Wilder Jr. and introduced in his 1978 book "New Concepts in Technical Trading Systems" — the same work that gave us the RSI and ATR. While ADX (which is derived from DMI) measures trend strength, the DMI itself focuses specifically on trend direction through two component lines: +DI (Positive Directional Indicator) and −DI (Negative Directional Indicator).
 
@@ -1592,7 +1592,7 @@ Understanding DMI separately from ADX helps traders appreciate the direction com
     icon: '🌩️',
     title: 'Volatility Trading Strategy',
     tagline: 'Profit from expansions and contractions in market volatility itself.',
-    metaTitle: 'Volatility Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Volatility Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn volatility trading: how to profit from changes in market volatility using options, VIX instruments, and volatility-based position strategies.',
     overview: `Volatility trading is a category of strategies that aims to profit not from the direction of price movement, but from changes in the level of volatility itself. Markets oscillate between periods of calm (low volatility) and turbulence (high volatility), and these cycles are as predictable as price trends — if you know how to read them.
 
@@ -1619,7 +1619,7 @@ In crypto markets, perpetual futures funding rates are closely linked to volatil
     icon: '🏛️',
     title: 'Market Making Strategy',
     tagline: 'Profit from the bid-ask spread by continuously providing liquidity on both sides.',
-    metaTitle: 'Market Making Strategy — AutoTrader Learn',
+    metaTitle: 'Market Making Strategy — Invest-Begin Learn',
     metaDescription: 'Learn market making: how algorithmic bots profit by simultaneously posting buy and sell orders around the mid-price, earning the spread while managing inventory risk.',
     overview: `Market making is the practice of simultaneously placing both a bid (buy) order and an ask (sell) order slightly below and above the current market price, profiting from the difference between the two — the bid-ask spread. Professional market makers — designated by exchanges to maintain liquidity — are the most visible practitioners, but algorithmic retail market making has become viable on crypto exchanges with deep order books.
 
@@ -1646,7 +1646,7 @@ In cryptocurrency markets, market making bots are especially popular on perpetua
     icon: '↩️',
     title: 'Counter-Trend Trading Strategy',
     tagline: 'Fade overextended moves and profit when momentum reverses.',
-    metaTitle: 'Counter-Trend Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Counter-Trend Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn counter-trend trading: how to identify overextended price moves and profit from reversals using momentum exhaustion, divergence, and overbought/oversold signals.',
     overview: `Counter-trend trading is the practice of taking positions against the prevailing trend — buying when price has fallen significantly and appears oversold, or selling when price has risen sharply and appears overbought. It is the conceptual opposite of trend-following, and while it can be extremely profitable, it carries higher inherent risk because you are deliberately fighting the established direction of price.
 
@@ -1673,7 +1673,7 @@ The most successful counter-trend traders combine strict entry criteria (requiri
     icon: '🤖',
     title: 'Machine Learning Trading Strategy',
     tagline: 'Use AI and ML models to discover non-linear patterns in market data.',
-    metaTitle: 'Machine Learning Trading Strategy — AutoTrader Learn',
+    metaTitle: 'Machine Learning Trading Strategy — Invest-Begin Learn',
     metaDescription: 'Learn ML-based trading: how machine learning models find non-linear patterns in price, volume, and alternative data that traditional indicators cannot capture.',
     overview: `Machine learning (ML) trading strategies use statistical algorithms to discover patterns in historical market data that may not be obvious to human analysts or expressible as simple rule-based conditions. Unlike traditional technical indicators that follow explicit formulas, ML models learn from data and adapt their internal parameters to maximise predictive accuracy on historical examples.
 
@@ -1700,7 +1700,7 @@ The most practical ML strategies for retail traders use gradient boosted trees w
     icon: '⚖️',
     title: 'Portfolio Rebalancing Strategy',
     tagline: 'Automatically restore your target asset allocation to control risk and lock in gains.',
-    metaTitle: 'Portfolio Rebalancing Strategy — AutoTrader Learn',
+    metaTitle: 'Portfolio Rebalancing Strategy — Invest-Begin Learn',
     metaDescription: 'Learn portfolio rebalancing: how systematic rebalancing restores your target allocation, reduces risk concentration, and can generate additional returns through disciplined selling of winners.',
     overview: `Portfolio rebalancing is the process of periodically adjusting the weightings of assets in a portfolio to maintain a desired target allocation. Over time, winning assets appreciate and grow to represent a larger proportion of the portfolio than intended, while losing assets shrink — creating unplanned concentration risk. Rebalancing restores the original balance by selling a portion of the outperformers and buying more of the underperformers.
 
@@ -1729,7 +1729,7 @@ Rebalancing is particularly powerful for multi-asset crypto portfolios (e.g., BT
     icon: '🤖',
     title: 'AI & Technology Stocks Power the S&P 500 to New Highs in June 2026',
     tagline: 'A wave of AI earnings beats and infrastructure investment drove a broad-based tech rally throughout June 2026.',
-    metaTitle: 'AI & Tech Stocks Push S&P 500 to New Highs | AutoTrader Blog',
+    metaTitle: 'AI & Tech Stocks Push S&P 500 to New Highs | Invest-Begin Blog',
     metaDescription: 'In June 2026, AI-driven earnings beats from mega-cap tech companies sent the S&P 500 to all-time highs. Explore the key drivers, top performers, and what it means for automated traders.',
     overview: `June 2026 marked another milestone month for technology stocks as the S&P 500 surged past 6,500 — propelled almost entirely by a fresh wave of artificial intelligence optimism. Mega-cap technology companies including NVIDIA, Microsoft, Alphabet, and Meta all delivered quarterly earnings results that beat Wall Street expectations by wide margins, with AI-related revenue lines growing at triple-digit year-over-year rates.
 
@@ -1761,7 +1761,7 @@ For automated traders, June 2026 underscored the continued importance of sector 
     icon: '🏦',
     title: 'Fed Holds Rates in June 2026: How Equity and Bond Markets Responded',
     tagline: 'The Federal Reserve\'s decision to hold rates steady in June 2026 sparked a cross-asset rally — but divergent signals from the dot plot introduced fresh uncertainty.',
-    metaTitle: 'Fed Holds Rates June 2026: Market Reaction | AutoTrader Blog',
+    metaTitle: 'Fed Holds Rates June 2026: Market Reaction | Invest-Begin Blog',
     metaDescription: 'The Federal Reserve kept its benchmark rate unchanged at its June 2026 FOMC meeting. We break down how equities, bonds, and currencies reacted and what traders should watch next.',
     overview: `At its June 2026 Federal Open Market Committee (FOMC) meeting, the Federal Reserve voted unanimously to hold the federal funds rate in the 4.25%–4.50% target range — a decision that had been widely anticipated by bond markets but still prompted a significant cross-asset response driven by the nuances of the accompanying statement and updated "dot plot" projections.
 
@@ -1793,7 +1793,7 @@ For yield-curve traders and interest-rate-sensitive equity strategies, the June 
     icon: '📊',
     title: 'The Options Market Explosion: Retail Traders Dominate Derivatives in June 2026',
     tagline: 'Zero-days-to-expiry (0DTE) options volume hit record highs in June 2026 as retail participation in derivatives markets reached all-time levels.',
-    metaTitle: 'Retail Options Boom — June 2026 Trends | AutoTrader Blog',
+    metaTitle: 'Retail Options Boom — June 2026 Trends | Invest-Begin Blog',
     metaDescription: 'In June 2026, retail options trading hit record levels. Explore the rise of 0DTE contracts, the role of AI-powered trading apps, and the volatility implications for equity markets.',
     overview: `June 2026 saw options market activity reach historic proportions, with total daily options volume on US exchanges exceeding 60 million contracts on multiple occasions — levels that would have been unimaginable just five years earlier. The dominant driver was the continued explosion of zero-days-to-expiry (0DTE) options trading, a phenomenon that has fundamentally changed the relationship between options markets and underlying equity volatility.
 
@@ -1823,7 +1823,7 @@ For systematic traders, the 0DTE environment demands intraday strategies that ar
     icon: '🌍',
     title: 'Dollar Weakness Fuels an Emerging Markets Equity Surge in June 2026',
     tagline: 'As the US dollar softened mid-year, EM equities in Asia and Latin America staged their strongest monthly rally in over two years.',
-    metaTitle: 'Emerging Markets Rally June 2026 | AutoTrader Blog',
+    metaTitle: 'Emerging Markets Rally June 2026 | Invest-Begin Blog',
     metaDescription: 'Emerging market stocks surged in June 2026 as a weakening US dollar and improving global growth outlook drove capital flows into Asia and Latin America. Full analysis inside.',
     overview: `Emerging market (EM) equities staged one of their most impressive runs of the mid-2020s in June 2026, driven by a confluence of a weakening US dollar, resilient Chinese economic data, and improving commodity prices that boosted Latin American exporters. The MSCI Emerging Markets Index rose 8.3% in June, significantly outpacing the MSCI World (developed markets) Index's 3.1% gain over the same period.
 
@@ -1855,7 +1855,7 @@ For global macro traders and portfolio managers with cross-asset mandates, June 
     icon: '⚡',
     title: 'Clean Energy Stocks: The June 2026 Green Investment Wave',
     tagline: 'New federal incentives, record solar deployments, and surging AI data-centre power demand drove a major re-rating of renewable energy stocks in June 2026.',
-    metaTitle: 'Clean Energy Stocks Rally June 2026 | AutoTrader Blog',
+    metaTitle: 'Clean Energy Stocks Rally June 2026 | Invest-Begin Blog',
     metaDescription: 'Clean energy stocks surged in June 2026 as new federal incentives, record solar installations, and AI data-centre power demand converged to create a powerful tailwind for the renewables sector.',
     overview: `The clean energy sector experienced a significant re-rating in June 2026, with the Invesco Solar ETF (TAN) surging 21% and the iShares Global Clean Energy ETF (ICLN) rising 16% — both substantially outperforming the broader market. The catalyst was a confluence of policy, demand, and economics that many analysts described as a structural inflection point rather than a cyclical bounce.
 
@@ -1887,7 +1887,7 @@ For equity investors and systematic traders, the clean energy sector's June rall
     icon: '₿',
     title: 'Bitcoin Breaks $120,000: The Crypto Rally That Defined July 2026',
     tagline: 'Institutional inflows, a weakening dollar, and post-halving supply dynamics pushed Bitcoin to successive all-time highs throughout July 2026.',
-    metaTitle: 'Bitcoin Hits All-Time High July 2026 | AutoTrader Blog',
+    metaTitle: 'Bitcoin Hits All-Time High July 2026 | Invest-Begin Blog',
     metaDescription: 'Bitcoin surged past $120,000 in July 2026 driven by record ETF inflows, post-halving supply tightening, and a weakening US dollar. Full analysis of the crypto rally and what it means for automated traders.',
     overview: `July 2026 will be remembered as one of the most significant months in Bitcoin's history. The leading cryptocurrency broke through the $100,000 psychological barrier in the first week of the month and accelerated to an all-time high of $121,400 by mid-July — a level that had seemed aspirational to many market participants just twelve months earlier. The rally was not an isolated speculative surge; it was underpinned by a convergence of structural, macro, and technical factors that collectively pointed to a maturing asset class finding its footing in institutional portfolios.
 
@@ -1919,7 +1919,7 @@ For automated traders, the July 2026 Bitcoin rally provided multiple high-qualit
     icon: '📋',
     title: 'S&P 500 Q2 2026 Earnings Season: Record Profits as AI Monetisation Arrives',
     tagline: 'The second quarter of 2026 delivered the strongest S&P 500 earnings growth in three years, with AI revenue lines finally moving the needle for mega-cap technology companies.',
-    metaTitle: 'S&P 500 Q2 2026 Earnings: AI Profits Surge | AutoTrader Blog',
+    metaTitle: 'S&P 500 Q2 2026 Earnings: AI Profits Surge | Invest-Begin Blog',
     metaDescription: 'Q2 2026 earnings season brought record S&P 500 profits driven by AI monetisation, resilient consumer spending, and expanding margins. Full analysis of the key results and implications for traders.',
     overview: `The S&P 500 Q2 2026 earnings season, which kicked off in mid-July with the major banks and accelerated through the second half of the month, delivered the strongest aggregate earnings growth the index had seen since Q2 2023. With approximately 60% of S&P 500 companies having reported by the final week of July, blended earnings growth stood at 14.7% year-over-year — comfortably ahead of the 9.8% consensus estimate that analysts had set entering the season.
 
@@ -1951,7 +1951,7 @@ For traders and portfolio managers, Q2 2026 earnings season reinforced several t
     icon: '🥇',
     title: 'Gold Hits $3,400: Commodities Surge as Dollar Weakens in July 2026',
     tagline: 'Gold surpassed $3,400 per ounce in July 2026, driven by dollar weakness, geopolitical uncertainty, and record central bank buying — dragging the broader commodity complex higher.',
-    metaTitle: 'Gold Price $3,400 July 2026 Rally | AutoTrader Blog',
+    metaTitle: 'Gold Price $3,400 July 2026 Rally | Invest-Begin Blog',
     metaDescription: 'Gold hit $3,400 per ounce in July 2026 as the US dollar weakened, central bank demand stayed elevated, and geopolitical uncertainty persisted. Full analysis of the commodity rally and its trading implications.',
     overview: `Gold extended its multi-year bull run in July 2026, surpassing $3,400 per troy ounce for the first time in history and delivering gains of approximately 8.5% for the month — one of its strongest monthly performances in recent memory. The move cemented gold's status as the pre-eminent safe-haven asset and store-of-value trade in an era of elevated geopolitical uncertainty, persistent fiscal deficits, and a declining US dollar.
 
@@ -1983,7 +1983,7 @@ For systematic traders, July 2026 demonstrated the value of trend-following stra
     icon: '💼',
     title: 'US Jobs Report July 2026: Labour Market Cools, Rate Cut Expectations Rise',
     tagline: 'July\'s non-farm payrolls came in below expectations for the third consecutive month, fuelling bond market rallies and raising expectations for Federal Reserve rate cuts in September 2026.',
-    metaTitle: 'US Jobs Report July 2026: Rate Cut Outlook | AutoTrader Blog',
+    metaTitle: 'US Jobs Report July 2026: Rate Cut Outlook | Invest-Begin Blog',
     metaDescription: 'The July 2026 US non-farm payrolls report showed a third consecutive month of below-consensus job growth, pushing bond yields lower and lifting rate cut expectations. Full analysis and trading implications.',
     overview: `The Bureau of Labor Statistics' July 2026 non-farm payrolls (NFP) report, released on the first Friday of August, delivered a significant market-moving surprise that reverberated across fixed income, equity, and currency markets for the remainder of the trading day and into the following week. The headline figure of 112,000 jobs added came in well below the consensus forecast of 165,000 and marked the third consecutive month of below-consensus payroll growth — a pattern that economists interpreted as clear evidence of a softening, though not collapsing, US labour market.
 
@@ -2015,7 +2015,7 @@ For macro-aware traders, the July 2026 NFP report was a textbook example of the 
     icon: '🇨🇳',
     title: 'China\'s Mega-Stimulus Package Reshapes Global Markets in July 2026',
     tagline: 'Beijing\'s announcement of a ¥3 trillion fiscal stimulus package in late July 2026 sent shockwaves through global equity, commodity, and currency markets — with effects felt from Shanghai to São Paulo.',
-    metaTitle: 'China Stimulus July 2026: Market Impact | AutoTrader Blog',
+    metaTitle: 'China Stimulus July 2026: Market Impact | Invest-Begin Blog',
     metaDescription: 'China announced a ¥3 trillion stimulus package in July 2026, triggering a sharp rally in Chinese equities, commodities, and emerging market assets. Full analysis of the global market ripple effects.',
     overview: `On July 22, 2026, the Chinese government announced what analysts immediately described as its most ambitious fiscal stimulus package since the 2008 global financial crisis — a ¥3 trillion ($415 billion) programme targeting domestic consumption, housing market stabilisation, advanced manufacturing, and green infrastructure. The announcement triggered an immediate and dramatic market response that rippled through global equity, commodity, currency, and bond markets over the following days and weeks.
 
@@ -2049,7 +2049,7 @@ For global macro traders, China's July 2026 stimulus announcement was a reminder
     icon: '⚡',
     title: 'Ethereum Layer 2 Networks Hit Record Activity in July 2026',
     tagline: 'Base, Arbitrum, and Optimism collectively surpassed Ethereum mainnet transaction volumes in July 2026 as fees fell to near-zero and user adoption accelerated.',
-    metaTitle: 'Ethereum L2 Networks Hit Record Activity | AutoTrader Blog',
+    metaTitle: 'Ethereum L2 Networks Hit Record Activity | Invest-Begin Blog',
     metaDescription: 'In July 2026, Ethereum Layer 2 networks including Base, Arbitrum, and Optimism hit all-time highs in daily transactions, TVL, and developer activity. Full analysis of the L2 explosion.',
     overview: `July 2026 marked a historic inflection point for Ethereum's Layer 2 ecosystem. For the first time, the combined daily transaction volume across Layer 2 networks — including Base, Arbitrum, Optimism, zkSync Era, and Starknet — exceeded Ethereum mainnet throughput by a factor of more than 12 to 1. This milestone, widely anticipated by the Ethereum developer community, validated the long-running bet that L2 scaling would drive the next phase of Ethereum adoption rather than a wholesale migration to competing Layer 1 chains.
 
@@ -2083,7 +2083,7 @@ For crypto traders and automated strategies, the L2 explosion created new opport
     icon: '🚀',
     title: 'Solana Captures Institutional Momentum in July 2026: ETF Filings and Record Inflows',
     tagline: 'Multiple asset managers filed for spot Solana ETFs in July 2026 as institutional allocators discovered the network\'s throughput and fee advantages over legacy blockchains.',
-    metaTitle: 'Solana Institutional Surge July 2026 | AutoTrader Blog',
+    metaTitle: 'Solana Institutional Surge July 2026 | Invest-Begin Blog',
     metaDescription: 'July 2026 saw major asset managers file spot Solana ETF applications while SOL prices surged 32%. Explore the institutional thesis, on-chain metrics, and trading opportunities.',
     overview: `Solana experienced its most significant institutional validation yet in July 2026 as a wave of spot ETF filings from major asset managers, combined with record-breaking network metrics and a sharp increase in developer activity, pushed SOL to new all-time highs. The developments marked a pivotal moment in Solana's journey from a "retail crypto" narrative to a serious institutional-grade asset with a growing body of sophisticated allocators.
 
@@ -2117,7 +2117,7 @@ For traders, Solana's institutional momentum created multiple viable strategies.
     icon: '📱',
     title: 'Apple and Alphabet Smash Q2 2026 Earnings Estimates, Lifting the Broader Market',
     tagline: 'Blowout Q2 results from two of the world\'s largest companies — driven by AI monetisation and services growth — sent the S&P 500 to fresh record highs in late July 2026.',
-    metaTitle: 'Apple & Alphabet Q2 Earnings Beat | AutoTrader Blog',
+    metaTitle: 'Apple & Alphabet Q2 Earnings Beat | Invest-Begin Blog',
     metaDescription: 'Apple and Alphabet both beat Q2 2026 earnings estimates by wide margins in July 2026, driven by AI-powered services and advertising. Explore what the results mean for investors and algorithmic traders.',
     overview: `The third week of July 2026 brought two of the most closely watched earnings reports of the year as Apple and Alphabet (Google's parent company) both delivered quarterly results that significantly exceeded analyst expectations, triggering a broad-based equity rally that pushed the S&P 500 to its fourth all-time high of the month.
 
@@ -2151,7 +2151,7 @@ For equity traders, the Apple and Alphabet earnings demonstrated the continued i
     icon: '💰',
     title: 'Bitcoin and Ethereum ETFs Record Largest Weekly Inflows Ever in July 2026',
     tagline: 'Spot crypto ETFs attracted over $4.2 billion in net inflows during a single week in July 2026 as pension funds and sovereign wealth funds began allocating to digital assets for the first time.',
-    metaTitle: 'Bitcoin & ETH ETF Record Inflows July 2026 | AutoTrader Blog',
+    metaTitle: 'Bitcoin & ETH ETF Record Inflows July 2026 | Invest-Begin Blog',
     metaDescription: 'Bitcoin and Ethereum spot ETFs recorded their largest-ever weekly inflows in July 2026, totalling $4.2 billion as institutional demand reached new heights. What it means for crypto markets.',
     overview: `The week of July 14–18, 2026 entered the history books of the cryptocurrency market when spot Bitcoin and Ethereum exchange-traded funds collectively attracted $4.2 billion in net inflows — the largest weekly inflow total since the Bitcoin spot ETF approval in January 2024 and significantly above the previous weekly record of $2.7 billion set in March 2025. The milestone reflected a qualitative shift in the types of institutions allocating capital to crypto: for the first time, multiple pension funds and sovereign wealth funds publicly disclosed cryptocurrency ETF positions in regulatory filings.
 
@@ -2185,7 +2185,7 @@ For crypto traders and automated strategies, the record ETF inflows underscored 
     icon: '🥇',
     title: 'Gold Surpasses $3,500 per Ounce for the First Time in July 2026',
     tagline: 'Safe-haven demand, central bank purchases, and a weaker US dollar combined to push gold through the $3,500 psychological barrier for the first time in history during July 2026.',
-    metaTitle: 'Gold Hits $3,500 All-Time High | AutoTrader Blog',
+    metaTitle: 'Gold Hits $3,500 All-Time High | Invest-Begin Blog',
     metaDescription: 'Gold broke above $3,500 per ounce for the first time in July 2026, driven by central bank buying, dollar weakness, and geopolitical uncertainty. Full analysis of the historic milestone.',
     overview: `Gold's centuries-long role as the world's foremost store of value reached a new chapter on July 17, 2026, when the spot gold price surpassed $3,500 per troy ounce for the first time in history during intraday trading on global markets. The milestone — which followed a year-long rally from approximately $2,800 at the start of 2026 — reflected a confluence of macro forces including sustained central bank gold accumulation, a weakening US dollar, persistent geopolitical uncertainty, and a wave of retail and institutional investor demand that had been building for months.
 
@@ -2219,7 +2219,7 @@ From an investment and trading perspective, gold's $3,500 breakthrough reinforce
     icon: 'B',
     title: 'Bitcoin and Nasdaq Move Together Again in August 2026: Correlation Returns to the Spotlight',
     tagline: 'As liquidity expectations improved, Bitcoin and US growth stocks rallied in tandem, reviving the risk-on correlation trade.',
-    metaTitle: 'Bitcoin-Nasdaq Correlation — August 2026 | AutoTrader Blog',
+    metaTitle: 'Bitcoin-Nasdaq Correlation — August 2026 | Invest-Begin Blog',
     metaDescription: 'Bitcoin and the Nasdaq 100 traded in lockstep through August 2026 as risk appetite returned. Learn what drove the correlation and how to adapt automated strategies.',
     overview: `August 2026 saw a familiar market regime return: Bitcoin and US technology equities moved in the same direction on most sessions, with the 30-day rolling correlation between BTC and the Nasdaq 100 rising above 0.60 for the first time in several months. For cross-asset traders, this mattered because it confirmed that macro liquidity expectations were once again dominating both digital assets and long-duration growth equities.
 
@@ -2247,7 +2247,7 @@ Systematic strategies that monitor cross-asset correlation and volatility can re
     icon: 'BTC',
     title: 'Bitcoin ETF Inflows vs S&P 500 Positioning in August 2026',
     tagline: 'Record spot-Bitcoin ETF subscriptions contrasted with cautious equity positioning, creating a notable divergence in risk appetite.',
-    metaTitle: 'Bitcoin ETF Flows vs S&P 500 — Aug 2026 | AutoTrader Blog',
+    metaTitle: 'Bitcoin ETF Flows vs S&P 500 — Aug 2026 | Invest-Begin Blog',
     metaDescription: 'August 2026 featured strong Bitcoin ETF demand while S&P 500 institutional positioning remained selective. Explore the divergence and strategy implications.',
     overview: `One of the clearest cross-market stories in August 2026 was divergence: Bitcoin ETFs continued to attract strong net inflows while positioning in broad US equities stayed selective and concentrated in a narrow set of sectors. The split challenged the assumption that all risk assets move together all the time.
 
@@ -2275,7 +2275,7 @@ August highlighted the value of running relative-strength models across asset cl
     icon: 'M',
     title: 'Bitcoin Miner Stocks Outperform in August 2026 as BTC Stabilizes Above Six Figures',
     tagline: 'With Bitcoin holding high levels and power costs easing, listed miner equities delivered leveraged upside versus spot BTC.',
-    metaTitle: 'Bitcoin Miner Stocks Rally August 2026 | AutoTrader Blog',
+    metaTitle: 'Bitcoin Miner Stocks Rally August 2026 | Invest-Begin Blog',
     metaDescription: 'Bitcoin mining equities outperformed in August 2026 as BTC consolidated at elevated levels and operating margins improved. Full market breakdown.',
     overview: `Bitcoin mining equities became a high-conviction theme in August 2026. After the explosive July crypto rally, Bitcoin spent much of August consolidating at elevated prices rather than reversing sharply lower. That stability, combined with easing regional energy costs and improved fleet efficiency, supported a strong rebound in publicly listed miner stocks.
 
@@ -2303,7 +2303,7 @@ The broader implication is that crypto exposure in equity markets is becoming mo
     icon: 'R',
     title: 'Wall Street Risk Models Add Crypto Signals in August 2026',
     tagline: 'Institutional desks increasingly blended Bitcoin volatility and ETF flow signals into equity risk frameworks.',
-    metaTitle: 'Wall Street Adds Crypto to Risk Models | AutoTrader Blog',
+    metaTitle: 'Wall Street Adds Crypto to Risk Models | Invest-Begin Blog',
     metaDescription: 'By August 2026, institutional risk teams increasingly incorporated crypto market signals into stock-market positioning models. Here is why it matters.',
     overview: `August 2026 marked a notable institutional shift: several multi-asset desks publicly described integrating crypto-derived inputs into their core risk models for equities. The change was less about "crypto hype" and more about signal utility. Bitcoin now trades with sufficient depth, global participation, and round-the-clock liquidity that its volatility and flow dynamics can inform broader risk appetite measures.
 
@@ -2331,7 +2331,7 @@ August reinforced an institutional reality: market structure is converging. Trad
     icon: 'V',
     title: 'A Volatility Playbook for Trading Bitcoin and Stocks Together',
     tagline: 'August 2026 price action showed why unified volatility controls are essential when trading BTC and equities in one portfolio.',
-    metaTitle: 'Bitcoin & Stocks Volatility Playbook | AutoTrader Blog',
+    metaTitle: 'Bitcoin & Stocks Volatility Playbook | Invest-Begin Blog',
     metaDescription: 'Learn a practical volatility playbook for trading Bitcoin and stocks together, based on August 2026 cross-asset behavior and risk-management lessons.',
     overview: `August 2026 delivered repeated examples of cross-asset volatility spillover: a sharp crypto move during US off-hours would often be followed by pre-market repricing in equity futures, and equity event risk would feed back into crypto by the next Asia session. For traders running both books, siloed risk controls proved inadequate.
 
@@ -2361,7 +2361,7 @@ The broad message from August 2026 is simple: opportunity increased, but so did 
     icon: '🛍️',
     title: 'Walmart, Target and Home Depot Earnings Signal a Resilient US Consumer in August 2026',
     tagline: 'August\'s retail earnings season showed shoppers trading down on price but not pulling back on spending, giving equity markets a fresh read on economic momentum.',
-    metaTitle: 'Retail Earnings August 2026 Roundup | AutoTrader Blog',
+    metaTitle: 'Retail Earnings August 2026 Roundup | Invest-Begin Blog',
     metaDescription: 'August 2026 retail earnings from Walmart, Target and Home Depot offered a real-time gauge of US consumer health. Here is what the results mean for stocks and automated strategies.',
     overview: `Mid-August 2026 brought one of the most closely watched weeks on the equity calendar: quarterly results from the largest US retailers. After more than a year of sticky inflation readings and a Federal Reserve reluctant to commit to a rapid easing path, investors leaned on Walmart, Target, and Home Depot earnings as a real-time proxy for the health of the American consumer — arguably a more timely signal than the lagging government data releases that dominate macro headlines.
 
@@ -2389,7 +2389,7 @@ Taken together, the week reinforced a narrative equity markets have leaned on fo
     icon: '💠',
     title: 'Ethereum Climbs Toward $6,000 as Institutional Staking Demand Accelerates in August 2026',
     tagline: 'A wave of corporate treasuries and ETF issuers embracing staked ETH pushed Ethereum to fresh multi-year highs in August 2026.',
-    metaTitle: 'Ethereum Nears $6,000 on Staking Demand | AutoTrader Blog',
+    metaTitle: 'Ethereum Nears $6,000 on Staking Demand | Invest-Begin Blog',
     metaDescription: 'Ethereum rallied toward $6,000 in August 2026 as staking-enabled ETFs and corporate treasuries accelerated demand. Full analysis of the drivers and what it means for crypto traders.',
     overview: `Ethereum's price action in August 2026 marked its strongest sustained run since the 2021 bull market, with ETH climbing toward the $6,000 level for the first time in the asset's history. Unlike prior rallies driven primarily by speculative leverage, this move was underpinned by a structural shift in how institutions access Ethereum's underlying yield: staking.
 
@@ -2417,7 +2417,7 @@ Not every signal was unambiguously bullish. Regulators in several jurisdictions 
     icon: '💵',
     title: 'US Dollar Slides to 2026 Lows as Traders Price In a September Fed Rate Cut',
     tagline: 'The dollar index fell to its weakest level of the year in August 2026 as soft labour data cemented expectations for a September rate cut, lifting EUR/USD and emerging-market currencies.',
-    metaTitle: 'Dollar Slides on Fed Rate-Cut Bets | AutoTrader Blog',
+    metaTitle: 'Dollar Slides on Fed Rate-Cut Bets | Invest-Begin Blog',
     metaDescription: 'The US dollar index dropped to its lowest level of 2026 in August as markets priced in a September Fed rate cut. Here is how EUR/USD, USD/JPY and emerging-market currencies reacted.',
     overview: `The US Dollar Index (DXY) fell to its lowest level of 2026 in mid-August, extending a decline that had been building since a softer-than-expected jobs report earlier in the summer. Fed funds futures markets moved to price in a probability of well above 90% for a rate cut at the September FOMC meeting, and the resulting shift in expected rate differentials weighed broadly on the greenback against every major currency pair.
 
@@ -2445,7 +2445,7 @@ For forex traders, the month underscored how quickly consensus positioning can b
     icon: '🏔️',
     title: "Jackson Hole 2026: Fed Chair's Speech Sparks a Broad Stock and Bond Rally",
     tagline: "Markets rallied across equities and bonds after the Federal Reserve's annual Jackson Hole address signalled openness to a faster pace of rate cuts.",
-    metaTitle: 'Jackson Hole 2026: Fed Speech Sparks Rally | AutoTrader Blog',
+    metaTitle: 'Jackson Hole 2026: Fed Speech Sparks Rally | Invest-Begin Blog',
     metaDescription: "The Federal Reserve's August 2026 Jackson Hole Economic Symposium speech triggered a sharp rally in stocks and bonds. Full breakdown of the speech, market reaction, and trading implications.",
     overview: `The Federal Reserve's annual Jackson Hole Economic Symposium, hosted by the Kansas City Fed in Wyoming each August, has long been one of the most closely scrutinised events on the macro calendar — and the 2026 edition lived up to that reputation. The Fed Chair's keynote address triggered one of the sharpest single-day rallies in both equities and Treasuries seen so far in the year.
 
@@ -2473,7 +2473,7 @@ Jackson Hole has a long history of moving markets disproportionately relative to
     icon: '🪙',
     title: 'Stablecoin Market Surpasses $300 Billion as Bank-Issued Tokens Go Mainstream',
     tagline: 'Regulatory clarity and a wave of bank-issued dollar tokens pushed the total stablecoin market above $300 billion in August 2026.',
-    metaTitle: 'Stablecoins Hit $300B — August 2026 | AutoTrader Blog',
+    metaTitle: 'Stablecoins Hit $300B — August 2026 | Invest-Begin Blog',
     metaDescription: 'The global stablecoin market surpassed $300 billion in August 2026 as banks launched dollar-pegged tokens under new regulation. What it means for crypto and forex markets.',
     overview: `The total market capitalisation of US dollar-pegged stablecoins crossed $300 billion in August 2026, a milestone that would have seemed improbable just a few years earlier when the sector was dominated by a handful of crypto-native issuers operating in a largely unregulated environment. The growth was led by incumbents Tether (USDT) and Circle's USDC, but the more consequential development was the arrival of a new cohort of bank-issued dollar tokens operating under a matured US federal stablecoin licensing framework.
 
