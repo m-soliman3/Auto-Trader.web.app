@@ -82,3 +82,20 @@ body:has(.consent-overlay) { --consent-bar-height: 48px; }
 @media (max-width: 640px) {
   body:has(.consent-overlay) { --consent-bar-height: 52px; }
 }
+
+/* The chat launcher is `position: fixed` in the bottom-right corner — the same
+   corner the footer puts its links row in. Reserve room for it horizontally on
+   desktop, where the footer is one wide row and the links can simply sit further
+   left, and vertically below 768px, where the footer stacks and centres and
+   there is no horizontal room to give. ~170px covers the widest launcher
+   (0.6rem + 34px icon + gap + the longest label, pt "Bate-papo", + status dot +
+   0.9rem) plus its 1rem offset. Scoped to :has() because app.ts mounts the
+   launcher on only a subset of routes — elsewhere the footer keeps its full width. */
+body:has(.chatbot-widget) { --chat-ribbon-reserve: 170px; }
+
+@media (max-width: 768px) {
+  body:has(.chatbot-widget) {
+    --chat-ribbon-reserve: 0px;
+    --chat-ribbon-height: 62px;
+  }
+}
