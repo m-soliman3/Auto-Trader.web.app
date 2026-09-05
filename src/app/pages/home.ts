@@ -181,6 +181,13 @@ export class Home implements AfterViewInit, OnDestroy {
         return;
       }
 
+      // The `muted` IDL property is only initialised from the content attribute
+      // when the element is created. Angular builds the element and *then* calls
+      // setAttribute, so the attribute alone leaves video.muted false, and a
+      // non-muted video is refused autoplay until the user interacts with the
+      // page. Set the property outright so the state is correct at play() time.
+      video.muted = true;
+
       if (resetToStart) {
         video.currentTime = 0;
       }
@@ -188,8 +195,13 @@ export class Home implements AfterViewInit, OnDestroy {
       // Do NOT call video.load() here: for step 1 the src is unchanged and load()
       // drops readyState to 0, causing play() to be aborted before any data arrives.
       // When the [src] binding changes (steps 2/3), the browser reloads automatically.
-      void video.play().catch(() => {
-        // Autoplay can be blocked by browser policy until user interaction.
+      void video.play().catch((err: DOMException) => {
+        // AbortError is normal: it fires when a pending play() is superseded by
+        // the next step's src change. Anything else means playback was actually
+        // refused, which is otherwise invisible — surface it rather than swallow it.
+        if (err?.name !== 'AbortError') {
+          console.warn('[home] step video playback was blocked:', err?.name);
+        }
       });
     }, 0);
   }
