@@ -8,6 +8,14 @@
         "**/.*",
         "**/node_modules/**"
       ],
+      "redirects": [
+        { "source": "/privacy", "destination": "/en/privacy", "type": 301 },
+        { "source": "/terms", "destination": "/en/terms", "type": 301 },
+        { "source": "/disclaimer", "destination": "/en/disclaimer", "type": 301 },
+        { "source": "/collecting-data", "destination": "/en/collecting-data", "type": 301 },
+        { "source": "/contact", "destination": "/en/contact", "type": 301 },
+        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 }
+      ],
       "rewrites": [
         {
           "source": "/api/getPortfolio",
@@ -191,6 +199,14 @@
         "firebase.json",
         "**/.*",
         "**/node_modules/**"
+      ],
+      "redirects": [
+        { "source": "/privacy", "destination": "/en/privacy", "type": 301 },
+        { "source": "/terms", "destination": "/en/terms", "type": 301 },
+        { "source": "/disclaimer", "destination": "/en/disclaimer", "type": 301 },
+        { "source": "/collecting-data", "destination": "/en/collecting-data", "type": 301 },
+        { "source": "/contact", "destination": "/en/contact", "type": 301 },
+        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 }
       ],
       "rewrites": [
         {

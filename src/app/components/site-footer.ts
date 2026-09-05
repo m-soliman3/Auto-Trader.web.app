@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-site-footer',
@@ -21,12 +22,12 @@ import { TranslateModule } from '@ngx-translate/core';
         <p class="footer-copy">{{ 'footer.copyright' | translate }}</p>
 
         <div class="footer-links">
-          <a routerLink="/privacy">{{ 'footer.privacy' | translate }}</a>
-          <a routerLink="/terms">{{ 'footer.terms' | translate }}</a>
-          <a routerLink="/disclaimer">{{ 'footer.disclaimer' | translate }}</a>
-          <a routerLink="/collecting-data">{{ 'footer.collectingData' | translate }}</a>
-          <a routerLink="/contact">{{ 'footer.contact' | translate }}</a>
-          <a routerLink="/knowledge-base">{{ 'footer.knowledgeBase' | translate }}</a>
+          <a [routerLink]="localizedLink('privacy')" [attr.href]="localizedHref('privacy')">{{ 'footer.privacy' | translate }}</a>
+          <a [routerLink]="localizedLink('terms')" [attr.href]="localizedHref('terms')">{{ 'footer.terms' | translate }}</a>
+          <a [routerLink]="localizedLink('disclaimer')" [attr.href]="localizedHref('disclaimer')">{{ 'footer.disclaimer' | translate }}</a>
+          <a [routerLink]="localizedLink('collecting-data')" [attr.href]="localizedHref('collecting-data')">{{ 'footer.collectingData' | translate }}</a>
+          <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')">{{ 'footer.contact' | translate }}</a>
+          <a [routerLink]="localizedLink('knowledge-base')" [attr.href]="localizedHref('knowledge-base')">{{ 'footer.knowledgeBase' | translate }}</a>
         </div>
       </div>
     </footer>
@@ -98,4 +99,20 @@ import { TranslateModule } from '@ngx-translate/core';
     `,
   ],
 })
-export class SiteFooter {}
+export class SiteFooter {
+  private readonly languageService = inject(LanguageService);
+
+  /**
+   * Footer links must carry the active locale prefix. An unprefixed `/privacy`
+   * bypasses `languagePrefixMatcher`, falls through Hosting's `**` rewrite to the
+   * CSR shell, and is indexed with the site-wide default meta description — which
+   * is what made these pages show up as duplicates in Bing's report.
+   */
+  localizedLink(...segments: string[]): string[] {
+    return ['/', this.languageService.currentLang(), ...segments];
+  }
+
+  localizedHref(...segments: string[]): string {
+    return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
+  }
+}
