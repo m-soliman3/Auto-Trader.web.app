@@ -29,35 +29,11 @@
   text-align: left;
 }
 
-/* ── AD BANNER (skyscraper) ── */
-.ad-banner-skyscraper {
-  position: fixed;
-  top: 96px;
-  left: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
-  width: 120px;
-  height: 600px;
-  z-index: 999;
-  display: none;
-}
-
-@media (min-width: 1200px) {
-  .ad-banner-skyscraper { display: block; }
-}
-
-/* ── AD WIDGET (eToro, right-aligned counterpart) ── */
-.ad-widget-etoro {
-  position: fixed;
-  top: 96px;
-  right: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
-  width: 300px;
-  height: 250px;
-  z-index: 999;
-  display: none;
-}
-
-@media (min-width: 1200px) {
-  .ad-widget-etoro { display: block; }
-}
+/* ── AD BANNERS ── */
+/* Positioning for `.ad-banner-skyscraper` and `.ad-widget-etoro` lives in the
+   respective components (`:host` styles). Angular view encapsulation scopes this
+   file to the parent, so rules here cannot style a child component's host element
+   and the positioning silently breaks. */
 
 .hero-badge {
   display: inline-block;
