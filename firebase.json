@@ -172,6 +172,20 @@
           }
         },
         {
+          "source": "/mcp",
+          "run": {
+            "serviceId": "ta-mcp-server",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/mcp/**",
+          "run": {
+            "serviceId": "ta-mcp-server",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "**",
           "destination": "/index.csr.html"
         }
