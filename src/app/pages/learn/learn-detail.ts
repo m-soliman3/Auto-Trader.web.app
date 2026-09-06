@@ -7,6 +7,12 @@ import { LanguageService } from '../../services/language.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
+import {
+  JsonLdNode,
+  SITE_URL,
+  StructuredDataService,
+} from '../../services/structured-data.service';
+import { LEARN_PUBLISH_DATES } from './learn-publish-dates';
 
 export type LearnCategory = 'strategy' | 'signal' | 'blog';
 
@@ -2514,6 +2520,7 @@ export class LearnDetailPage implements OnInit {
   private translate  = inject(TranslateService);
   private document   = inject(DOCUMENT);
   private meta       = inject(Meta);
+  private structuredData = inject(StructuredDataService);
 
   page: LearnData | null = null;
   relatedPages: LearnData[] = [];
@@ -2641,6 +2648,107 @@ export class LearnDetailPage implements OnInit {
 
     const howHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.escapeHtml(translatedHowItWorks)) ?? '';
     this.howItWorksHtml = this.sanitizer.bypassSecurityTrustHtml(howHtml);
+
+    this.structuredData.setPageGraph(this.buildStructuredData(base, canonicalHref));
+  }
+
+  /**
+   * Article + WebPage + BreadcrumbList JSON-LD for this article, in the active language.
+   *
+   * `datePublished` / `dateModified` come from LEARN_PUBLISH_DATES, which mirrors the `lastmod`
+   * values already published in public/sitemap.xml. A slug with no entry there gets no date
+   * fields at all rather than an invented one.
+   */
+  private buildStructuredData(base: LearnData, canonicalHref: string): JsonLdNode[] {
+    const page = this.page;
+    if (!page) {
+      return [];
+    }
+
+    const lang = this.languageService.currentLang();
+    const publishedAt = LEARN_PUBLISH_DATES[base.slug];
+    const breadcrumb = this.structuredData.breadcrumbNode(
+      this.structuredData.knowledgeBaseTrail(lang, page.title, canonicalHref),
+    );
+
+    const article: JsonLdNode = {
+      '@type': base.category === 'blog' ? 'BlogPosting' : 'Article',
+      '@id': `${canonicalHref}#article`,
+      headline: this.headline(page.title),
+      name: page.title,
+      description: page.metaDescription,
+      abstract: page.tagline,
+      articleSection: this.articleSection(base.category),
+      url: canonicalHref,
+      mainEntityOfPage: { '@id': `${canonicalHref}#webpage` },
+      inLanguage: lang,
+      isAccessibleForFree: true,
+      author: this.structuredData.organizationRef,
+      publisher: this.structuredData.organizationRef,
+      wordCount: this.wordCount(page.overview, page.howItWorks),
+    };
+
+    if (base.imageUrl) {
+      article['image'] = this.absoluteImageUrl(base.imageUrl);
+    }
+
+    if (publishedAt) {
+      article['datePublished'] = publishedAt;
+      article['dateModified'] = publishedAt;
+    }
+
+    const webPage: JsonLdNode = {
+      '@type': 'WebPage',
+      '@id': `${canonicalHref}#webpage`,
+      url: canonicalHref,
+      name: page.metaTitle,
+      description: page.metaDescription,
+      isPartOf: this.structuredData.websiteRef,
+      inLanguage: lang,
+      isAccessibleForFree: true,
+      breadcrumb: { '@id': breadcrumb['@id'] },
+    };
+
+    if (base.imageUrl) {
+      webPage['primaryImageOfPage'] = {
+        '@type': 'ImageObject',
+        '@id': `${canonicalHref}#primaryimage`,
+        url: this.absoluteImageUrl(base.imageUrl),
+        contentUrl: this.absoluteImageUrl(base.imageUrl),
+      };
+    }
+
+    return [webPage, article, breadcrumb];
+  }
+
+  /**
+   * Google truncates article headlines past 110 characters, so trim on a word boundary and keep
+   * the untouched title in `name`. A handful of translated titles run just over the limit.
+   */
+  private headline(title: string): string {
+    const limit = 110;
+    if (title.length <= limit) {
+      return title;
+    }
+    const clipped = title.slice(0, limit);
+    const lastSpace = clipped.lastIndexOf(' ');
+    return (lastSpace > 60 ? clipped.slice(0, lastSpace) : clipped).trim();
+  }
+
+  private articleSection(category: LearnCategory): string {
+    switch (category) {
+      case 'blog': return 'Market news';
+      case 'signal': return 'Trading signals and indicators';
+      default: return 'Trading strategies';
+    }
+  }
+
+  private absoluteImageUrl(imageUrl: string): string {
+    return imageUrl.startsWith('http') ? imageUrl : `${SITE_URL}${imageUrl}`;
+  }
+
+  private wordCount(...sections: string[]): number {
+    return sections.join(' ').split(/\s+/).filter(Boolean).length;
   }
 
   private escapeHtml(text: string): string {
@@ -2658,9 +2766,10 @@ export class LearnDetailPage implements OnInit {
   }
 
   private canonicalHref(): string {
-    const origin = this.document.location?.origin ?? '';
+    // Always the canonical origin — during prerender `document.location.origin` is the render
+    // host (http://ng-localhost), which must never leak into og:url or structured data.
     const lang = this.languageService.currentLang();
-    return `${origin}/${lang}/${this.routePrefix()}/${this.currentSlug}`;
+    return `${SITE_URL}/${lang}/${this.routePrefix()}/${this.currentSlug}`;
   }
 
   private ogLocale(lang: string): string {

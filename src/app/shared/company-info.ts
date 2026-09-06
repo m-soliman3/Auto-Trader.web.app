@@ -20,6 +20,24 @@ export const COMPANY_INFO = {
   /** Registered address (matches the /contact page). */
   address: 'Kapstadt Ring 7a, 22297 Hamburg, Germany',
 
+  /**
+   * The same registered address split into schema.org PostalAddress fields, used by
+   * the Organization JSON-LD in StructuredDataService. Keep in sync with `address`.
+   */
+  postalAddress: {
+    streetAddress: 'Kapstadt Ring 7a',
+    postalCode: '22297',
+    addressLocality: 'Hamburg',
+    addressCountry: 'DE',
+  },
+
   /** Public-facing website URL. */
   website: 'https://auto-trading.app',
+
+  /**
+   * Canonical origin the site is indexed under — the one used by the canonical tag,
+   * the hreflang alternates, public/sitemap.xml and all structured data. This is the
+   * origin search engines see; `website` above is the product's marketing domain.
+   */
+  canonicalOrigin: 'https://invest-begin.com',
 } as const;

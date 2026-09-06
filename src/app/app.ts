@@ -10,6 +10,7 @@ import { SiteFooter } from './components/site-footer';
 import { ConsentBannerComponent } from './components/consent-banner';
 import { LanguageService } from './services/language.service';
 import { HreflangService } from './services/hreflang.service';
+import { StructuredDataService } from './services/structured-data.service';
 import { UsageAnalyticsService } from './services/usage-analytics.service';
 import { RealMoneyOnboardingModal } from './components/real-money-onboarding-modal';
 import { RealMoneyOnboardingService } from './services/real-money-onboarding.service';
@@ -32,6 +33,8 @@ export class App {
   private readonly language = inject(LanguageService);
   // Eagerly inject HreflangService so it manages hreflang/canonical tags from startup
   private readonly hreflang = inject(HreflangService);
+  // Eagerly inject StructuredDataService so JSON-LD is emitted from the first render on.
+  private readonly structuredData = inject(StructuredDataService);
   // Eagerly inject analytics so user usage tracking starts at app boot.
   private readonly usageAnalytics = inject(UsageAnalyticsService);
   readonly realMoneyOnboarding = inject(RealMoneyOnboardingService);
@@ -54,6 +57,7 @@ export class App {
     void this.scrollMemory;
     void this.language;
     void this.hreflang;
+    void this.structuredData;
     void this.usageAnalytics;
 
     this.router.events
