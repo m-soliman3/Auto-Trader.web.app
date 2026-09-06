@@ -32,6 +32,10 @@ import { TranslateModule } from '@ngx-translate/core';
         <ul><li>{{ 'privacy.s2Cookie1' | translate }}</li><li>{{ 'privacy.s2Cookie2' | translate }}</li><li>{{ 'privacy.s2Cookie3' | translate }}</li><li>{{ 'privacy.s2Cookie4' | translate }}</li></ul>
         <p><strong>{{ 'privacy.supportData' | translate }}</strong></p>
         <ul><li>{{ 'privacy.s2Support1' | translate }}</li><li>{{ 'privacy.s2Support2' | translate }}</li></ul>
+        <p><strong>{{ 'privacy.billingData' | translate }}</strong></p>
+        <ul><li>{{ 'privacy.s2Billing1' | translate }}</li><li>{{ 'privacy.s2Billing2' | translate }}</li><li>{{ 'privacy.s2Billing3' | translate }}</li></ul>
+        <p><strong>{{ 'privacy.assistantData' | translate }}</strong></p>
+        <ul><li>{{ 'privacy.s2Assistant1' | translate }}</li><li>{{ 'privacy.s2Assistant2' | translate }}</li></ul>
         </section>
 
         <section><h2>{{ 'privacy.s3Title' | translate }}</h2>
@@ -44,7 +48,7 @@ import { TranslateModule } from '@ngx-translate/core';
         </section>
 
         <section><h2>{{ 'privacy.s5Title' | translate }}</h2>
-        <ul><li><strong>{{ 'privacy.googleAnalyticsTagManager' | translate }}</strong> {{ 'privacy.s5Item1' | translate }}</li><li><strong>{{ 'privacy.firebase' | translate }}</strong> {{ 'privacy.s5Item2' | translate }}</li><li><strong>{{ 'privacy.exchangeApis' | translate }}</strong> {{ 'privacy.s5Item3' | translate }}</li></ul>
+        <ul><li><strong>{{ 'privacy.googleAnalyticsTagManager' | translate }}</strong> {{ 'privacy.s5Item1' | translate }}</li><li><strong>{{ 'privacy.firebase' | translate }}</strong> {{ 'privacy.s5Item2' | translate }}</li><li><strong>{{ 'privacy.exchangeApis' | translate }}</strong> {{ 'privacy.s5Item3' | translate }}</li><li><strong>{{ 'privacy.paymentProcessors' | translate }}</strong> {{ 'privacy.s5Item4' | translate }}</li><li><strong>{{ 'privacy.analyticsProviders' | translate }}</strong> {{ 'privacy.s5Item5' | translate }}</li><li><strong>{{ 'privacy.aiProviders' | translate }}</strong> {{ 'privacy.s5Item6' | translate }}</li><li><strong>{{ 'privacy.affiliatePartners' | translate }}</strong> {{ 'privacy.s5Item7' | translate }}</li></ul>
         <p>{{ 'privacy.s5Body' | translate }}</p>
         </section>
 
