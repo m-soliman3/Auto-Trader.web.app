@@ -6,6 +6,11 @@ import { AuthService } from '../../services/auth.service';
 import { LanguageService } from '../../services/language.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  JsonLdNode,
+  SOFTWARE_APPLICATION_ID,
+  StructuredDataService,
+} from '../../services/structured-data.service';
 
 export interface FeatureLink {
   label: string;
@@ -736,6 +741,7 @@ export class FeatureDetailPage implements OnInit {
   private translate = inject(TranslateService);
   private document = inject(DOCUMENT);
   private meta = inject(Meta);
+  private structuredData = inject(StructuredDataService);
 
   private baseFeature: FeatureData | null = null;
   feature: FeatureData | null = null;
@@ -812,10 +818,16 @@ export class FeatureDetailPage implements OnInit {
       externalLinks: translatedExternalLinks,
       relatedLinks: translatedRelatedLinks,
     };
+    const canonicalHref = this.canonicalHref(base.slug);
+
     this.document.title = this.feature.metaTitle;
     this.meta.updateTag({ name: 'description', content: this.feature.metaDescription });
     this.meta.updateTag({ property: 'og:title', content: this.feature.metaTitle });
     this.meta.updateTag({ property: 'og:description', content: this.feature.metaDescription });
+    this.meta.updateTag({ property: 'og:url', content: canonicalHref });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+
+    this.structuredData.setPageGraph(this.buildStructuredData(canonicalHref));
 
     const referencesHtml = this.inlineReferenceHtml(translatedExternalLinks, translatedRelatedLinks);
 
@@ -846,6 +858,45 @@ export class FeatureDetailPage implements OnInit {
 
   featurePageUrl(slug: string): string {
     return `/${this.languageService.currentLang()}/features/${slug}`;
+  }
+
+  /** Absolute URL of this feature page on the canonical origin, in the active language. */
+  private canonicalHref(slug: string): string {
+    return this.structuredData.absoluteUrl(this.languageService.currentLang(), 'features', slug);
+  }
+
+  /**
+   * WebPage + BreadcrumbList JSON-LD for a feature page. The page describes one capability of
+   * the product, so it points `about` at the site-wide SoftwareApplication node rather than
+   * declaring a second product entity.
+   */
+  private buildStructuredData(canonicalHref: string): JsonLdNode[] {
+    const feature = this.feature;
+    if (!feature) {
+      return [];
+    }
+
+    const lang = this.languageService.currentLang();
+    const breadcrumb = this.structuredData.breadcrumbNode(
+      this.structuredData.knowledgeBaseTrail(lang, feature.title, canonicalHref),
+    );
+
+    const webPage: JsonLdNode = {
+      '@type': 'WebPage',
+      '@id': `${canonicalHref}#webpage`,
+      url: canonicalHref,
+      name: feature.metaTitle,
+      description: feature.metaDescription,
+      abstract: feature.tagline,
+      isPartOf: this.structuredData.websiteRef,
+      about: { '@id': SOFTWARE_APPLICATION_ID },
+      publisher: this.structuredData.organizationRef,
+      inLanguage: lang,
+      isAccessibleForFree: true,
+      breadcrumb: { '@id': breadcrumb['@id'] },
+    };
+
+    return [webPage, breadcrumb];
   }
 
   localizedHref(...segments: string[]): string {

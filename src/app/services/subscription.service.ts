@@ -15,7 +15,8 @@ const PREMIUM_LIMITS: Record<LimitedResource, number> = {
   strategy: 25,
 };
 
-const PREMIUM_MONTHLY_PRICE_USD = 10;
+/** Monthly Premium price in USD, also quoted by the SoftwareApplication offer in JSON-LD. */
+export const PREMIUM_MONTHLY_PRICE_USD = 10;
 
 @Injectable({ providedIn: 'root' })
 export class SubscriptionService {
