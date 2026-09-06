@@ -55,6 +55,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
       </button>
 
+      <!-- X (Twitter) sign-in temporarily disabled - keep for future re-enable
       <button class="btn-social btn-social-x" (click)="loginWithTwitter()" [disabled]="socialLoading() !== ''">
         @if (socialLoading() === 'twitter') {
           <span class="spinner spinner-dark"></span> {{ 'login.connecting' | translate }}
@@ -65,6 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           {{ 'login.continueWithX' | translate }}
         }
       </button>
+      -->
 
       <button class="btn-social" (click)="loginWithFacebook()" [disabled]="socialLoading() !== ''">
         @if (socialLoading() === 'facebook') {
