@@ -35,3 +35,19 @@ export function requireRunnerKey(req: Request, res: Response, next: NextFunction
   }
   next();
 }
+
+/**
+ * Gate for the read-only market-analysis endpoints.
+ *
+ * Deliberately a *different* secret from RUNNER_API_KEY: that key can trigger
+ * `/v1/run-active-strategies`, which places real orders. A read-only consumer
+ * such as the MCP server must never hold a credential that can trade.
+ */
+export function requireAnalysisReadKey(req: Request, res: Response, next: NextFunction) {
+  const provided = String(req.headers["x-analysis-key"] || "");
+  if (!config.analysisReadKey || provided !== config.analysisReadKey) {
+    res.status(401).json({ error: "Invalid analysis key" });
+    return;
+  }
+  next();
+}

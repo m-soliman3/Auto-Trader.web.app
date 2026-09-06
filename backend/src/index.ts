@@ -2,11 +2,13 @@ import express from "express";
 import cors from "cors";
 import http from "http";
 import { config } from "./infra/config";
-import { requireRunnerKey, requireUserAuth } from "./api/auth";
+import { requireAnalysisReadKey, requireRunnerKey, requireUserAuth } from "./api/auth";
 import { runActiveStrategiesOnce } from "./engine/runner";
 import { executeStrategyOrder } from "./engine/execution";
 import { resolveInstrumentChart } from "./engine/chart";
 import { getRecentRunnerSummaries, getRecentUserRunnerSummaries } from "./engine/repository";
+import { runAnalysisOnce } from "./engine/analysisRunner";
+import { getAnalysisSnapshot, listAnalysisSnapshots } from "./engine/analysisRepository";
 import { setupWebSocketServer } from "./infra/websocket";
 import { provisionAlpacaPaperAccount, seedAlpacaPaperBalance, fetchAlpacaBrokerPortfolio, deleteAlpacaBrokerAccount } from "./api/alpaca-paper";
 import { sendTopUpConfirmationEmail } from "./api/email";
@@ -288,6 +290,51 @@ app.get("/v1/paper-balance-status", requireUserAuth, async (req, res) => {
   } catch (error: any) {
     console.error("paper-balance-status error", error);
     res.status(500).json({ error: error?.message || "Failed to check balance status." });
+  }
+});
+
+// ── Market analysis (read-only surface for the MCP connector) ────────────────
+//
+// `POST /v1/run-analysis` is the Cloud Scheduler trigger. It writes snapshots
+// to the top-level `marketAnalysis` collection and never places an order.
+app.post("/v1/run-analysis", requireRunnerKey, async (req, res) => {
+  try {
+    const extra = Array.isArray(req.body?.targets) ? req.body.targets : [];
+    const summary = await runAnalysisOnce(extra);
+    res.status(200).json(summary);
+  } catch (error: any) {
+    console.error("run-analysis error", error);
+    res.status(500).json({ error: error?.message || "Internal server error" });
+  }
+});
+
+app.get("/v1/analysis", requireAnalysisReadKey, async (req, res) => {
+  try {
+    const limitParam = Number.parseInt(String(req.query?.limit || "100"), 10);
+    const items = await listAnalysisSnapshots(Number.isFinite(limitParam) ? limitParam : 100);
+    res.status(200).json({ count: items.length, items });
+  } catch (error: any) {
+    console.error("analysis list error", error);
+    res.status(500).json({ error: error?.message || "Internal server error" });
+  }
+});
+
+app.get("/v1/analysis/:symbol", requireAnalysisReadKey, async (req, res) => {
+  try {
+    const symbol = String(req.params.symbol || "").toUpperCase();
+    const timeframe = String(req.query?.timeframe || "1h");
+    const snapshot = await getAnalysisSnapshot(symbol, timeframe);
+    if (!snapshot) {
+      res.status(404).json({
+        error: `No analysis snapshot for ${symbol} on ${timeframe}.`,
+        hint: "Add it to ANALYSIS_SYMBOLS/ANALYSIS_TIMEFRAMES, or wait for the next scheduled run.",
+      });
+      return;
+    }
+    res.status(200).json(snapshot);
+  } catch (error: any) {
+    console.error("analysis get error", error);
+    res.status(500).json({ error: error?.message || "Internal server error" });
   }
 });
 
