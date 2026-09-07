@@ -1,4 +1,4 @@
-# AutoTrading
+# Invest-Begin.com
 ## Backend / Firestore setup
 
 This project now persists user data (accounts, exchanges, bots, saved strategies) in Firebase Firestore instead of `localStorage`.
@@ -125,6 +125,11 @@ ng e2e
 ```
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## MCP Server
+We have created an MCP Server that can be used by AI for analysis of stocks, Forex and Crypto.
+to connect, add MCP server connector with URL : https://www.invest-begin.com/mcp
+We are published on Smithery: https://smithery.ai/servers/invest-begin/investBegin-TradeAnalyzer
 
 ## Additional Resources
 
