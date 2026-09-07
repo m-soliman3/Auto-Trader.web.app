@@ -74,7 +74,7 @@
 
           @if (langMenuOpen()) {
             <div class="lang-menu" role="menu" [attr.aria-label]="'language.selectLanguage' | translate">
-              @for (lang of languageService.languages; track lang.code) {
+              @for (lang of languageService.selectableLanguages; track lang.code) {
                 <a
                   class="lang-menu-item"
                   role="menuitem"

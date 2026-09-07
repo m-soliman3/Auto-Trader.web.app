@@ -8,7 +8,7 @@
     <!-- language selector -->
     <div class="ld-language-links" aria-label="Page language variants">
       <span class="ld-language-label">{{ 'language.selectLanguage' | translate }}:</span>
-      @for (lang of languageService.languages; track lang.code) {
+      @for (lang of languageService.selectableLanguages; track lang.code) {
         <a
           [routerLink]="learnLanguageLink(lang.code)"
           [attr.href]="learnLanguageHref(lang.code)"

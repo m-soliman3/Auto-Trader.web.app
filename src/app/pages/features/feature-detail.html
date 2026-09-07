@@ -6,7 +6,7 @@
     <a [routerLink]="['/', languageService.currentLang()]" [attr.href]="localizedHref()" class="fp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
     <div class="fp-language-links" [attr.aria-label]="'Feature page language variants'">
       <span class="fp-language-label">{{ 'language.selectLanguage' | translate }}:</span>
-      @for (lang of languageService.languages; track lang.code) {
+      @for (lang of languageService.selectableLanguages; track lang.code) {
         <a
           [routerLink]="featureLanguageLink(lang.code)"
           [attr.href]="featureLanguageHref(lang.code)"

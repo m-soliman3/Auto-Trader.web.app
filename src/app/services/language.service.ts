@@ -9,14 +9,16 @@ export interface Language {
   label: string;
   flag: string;
   dir: 'ltr' | 'rtl';
+  /** Pages and routing for this language still exist, but it's hidden from the language selector UI. */
+  hidden?: boolean;
 }
 
 export const LANGUAGES: Language[] = [
   { code: 'en', label: 'English', flag: '🇬🇧', dir: 'ltr' },
   { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
-  { code: 'es', label: 'Español', flag: '🇪🇸', dir: 'ltr' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷', dir: 'ltr' },
-  { code: 'pt', label: 'Português', flag: '🇵🇹', dir: 'ltr' },
+  { code: 'es', label: 'Español', flag: '🇪🇸', dir: 'ltr', hidden: true },
+  { code: 'fr', label: 'Français', flag: '🇫🇷', dir: 'ltr', hidden: true },
+  { code: 'pt', label: 'Português', flag: '🇵🇹', dir: 'ltr', hidden: true },
   { code: 'ar', label: 'العربية', flag: '🇸🇦', dir: 'rtl' },
 ];
 
@@ -100,6 +102,8 @@ export class LanguageService {
   private readonly platformId = inject(PLATFORM_ID);
 
   readonly languages = LANGUAGES;
+  /** Languages shown in the language-selector UI. Hidden languages keep their pages and routing. */
+  readonly selectableLanguages = LANGUAGES.filter((l) => !l.hidden);
   readonly currentLang = signal<string>(this.getInitialLang());
 
   constructor() {
