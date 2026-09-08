@@ -57,8 +57,6 @@ export const TOUR_STEPS: TourStep[] = [
   },
 ];
 
-const STORAGE_KEY_PREFIX = 'at-tour-seen-';
-
 @Injectable({ providedIn: 'root' })
 export class TourService {
   private readonly auth = inject(AuthService);
@@ -149,23 +147,10 @@ export class TourService {
   }
 
   hasSeenTour(): boolean {
-    try {
-      const uid = this.auth.currentUser()?.id;
-      if (!uid) return false;
-      return localStorage.getItem(STORAGE_KEY_PREFIX + uid) === '1';
-    } catch {
-      return false;
-    }
+    return this.auth.currentUser()?.tourCompleted === true;
   }
 
   private markSeen(): void {
-    try {
-      const uid = this.auth.currentUser()?.id;
-      if (uid) {
-        localStorage.setItem(STORAGE_KEY_PREFIX + uid, '1');
-      }
-    } catch {
-      // localStorage may be unavailable in some environments
-    }
+    void this.auth.markTourCompleted();
   }
 }
