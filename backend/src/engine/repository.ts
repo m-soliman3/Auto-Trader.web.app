@@ -1,6 +1,32 @@
-import { db } from "../infra/firebase";
+import admin, { db } from "../infra/firebase";
 import { BotDoc, ExchangeDoc, StrategyDoc } from "../types/domain";
 import { RunnerSummary } from "./runner";
+
+// If a lock is older than this, treat it as abandoned (e.g. the instance that
+// took it crashed or was killed mid-execution) rather than blocking forever.
+const STRATEGY_LOCK_STALE_MS = 2 * 60 * 1000;
+
+/**
+ * Atomically claims a strategy for execution so overlapping runner passes —
+ * e.g. a Cloud Scheduler tick firing before the previous pass finished —
+ * can't both place an order for the same strategy. Returns false when
+ * another pass already holds a fresh lock, so the caller should skip it.
+ */
+export async function claimStrategyForRun(uid: string, strategyId: string): Promise<boolean> {
+  const ref = db.doc(`users/${uid}/strategies/${strategyId}`);
+  return db.runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    if (!snap.exists) return false;
+
+    const data = snap.data() as StrategyDoc;
+    const lockedAtMs = data.runLockedAt ? new Date(data.runLockedAt).getTime() : NaN;
+    const isLocked = Number.isFinite(lockedAtMs) && Date.now() - lockedAtMs < STRATEGY_LOCK_STALE_MS;
+    if (isLocked) return false;
+
+    tx.set(ref, { runLockedAt: new Date().toISOString() }, { merge: true });
+    return true;
+  });
+}
 
 export async function listActiveStrategies(): Promise<Array<{ uid: string; strategyId: string; strategy: StrategyDoc }>> {
   const usersSnap = await db.collection("users").get();

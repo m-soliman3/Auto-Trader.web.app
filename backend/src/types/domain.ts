@@ -21,6 +21,8 @@ export interface StrategyDoc {
   createdAt?: string;
   activatedAt?: string;
   lastExecutionAt?: string;
+  /** ISO timestamp set while a runner pass is executing this strategy, to stop an overlapping pass from double-executing it. Cleared when the execution attempt finishes. */
+  runLockedAt?: string;
   pendingSignal?: {
     side: TradeSide;
     reason: string;
