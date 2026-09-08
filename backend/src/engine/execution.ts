@@ -18,6 +18,25 @@ import {
   placeSchwabOrder,
 } from "./marketData";
 import { getBot, getExchangeByLabel, getStrategy, getUserProfile, updateBot, updateStrategy, writeExecution } from "./repository";
+import { sendStrategySignalEmail } from "../api/email";
+
+// The demo account whose live buy/sell signals get emailed to the founder as
+// a friendly heads-up. Resolved to a uid once per process and cached, so
+// every other user's executions skip the extra Auth lookup.
+const SIGNAL_ALERT_USER_EMAIL = "autotraderexecution@invest-begin.com";
+let signalAlertUidCache: string | null | undefined;
+
+async function isSignalAlertUser(uid: string): Promise<boolean> {
+  if (signalAlertUidCache === undefined) {
+    try {
+      const user = await admin.auth().getUserByEmail(SIGNAL_ALERT_USER_EMAIL);
+      signalAlertUidCache = user.uid;
+    } catch {
+      signalAlertUidCache = null;
+    }
+  }
+  return signalAlertUidCache === uid;
+}
 
 function toFiniteNumber(value: unknown): number | null {
   const parsed = Number(value);
@@ -222,6 +241,19 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
     totalAmount: metrics.totalAmount,
     executedAt: now,
   });
+
+  if (await isSignalAlertUser(uid)) {
+    await sendStrategySignalEmail({
+      strategyName: strategy.name || "Strategy",
+      templateId: strategy.templateId,
+      symbol,
+      side,
+      timeframe: bot.timeframe,
+      executionPrice: metrics.executionPrice,
+      investment,
+      exchangeId,
+    });
+  }
 
   return {
     success: true,

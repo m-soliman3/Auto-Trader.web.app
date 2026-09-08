@@ -13,6 +13,8 @@ export interface AppConfig {
   emailjsPrivateKey?: string;
   /** EmailJS template ID for demo account top-up confirmation emails. */
   emailjsTopupTemplateId?: string;
+  /** Resend API key for freeform transactional emails (e.g. strategy signal alerts). */
+  resendApiKey?: string;
   /** Read-only key for the market-analysis endpoints. Never grants execution. */
   analysisReadKey: string;
   /** Symbols the analysis runner always covers. */
@@ -39,6 +41,7 @@ export const config: AppConfig = {
   emailjsPublicKey: process.env.EMAILJS_PUBLIC_KEY || "gLTFDfDYuNpAvYzQJ",
   emailjsPrivateKey: process.env.EMAILJS_PRIVATE_KEY || "EATS9AlStHHuuQOzW5TbE",
   emailjsTopupTemplateId: process.env.EMAILJS_TOPUP_TEMPLATE_ID || "template_nwywmjp",
+  resendApiKey: process.env.RESEND_API_KEY || "",
   analysisReadKey: String(process.env.ANALYSIS_READ_KEY || ""),
   analysisSymbols: String(process.env.ANALYSIS_SYMBOLS || "AAPL,MSFT,NVDA,TSLA,AMZN,GOOGL,META,SPY,QQQ,BTC/USD,ETH/USD,EUR/USD,GBP/USD,USD/JPY")
     .split(",").map((s) => s.trim().toUpperCase()).filter(Boolean),
