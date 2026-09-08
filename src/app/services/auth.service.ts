@@ -61,6 +61,8 @@ export interface User {
   alpacaPaperAccountNumber?: string;
   /** True once the user has completed the post-signup onboarding guide. */
   onboardingCompleted?: boolean;
+  /** True once the user has skipped or finished the dashboard quick guide tour. */
+  tourCompleted?: boolean;
   /** Answers captured during the post-signup onboarding guide. */
   signupGuide?: {
     isActiveTrader: boolean;
@@ -235,6 +237,20 @@ export class AuthService {
       const profile = snap.data() as User;
       this.currentUser.set(profile);
       this.applyPreferredLanguage(profile.preferredLanguage);
+    }
+  }
+
+  /** Marks the dashboard quick guide tour as skipped/finished, persisted on the user's profile. */
+  async markTourCompleted(): Promise<void> {
+    const fbUser = this.fireAuth.currentUser;
+    if (!fbUser) return;
+
+    this.currentUser.update((current) => (current ? { ...current, tourCompleted: true } : current));
+
+    try {
+      await setDoc(doc(this.firestore, 'users', fbUser.uid), { tourCompleted: true }, { merge: true });
+    } catch (err) {
+      console.error('failed to save tour completion', err);
     }
   }
 
