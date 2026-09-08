@@ -25,6 +25,13 @@
           }
         },
         {
+          "source": "/api/liquidatePosition",
+          "function": {
+            "functionId": "liquidatePosition",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/api/getMarketData",
           "function": {
             "functionId": "getMarketData",
@@ -227,6 +234,13 @@
           "source": "/api/getPortfolio",
           "function": {
             "functionId": "getPortfolioHttp",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/liquidatePosition",
+          "function": {
+            "functionId": "liquidatePosition",
             "region": "europe-west1"
           }
         },

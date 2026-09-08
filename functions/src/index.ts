@@ -47,6 +47,61 @@ const corsHandler = cors({
 const ALPACA_BROKER_KEY = defineSecret("ALPACA_BROKER_KEY");
 const ALPACA_BROKER_SECRET = defineSecret("ALPACA_BROKER_SECRET");
 
+function getUsEasternClockParts(now: Date): { weekday: string; hour: number; minute: number } {
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  const parts = formatter.formatToParts(now);
+  const map: Record<string, string> = {};
+  for (const part of parts) {
+    if (part.type !== "literal") map[part.type] = part.value;
+  }
+
+  return {
+    weekday: map.weekday || "",
+    hour: Number.parseInt(map.hour || "0", 10),
+    minute: Number.parseInt(map.minute || "0", 10),
+  };
+}
+
+/**
+ * Determines whether a symbol is currently tradeable on its exchange, so the
+ * liquidation flow knows whether to submit an immediate market order or a
+ * standing (GTC) order that waits for the market to reopen.
+ */
+function resolveMarketSession(exchangeId: string, symbol: string): { isOpen: boolean; reason: string } {
+  const normalized = String(exchangeId || "").toLowerCase();
+
+  if (normalized === "binance") {
+    return { isOpen: true, reason: "Crypto market is 24/7." };
+  }
+
+  if (normalized === "alpaca" || normalized === "alpaca-paper") {
+    if (String(symbol || "").includes("/")) {
+      return { isOpen: true, reason: "Alpaca crypto market is 24/7." };
+    }
+
+    const clock = getUsEasternClockParts(new Date());
+    if (clock.weekday === "Sat" || clock.weekday === "Sun") {
+      return { isOpen: false, reason: "US equities market is closed on weekends." };
+    }
+    const minutes = clock.hour * 60 + clock.minute;
+    const open = 9 * 60 + 30;
+    const close = 16 * 60;
+    if (minutes < open || minutes >= close) {
+      return { isOpen: false, reason: "US equities market hours are 09:30–16:00 ET." };
+    }
+    return { isOpen: true, reason: "US equities regular session is open." };
+  }
+
+  return { isOpen: false, reason: `Exchange "${exchangeId}" is not supported.` };
+}
+
 async function fetchAlpacaPortfolio(
   apiKey: string,
   apiSecret: string,
@@ -92,8 +147,10 @@ async function fetchAlpacaPortfolio(
   const openPositions = Array.isArray(positionsPayload)
     ? positionsPayload.map((position: any) => {
         const side: "long" | "short" = String(position.side || "long").toLowerCase() === "short" ? "short" : "long";
+        const symbol = String(position.symbol || "");
+        const session = resolveMarketSession(isPaper ? "alpaca-paper" : "alpaca", symbol);
         return {
-          symbol: String(position.symbol || ""),
+          symbol,
           quantity: Number.parseFloat(position.qty || "0"),
           marketValue: Number.parseFloat(position.market_value || "0"),
           unrealizedPnl: position.unrealized_pl === undefined || position.unrealized_pl === null
@@ -109,6 +166,8 @@ async function fetchAlpacaPortfolio(
             ? null
             : Number.parseFloat(position.current_price),
           side,
+          marketOpen: session.isOpen,
+          marketStatusReason: session.reason,
         };
       })
     : [];
@@ -217,6 +276,8 @@ async function fetchBinancePortfolio(
       entryPrice: null,
       currentPrice: asset.currentPrice,
       side: "long" as const,
+      marketOpen: true,
+      marketStatusReason: "Crypto market is 24/7.",
     }));
 
   return {
@@ -282,8 +343,10 @@ async function fetchAlpacaBrokerPaperPortfolio(
   const openPositions = Array.isArray(positions)
     ? positions.map((p: any) => {
         const side: "long" | "short" = String(p.side || "long").toLowerCase() === "short" ? "short" : "long";
+        const symbol = String(p.symbol || "");
+        const session = resolveMarketSession("alpaca-paper", symbol);
         return {
-          symbol: String(p.symbol || ""),
+          symbol,
           quantity: Number.parseFloat(p.qty || "0"),
           marketValue: Number.parseFloat(p.market_value || "0"),
           unrealizedPnl: p.unrealized_pl != null ? Number.parseFloat(p.unrealized_pl) : null,
@@ -291,6 +354,8 @@ async function fetchAlpacaBrokerPaperPortfolio(
           entryPrice: p.avg_entry_price != null ? Number.parseFloat(p.avg_entry_price) : null,
           currentPrice: p.current_price != null ? Number.parseFloat(p.current_price) : null,
           side,
+          marketOpen: session.isOpen,
+          marketStatusReason: session.reason,
         };
       })
     : [];
@@ -447,6 +512,191 @@ export const getPortfolioHttp = functions
           res.status(451).json({
             error: "Binance blocked this server location (451 restricted location). Please use Binance for this region, Binance.US if applicable, or deploy functions in another allowed region.",
           });
+          return;
+        }
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Submits a market-close order to an Alpaca trading account (direct keys or
+ * the Broker sandbox trading proxy). When the market is open, it's an
+ * immediate "day" market order for the full position size. When the market
+ * is closed, it's a standing "gtc" limit order at the price the user saw
+ * when they clicked Liquidate, so it fills as soon as the market reopens.
+ */
+async function submitAlpacaLiquidationOrder(
+  ordersUrl: string,
+  headers: Record<string, string>,
+  params: { symbol: string; quantity: number; side: "long" | "short"; marketOpen: boolean; limitPrice?: number }
+): Promise<any> {
+  const orderSide = params.side === "short" ? "buy" : "sell";
+  const qty = Math.abs(Number(params.quantity));
+  if (!Number.isFinite(qty) || qty <= 0) {
+    throw new functions.https.HttpsError("invalid-argument", "Invalid quantity for liquidation order.");
+  }
+
+  const body: Record<string, any> = {
+    symbol: params.symbol,
+    side: orderSide,
+    qty: qty.toString(),
+  };
+
+  if (params.marketOpen) {
+    body.type = "market";
+    body.time_in_force = "day";
+  } else {
+    const limitPrice = Number(params.limitPrice);
+    if (!Number.isFinite(limitPrice) || limitPrice <= 0) {
+      throw new functions.https.HttpsError(
+        "invalid-argument",
+        "A valid price is required to place a standing order while the market is closed."
+      );
+    }
+    body.type = "limit";
+    body.time_in_force = "gtc";
+    body.limit_price = limitPrice.toFixed(2);
+  }
+
+  const response = await fetch(ordersUrl, {
+    method: "POST",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  } as any);
+
+  const text = await response.text();
+  const payload = text ? JSON.parse(text) : {};
+  if (!response.ok) {
+    throw new functions.https.HttpsError("internal", `Broker order error ${response.status}: ${text}`);
+  }
+  return payload;
+}
+
+async function placeBinanceLiquidationOrder(apiKey: string, apiSecret: string, symbol: string, quantity: number): Promise<any> {
+  const qty = Math.abs(Number(quantity));
+  if (!Number.isFinite(qty) || qty <= 0) {
+    throw new functions.https.HttpsError("invalid-argument", "Invalid quantity for liquidation order.");
+  }
+
+  const pair = `${symbol.toUpperCase()}USDT`;
+  const timestamp = Date.now();
+  const queryString = `symbol=${pair}&side=SELL&type=MARKET&quantity=${qty}&timestamp=${timestamp}`;
+  const signature = crypto.createHmac("sha256", apiSecret).update(queryString).digest("hex");
+  const url = `https://api.binance.com/api/v3/order?${queryString}&signature=${signature}`;
+
+  const response = await fetch(url, { method: "POST", headers: { "X-MBX-APIKEY": apiKey } } as any);
+  const text = await response.text();
+  const payload = text ? JSON.parse(text) : {};
+  if (!response.ok) {
+    throw new functions.https.HttpsError("internal", `Binance order error ${response.status}: ${text}`);
+  }
+  return payload;
+}
+
+export const liquidatePosition = functions
+  .region("europe-west1")
+  .runWith({ secrets: [ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") {
+        res.status(204).send("");
+        return;
+      }
+
+      if (req.method !== "POST") {
+        res.status(405).json({ error: "Method not allowed" });
+        return;
+      }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+
+        const exchangeId = String(req.body?.exchangeId || "").trim();
+        const apiKey = String(req.body?.apiKey || "").replace(/\s+/g, "");
+        const apiSecret = String(req.body?.apiSecret || "").replace(/\s+/g, "");
+        const symbol = String(req.body?.symbol || "").trim();
+        const quantity = Number(req.body?.quantity);
+        const side: "long" | "short" = String(req.body?.side || "long").toLowerCase() === "short" ? "short" : "long";
+        const limitPrice = req.body?.limitPrice != null ? Number(req.body.limitPrice) : undefined;
+
+        if (!exchangeId || !apiKey || !apiSecret || !symbol || !Number.isFinite(quantity) || quantity <= 0) {
+          res.status(400).json({ error: "Missing or invalid exchangeId, apiKey, apiSecret, symbol, or quantity" });
+          return;
+        }
+
+        console.log(`🔻 Liquidation requested by ${decoded.uid}: ${exchangeId} ${symbol} qty=${quantity} side=${side}`);
+
+        if (exchangeId === "binance") {
+          const order = await placeBinanceLiquidationOrder(apiKey, apiSecret, symbol, quantity);
+          res.status(200).json({ success: true, message: `Market sell order submitted for ${symbol}.`, order });
+          return;
+        }
+
+        if (exchangeId === "alpaca" || exchangeId === "alpaca-paper") {
+          const session = resolveMarketSession(exchangeId, symbol);
+          let order: any;
+
+          if (exchangeId === "alpaca-paper" && apiKey.startsWith("CK")) {
+            const userDoc = await admin.firestore().collection("users").doc(decoded.uid).get();
+            const brokerAccountId = userDoc.data()?.alpacaBrokerAccountId;
+            if (!brokerAccountId) {
+              res.status(404).json({ error: "Broker-provisioned paper account not found for this user." });
+              return;
+            }
+
+            const tokenRes = await fetch("https://authx.sandbox.alpaca.markets/v1/oauth2/token", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: new URLSearchParams({
+                grant_type: "client_credentials",
+                client_id: ALPACA_BROKER_KEY.value(),
+                client_secret: ALPACA_BROKER_SECRET.value(),
+              }).toString(),
+            } as any);
+            if (!tokenRes.ok) {
+              const errText = await tokenRes.text();
+              throw new functions.https.HttpsError("internal", `Alpaca auth token failed (${tokenRes.status}): ${errText}`);
+            }
+            const { access_token } = (await tokenRes.json()) as { access_token: string };
+
+            order = await submitAlpacaLiquidationOrder(
+              `https://broker-api.sandbox.alpaca.markets/v1/trading/accounts/${brokerAccountId}/orders`,
+              { Authorization: `Bearer ${access_token}` },
+              { symbol, quantity, side, marketOpen: session.isOpen, limitPrice }
+            );
+          } else {
+            const baseUrl = exchangeId === "alpaca-paper" ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
+            order = await submitAlpacaLiquidationOrder(
+              `${baseUrl}/v2/orders`,
+              { "APCA-API-KEY-ID": apiKey, "APCA-API-SECRET-KEY": apiSecret },
+              { symbol, quantity, side, marketOpen: session.isOpen, limitPrice }
+            );
+          }
+
+          const message = session.isOpen
+            ? `Market order submitted to close ${symbol}.`
+            : `Market is closed — a standing order was placed to close ${symbol} at $${Number(limitPrice).toFixed(2)} once trading resumes.`;
+
+          res.status(200).json({ success: true, message, order });
+          return;
+        }
+
+        res.status(404).json({ error: `Liquidation is not supported for exchange: ${exchangeId}` });
+      } catch (error: any) {
+        console.error("❌❌❌ liquidatePosition error:", error);
+        const message = error?.message || "Failed to liquidate position";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        const code = error?.code;
+        if (code === "invalid-argument") {
+          res.status(400).json({ error: message });
+          return;
+        }
+        if (code === "not-found") {
+          res.status(404).json({ error: message });
           return;
         }
         res.status(500).json({ error: message });
