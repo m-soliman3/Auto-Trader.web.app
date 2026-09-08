@@ -929,6 +929,7 @@ export class ExchangeService {
           symbol: position.symbol,
           quantity: position.quantity,
           side: position.side,
+          limitPrice: position.currentPrice ?? undefined,
         },
         {
           headers: {

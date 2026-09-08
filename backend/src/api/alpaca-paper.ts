@@ -14,6 +14,7 @@
 
 import fetch from "node-fetch";
 import { config } from "../infra/config";
+import { marketSessionForExchange } from "../engine/marketSession";
 
 const BROKER_SANDBOX_BASE = "https://broker-api.sandbox.alpaca.markets";
 const AUTHX_SANDBOX_BASE = "https://authx.sandbox.alpaca.markets";
@@ -379,6 +380,8 @@ export interface PaperPortfolioData {
     entryPrice: number | null;
     currentPrice: number | null;
     side: "long" | "short";
+    marketOpen: boolean;
+    marketStatusReason: string;
   }>;
 }
 
@@ -424,16 +427,22 @@ export async function fetchAlpacaBrokerPortfolio(accountId: string): Promise<Pap
   const positions: any[] = await posRes.json();
 
   const openPositions = Array.isArray(positions)
-    ? positions.map((p: any) => ({
-        symbol: String(p.symbol || ""),
-        quantity: parseFloat(p.qty || "0"),
-        marketValue: parseFloat(p.market_value || "0"),
-        unrealizedPnl: p.unrealized_pl != null ? parseFloat(p.unrealized_pl) : null,
-        pnlPercentage: p.unrealized_plpc != null ? parseFloat(p.unrealized_plpc) * 100 : null,
-        entryPrice: p.avg_entry_price != null ? parseFloat(p.avg_entry_price) : null,
-        currentPrice: p.current_price != null ? parseFloat(p.current_price) : null,
-        side: String(p.side || "long").toLowerCase() === "short" ? "short" as const : "long" as const,
-      }))
+    ? positions.map((p: any) => {
+        const symbol = String(p.symbol || "");
+        const session = marketSessionForExchange("alpaca-paper", symbol);
+        return {
+          symbol,
+          quantity: parseFloat(p.qty || "0"),
+          marketValue: parseFloat(p.market_value || "0"),
+          unrealizedPnl: p.unrealized_pl != null ? parseFloat(p.unrealized_pl) : null,
+          pnlPercentage: p.unrealized_plpc != null ? parseFloat(p.unrealized_plpc) * 100 : null,
+          entryPrice: p.avg_entry_price != null ? parseFloat(p.avg_entry_price) : null,
+          currentPrice: p.current_price != null ? parseFloat(p.current_price) : null,
+          side: String(p.side || "long").toLowerCase() === "short" ? "short" as const : "long" as const,
+          marketOpen: session.isOpen,
+          marketStatusReason: session.reason,
+        };
+      })
     : [];
 
   return {
