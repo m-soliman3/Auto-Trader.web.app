@@ -1,7 +1,7 @@
 import admin from "../infra/firebase";
 import { executeStrategyOrder, shouldRunByTimeframe } from "./execution";
 import { marketSessionForExchange } from "./marketSession";
-import { listActiveStrategies, getBot, getExchangeByLabel, saveRunnerSummary, saveUserRunnerSummary, updateStrategy } from "./repository";
+import { claimStrategyForRun, listActiveStrategies, getBot, getExchangeByLabel, saveRunnerSummary, saveUserRunnerSummary, updateStrategy } from "./repository";
 import { evaluateStrategySignal } from "./signals";
 
 export interface RunnerSummary {
@@ -138,10 +138,20 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
       continue;
     }
 
+    // Guard against an overlapping runner pass (e.g. a scheduler tick firing
+    // before this pass finished) executing the same strategy twice.
+    const claimed = await claimStrategyForRun(uid, strategyId);
+    if (!claimed) {
+      skipped++;
+      userStats!.skipped++;
+      continue;
+    }
+
     try {
       await executeStrategyOrder(uid, strategyId, signalSide as "buy" | "sell");
       await updateStrategy(uid, strategyId, {
         pendingSignal: admin.firestore.FieldValue.delete(),
+        runLockedAt: admin.firestore.FieldValue.delete(),
         lastEvaluationAt: new Date().toISOString(),
         lastEvaluationStatus: "executed",
         lastProcessedSignalAt: new Date().toISOString(),
@@ -153,6 +163,7 @@ export async function runActiveStrategiesOnce(): Promise<RunnerSummary> {
       failed++;
       userStats!.failed++;
       await updateStrategy(uid, strategyId, {
+        runLockedAt: admin.firestore.FieldValue.delete(),
         lastEvaluationAt: new Date().toISOString(),
         lastEvaluationStatus: "execution-failed",
         lastEvaluationReason: error?.message || "unknown error",
