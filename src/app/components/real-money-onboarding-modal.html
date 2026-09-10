@@ -362,6 +362,22 @@
                 <div class="form-error">{{ exchangeError() }}</div>
               }
 
+              @if (isAlpacaSelected()) {
+                <div class="oauth-connect-block">
+                  <div class="oauth-disclosure">
+                    <h4 class="oauth-disclosure-title">Authorize Invest-Begin</h4>
+                    <p class="oauth-disclosure-body">
+                      By allowing Invest-Begin to access your Alpaca account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Alpaca does not warrant or guarantee that Invest-Begin will work as advertised or expected. Before authorizing,
+                      <a href="https://www.invest-begin.com" target="_blank" rel="noopener noreferrer">learn more about Invest-Begin.</a>
+                    </p>
+                  </div>
+                  <button type="button" class="primary-btn oauth-btn" (click)="connectAlpacaOAuth()" [disabled]="oauthConnecting()">
+                    {{ oauthConnecting() ? 'Redirecting to Alpaca…' : 'Connect with Alpaca' }}
+                  </button>
+                  <div class="oauth-divider"><span>or enter API keys manually</span></div>
+                </div>
+              }
+
               <div class="form-group">
                 <label for="ex-label">Account label</label>
                 <input id="ex-label" type="text" [(ngModel)]="exchangeLabel" placeholder="My Exchange" />
