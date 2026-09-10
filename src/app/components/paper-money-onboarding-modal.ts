@@ -85,6 +85,13 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
   exchangeError = signal('');
   exchangeSaving = signal(false);
   exchangeConnected = signal(false);
+  oauthConnecting = signal(false);
+
+  /** True when the "Connect with Alpaca" OAuth option should show (Alpaca Connect Apps). */
+  isAlpacaSelected = computed(() => {
+    const ex = this.selectedExchange();
+    return ex?.id === 'alpaca' || ex?.id === 'alpaca-paper';
+  });
 
   private get backendBase(): string {
     return String(environment.tradingBackendBaseUrl || '').replace(/\/$/, '');
@@ -229,6 +236,27 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
     this.exchangeStep.set(1);
     this.selectedExchange.set(null);
     this.exchangeError.set('');
+  }
+
+  /**
+   * "Connect with Alpaca" via OAuth (Alpaca Connect Apps) — an alternative to
+   * pasting API keys below. Navigates the browser to Alpaca's authorize page;
+   * on approval the user lands back on /exchanges already connected.
+   */
+  async connectAlpacaOAuth(): Promise<void> {
+    const ex = this.selectedExchange();
+    if (!ex) return;
+
+    this.exchangeError.set('');
+    this.oauthConnecting.set(true);
+    try {
+      const env: 'live' | 'paper' = ex.id === 'alpaca-paper' ? 'paper' : 'live';
+      await this.exchangeService.startAlpacaConnect(env);
+      // On success the browser navigates to Alpaca; nothing else to do here.
+    } catch (err: any) {
+      this.oauthConnecting.set(false);
+      this.exchangeError.set(err?.message || 'Failed to start the Alpaca connection. Please try again.');
+    }
   }
 
   async saveExchange(): Promise<void> {

@@ -414,6 +414,60 @@
   color: var(--text-secondary);
 }
 
+/* ── Alpaca Connect OAuth ────────────────────────────────────────────────── */
+.oauth-connect-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.oauth-disclosure {
+  background: rgba(255, 106, 0, 0.07);
+  border: 1px solid rgba(255, 106, 0, 0.22);
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem;
+}
+
+.oauth-disclosure-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.oauth-disclosure-body {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+
+  a { color: #ff6a00; font-weight: 600; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+}
+
+.oauth-btn {
+  background: #ff6a00;
+
+  &:hover:not(:disabled) { opacity: 0.9; }
+}
+
+.oauth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border, rgba(255,255,255,0.12));
+  }
+}
+
 /* ── Primary button ──────────────────────────────────────────────────────── */
 .primary-btn {
   width: 100%;
