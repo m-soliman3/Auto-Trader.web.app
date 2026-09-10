@@ -19,6 +19,7 @@ import {
 } from "./marketData";
 import { getBot, getExchangeByLabel, getStrategy, getUserProfile, updateBot, updateStrategy, writeExecution } from "./repository";
 import { sendStrategySignalEmail } from "../api/email";
+import { getAlpacaOAuthAccessToken } from "../api/alpaca-oauth";
 
 // The demo account whose live buy/sell signals get emailed to the founder as
 // a friendly heads-up. Resolved to a uid once per process and cached, so
@@ -151,7 +152,13 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
   const symbol = String(bot.symbol || "");
   const investment = Number(bot.investment || 0);
 
-  if (!exchangeId || !apiKey || !apiSecret) throw new Error("Missing exchange credentials");
+  // Alpaca accounts connected via the "Connect with Alpaca" OAuth flow have
+  // no apiKey/apiSecret — trading uses the stored OAuth access token instead
+  // (fetched just before the alpaca branch below). Every other exchange
+  // keeps requiring both, unchanged.
+  const isAlpacaOAuth = (exchangeId === "alpaca" || exchangeId === "alpaca-paper") && exchange.authMethod === "oauth";
+
+  if (!exchangeId || (!isAlpacaOAuth && (!apiKey || !apiSecret))) throw new Error("Missing exchange credentials");
   if (!symbol || !Number.isFinite(investment) || investment <= 0) throw new Error("Bot symbol or investment is invalid");
 
   const session = marketSessionForExchange(exchangeId, symbol, new Date());
@@ -174,6 +181,14 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
       const userProfile = await getUserProfile(uid);
       brokerAccountId = String(userProfile?.["alpacaBrokerAccountId"] || "").trim() || undefined;
     }
+
+    let oauthAccessToken: string | undefined;
+    if (isAlpacaOAuth) {
+      const env: "live" | "paper" = exchangeId === "alpaca-paper" ? "paper" : "live";
+      oauthAccessToken = (await getAlpacaOAuthAccessToken(uid, env)) || undefined;
+      if (!oauthAccessToken) throw new Error("Alpaca OAuth connection expired or missing — please reconnect.");
+    }
+
     orderResult = await placeAlpacaOrder({
       exchangeId,
       apiKey,
@@ -183,6 +198,7 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
       investment,
       brokerProvisioned: isBrokerPaper,
       brokerAccountId,
+      oauthAccessToken,
     });
   } else if (exchangeId === "bybit" || exchangeId === "bybit-testnet") {
     orderResult = await placeBybitOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });

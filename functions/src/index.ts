@@ -102,6 +102,14 @@ function resolveMarketSession(exchangeId: string, symbol: string): { isOpen: boo
   return { isOpen: false, reason: `Exchange "${exchangeId}" is not supported.` };
 }
 
+// OAuth2 credentials for the Alpaca "Connect Apps" integration — separate
+// from the Broker API credentials above. This is the flow where a user
+// authorizes Invest-Begin against their own existing Alpaca account
+// (docs.alpaca.markets/docs/about-connect-api), as opposed to the Broker API
+// which provisions managed sandbox sub-accounts.
+const ALPACA_OAUTH_CLIENT_ID = defineSecret("ALPACA_OAUTH_CLIENT_ID");
+const ALPACA_OAUTH_CLIENT_SECRET = defineSecret("ALPACA_OAUTH_CLIENT_SECRET");
+
 async function fetchAlpacaPortfolio(
   apiKey: string,
   apiSecret: string,
@@ -412,6 +420,17 @@ export const getPortfolio = functions
       console.log("📊 Portfolio request for:", exchangeId);
       console.log("🔑 API Key provided:", !!apiKey);
 
+      // Alpaca accounts connected via the "Connect with Alpaca" OAuth flow
+      // (see alpacaOAuthCallback below) carry no apiKey/apiSecret at all —
+      // the access token lives server-side in alpaca_oauth_tokens, looked up
+      // by uid, and is never sent by the client.
+      if ((exchangeId === "alpaca" || exchangeId === "alpaca-paper") && data.authMethod === "oauth") {
+        const env: "live" | "paper" = exchangeId === "alpaca-paper" ? "paper" : "live";
+        const portfolio = await fetchAlpacaOAuthPortfolio(context.auth.uid, env);
+        console.log("✅ Success! (Alpaca OAuth) Portfolio value:", portfolio.portfolioValue);
+        return portfolio;
+      }
+
       // Top-up paper accounts use CK-prefixed Broker API keys which only work
       // against the Broker sandbox trading proxy (not paper-api.alpaca.markets).
       // Manually connected alpaca-paper accounts use regular PK-prefixed keys
@@ -473,6 +492,14 @@ export const getPortfolioHttp = functions
         const { exchangeId, apiKey, apiSecret } = req.body || {};
         console.log("📊 HTTP portfolio request for:", exchangeId);
         console.log("🔑 API Key provided:", !!apiKey);
+
+        // Same OAuth routing as the callable version above.
+        if ((exchangeId === "alpaca" || exchangeId === "alpaca-paper") && req.body?.authMethod === "oauth") {
+          const env: "live" | "paper" = exchangeId === "alpaca-paper" ? "paper" : "live";
+          const portfolio = await fetchAlpacaOAuthPortfolio(decoded.uid, env);
+          res.status(200).json(portfolio);
+          return;
+        }
 
         // Same CK-key routing as the callable version.
         if (exchangeId === "alpaca-paper" && (apiKey || "").startsWith("CK")) {
@@ -2821,4 +2848,270 @@ export const createShopifyListing = functions
       status: product.status,
       onlineStoreUrl: product.onlineStoreUrl ?? null,
     };
+  });
+
+// ── Alpaca Connect OAuth ─────────────────────────────────────────────────────
+//
+// Implements Alpaca's "Connect Apps" OAuth2 flow so a user can authorize
+// Invest-Begin against their own Alpaca account without ever pasting an API
+// key/secret into this app (docs.alpaca.markets/docs/about-connect-api).
+// This is independent of the Broker API sandbox provisioning further above,
+// which creates managed paper sub-accounts instead.
+//
+// Scopes requested: "trading data" (place/cancel orders + read account/market
+// data) — the same Read + Trade permissions the manual API-key flow already
+// asks users to enable, see connect-exchange-modal.html.
+
+const ALPACA_OAUTH_SCOPES = "trading data";
+const ALPACA_OAUTH_STATE_COLLECTION = "alpaca_oauth_states";
+// Server-only collection — deliberately NOT under users/{uid}/, so no
+// Firestore security rule matches it and access tokens can never be read by
+// a client SDK (mirrors the marketAnalysis collection pattern used by the
+// MCP analysis runner). Doc id is `${uid}_${env}`.
+const ALPACA_OAUTH_TOKENS_COLLECTION = "alpaca_oauth_tokens";
+
+function resolveAlpacaOAuthRedirectUri(host: string): string {
+  return host.includes("localhost") || host.includes("127.0.0.1")
+    ? `http://${host}/api/alpaca/oauth/callback`
+    : "https://invest-begin.com/api/alpaca/oauth/callback";
+}
+
+/**
+ * Fetches portfolio (equity + open positions) for an Alpaca account connected
+ * via OAuth, using the access token stored server-side for this uid/env.
+ */
+async function fetchAlpacaOAuthPortfolio(uid: string, env: "live" | "paper"): Promise<PortfolioData> {
+  const tokenSnap = await admin.firestore()
+    .collection(ALPACA_OAUTH_TOKENS_COLLECTION)
+    .doc(`${uid}_${env}`)
+    .get();
+
+  if (!tokenSnap.exists) {
+    throw new functions.https.HttpsError(
+      "failed-precondition",
+      `Alpaca is not connected via OAuth (${env}). Please reconnect.`
+    );
+  }
+
+  const { accessToken } = tokenSnap.data() as { accessToken: string };
+  const baseUrl = env === "paper" ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
+  const headers = { Authorization: `Bearer ${accessToken}` };
+
+  const accountRes = await fetch(`${baseUrl}/v2/account`, { headers } as any);
+  if (!accountRes.ok) {
+    const text = await accountRes.text();
+    throw new functions.https.HttpsError("internal", `Alpaca OAuth account error ${accountRes.status}: ${text}`);
+  }
+  const data: any = await accountRes.json();
+
+  const posRes = await fetch(`${baseUrl}/v2/positions`, { headers } as any);
+  if (!posRes.ok) {
+    const text = await posRes.text();
+    throw new functions.https.HttpsError("internal", `Alpaca OAuth positions error ${posRes.status}: ${text}`);
+  }
+  const positions: any[] = await posRes.json();
+
+  const openPositions = Array.isArray(positions)
+    ? positions.map((p: any) => {
+        const side: "long" | "short" = String(p.side || "long").toLowerCase() === "short" ? "short" : "long";
+        return {
+          symbol: String(p.symbol || ""),
+          quantity: Number.parseFloat(p.qty || "0"),
+          marketValue: Number.parseFloat(p.market_value || "0"),
+          unrealizedPnl: p.unrealized_pl != null ? Number.parseFloat(p.unrealized_pl) : null,
+          pnlPercentage: p.unrealized_plpc != null ? Number.parseFloat(p.unrealized_plpc) * 100 : null,
+          entryPrice: p.avg_entry_price != null ? Number.parseFloat(p.avg_entry_price) : null,
+          currentPrice: p.current_price != null ? Number.parseFloat(p.current_price) : null,
+          side,
+        };
+      })
+    : [];
+
+  return {
+    portfolioValue: Number.parseFloat(data.equity || data.portfolio_value || "0"),
+    unrealizedPnl: data.unrealized_pl != null ? Number.parseFloat(data.unrealized_pl) : null,
+    pnlPercentage: data.unrealized_plpc != null ? Number.parseFloat(data.unrealized_plpc) * 100 : null,
+    updatedAt: new Date().toISOString(),
+    openPositions,
+  };
+}
+
+/**
+ * Starts the Alpaca Connect OAuth flow for the authenticated user.
+ * POST /api/alpaca/oauth/start   body: { env: "live" | "paper" }
+ * Returns { authorizeUrl } for the frontend to navigate the browser to.
+ */
+export const alpacaOAuthStart = functions
+  .region("europe-west1")
+  .runWith({ secrets: [ALPACA_OAUTH_CLIENT_ID] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") {
+        res.status(204).send("");
+        return;
+      }
+      if (req.method !== "POST") {
+        res.status(405).json({ error: "Method not allowed" });
+        return;
+      }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const env: "live" | "paper" = req.body?.env === "paper" ? "paper" : "live";
+
+        const clientId = ALPACA_OAUTH_CLIENT_ID.value();
+        if (!clientId) {
+          res.status(500).json({ error: "Alpaca OAuth is not configured" });
+          return;
+        }
+
+        const state = crypto.randomBytes(24).toString("hex");
+        const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+        await admin.firestore()
+          .collection(ALPACA_OAUTH_STATE_COLLECTION)
+          .doc(state)
+          .set({ uid: decoded.uid, env, expiresAt });
+
+        const redirectUri = resolveAlpacaOAuthRedirectUri(String(req.headers.host || ""));
+
+        const authorizeUrl = new URL("https://app.alpaca.markets/oauth/authorize");
+        authorizeUrl.searchParams.set("response_type", "code");
+        authorizeUrl.searchParams.set("client_id", clientId);
+        authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+        authorizeUrl.searchParams.set("scope", ALPACA_OAUTH_SCOPES);
+        authorizeUrl.searchParams.set("state", state);
+        authorizeUrl.searchParams.set("env", env);
+
+        res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
+      } catch (error: any) {
+        const message = error?.message || "Failed to start Alpaca OAuth";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ alpacaOAuthStart failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Handles Alpaca's OAuth2 redirect back from the authorize step.
+ * GET /api/alpaca/oauth/callback?code=...&state=...
+ *
+ * Exchanges the code for an access token, stores it server-side only (never
+ * sent to the client — see ALPACA_OAUTH_TOKENS_COLLECTION above), records a
+ * lightweight connection under users/{uid}/exchanges/ so the existing
+ * frontend lists it exactly like any other connected exchange, then
+ * redirects the browser back into the app.
+ */
+export const alpacaOAuthCallback = functions
+  .region("europe-west1")
+  .runWith({ secrets: [ALPACA_OAUTH_CLIENT_ID, ALPACA_OAUTH_CLIENT_SECRET] })
+  .https.onRequest(async (req, res) => {
+    const clientId = ALPACA_OAUTH_CLIENT_ID.value();
+    const clientSecret = ALPACA_OAUTH_CLIENT_SECRET.value();
+
+    if (!clientId || !clientSecret) {
+      res.status(500).send("Alpaca OAuth is not configured");
+      return;
+    }
+
+    const code = String(req.query.code || "");
+    const state = String(req.query.state || "");
+    const oauthError = String(req.query.error || "");
+
+    if (oauthError) {
+      console.warn("⚠ Alpaca OAuth authorize returned an error:", oauthError);
+      res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+      return;
+    }
+    if (!code || !state) {
+      res.status(400).send("Missing required parameters");
+      return;
+    }
+
+    // Verify one-time state and recover which user/env started this flow.
+    const stateRef = admin.firestore().collection(ALPACA_OAUTH_STATE_COLLECTION).doc(state);
+    const stateSnap = await stateRef.get();
+    if (!stateSnap.exists) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+    const stateData = stateSnap.data()!;
+    await stateRef.delete(); // consumed — one-time use only
+
+    if (Date.now() > stateData.expiresAt) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+
+    const uid = String(stateData.uid);
+    const env: "live" | "paper" = stateData.env === "paper" ? "paper" : "live";
+
+    try {
+      const redirectUri = resolveAlpacaOAuthRedirectUri(String(req.headers.host || ""));
+      const tokenRes = await fetch("https://api.alpaca.markets/oauth/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          code,
+          client_id: clientId,
+          client_secret: clientSecret,
+          redirect_uri: redirectUri,
+        }).toString(),
+      } as any);
+
+      if (!tokenRes.ok) {
+        const text = await tokenRes.text();
+        console.error("❌ Alpaca OAuth token exchange failed:", text);
+        res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+        return;
+      }
+
+      const tokenData: any = await tokenRes.json();
+      const accessToken: string = tokenData.access_token;
+      const scope: string = tokenData.scope || ALPACA_OAUTH_SCOPES;
+
+      if (!accessToken) {
+        console.error("❌ Alpaca OAuth token response had no access_token");
+        res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+        return;
+      }
+
+      // Persist the access token server-side only.
+      await admin.firestore()
+        .collection(ALPACA_OAUTH_TOKENS_COLLECTION)
+        .doc(`${uid}_${env}`)
+        .set({ uid, env, accessToken, scope, connectedAt: new Date().toISOString() });
+
+      // Lightweight, client-visible connection record — no secret material.
+      // Fixed label so reconnecting the same env updates it instead of
+      // creating a duplicate entry in the exchanges list.
+      const exchangeId = env === "paper" ? "alpaca-paper" : "alpaca";
+      const label = env === "paper" ? "Alpaca Paper (Connect)" : "Alpaca (Connect)";
+      await admin.firestore()
+        .collection("users").doc(uid)
+        .collection("exchanges").doc(label)
+        .set(
+          {
+            exchangeId,
+            label,
+            apiKey: "",
+            secret: "",
+            authMethod: "oauth",
+            connectedAt: new Date().toISOString(),
+            status: "active",
+          },
+          { merge: true }
+        );
+
+      console.log(`✅ Alpaca OAuth connected for uid=${uid} env=${env}`);
+      res.redirect(302, `https://invest-begin.com/exchanges?alpaca_connect=success&env=${env}`);
+    } catch (error: any) {
+      console.error("❌ alpacaOAuthCallback failed:", error);
+      res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+    }
   });

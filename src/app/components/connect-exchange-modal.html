@@ -110,6 +110,26 @@
         </div>
       </div>
 
+      @if (isAlpacaSelected()) {
+        <div class="oauth-connect-block">
+          <div class="oauth-disclosure">
+            <h4 class="oauth-disclosure-title">{{ 'connectExchange.oauthDisclosureTitle' | translate }}</h4>
+            <p class="oauth-disclosure-body">
+              {{ 'connectExchange.oauthDisclosureBody' | translate }}
+              <a href="https://www.invest-begin.com" target="_blank" rel="noopener noreferrer">{{ 'connectExchange.oauthDisclosureLearnMore' | translate }}</a>
+            </p>
+          </div>
+          <button type="button" class="btn-oauth-connect" (click)="connectAlpacaOAuth()" [disabled]="oauthConnecting()">
+            @if (oauthConnecting()) {
+              <span class="spinner"></span> {{ 'connectExchange.oauthConnecting' | translate }}
+            } @else {
+              {{ 'connectExchange.connectWithAlpacaOAuth' | translate }}
+            }
+          </button>
+          <div class="oauth-divider"><span>{{ 'connectExchange.orEnterManually' | translate }}</span></div>
+        </div>
+      }
+
       <div class="form-group">
         <label for="label">{{ 'connectExchange.accountLabel' | translate }}</label>
         <input id="label" type="text" [(ngModel)]="label" name="label" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />

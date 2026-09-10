@@ -445,6 +445,7 @@
     "accountLabel": "Account Label",
     "accountLabelHint": "A nickname to identify this connection",
     "accountLabelPlaceholder": "e.g. Main Binance",
+    "alpacaOAuthHint": "Securely link your Alpaca account — no API keys to copy. You'll be redirected to Alpaca to authorize access.",
     "and": "and",
     "apiKey": "API Key",
     "apiKeyPlaceholder": "Paste your API key here",
@@ -452,6 +453,7 @@
     "apiSecretPlaceholder": "Paste your API secret",
     "chooseExchange": "Choose the exchange you want to connect",
     "connect": "Connect",
+    "connectWithAlpacaOAuth": "Connect with Alpaca",
     "connectExchange": "Connect Exchange",
     "connecting": "Connecting…",
     "cryptoExchanges": "Crypto Exchanges",
@@ -462,6 +464,11 @@
     "guideToGenerateApiFor": "Guide to generate {{name}} API here",
     "keysValidated": "Your keys are securely validated with the exchange before saving",
     "noExchangesForMode": "No exchanges available for this mode yet.",
+    "oauthConnecting": "Redirecting to Alpaca…",
+    "oauthDisclosureTitle": "Authorize Invest-Begin",
+    "oauthDisclosureBody": "By allowing Invest-Begin to access your Alpaca account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Alpaca does not warrant or guarantee that Invest-Begin will work as advertised or expected. Before authorizing,",
+    "oauthDisclosureLearnMore": "learn more about Invest-Begin.",
+    "orEnterManually": "or enter API keys manually",
     "paperTrading": "Paper Trading",
     "passphrase": "Passphrase",
     "passphrasePlaceholder": "Passphrase set when creating the key",
@@ -753,7 +760,9 @@
     "supportedProviders": "Supported Providers",
     "acknowledgeRisksToContinue": "Please acknowledge the risks to continue",
     "typeDisconnectToConfirmError": "Please type \"disconnect this Exchange\" to confirm",
-    "successConnected": "Your exchange is connected successfully."
+    "successConnected": "Your exchange is connected successfully.",
+    "oauthConnectSuccess": "Alpaca connected successfully.",
+    "oauthConnectError": "Alpaca connection failed. Please try again."
   },
   "bots": {
     "confirmDeletion": "Confirm Deletion",

@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createShopifyListing = exports.shopifyCallback = exports.shopifyAuth = exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.getMarketData = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.alpacaOAuthCallback = exports.alpacaOAuthStart = exports.createShopifyListing = exports.shopifyCallback = exports.shopifyAuth = exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.getMarketData = exports.liquidatePosition = exports.getPortfolioHttp = exports.getPortfolio = void 0;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -63,6 +63,61 @@ const corsHandler = (0, cors_1.default)({
 // which are defined early in this file, before the top-up/payment functions.
 const ALPACA_BROKER_KEY = (0, params_1.defineSecret)("ALPACA_BROKER_KEY");
 const ALPACA_BROKER_SECRET = (0, params_1.defineSecret)("ALPACA_BROKER_SECRET");
+function getUsEasternClockParts(now) {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    });
+    const parts = formatter.formatToParts(now);
+    const map = {};
+    for (const part of parts) {
+        if (part.type !== "literal")
+            map[part.type] = part.value;
+    }
+    return {
+        weekday: map.weekday || "",
+        hour: Number.parseInt(map.hour || "0", 10),
+        minute: Number.parseInt(map.minute || "0", 10),
+    };
+}
+/**
+ * Determines whether a symbol is currently tradeable on its exchange, so the
+ * liquidation flow knows whether to submit an immediate market order or a
+ * standing (GTC) order that waits for the market to reopen.
+ */
+function resolveMarketSession(exchangeId, symbol) {
+    const normalized = String(exchangeId || "").toLowerCase();
+    if (normalized === "binance") {
+        return { isOpen: true, reason: "Crypto market is 24/7." };
+    }
+    if (normalized === "alpaca" || normalized === "alpaca-paper") {
+        if (String(symbol || "").includes("/")) {
+            return { isOpen: true, reason: "Alpaca crypto market is 24/7." };
+        }
+        const clock = getUsEasternClockParts(new Date());
+        if (clock.weekday === "Sat" || clock.weekday === "Sun") {
+            return { isOpen: false, reason: "US equities market is closed on weekends." };
+        }
+        const minutes = clock.hour * 60 + clock.minute;
+        const open = 9 * 60 + 30;
+        const close = 16 * 60;
+        if (minutes < open || minutes >= close) {
+            return { isOpen: false, reason: "US equities market hours are 09:30–16:00 ET." };
+        }
+        return { isOpen: true, reason: "US equities regular session is open." };
+    }
+    return { isOpen: false, reason: `Exchange "${exchangeId}" is not supported.` };
+}
+// OAuth2 credentials for the Alpaca "Connect Apps" integration — separate
+// from the Broker API credentials above. This is the flow where a user
+// authorizes Invest-Begin against their own existing Alpaca account
+// (docs.alpaca.markets/docs/about-connect-api), as opposed to the Broker API
+// which provisions managed sandbox sub-accounts.
+const ALPACA_OAUTH_CLIENT_ID = (0, params_1.defineSecret)("ALPACA_OAUTH_CLIENT_ID");
+const ALPACA_OAUTH_CLIENT_SECRET = (0, params_1.defineSecret)("ALPACA_OAUTH_CLIENT_SECRET");
 async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
     const baseUrl = isPaper
         ? "https://paper-api.alpaca.markets"
@@ -97,8 +152,10 @@ async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
     const openPositions = Array.isArray(positionsPayload)
         ? positionsPayload.map((position) => {
             const side = String(position.side || "long").toLowerCase() === "short" ? "short" : "long";
+            const symbol = String(position.symbol || "");
+            const session = resolveMarketSession(isPaper ? "alpaca-paper" : "alpaca", symbol);
             return {
-                symbol: String(position.symbol || ""),
+                symbol,
                 quantity: Number.parseFloat(position.qty || "0"),
                 marketValue: Number.parseFloat(position.market_value || "0"),
                 unrealizedPnl: position.unrealized_pl === undefined || position.unrealized_pl === null
@@ -114,6 +171,8 @@ async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
                     ? null
                     : Number.parseFloat(position.current_price),
                 side,
+                marketOpen: session.isOpen,
+                marketStatusReason: session.reason,
             };
         })
         : [];
@@ -200,6 +259,8 @@ async function fetchBinancePortfolio(apiKey, apiSecret) {
         entryPrice: null,
         currentPrice: asset.currentPrice,
         side: "long",
+        marketOpen: true,
+        marketStatusReason: "Crypto market is 24/7.",
     }));
     return {
         portfolioValue: totalCurrentValue,
@@ -252,8 +313,10 @@ async function fetchAlpacaBrokerPaperPortfolio(brokerKey, brokerSecret, accountI
     const openPositions = Array.isArray(positions)
         ? positions.map((p) => {
             const side = String(p.side || "long").toLowerCase() === "short" ? "short" : "long";
+            const symbol = String(p.symbol || "");
+            const session = resolveMarketSession("alpaca-paper", symbol);
             return {
-                symbol: String(p.symbol || ""),
+                symbol,
                 quantity: Number.parseFloat(p.qty || "0"),
                 marketValue: Number.parseFloat(p.market_value || "0"),
                 unrealizedPnl: p.unrealized_pl != null ? Number.parseFloat(p.unrealized_pl) : null,
@@ -261,6 +324,8 @@ async function fetchAlpacaBrokerPaperPortfolio(brokerKey, brokerSecret, accountI
                 entryPrice: p.avg_entry_price != null ? Number.parseFloat(p.avg_entry_price) : null,
                 currentPrice: p.current_price != null ? Number.parseFloat(p.current_price) : null,
                 side,
+                marketOpen: session.isOpen,
+                marketStatusReason: session.reason,
             };
         })
         : [];
@@ -303,6 +368,16 @@ exports.getPortfolio = functions
         const { exchangeId, apiKey, apiSecret } = data;
         console.log("📊 Portfolio request for:", exchangeId);
         console.log("🔑 API Key provided:", !!apiKey);
+        // Alpaca accounts connected via the "Connect with Alpaca" OAuth flow
+        // (see alpacaOAuthCallback below) carry no apiKey/apiSecret at all —
+        // the access token lives server-side in alpaca_oauth_tokens, looked up
+        // by uid, and is never sent by the client.
+        if ((exchangeId === "alpaca" || exchangeId === "alpaca-paper") && data.authMethod === "oauth") {
+            const env = exchangeId === "alpaca-paper" ? "paper" : "live";
+            const portfolio = await fetchAlpacaOAuthPortfolio(context.auth.uid, env);
+            console.log("✅ Success! (Alpaca OAuth) Portfolio value:", portfolio.portfolioValue);
+            return portfolio;
+        }
         // Top-up paper accounts use CK-prefixed Broker API keys which only work
         // against the Broker sandbox trading proxy (not paper-api.alpaca.markets).
         // Manually connected alpaca-paper accounts use regular PK-prefixed keys
@@ -354,6 +429,13 @@ exports.getPortfolioHttp = functions
             const { exchangeId, apiKey, apiSecret } = req.body || {};
             console.log("📊 HTTP portfolio request for:", exchangeId);
             console.log("🔑 API Key provided:", !!apiKey);
+            // Same OAuth routing as the callable version above.
+            if ((exchangeId === "alpaca" || exchangeId === "alpaca-paper") && req.body?.authMethod === "oauth") {
+                const env = exchangeId === "alpaca-paper" ? "paper" : "live";
+                const portfolio = await fetchAlpacaOAuthPortfolio(decoded.uid, env);
+                res.status(200).json(portfolio);
+                return;
+            }
             // Same CK-key routing as the callable version.
             if (exchangeId === "alpaca-paper" && (apiKey || "").startsWith("CK")) {
                 const userDoc = await admin.firestore().collection("users").doc(decoded.uid).get();
@@ -388,6 +470,157 @@ exports.getPortfolioHttp = functions
                 res.status(451).json({
                     error: "Binance blocked this server location (451 restricted location). Please use Binance for this region, Binance.US if applicable, or deploy functions in another allowed region.",
                 });
+                return;
+            }
+            res.status(500).json({ error: message });
+        }
+    });
+});
+/**
+ * Submits a market-close order to an Alpaca trading account (direct keys or
+ * the Broker sandbox trading proxy). When the market is open, it's an
+ * immediate "day" market order for the full position size. When the market
+ * is closed, it's a standing "gtc" limit order at the price the user saw
+ * when they clicked Liquidate, so it fills as soon as the market reopens.
+ */
+async function submitAlpacaLiquidationOrder(ordersUrl, headers, params) {
+    const orderSide = params.side === "short" ? "buy" : "sell";
+    const qty = Math.abs(Number(params.quantity));
+    if (!Number.isFinite(qty) || qty <= 0) {
+        throw new functions.https.HttpsError("invalid-argument", "Invalid quantity for liquidation order.");
+    }
+    const body = {
+        symbol: params.symbol,
+        side: orderSide,
+        qty: qty.toString(),
+    };
+    if (params.marketOpen) {
+        body.type = "market";
+        body.time_in_force = "day";
+    }
+    else {
+        const limitPrice = Number(params.limitPrice);
+        if (!Number.isFinite(limitPrice) || limitPrice <= 0) {
+            throw new functions.https.HttpsError("invalid-argument", "A valid price is required to place a standing order while the market is closed.");
+        }
+        body.type = "limit";
+        body.time_in_force = "gtc";
+        body.limit_price = limitPrice.toFixed(2);
+    }
+    const response = await (0, node_fetch_1.default)(ordersUrl, {
+        method: "POST",
+        headers: { ...headers, "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+    });
+    const text = await response.text();
+    const payload = text ? JSON.parse(text) : {};
+    if (!response.ok) {
+        throw new functions.https.HttpsError("internal", `Broker order error ${response.status}: ${text}`);
+    }
+    return payload;
+}
+async function placeBinanceLiquidationOrder(apiKey, apiSecret, symbol, quantity) {
+    const qty = Math.abs(Number(quantity));
+    if (!Number.isFinite(qty) || qty <= 0) {
+        throw new functions.https.HttpsError("invalid-argument", "Invalid quantity for liquidation order.");
+    }
+    const pair = `${symbol.toUpperCase()}USDT`;
+    const timestamp = Date.now();
+    const queryString = `symbol=${pair}&side=SELL&type=MARKET&quantity=${qty}&timestamp=${timestamp}`;
+    const signature = crypto.createHmac("sha256", apiSecret).update(queryString).digest("hex");
+    const url = `https://api.binance.com/api/v3/order?${queryString}&signature=${signature}`;
+    const response = await (0, node_fetch_1.default)(url, { method: "POST", headers: { "X-MBX-APIKEY": apiKey } });
+    const text = await response.text();
+    const payload = text ? JSON.parse(text) : {};
+    if (!response.ok) {
+        throw new functions.https.HttpsError("internal", `Binance order error ${response.status}: ${text}`);
+    }
+    return payload;
+}
+exports.liquidatePosition = functions
+    .region("europe-west1")
+    .runWith({ secrets: [ALPACA_BROKER_KEY, ALPACA_BROKER_SECRET] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const exchangeId = String(req.body?.exchangeId || "").trim();
+            const apiKey = String(req.body?.apiKey || "").replace(/\s+/g, "");
+            const apiSecret = String(req.body?.apiSecret || "").replace(/\s+/g, "");
+            const symbol = String(req.body?.symbol || "").trim();
+            const quantity = Number(req.body?.quantity);
+            const side = String(req.body?.side || "long").toLowerCase() === "short" ? "short" : "long";
+            const limitPrice = req.body?.limitPrice != null ? Number(req.body.limitPrice) : undefined;
+            if (!exchangeId || !apiKey || !apiSecret || !symbol || !Number.isFinite(quantity) || quantity <= 0) {
+                res.status(400).json({ error: "Missing or invalid exchangeId, apiKey, apiSecret, symbol, or quantity" });
+                return;
+            }
+            console.log(`🔻 Liquidation requested by ${decoded.uid}: ${exchangeId} ${symbol} qty=${quantity} side=${side}`);
+            if (exchangeId === "binance") {
+                const order = await placeBinanceLiquidationOrder(apiKey, apiSecret, symbol, quantity);
+                res.status(200).json({ success: true, message: `Market sell order submitted for ${symbol}.`, order });
+                return;
+            }
+            if (exchangeId === "alpaca" || exchangeId === "alpaca-paper") {
+                const session = resolveMarketSession(exchangeId, symbol);
+                let order;
+                if (exchangeId === "alpaca-paper" && apiKey.startsWith("CK")) {
+                    const userDoc = await admin.firestore().collection("users").doc(decoded.uid).get();
+                    const brokerAccountId = userDoc.data()?.alpacaBrokerAccountId;
+                    if (!brokerAccountId) {
+                        res.status(404).json({ error: "Broker-provisioned paper account not found for this user." });
+                        return;
+                    }
+                    const tokenRes = await (0, node_fetch_1.default)("https://authx.sandbox.alpaca.markets/v1/oauth2/token", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: new URLSearchParams({
+                            grant_type: "client_credentials",
+                            client_id: ALPACA_BROKER_KEY.value(),
+                            client_secret: ALPACA_BROKER_SECRET.value(),
+                        }).toString(),
+                    });
+                    if (!tokenRes.ok) {
+                        const errText = await tokenRes.text();
+                        throw new functions.https.HttpsError("internal", `Alpaca auth token failed (${tokenRes.status}): ${errText}`);
+                    }
+                    const { access_token } = (await tokenRes.json());
+                    order = await submitAlpacaLiquidationOrder(`https://broker-api.sandbox.alpaca.markets/v1/trading/accounts/${brokerAccountId}/orders`, { Authorization: `Bearer ${access_token}` }, { symbol, quantity, side, marketOpen: session.isOpen, limitPrice });
+                }
+                else {
+                    const baseUrl = exchangeId === "alpaca-paper" ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
+                    order = await submitAlpacaLiquidationOrder(`${baseUrl}/v2/orders`, { "APCA-API-KEY-ID": apiKey, "APCA-API-SECRET-KEY": apiSecret }, { symbol, quantity, side, marketOpen: session.isOpen, limitPrice });
+                }
+                const message = session.isOpen
+                    ? `Market order submitted to close ${symbol}.`
+                    : `Market is closed — a standing order was placed to close ${symbol} at $${Number(limitPrice).toFixed(2)} once trading resumes.`;
+                res.status(200).json({ success: true, message, order });
+                return;
+            }
+            res.status(404).json({ error: `Liquidation is not supported for exchange: ${exchangeId}` });
+        }
+        catch (error) {
+            console.error("❌❌❌ liquidatePosition error:", error);
+            const message = error?.message || "Failed to liquidate position";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            const code = error?.code;
+            if (code === "invalid-argument") {
+                res.status(400).json({ error: message });
+                return;
+            }
+            if (code === "not-found") {
+                res.status(404).json({ error: message });
                 return;
             }
             res.status(500).json({ error: message });
@@ -606,7 +839,7 @@ exports.sendContactMessage = functions
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    from: "AutoTrader Contact <noreply@invest-begin.com>",
+                    from: "AutoTrader Contact <assistant@invest-begin.com>",
                     to: [CONTACT_RECIPIENT],
                     reply_to: sender,
                     subject: `[Contact Form] ${emailSubject}`,
@@ -664,7 +897,7 @@ async function sendLearnAccessCodeEmail(params) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            from: "AutoTrader <noreply@invest-begin.com>",
+            from: "AutoTrader <assistant@invest-begin.com>",
             to: [params.recipientEmail],
             subject: "Your AutoTrader verification code",
             text: `Hello ${params.recipientName || "Trader"},\n\nYour verification code is: ${params.code}\n\nThis code expires in ${LEARN_CODE_EXPIRY_MINUTES} minutes.\n\nPage: ${params.slug}`,
@@ -2234,5 +2467,235 @@ exports.createShopifyListing = functions
         status: product.status,
         onlineStoreUrl: product.onlineStoreUrl ?? null,
     };
+});
+// ── Alpaca Connect OAuth ─────────────────────────────────────────────────────
+//
+// Implements Alpaca's "Connect Apps" OAuth2 flow so a user can authorize
+// Invest-Begin against their own Alpaca account without ever pasting an API
+// key/secret into this app (docs.alpaca.markets/docs/about-connect-api).
+// This is independent of the Broker API sandbox provisioning further above,
+// which creates managed paper sub-accounts instead.
+//
+// Scopes requested: "trading data" (place/cancel orders + read account/market
+// data) — the same Read + Trade permissions the manual API-key flow already
+// asks users to enable, see connect-exchange-modal.html.
+const ALPACA_OAUTH_SCOPES = "trading data";
+const ALPACA_OAUTH_STATE_COLLECTION = "alpaca_oauth_states";
+// Server-only collection — deliberately NOT under users/{uid}/, so no
+// Firestore security rule matches it and access tokens can never be read by
+// a client SDK (mirrors the marketAnalysis collection pattern used by the
+// MCP analysis runner). Doc id is `${uid}_${env}`.
+const ALPACA_OAUTH_TOKENS_COLLECTION = "alpaca_oauth_tokens";
+function resolveAlpacaOAuthRedirectUri(host) {
+    return host.includes("localhost") || host.includes("127.0.0.1")
+        ? `http://${host}/api/alpaca/oauth/callback`
+        : "https://invest-begin.com/api/alpaca/oauth/callback";
+}
+/**
+ * Fetches portfolio (equity + open positions) for an Alpaca account connected
+ * via OAuth, using the access token stored server-side for this uid/env.
+ */
+async function fetchAlpacaOAuthPortfolio(uid, env) {
+    const tokenSnap = await admin.firestore()
+        .collection(ALPACA_OAUTH_TOKENS_COLLECTION)
+        .doc(`${uid}_${env}`)
+        .get();
+    if (!tokenSnap.exists) {
+        throw new functions.https.HttpsError("failed-precondition", `Alpaca is not connected via OAuth (${env}). Please reconnect.`);
+    }
+    const { accessToken } = tokenSnap.data();
+    const baseUrl = env === "paper" ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    const accountRes = await (0, node_fetch_1.default)(`${baseUrl}/v2/account`, { headers });
+    if (!accountRes.ok) {
+        const text = await accountRes.text();
+        throw new functions.https.HttpsError("internal", `Alpaca OAuth account error ${accountRes.status}: ${text}`);
+    }
+    const data = await accountRes.json();
+    const posRes = await (0, node_fetch_1.default)(`${baseUrl}/v2/positions`, { headers });
+    if (!posRes.ok) {
+        const text = await posRes.text();
+        throw new functions.https.HttpsError("internal", `Alpaca OAuth positions error ${posRes.status}: ${text}`);
+    }
+    const positions = await posRes.json();
+    const openPositions = Array.isArray(positions)
+        ? positions.map((p) => {
+            const side = String(p.side || "long").toLowerCase() === "short" ? "short" : "long";
+            return {
+                symbol: String(p.symbol || ""),
+                quantity: Number.parseFloat(p.qty || "0"),
+                marketValue: Number.parseFloat(p.market_value || "0"),
+                unrealizedPnl: p.unrealized_pl != null ? Number.parseFloat(p.unrealized_pl) : null,
+                pnlPercentage: p.unrealized_plpc != null ? Number.parseFloat(p.unrealized_plpc) * 100 : null,
+                entryPrice: p.avg_entry_price != null ? Number.parseFloat(p.avg_entry_price) : null,
+                currentPrice: p.current_price != null ? Number.parseFloat(p.current_price) : null,
+                side,
+            };
+        })
+        : [];
+    return {
+        portfolioValue: Number.parseFloat(data.equity || data.portfolio_value || "0"),
+        unrealizedPnl: data.unrealized_pl != null ? Number.parseFloat(data.unrealized_pl) : null,
+        pnlPercentage: data.unrealized_plpc != null ? Number.parseFloat(data.unrealized_plpc) * 100 : null,
+        updatedAt: new Date().toISOString(),
+        openPositions,
+    };
+}
+/**
+ * Starts the Alpaca Connect OAuth flow for the authenticated user.
+ * POST /api/alpaca/oauth/start   body: { env: "live" | "paper" }
+ * Returns { authorizeUrl } for the frontend to navigate the browser to.
+ */
+exports.alpacaOAuthStart = functions
+    .region("europe-west1")
+    .runWith({ secrets: [ALPACA_OAUTH_CLIENT_ID] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const env = req.body?.env === "paper" ? "paper" : "live";
+            const clientId = ALPACA_OAUTH_CLIENT_ID.value();
+            if (!clientId) {
+                res.status(500).json({ error: "Alpaca OAuth is not configured" });
+                return;
+            }
+            const state = crypto.randomBytes(24).toString("hex");
+            const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+            await admin.firestore()
+                .collection(ALPACA_OAUTH_STATE_COLLECTION)
+                .doc(state)
+                .set({ uid: decoded.uid, env, expiresAt });
+            const redirectUri = resolveAlpacaOAuthRedirectUri(String(req.headers.host || ""));
+            const authorizeUrl = new URL("https://app.alpaca.markets/oauth/authorize");
+            authorizeUrl.searchParams.set("response_type", "code");
+            authorizeUrl.searchParams.set("client_id", clientId);
+            authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+            authorizeUrl.searchParams.set("scope", ALPACA_OAUTH_SCOPES);
+            authorizeUrl.searchParams.set("state", state);
+            authorizeUrl.searchParams.set("env", env);
+            res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to start Alpaca OAuth";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ alpacaOAuthStart failed:", error);
+            res.status(500).json({ error: message });
+        }
+    });
+});
+/**
+ * Handles Alpaca's OAuth2 redirect back from the authorize step.
+ * GET /api/alpaca/oauth/callback?code=...&state=...
+ *
+ * Exchanges the code for an access token, stores it server-side only (never
+ * sent to the client — see ALPACA_OAUTH_TOKENS_COLLECTION above), records a
+ * lightweight connection under users/{uid}/exchanges/ so the existing
+ * frontend lists it exactly like any other connected exchange, then
+ * redirects the browser back into the app.
+ */
+exports.alpacaOAuthCallback = functions
+    .region("europe-west1")
+    .runWith({ secrets: [ALPACA_OAUTH_CLIENT_ID, ALPACA_OAUTH_CLIENT_SECRET] })
+    .https.onRequest(async (req, res) => {
+    const clientId = ALPACA_OAUTH_CLIENT_ID.value();
+    const clientSecret = ALPACA_OAUTH_CLIENT_SECRET.value();
+    if (!clientId || !clientSecret) {
+        res.status(500).send("Alpaca OAuth is not configured");
+        return;
+    }
+    const code = String(req.query.code || "");
+    const state = String(req.query.state || "");
+    const oauthError = String(req.query.error || "");
+    if (oauthError) {
+        console.warn("⚠ Alpaca OAuth authorize returned an error:", oauthError);
+        res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+        return;
+    }
+    if (!code || !state) {
+        res.status(400).send("Missing required parameters");
+        return;
+    }
+    // Verify one-time state and recover which user/env started this flow.
+    const stateRef = admin.firestore().collection(ALPACA_OAUTH_STATE_COLLECTION).doc(state);
+    const stateSnap = await stateRef.get();
+    if (!stateSnap.exists) {
+        res.status(401).send("Invalid or expired state");
+        return;
+    }
+    const stateData = stateSnap.data();
+    await stateRef.delete(); // consumed — one-time use only
+    if (Date.now() > stateData.expiresAt) {
+        res.status(401).send("Invalid or expired state");
+        return;
+    }
+    const uid = String(stateData.uid);
+    const env = stateData.env === "paper" ? "paper" : "live";
+    try {
+        const redirectUri = resolveAlpacaOAuthRedirectUri(String(req.headers.host || ""));
+        const tokenRes = await (0, node_fetch_1.default)("https://api.alpaca.markets/oauth/token", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                grant_type: "authorization_code",
+                code,
+                client_id: clientId,
+                client_secret: clientSecret,
+                redirect_uri: redirectUri,
+            }).toString(),
+        });
+        if (!tokenRes.ok) {
+            const text = await tokenRes.text();
+            console.error("❌ Alpaca OAuth token exchange failed:", text);
+            res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+            return;
+        }
+        const tokenData = await tokenRes.json();
+        const accessToken = tokenData.access_token;
+        const scope = tokenData.scope || ALPACA_OAUTH_SCOPES;
+        if (!accessToken) {
+            console.error("❌ Alpaca OAuth token response had no access_token");
+            res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+            return;
+        }
+        // Persist the access token server-side only.
+        await admin.firestore()
+            .collection(ALPACA_OAUTH_TOKENS_COLLECTION)
+            .doc(`${uid}_${env}`)
+            .set({ uid, env, accessToken, scope, connectedAt: new Date().toISOString() });
+        // Lightweight, client-visible connection record — no secret material.
+        // Fixed label so reconnecting the same env updates it instead of
+        // creating a duplicate entry in the exchanges list.
+        const exchangeId = env === "paper" ? "alpaca-paper" : "alpaca";
+        const label = env === "paper" ? "Alpaca Paper (Connect)" : "Alpaca (Connect)";
+        await admin.firestore()
+            .collection("users").doc(uid)
+            .collection("exchanges").doc(label)
+            .set({
+            exchangeId,
+            label,
+            apiKey: "",
+            secret: "",
+            authMethod: "oauth",
+            connectedAt: new Date().toISOString(),
+            status: "active",
+        }, { merge: true });
+        console.log(`✅ Alpaca OAuth connected for uid=${uid} env=${env}`);
+        res.redirect(302, `https://invest-begin.com/exchanges?alpaca_connect=success&env=${env}`);
+    }
+    catch (error) {
+        console.error("❌ alpacaOAuthCallback failed:", error);
+        res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+    }
 });
 //# sourceMappingURL=index.js.map
