@@ -445,6 +445,7 @@
     "accountLabel": "Etiqueta da Conta",
     "accountLabelHint": "Um apelido para identificar esta conexão",
     "accountLabelPlaceholder": "ex. Principal Binance",
+    "alpacaOAuthHint": "Conecte sua conta Alpaca com segurança — sem precisar copiar chaves de API. Você será redirecionado para o Alpaca para autorizar o acesso.",
     "and": "e",
     "apiKey": "Chave de API",
     "apiKeyPlaceholder": "Cole sua chave de API aqui",
@@ -452,6 +453,7 @@
     "apiSecretPlaceholder": "Cole seu segredo de API",
     "chooseExchange": "Escolha a bolsa que você quer conectar",
     "connect": "Conectar",
+    "connectWithAlpacaOAuth": "Conectar com Alpaca",
     "connectExchange": "Conectar Exchange",
     "connecting": "Conectando…",
     "cryptoExchanges": "Exchanges de Criptomoedas",
@@ -462,6 +464,11 @@
     "guideToGenerateApiFor": "Guia para gerar a API do {{name}} aqui",
     "keysValidated": "Suas chaves são validadas com segurança na exchange antes de serem salvas",
     "noExchangesForMode": "Nenhuma troca disponível para este modo ainda.",
+    "oauthConnecting": "Redirecionando para o Alpaca…",
+    "oauthDisclosureTitle": "Authorize Invest-Begin",
+    "oauthDisclosureBody": "By allowing Invest-Begin to access your Alpaca account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Alpaca does not warrant or guarantee that Invest-Begin will work as advertised or expected. Before authorizing,",
+    "oauthDisclosureLearnMore": "learn more about Invest-Begin.",
+    "orEnterManually": "ou insira as chaves de API manualmente",
     "paperTrading": "Negociação Simulada",
     "passphrase": "Senha de acesso",
     "passphrasePlaceholder": "Senha definida ao criar a chave",
@@ -753,7 +760,9 @@
     "supportedProviders": "Provedores Suportados",
     "acknowledgeRisksToContinue": "Por favor, reconheça os riscos para continuar",
     "typeDisconnectToConfirmError": "Por favor, digite \"desconectar esta Exchange\" para confirmar",
-    "successConnected": "Exchange conectada"
+    "successConnected": "Exchange conectada",
+    "oauthConnectSuccess": "Alpaca conectado com sucesso.",
+    "oauthConnectError": "Falha ao conectar com Alpaca. Tente novamente."
   },
   "bots": {
     "confirmDeletion": "Confirmar Exclusão",

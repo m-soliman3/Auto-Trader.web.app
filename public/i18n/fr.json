@@ -445,6 +445,7 @@
     "accountLabel": "Libellé du compte",
     "accountLabelHint": "Un surnom pour identifier cette connexion",
     "accountLabelPlaceholder": "par exemple, Binance principal",
+    "alpacaOAuthHint": "Connectez votre compte Alpaca en toute sécurité, sans copier de clés API. Vous serez redirigé vers Alpaca pour autoriser l'accès.",
     "and": "et",
     "apiKey": "Clé API",
     "apiKeyPlaceholder": "Collez votre clé API ici",
@@ -452,6 +453,7 @@
     "apiSecretPlaceholder": "Collez votre secret API",
     "chooseExchange": "Choisissez l'échange auquel vous voulez vous connecter",
     "connect": "Se connecter",
+    "connectWithAlpacaOAuth": "Se connecter avec Alpaca",
     "connectExchange": "Connecter Exchange",
     "connecting": "Connexion…",
     "cryptoExchanges": "Bourses de crypto-monnaies",
@@ -462,6 +464,11 @@
     "guideToGenerateApiFor": "Guide pour générer l'API {{name}} ici",
     "keysValidated": "Vos clés sont sécuritairement validées avec l'échange avant d'être enregistrées",
     "noExchangesForMode": "Aucun échange disponible pour ce mode pour le moment.",
+    "oauthConnecting": "Redirection vers Alpaca…",
+    "oauthDisclosureTitle": "Authorize Invest-Begin",
+    "oauthDisclosureBody": "By allowing Invest-Begin to access your Alpaca account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Alpaca does not warrant or guarantee that Invest-Begin will work as advertised or expected. Before authorizing,",
+    "oauthDisclosureLearnMore": "learn more about Invest-Begin.",
+    "orEnterManually": "ou entrez les clés API manuellement",
     "paperTrading": "Trading sur papier",
     "passphrase": "Phrase secrète",
     "passphrasePlaceholder": "Phrase secrète définie lors de la création de la clé",
@@ -753,7 +760,9 @@
     "supportedProviders": "Fournisseurs pris en charge",
     "acknowledgeRisksToContinue": "Veuillez reconnaître les risques pour continuer",
     "typeDisconnectToConfirmError": "Veuillez taper \"déconnecter cet Exchange\" pour confirmer",
-    "successConnected": "Exchange connecté"
+    "successConnected": "Exchange connecté",
+    "oauthConnectSuccess": "Alpaca connecté avec succès.",
+    "oauthConnectError": "La connexion à Alpaca a échoué. Veuillez réessayer."
   },
   "bots": {
     "confirmDeletion": "Confirmer la suppression",

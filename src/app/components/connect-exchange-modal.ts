@@ -42,6 +42,12 @@ export class ConnectExchangeModal {
   selected = signal<Exchange | null>(null);
   error = signal('');
   saving = signal(false);
+  oauthConnecting = signal(false);
+
+  isAlpacaSelected = computed(() => {
+    const ex = this.selected();
+    return ex?.id === 'alpaca' || ex?.id === 'alpaca-paper';
+  });
 
   // Form fields
   label = '';
@@ -154,6 +160,39 @@ export class ConnectExchangeModal {
         this.saving.set(false);
       }
     })();
+  }
+
+  /**
+   * "Connect with Alpaca" via OAuth (Alpaca Connect Apps) — an alternative to
+   * pasting API keys below. Navigates the browser to Alpaca's authorize page;
+   * on approval the user lands back on /exchanges already connected.
+   */
+  async connectAlpacaOAuth(): Promise<void> {
+    const ex = this.selected();
+    if (!ex) return;
+
+    if (!this.authService.currentUser()) {
+      this.error.set('You must be logged in to connect an exchange.');
+      return;
+    }
+
+    try {
+      this.subscription.assertCanCreate('exchange', this.exchangeService.connections().length);
+    } catch (err: any) {
+      this.error.set(err?.message || 'You reached your plan limit for exchange connections.');
+      return;
+    }
+
+    this.error.set('');
+    this.oauthConnecting.set(true);
+    try {
+      const env: 'live' | 'paper' = ex.id === 'alpaca-paper' ? 'paper' : 'live';
+      await this.exchangeService.startAlpacaConnect(env);
+      // On success the browser navigates to Alpaca; nothing else to do here.
+    } catch (err: any) {
+      this.oauthConnecting.set(false);
+      this.error.set(err?.message || 'Failed to start the Alpaca connection. Please try again.');
+    }
   }
 
   close() {

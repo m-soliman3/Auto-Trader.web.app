@@ -445,6 +445,7 @@
     "accountLabel": "تسمية الحساب",
     "accountLabelHint": "لقب لتحديد هذا الاتصال",
     "accountLabelPlaceholder": "على سبيل المثال، بينانس الرئيسية",
+    "alpacaOAuthHint": "اربط حساب Alpaca الخاص بك بأمان دون نسخ مفاتيح API. سيتم تحويلك إلى Alpaca لتفويض الوصول.",
     "and": "و",
     "apiKey": "مفتاح API",
     "apiKeyPlaceholder": "الصق مفتاح API الخاص بك هنا",
@@ -452,6 +453,7 @@
     "apiSecretPlaceholder": "قم بلصق سر الـ API الخاص بك",
     "chooseExchange": "اختر البورصة التي تريد الاتصال بها",
     "connect": "اتصل",
+    "connectWithAlpacaOAuth": "الاتصال بـ Alpaca",
     "connectExchange": "ربط التبادل",
     "connecting": "جارٍ الاتصال…",
     "cryptoExchanges": "بورصات العملات المشفرة",
@@ -462,6 +464,11 @@
     "guideToGenerateApiFor": "دليل إنشاء API الخاص بـ {{name}} هنا",
     "keysValidated": "يتم التحقق من مفاتيحك بأمان مع البورصة قبل الحفظ",
     "noExchangesForMode": "لا توجد عمليات تبادل متاحة لهذا الوضع بعد.",
+    "oauthConnecting": "جارٍ التحويل إلى Alpaca…",
+    "oauthDisclosureTitle": "Authorize Invest-Begin",
+    "oauthDisclosureBody": "By allowing Invest-Begin to access your Alpaca account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Alpaca does not warrant or guarantee that Invest-Begin will work as advertised or expected. Before authorizing,",
+    "oauthDisclosureLearnMore": "learn more about Invest-Begin.",
+    "orEnterManually": "أو أدخل مفاتيح API يدويًا",
     "paperTrading": "التداول الورقي",
     "passphrase": "عبارة مرور",
     "passphrasePlaceholder": "تم تعيين عبارة المرور عند إنشاء المفتاح",
@@ -753,7 +760,9 @@
     "supportedProviders": "المزودون المدعومون",
     "acknowledgeRisksToContinue": "يرجى الاعتراف بالمخاطر للاستمرار",
     "typeDisconnectToConfirmError": "يرجى كتابة \"قطع هذا التبادل\" للتأكيد",
-    "successConnected": "تم توصيل البورصة"
+    "successConnected": "تم توصيل البورصة",
+    "oauthConnectSuccess": "تم الاتصال بـ Alpaca بنجاح.",
+    "oauthConnectError": "فشل الاتصال بـ Alpaca. يرجى المحاولة مرة أخرى."
   },
   "bots": {
     "confirmDeletion": "تأكيد الحذف",

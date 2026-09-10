@@ -445,6 +445,7 @@
     "accountLabel": "Kontobezeichnung",
     "accountLabelHint": "Ein Spitzname, um diese Verbindung zu identifizieren",
     "accountLabelPlaceholder": "z. B. Haupt-Binance",
+    "alpacaOAuthHint": "Verbinden Sie Ihr Alpaca-Konto sicher – keine API-Schlüssel nötig. Sie werden zu Alpaca weitergeleitet, um den Zugriff zu autorisieren.",
     "and": "und",
     "apiKey": "API-Schlüssel",
     "apiKeyPlaceholder": "Fügen Sie hier Ihren API-Schlüssel ein",
@@ -452,6 +453,7 @@
     "apiSecretPlaceholder": "Fügen Sie Ihr API-Geheimnis ein",
     "chooseExchange": "Wählen Sie die Börse, mit der Sie sich verbinden möchten",
     "connect": "Verbinden",
+    "connectWithAlpacaOAuth": "Mit Alpaca verbinden",
     "connectExchange": "Exchange verbinden",
     "connecting": "Verbindung wird hergestellt…",
     "cryptoExchanges": "Krypto-Börsen",
@@ -462,6 +464,11 @@
     "guideToGenerateApiFor": "Anleitung zur Erstellung der {{name}}-API hier",
     "keysValidated": "Ihre Schlüssel werden vor dem Speichern sicher mit der Börse überprüft",
     "noExchangesForMode": "Für diesen Modus sind noch keine Austauschmöglichkeiten verfügbar.",
+    "oauthConnecting": "Weiterleitung zu Alpaca…",
+    "oauthDisclosureTitle": "Authorize Invest-Begin",
+    "oauthDisclosureBody": "By allowing Invest-Begin to access your Alpaca account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Alpaca does not warrant or guarantee that Invest-Begin will work as advertised or expected. Before authorizing,",
+    "oauthDisclosureLearnMore": "learn more about Invest-Begin.",
+    "orEnterManually": "oder API-Schlüssel manuell eingeben",
     "paperTrading": "Papierhandel",
     "passphrase": "Passphrase",
     "passphrasePlaceholder": "Passphrase, die beim Erstellen des Schlüssels festgelegt wurde",
@@ -753,7 +760,9 @@
     "supportedProviders": "Unterstützte Anbieter",
     "acknowledgeRisksToContinue": "Bitte erkennen Sie die Risiken an, um fortzufahren",
     "typeDisconnectToConfirmError": "Bitte geben Sie 'diesen Exchange trennen' ein, um zu bestätigen",
-    "successConnected": "Börse verbunden"
+    "successConnected": "Börse verbunden",
+    "oauthConnectSuccess": "Alpaca erfolgreich verbunden.",
+    "oauthConnectError": "Alpaca-Verbindung fehlgeschlagen. Bitte erneut versuchen."
   },
   "bots": {
     "confirmDeletion": "Löschung bestätigen",

@@ -39,6 +39,13 @@ export interface ConnectedExchange {
    * Firebase function (/api/getPortfolio) using the stored keys.
    */
   brokerProvisioned?: boolean;
+  /**
+   * "oauth" for Alpaca connections made via the "Connect with Alpaca" OAuth
+   * flow (Alpaca Connect Apps). apiKey/secret are empty strings in that case
+   * — the access token lives server-side and is never sent to the client.
+   * Absent/"apiKey" for every other connection (unchanged, manual keys).
+   */
+  authMethod?: 'apiKey' | 'oauth';
 }
 
 export interface PortfolioData {
@@ -765,6 +772,33 @@ export class ExchangeService {
     }
   }
 
+  /**
+   * Starts the "Connect with Alpaca" OAuth flow (Alpaca Connect Apps) and
+   * navigates the browser to Alpaca's authorize page. On approval, Alpaca
+   * redirects back through our OAuth callback, which stores the connection
+   * and lands the user back on /exchanges?alpaca_connect=success — see
+   * ExchangesPage, which reloads connections when it sees that param.
+   */
+  async startAlpacaConnect(env: 'live' | 'paper'): Promise<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('You must be logged in to connect Alpaca.');
+    }
+    const idToken = await currentUser.getIdToken();
+
+    const response = await firstValueFrom(this.http.post<{ authorizeUrl: string }>(
+      '/api/alpaca/oauth/start',
+      { env },
+      { headers: { Authorization: `Bearer ${idToken}` } },
+    ));
+
+    if (!response?.authorizeUrl) {
+      throw new Error('Alpaca did not return an authorization URL.');
+    }
+
+    window.location.href = response.authorizeUrl;
+  }
+
   async validateCredentials(exchangeId: string, apiKey: string, secret: string, passphrase?: string): Promise<boolean> {
     try {
       const currentUser = this.firebaseAuth.currentUser;
@@ -839,6 +873,26 @@ export class ExchangeService {
         throw new Error('Not authenticated');
       }
       const idToken = await currentUser.getIdToken();
+
+      // OAuth-connected Alpaca accounts (Connect Apps) have no apiKey/secret
+      // to send — the backend looks up the stored access token by uid+env.
+      if (exchange.authMethod === 'oauth') {
+        const response = await Promise.race([
+          firstValueFrom(this.http.post<PortfolioData>(
+            '/api/getPortfolio',
+            { exchangeId: exchange.exchangeId, authMethod: 'oauth' },
+            { headers: { Authorization: `Bearer ${idToken}` } },
+          )),
+          new Promise<any>((_, reject) =>
+            setTimeout(() => reject(new Error('Request timeout after 15 seconds')), 15000)
+          ),
+        ]);
+        const data = response as PortfolioData;
+        if (data && data.portfolioValue !== undefined) {
+          return data;
+        }
+        throw new Error('Invalid portfolio data response for OAuth-connected Alpaca account');
+      }
 
       // Broker-provisioned alpaca-paper accounts (created via the top-up flow)
       // must be queried via the Cloud Run backend broker API, which uses

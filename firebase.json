@@ -158,6 +158,20 @@
           }
         },
         {
+          "source": "/api/alpaca/oauth/start",
+          "function": {
+            "functionId": "alpacaOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/alpaca/oauth/callback",
+          "function": {
+            "functionId": "alpacaOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",
@@ -367,6 +381,20 @@
           "source": "/api/shopify/callback",
           "function": {
             "functionId": "shopifyCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/alpaca/oauth/start",
+          "function": {
+            "functionId": "alpacaOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/alpaca/oauth/callback",
+          "function": {
+            "functionId": "alpacaOAuthCallback",
             "region": "europe-west1"
           }
         },

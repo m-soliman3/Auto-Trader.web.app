@@ -282,6 +282,14 @@ export async function placeAlpacaOrder(input: {
   investment: number;
   brokerProvisioned?: boolean;
   brokerAccountId?: string;
+  /**
+   * When set, this Alpaca connection was made via the "Connect with Alpaca"
+   * OAuth flow (functions/src/index.ts — alpacaOAuthCallback) rather than a
+   * pasted API key/secret. Orders are placed with `Authorization: Bearer
+   * <oauthAccessToken>` instead of the APCA-API-KEY-ID/SECRET headers.
+   * apiKey/apiSecret are ignored in this case.
+   */
+  oauthAccessToken?: string;
 }): Promise<{ orderId: string; raw: any }> {
   const isPaper = input.exchangeId === "alpaca-paper";
   const useBrokerSandbox = isPaper && (input.brokerProvisioned === true || input.apiKey.startsWith("CK"));
@@ -373,11 +381,14 @@ export async function placeAlpacaOrder(input: {
   const baseUrl = isPaper ? "https://paper-api.alpaca.markets" : "https://api.alpaca.markets";
   const symbol = String(input.symbol || "").toUpperCase().trim();
 
+  const authHeaders: Record<string, string> = input.oauthAccessToken
+    ? { Authorization: `Bearer ${input.oauthAccessToken}` }
+    : { "APCA-API-KEY-ID": input.apiKey, "APCA-API-SECRET-KEY": input.apiSecret };
+
   const response = await fetch(`${baseUrl}/v2/orders` as any, {
     method: "POST",
     headers: {
-      "APCA-API-KEY-ID": input.apiKey,
-      "APCA-API-SECRET-KEY": input.apiSecret,
+      ...authHeaders,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -406,8 +417,7 @@ export async function placeAlpacaOrder(input: {
       const detailResponse = await fetch(`${baseUrl}/v2/orders/${encodeURIComponent(orderId)}` as any, {
         method: "GET",
         headers: {
-          "APCA-API-KEY-ID": input.apiKey,
-          "APCA-API-SECRET-KEY": input.apiSecret,
+          ...authHeaders,
           "Content-Type": "application/json",
         },
       } as any);

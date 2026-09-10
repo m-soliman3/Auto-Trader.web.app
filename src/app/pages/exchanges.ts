@@ -333,6 +333,27 @@ export class ExchangesPage {
   constructor() {
     this.route.queryParamMap.subscribe((params) => {
       this.showAddExchangeModal.set(params.get('open') === 'add');
+
+      // Landing back from the "Connect with Alpaca" OAuth redirect
+      // (see alpacaOAuthCallback in functions/src/index.ts).
+      const alpacaConnect = params.get('alpaca_connect');
+      if (alpacaConnect === 'success') {
+        void this.exchangeService.reloadFromFirestore();
+        this.showSuccessToast('exchanges.oauthConnectSuccess');
+        this.clearAlpacaConnectQuery();
+      } else if (alpacaConnect === 'error') {
+        this.showSuccessToast('exchanges.oauthConnectError');
+        this.clearAlpacaConnectQuery();
+      }
+    });
+  }
+
+  private clearAlpacaConnectQuery(): void {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { alpaca_connect: null, env: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
     });
   }
 

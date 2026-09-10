@@ -50,6 +50,8 @@ export interface ExchangeDoc {
   secret: string;
   passphrase?: string;
   brokerProvisioned?: boolean;
+  /** "oauth" for Alpaca accounts connected via Connect Apps OAuth (apiKey/secret are empty in that case). */
+  authMethod?: "apiKey" | "oauth";
 }
 
 export interface Candle {
