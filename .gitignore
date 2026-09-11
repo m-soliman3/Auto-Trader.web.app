@@ -63,3 +63,12 @@ public/images/products/
 
 # Backend build output
 backend/dist/
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfplan
+crash.log
+crash.*.log
