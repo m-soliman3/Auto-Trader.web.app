@@ -86,6 +86,7 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
   exchangeSaving = signal(false);
   exchangeConnected = signal(false);
   oauthConnecting = signal(false);
+  manualEntryExpanded = signal(false);
 
   /** True when the "Connect with Alpaca" OAuth option should show (Alpaca Connect Apps). */
   isAlpacaSelected = computed(() => {
@@ -229,6 +230,7 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
     this.exchangeSecret = '';
     this.exchangePassphrase = '';
     this.exchangeError.set('');
+    this.manualEntryExpanded.set(false);
     this.exchangeStep.set(2);
   }
 
@@ -236,6 +238,11 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
     this.exchangeStep.set(1);
     this.selectedExchange.set(null);
     this.exchangeError.set('');
+    this.manualEntryExpanded.set(false);
+  }
+
+  toggleManualEntry(): void {
+    this.manualEntryExpanded.update((v) => !v);
   }
 
   /**

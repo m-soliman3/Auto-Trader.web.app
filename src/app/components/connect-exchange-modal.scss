@@ -395,20 +395,29 @@
   line-height: 1.4;
 }
 
-.oauth-divider {
+.manual-entry-toggle {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin: 0.25rem 0;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.25rem 0 0;
+  padding: 0.4rem;
+  background: none;
+  border: none;
   color: var(--text-secondary);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
 
-  &::before, &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border, rgba(255,255,255,0.12));
-  }
+  &:hover { color: var(--accent); }
+}
+
+.manual-entry-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s;
+
+  &.expanded { transform: rotate(180deg); }
 }
 
 .btn-save {
