@@ -91,30 +91,14 @@ nothing points a real domain at it yet. Before using this for real traffic:
    are 20+ in `firebase.json`) or keep most traffic on Firebase Hosting's
    default rewrites and reserve this for specific high-risk endpoints.
 
-## A real gotcha: state is local-only right now
+## State is shared (GCS backend)
 
-`terraform.tfstate` lives only on the machine that ran `apply` (it's
-gitignored, as `.tfstate` files should be — they can contain sensitive
-values). That means **nobody else, and no other session on this repo, knows
-these resources exist** unless they read this README. If someone else runs
-`terraform apply` from a fresh checkout without this state file, Terraform
-will try to recreate everything and fail with "already exists" errors.
-
-Before this goes further (more resources, a real domain), move state to a
-shared backend — a GCS bucket is the standard choice on GCP:
-
-```hcl
-terraform {
-  backend "gcs" {
-    bucket = "autotrader-b8851-tfstate"  # create this bucket first
-    prefix = "cloud-armor"
-  }
-}
-```
-
-Until then, treat this as this-machine-only infrastructure: don't `terraform
-destroy` or `apply` it from a different checkout without first pulling the
-current state, and check with whoever's machine originally applied it.
+State lives in `gs://autotrader-b8851-tfstate/cloud-armor/` (bucket created
+with versioning on, `europe-west1`), configured via the `backend "gcs"`
+block in `main.tf`. Any machine/session with access to that bucket and the
+`autotrader-b8851` project runs `terraform init` and sees the real, current
+state — no more "only my laptop knows this exists." `terraform plan`
+against this backend confirms 0 drift: the 7 resources below match exactly.
 
 ## Destroying
 

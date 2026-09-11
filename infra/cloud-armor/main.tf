@@ -7,6 +7,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+
+  # Shared state: any machine/session running Terraform against this
+  # directory sees the same up-to-date picture of what's already created,
+  # instead of only whoever's local disk happened to run `apply` first.
+  backend "gcs" {
+    bucket = "autotrader-b8851-tfstate"
+    prefix = "cloud-armor"
+  }
 }
 
 provider "google" {
