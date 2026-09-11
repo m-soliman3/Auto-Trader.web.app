@@ -194,44 +194,49 @@
                     {{ 'connectExchange.connectWithAlpacaOAuth' | translate }}
                   }
                 </button>
-                <div class="oauth-divider"><span>{{ 'connectExchange.orEnterManually' | translate }}</span></div>
+                <button type="button" class="manual-entry-toggle" (click)="toggleManualEntry()" [attr.aria-expanded]="manualEntryExpanded()">
+                  <span>{{ 'connectExchange.orEnterManually' | translate }}</span>
+                  <svg class="manual-entry-chevron" [class.expanded]="manualEntryExpanded()" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
               </div>
             }
 
-            <div class="form-group">
-              <label>{{ 'connectExchange.accountLabel' | translate }}</label>
-              <input type="text" [(ngModel)]="exchangeLabel" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />
-            </div>
-
-            <div class="form-group">
-              <label>{{ 'connectExchange.apiKey' | translate }}</label>
-              <input type="text" [(ngModel)]="exchangeApiKey" [placeholder]="'connectExchange.apiKeyPlaceholder' | translate" autocomplete="off" />
-            </div>
-
-            <div class="form-group">
-              <label>{{ 'connectExchange.apiSecret' | translate }}</label>
-              <input type="password" [(ngModel)]="exchangeSecret" [placeholder]="'connectExchange.apiSecretPlaceholder' | translate" autocomplete="off" />
-            </div>
-
-            @if (selectedExchange()?.hasPassphrase) {
+            @if (!isAlpacaSelected() || manualEntryExpanded()) {
               <div class="form-group">
-                <label>{{ 'connectExchange.passphrase' | translate }}</label>
-                <input type="password" [(ngModel)]="exchangePassphrase" [placeholder]="'connectExchange.passphrasePlaceholder' | translate" autocomplete="off" />
+                <label>{{ 'connectExchange.accountLabel' | translate }}</label>
+                <input type="text" [(ngModel)]="exchangeLabel" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />
               </div>
-            }
 
-            <button
-              class="btn-primary"
-              type="button"
-              [disabled]="exchangeSaving()"
-              (click)="saveExchange()"
-            >
-              @if (exchangeSaving()) {
-                <span class="spinner"></span> {{ 'connectExchange.connecting' | translate }}
-              } @else {
-                {{ 'connectExchange.connect' | translate }} {{ selectedExchange()?.name }}
+              <div class="form-group">
+                <label>{{ 'connectExchange.apiKey' | translate }}</label>
+                <input type="text" [(ngModel)]="exchangeApiKey" [placeholder]="'connectExchange.apiKeyPlaceholder' | translate" autocomplete="off" />
+              </div>
+
+              <div class="form-group">
+                <label>{{ 'connectExchange.apiSecret' | translate }}</label>
+                <input type="password" [(ngModel)]="exchangeSecret" [placeholder]="'connectExchange.apiSecretPlaceholder' | translate" autocomplete="off" />
+              </div>
+
+              @if (selectedExchange()?.hasPassphrase) {
+                <div class="form-group">
+                  <label>{{ 'connectExchange.passphrase' | translate }}</label>
+                  <input type="password" [(ngModel)]="exchangePassphrase" [placeholder]="'connectExchange.passphrasePlaceholder' | translate" autocomplete="off" />
+                </div>
               }
-            </button>
+
+              <button
+                class="btn-primary"
+                type="button"
+                [disabled]="exchangeSaving()"
+                (click)="saveExchange()"
+              >
+                @if (exchangeSaving()) {
+                  <span class="spinner"></span> {{ 'connectExchange.connecting' | translate }}
+                } @else {
+                  {{ 'connectExchange.connect' | translate }} {{ selectedExchange()?.name }}
+                }
+              </button>
+            }
           }
 
         </section>

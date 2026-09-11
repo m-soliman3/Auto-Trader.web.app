@@ -43,6 +43,7 @@ export class ConnectExchangeModal {
   error = signal('');
   saving = signal(false);
   oauthConnecting = signal(false);
+  manualEntryExpanded = signal(false);
 
   isAlpacaSelected = computed(() => {
     const ex = this.selected();
@@ -68,6 +69,7 @@ export class ConnectExchangeModal {
     this.secret = '';
     this.passphrase = '';
     this.error.set('');
+    this.manualEntryExpanded.set(false);
     this.step.set(2);
   }
 
@@ -75,6 +77,11 @@ export class ConnectExchangeModal {
     this.step.set(1);
     this.selected.set(null);
     this.error.set('');
+    this.manualEntryExpanded.set(false);
+  }
+
+  toggleManualEntry() {
+    this.manualEntryExpanded.update(v => !v);
   }
 
   save() {

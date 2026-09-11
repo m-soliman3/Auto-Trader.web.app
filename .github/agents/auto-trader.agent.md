@@ -153,6 +153,16 @@ under automation while working fine in a real browser. **An empty AvaTrade slot 
 browser is not evidence of a regression** — confirm in a real browser session before debugging it.
 The eToro creative is a plain image and does render under automation.
 
+## Exchange Connection UI (Alpaca OAuth + Manual Entry)
+
+The "Connect with Alpaca" OAuth button and the "or enter API keys manually" manual-entry toggle are duplicated across **three** components, because each has its own independent exchange-selection state (`selectedExchange`/`selected`, `exchangeStep`/`step`, `isAlpacaSelected`, `manualEntryExpanded`, `connectAlpacaOAuth()`) rather than sharing one:
+
+1. `src/app/components/connect-exchange-modal.ts` / `.html` / `.scss` — the modal opened from the **Exchanges page** (`src/app/pages/exchanges.ts` embeds `<app-connect-exchange-modal>` directly, so this page does not need separate edits).
+2. `src/app/components/paper-money-onboarding-modal.ts` / `.html` / `.scss` — shown to new users on first paper-trading top-up.
+3. `src/app/components/real-money-onboarding-modal.ts` / `.html` / `.scss` — shown to new users on first real-money top-up.
+
+Any change to the Alpaca OAuth flow, the manual API-key form, or the toggle between them must be applied identically to **all three** components above — they are not derived from a shared base, so updating only one leaves the others stale. Pattern to preserve: OAuth "Connect with Alpaca" button is the primary, always-visible option for Alpaca/Alpaca Paper; "or enter API keys manually" is a `manual-entry-toggle` button (not a static divider) that expands the label/API key/secret/passphrase fields and the submit button via `manualEntryExpanded()`; non-Alpaca exchanges always show the manual fields directly since they have no OAuth alternative. Reset `manualEntryExpanded` to `false` whenever an exchange is (re)selected or the user navigates back to the exchange list.
+
 ## Security Expectations
 
 - New user Firestore profiles always include `onboardingCompleted: false` (set explicitly at registration and in `onAuthStateChanged` fallback). The dashboard redirects to the signup guide only when `user.onboardingCompleted === false` (strict equality), never for `undefined`. This prevents existing users whose profiles predate the field from being sent to the questionnaire.

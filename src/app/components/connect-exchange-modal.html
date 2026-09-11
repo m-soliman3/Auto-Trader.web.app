@@ -126,53 +126,58 @@
               {{ 'connectExchange.connectWithAlpacaOAuth' | translate }}
             }
           </button>
-          <div class="oauth-divider"><span>{{ 'connectExchange.orEnterManually' | translate }}</span></div>
+          <button type="button" class="manual-entry-toggle" (click)="toggleManualEntry()" [attr.aria-expanded]="manualEntryExpanded()">
+            <span>{{ 'connectExchange.orEnterManually' | translate }}</span>
+            <svg class="manual-entry-chevron" [class.expanded]="manualEntryExpanded()" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
         </div>
       }
 
-      <div class="form-group">
-        <label for="label">{{ 'connectExchange.accountLabel' | translate }}</label>
-        <input id="label" type="text" [(ngModel)]="label" name="label" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />
-        <span class="hint">{{ 'connectExchange.accountLabelHint' | translate }}</span>
-      </div>
-
-      <div class="form-group">
-        <div class="api-key-label-row">
-          <label for="apiKey">{{ 'connectExchange.apiKey' | translate }}</label>
-          @if (selected()?.apiDocsUrl) {
-            <a [href]="selected()?.apiDocsUrl" target="_blank" rel="noopener" class="get-api-link">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              {{ 'connectExchange.getApiKeysFrom' | translate }} {{ selected()?.name }}
-            </a>
-          }
-        </div>
-        <input id="apiKey" type="text" [(ngModel)]="apiKey" name="apiKey" [placeholder]="'connectExchange.apiKeyPlaceholder' | translate" autocomplete="off" />
-      </div>
-
-      <div class="form-group">
-        <label for="secret">{{ 'connectExchange.apiSecret' | translate }}</label>
-        <input id="secret" type="password" [(ngModel)]="secret" name="secret" [placeholder]="'connectExchange.apiSecretPlaceholder' | translate" autocomplete="off" />
-      </div>
-
-      @if (selected()?.hasPassphrase) {
+      @if (!isAlpacaSelected() || manualEntryExpanded()) {
         <div class="form-group">
-          <label for="passphrase">{{ 'connectExchange.passphrase' | translate }}</label>
-          <input id="passphrase" type="password" [(ngModel)]="passphrase" name="passphrase" [placeholder]="'connectExchange.passphrasePlaceholder' | translate" autocomplete="off" />
+          <label for="label">{{ 'connectExchange.accountLabel' | translate }}</label>
+          <input id="label" type="text" [(ngModel)]="label" name="label" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />
+          <span class="hint">{{ 'connectExchange.accountLabelHint' | translate }}</span>
         </div>
-      }
 
-      <div class="permissions-note">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        {{ 'connectExchange.enable' | translate }} <strong>{{ 'connectExchange.read' | translate }}</strong> {{ 'connectExchange.and' | translate }} <strong>{{ 'connectExchange.trade' | translate }}</strong> {{ 'connectExchange.permissionsNoteTail' | translate }}
-      </div>
+        <div class="form-group">
+          <div class="api-key-label-row">
+            <label for="apiKey">{{ 'connectExchange.apiKey' | translate }}</label>
+            @if (selected()?.apiDocsUrl) {
+              <a [href]="selected()?.apiDocsUrl" target="_blank" rel="noopener" class="get-api-link">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                {{ 'connectExchange.getApiKeysFrom' | translate }} {{ selected()?.name }}
+              </a>
+            }
+          </div>
+          <input id="apiKey" type="text" [(ngModel)]="apiKey" name="apiKey" [placeholder]="'connectExchange.apiKeyPlaceholder' | translate" autocomplete="off" />
+        </div>
 
-      <button type="submit" class="btn-save" [disabled]="saving()">
-        @if (saving()) {
-          <span class="spinner"></span> {{ 'connectExchange.connecting' | translate }}
-        } @else {
-          {{ 'connectExchange.connect' | translate }} {{ selected()?.name }}
+        <div class="form-group">
+          <label for="secret">{{ 'connectExchange.apiSecret' | translate }}</label>
+          <input id="secret" type="password" [(ngModel)]="secret" name="secret" [placeholder]="'connectExchange.apiSecretPlaceholder' | translate" autocomplete="off" />
+        </div>
+
+        @if (selected()?.hasPassphrase) {
+          <div class="form-group">
+            <label for="passphrase">{{ 'connectExchange.passphrase' | translate }}</label>
+            <input id="passphrase" type="password" [(ngModel)]="passphrase" name="passphrase" [placeholder]="'connectExchange.passphrasePlaceholder' | translate" autocomplete="off" />
+          </div>
         }
-      </button>
+
+        <div class="permissions-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          {{ 'connectExchange.enable' | translate }} <strong>{{ 'connectExchange.read' | translate }}</strong> {{ 'connectExchange.and' | translate }} <strong>{{ 'connectExchange.trade' | translate }}</strong> {{ 'connectExchange.permissionsNoteTail' | translate }}
+        </div>
+
+        <button type="submit" class="btn-save" [disabled]="saving()">
+          @if (saving()) {
+            <span class="spinner"></span> {{ 'connectExchange.connecting' | translate }}
+          } @else {
+            {{ 'connectExchange.connect' | translate }} {{ selected()?.name }}
+          }
+        </button>
+      }
 
     </form>
   }

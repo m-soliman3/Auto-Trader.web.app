@@ -144,6 +144,7 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
   exchangeSaving = signal(false);
   exchangeConnected = signal(false);
   oauthConnecting = signal(false);
+  manualEntryExpanded = signal(false);
 
   /** True when the "Connect with Alpaca" OAuth option should show (Alpaca Connect Apps). */
   isAlpacaSelected = computed(() => {
@@ -219,6 +220,7 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     this.exchangeSecret = '';
     this.exchangePassphrase = '';
     this.exchangeError.set('');
+    this.manualEntryExpanded.set(false);
     this.exchangeStep.set(2);
   }
 
@@ -226,6 +228,11 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
     this.exchangeStep.set(1);
     this.selectedExchange.set(null);
     this.exchangeError.set('');
+    this.manualEntryExpanded.set(false);
+  }
+
+  toggleManualEntry(): void {
+    this.manualEntryExpanded.update((v) => !v);
   }
 
   async saveExchange(): Promise<void> {
