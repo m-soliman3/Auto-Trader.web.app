@@ -161,6 +161,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ───── PRICING ───── -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">{{ 'home.pricing.tag' | translate }}</p>
+      <h2>{{ 'home.pricing.title' | translate }}</h2>
+      <p class="section-sub">{{ 'home.pricing.sub' | translate }}</p>
+    </div>
+    <div class="pricing-grid">
+      @for (plan of pricingPlans; track plan.id) {
+        <div class="pricing-card" [class.highlighted]="plan.highlighted">
+          @if (plan.badgeKey) {
+            <span class="pricing-badge">{{ plan.badgeKey | translate }}</span>
+          }
+          <h3 class="pricing-name">{{ plan.nameKey | translate }}</h3>
+          <div class="pricing-price">
+            <span class="pricing-amount">{{ plan.priceKey | translate }}</span>
+            @if (plan.periodKey) {
+              <span class="pricing-period">{{ plan.periodKey | translate }}</span>
+            }
+          </div>
+          <ul class="pricing-features">
+            @for (f of plan.features; track f.textKey) {
+              <li [class.excluded]="!f.included">
+                <span class="pricing-feature-icon" aria-hidden="true">{{ f.included ? '✓' : '✕' }}</span>
+                <span>{{ f.textKey | translate }}</span>
+              </li>
+            }
+          </ul>
+          <a
+            [routerLink]="pricingCtaRouterLink()"
+            [queryParams]="pricingCtaQueryParams(plan.id)"
+            [attr.href]="pricingCtaHref(plan.id)"
+            class="pricing-cta"
+            [class.btn-accent]="plan.highlighted"
+            [class.btn-outline]="!plan.highlighted"
+          >{{ plan.ctaKey | translate }}</a>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
 <!-- ───── HOW AUTOTRADER HELPS ───── -->
 <section class="section" id="how-autotrader-helps">
   <div class="container">

@@ -98,6 +98,50 @@
         "desc": "Sit back while auto-Trading monitors markets around the clock, executing trades and managing risk automatically."
       }
     },
+    "pricing": {
+      "tag": "Pricing",
+      "title": "Simple, transparent pricing",
+      "sub": "Start free, then upgrade whenever your strategy needs more room to grow.",
+      "plans": {
+        "free": {
+          "name": "Free",
+          "price": "Free",
+          "cta": "Start with Free",
+          "features": {
+            "strategies": "Connect up to 2 strategies",
+            "exchanges": "1 real-money exchange & 1 paper exchange",
+            "emailNotifications": "Email notifications",
+            "extraStrategies": "Extra strategies",
+            "customerSupport": "Customer support"
+          }
+        },
+        "beginner": {
+          "name": "Beginner Trader",
+          "price": "$10",
+          "period": "/month",
+          "badge": "Most Popular",
+          "cta": "Start with Beginner Trader",
+          "features": {
+            "strategies": "Connect up to 10 strategies",
+            "exchanges": "2 real-money exchanges & 2 paper exchanges",
+            "emailNotifications": "Email notifications",
+            "customerSupport": "Customer support"
+          }
+        },
+        "expert": {
+          "name": "Trading Expert",
+          "price": "$35",
+          "period": "/month",
+          "cta": "Start with Trading Expert",
+          "features": {
+            "strategies": "Unlimited strategies",
+            "exchanges": "Up to 10 exchanges",
+            "emailNotifications": "Email notifications",
+            "customerSupport": "Priority customer support"
+          }
+        }
+      }
+    },
     "ctaTitle": "Ready to trade on autopilot?",
     "ctaDesc": "Join 125,000+ traders who have automated their strategy with auto-Trading. Start free — no credit card required.",
     "createFreeAccount": "Create Free Account →"
