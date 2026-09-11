@@ -1,5 +1,11 @@
 # Cloud Armor proof of concept
 
+**Status: applied and verified (2026-09-11).** Live at `8.232.74.122`.
+Confirmed: `GET /health` → `200` (matches the backend directly); the same
+request with a SQLi or XSS payload in a query param → `403`, blocked by
+Cloud Armor before it reaches the backend. Nothing points real user traffic
+at this IP yet — see "What this does *not* do" below.
+
 ## Why this exists
 
 The app's frontend (Firebase Hosting) and backend (Cloud Functions + Cloud
@@ -50,14 +56,24 @@ this is the Standard tier, not Enterprise.
 ## Testing
 
 ```sh
-curl http://$(terraform output -raw load_balancer_ip)/health
+curl -i http://$(terraform output -raw load_balancer_ip)/health
 ```
 
 Should return the same response as the existing
 `https://auto-trader-chatbot-backend-zcypdnoyqa-ew.a.run.app/health`, now
-routed through Cloud Armor. To confirm the WAF is active, send a request
-with an obvious SQLi/XSS payload in a query param and confirm it gets a
-`403` instead of reaching the backend.
+routed through Cloud Armor. To confirm the WAF is active:
+
+```sh
+curl -s -o /dev/null -w "%{http_code}\n" -G \
+  "http://$(terraform output -raw load_balancer_ip)/health" \
+  --data-urlencode "id=1' OR '1'='1"
+```
+
+should return `403` instead of reaching the backend (verified above).
+
+Note: right after `terraform apply`, the global load balancer can take a
+few minutes to propagate — expect connection timeouts or a stray `404`
+for the first 1-3 minutes before it settles into consistent `200`s.
 
 ## Promoting to production
 
@@ -74,6 +90,15 @@ nothing points a real domain at it yet. Before using this for real traffic:
 4. Consider whether to front every individual Cloud Function this way (there
    are 20+ in `firebase.json`) or keep most traffic on Firebase Hosting's
    default rewrites and reserve this for specific high-risk endpoints.
+
+## State is shared (GCS backend)
+
+State lives in `gs://autotrader-b8851-tfstate/cloud-armor/` (bucket created
+with versioning on, `europe-west1`), configured via the `backend "gcs"`
+block in `main.tf`. Any machine/session with access to that bucket and the
+`autotrader-b8851` project runs `terraform init` and sees the real, current
+state — no more "only my laptop knows this exists." `terraform plan`
+against this backend confirms 0 drift: the 7 resources below match exactly.
 
 ## Destroying
 
