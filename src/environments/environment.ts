@@ -8,6 +8,10 @@ export const firebaseConfig = {
 };
 
 export const environment = {
+  // reCAPTCHA Enterprise site key used to activate Firebase App Check on the web app.
+  // App Check enforcement is currently OFF for all backend services (monitor-only) —
+  // this only lets the client mint App Check tokens; it does not block any request.
+  recaptchaEnterpriseSiteKey: '6LdmhLYtAAAAAF2Zq6LPGFuGcEg6F8yoqqkt01TI',
   // Leave empty to keep using Firebase Hosting rewrites (/api/*).
   // Set to your Cloud Run URL to route supported endpoints there.
   tradingBackendBaseUrl: 'https://auto-trader-backend-zcypdnoyqa-ew.a.run.app',
