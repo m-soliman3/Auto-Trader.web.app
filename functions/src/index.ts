@@ -2959,7 +2959,7 @@ export const alpacaOAuthStart = functions
         const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
         const env: "live" | "paper" = req.body?.env === "paper" ? "paper" : "live";
 
-        const clientId = ALPACA_OAUTH_CLIENT_ID.value();
+        const clientId = ALPACA_OAUTH_CLIENT_ID.value().trim();
         if (!clientId) {
           res.status(500).json({ error: "Alpaca OAuth is not configured" });
           return;
@@ -3010,8 +3010,8 @@ export const alpacaOAuthCallback = functions
   .region("europe-west1")
   .runWith({ secrets: [ALPACA_OAUTH_CLIENT_ID, ALPACA_OAUTH_CLIENT_SECRET] })
   .https.onRequest(async (req, res) => {
-    const clientId = ALPACA_OAUTH_CLIENT_ID.value();
-    const clientSecret = ALPACA_OAUTH_CLIENT_SECRET.value();
+    const clientId = ALPACA_OAUTH_CLIENT_ID.value().trim();
+    const clientSecret = ALPACA_OAUTH_CLIENT_SECRET.value().trim();
 
     if (!clientId || !clientSecret) {
       res.status(500).send("Alpaca OAuth is not configured");
@@ -3066,7 +3066,7 @@ export const alpacaOAuthCallback = functions
 
       if (!tokenRes.ok) {
         const text = await tokenRes.text();
-        console.error("❌ Alpaca OAuth token exchange failed:", text);
+        console.error(`❌ Alpaca OAuth token exchange failed (status ${tokenRes.status}):`, text);
         res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
         return;
       }
