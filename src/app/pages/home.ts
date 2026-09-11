@@ -47,6 +47,18 @@ export class Home implements AfterViewInit, OnDestroy {
     return this.auth.isLoggedIn() ? '/dashboard' : '/signup';
   }
 
+  pricingCtaRouterLink(): string[] {
+    return this.ctaRouterLink();
+  }
+
+  pricingCtaQueryParams(planId: string): Record<string, string> {
+    return { plan: planId };
+  }
+
+  pricingCtaHref(planId: string): string {
+    return this.auth.isLoggedIn() ? '/dashboard' : `/signup?plan=${planId}`;
+  }
+
   stats = [
     { value: '50+', labelKey: 'home.stats.activeTraders' },
     { value: '$2,969,028', labelKey: 'home.stats.volumeTraded' },
@@ -81,6 +93,55 @@ export class Home implements AfterViewInit, OnDestroy {
       titleKey: 'home.steps.step3.title',
       descKey: 'home.steps.step3.desc',
       videoSrc: '/videos/Strategy created 08.06.2026.mov',
+    },
+  ];
+
+  pricingPlans = [
+    {
+      id: 'free',
+      highlighted: false,
+      nameKey: 'home.pricing.plans.free.name',
+      priceKey: 'home.pricing.plans.free.price',
+      periodKey: null as string | null,
+      badgeKey: null as string | null,
+      ctaKey: 'home.pricing.plans.free.cta',
+      features: [
+        { textKey: 'home.pricing.plans.free.features.strategies', included: true },
+        { textKey: 'home.pricing.plans.free.features.exchanges', included: true },
+        { textKey: 'home.pricing.plans.free.features.emailNotifications', included: false },
+        { textKey: 'home.pricing.plans.free.features.extraStrategies', included: false },
+        { textKey: 'home.pricing.plans.free.features.customerSupport', included: false },
+      ],
+    },
+    {
+      id: 'beginner-trader',
+      highlighted: true,
+      nameKey: 'home.pricing.plans.beginner.name',
+      priceKey: 'home.pricing.plans.beginner.price',
+      periodKey: 'home.pricing.plans.beginner.period' as string | null,
+      badgeKey: 'home.pricing.plans.beginner.badge' as string | null,
+      ctaKey: 'home.pricing.plans.beginner.cta',
+      features: [
+        { textKey: 'home.pricing.plans.beginner.features.strategies', included: true },
+        { textKey: 'home.pricing.plans.beginner.features.exchanges', included: true },
+        { textKey: 'home.pricing.plans.beginner.features.emailNotifications', included: true },
+        { textKey: 'home.pricing.plans.beginner.features.customerSupport', included: true },
+      ],
+    },
+    {
+      id: 'trading-expert',
+      highlighted: false,
+      nameKey: 'home.pricing.plans.expert.name',
+      priceKey: 'home.pricing.plans.expert.price',
+      periodKey: 'home.pricing.plans.expert.period' as string | null,
+      badgeKey: null as string | null,
+      ctaKey: 'home.pricing.plans.expert.cta',
+      features: [
+        { textKey: 'home.pricing.plans.expert.features.strategies', included: true },
+        { textKey: 'home.pricing.plans.expert.features.exchanges', included: true },
+        { textKey: 'home.pricing.plans.expert.features.emailNotifications', included: true },
+        { textKey: 'home.pricing.plans.expert.features.customerSupport', included: true },
+      ],
     },
   ];
 
