@@ -13,6 +13,7 @@
         <li><a [routerLink]="homeLink()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="onHomeClick($event)">{{ 'nav.home' | translate }}</a></li>
         <li><a [routerLink]="homeLink()" fragment="features" (click)="onSectionClick('features', $event)">{{ 'nav.features' | translate }}</a></li>
         <li><a [routerLink]="homeLink()" fragment="how-it-works" (click)="onSectionClick('how-it-works', $event)">{{ 'nav.howItWorks' | translate }}</a></li>
+        <li><a [routerLink]="homeLink()" fragment="pricing" (click)="onSectionClick('pricing', $event)">{{ 'nav.pricing' | translate }}</a></li>
         <li class="mobile-only"><a [routerLink]="localizedLink('login')" (click)="closeMenu()">{{ 'nav.logIn' | translate }}</a></li>
         <li class="mobile-only"><a [routerLink]="localizedLink('signup')" class="btn-primary" (click)="closeMenu()">{{ 'nav.getStarted' | translate }}</a></li>
       } @else {
