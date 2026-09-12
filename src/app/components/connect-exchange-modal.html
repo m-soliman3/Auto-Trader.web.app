@@ -37,11 +37,11 @@
         Demo money (simulated balance) is always free and does not require a connection.
       </div>
     }
-    @if (cryptoExchanges().length > 0) {
+    @if (stockExchanges().length > 0) {
       <div class="exchange-section">
-        <div class="exchange-section-label">{{ 'connectExchange.cryptoExchanges' | translate }}</div>
+        <div class="exchange-section-label">{{ 'connectExchange.stocksAndMultiAsset' | translate }}</div>
         <div class="exchange-grid">
-          @for (ex of cryptoExchanges(); track ex.id) {
+          @for (ex of stockExchanges(); track ex.id) {
             <button class="exchange-tile" (click)="select(ex)">
               <div class="exchange-tile-top">
                 <span class="exchange-logo" [style.color]="ex.color">{{ ex.logo }}</span>
@@ -56,11 +56,11 @@
       </div>
     }
 
-    @if (stockExchanges().length > 0) {
+    @if (cryptoExchanges().length > 0) {
       <div class="exchange-section">
-        <div class="exchange-section-label">{{ 'connectExchange.stocksAndMultiAsset' | translate }}</div>
+        <div class="exchange-section-label">{{ 'connectExchange.cryptoExchanges' | translate }}</div>
         <div class="exchange-grid">
-          @for (ex of stockExchanges(); track ex.id) {
+          @for (ex of cryptoExchanges(); track ex.id) {
             <button class="exchange-tile" (click)="select(ex)">
               <div class="exchange-tile-top">
                 <span class="exchange-logo" [style.color]="ex.color">{{ ex.logo }}</span>
