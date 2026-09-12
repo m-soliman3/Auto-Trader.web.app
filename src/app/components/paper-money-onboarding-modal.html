@@ -129,10 +129,10 @@
           }
 
           @if (exchangeStep() === 1) {
-            @if (paperCryptoExchanges().length > 0) {
-              <div class="exchange-category-label">{{ 'connectExchange.cryptoExchanges' | translate }}</div>
+            @if (paperStockExchanges().length > 0) {
+              <div class="exchange-category-label">{{ 'connectExchange.stocksAndMultiAsset' | translate }}</div>
               <div class="exchange-grid">
-                @for (ex of paperCryptoExchanges(); track ex.id) {
+                @for (ex of paperStockExchanges(); track ex.id) {
                   <button class="exchange-tile" (click)="selectExchange(ex)">
                     <span class="exchange-logo" [style.color]="ex.color">{{ ex.logo }}</span>
                     <span class="exchange-name">{{ ex.name }}</span>
@@ -141,10 +141,10 @@
               </div>
             }
 
-            @if (paperStockExchanges().length > 0) {
-              <div class="exchange-category-label">{{ 'connectExchange.stocksAndMultiAsset' | translate }}</div>
+            @if (paperCryptoExchanges().length > 0) {
+              <div class="exchange-category-label">{{ 'connectExchange.cryptoExchanges' | translate }}</div>
               <div class="exchange-grid">
-                @for (ex of paperStockExchanges(); track ex.id) {
+                @for (ex of paperCryptoExchanges(); track ex.id) {
                   <button class="exchange-tile" (click)="selectExchange(ex)">
                     <span class="exchange-logo" [style.color]="ex.color">{{ ex.logo }}</span>
                     <span class="exchange-name">{{ ex.name }}</span>

@@ -304,10 +304,10 @@
 
           <!-- Step 1: exchange picker -->
           @if (exchangeStep() === 1) {
-            @if (realCryptoExchanges().length > 0) {
-              <div class="exchange-category-label">Crypto Exchanges</div>
+            @if (realStockExchanges().length > 0) {
+              <div class="exchange-category-label">Stock Brokers</div>
               <div class="exchange-grid">
-                @for (ex of realCryptoExchanges(); track ex.id) {
+                @for (ex of realStockExchanges(); track ex.id) {
                   <div class="exchange-tile-wrap">
                     <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
                       <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
@@ -323,10 +323,10 @@
                 }
               </div>
             }
-            @if (realStockExchanges().length > 0) {
-              <div class="exchange-category-label">Stock Brokers</div>
+            @if (realCryptoExchanges().length > 0) {
+              <div class="exchange-category-label">Crypto Exchanges</div>
               <div class="exchange-grid">
-                @for (ex of realStockExchanges(); track ex.id) {
+                @for (ex of realCryptoExchanges(); track ex.id) {
                   <div class="exchange-tile-wrap">
                     <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
                       <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
