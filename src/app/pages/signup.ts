@@ -1,9 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
+import { SUPPORTED_EXCHANGES, Exchange } from '../services/exchange.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,9 +17,38 @@ import { TranslateModule } from '@ngx-translate/core';
 export class Signup {
   auth = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  /** Strategy template referenced by a `?strategy=<id>` query param, if any and known. */
+  contextStrategy: StrategyTemplate | null = null;
+  /** Broker/exchange referenced by a `?broker=<id>` query param, if any and known. */
+  contextBroker: Exchange | null = null;
 
   constructor() {
     if (this.auth.isLoggedIn()) this.router.navigate(['/dashboard']);
+
+    const params = this.route.snapshot.queryParamMap;
+    const strategyId = params.get('strategy');
+    const brokerId = params.get('broker');
+    if (strategyId) {
+      this.contextStrategy = STRATEGY_TEMPLATES.find(t => t.id === strategyId) ?? null;
+    }
+    if (brokerId) {
+      this.contextBroker = SUPPORTED_EXCHANGES.find(e => e.id === brokerId) ?? null;
+    }
+  }
+
+  get hasContext(): boolean {
+    return !!this.contextStrategy || !!this.contextBroker;
+  }
+
+  /** True when both `?strategy=` and `?broker=` resolved — shows the single combined panel. */
+  get isCombinedContext(): boolean {
+    return !!this.contextStrategy && !!this.contextBroker;
+  }
+
+  get isAlpacaBroker(): boolean {
+    return this.contextBroker?.id === 'alpaca' || this.contextBroker?.id === 'alpaca-paper';
   }
 
   name          = '';

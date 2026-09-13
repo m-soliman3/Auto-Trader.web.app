@@ -33,7 +33,7 @@
       "automation": "Trading Automation"
     },
     "graph": {
-      "ariaLabel": "Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts",
+      "ariaLabel": "Bot configuration and exchange or broker API feed into the trading automation core, then into market execution and monitoring alerts",
       "strategy": "Trading Strategy",
       "botConfig": "Bot Configuration",
       "exchangeApi": "Exchange / Broker API",
@@ -145,7 +145,21 @@
     },
     "ctaTitle": "Ready to trade on autopilot?",
     "ctaDesc": "Join 125,000+ traders who have automated their strategy with auto-Trading. Start free — no credit card required.",
-    "createFreeAccount": "Create Free Account →"
+    "createFreeAccount": "Create Free Account →",
+    "brokers": {
+      "categoryCrypto": "Crypto",
+      "categoryStocks": "Stocks"
+    },
+    "build": {
+      "heroTeaser": "Build your automation",
+      "tag": "Build Your Automation",
+      "title": "Pick a strategy. Connect a broker. Done.",
+      "sub": "Any strategy connects to any broker — choose both below and see exactly how AutoTrader would automate it for you.",
+      "pickStrategy": "1. Pick a strategy",
+      "connectBroker": "2. Connect a broker",
+      "linkedLabel": "Automated",
+      "ctaButton": "Automate {{strategy}} on {{broker}}"
+    }
   },
   "login": {
     "welcomeBack": "Welcome back",
@@ -200,7 +214,22 @@
     "signUpWithX": "Sign up with X",
     "signUpWithFacebook": "Sign up with Facebook",
     "alreadyHaveAccount": "Already have an account?",
-    "logIn": "Log in"
+    "logIn": "Log in",
+    "context": {
+      "strategyBadge": "Your strategy",
+      "strategyLede": "Here's how we automate this for you:",
+      "brokerBadge": "Your broker",
+      "brokerLede": "Here's how we connect your account:",
+      "risk": "Risk",
+      "difficulty": "Difficulty",
+      "timeframes": "Timeframes",
+      "brokerAlpacaNote": "Once you sign up, connect your Alpaca account in one click via secure OAuth — no API keys to copy or paste. AutoTrader places trades on your behalf the moment your strategy goes live.",
+      "brokerApiNote": "After you sign up, add your {{broker}} API keys under Exchanges. AutoTrader uses them only to place trades on your behalf via {{broker}}'s API — never to withdraw funds.",
+      "comboBadge": "Your automation",
+      "comboOn": "on",
+      "comboLede": "Here's how we'll automate this for you:",
+      "comboDesc": "{{strategy}} will run automatically, placing trades through your {{broker}} connection once you sign up."
+    }
   },
   "contact": {
     "title": "Get in touch",
