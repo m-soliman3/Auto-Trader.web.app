@@ -32,7 +32,7 @@
       "automation": "Automação de Trading"
     },
     "graph": {
-      "ariaLabel": "A estratégia de trading, a configuração do bot e a API da exchange ou corretora alimentam o núcleo de automação, que depois leva à execução de mercado e à monitorização com alertas",
+      "ariaLabel": "A configuração do bot e a API da exchange ou corretora alimentam o núcleo de automação, que depois leva à execução de mercado e à monitorização com alertas",
       "strategy": "Estratégia de Trading",
       "botConfig": "Configuração do Bot",
       "exchangeApi": "API da Exchange / Corretora",
@@ -100,7 +100,21 @@
     },
     "ctaTitle": "Pronto para operar em piloto automático?",
     "ctaDesc": "Junte-se a mais de 125.000 traders que automatizaram a sua estratégia com auto-Trading. Comece gratuitamente — sem cartão de crédito.",
-    "createFreeAccount": "Criar conta gratuita →"
+    "createFreeAccount": "Criar conta gratuita →",
+    "brokers": {
+      "categoryCrypto": "Cripto",
+      "categoryStocks": "Ações"
+    },
+    "build": {
+      "heroTeaser": "Construa sua automação",
+      "tag": "Construa sua automação",
+      "title": "Escolha uma estratégia. Conecte uma corretora. Pronto.",
+      "sub": "Qualquer estratégia se conecta a qualquer corretora — escolha as duas abaixo e veja exatamente como o AutoTrader automatizaria isso para você.",
+      "pickStrategy": "1. Escolha uma estratégia",
+      "connectBroker": "2. Conecte uma corretora",
+      "linkedLabel": "Automatizado",
+      "ctaButton": "Automatizar {{strategy}} na {{broker}}"
+    }
   },
   "login": {
     "welcomeBack": "Bem-vindo de volta",
@@ -155,7 +169,22 @@
     "signUpWithX": "Registar com X",
     "signUpWithFacebook": "Registar com Facebook",
     "alreadyHaveAccount": "Já tem conta?",
-    "logIn": "Iniciar sessão"
+    "logIn": "Iniciar sessão",
+    "context": {
+      "strategyBadge": "Sua estratégia",
+      "strategyLede": "Veja como automatizamos isso para você:",
+      "brokerBadge": "Sua corretora",
+      "brokerLede": "Veja como conectamos sua conta:",
+      "risk": "Risco",
+      "difficulty": "Dificuldade",
+      "timeframes": "Períodos",
+      "brokerAlpacaNote": "Depois de se cadastrar, conecte sua conta Alpaca com um clique via OAuth seguro, sem copiar nem colar chaves de API. O AutoTrader executa as ordens em seu nome assim que sua estratégia estiver ativa.",
+      "brokerApiNote": "Depois de se cadastrar, adicione suas chaves de API da {{broker}} em Exchanges. O AutoTrader as usa apenas para executar ordens em seu nome pela API da {{broker}}, nunca para sacar fundos.",
+      "comboBadge": "Sua automação",
+      "comboOn": "na",
+      "comboLede": "Veja como vamos automatizar isso para você:",
+      "comboDesc": "{{strategy}} será executada automaticamente, enviando ordens através da sua conexão com a {{broker}} assim que você se cadastrar."
+    }
   },
   "contact": {
     "title": "Contacto",

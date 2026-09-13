@@ -1,10 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 import { SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
 import { AdBannerSkyscraper } from '../components/ad-banner-skyscraper';
 import { AdWidgetEtoro } from '../components/ad-widget-etoro';
 
@@ -145,10 +146,55 @@ export class Home implements AfterViewInit, OnDestroy {
     },
   ];
 
-  /** Unique (non-paper/testnet/sandbox/demo) exchanges & brokers for the marquee. */
-  partnerBrokerages = SUPPORTED_EXCHANGES
+  /** Curated, representative strategy ids offered in the "build your automation" picker. */
+  private static readonly HERO_STRATEGY_IDS = [
+    'ema-crossover',
+    'macd-trend',
+    'rsi-reversal',
+    'bollinger-bounce',
+    'vwap-reversion',
+    'breakout',
+  ];
+
+  heroStrategies: StrategyTemplate[] = Home.HERO_STRATEGY_IDS
+    .map(id => STRATEGY_TEMPLATES.find(t => t.id === id))
+    .filter((t): t is StrategyTemplate => !!t);
+
+  /** Unique (non-paper/testnet/sandbox/demo) exchanges & brokers for the "build your automation" picker, stocks first. */
+  brokerShowcase = SUPPORTED_EXCHANGES
     .filter(e => !e.isPaper)
-    .map(e => ({ name: e.name, logo: e.logo, color: e.color }));
+    .map(e => ({ id: e.id, name: e.name, logo: e.logo, color: e.color, category: e.category }))
+    .sort((a, b) => (a.category === b.category ? 0 : a.category === 'stocks' ? -1 : 1));
+
+  /** Single-select state for the "build your automation" section (strategy + broker picked together). */
+  readonly selectedStrategyId = signal<string>('ema-crossover');
+  readonly selectedBrokerId = signal<string>('alpaca');
+
+  readonly selectedStrategy = computed(() =>
+    this.heroStrategies.find(s => s.id === this.selectedStrategyId()) ?? this.heroStrategies[0]
+  );
+
+  readonly selectedBroker = computed(() =>
+    this.brokerShowcase.find(b => b.id === this.selectedBrokerId()) ?? this.brokerShowcase[0]
+  );
+
+  selectStrategy(id: string): void {
+    this.selectedStrategyId.set(id);
+  }
+
+  selectBroker(id: string): void {
+    this.selectedBrokerId.set(id);
+  }
+
+  combinedQueryParams(): Record<string, string> {
+    return { strategy: this.selectedStrategyId(), broker: this.selectedBrokerId() };
+  }
+
+  combinedHref(): string {
+    return this.auth.isLoggedIn()
+      ? '/dashboard'
+      : `/signup?strategy=${this.selectedStrategyId()}&broker=${this.selectedBrokerId()}`;
+  }
 
   activeStepVideoSrc(): string {
     return this.steps[this.activeStepIndex()]?.videoSrc ?? '';

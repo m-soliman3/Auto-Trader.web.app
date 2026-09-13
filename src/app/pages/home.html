@@ -19,37 +19,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="gradient-text">{{ 'home.heroTitle2' | translate }}</span><br />
       {{ 'home.heroTitle3' | translate }}
     </h1>
-    <div class="hero-graph" role="img" [attr.aria-label]="t('home.graph.ariaLabel', 'Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts')">
-      <div class="graph-inputs">
-        <div class="graph-node">{{ t('home.graph.strategy', 'Trading Strategy') }}</div>
-        <div class="graph-node">{{ t('home.graph.botConfig', 'Bot Configuration') }}</div>
-        <div class="graph-node">{{ t('home.graph.exchangeApi', 'Exchange / Broker API') }}</div>
-      </div>
-      <div class="graph-connectors" aria-hidden="true">
-        <span class="graph-link graph-link-left"></span>
-        <span class="graph-link graph-link-mid"></span>
-        <span class="graph-link graph-link-right"></span>
-      </div>
-      <div class="graph-node graph-core">{{ t('home.graph.automationCore', 'Trading Automation Core') }}</div>
-      <div class="graph-connectors graph-connectors-output" aria-hidden="true">
-        <span class="graph-link graph-link-out-left"></span>
-        <span class="graph-link graph-link-out-right"></span>
-      </div>
-      <div class="graph-outputs">
-        <div class="graph-node graph-output">{{ t('home.graph.marketExecution', 'Market Execution') }}</div>
-        <div class="graph-node graph-output">{{ t('home.graph.monitoringAlerts', 'Monitoring and Alerts') }}</div>
-      </div>
-    </div>
-    <div class="hero-graph-steps" [attr.aria-label]="t('home.graph.ariaLabel', 'Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts')">
-      <p class="hero-step-line">{{ t('home.graph.stepLine1', 'Select a trading strategy.') }}</p>
-      <p class="hero-step-line">{{ t('home.graph.stepLine2', 'Set up a bot.') }}</p>
-      <p class="hero-step-line">{{ t('home.graph.stepLine3', 'Connect your exchange or broker.') }}</p>
-      <p class="hero-step-line">{{ t('home.graph.stepLine4', 'Done!') }}</p>
-    </div>
     <div class="hero-cta">
       <a [routerLink]="ctaRouterLink()" [attr.href]="ctaHref()" class="btn-accent">{{ 'home.startFree' | translate }}</a>
       <a href="#how-it-works" class="btn-outline">{{ 'home.seeHowItWorks' | translate }}</a>
     </div>
+    <a href="#build-automation" class="hero-next-link">
+      <span>{{ t('home.build.heroTeaser', 'Build your automation') }}</span>
+      <span class="hero-next-arrow" aria-hidden="true">↓</span>
+    </a>
   </div>
 
 </section>
@@ -58,6 +35,72 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      :host styles. -->
 <app-ad-banner-skyscraper side="left" ngSkipHydration />
 <app-ad-widget-etoro />
+
+<!-- ───── BUILD YOUR AUTOMATION (STRATEGY + BROKER PICKER) ───── -->
+<section class="section build-section" id="build-automation">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">{{ t('home.build.tag', 'Build Your Automation') }}</p>
+      <h2>{{ t('home.build.title', 'Pick a strategy. Connect a broker. Done.') }}</h2>
+      <p class="section-sub">{{ t('home.build.sub', 'Any strategy connects to any broker — choose both below and see exactly how AutoTrader would automate it for you.') }}</p>
+    </div>
+
+    <div class="build-grid">
+      <div class="build-column build-column-strategy">
+        <h3 class="build-column-title">{{ t('home.build.pickStrategy', '1. Pick a strategy') }}</h3>
+        <div class="build-list" role="list" [attr.aria-label]="t('home.build.pickStrategy', '1. Pick a strategy')">
+          @for (s of heroStrategies; track s.id) {
+            <button
+              type="button"
+              role="listitem"
+              class="build-item"
+              [class.active]="selectedStrategyId() === s.id"
+              (click)="selectStrategy(s.id)"
+            >
+              <span class="build-item-icon" aria-hidden="true">{{ s.icon }}</span>
+              <span class="build-item-name">{{ s.name }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="build-link">
+        <span class="build-link-line" aria-hidden="true"></span>
+        <a
+          [routerLink]="ctaRouterLink()"
+          [queryParams]="combinedQueryParams()"
+          [attr.href]="combinedHref()"
+          class="btn-accent build-cta build-link-cta"
+        >
+          <span aria-hidden="true">{{ selectedStrategy().icon }}</span>
+          {{ 'home.build.ctaButton' | translate:{ strategy: selectedStrategy().name, broker: selectedBroker().name } }}
+        </a>
+        <span class="build-link-line" aria-hidden="true"></span>
+      </div>
+
+      <div class="build-column build-column-broker">
+        <h3 class="build-column-title">{{ t('home.build.connectBroker', '2. Connect a broker') }}</h3>
+        <div class="build-list" role="list" [attr.aria-label]="t('home.build.connectBroker', '2. Connect a broker')">
+          @for (b of brokerShowcase; track b.id) {
+            <button
+              type="button"
+              role="listitem"
+              class="build-item"
+              [class.active]="selectedBrokerId() === b.id"
+              (click)="selectBroker(b.id)"
+            >
+              <span class="build-item-icon" aria-hidden="true">{{ b.logo }}</span>
+              <span class="build-item-name">{{ b.name }}</span>
+              <span class="build-item-category" [class.category-crypto]="b.category === 'crypto'" [class.category-stocks]="b.category === 'stocks'">
+                {{ b.category === 'crypto' ? t('home.brokers.categoryCrypto', 'Crypto') : t('home.brokers.categoryStocks', 'Stocks') }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ───── STATS ───── -->
 <section class="stats-bar">
@@ -68,30 +111,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="stat-label">{{ s.labelKey | translate }}</span>
       </div>
     }
-  </div>
-</section>
-
-<!-- ───── PARTNER BROKERAGES ───── -->
-<section class="partners-section">
-  <div class="container">
-    <p class="section-tag partners-tag">{{ t('home.partners.tag', 'Partner Brokerages') }}</p>
-  </div>
-  <div class="partners-marquee" aria-label="Partner brokerages">
-    <div class="partners-track">
-      @for (b of partnerBrokerages; track b.name) {
-        <span class="partner-item">
-          <span class="partner-logo">{{ b.logo }}</span>
-          <span class="partner-name">{{ b.name }}</span>
-        </span>
-      }
-      <!-- duplicate set for seamless loop -->
-      @for (b of partnerBrokerages; track b.name) {
-        <span class="partner-item" aria-hidden="true">
-          <span class="partner-logo">{{ b.logo }}</span>
-          <span class="partner-name">{{ b.name }}</span>
-        </span>
-      }
-    </div>
   </div>
 </section>
 
