@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Invest-Begin">
+  <title>Invest-Begin</title>
+  <!-- Fixed light tile: the tab icon stays the light mark whatever the browser's
+       colour scheme. A light tile reads on both light and dark tab strips, so this
+       deliberately does not follow prefers-color-scheme. -->
+  <rect width="32" height="32" rx="8" fill="#e2e7f0"/>
+  <rect x="5.85" y="17" width="3.5" height="9.6" rx="1.75" fill="#ff4d6a" transform="rotate(20 7.6 21.8)"/>
+  <rect x="14.25" y="11.8" width="3.5" height="9.6" rx="1.75" fill="#19e88d" transform="rotate(20 16 16.6)"/>
+  <rect x="22.65" y="6.6" width="3.5" height="9.6" rx="1.75" fill="#19e88d" transform="rotate(20 24.4 11.4)"/>
+</svg>

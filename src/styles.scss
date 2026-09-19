@@ -10,6 +10,10 @@
   --text-secondary: #8b95a9;
   --text-muted:     #5a6278;
   --accent:         #00d17a;
+  /* Logo tile is a soft grey offset from --surface (the navbar ground) in both
+     themes, so the tile always reads as a tile. Matching --bg or --surface made
+     it disappear. Dark is a near-neutral grey rather than near-black. */
+  --logo-tile:      #383d44;
 }
 
 /* === Light theme === */
@@ -22,6 +26,7 @@
   --text-secondary: #4a5468;
   --text-muted:     #9aa0b2;
   --accent:         #00a85a;
+  --logo-tile:      #e2e7f0;
 }
 
 /* === Paper/Demo mode overrides (dark) === */
