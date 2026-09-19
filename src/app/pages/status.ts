@@ -26,7 +26,7 @@ interface ServiceCheck {
     <div class="status-page">
       <header class="status-header">
         <a class="status-logo" routerLink="/">
-          <img src="/icons/logo.svg" alt="AutoTrader" height="32" />
+          <img src="/images/logo.svg" alt="Invest-Begin" width="32" height="32" />
         </a>
         <h1>{{ 'status.title' | translate }}</h1>
         <p class="status-subtitle">{{ 'status.subtitle' | translate }}</p>
