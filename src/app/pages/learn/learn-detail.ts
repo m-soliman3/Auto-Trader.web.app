@@ -2569,17 +2569,26 @@ export class LearnDetailPage implements OnInit {
     }
     this.currentSlug = slug;
 
-    this.allStrategies = Object.values(LEARN_PAGES)
-      .filter(p => p.category === 'strategy' && p.slug !== slug);
-    this.allSignals = Object.values(LEARN_PAGES)
-      .filter(p => p.category === 'signal' && p.slug !== slug);
-
     this.applyTranslatedPage();
   }
 
   private t(key: string, fallback: string): string {
     const translated = this.translate.instant(key);
     return translated === key ? fallback : translated;
+  }
+
+  /**
+   * Cross-link lists (related chips, "all strategies/signals") render `title` and `tagline`
+   * straight from LEARN_PAGES, which holds the English source. Swap in the active language so
+   * these don't stay English on the localized pages.
+   */
+  private translatedLink(base: LearnData): LearnData {
+    const keyRoot = `learnPages.${base.slug}`;
+    return {
+      ...base,
+      title: this.t(`${keyRoot}.title`, base.title),
+      tagline: this.t(`${keyRoot}.tagline`, base.tagline),
+    };
   }
 
   private applyTranslatedPage(): void {
@@ -2636,7 +2645,15 @@ export class LearnDetailPage implements OnInit {
 
     this.relatedPages = base.relatedSlugs
       .map(s => LEARN_PAGES[s])
-      .filter(Boolean);
+      .filter(Boolean)
+      .map(p => this.translatedLink(p));
+
+    this.allStrategies = Object.values(LEARN_PAGES)
+      .filter(p => p.category === 'strategy' && p.slug !== base.slug)
+      .map(p => this.translatedLink(p));
+    this.allSignals = Object.values(LEARN_PAGES)
+      .filter(p => p.category === 'signal' && p.slug !== base.slug)
+      .map(p => this.translatedLink(p));
 
     this.strategyCodeExamples = this.buildStrategyCodeExamples(base.slug);
 

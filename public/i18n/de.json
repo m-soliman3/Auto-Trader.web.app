@@ -159,6 +159,11 @@
       "connectBroker": "2. Broker verbinden",
       "linkedLabel": "Automatisiert",
       "ctaButton": "{{strategy}} bei {{broker}} automatisieren"
+    },
+    "help": {
+      "title": "Wie kann AutoTrader Ihnen helfen",
+      "sub": "Entdecken Sie die zentralen Bereiche, in denen AutoTrader Planung, Automatisierung und Ausführung in Ihrem Workflow unterstützt.",
+      "ariaLabel": "Hilfreiche AutoTrader-Themen"
     }
   },
   "login": {
@@ -792,7 +797,9 @@
     "noExecutions": "Keine Ausführungen",
     "disabledMessage": "Backend-Monitor ist deaktiviert. Setzen Sie tradingBackendBaseUrl in der Umgebung.",
     "signInMessage": "Melden Sie sich an, um den Status des Backend-Runners zu sehen.",
-    "unableToLoad": "Der Status des Backend-Runners kann derzeit nicht geladen werden."
+    "unableToLoad": "Der Status des Backend-Runners kann derzeit nicht geladen werden.",
+    "refresh": "Aktualisieren",
+    "refreshing": "Wird aktualisiert..."
   },
   "portfolioManagement": {
     "title": "Portfoliomanagement",
@@ -918,7 +925,8 @@
     "errorTimeframe": "Bitte wählen Sie einen Zeitrahmen aus.",
     "errorInvestment": "Bitte geben Sie einen gültigen Investitionsbetrag größer als 0 ein.",
     "errorStrategyName": "Bitte geben Sie einen Strategienamen ein.",
-    "errorCreate": "Strategie konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+    "errorCreate": "Strategie konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+    "createNew": "Neue Strategie erstellen"
   },
   "legal": {
     "home": "Startseite",
@@ -1301,7 +1309,9 @@
     "privacyPolicyLink": "Datenschutzrichtlinie",
     "moreInfoText": "Für weitere Informationen lesen Sie bitte unsere",
     "declineAll": "Alle ablehnen",
-    "acceptAll": "Alle akzeptieren"
+    "acceptAll": "Alle akzeptieren",
+    "expandDetails": "Einwilligungsdetails anzeigen",
+    "collapseDetails": "Einwilligungsdetails ausblenden"
   },
   "featurePages": {
     "ai-signals": {
@@ -3838,6 +3848,7 @@
   "learnDetail": {
     "backToHome": "← Zurück zur Startseite",
     "tradingStrategy": "Handelsstrategie",
+    "blogPost": "Blogbeitrag",
     "tradingSignalIndicator": "Handelssignal / Indikator",
     "startAutomatingFree": "Kostenlos automatisieren →",
     "wantToAutomate": "Diese Strategie automatisieren?",
@@ -3927,5 +3938,31 @@
         "desc": "Chatbot und KI-gestützte Trading-Beratung."
       }
     }
+  },
+  "sitemap": {
+    "backToHome": "← Zurück zur Startseite",
+    "title": "Wissensdatenbank",
+    "subtitle": "Ein vollständiges Verzeichnis aller Seiten von auto-Trading — nutzen Sie es, um die Plattform zu erkunden, Handelsstrategien zu lernen oder direkt zu einem bestimmten Bereich zu springen.",
+    "mainPages": "Hauptseiten",
+    "home": "Startseite",
+    "homeDesc": "Plattformübersicht, Funktionen und Einstiegsleitfaden.",
+    "login": "Anmelden",
+    "loginDesc": "Melden Sie sich bei Ihrem auto-Trading-Konto an.",
+    "signup": "Registrieren",
+    "signupDesc": "Erstellen Sie ein kostenloses Konto und starten Sie mit der Automatisierung.",
+    "contact": "Kontakt",
+    "contactDesc": "Nehmen Sie Kontakt mit dem auto-Trading-Team auf.",
+    "platformFeatures": "Plattform-Funktionen",
+    "legal": "Rechtliches & Richtlinien",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzerklärung",
+    "disclaimer": "Risikohinweis",
+    "collectingData": "Datenerhebung",
+    "blogPosts": "Blogbeiträge",
+    "blogPostsDesc": "Ausführliche Artikel zu aktuellen Aktienmarkttrends, Makroereignissen und Handelseinblicken — regelmäßig aktualisiert.",
+    "strategies": "Handelsstrategien — Lernbereich",
+    "strategiesDesc": "Lernleitfäden zu 35 professionellen Handelsstrategien. Vollständig automatisiert mit auto-Trading.",
+    "signals": "Handelssignale & Indikatoren — Lernbereich",
+    "signalsDesc": "Ausführliche Leitfäden zu 35 technischen Indikatoren zur Erzeugung von Handelssignalen."
   }
 }
