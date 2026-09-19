@@ -159,6 +159,11 @@
       "connectBroker": "2. Connect a broker",
       "linkedLabel": "Automated",
       "ctaButton": "Automate {{strategy}} on {{broker}}"
+    },
+    "help": {
+      "title": "How can AutoTrader Help you",
+      "sub": "Explore key areas where AutoTrader supports planning, automation, and execution across your workflow.",
+      "ariaLabel": "Helpful AutoTrader topics"
     }
   },
   "login": {
@@ -792,7 +797,9 @@
     "noExecutions": "No Executions",
     "disabledMessage": "Backend monitor is disabled. Set tradingBackendBaseUrl in environment.",
     "signInMessage": "Sign in to view backend runner status.",
-    "unableToLoad": "Unable to load backend runner status right now."
+    "unableToLoad": "Unable to load backend runner status right now.",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing..."
   },
   "portfolioManagement": {
     "title": "Portfolio Management",
@@ -918,7 +925,8 @@
     "errorTimeframe": "Please select a timeframe.",
     "errorInvestment": "Please enter a valid investment amount greater than 0.",
     "errorStrategyName": "Please enter a strategy name.",
-    "errorCreate": "Unable to create strategy. Please try again."
+    "errorCreate": "Unable to create strategy. Please try again.",
+    "createNew": "Create New Strategy"
   },
   "legal": {
     "home": "Home",
@@ -1301,7 +1309,9 @@
     "privacyPolicyLink": "Privacy Policy",
     "moreInfoText": "For more information, please review our",
     "declineAll": "Decline All",
-    "acceptAll": "Accept All"
+    "acceptAll": "Accept All",
+    "expandDetails": "Show consent details",
+    "collapseDetails": "Hide consent details"
   },
   "featurePages": {
     "ai-signals": {
@@ -3188,6 +3198,7 @@
   "learnDetail": {
     "backToHome": "← Back to Home",
     "tradingStrategy": "Trading Strategy",
+    "blogPost": "Blog Post",
     "tradingSignalIndicator": "Trading Signal / Indicator",
     "startAutomatingFree": "Start Automating Free →",
     "wantToAutomate": "Want to automate this strategy?",
@@ -3277,5 +3288,31 @@
         "desc": "Chatbot and AI-powered trading guidance."
       }
     }
+  },
+  "sitemap": {
+    "backToHome": "← Back to Home",
+    "title": "Knowledge Base",
+    "subtitle": "A complete directory of every page on auto-Trading — use it to explore the platform, learn trading strategies, or jump to a specific section.",
+    "mainPages": "Main Pages",
+    "home": "Home",
+    "homeDesc": "Platform overview, features, and get-started guide.",
+    "login": "Login",
+    "loginDesc": "Sign in to your auto-Trading account.",
+    "signup": "Sign Up",
+    "signupDesc": "Create a free account and start automating.",
+    "contact": "Contact",
+    "contactDesc": "Get in touch with the auto-Trading team.",
+    "platformFeatures": "Platform Features",
+    "legal": "Legal & Policies",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "disclaimer": "Risk Disclaimer",
+    "collectingData": "Collecting Data",
+    "blogPosts": "Blog Posts",
+    "blogPostsDesc": "In-depth articles on recent stock market trends, macro events, and trading insights — updated regularly.",
+    "strategies": "Trading Strategies — Learn Hub",
+    "strategiesDesc": "Educational guides to 35 professional trading strategies. Fully automated with auto-Trading.",
+    "signals": "Trading Signals & Indicators — Learn Hub",
+    "signalsDesc": "In-depth guides to 35 technical indicators used to generate trading signals."
   }
 }
