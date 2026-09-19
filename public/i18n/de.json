@@ -233,7 +233,16 @@
       "comboBadge": "Ihre Automatisierung",
       "comboOn": "auf",
       "comboLede": "So automatisieren wir das für Sie:",
-      "comboDesc": "{{strategy}} läuft automatisch und platziert Trades über Ihre {{broker}}-Verbindung, sobald Sie sich registriert haben."
+      "comboDesc": "{{strategy}} läuft automatisch und platziert Trades über Ihre {{broker}}-Verbindung, sobald Sie sich registriert haben.",
+      "buysWhen": "Kauft, wenn",
+      "sellsWhen": "Verkauft, wenn",
+      "chartPrice": "Kurs",
+      "chartBuy": "Kauf",
+      "chartSell": "Verkauf",
+      "chartBar": "Kerze",
+      "chartSignal": "Signal",
+      "chartSignals": "Signale in diesem Beispiel",
+      "chartDisclaimer": "Beispielhafte Darstellung — keine Echtzeit-Marktdaten."
     }
   },
   "contact": {

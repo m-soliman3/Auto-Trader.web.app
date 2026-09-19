@@ -183,7 +183,16 @@
       "comboBadge": "Sua automação",
       "comboOn": "na",
       "comboLede": "Veja como vamos automatizar isso para você:",
-      "comboDesc": "{{strategy}} será executada automaticamente, enviando ordens através da sua conexão com a {{broker}} assim que você se cadastrar."
+      "comboDesc": "{{strategy}} será executada automaticamente, enviando ordens através da sua conexão com a {{broker}} assim que você se cadastrar.",
+      "buysWhen": "Compra quando",
+      "sellsWhen": "Vende quando",
+      "chartPrice": "Preço",
+      "chartBuy": "Compra",
+      "chartSell": "Venda",
+      "chartBar": "Vela",
+      "chartSignal": "Sinal",
+      "chartSignals": "Sinais deste exemplo",
+      "chartDisclaimer": "Exemplo ilustrativo — não são dados reais de mercado."
     }
   },
   "contact": {

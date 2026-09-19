@@ -233,7 +233,16 @@
       "comboBadge": "Your automation",
       "comboOn": "on",
       "comboLede": "Here's how we'll automate this for you:",
-      "comboDesc": "{{strategy}} will run automatically, placing trades through your {{broker}} connection once you sign up."
+      "comboDesc": "{{strategy}} will run automatically, placing trades through your {{broker}} connection once you sign up.",
+      "buysWhen": "Buys when",
+      "sellsWhen": "Sells when",
+      "chartPrice": "Price",
+      "chartBuy": "Buy",
+      "chartSell": "Sell",
+      "chartBar": "Bar",
+      "chartSignal": "Signal",
+      "chartSignals": "Signals in this example",
+      "chartDisclaimer": "Illustrative example — not live market data."
     }
   },
   "contact": {

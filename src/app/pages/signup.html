@@ -158,6 +158,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="auth-alt">{{ 'signup.alreadyHaveAccount' | translate }} <a routerLink="/login">{{ 'signup.logIn' | translate }}</a></p>
 </ng-template>
 
+<!-- Jargon-free strategy explainer + entry/exit chart, shared by the combined
+     and strategy-only panels below. -->
+<ng-template #strategyExplainerTpl>
+  @if (contextExplainer; as ex) {
+    <div class="context-explainer">
+      <h3 class="explainer-question">{{ ex.question }}</h3>
+      <p class="explainer-plain">{{ ex.plain }}</p>
+
+      <div class="explainer-rules">
+        <div class="explainer-rule">
+          <span class="rule-tag rule-tag-entry">{{ 'signup.context.buysWhen' | translate }}</span>
+          <p>{{ ex.entry }}</p>
+        </div>
+        <div class="explainer-rule">
+          <span class="rule-tag rule-tag-exit">{{ 'signup.context.sellsWhen' | translate }}</span>
+          <p>{{ ex.exit }}</p>
+        </div>
+      </div>
+
+      <app-strategy-chart [spec]="ex.chart" />
+    </div>
+  }
+</ng-template>
+
 @if (hasContext) {
   <div class="auth-layout">
     <div class="auth-context-panel">
@@ -176,6 +200,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="context-pill">{{ 'signup.context.difficulty' | translate }}: {{ contextStrategy!.difficulty }}</span>
           <span class="context-pill">{{ 'signup.context.timeframes' | translate }}: {{ contextStrategy!.timeframes.join(', ') }}</span>
         </div>
+        <ng-container *ngTemplateOutlet="strategyExplainerTpl"></ng-container>
         <p class="context-desc context-desc-broker">
           @if (isAlpacaBroker) {
             {{ 'signup.context.brokerAlpacaNote' | translate }}
@@ -194,6 +219,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="context-pill">{{ 'signup.context.difficulty' | translate }}: {{ contextStrategy.difficulty }}</span>
           <span class="context-pill">{{ 'signup.context.timeframes' | translate }}: {{ contextStrategy.timeframes.join(', ') }}</span>
         </div>
+        <ng-container *ngTemplateOutlet="strategyExplainerTpl"></ng-container>
       } @else if (contextBroker) {
         <span class="context-badge">{{ 'signup.context.brokerBadge' | translate }}</span>
         <div class="context-icon" aria-hidden="true">{{ contextBroker.logo }}</div>
