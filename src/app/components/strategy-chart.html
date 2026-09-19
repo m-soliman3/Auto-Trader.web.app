@@ -1,0 +1,137 @@
+<figure class="sc">
+  <!-- Legend first: identity is never carried by colour alone. -->
+  <div class="sc-legend">
+    <span class="sc-key">
+      <span class="sc-key-line sc-key-price" aria-hidden="true"></span>
+      {{ 'signup.context.chartPrice' | translate }}
+    </span>
+    @if (model().band; as band) {
+      <span class="sc-key">
+        <span class="sc-key-band" aria-hidden="true"></span>
+        {{ band.label }}
+      </span>
+    }
+    @for (line of model().lines; track line.label) {
+      <span class="sc-key">
+        <span class="sc-key-line" [style.background]="line.color" aria-hidden="true"></span>
+        {{ line.label }}
+      </span>
+    }
+    <span class="sc-key">
+      <span class="sc-key-glyph sc-key-entry" aria-hidden="true">▲</span>
+      {{ 'signup.context.chartBuy' | translate }}
+    </span>
+    <span class="sc-key">
+      <span class="sc-key-glyph sc-key-exit" aria-hidden="true">▼</span>
+      {{ 'signup.context.chartSell' | translate }}
+    </span>
+  </div>
+
+  <div class="sc-plot" (pointermove)="onMove($event)" (pointerleave)="hover.set(null)">
+    <svg
+      [attr.viewBox]="'0 0 ' + W + ' ' + H"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      [attr.aria-label]="spec().caption"
+    >
+      <!-- Recessive chrome -->
+      @for (g of model().grid; track g.y) {
+        <line class="sc-grid" x1="0" [attr.y1]="g.y" [attr.x2]="W - 30" [attr.y2]="g.y" />
+        <text class="sc-tick" [attr.x]="W - 26" [attr.y]="g.y + 3">{{ format(g.value) }}</text>
+      }
+
+      @if (model().band; as band) {
+        <path class="sc-band" [attr.d]="band.d" />
+      }
+
+      @for (lv of model().levels; track lv.label) {
+        <line class="sc-level" x1="0" [attr.y1]="lv.y" [attr.x2]="W - 30" [attr.y2]="lv.y" />
+        <text class="sc-level-label" x="3" [attr.y]="lv.y - 4">{{ lv.label }}</text>
+      }
+
+      <polyline class="sc-line sc-price" [attr.points]="model().pricePoints" />
+
+      @for (line of model().lines; track line.label) {
+        <polyline class="sc-line" [attr.points]="line.points" [attr.stroke]="line.color" />
+      }
+
+      <!-- Signals: shape + word, so the colour is never the only cue -->
+      @for (m of model().markers; track m.key) {
+        <g [class]="'sc-marker sc-marker-' + m.kind">
+          <circle class="sc-marker-dot" [attr.cx]="m.x" [attr.cy]="m.y" r="3.5" />
+          <path class="sc-marker-glyph" [attr.d]="m.glyph" />
+          @if (m.label) {
+            <text class="sc-marker-label" [attr.x]="m.x" [attr.y]="m.labelY" [attr.text-anchor]="m.labelAnchor">
+              @if (m.label === 'entry') {
+                {{ 'signup.context.chartBuy' | translate }}
+              } @else {
+                {{ 'signup.context.chartSell' | translate }}
+              }
+            </text>
+          }
+        </g>
+      }
+
+      @if (hover() !== null) {
+        <line class="sc-crosshair" [attr.x1]="hoverX()" y1="0" [attr.x2]="hoverX()" [attr.y2]="H" />
+        <circle class="sc-crosshair-dot" [attr.cx]="hoverX()" [attr.cy]="hoverY()" r="4" />
+      }
+    </svg>
+
+    @if (hover() !== null) {
+      <div class="sc-tip" [style.left.%]="tipLeft()" aria-hidden="true">
+        <p class="sc-tip-head">
+          {{ 'signup.context.chartBar' | translate }} {{ hover()! + 1 }}
+          @if (hoverMarker(); as m) {
+            <span class="sc-tip-signal" [class.is-exit]="m.kind === 'exit'">
+              @if (m.kind === 'entry') {
+                {{ 'signup.context.chartBuy' | translate }}
+              } @else {
+                {{ 'signup.context.chartSell' | translate }}
+              }
+            </span>
+          }
+        </p>
+        @for (row of hoverRows(); track row.label) {
+          <p class="sc-tip-row">
+            <span class="sc-tip-swatch" [style.background]="row.color" aria-hidden="true"></span>
+            <span class="sc-tip-label">{{ row.label ?? ('signup.context.chartPrice' | translate) }}</span>
+            <span class="sc-tip-value">{{ format(row.value) }}</span>
+          </p>
+        }
+      </div>
+    }
+  </div>
+
+  <figcaption class="sc-caption">
+    {{ spec().caption }}
+    <span class="sc-disclaimer">{{ 'signup.context.chartDisclaimer' | translate }}</span>
+  </figcaption>
+
+  <!-- Same signals as a table, for screen readers and anyone who can't use the hover layer. -->
+  <table class="sc-table">
+    <caption>{{ 'signup.context.chartSignals' | translate }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{{ 'signup.context.chartSignal' | translate }}</th>
+        <th scope="col">{{ 'signup.context.chartBar' | translate }}</th>
+        <th scope="col">{{ 'signup.context.chartPrice' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (m of model().markers; track m.key) {
+        <tr>
+          <td>
+            @if (m.kind === 'entry') {
+              {{ 'signup.context.chartBuy' | translate }}
+            } @else {
+              {{ 'signup.context.chartSell' | translate }}
+            }
+          </td>
+          <td>{{ m.index + 1 }}</td>
+          <td>{{ format(m.price) }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</figure>

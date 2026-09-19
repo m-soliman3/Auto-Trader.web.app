@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
+import { STRATEGY_EXPLAINERS, StrategyExplainer } from '../services/strategy-explainer';
 import { SUPPORTED_EXCHANGES, Exchange } from '../services/exchange.service';
+import { StrategyChart } from '../components/strategy-chart';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, TranslateModule],
+  imports: [RouterLink, FormsModule, CommonModule, TranslateModule, StrategyChart],
   templateUrl: './signup.html',
   styleUrl: './signup.scss'
 })
@@ -23,6 +25,12 @@ export class Signup {
   contextStrategy: StrategyTemplate | null = null;
   /** Broker/exchange referenced by a `?broker=<id>` query param, if any and known. */
   contextBroker: Exchange | null = null;
+  /**
+   * Jargon-free explanation of the linked strategy plus its entry/exit chart.
+   * Null for a strategy with no explainer written yet — the panel just omits the
+   * block rather than showing a gap.
+   */
+  contextExplainer: StrategyExplainer | null = null;
 
   constructor() {
     if (this.auth.isLoggedIn()) this.router.navigate(['/dashboard']);
@@ -32,6 +40,7 @@ export class Signup {
     const brokerId = params.get('broker');
     if (strategyId) {
       this.contextStrategy = STRATEGY_TEMPLATES.find(t => t.id === strategyId) ?? null;
+      this.contextExplainer = STRATEGY_EXPLAINERS[strategyId] ?? null;
     }
     if (brokerId) {
       this.contextBroker = SUPPORTED_EXCHANGES.find(e => e.id === brokerId) ?? null;

@@ -233,7 +233,16 @@
       "comboBadge": "أتمتتك",
       "comboOn": "عبر",
       "comboLede": "إليك كيف سنقوم بأتمتة ذلك من أجلك:",
-      "comboDesc": "سيعمل {{strategy}} تلقائيًا، وينفذ الصفقات عبر اتصال {{broker}} الخاص بك بمجرد التسجيل."
+      "comboDesc": "سيعمل {{strategy}} تلقائيًا، وينفذ الصفقات عبر اتصال {{broker}} الخاص بك بمجرد التسجيل.",
+      "buysWhen": "يشتري عندما",
+      "sellsWhen": "يبيع عندما",
+      "chartPrice": "السعر",
+      "chartBuy": "شراء",
+      "chartSell": "بيع",
+      "chartBar": "شمعة",
+      "chartSignal": "إشارة",
+      "chartSignals": "الإشارات في هذا المثال",
+      "chartDisclaimer": "مثال توضيحي — ليست بيانات سوق حقيقية."
     }
   },
   "contact": {
