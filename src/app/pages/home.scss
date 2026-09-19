@@ -4,106 +4,11 @@
   padding: 0 1.5rem;
 }
 
-/* ── HERO ── */
-.hero {
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  padding-top: 80px;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,209,122,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero .container {
-  position: relative;
-  z-index: 1;
-  padding: 2.25rem 1.5rem 1.25rem;
-  max-width: 850px;
-  text-align: left;
-}
-
 /* ── AD BANNERS ── */
 /* Positioning for `.ad-banner-skyscraper` and `.ad-widget-etoro` lives in the
    respective components (`:host` styles). Angular view encapsulation scopes this
    file to the parent, so rules here cannot style a child component's host element
    and the positioning silently breaks. */
-
-.hero-badge {
-  display: inline-block;
-  background: rgba(0,209,122,0.12);
-  color: var(--accent);
-  border: 1px solid rgba(0,209,122,0.3);
-  padding: 0.35rem 1rem;
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.hero-title {
-  font-size: clamp(2.1rem, 5vw, 3.6rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
-  margin: 0 0 1rem;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #00d17a 0%, #00a8ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-sub {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 600px;
-  margin-bottom: 2.5rem;
-  white-space: pre-line;
-}
-
-.hero-cta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.hero-next-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
-.hero-next-arrow {
-  display: inline-block;
-  animation: heroNextBounce 1.6s ease-in-out infinite;
-}
-
-@keyframes heroNextBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(4px); }
-}
 
 .btn-accent {
   padding: 0.85rem 2rem;
@@ -170,14 +75,29 @@
 
 /* ── BUILD YOUR AUTOMATION (STRATEGY + BROKER PICKER) ── */
 .build-section {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(80px + 2.25rem);
+  padding-bottom: 2rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,209,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
 
   .section-header {
     margin-bottom: 1.75rem;
 
-    h2 {
-      font-size: clamp(1.5rem, 3vw, 2.1rem);
+    h1 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
     }
   }
 }
@@ -358,6 +278,7 @@
   text-align: center;
   margin-bottom: 3.5rem;
 
+  h1,
   h2 {
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 800;
