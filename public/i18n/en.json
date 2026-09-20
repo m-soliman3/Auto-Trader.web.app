@@ -50,8 +50,7 @@
     "stats": {
       "activeTraders": "Active Traders",
       "volumeTraded": "Volume Traded",
-      "uptime": "Uptime",
-      "avgReturn": "Avg. Monthly Return"
+      "uptime": "Uptime"
     },
     "featuresTag": "Features",
     "featuresTitle": "Everything you need to trade on autopilot",
