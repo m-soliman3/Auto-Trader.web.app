@@ -50,8 +50,7 @@
     "stats": {
       "activeTraders": "متداول نشط",
       "volumeTraded": "حجم التداول",
-      "uptime": "وقت التشغيل",
-      "avgReturn": "متوسط العائد الشهري"
+      "uptime": "وقت التشغيل"
     },
     "featuresTag": "المميزات",
     "featuresTitle": "كل ما تحتاجه للتداول بالطيار الآلي",

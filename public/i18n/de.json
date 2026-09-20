@@ -50,8 +50,7 @@
     "stats": {
       "activeTraders": "Aktive Trader",
       "volumeTraded": "Gehandeltes Volumen",
-      "uptime": "Betriebszeit",
-      "avgReturn": "Durchschn. Monatsrendite"
+      "uptime": "Betriebszeit"
     },
     "featuresTag": "Funktionen",
     "featuresTitle": "Alles, was Sie für den automatisierten Handel benötigen",

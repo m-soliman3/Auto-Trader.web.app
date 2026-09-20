@@ -49,8 +49,7 @@
     "stats": {
       "activeTraders": "Traders Activos",
       "volumeTraded": "Volumen Operado",
-      "uptime": "Disponibilidad",
-      "avgReturn": "Rendimiento Mensual Prom."
+      "uptime": "Disponibilidad"
     },
     "featuresTag": "Características",
     "featuresTitle": "Todo lo que necesitas para operar en piloto automático",

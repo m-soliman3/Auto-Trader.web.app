@@ -49,8 +49,7 @@
     "stats": {
       "activeTraders": "Traders Actifs",
       "volumeTraded": "Volume Échangé",
-      "uptime": "Disponibilité",
-      "avgReturn": "Rendement Mensuel Moy."
+      "uptime": "Disponibilité"
     },
     "featuresTag": "Fonctionnalités",
     "featuresTitle": "Tout ce dont vous avez besoin pour trader en pilote automatique",
