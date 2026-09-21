@@ -1,15 +1,17 @@
 [
   {
-    "name": "keep-recent-images",
+    "name": "keep-recent-backend-images",
     "action": { "type": "Keep" },
     "mostRecentVersions": {
+      "packageNamePrefixes": ["auto-trader-backend"],
       "keepCount": 10
     }
   },
   {
-    "name": "delete-stale-images",
+    "name": "delete-stale-backend-images",
     "action": { "type": "Delete" },
     "condition": {
+      "packageNamePrefixes": ["auto-trader-backend"],
       "olderThan": "30d"
     }
   }

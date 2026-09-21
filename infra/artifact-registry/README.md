@@ -1,7 +1,7 @@
 # Artifact Registry cleanup policies
 
-**Status: not yet applied.** The files here are ready to run; nobody has run them
-against the project yet.
+**Status: installed in dry-run mode on `cloud-run-source-deploy` (europe-west1).**
+Nothing has been deleted. Run with `--apply` to enable deletion.
 
 ## Why this exists
 
@@ -18,12 +18,24 @@ it never falls on its own.
 
 ## What the policy does
 
-`cloud-run-cleanup-policy.json` keeps the 10 most recent images and deletes
-anything older than 30 days. Artifact Registry evaluates **Keep rules ahead of
-Delete rules**, so those 10 survive regardless of age. That ordering is the safety
-property that matters here: a Cloud Run revision is pinned to an exact image
-digest, and deleting that digest would leave already-running instances alone but
-break the next cold start.
+`cloud-run-cleanup-policy.json` keeps the 10 most recent `auto-trader-backend`
+images and deletes `auto-trader-backend` images older than 30 days. Artifact
+Registry evaluates **Keep rules ahead of Delete rules**, so those 10 survive
+regardless of age. That ordering is the safety property that matters here: a Cloud
+Run revision is pinned to an exact image digest, and deleting that digest would
+leave already-running instances alone but break the next cold start.
+
+Both rules are deliberately scoped to `auto-trader-backend` by
+`packageNamePrefixes`. That package is the whole problem — it holds 407 of the
+repository's images and nearly all of its 18.5 GB, against 21 for `ta-mcp-server`
+and 2 for `auto-trader-chatbot-backend`.
+
+The scoping is also what makes this safe. `auto-trader-chatbot-backend` has not
+been rebuilt since 2026-03-12, so its live image is far older than 30 days and is
+nowhere near the repository's 10 most recent. An unscoped policy could therefore
+have collected the image that service is actually running, depending on whether
+`keepCount` is counted per package or per repository. Scoping both rules removes
+the question entirely: the other two packages are never considered.
 
 `gcf-artifacts` is left to the Firebase CLI, which understands that repository's
 layout. Firebase's own default retention is 1 day because those images are only
@@ -49,7 +61,10 @@ current login — `gcloud auth login`.
 
 ## The one case to think about
 
-If you roll a Cloud Run service back to a revision older than the 10 most recent
+If you roll `auto-trader-backend` back to a revision older than its 10 most recent
 images, that revision's image may already have been collected and the rollback
 will fail to start. Raise `keepCount` in the policy file if you want a deeper
 rollback window; the trade is linear in storage.
+
+If you ever add a package to the delete rule, check first whether its live image
+is older than the age condition — as the chatbot backend's was.
