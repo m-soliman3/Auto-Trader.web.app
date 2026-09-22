@@ -3,7 +3,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, ViewChild
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../services/language.service';
+import { LocalizedLinks } from '../shared/localized-links';
 import { SUPPORTED_EXCHANGES } from '../services/exchange.service';
 import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
 import { AdBannerSkyscraper } from '../components/ad-banner-skyscraper';
@@ -16,12 +16,11 @@ import { AdWidgetEtoro } from '../components/ad-widget-etoro';
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home implements AfterViewInit, OnDestroy {
+export class Home extends LocalizedLinks implements AfterViewInit, OnDestroy {
   private auth   = inject(AuthService);
   private translate = inject(TranslateService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
-  languageService = inject(LanguageService);
 
   @ViewChild('howItWorksSection') howItWorksSection?: ElementRef<HTMLElement>;
   @ViewChild('howItWorksVideo') howItWorksVideo?: ElementRef<HTMLVideoElement>;
@@ -36,16 +35,12 @@ export class Home implements AfterViewInit, OnDestroy {
     return !value || value === key ? fallback : value;
   }
 
-  localizedHref(...segments: string[]): string {
-    return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
-  }
-
   ctaRouterLink(): string[] {
-    return ['/', this.auth.isLoggedIn() ? 'dashboard' : 'signup'];
+    return this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
   }
 
   ctaHref(): string {
-    return this.auth.isLoggedIn() ? '/dashboard' : '/signup';
+    return this.localizedHref(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
   }
 
   pricingCtaRouterLink(): string[] {
@@ -57,7 +52,9 @@ export class Home implements AfterViewInit, OnDestroy {
   }
 
   pricingCtaHref(planId: string): string {
-    return this.auth.isLoggedIn() ? '/dashboard' : `/signup?plan=${planId}`;
+    return this.auth.isLoggedIn()
+      ? this.localizedHref('dashboard')
+      : `${this.localizedHref('signup')}?plan=${planId}`;
   }
 
   stats = [
@@ -191,8 +188,8 @@ export class Home implements AfterViewInit, OnDestroy {
 
   combinedHref(): string {
     return this.auth.isLoggedIn()
-      ? '/dashboard'
-      : `/signup?strategy=${this.selectedStrategyId()}&broker=${this.selectedBrokerId()}`;
+      ? this.localizedHref('dashboard')
+      : `${this.localizedHref('signup')}?strategy=${this.selectedStrategyId()}&broker=${this.selectedBrokerId()}`;
   }
 
   activeStepVideoSrc(): string {

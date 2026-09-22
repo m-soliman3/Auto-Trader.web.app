@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocalizedLinks } from '../shared/localized-links';
 
 @Component({
   selector: 'app-contact',
@@ -10,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })
-export class Contact {
+export class Contact extends LocalizedLinks {
   senderEmail = '';
   subject     = '';
   message     = '';

@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit, PLATFORM_ID, inject, signal } from '@angu
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
+import { LocalizedLinks } from '../shared/localized-links';
 
 type ServiceStatus = 'checking' | 'operational' | 'degraded' | 'down';
 
@@ -25,7 +26,7 @@ interface ServiceCheck {
   template: `
     <div class="status-page">
       <header class="status-header">
-        <a class="status-logo" routerLink="/">
+        <a class="status-logo" [routerLink]="localizedLink()" [attr.href]="localizedHref()">
           <img src="/images/logo.svg" alt="Invest-Begin" width="32" height="32" />
         </a>
         <h1>{{ 'status.title' | translate }}</h1>
@@ -95,9 +96,9 @@ interface ServiceCheck {
       </main>
 
       <footer class="status-footer">
-        <a routerLink="/">{{ 'status.backHome' | translate }}</a>
+        <a [routerLink]="localizedLink()" [attr.href]="localizedHref()">{{ 'status.backHome' | translate }}</a>
         <span>·</span>
-        <a routerLink="/contact">{{ 'status.contactSupport' | translate }}</a>
+        <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')">{{ 'status.contactSupport' | translate }}</a>
       </footer>
     </div>
   `,
@@ -355,7 +356,7 @@ interface ServiceCheck {
     }
   `],
 })
-export class StatusPage implements OnInit, OnDestroy {
+export class StatusPage extends LocalizedLinks implements OnInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
 

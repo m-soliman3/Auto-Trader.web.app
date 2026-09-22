@@ -14,7 +14,15 @@
         { "source": "/disclaimer", "destination": "/en/disclaimer", "type": 301 },
         { "source": "/collecting-data", "destination": "/en/collecting-data", "type": 301 },
         { "source": "/contact", "destination": "/en/contact", "type": 301 },
-        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 }
+        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 },
+        { "source": "/login", "destination": "/en/login", "type": 301 },
+        { "source": "/signup", "destination": "/en/signup", "type": 301 },
+        { "source": "/signup-guide", "destination": "/en/signup-guide", "type": 301 },
+        { "source": "/system-health", "destination": "/en/system-health", "type": 301 },
+        { "source": "/sitemap", "destination": "/en/sitemap", "type": 301 },
+        { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
+        { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
+        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 }
       ],
       "rewrites": [
         {
@@ -240,7 +248,15 @@
         { "source": "/disclaimer", "destination": "/en/disclaimer", "type": 301 },
         { "source": "/collecting-data", "destination": "/en/collecting-data", "type": 301 },
         { "source": "/contact", "destination": "/en/contact", "type": 301 },
-        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 }
+        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 },
+        { "source": "/login", "destination": "/en/login", "type": 301 },
+        { "source": "/signup", "destination": "/en/signup", "type": 301 },
+        { "source": "/signup-guide", "destination": "/en/signup-guide", "type": 301 },
+        { "source": "/system-health", "destination": "/en/system-health", "type": 301 },
+        { "source": "/sitemap", "destination": "/en/sitemap", "type": 301 },
+        { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
+        { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
+        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 }
       ],
       "rewrites": [
         {

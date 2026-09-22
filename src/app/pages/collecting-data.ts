@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocalizedLinks } from '../shared/localized-links';
 
 @Component({
   selector: 'app-collecting-data-page',
@@ -12,8 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
       <div class="legal-card">
         <div class="legal-top">
           <div class="legal-links">
-            <a routerLink="/" class="back-link">{{ 'legal.home' | translate }}</a>
-            <a routerLink="/contact" class="back-link">{{ 'legal.contact' | translate }}</a>
+            <a [routerLink]="localizedLink()" [attr.href]="localizedHref()" class="back-link">{{ 'legal.home' | translate }}</a>
+            <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')" class="back-link">{{ 'legal.contact' | translate }}</a>
           </div>
           <button type="button" class="close-btn" [attr.aria-label]="'common.close' | translate" (click)="close()">X</button>
         </div>
@@ -34,19 +35,19 @@ import { TranslateModule } from '@ngx-translate/core';
         <section>
           <h2>{{ 'collectingData.s3Title' | translate }}</h2>
           <p>{{ 'collectingData.s3Body' | translate }}</p>
-          <a routerLink="/settings/myData" class="action-link">{{ 'collectingData.s3Link' | translate }}</a>
+          <a [routerLink]="localizedLink('settings', 'myData')" [attr.href]="localizedHref('settings', 'myData')" class="action-link">{{ 'collectingData.s3Link' | translate }}</a>
         </section>
 
         <section>
           <h2>{{ 'collectingData.s4Title' | translate }}</h2>
           <p>{{ 'collectingData.s4Body' | translate }}</p>
-          <a routerLink="/contact" class="action-link">{{ 'collectingData.s4Link' | translate }}</a>
+          <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')" class="action-link">{{ 'collectingData.s4Link' | translate }}</a>
         </section>
 
         <section>
           <h2>{{ 'collectingData.s5Title' | translate }}</h2>
           <p>{{ 'collectingData.s5Body' | translate }}</p>
-          <a routerLink="/contact" class="action-link">{{ 'collectingData.s4Link' | translate }}</a>
+          <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')" class="action-link">{{ 'collectingData.s4Link' | translate }}</a>
         </section>
       </div>
     </div>
@@ -72,8 +73,10 @@ import { TranslateModule } from '@ngx-translate/core';
     `,
   ],
 })
-export class CollectingDataPage {
-  constructor(private readonly location: Location) {}
+export class CollectingDataPage extends LocalizedLinks {
+  constructor(private readonly location: Location) {
+    super();
+  }
 
   close(): void {
     if (window.history.length > 1) {

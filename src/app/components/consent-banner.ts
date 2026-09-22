@@ -2,6 +2,7 @@ import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocalizedLinks } from '../shared/localized-links';
 
 @Component({
   selector: 'app-consent-banner',
@@ -66,7 +67,7 @@ import { TranslateModule } from '@ngx-translate/core';
                   <li>{{ 'consent.rightObject' | translate }}</li>
                   <li>{{ 'consent.rightWithdraw' | translate }}</li>
                 </ul>
-                <p>{{ 'consent.moreInfoText' | translate }} <a routerLink="/privacy" class="consent-link">{{ 'consent.privacyPolicyLink' | translate }}</a>.</p>
+                <p>{{ 'consent.moreInfoText' | translate }} <a [routerLink]="localizedLink('privacy')" [attr.href]="localizedHref('privacy')" class="consent-link">{{ 'consent.privacyPolicyLink' | translate }}</a>.</p>
               </div>
             </details>
           </div>
@@ -352,7 +353,7 @@ import { TranslateModule } from '@ngx-translate/core';
     }
   `]
 })
-export class ConsentBannerComponent implements OnInit {
+export class ConsentBannerComponent extends LocalizedLinks implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
   showBanner: boolean = false;
   isExpanded: boolean = false;

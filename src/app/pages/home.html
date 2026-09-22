@@ -104,7 +104,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="features-grid">
       @for (f of features; track f.titleKey) {
-        <a [routerLink]="['/', languageService.currentLang(), 'features', f.slug]" [attr.href]="localizedHref('features', f.slug)" class="feature-card feature-card-link">
+        <a [routerLink]="localizedLink('features', f.slug)" [attr.href]="localizedHref('features', f.slug)" class="feature-card feature-card-link">
           <div class="feature-icon">{{ f.icon }}</div>
           <h3>{{ f.titleKey | translate }}</h3>
           <p>{{ f.descKey | translate }}</p>
@@ -212,12 +212,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
         <div class="help-keywords" [attr.aria-label]="t('home.help.ariaLabel', 'Helpful AutoTrader topics')">
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" [attr.href]="localizedHref('features', 'ai-signals')" class="help-keyword-link">{{ 'home.features.aiSignals.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" [attr.href]="localizedHref('features', 'multi-exchange')" class="help-keyword-link">{{ 'home.features.multiExchange.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" [attr.href]="localizedHref('features', 'risk-management')" class="help-keyword-link">{{ 'home.features.riskManagement.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" [attr.href]="localizedHref('features', 'backtesting')" class="help-keyword-link">{{ 'home.features.backtesting.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" [attr.href]="localizedHref('features', 'smart-alerts')" class="help-keyword-link">{{ 'home.features.smartAlerts.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" [attr.href]="localizedHref('features', 'no-code-builder')" class="help-keyword-link">{{ 'home.features.noCode.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'ai-signals')" [attr.href]="localizedHref('features', 'ai-signals')" class="help-keyword-link">{{ 'home.features.aiSignals.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'multi-exchange')" [attr.href]="localizedHref('features', 'multi-exchange')" class="help-keyword-link">{{ 'home.features.multiExchange.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'risk-management')" [attr.href]="localizedHref('features', 'risk-management')" class="help-keyword-link">{{ 'home.features.riskManagement.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'backtesting')" [attr.href]="localizedHref('features', 'backtesting')" class="help-keyword-link">{{ 'home.features.backtesting.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'smart-alerts')" [attr.href]="localizedHref('features', 'smart-alerts')" class="help-keyword-link">{{ 'home.features.smartAlerts.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'no-code-builder')" [attr.href]="localizedHref('features', 'no-code-builder')" class="help-keyword-link">{{ 'home.features.noCode.title' | translate }}</a>
         </div>
   </div>
 </section>

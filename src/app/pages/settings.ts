@@ -8,6 +8,7 @@ import { ThemeService } from '../services/theme.service';
 import { DashboardLayoutService, DashboardSectionDefinition, DashboardSectionId } from '../services/dashboard-layout.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
+import { LocalizedLinks } from '../shared/localized-links';
 
 const DEFAULT_DASHBOARD_SECTION_ORDER: DashboardSectionId[] = [
   'connectedExchanges',
@@ -26,7 +27,7 @@ type SettingsSectionId = 'display' | 'languages' | 'account' | 'security' | 'bil
   templateUrl: './settings.html',
   styleUrl: './settings.scss'
 })
-export class Settings {
+export class Settings extends LocalizedLinks {
   auth = inject(AuthService);
   theme = inject(ThemeService);
   language = inject(LanguageService);
@@ -79,6 +80,7 @@ export class Settings {
   private reloginTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
+    super();
     this.route.paramMap
       .pipe(takeUntilDestroyed())
       .subscribe((params) => {

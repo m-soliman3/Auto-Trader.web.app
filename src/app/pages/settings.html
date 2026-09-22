@@ -263,17 +263,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="section-sub">{{ 'settings.legalSub' | translate }}</p>
 
       <div class="legal-links-grid">
-        <a routerLink="/terms" class="legal-link-card">
+        <a [routerLink]="localizedLink('terms')" [attr.href]="localizedHref('terms')" class="legal-link-card">
           <strong>{{ 'settings.termsOfService' | translate }}</strong>
           <span>{{ 'settings.termsDesc' | translate }}</span>
         </a>
 
-        <a routerLink="/privacy" class="legal-link-card">
+        <a [routerLink]="localizedLink('privacy')" [attr.href]="localizedHref('privacy')" class="legal-link-card">
           <strong>{{ 'settings.privacyPolicy' | translate }}</strong>
           <span>{{ 'settings.privacyDesc' | translate }}</span>
         </a>
 
-        <a routerLink="/disclaimer" class="legal-link-card">
+        <a [routerLink]="localizedLink('disclaimer')" [attr.href]="localizedHref('disclaimer')" class="legal-link-card">
           <strong>{{ 'settings.disclaimer' | translate }}</strong>
           <span>{{ 'settings.disclaimerDesc' | translate }}</span>
         </a>
@@ -297,13 +297,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <p class="section-sub" style="margin-top: 1rem;">{{ 'settings.myDataNote' | translate }}</p>
-      <a routerLink="/collecting-data" class="legal-link-card" style="margin-top: 0.75rem; display: inline-block;">{{ 'settings.myDataViewPolicy' | translate }}</a>
+      <a [routerLink]="localizedLink('collecting-data')" [attr.href]="localizedHref('collecting-data')" class="legal-link-card" style="margin-top: 0.75rem; display: inline-block;">{{ 'settings.myDataViewPolicy' | translate }}</a>
 
       <div class="display-divider" style="margin: 1.5rem 0;"></div>
 
       <h2>{{ 'settings.myDataDeleteTitle' | translate }}</h2>
       <p class="section-sub">{{ 'settings.myDataDeleteDesc' | translate }}</p>
-      <a routerLink="/contact" class="secondary-btn" style="display: inline-block; margin-top: 0.75rem; text-decoration: none; text-align: center;">{{ 'settings.myDataContactLink' | translate }}</a>
+      <a [routerLink]="localizedLink('contact')" [attr.href]="localizedHref('contact')" class="secondary-btn" style="display: inline-block; margin-top: 0.75rem; text-decoration: none; text-align: center;">{{ 'settings.myDataContactLink' | translate }}</a>
     </section>
     }
     </div>
