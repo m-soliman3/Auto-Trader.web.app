@@ -8,6 +8,7 @@ import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.servi
 import { STRATEGY_EXPLAINERS, StrategyExplainer } from '../services/strategy-explainer';
 import { SUPPORTED_EXCHANGES, Exchange } from '../services/exchange.service';
 import { StrategyChart } from '../components/strategy-chart';
+import { LocalizedLinks } from '../shared/localized-links';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,7 @@ import { StrategyChart } from '../components/strategy-chart';
   templateUrl: './signup.html',
   styleUrl: './signup.scss'
 })
-export class Signup {
+export class Signup extends LocalizedLinks {
   auth = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -33,6 +34,7 @@ export class Signup {
   contextExplainer: StrategyExplainer | null = null;
 
   constructor() {
+    super();
     if (this.auth.isLoggedIn()) this.router.navigate(['/dashboard']);
 
     const params = this.route.snapshot.queryParamMap;

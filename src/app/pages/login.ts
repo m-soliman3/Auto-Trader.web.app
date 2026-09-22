@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocalizedLinks } from '../shared/localized-links';
 
 
 @Component({
@@ -13,11 +14,12 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class Login {
+export class Login extends LocalizedLinks {
   auth = inject(AuthService);
   private router = inject(Router);
 
   constructor() {
+    super();
     if (this.auth.isLoggedIn()) this.router.navigate(['/dashboard']);
   }
 

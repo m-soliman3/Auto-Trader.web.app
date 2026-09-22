@@ -13,7 +13,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="contact-card">
 
     <div class="contact-logo">
-      <a routerLink="/">
+      <a [routerLink]="localizedLink()" [attr.href]="localizedHref()">
         <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
           <rect width="32" height="32" rx="8" fill="#00d17a"/>
           <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -115,6 +115,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </button>
     </form>
 
-    <p class="contact-alt"><a routerLink="/">{{ 'contact.backToHome' | translate }}</a></p>
+    <p class="contact-alt"><a [routerLink]="localizedLink()" [attr.href]="localizedHref()">{{ 'contact.backToHome' | translate }}</a></p>
   </div>
 </div>
