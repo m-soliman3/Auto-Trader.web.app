@@ -27,7 +27,8 @@
 
     <div class="nav-actions">
       @if (showAccountModeSwitch()) {
-        <div class="account-mode-toggle" role="group" [attr.aria-label]="'nav.accountMode' | translate" [class.onboarding-active]="realMoneyOnboarding.needsOnboarding()">
+        <!-- TODO(onboarding): re-add [class.onboarding-active]="realMoneyOnboarding.needsOnboarding()" below to re-enable the onboarding highlight. -->
+        <div class="account-mode-toggle" role="group" [attr.aria-label]="'nav.accountMode' | translate">
           <button
             class="mode-btn"
             [class.active]="accountMode.mode() === 'real'"

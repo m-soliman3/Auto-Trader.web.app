@@ -10,7 +10,8 @@ import { UiPolicyService } from '../services/ui-policy.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
-import { RealMoneyOnboardingService } from '../services/real-money-onboarding.service';
+// TODO(onboarding): disabled for now — uncomment to re-enable the new-user onboarding modals.
+// import { RealMoneyOnboardingService } from '../services/real-money-onboarding.service';
 import { TourService } from '../services/tour.service';
 
 @Component({
@@ -28,7 +29,7 @@ export class Navbar {
   accountMode = inject(AccountModeService);
   languageService = inject(LanguageService);
   uiPolicy = inject(UiPolicyService);
-  realMoneyOnboarding = inject(RealMoneyOnboardingService);
+  // realMoneyOnboarding = inject(RealMoneyOnboardingService); // TODO(onboarding)
   tourService = inject(TourService);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly router = inject(Router);
