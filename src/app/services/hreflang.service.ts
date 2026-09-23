@@ -7,6 +7,9 @@ import { authGuard } from '../guards/auth.guard';
 
 const BASE_URL = 'https://invest-begin.com';
 const PAYWALL_SCHEMA_SCRIPT_SELECTOR = 'script[data-schema="paywall"]';
+const ROBOTS_META_SELECTOR = 'meta[name="robots"]';
+/** Hidden languages keep working for visitors but stay out of search indexes. */
+const INDEXABLE_LANGUAGES = LANGUAGES.filter((l) => !l.hidden);
 
 @Injectable({ providedIn: 'root' })
 export class HreflangService {
@@ -27,6 +30,7 @@ export class HreflangService {
     const canonicalPath = this.getCanonicalPath(url);
     this.setHreflangTags(canonicalPath);
     this.setCanonicalTag(url, canonicalPath);
+    this.setRobotsTag(url);
     this.setPaywallStructuredData(this.isCurrentRouteProtected());
   }
 
@@ -52,7 +56,7 @@ export class HreflangService {
     const head = this.document.head;
     const fragment = this.document.createDocumentFragment();
 
-    for (const lang of LANGUAGES) {
+    for (const lang of INDEXABLE_LANGUAGES) {
       const href = `${BASE_URL}/${lang.code}${canonicalPath}`;
       const link = this.document.createElement('link');
       link.setAttribute('rel', 'alternate');
@@ -88,6 +92,24 @@ export class HreflangService {
       this.document.head.appendChild(canonical);
     }
     canonical.setAttribute('href', href);
+  }
+
+  private setRobotsTag(url: string): void {
+    const first = url.split('?')[0].split('#')[0].split('/').filter(Boolean)[0];
+    const isHidden = LANGUAGES.some((l) => l.code === first && l.hidden);
+    const existing = this.document.querySelector<HTMLMetaElement>(ROBOTS_META_SELECTOR);
+
+    if (!isHidden) {
+      existing?.parentNode?.removeChild(existing);
+      return;
+    }
+
+    const meta = existing ?? this.document.createElement('meta');
+    meta.setAttribute('name', 'robots');
+    meta.setAttribute('content', 'noindex, follow');
+    if (!existing) {
+      this.document.head.appendChild(meta);
+    }
   }
 
   private setPaywallStructuredData(isProtectedPath: boolean): void {
