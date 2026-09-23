@@ -233,7 +233,7 @@
           ]
         },
         {
-          "regex": "^/(es|fr|pt)(/.*)?$",
+          "regex": "^/(de|es|fr|pt)(/.*)?$",
           "headers": [
             { "key": "X-Robots-Tag", "value": "noindex, follow" }
           ]
@@ -459,7 +459,7 @@
           ]
         },
         {
-          "regex": "^/(es|fr|pt)(/.*)?$",
+          "regex": "^/(de|es|fr|pt)(/.*)?$",
           "headers": [
             { "key": "X-Robots-Tag", "value": "noindex, follow" }
           ]

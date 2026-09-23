@@ -15,7 +15,7 @@ export interface Language {
 
 export const LANGUAGES: Language[] = [
   { code: 'en', label: 'English', flag: '🇬🇧', dir: 'ltr' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr', hidden: true },
   { code: 'es', label: 'Español', flag: '🇪🇸', dir: 'ltr', hidden: true },
   { code: 'fr', label: 'Français', flag: '🇫🇷', dir: 'ltr', hidden: true },
   { code: 'pt', label: 'Português', flag: '🇵🇹', dir: 'ltr', hidden: true },
@@ -220,7 +220,7 @@ export class LanguageService {
     }
 
     const mapped = COUNTRY_LANGUAGE_MAP[countryCode.toUpperCase()];
-    return mapped && LANGUAGES.some((lang) => lang.code === mapped) ? mapped : null;
+    return mapped && this.selectableLanguages.some((lang) => lang.code === mapped) ? mapped : null;
   }
 
   private async getCountryCodeFromCurrentLocation(): Promise<string | null> {
