@@ -12,15 +12,17 @@ import { LanguageService } from './services/language.service';
 import { HreflangService } from './services/hreflang.service';
 import { StructuredDataService } from './services/structured-data.service';
 import { UsageAnalyticsService } from './services/usage-analytics.service';
-import { RealMoneyOnboardingModal } from './components/real-money-onboarding-modal';
-import { RealMoneyOnboardingService } from './services/real-money-onboarding.service';
-import { PaperMoneyOnboardingModal } from './components/paper-money-onboarding-modal';
-import { PaperOnboardingService } from './services/paper-onboarding.service';
+// TODO(onboarding): disabled for now — uncomment to re-enable the new-user onboarding modals.
+// import { RealMoneyOnboardingModal } from './components/real-money-onboarding-modal';
+// import { RealMoneyOnboardingService } from './services/real-money-onboarding.service';
+// import { PaperMoneyOnboardingModal } from './components/paper-money-onboarding-modal';
+// import { PaperOnboardingService } from './services/paper-onboarding.service';
 import { TourOverlay } from './components/tour-overlay';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent, RealMoneyOnboardingModal, PaperMoneyOnboardingModal, TourOverlay],
+  // TODO(onboarding): add RealMoneyOnboardingModal, PaperMoneyOnboardingModal back here to re-enable.
+  imports: [RouterOutlet, Navbar, AiChatRibbon, SiteFooter, ConsentBannerComponent, TourOverlay],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -37,8 +39,9 @@ export class App {
   private readonly structuredData = inject(StructuredDataService);
   // Eagerly inject analytics so user usage tracking starts at app boot.
   private readonly usageAnalytics = inject(UsageAnalyticsService);
-  readonly realMoneyOnboarding = inject(RealMoneyOnboardingService);
-  readonly paperOnboarding = inject(PaperOnboardingService);
+  // TODO(onboarding): disabled for now — uncomment to re-enable the new-user onboarding modals.
+  // readonly realMoneyOnboarding = inject(RealMoneyOnboardingService);
+  // readonly paperOnboarding = inject(PaperOnboardingService);
 
   private readonly currentUrl = signal(this.router.url);
 

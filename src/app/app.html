@@ -5,15 +5,17 @@
 		<app-ai-chat-ribbon />
 	}
 
-	<main class="app-main"
-		[class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding() || paperOnboarding.needsOnboarding()">
+	<!-- TODO(onboarding): disabled for now — uncomment to re-enable the new-user onboarding modals.
+	     To re-enable, restore on <main> and <app-site-footer>:
+	     [class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding() || paperOnboarding.needsOnboarding()" -->
+	<main class="app-main">
 		<router-outlet />
 	</main>
 
-	<app-site-footer
-		[class.blurred-for-onboarding]="realMoneyOnboarding.needsOnboarding() || paperOnboarding.needsOnboarding()" />
+	<app-site-footer />
 </div>
 
+<!-- TODO(onboarding): disabled for now — uncomment to re-enable the new-user onboarding modals.
 @if (realMoneyOnboarding.needsOnboarding()) {
 	<app-real-money-onboarding-modal />
 }
@@ -21,5 +23,6 @@
 @if (paperOnboarding.needsOnboarding()) {
 	<app-paper-money-onboarding-modal />
 }
+-->
 
 <app-tour-overlay />
