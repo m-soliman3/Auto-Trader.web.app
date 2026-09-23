@@ -1,5 +1,5 @@
 import { Injectable, PLATFORM_ID, inject, signal, effect } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
@@ -15,7 +15,7 @@ export interface Language {
 
 export const LANGUAGES: Language[] = [
   { code: 'en', label: 'English', flag: '🇬🇧', dir: 'ltr' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr', hidden: true },
   { code: 'es', label: 'Español', flag: '🇪🇸', dir: 'ltr', hidden: true },
   { code: 'fr', label: 'Français', flag: '🇫🇷', dir: 'ltr', hidden: true },
   { code: 'pt', label: 'Português', flag: '🇵🇹', dir: 'ltr', hidden: true },
@@ -100,6 +100,7 @@ export class LanguageService {
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
 
   readonly languages = LANGUAGES;
   /** Languages shown in the language-selector UI. Hidden languages keep their pages and routing. */
@@ -219,7 +220,7 @@ export class LanguageService {
     }
 
     const mapped = COUNTRY_LANGUAGE_MAP[countryCode.toUpperCase()];
-    return mapped && LANGUAGES.some((lang) => lang.code === mapped) ? mapped : null;
+    return mapped && this.selectableLanguages.some((lang) => lang.code === mapped) ? mapped : null;
   }
 
   private async getCountryCodeFromCurrentLocation(): Promise<string | null> {
@@ -264,12 +265,13 @@ export class LanguageService {
     }
   }
 
+  // Runs on the server too, so prerendered pages ship the correct <html lang dir>
+  // (e.g. /ar/* as lang="ar" dir="rtl") instead of index.html's lang="en".
   private applyDir(code: string): void {
-    if (!isPlatformBrowser(this.platformId)) return;
     const lang = LANGUAGES.find((l) => l.code === code);
     const dir = lang?.dir ?? 'ltr';
-    document.documentElement.setAttribute('dir', dir);
-    document.documentElement.setAttribute('lang', code);
+    this.document.documentElement.setAttribute('dir', dir);
+    this.document.documentElement.setAttribute('lang', code);
   }
 
   private syncLanguageFromUrl(url: string): void {

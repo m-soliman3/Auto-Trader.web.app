@@ -71,7 +71,7 @@ export class Settings extends LocalizedLinks {
     });
   });
   languageDirty = computed(() => this.draftLanguage() !== this.resolvePersistedPreferredLanguage());
-  supportedLanguages = computed(() => this.language.languages);
+  supportedLanguages = computed(() => this.language.selectableLanguages);
 
   draggingSectionId = signal<DashboardSectionId | null>(null);
   dropTargetSectionId = signal<DashboardSectionId | null>(null);
