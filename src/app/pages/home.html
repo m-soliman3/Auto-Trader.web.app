@@ -160,6 +160,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ───── SUPPORTED BROKERS ───── -->
+<section class="section" id="supported-brokers">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">{{ 'home.supportedBrokers.tag' | translate }}</p>
+      <h2>{{ 'home.supportedBrokers.title' | translate }}</h2>
+      <p class="section-sub">{{ 'home.supportedBrokers.sub' | translate:{ count: supportedBrokerCount } }}</p>
+    </div>
+    @for (group of supportedBrokerGroups; track group.titleKey) {
+      <h3 class="brokers-group-title">{{ group.titleKey | translate }}</h3>
+      <ul class="brokers-grid">
+        @for (b of group.brokers; track b.id) {
+          <li>
+            <a [routerLink]="localizedLink('brokers', b.id)" [attr.href]="localizedHref('brokers', b.id)" class="broker-card">
+              <span class="broker-card-logo" aria-hidden="true">{{ b.logo }}</span>
+              <span class="broker-card-name">{{ b.name }}</span>
+              <span class="build-item-category" [class.category-crypto]="b.category === 'crypto'" [class.category-stocks]="b.category === 'stocks'">
+                {{ (b.category === 'crypto' ? 'home.brokers.categoryCrypto' : 'home.brokers.categoryStocks') | translate }}
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>
+
 <!-- ───── PRICING ───── -->
 <section class="section" id="pricing">
   <div class="container">

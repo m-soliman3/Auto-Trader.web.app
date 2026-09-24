@@ -21,6 +21,7 @@
         { "source": "/system-health", "destination": "/en/system-health", "type": 301 },
         { "source": "/sitemap", "destination": "/en/sitemap", "type": 301 },
         { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
+        { "source": "/brokers/:slug", "destination": "/en/brokers/:slug", "type": 301 },
         { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
         { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 }
       ],
@@ -261,6 +262,7 @@
         { "source": "/system-health", "destination": "/en/system-health", "type": 301 },
         { "source": "/sitemap", "destination": "/en/sitemap", "type": 301 },
         { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
+        { "source": "/brokers/:slug", "destination": "/en/brokers/:slug", "type": 301 },
         { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
         { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 }
       ],

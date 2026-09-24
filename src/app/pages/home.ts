@@ -162,6 +162,22 @@ export class Home extends LocalizedLinks implements AfterViewInit, OnDestroy {
     .map(e => ({ id: e.id, name: e.name, logo: e.logo, color: e.color, category: e.category }))
     .sort((a, b) => (a.category === b.category ? 0 : a.category === 'stocks' ? -1 : 1));
 
+  /** Every live broker has a `/brokers/:slug` page (see `BROKER_PAGES`), grouped for the "Supported Brokers" section. */
+  private readonly supportedBrokers = SUPPORTED_EXCHANGES.filter(e => !e.isPaper);
+
+  readonly supportedBrokerGroups = [
+    {
+      titleKey: 'home.supportedBrokers.stocksTitle',
+      brokers: this.supportedBrokers.filter(e => e.category === 'stocks'),
+    },
+    {
+      titleKey: 'home.supportedBrokers.cryptoTitle',
+      brokers: this.supportedBrokers.filter(e => e.category === 'crypto'),
+    },
+  ];
+
+  readonly supportedBrokerCount = this.supportedBrokers.length;
+
   /** Single-select state for the "build your automation" section (strategy + broker picked together). */
   readonly selectedStrategyId = signal<string>('ema-crossover');
   readonly selectedBrokerId = signal<string>('alpaca');

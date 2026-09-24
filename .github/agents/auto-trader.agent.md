@@ -23,6 +23,9 @@ Follow this rule after meaningful code changes:
 
 When making any change that affects visible text, punctuation, labels, buttons, images, or orientation in the frontend, add the new key and its English value to `public/i18n/en.json` (the source file), then add the translated equivalent to each of the five target locale files: de.json, es.json, fr.json, pt.json, and ar.json.
 
+- Translate new copy into English and Arabic only. German, Spanish, French and Portuguese are hidden, noindexed locales: do not add new keys to de/es/fr/pt.json — ngx-translate's `fallbackLang: 'en'` renders English for them. Steps below that mention those four files apply only to keys that already exist there.
+- Add prerender routes and sitemap entries for new public pages under `/en/` and `/ar/` only.
+
 Follow this procedure:
 1. Add a unique, descriptive translation key in `public/i18n/en.json`.
 2. Add the matching translated key and value to `public/i18n/de.json`, `public/i18n/es.json`, `public/i18n/fr.json`, `public/i18n/pt.json`, and `public/i18n/ar.json`.
@@ -61,6 +64,10 @@ Follow this integration pattern in the order below:
 - Every entry in `LEARN_PAGES` (`src/app/pages/learn/learn-detail.ts`), including `blog` category pages, must have a matching slug entry in the `bySlug` map inside `codeProfileForPage()`. A missing mapping throws a runtime error ("Missing strategy code profile mapping for learn page slug: ..."), so add the mapping in the same change whenever a new learn/blog page is added.
 - Blog post content lives only in the base `LEARN_PAGES` TypeScript object for English; `public/i18n/en.json` does not contain `learnPages.<slug>` keys for blog posts. Only the 5 non-English locale files (de/es/fr/pt/ar.json) carry explicit `learnPages.<slug>` translation objects (title, tagline, metaTitle, metaDescription, overview, howItWorks, externalLinks as `{label, description}` — no `url`, since URLs are sourced only from the English TS object).
 - New blog posts require entries in `prerender-routes.txt` (one line per locale per slug, e.g. `/en/blog/<slug>`) so the page is statically prerendered by `@angular/ssr`, and corresponding `<url>` entries in `public/sitemap.xml` for each locale/slug combination.
+
+- Each live (non-paper) entry in `SUPPORTED_EXCHANGES` has a public page at `/:lang/brokers/:slug` (`src/app/pages/brokers/broker-detail.ts`, lazy-loaded via `loadComponent` so its content stays out of the initial bundle), where the slug is the exchange id. Short page data (homepage, founded, HQ, tagline, overview, asset classes, symbols, meta) lives in `BROKER_PAGES` (`broker-pages.ts`); the long broker-specific guide (API setup steps, fees, availability, strengths, limitations, strategy links, FAQs) lives in `BROKER_GUIDES` (`broker-guides.ts`). Name, logo, colour and category come from `SUPPORTED_EXCHANGES`, and `paperId` links the paper/testnet/sandbox/demo variant. English copy lives only in those TS files; `ar.json` carries `brokerPages.<slug>` with the same field names (list items by index). Never import `broker-pages.ts` or `broker-guides.ts` from an eagerly loaded component — the homepage `#supported-brokers` section derives its list from `SUPPORTED_EXCHANGES` directly.
+- Keep broker pages substantive: every guide must be written for that broker specifically (real API permission names, fee structure, regions/regulation, honest limitations), not a template with the name swapped. Strategy links must point at existing non-blog `LEARN_PAGES` slugs; `broker-pages.spec.ts` enforces page/guide/exchange parity and valid strategy slugs.
+- When adding a live broker to `SUPPORTED_EXCHANGES`, add its `BROKER_PAGES` and `BROKER_GUIDES` entries, its `brokerPages.<slug>` Arabic translation, `/en/brokers/<slug>` and `/ar/brokers/<slug>` lines in `prerender-routes.txt`, and matching `<url>` entries in `public/sitemap.xml`.
 
 ## Static Prerendering
 
