@@ -180,6 +180,12 @@ const coreRoutes: Routes = [
     data: { selfDescribed: true },
   },
   {
+    path: 'brokers/:slug',
+    loadComponent: () => import('./pages/brokers/broker-detail').then((m) => m.BrokerDetailPage),
+    title: 'pageTitle.broker',
+    data: { selfDescribed: true },
+  },
+  {
     path: 'knowledge-base',
     component: SitemapPage,
     title: 'pageTitle.sitemap',

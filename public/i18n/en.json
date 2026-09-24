@@ -17,7 +17,8 @@
     "closeMenu": "Close navigation menu",
     "openUserMenu": "Open user menu",
     "closeUserMenu": "Close user menu",
-    "accountMode": "Account mode"
+    "accountMode": "Account mode",
+    "brokers": "Brokers"
   },
   "home": {
     "badge": "🚀 Now live — AI v3 signals engine",
@@ -163,6 +164,13 @@
       "title": "How can AutoTrader Help you",
       "sub": "Explore key areas where AutoTrader supports planning, automation, and execution across your workflow.",
       "ariaLabel": "Helpful AutoTrader topics"
+    },
+    "supportedBrokers": {
+      "tag": "Integrations",
+      "title": "Supported Brokers",
+      "sub": "AutoTrader connects to {{count}} stock brokers and crypto exchanges. Pick one to see what you can trade there and how to connect it.",
+      "stocksTitle": "Stock brokers",
+      "cryptoTitle": "Crypto exchanges"
     }
   },
   "login": {
@@ -1645,7 +1653,8 @@
     "feature": "Feature — Invest-Begin",
     "sitemap": "Knowledge Base — Invest-Begin | Full Page Directory",
     "learn": "Learn Trading — Invest-Begin",
-    "status": "System Status — Invest-Begin | Service Health Dashboard"
+    "status": "System Status — Invest-Begin | Service Health Dashboard",
+    "broker": "Supported Broker — Invest-Begin"
   },
   "metaDescription": {
     "default": "Invest-Begin connects to 30+ exchanges and runs your trading bots 24/7 — powered by AI signals, risk management, and zero emotion.",
@@ -3322,5 +3331,73 @@
     "strategiesDesc": "Educational guides to 35 professional trading strategies. Fully automated with auto-Trading.",
     "signals": "Trading Signals & Indicators — Learn Hub",
     "signalsDesc": "In-depth guides to 35 technical indicators used to generate trading signals."
+  },
+  "brokerDetail": {
+    "tagStocks": "Supported stock broker",
+    "tagCrypto": "Supported crypto exchange",
+    "startAutomating": "Automate {{name}} for free",
+    "visitWebsite": "Visit {{name}}",
+    "overviewTag": "Overview",
+    "aboutTitle": "About {{name}}",
+    "atAGlance": "At a glance",
+    "website": "Official website",
+    "founded": "Founded",
+    "headquarters": "Headquarters",
+    "marketType": "Market type",
+    "paperTrading": "Paper trading",
+    "paperAvailable": "Yes — {{paper}}",
+    "paperUnavailable": "Live trading only",
+    "connection": "Connection",
+    "connectionOAuth": "One-click OAuth or API keys",
+    "connectionGateway": "IB Gateway or TWS running locally",
+    "connectionPassphrase": "API key, secret & passphrase",
+    "connectionKeys": "API key & secret",
+    "marketsTag": "Supported markets",
+    "marketsTitle": "What you can trade on {{name}}",
+    "marketsSub": "The asset classes {{name}} offers, and popular symbols you can automate with AutoTrader.",
+    "assetClassesTitle": "Asset classes offered",
+    "popularStocks": "Popular stocks & ETFs",
+    "popularCrypto": "Popular crypto markets",
+    "popularOther": "Forex, indices & commodities",
+    "symbolsNote": "Symbols shown are examples. Exact availability depends on your country, account type and the broker's current listings.",
+    "connectTag": "Get started",
+    "connectTitle": "How to connect {{name}} to AutoTrader",
+    "apiGuide": "How to create {{name}} API keys",
+    "apiDocs": "{{name}} API documentation",
+    "otherTag": "More integrations",
+    "otherTitle": "Other supported brokers & exchanges",
+    "ctaTitle": "Ready to automate {{name}}?",
+    "ctaDesc": "Create a free account, connect {{name}} and launch your first strategy in minutes.",
+    "assetClasses": {
+      "spotCrypto": "Spot crypto",
+      "cryptoMargin": "Crypto margin",
+      "cryptoPerpetuals": "Perpetual futures",
+      "cryptoFutures": "Crypto futures",
+      "cryptoOptions": "Crypto options",
+      "usStocks": "US stocks",
+      "globalStocks": "International stocks",
+      "etfs": "ETFs",
+      "options": "Options",
+      "futures": "Futures",
+      "forex": "Forex",
+      "indices": "Indices",
+      "commodities": "Commodities",
+      "bonds": "Bonds",
+      "mutualFunds": "Mutual funds",
+      "cfds": "CFDs"
+    },
+    "feesTag": "Fees & accounts",
+    "feesTitle": "Trading {{name}}: costs and where it's available",
+    "feesCardTitle": "Fees and account types",
+    "availabilityTitle": "Availability and regulation",
+    "prosConsTag": "For automated trading",
+    "prosConsTitle": "Automating {{name}}: strengths and limitations",
+    "strengthsTitle": "Strengths",
+    "limitationsTitle": "Limitations",
+    "strategiesTag": "Strategy ideas",
+    "strategiesTitle": "Strategies that suit {{name}}",
+    "readGuide": "Read the strategy guide →",
+    "faqTag": "FAQ",
+    "faqTitle": "{{name}} automation: frequently asked questions"
   }
 }
