@@ -133,7 +133,26 @@
         </div>
       }
 
-      @if (!isAlpacaSelected() || manualEntryExpanded()) {
+      @if (isTastytradeSelected()) {
+        <div class="oauth-connect-block">
+          <div class="oauth-disclosure">
+            <h4 class="oauth-disclosure-title">{{ 'connectExchange.oauthDisclosureTitle' | translate }}</h4>
+            <p class="oauth-disclosure-body">
+              {{ 'connectExchange.tastytradeOauthDisclosureBody' | translate }}
+              <a href="https://www.invest-begin.com" target="_blank" rel="noopener noreferrer">{{ 'connectExchange.oauthDisclosureLearnMore' | translate }}</a>
+            </p>
+          </div>
+          <button type="button" class="btn-oauth-connect" (click)="connectTastytradeOAuth()" [disabled]="oauthConnecting()">
+            @if (oauthConnecting()) {
+              <span class="spinner"></span> {{ 'connectExchange.tastytradeOauthConnecting' | translate }}
+            } @else {
+              {{ 'connectExchange.connectWithTastytradeOAuth' | translate }}
+            }
+          </button>
+        </div>
+      }
+
+      @if (!isAlpacaSelected() && !isTastytradeSelected() || manualEntryExpanded()) {
         <div class="form-group">
           <label for="label">{{ 'connectExchange.accountLabel' | translate }}</label>
           <input id="label" type="text" [(ngModel)]="label" name="label" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />

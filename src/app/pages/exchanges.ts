@@ -345,6 +345,18 @@ export class ExchangesPage {
         this.showSuccessToast('exchanges.oauthConnectError');
         this.clearAlpacaConnectQuery();
       }
+
+      // Landing back from the "Connect with tastytrade" OAuth redirect
+      // (see tastytradeOAuthCallback in functions/src/index.ts).
+      const tastytradeConnect = params.get('tastytrade_connect');
+      if (tastytradeConnect === 'success') {
+        void this.exchangeService.reloadFromFirestore();
+        this.showSuccessToast('exchanges.tastytradeConnectSuccess');
+        this.clearTastytradeConnectQuery();
+      } else if (tastytradeConnect === 'error') {
+        this.showSuccessToast('exchanges.tastytradeConnectError');
+        this.clearTastytradeConnectQuery();
+      }
     });
   }
 
@@ -352,6 +364,15 @@ export class ExchangesPage {
     void this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { alpaca_connect: null, env: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+  }
+
+  private clearTastytradeConnectQuery(): void {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { tastytrade_connect: null },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
