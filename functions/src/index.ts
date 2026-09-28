@@ -109,6 +109,8 @@ function resolveMarketSession(exchangeId: string, symbol: string): { isOpen: boo
 // which provisions managed sandbox sub-accounts.
 const ALPACA_OAUTH_CLIENT_ID = defineSecret("ALPACA_OAUTH_CLIENT_ID");
 const ALPACA_OAUTH_CLIENT_SECRET = defineSecret("ALPACA_OAUTH_CLIENT_SECRET");
+const TASTYTRADE_CLIENT_ID = defineSecret("TASTYTRADE_CLIENT_ID");
+const TASTYTRADE_CLIENT_SECRET = defineSecret("TASTYTRADE_CLIENT_SECRET");
 
 async function fetchAlpacaPortfolio(
   apiKey: string,
@@ -3113,5 +3115,184 @@ export const alpacaOAuthCallback = functions
     } catch (error: any) {
       console.error("❌ alpacaOAuthCallback failed:", error);
       res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
+    }
+  });
+
+// ---------------------------------------------------------------------------
+// tastytrade OAuth — Connect flow
+// Authorization URL : https://developer.tastytrade.com/oauth/authorize
+// Token exchange    : https://api.tastytrade.com/oauth/token
+// ---------------------------------------------------------------------------
+
+const TASTYTRADE_OAUTH_STATE_COLLECTION  = "tastytrade_oauth_states";
+// Server-only — no Firestore security rule should match this collection.
+// Doc id: `${uid}`.
+const TASTYTRADE_OAUTH_TOKENS_COLLECTION = "tastytrade_oauth_tokens";
+
+function resolveTastytradeOAuthRedirectUri(host: string): string {
+  return host.includes("localhost") || host.includes("127.0.0.1")
+    ? `http://${host}/api/tastytrade/oauth/callback`
+    : "https://invest-begin.com/api/tastytrade/oauth/callback";
+}
+
+/**
+ * Starts the tastytrade OAuth flow for the authenticated user.
+ * POST /api/tastytrade/oauth/start
+ * Returns { authorizeUrl } for the frontend to redirect the browser to.
+ */
+export const tastytradeOAuthStart = functions
+  .region("europe-west1")
+  .runWith({ secrets: [TASTYTRADE_CLIENT_ID] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+      if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const clientId = TASTYTRADE_CLIENT_ID.value().trim();
+        if (!clientId) {
+          res.status(500).json({ error: "tastytrade OAuth is not configured" });
+          return;
+        }
+
+        const state = crypto.randomBytes(24).toString("hex");
+        const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+        await admin.firestore()
+          .collection(TASTYTRADE_OAUTH_STATE_COLLECTION)
+          .doc(state)
+          .set({ uid: decoded.uid, expiresAt });
+
+        const redirectUri = resolveTastytradeOAuthRedirectUri(String(req.headers.host || ""));
+
+        const authorizeUrl = new URL("https://developer.tastytrade.com/oauth/authorize");
+        authorizeUrl.searchParams.set("response_type", "code");
+        authorizeUrl.searchParams.set("client_id", clientId);
+        authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+        authorizeUrl.searchParams.set("state", state);
+
+        res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
+      } catch (error: any) {
+        const message = error?.message || "Failed to start tastytrade OAuth";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ tastytradeOAuthStart failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Handles tastytrade's OAuth2 redirect back from the authorize step.
+ * GET /api/tastytrade/oauth/callback?code=...&state=...
+ *
+ * Exchanges the code for an access token, stores it server-side only,
+ * records a lightweight connection record under users/{uid}/exchanges/,
+ * then redirects the browser back into the app.
+ */
+export const tastytradeOAuthCallback = functions
+  .region("europe-west1")
+  .runWith({ secrets: [TASTYTRADE_CLIENT_ID, TASTYTRADE_CLIENT_SECRET] })
+  .https.onRequest(async (req, res) => {
+    const clientId     = TASTYTRADE_CLIENT_ID.value().trim();
+    const clientSecret = TASTYTRADE_CLIENT_SECRET.value().trim();
+
+    if (!clientId || !clientSecret) {
+      res.status(500).send("tastytrade OAuth is not configured");
+      return;
+    }
+
+    const code       = String(req.query.code  || "");
+    const state      = String(req.query.state || "");
+    const oauthError = String(req.query.error || "");
+
+    if (oauthError) {
+      console.warn("⚠ tastytrade OAuth authorize returned an error:", oauthError);
+      res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+      return;
+    }
+    if (!code || !state) {
+      res.status(400).send("Missing required parameters");
+      return;
+    }
+
+    // Verify one-time state and recover which user started this flow.
+    const stateRef  = admin.firestore().collection(TASTYTRADE_OAUTH_STATE_COLLECTION).doc(state);
+    const stateSnap = await stateRef.get();
+    if (!stateSnap.exists) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+    const stateData = stateSnap.data()!;
+    await stateRef.delete(); // consumed — one-time use only
+
+    if (Date.now() > stateData.expiresAt) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+
+    const uid = String(stateData.uid);
+
+    try {
+      const redirectUri = resolveTastytradeOAuthRedirectUri(String(req.headers.host || ""));
+      const tokenRes = await fetch("https://api.tastytrade.com/oauth/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type:    "authorization_code",
+          code,
+          client_id:     clientId,
+          client_secret: clientSecret,
+          redirect_uri:  redirectUri,
+        }).toString(),
+      } as any);
+
+      if (!tokenRes.ok) {
+        const text = await tokenRes.text();
+        console.error(`❌ tastytrade OAuth token exchange failed (status ${tokenRes.status}):`, text);
+        res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+        return;
+      }
+
+      const tokenData: any = await tokenRes.json();
+      const accessToken: string = tokenData.access_token;
+
+      if (!accessToken) {
+        console.error("❌ tastytrade OAuth token response had no access_token");
+        res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+        return;
+      }
+
+      // Persist access token server-side only.
+      await admin.firestore()
+        .collection(TASTYTRADE_OAUTH_TOKENS_COLLECTION)
+        .doc(uid)
+        .set({ uid, accessToken, connectedAt: new Date().toISOString() });
+
+      // Lightweight, client-visible connection record — no secret material.
+      await admin.firestore()
+        .collection("users").doc(uid)
+        .collection("exchanges").doc("tastytrade")
+        .set(
+          {
+            exchangeId:  "tastytrade",
+            label:       "tastytrade",
+            apiKey:      "",
+            secret:      "",
+            authMethod:  "oauth",
+            connectedAt: new Date().toISOString(),
+            status:      "active",
+          },
+          { merge: true }
+        );
+
+      console.log(`✅ tastytrade OAuth connected for uid=${uid}`);
+      res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=success");
+    } catch (error: any) {
+      console.error("❌ tastytradeOAuthCallback failed:", error);
+      res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
     }
   });
