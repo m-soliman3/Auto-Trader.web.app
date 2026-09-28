@@ -181,6 +181,20 @@
           }
         },
         {
+          "source": "/api/tastytrade/oauth/start",
+          "function": {
+            "functionId": "tastytradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/tastytrade/oauth/callback",
+          "function": {
+            "functionId": "tastytradeOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",
@@ -418,6 +432,20 @@
           "source": "/api/alpaca/oauth/callback",
           "function": {
             "functionId": "alpacaOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/tastytrade/oauth/start",
+          "function": {
+            "functionId": "tastytradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/tastytrade/oauth/callback",
+          "function": {
+            "functionId": "tastytradeOAuthCallback",
             "region": "europe-west1"
           }
         },
