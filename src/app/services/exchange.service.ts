@@ -799,6 +799,32 @@ export class ExchangeService {
     window.location.href = response.authorizeUrl;
   }
 
+  /**
+   * Starts the "Connect with tastytrade" OAuth flow and navigates the browser
+   * to tastytrade's authorize page. On approval, tastytrade redirects back
+   * through our callback, which stores the connection and lands the user back
+   * on /exchanges?tastytrade_connect=success.
+   */
+  async startTastytradeConnect(): Promise<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('You must be logged in to connect tastytrade.');
+    }
+    const idToken = await currentUser.getIdToken();
+
+    const response = await firstValueFrom(this.http.post<{ authorizeUrl: string }>(
+      '/api/tastytrade/oauth/start',
+      {},
+      { headers: { Authorization: `Bearer ${idToken}` } },
+    ));
+
+    if (!response?.authorizeUrl) {
+      throw new Error('tastytrade did not return an authorization URL.');
+    }
+
+    window.location.href = response.authorizeUrl;
+  }
+
   async validateCredentials(exchangeId: string, apiKey: string, secret: string, passphrase?: string): Promise<boolean> {
     try {
       const currentUser = this.firebaseAuth.currentUser;

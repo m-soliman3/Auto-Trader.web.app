@@ -549,6 +549,9 @@
     "chooseExchange": "Choose the exchange you want to connect",
     "connect": "Connect",
     "connectWithAlpacaOAuth": "Connect with Alpaca",
+    "connectWithTastytradeOAuth": "Connect with tastytrade",
+    "tastytradeOauthConnecting": "Redirecting to tastytrade…",
+    "tastytradeOauthDisclosureBody": "By allowing Invest-Begin to access your tastytrade account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Before authorizing,",
     "connectExchange": "Connect Exchange",
     "connecting": "Connecting…",
     "cryptoExchanges": "Crypto Exchanges",
@@ -859,7 +862,9 @@
     "typeDisconnectToConfirmError": "Please type \"disconnect this Exchange\" to confirm",
     "successConnected": "Your exchange is connected successfully.",
     "oauthConnectSuccess": "Alpaca connected successfully.",
-    "oauthConnectError": "Alpaca connection failed. Please try again."
+    "oauthConnectError": "Alpaca connection failed. Please try again.",
+    "tastytradeConnectSuccess": "tastytrade connected successfully.",
+    "tastytradeConnectError": "tastytrade connection failed. Please try again."
   },
   "bots": {
     "confirmDeletion": "Confirm Deletion",

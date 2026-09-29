@@ -549,6 +549,9 @@
     "chooseExchange": "اختر منصة التداول التي تريد ربطها",
     "connect": "ربط",
     "connectWithAlpacaOAuth": "الاتصال بـ Alpaca",
+    "connectWithTastytradeOAuth": "الاتصال بـ tastytrade",
+    "tastytradeOauthConnecting": "جارٍ التحويل إلى tastytrade…",
+    "tastytradeOauthDisclosureBody": "بالسماح لـ Invest-Begin بالوصول إلى حسابك في tastytrade، فإنك تمنح Invest-Begin حق الوصول إلى معلومات حسابك وتفوّضه بتنفيذ المعاملات في حسابك وفقًا لتوجيهاتك. قبل التفويض،",
     "connectExchange": "ربط منصة تداول",
     "connecting": "جارٍ الاتصال…",
     "cryptoExchanges": "منصات تداول العملات المشفرة",
@@ -859,7 +862,9 @@
     "typeDisconnectToConfirmError": "يرجى كتابة \"disconnect this Exchange\" للتأكيد",
     "successConnected": "تم ربط منصة التداول بنجاح.",
     "oauthConnectSuccess": "تم الاتصال بـ Alpaca بنجاح.",
-    "oauthConnectError": "فشل الاتصال بـ Alpaca. يرجى المحاولة مرة أخرى."
+    "oauthConnectError": "فشل الاتصال بـ Alpaca. يرجى المحاولة مرة أخرى.",
+    "tastytradeConnectSuccess": "تم الاتصال بـ tastytrade بنجاح.",
+    "tastytradeConnectError": "فشل الاتصال بـ tastytrade. يرجى المحاولة مرة أخرى."
   },
   "bots": {
     "confirmDeletion": "تأكيد الحذف",

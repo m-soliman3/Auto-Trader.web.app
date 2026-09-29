@@ -133,7 +133,30 @@
         </div>
       }
 
-      @if (!isAlpacaSelected() || manualEntryExpanded()) {
+      @if (isTastytradeSelected()) {
+        <div class="oauth-connect-block">
+          <div class="oauth-disclosure">
+            <h4 class="oauth-disclosure-title">{{ 'connectExchange.oauthDisclosureTitle' | translate }}</h4>
+            <p class="oauth-disclosure-body">
+              {{ 'connectExchange.tastytradeOauthDisclosureBody' | translate }}
+              <a href="https://www.invest-begin.com" target="_blank" rel="noopener noreferrer">{{ 'connectExchange.oauthDisclosureLearnMore' | translate }}</a>
+            </p>
+          </div>
+          <button type="button" class="btn-oauth-connect" (click)="connectTastytradeOAuth()" [disabled]="oauthConnecting()">
+            @if (oauthConnecting()) {
+              <span class="spinner"></span> {{ 'connectExchange.tastytradeOauthConnecting' | translate }}
+            } @else {
+              {{ 'connectExchange.connectWithTastytradeOAuth' | translate }}
+            }
+          </button>
+          <button type="button" class="manual-entry-toggle" (click)="toggleManualEntry()" [attr.aria-expanded]="manualEntryExpanded()">
+            <span>{{ 'connectExchange.orEnterManually' | translate }}</span>
+            <svg class="manual-entry-chevron" [class.expanded]="manualEntryExpanded()" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+      }
+
+      @if (!isAlpacaSelected() && !isTastytradeSelected() || manualEntryExpanded()) {
         <div class="form-group">
           <label for="label">{{ 'connectExchange.accountLabel' | translate }}</label>
           <input id="label" type="text" [(ngModel)]="label" name="label" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />
