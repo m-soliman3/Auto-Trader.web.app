@@ -3120,8 +3120,8 @@ export const alpacaOAuthCallback = functions
 
 // ---------------------------------------------------------------------------
 // tastytrade OAuth — Connect flow
-// Authorization URL : https://developer.tastytrade.com/oauth/authorize
-// Token exchange    : https://api.tastytrade.com/oauth/token
+// Authorization URL : https://my.tastytrade.com/auth.html
+// Token exchange    : https://api.tastyworks.com/oauth/token
 // ---------------------------------------------------------------------------
 
 const TASTYTRADE_OAUTH_STATE_COLLECTION  = "tastytrade_oauth_states";
@@ -3166,10 +3166,11 @@ export const tastytradeOAuthStart = functions
 
         const redirectUri = resolveTastytradeOAuthRedirectUri(String(req.headers.host || ""));
 
-        const authorizeUrl = new URL("https://developer.tastytrade.com/oauth/authorize");
+        const authorizeUrl = new URL("https://my.tastytrade.com/auth.html");
         authorizeUrl.searchParams.set("response_type", "code");
         authorizeUrl.searchParams.set("client_id", clientId);
         authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+        authorizeUrl.searchParams.set("scope", "read trade");
         authorizeUrl.searchParams.set("state", state);
 
         res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
@@ -3238,7 +3239,7 @@ export const tastytradeOAuthCallback = functions
 
     try {
       const redirectUri = resolveTastytradeOAuthRedirectUri(String(req.headers.host || ""));
-      const tokenRes = await fetch("https://api.tastytrade.com/oauth/token", {
+      const tokenRes = await fetch("https://api.tastyworks.com/oauth/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
@@ -3258,7 +3259,9 @@ export const tastytradeOAuthCallback = functions
       }
 
       const tokenData: any = await tokenRes.json();
-      const accessToken: string = tokenData.access_token;
+      const accessToken: string  = tokenData.access_token;
+      const refreshToken: string = tokenData.refresh_token || "";
+      const expiresIn: number    = Number(tokenData.expires_in || 900);
 
       if (!accessToken) {
         console.error("❌ tastytrade OAuth token response had no access_token");
@@ -3266,11 +3269,17 @@ export const tastytradeOAuthCallback = functions
         return;
       }
 
-      // Persist access token server-side only.
+      // Persist tokens server-side only (access token valid 15 min; refresh never expires).
       await admin.firestore()
         .collection(TASTYTRADE_OAUTH_TOKENS_COLLECTION)
         .doc(uid)
-        .set({ uid, accessToken, connectedAt: new Date().toISOString() });
+        .set({
+          uid,
+          accessToken,
+          refreshToken,
+          accessTokenExpiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+          connectedAt: new Date().toISOString(),
+        });
 
       // Lightweight, client-visible connection record — no secret material.
       await admin.firestore()
