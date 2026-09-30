@@ -492,18 +492,18 @@
 }
 
 .steps-media {
+  align-self: start;
   border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
   border-radius: 18px;
   overflow: hidden;
-  background: #06080d;
-  min-height: 320px;
+  background: #ffffff;
+  aspect-ratio: 1.46;
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22);
 }
 
 .steps-video {
   width: 100%;
   height: 100%;
-  min-height: 320px;
   display: block;
   object-fit: cover;
 }
@@ -730,10 +730,6 @@
   .steps-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
   .help-keywords { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .steps-media,
-  .steps-video {
-    min-height: 260px;
-  }
 }
 
 @media (max-width: 600px) {

@@ -77,19 +77,19 @@ export class Home extends LocalizedLinks implements AfterViewInit, OnDestroy {
       num: '01',
       titleKey: 'home.steps.step1.title',
       descKey: 'home.steps.step1.desc',
-      videoSrc: '/videos/Connect Exchange - 08.06.2026.mov',
+      videoSrc: '/videos/Connect Exchange - 30.09.2026.mp4',
     },
     {
       num: '02',
       titleKey: 'home.steps.step2.title',
       descKey: 'home.steps.step2.desc',
-      videoSrc: '/videos/Bot Created 08.06.2026.mov',
+      videoSrc: '/videos/Create Strategy - 30.09.2026.mp4',
     },
     {
       num: '03',
       titleKey: 'home.steps.step3.title',
       descKey: 'home.steps.step3.desc',
-      videoSrc: '/videos/Strategy created 08.06.2026.mov',
+      videoSrc: '/videos/Let It Work For You - 30.09.2026.mp4',
     },
   ];
 
