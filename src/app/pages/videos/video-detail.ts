@@ -35,6 +35,7 @@ export interface VideoData {
   highlights: VideoHighlight[];
   relatedLinks: VideoRelatedLink[];
   videoFile: string;
+  thumbnailFile: string;
   uploadDate: string;
   metaTitle: string;
   metaDescription: string;
@@ -90,6 +91,7 @@ auto-Trading supports more than 30 spot and derivatives exchanges, including Bin
       { label: 'Multi-Exchange Support', routeSegment: 'features', slug: 'multi-exchange' },
     ],
     videoFile: 'Connect Exchange - 30.09.2026.mp4',
+    thumbnailFile: 'connect-exchange.jpg',
     uploadDate: '2026-09-30',
   },
 
@@ -135,6 +137,7 @@ You will see blocks being dragged from the side panel onto the canvas and wired 
       { label: 'No-Code Strategy Builder', routeSegment: 'features', slug: 'no-code-builder' },
     ],
     videoFile: 'Create Strategy - 30.09.2026.mp4',
+    thumbnailFile: 'create-strategy.jpg',
     uploadDate: '2026-09-30',
   },
 
@@ -180,6 +183,7 @@ You will also see the risk controls that run underneath every trade: stop-loss a
       { label: 'Risk Management', routeSegment: 'features', slug: 'risk-management' },
     ],
     videoFile: 'Let It Work For You - 30.09.2026.mp4',
+    thumbnailFile: 'let-it-work-for-you.jpg',
     uploadDate: '2026-09-30',
   },
 };
@@ -274,6 +278,7 @@ export class VideoDetailPage implements OnInit {
 
     const canonicalHref = this.canonicalHref(base.slug);
     const videoAbsUrl = `${SITE_URL}/videos/${encodeURIComponent(base.videoFile)}`;
+    const thumbnailAbsUrl = `${SITE_URL}/images/video-thumbnails/${base.thumbnailFile}`;
 
     this.document.title = this.video.metaTitle;
     this.meta.updateTag({ name: 'description', content: this.video.metaDescription });
@@ -283,9 +288,11 @@ export class VideoDetailPage implements OnInit {
     this.meta.updateTag({ property: 'og:type', content: 'video.other' });
     this.meta.updateTag({ property: 'og:video', content: videoAbsUrl });
     this.meta.updateTag({ property: 'og:video:type', content: 'video/mp4' });
-    this.meta.updateTag({ property: 'og:image', content: `${SITE_URL}/images/logo-lockup.svg` });
+    this.meta.updateTag({ property: 'og:image', content: thumbnailAbsUrl });
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:image', content: thumbnailAbsUrl });
 
-    this.structuredData.setPageGraph(this.buildStructuredData(canonicalHref, videoAbsUrl));
+    this.structuredData.setPageGraph(this.buildStructuredData(canonicalHref, videoAbsUrl, thumbnailAbsUrl));
 
     this.overviewParagraphs = translatedOverview.split('\n\n').map((p) => p.trim()).filter(Boolean);
     this.howItWorksParagraphs = translatedHowItWorks.split('\n\n').map((p) => p.trim()).filter(Boolean);
@@ -312,7 +319,7 @@ export class VideoDetailPage implements OnInit {
     return this.structuredData.absoluteUrl(this.languageService.currentLang(), 'videos', slug);
   }
 
-  private buildStructuredData(canonicalHref: string, videoAbsUrl: string): JsonLdNode[] {
+  private buildStructuredData(canonicalHref: string, videoAbsUrl: string, thumbnailAbsUrl: string): JsonLdNode[] {
     const video = this.video;
     if (!video) {
       return [];
@@ -328,6 +335,7 @@ export class VideoDetailPage implements OnInit {
       '@id': `${canonicalHref}#video`,
       name: video.metaTitle,
       description: video.metaDescription,
+      thumbnailUrl: [thumbnailAbsUrl],
       contentUrl: videoAbsUrl,
       uploadDate: `${video.uploadDate}T00:00:00Z`,
       publisher: this.structuredData.organizationRef,

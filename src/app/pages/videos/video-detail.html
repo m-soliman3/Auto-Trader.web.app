@@ -32,6 +32,7 @@
     <video
       class="vp-player"
       [src]="'/videos/' + video.videoFile"
+      [attr.poster]="'/images/video-thumbnails/' + video.thumbnailFile"
       controls
       preload="metadata"
       playsinline

@@ -25,10 +25,10 @@ const FEATURE_CARDS: { slug: string; icon: string }[] = [
 ];
 
 /** Video guides shown on the knowledge base — titles come from the videoPages translations. */
-const VIDEO_CARDS: { slug: string; icon: string }[] = [
-  { slug: 'connect-exchange', icon: '🔗' },
-  { slug: 'create-strategy', icon: '🧩' },
-  { slug: 'let-it-work-for-you', icon: '🛡️' },
+const VIDEO_CARDS: { slug: string; icon: string; imageUrl: string }[] = [
+  { slug: 'connect-exchange', icon: '🔗', imageUrl: '/images/video-thumbnails/connect-exchange.jpg' },
+  { slug: 'create-strategy', icon: '🧩', imageUrl: '/images/video-thumbnails/create-strategy.jpg' },
+  { slug: 'let-it-work-for-you', icon: '🛡️', imageUrl: '/images/video-thumbnails/let-it-work-for-you.jpg' },
 ];
 
 @Component({
@@ -78,6 +78,7 @@ export class SitemapPage {
         icon: v.icon,
         title: this.t(`videoPages.${v.slug}.title`, v.slug),
         tagline: this.t(`videoPages.${v.slug}.tagline`, ''),
+        imageUrl: v.imageUrl,
       })),
     );
 

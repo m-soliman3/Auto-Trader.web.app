@@ -63,7 +63,12 @@
       <p class="sm-section-desc">{{ 'sitemap.videoGuidesDesc' | translate }}</p>
       <div class="sm-grid">
         @for (video of videos(); track video.slug) {
-          <a [routerLink]="localizedLink('videos', video.slug)" [attr.href]="localizedHref('videos', video.slug)" class="sm-card">
+          <a [routerLink]="localizedLink('videos', video.slug)" [attr.href]="localizedHref('videos', video.slug)" class="sm-card sm-card-learn sm-card-blog">
+            @if (video.imageUrl) {
+              <div class="sm-card-img-wrap">
+                <img [src]="video.imageUrl" [alt]="video.title" class="sm-card-img" loading="lazy" width="360" height="200">
+              </div>
+            }
             <div class="sm-card-icon">{{ video.icon }}</div>
             <div class="sm-card-title">{{ video.title }}</div>
             <div class="sm-card-desc">{{ video.tagline }}</div>
