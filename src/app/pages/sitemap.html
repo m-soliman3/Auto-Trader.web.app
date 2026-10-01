@@ -55,6 +55,23 @@
       </div>
     </section>
 
+    <!-- ── VIDEO GUIDES ── -->
+    <section class="sm-section">
+      <h2 class="sm-section-title">
+        <span class="sm-section-icon">🎬</span> {{ 'sitemap.videoGuides' | translate }}
+      </h2>
+      <p class="sm-section-desc">{{ 'sitemap.videoGuidesDesc' | translate }}</p>
+      <div class="sm-grid">
+        @for (video of videos(); track video.slug) {
+          <a [routerLink]="localizedLink('videos', video.slug)" [attr.href]="localizedHref('videos', video.slug)" class="sm-card">
+            <div class="sm-card-icon">{{ video.icon }}</div>
+            <div class="sm-card-title">{{ video.title }}</div>
+            <div class="sm-card-desc">{{ video.tagline }}</div>
+          </a>
+        }
+      </div>
+    </section>
+
     <!-- ── LEGAL ── -->
     <section class="sm-section">
       <h2 class="sm-section-title">

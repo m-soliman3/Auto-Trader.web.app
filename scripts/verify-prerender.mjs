@@ -28,7 +28,7 @@ const LOCALES = ['en', 'de', 'es', 'fr', 'pt', 'ar'];
 const REDIRECTED_ROOTS = new Set([
   'privacy', 'terms', 'disclaimer', 'collecting-data', 'contact', 'knowledge-base',
   'login', 'signup', 'signup-guide', 'system-health', 'sitemap',
-  'features', 'learn', 'blog', 'brokers',
+  'features', 'learn', 'blog', 'brokers', 'videos',
 ]);
 
 const DEV_HOSTS = [/ng-localhost/gi, /\/\/localhost[:/]/gi, /\/\/127\.0\.0\.1[:/]/gi, /\/\/0\.0\.0\.0[:/]/gi];

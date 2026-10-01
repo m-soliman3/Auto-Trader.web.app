@@ -24,6 +24,13 @@ const FEATURE_CARDS: { slug: string; icon: string }[] = [
   { slug: 'no-code-builder', icon: '🌐' },
 ];
 
+/** Video guides shown on the knowledge base — titles come from the videoPages translations. */
+const VIDEO_CARDS: { slug: string; icon: string }[] = [
+  { slug: 'connect-exchange', icon: '🔗' },
+  { slug: 'create-strategy', icon: '🧩' },
+  { slug: 'let-it-work-for-you', icon: '🛡️' },
+];
+
 @Component({
   selector: 'app-sitemap',
   standalone: true,
@@ -37,6 +44,7 @@ export class SitemapPage {
   private destroyRef = inject(DestroyRef);
 
   readonly features   = signal<SitemapCard[]>([]);
+  readonly videos     = signal<SitemapCard[]>([]);
   readonly strategies = signal<SitemapCard[]>([]);
   readonly signals    = signal<SitemapCard[]>([]);
   readonly blogPosts  = signal<SitemapCard[]>([]);
@@ -61,6 +69,15 @@ export class SitemapPage {
         icon: f.icon,
         title: this.t(`featurePages.${f.slug}.title`, f.slug),
         tagline: this.t(`featurePages.${f.slug}.tagline`, ''),
+      })),
+    );
+
+    this.videos.set(
+      VIDEO_CARDS.map(v => ({
+        slug: v.slug,
+        icon: v.icon,
+        title: this.t(`videoPages.${v.slug}.title`, v.slug),
+        tagline: this.t(`videoPages.${v.slug}.tagline`, ''),
       })),
     );
 

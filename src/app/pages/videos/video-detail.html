@@ -1,0 +1,133 @@
+@if (video) {
+<!-- ── HERO ── -->
+<section class="vp-hero">
+  <div class="vp-hero-bg"></div>
+  <div class="vp-container">
+    <a [routerLink]="['/', languageService.currentLang()]" [attr.href]="localizedHref()" class="vp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
+    <div class="vp-language-links" [attr.aria-label]="'Video page language variants'">
+      <span class="vp-language-label">{{ 'language.selectLanguage' | translate }}:</span>
+      @for (lang of languageService.selectableLanguages; track lang.code) {
+        <a
+          [routerLink]="videoLanguageLink(lang.code)"
+          [attr.href]="videoLanguageHref(lang.code)"
+          [attr.hreflang]="lang.code"
+          [attr.lang]="lang.code"
+          class="vp-language-chip"
+          [class.active]="lang.code === languageService.currentLang()"
+        >{{ lang.label }}</a>
+      }
+    </div>
+    <div class="vp-hero-icon">{{ video.icon }}</div>
+    <p class="vp-tag">{{ 'videoDetail.videoGuide' | translate }}</p>
+    <h1 class="vp-hero-title">{{ video.title }}</h1>
+    <p class="vp-hero-tagline">{{ video.tagline }}</p>
+    <p class="vp-hero-desc">{{ video.heroDescription }}</p>
+    <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="vp-btn-accent">{{ 'featureDetail.startForFree' | translate }} →</a>
+  </div>
+</section>
+
+<!-- ── VIDEO PLAYER ── -->
+<section class="vp-player-section">
+  <div class="vp-container vp-player-wrap">
+    <video
+      class="vp-player"
+      [src]="'/videos/' + video.videoFile"
+      controls
+      preload="metadata"
+      playsinline
+      [attr.aria-label]="video.title"
+      controlsList="nodownload"
+    ></video>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<section class="vp-section">
+  <div class="vp-container vp-two-col">
+    <div class="vp-overview">
+      <p class="vp-tag">{{ 'featureDetail.overview' | translate }}</p>
+      <h2>{{ ('videoDetail.whatThisCovers' | translate) + ' ' + video.title }}</h2>
+      @for (para of overviewParagraphs; track $index) {
+        <p class="vp-body-text">{{ para }}</p>
+      }
+      <div class="vp-related-links">
+        <span class="vp-related-label">{{ 'featureDetail.exploreAlso' | translate }}</span>
+        @for (link of video.relatedLinks; track link.slug) {
+          <a [routerLink]="relatedLinkPath(link)" [attr.href]="relatedLinkHref(link)" class="vp-related-chip">{{ link.label }}</a>
+        }
+      </div>
+    </div>
+    <div class="vp-how-it-works">
+      <div class="vp-hiw-card">
+        <p class="vp-tag">{{ 'featureDetail.howItWorks' | translate }}</p>
+        <h3>{{ 'videoDetail.behindTheScenes' | translate }}</h3>
+        @for (para of howItWorksParagraphs; track $index) {
+          <p class="vp-body-text">{{ para }}</p>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HIGHLIGHTS ── -->
+<section class="vp-section vp-section-alt">
+  <div class="vp-container">
+    <div class="vp-section-header">
+      <p class="vp-tag">{{ 'videoDetail.keyTakeaways' | translate }}</p>
+      <h2>{{ 'videoDetail.whatYoullLearn' | translate }}</h2>
+    </div>
+    <div class="vp-highlights-grid">
+      @for (h of video.highlights; track h.title) {
+        <div class="vp-highlight-card">
+          <span class="vp-highlight-icon">{{ h.icon }}</span>
+          <h3>{{ h.title }}</h3>
+          <p>{{ h.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── WATCH NEXT + ACCOUNT LINKS ── -->
+<section class="vp-section">
+  <div class="vp-container">
+    <div class="vp-section-header">
+      <p class="vp-tag">{{ 'videoDetail.continueWatching' | translate }}</p>
+      <h2>{{ 'videoDetail.watchNext' | translate }}</h2>
+    </div>
+
+    <div class="vp-more-videos-grid">
+      @for (item of otherVideos; track item.slug) {
+        <a [routerLink]="localizedLink('videos', item.slug)" [attr.href]="localizedHref('videos', item.slug)" class="vp-more-video-card">
+          <span class="vp-more-video-icon">{{ item.icon }}</span>
+          <h3>{{ item.label }}</h3>
+          <p>{{ item.tagline }}</p>
+        </a>
+      }
+    </div>
+
+    @if (!auth.isLoggedIn()) {
+      <div class="vp-account-links">
+        <a [routerLink]="localizedLink('login')" [attr.href]="localizedHref('login')" class="vp-btn-outline">{{ 'nav.logIn' | translate }}</a>
+        <a [routerLink]="localizedLink('signup')" [attr.href]="localizedHref('signup')" class="vp-btn-accent">{{ 'nav.getStarted' | translate }}</a>
+      </div>
+    } @else {
+      <div class="vp-account-links">
+        <a [routerLink]="localizedLink('dashboard')" [attr.href]="localizedHref('dashboard')" class="vp-btn-accent">{{ 'nav.dashboard' | translate }}</a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section class="vp-cta-banner">
+  <div class="vp-container vp-cta-inner">
+    <h2>{{ 'videoDetail.ctaTitle' | translate }}</h2>
+    <p>{{ 'videoDetail.ctaDesc' | translate }}</p>
+    <div class="vp-cta-actions">
+      <a [routerLink]="ctaLink()" [attr.href]="ctaHref()" class="vp-btn-accent">{{ 'featureDetail.createFreeAccount' | translate }} →</a>
+      <a [routerLink]="localizedLink('knowledge-base')" [attr.href]="localizedHref('knowledge-base')" class="vp-btn-outline">{{ 'footer.knowledgeBase' | translate }}</a>
+    </div>
+  </div>
+</section>
+}
