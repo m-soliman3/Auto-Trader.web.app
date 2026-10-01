@@ -23,7 +23,10 @@
         { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
         { "source": "/brokers/:slug", "destination": "/en/brokers/:slug", "type": 301 },
         { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
-        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 }
+        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 },
+        { "source": "/videos/connect-exchange", "destination": "/en/videos/connect-exchange", "type": 301 },
+        { "source": "/videos/create-strategy", "destination": "/en/videos/create-strategy", "type": 301 },
+        { "source": "/videos/let-it-work-for-you", "destination": "/en/videos/let-it-work-for-you", "type": 301 }
       ],
       "rewrites": [
         {
@@ -278,7 +281,10 @@
         { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
         { "source": "/brokers/:slug", "destination": "/en/brokers/:slug", "type": 301 },
         { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
-        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 }
+        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 },
+        { "source": "/videos/connect-exchange", "destination": "/en/videos/connect-exchange", "type": 301 },
+        { "source": "/videos/create-strategy", "destination": "/en/videos/create-strategy", "type": 301 },
+        { "source": "/videos/let-it-work-for-you", "destination": "/en/videos/let-it-work-for-you", "type": 301 }
       ],
       "rewrites": [
         {

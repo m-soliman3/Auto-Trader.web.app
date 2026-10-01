@@ -594,6 +594,9 @@
 /en/brokers/gateio
 /en/brokers/mexc
 /en/brokers/deribit
+/en/videos/connect-exchange
+/en/videos/create-strategy
+/en/videos/let-it-work-for-you
 /en/login
 /en/privacy
 /en/signup
@@ -685,6 +688,9 @@
 /ar/brokers/gateio
 /ar/brokers/mexc
 /ar/brokers/deribit
+/ar/videos/connect-exchange
+/ar/videos/create-strategy
+/ar/videos/let-it-work-for-you
 /ar/login
 /ar/privacy
 /ar/signup
