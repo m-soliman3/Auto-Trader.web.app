@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal, computed, ViewChild, OnDestroy, effect } from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed, ViewChild, OnDestroy } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -198,17 +198,6 @@ export class Dashboard implements OnDestroy {
   private readonly chartTicks = 4;
 
   constructor() {
-    // Reactively redirect to the signup guide whenever auth resolves and the
-    // user explicitly has onboardingCompleted=false (set on new registrations).
-    // Using strict === false avoids redirecting existing users whose Firestore
-    // profile predates this field and have it as undefined.
-    effect(() => {
-      const user = this.auth.currentUser();
-      if (user && user.onboardingCompleted === false) {
-        void this.router.navigate(['/signup-guide'], { replaceUrl: true });
-      }
-    });
-
     this.loadRunnerSummaries();
     // Auto-start the tour on first dashboard visit after onboarding.
     this.tourService.startIfFirstVisit();
