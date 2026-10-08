@@ -92,8 +92,7 @@ export class Signup extends LocalizedLinks {
     const err = await authenticate();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
-    this.router.navigate([dest]);
+    this.router.navigate(['/dashboard']);
   }
 
   async loginWithTwitter() {
@@ -101,8 +100,7 @@ export class Signup extends LocalizedLinks {
     const err = await this.auth.loginWithTwitter();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
-    this.router.navigate([dest]);
+    this.router.navigate(['/dashboard']);
   }
 
   async loginWithFacebook() {
@@ -110,8 +108,7 @@ export class Signup extends LocalizedLinks {
     const err = await this.auth.loginWithFacebook();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
-    this.router.navigate([dest]);
+    this.router.navigate(['/dashboard']);
   }
 
   onSubmit() {
@@ -146,7 +143,7 @@ export class Signup extends LocalizedLinks {
       if (err) {
         this.error.set(err);
       } else {
-        this.router.navigate(['/signup-guide']);
+        this.router.navigate(['/dashboard']);
       }
     }, 300);
   }

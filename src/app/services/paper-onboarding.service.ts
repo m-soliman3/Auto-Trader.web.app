@@ -19,8 +19,6 @@ export class PaperOnboardingService {
     if (this.accountMode.mode() !== 'paper') return false;
 
     const user = this.auth.currentUser();
-    // Don't show until the signup guide has been completed.
-    if (!user?.onboardingCompleted) return false;
     if (user?.paperOnboarded === true) return false;
 
     // If at least one paper exchange is already connected, consider onboarded.
