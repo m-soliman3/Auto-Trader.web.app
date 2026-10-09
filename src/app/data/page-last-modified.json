@@ -1,0 +1,518 @@
+{
+  "/": {
+    "en": "2026-09-30",
+    "ar": "2026-09-30"
+  },
+  "/login": {
+    "en": "2026-09-22",
+    "ar": "2026-09-23"
+  },
+  "/signup": {
+    "en": "2026-10-08",
+    "ar": "2026-10-08"
+  },
+  "/contact": {
+    "en": "2026-09-22",
+    "ar": "2026-09-23"
+  },
+  "/terms": {
+    "en": "2026-09-22",
+    "ar": "2026-09-23"
+  },
+  "/privacy": {
+    "en": "2026-09-22",
+    "ar": "2026-09-23"
+  },
+  "/disclaimer": {
+    "en": "2026-09-22",
+    "ar": "2026-09-23"
+  },
+  "/collecting-data": {
+    "en": "2026-09-22",
+    "ar": "2026-09-23"
+  },
+  "/knowledge-base": {
+    "en": "2026-10-01",
+    "ar": "2026-10-01"
+  },
+  "/features/ai-signals": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/features/multi-exchange": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/features/risk-management": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/features/backtesting": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/features/smart-alerts": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/features/no-code-builder": {
+    "en": "2026-09-06",
+    "ar": "2026-09-23"
+  },
+  "/brokers/alpaca": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/interactive-brokers": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/tradier": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/tastytrade": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/schwab": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/ig-markets": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/binance": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/coinbase": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/kraken": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/bybit": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/okx": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/kucoin": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/bitfinex": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/gateio": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/mexc": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/brokers/deribit": {
+    "en": "2026-09-24",
+    "ar": "2026-09-24"
+  },
+  "/learn/moving-average-crossover": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/fair-value-gap": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/smart-money-concepts": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/order-blocks": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/liquidity-sweeps": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/breaker-blocks": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/trend-following": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/mean-reversion": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/breakout-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/scalping-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/swing-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/fibonacci-retracement": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/ichimoku-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/price-action-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/grid-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/dollar-cost-averaging": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/arbitrage-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/ema-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/sma-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/rsi-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/macd-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/stochastic-oscillator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/bollinger-bands": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/vwap-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/atr-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/adx-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/donchian-channel": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/volume-analysis": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/cci-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/williams-percent-r": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/parabolic-sar": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/obv-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/pivot-points": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/keltner-channels": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/supertrend-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/mfi-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/fibonacci-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/supply-demand-zones": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/wyckoff-method": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/elliott-wave": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/stochastic-rsi": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/force-index": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/ultimate-oscillator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/vortex-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/dmi-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/volatility-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/market-making-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/counter-trend-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/machine-learning-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/rebalancing-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/alligator-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/aroon-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/awesome-oscillator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/carry-trade": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/chaikin-money-flow": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/chart-patterns": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/detrended-price-oscillator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/elder-ray": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/gap-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/harmonic-patterns": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/hull-moving-average": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/linear-regression": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/momentum-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/news-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/pairs-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/position-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/range-trading": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/rate-of-change": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/triple-screen-strategy": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/learn/trix-indicator": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/ai-tech-stocks-june-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/fed-rate-pause-june-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/options-market-boom-june-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/emerging-markets-rally-june-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/clean-energy-stocks-june-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/bitcoin-ath-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/sp500-q2-earnings-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/gold-commodities-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/us-jobs-report-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/china-stimulus-markets-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/ethereum-layer2-explosion-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/solana-institutional-surge-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/apple-alphabet-q2-earnings-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/crypto-etf-record-inflows-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/gold-3500-record-july-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/bitcoin-nasdaq-correlation-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/bitcoin-etf-flows-vs-sp500-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/bitcoin-miner-stocks-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/wall-street-crypto-risk-models-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/bitcoin-stocks-volatility-playbook-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/retail-earnings-consumer-strength-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/ethereum-6000-institutional-staking-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/dollar-slides-fed-cut-bets-aug-2026": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/jackson-hole-2026-powell-speech": {
+    "en": "2026-09-05",
+    "ar": "2026-09-23"
+  },
+  "/blog/stablecoin-market-300-billion-aug-2026": {
+    "en": "2026-09-19",
+    "ar": "2026-09-23"
+  },
+  "/videos/connect-exchange": {
+    "en": "2026-10-01",
+    "ar": "2026-10-01"
+  },
+  "/videos/create-strategy": {
+    "en": "2026-10-01",
+    "ar": "2026-10-01"
+  },
+  "/videos/let-it-work-for-you": {
+    "en": "2026-10-01",
+    "ar": "2026-10-01"
+  }
+}

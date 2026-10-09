@@ -2,91 +2,91 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://invest-begin.com/en</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/login</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/signup</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/contact</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/terms</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/privacy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/disclaimer</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/collecting-data</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://invest-begin.com/en/sitemap</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://invest-begin.com/en/knowledge-base</loc>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/ai-signals</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/multi-exchange</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/risk-management</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/backtesting</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/smart-alerts</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/features/no-code-builder</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -188,331 +188,331 @@
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/moving-average-crossover</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/fair-value-gap</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/smart-money-concepts</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/order-blocks</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/liquidity-sweeps</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/breaker-blocks</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/trend-following</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/mean-reversion</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/breakout-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/scalping-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/swing-trading</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/fibonacci-retracement</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/ichimoku-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/price-action-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/grid-trading</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/dollar-cost-averaging</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/arbitrage-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/ema-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/sma-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/rsi-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/macd-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/stochastic-oscillator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/bollinger-bands</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/vwap-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/atr-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/adx-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/donchian-channel</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/volume-analysis</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/cci-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/williams-percent-r</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/parabolic-sar</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/obv-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/pivot-points</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/keltner-channels</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/supertrend-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/mfi-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/fibonacci-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/supply-demand-zones</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/wyckoff-method</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/elliott-wave</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/login</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/signup</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/contact</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/terms</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/privacy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/disclaimer</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/collecting-data</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://invest-begin.com/ar/sitemap</loc>
-    <lastmod>2026-05-29</lastmod>
+    <loc>https://invest-begin.com/ar/knowledge-base</loc>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/ai-signals</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/multi-exchange</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/risk-management</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/backtesting</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/smart-alerts</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/features/no-code-builder</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -614,303 +614,303 @@
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/moving-average-crossover</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/fair-value-gap</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/smart-money-concepts</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/order-blocks</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/liquidity-sweeps</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/breaker-blocks</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/trend-following</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/mean-reversion</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/breakout-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/scalping-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/swing-trading</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/fibonacci-retracement</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/ichimoku-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/price-action-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/grid-trading</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/dollar-cost-averaging</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/arbitrage-strategy</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/ema-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/sma-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/rsi-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/macd-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/stochastic-oscillator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/bollinger-bands</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/vwap-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/atr-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/adx-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/donchian-channel</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/volume-analysis</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/cci-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/williams-percent-r</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/parabolic-sar</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/obv-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/pivot-points</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/keltner-channels</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/supertrend-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/mfi-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/fibonacci-indicator</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/supply-demand-zones</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/wyckoff-method</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/elliott-wave</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <!-- ── New indicator pages (2026-05-09) ── -->
   <url>
     <loc>https://invest-begin.com/en/learn/stochastic-rsi</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/force-index</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/ultimate-oscillator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/vortex-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/dmi-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <!-- ── New strategy pages (2026-05-09) ── -->
   <url>
     <loc>https://invest-begin.com/en/learn/volatility-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/market-making-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/counter-trend-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/machine-learning-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/rebalancing-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -921,602 +921,638 @@
   <!-- ar -->
   <url>
     <loc>https://invest-begin.com/ar/learn/stochastic-rsi</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/force-index</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/ultimate-oscillator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/vortex-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/dmi-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/volatility-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/market-making-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/counter-trend-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/machine-learning-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/rebalancing-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/alligator-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/alligator-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/aroon-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/aroon-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/awesome-oscillator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/awesome-oscillator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/carry-trade</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/carry-trade</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/chaikin-money-flow</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/chaikin-money-flow</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/chart-patterns</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/chart-patterns</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/detrended-price-oscillator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/detrended-price-oscillator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/elder-ray</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/elder-ray</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/gap-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/gap-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/harmonic-patterns</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/harmonic-patterns</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/hull-moving-average</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/hull-moving-average</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/linear-regression</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/linear-regression</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/momentum-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/momentum-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/news-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/news-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/pairs-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/pairs-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/position-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/position-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/range-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/range-trading</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/rate-of-change</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/rate-of-change</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/triple-screen-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/triple-screen-strategy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/learn/trix-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/learn/trix-indicator</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/ai-tech-stocks-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/ai-tech-stocks-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/fed-rate-pause-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/fed-rate-pause-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/options-market-boom-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/options-market-boom-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/emerging-markets-rally-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/emerging-markets-rally-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/clean-energy-stocks-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/clean-energy-stocks-june-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/bitcoin-ath-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/bitcoin-ath-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/sp500-q2-earnings-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/sp500-q2-earnings-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/gold-commodities-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/gold-commodities-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/us-jobs-report-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/us-jobs-report-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/china-stimulus-markets-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/china-stimulus-markets-july-2026</loc>
-    <lastmod>2026-07-12</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/ethereum-layer2-explosion-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/ethereum-layer2-explosion-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/solana-institutional-surge-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/solana-institutional-surge-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/apple-alphabet-q2-earnings-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/apple-alphabet-q2-earnings-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/crypto-etf-record-inflows-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/crypto-etf-record-inflows-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/gold-3500-record-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/gold-3500-record-july-2026</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/bitcoin-nasdaq-correlation-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/bitcoin-nasdaq-correlation-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/bitcoin-etf-flows-vs-sp500-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/bitcoin-etf-flows-vs-sp500-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/bitcoin-miner-stocks-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/bitcoin-miner-stocks-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/wall-street-crypto-risk-models-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/wall-street-crypto-risk-models-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/bitcoin-stocks-volatility-playbook-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/bitcoin-stocks-volatility-playbook-aug-2026</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/retail-earnings-consumer-strength-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/retail-earnings-consumer-strength-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/ethereum-6000-institutional-staking-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/ethereum-6000-institutional-staking-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/dollar-slides-fed-cut-bets-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/dollar-slides-fed-cut-bets-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/jackson-hole-2026-powell-speech</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/jackson-hole-2026-powell-speech</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/en/blog/stablecoin-market-300-billion-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://invest-begin.com/ar/blog/stablecoin-market-300-billion-aug-2026</loc>
-    <lastmod>2026-08-19</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/en/videos/connect-exchange</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/en/videos/create-strategy</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/en/videos/let-it-work-for-you</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/ar/videos/connect-exchange</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/ar/videos/create-strategy</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://invest-begin.com/ar/videos/let-it-work-for-you</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

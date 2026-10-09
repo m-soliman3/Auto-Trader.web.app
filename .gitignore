@@ -72,3 +72,9 @@ backend/dist/
 *.tfplan
 crash.log
 crash.*.log
+
+# Local admin scripts, user exports and service account keys (contain user PII / secrets)
+functions/new-users-since-*.js
+firebase-adminsdk*.json
+users*.json
+emails*.txt
