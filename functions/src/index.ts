@@ -946,6 +946,27 @@ async function getOrCreateStripeCustomer(decoded: admin.auth.DecodedIdToken): Pr
   return customer;
 }
 
+const PROVIDER_TO_SIGNUP_METHOD: Record<string, string> = {
+  "password": "email",
+  "google.com": "google",
+  "microsoft.com": "microsoft",
+  "facebook.com": "facebook",
+  "twitter.com": "twitter",
+};
+
+async function resolveSignupMethod(uid: string): Promise<string> {
+  try {
+    const authUser = await admin.auth().getUser(uid);
+    for (const info of authUser.providerData) {
+      const mapped = PROVIDER_TO_SIGNUP_METHOD[info.providerId];
+      if (mapped) return mapped;
+    }
+  } catch (error: any) {
+    console.error("❌ Could not resolve signup method:", error?.message || error);
+  }
+  return "unknown";
+}
+
 const SIGNUP_NOTIFICATION_RECIPIENT = "founder@invest-begin.com";
 
 /** Emails the founder whenever a new user profile document is created. */
@@ -964,7 +985,15 @@ export const notifyNewUserSignup = functions
       const user = snap.data() || {};
       const email = String(user.email || "(no email)");
       const name = String(user.name || "(no name)");
-      const method = String(user.signupMethod || "unknown");
+      let method = String(user.signupMethod || "");
+      if (!method) {
+        // The client may create the profile doc before it records the method
+        // (auth-state listener race), so fall back to the Auth provider.
+        method = await resolveSignupMethod(context.params.userId);
+        if (method !== "unknown") {
+          await snap.ref.set({ signupMethod: method }, { merge: true });
+        }
+      }
       const language = String(user.preferredLanguage || "unknown");
       const createdAt = String(user.createdAt || new Date().toISOString());
 
