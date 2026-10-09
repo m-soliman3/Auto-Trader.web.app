@@ -126,6 +126,7 @@ export class AuthService {
             createdAt: new Date().toISOString(),
             preferredLanguage: this.language.getCurrentLanguage().code,
             onboardingCompleted: false,
+            ...this.providerSignupMethod(fbUser),
           };
           try {
             await setDoc(ref, fallbackProfile);
@@ -405,6 +406,21 @@ export class AuthService {
       case 'auth/requires-recent-login': return 'Please log out and log back in, then try again.';
       default:                           return e.message ?? 'An error occurred.';
     }
+  }
+
+  private providerSignupMethod(fbUser: FirebaseUser): { signupMethod?: SignupMethod } {
+    const map: Record<string, SignupMethod> = {
+      'password': 'email',
+      'google.com': 'google',
+      'microsoft.com': 'microsoft',
+      'facebook.com': 'facebook',
+      'twitter.com': 'twitter',
+    };
+    for (const info of fbUser.providerData) {
+      const method = map[info.providerId];
+      if (method) return { signupMethod: method };
+    }
+    return {};
   }
 
   private applyPreferredLanguage(preferredLanguage?: string): void {
