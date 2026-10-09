@@ -26,7 +26,7 @@ import {
   Unsubscribe,
 } from '@angular/fire/firestore';
 import { LanguageService } from './language.service';
-import { UsageAnalyticsService } from './usage-analytics.service';
+import { SignupMethod, UsageAnalyticsService } from './usage-analytics.service';
 
 export interface User {
   id: string;
@@ -34,6 +34,8 @@ export interface User {
   email: string;
   createdAt: string;
   preferredLanguage?: string;
+  /** How the account was first created; set once at signup. */
+  signupMethod?: SignupMethod;
   plan?: string;
   subscription?: {
     active?: boolean;
@@ -167,10 +169,11 @@ export class AuthService {
         createdAt: new Date().toISOString(),
         preferredLanguage: this.language.getCurrentLanguage().code,
         onboardingCompleted: false,
+        signupMethod: 'email',
       };
       await setDoc(doc(this.firestore, 'users', cred.user.uid), profile);
       this.currentUser.set(profile);
-      await this.usageAnalytics.recordAuthEvent(cred.user.uid, 'signup', profile.preferredLanguage);
+      await this.usageAnalytics.recordAuthEvent(cred.user.uid, 'signup', profile.preferredLanguage, 'email');
       return null;
     } catch (e: any) {
       return this.mapError(e);
@@ -314,11 +317,12 @@ export class AuthService {
       const result = await signInWithPopup(this.fireAuth, new GoogleAuthProvider());
       const additionalUserInfo = getAdditionalUserInfo(result);
       this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
-      await this.upsertSocialProfile(result.user);
+      await this.upsertSocialProfile(result.user, additionalUserInfo?.isNewUser ? 'google' : undefined);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
         additionalUserInfo?.isNewUser ? 'signup' : 'login',
         this.language.getCurrentLanguage().code,
+        additionalUserInfo?.isNewUser ? 'google' : undefined,
       );
       return null;
     } catch (e: any) {
@@ -333,11 +337,12 @@ export class AuthService {
       const result = await signInWithPopup(this.fireAuth, new OAuthProvider('microsoft.com'));
       const additionalUserInfo = getAdditionalUserInfo(result);
       this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
-      await this.upsertSocialProfile(result.user);
+      await this.upsertSocialProfile(result.user, additionalUserInfo?.isNewUser ? 'microsoft' : undefined);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
         additionalUserInfo?.isNewUser ? 'signup' : 'login',
         this.language.getCurrentLanguage().code,
+        additionalUserInfo?.isNewUser ? 'microsoft' : undefined,
       );
       return null;
     } catch (e: any) {
@@ -352,11 +357,12 @@ export class AuthService {
       const result = await signInWithPopup(this.fireAuth, new TwitterAuthProvider());
       const additionalUserInfo = getAdditionalUserInfo(result);
       this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
-      await this.upsertSocialProfile(result.user);
+      await this.upsertSocialProfile(result.user, additionalUserInfo?.isNewUser ? 'twitter' : undefined);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
         additionalUserInfo?.isNewUser ? 'signup' : 'login',
         this.language.getCurrentLanguage().code,
+        additionalUserInfo?.isNewUser ? 'twitter' : undefined,
       );
       return null;
     } catch (e: any) {
@@ -371,11 +377,12 @@ export class AuthService {
       const result = await signInWithPopup(this.fireAuth, new FacebookAuthProvider());
       const additionalUserInfo = getAdditionalUserInfo(result);
       this.lastSigninWasNewUser.set(additionalUserInfo?.isNewUser ?? false);
-      await this.upsertSocialProfile(result.user);
+      await this.upsertSocialProfile(result.user, additionalUserInfo?.isNewUser ? 'facebook' : undefined);
       await this.usageAnalytics.recordAuthEvent(
         result.user.uid,
         additionalUserInfo?.isNewUser ? 'signup' : 'login',
         this.language.getCurrentLanguage().code,
+        additionalUserInfo?.isNewUser ? 'facebook' : undefined,
       );
       return null;
     } catch (e: any) {
@@ -410,7 +417,7 @@ export class AuthService {
     }
   }
 
-  private async upsertSocialProfile(fbUser: FirebaseUser): Promise<void> {
+  private async upsertSocialProfile(fbUser: FirebaseUser, signupMethod?: SignupMethod): Promise<void> {
     const ref = doc(this.firestore, 'users', fbUser.uid);
     const snap = await getDoc(ref);
     const existing = snap.exists() ? (snap.data() as User) : null;
@@ -421,6 +428,9 @@ export class AuthService {
       email: fbUser.email ?? existing?.email ?? '',
       createdAt: existing?.createdAt ?? new Date().toISOString(),
       preferredLanguage: existing?.preferredLanguage ?? this.language.getCurrentLanguage().code,
+      ...((existing?.signupMethod ?? signupMethod)
+        ? { signupMethod: (existing?.signupMethod ?? signupMethod) as SignupMethod }
+        : {}),
     };
 
     await setDoc(ref, profile, { merge: true });
