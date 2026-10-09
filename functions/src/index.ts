@@ -946,6 +946,60 @@ async function getOrCreateStripeCustomer(decoded: admin.auth.DecodedIdToken): Pr
   return customer;
 }
 
+const SIGNUP_NOTIFICATION_RECIPIENT = "founder@invest-begin.com";
+
+/** Emails the founder whenever a new user profile document is created. */
+export const notifyNewUserSignup = functions
+  .region("europe-west1")
+  .runWith({ secrets: [RESEND_API_KEY] })
+  .firestore.document("users/{userId}")
+  .onCreate(async (snap, context) => {
+    try {
+      const apiKey = RESEND_API_KEY.value();
+      if (!apiKey) {
+        console.error("❌ Missing RESEND_API_KEY secret; signup notification skipped.");
+        return;
+      }
+
+      const user = snap.data() || {};
+      const email = String(user.email || "(no email)");
+      const name = String(user.name || "(no name)");
+      const method = String(user.signupMethod || "unknown");
+      const language = String(user.preferredLanguage || "unknown");
+      const createdAt = String(user.createdAt || new Date().toISOString());
+
+      const resendRes = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "AutoTrader Signups <assistant@invest-begin.com>",
+          to: [SIGNUP_NOTIFICATION_RECIPIENT],
+          subject: `[New signup] ${email} via ${method}`,
+          text: [
+            "A new user just signed up.",
+            "",
+            `Email: ${email}`,
+            `Name: ${name}`,
+            `Signup method: ${method}`,
+            `Language: ${language}`,
+            `Created at: ${createdAt}`,
+            `User ID: ${context.params.userId}`,
+          ].join("\n"),
+        }),
+      } as any);
+
+      if (!resendRes.ok) {
+        console.error("❌ Signup notification failed:", await resendRes.text());
+      }
+    } catch (error: any) {
+      // Never let a notification failure surface as a function error/retry.
+      console.error("❌ Signup notification error:", error?.message || error);
+    }
+  });
+
 export const sendContactMessage = functions
   .region("europe-west1")
   .runWith({ secrets: [RESEND_API_KEY] })
