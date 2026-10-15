@@ -198,6 +198,20 @@
           }
         },
         {
+          "source": "/api/snaptrade/oauth/start",
+          "function": {
+            "functionId": "snaptradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/callback",
+          "function": {
+            "functionId": "snaptradeOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",
@@ -452,6 +466,20 @@
           "source": "/api/tastytrade/oauth/callback",
           "function": {
             "functionId": "tastytradeOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/start",
+          "function": {
+            "functionId": "snaptradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/callback",
+          "function": {
+            "functionId": "snaptradeOAuthCallback",
             "region": "europe-west1"
           }
         },

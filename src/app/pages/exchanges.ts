@@ -357,6 +357,27 @@ export class ExchangesPage {
         this.showSuccessToast('exchanges.tastytradeConnectError');
         this.clearTastytradeConnectQuery();
       }
+
+      // Landing back from the SnapTrade OAuth redirect
+      // (see snaptradeOAuthCallback in functions/src/index.ts).
+      const snaptradeConnect = params.get('snaptrade_connect');
+      if (snaptradeConnect === 'success') {
+        void this.exchangeService.reloadFromFirestore();
+        this.showSuccessToast('exchanges.snaptradeConnectSuccess');
+        this.clearSnaptradeConnectQuery();
+      } else if (snaptradeConnect === 'error') {
+        this.showSuccessToast('exchanges.snaptradeConnectError');
+        this.clearSnaptradeConnectQuery();
+      }
+    });
+  }
+
+  private clearSnaptradeConnectQuery(): void {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { snaptrade_connect: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
     });
   }
 

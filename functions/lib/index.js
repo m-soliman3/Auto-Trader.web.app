@@ -36,13 +36,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tastytradeOAuthCallback = exports.tastytradeOAuthStart = exports.alpacaOAuthCallback = exports.alpacaOAuthStart = exports.createShopifyListing = exports.shopifyCallback = exports.shopifyAuth = exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.getMarketData = exports.liquidatePosition = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.snaptradeOAuthCallback = exports.snaptradeOAuthStart = exports.tastytradeOAuthCallback = exports.tastytradeOAuthStart = exports.alpacaOAuthCallback = exports.alpacaOAuthStart = exports.createShopifyListing = exports.shopifyCallback = exports.shopifyAuth = exports.nowPaymentsCallback = exports.checkNowPaymentsOrder = exports.listNowPaymentsCurrencies = exports.createNowPaymentsOrder = exports.confirmTopUp = exports.createTopUpIntent = exports.confirmPayPalSubscription = exports.createPayPalSubscription = exports.cancelPremiumSubscription = exports.getPremiumBillingOverview = exports.confirmPremiumSubscriptionActivation = exports.createPremiumSubscriptionIntent = exports.verifyLearnCodeAccess = exports.requestLearnCodeAccess = exports.sendContactMessage = exports.notifyNewUserSignup = exports.getMarketData = exports.liquidatePosition = exports.getPortfolioHttp = exports.getPortfolio = void 0;
+exports.refreshSnaptradeAccessToken = refreshSnaptradeAccessToken;
 const functions = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const crypto = __importStar(require("crypto"));
 const cors_1 = __importDefault(require("cors"));
 const stripe_1 = __importDefault(require("stripe"));
+const jose_1 = require("jose");
 const params_1 = require("firebase-functions/params");
 if (!admin.apps.length) {
     admin.initializeApp();
@@ -120,6 +122,8 @@ const ALPACA_OAUTH_CLIENT_ID = (0, params_1.defineSecret)("ALPACA_OAUTH_CLIENT_I
 const ALPACA_OAUTH_CLIENT_SECRET = (0, params_1.defineSecret)("ALPACA_OAUTH_CLIENT_SECRET");
 const TASTYTRADE_CLIENT_ID = (0, params_1.defineSecret)("TASTYTRADE_CLIENT_ID");
 const TASTYTRADE_CLIENT_SECRET = (0, params_1.defineSecret)("TASTYTRADE_CLIENT_SECRET");
+const SNAPTRADE_OAUTH_CLIENT_ID = (0, params_1.defineSecret)("SNAPTRADE_OAUTH_CLIENT_ID");
+const SNAPTRADE_OAUTH_CLIENT_SECRET = (0, params_1.defineSecret)("SNAPTRADE_OAUTH_CLIENT_SECRET");
 async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
     const baseUrl = isPaper
         ? "https://paper-api.alpaca.markets"
@@ -801,6 +805,85 @@ async function getOrCreateStripeCustomer(decoded) {
     }, { merge: true });
     return customer;
 }
+const PROVIDER_TO_SIGNUP_METHOD = {
+    "password": "email",
+    "google.com": "google",
+    "microsoft.com": "microsoft",
+    "facebook.com": "facebook",
+    "twitter.com": "twitter",
+};
+async function resolveSignupMethod(uid) {
+    try {
+        const authUser = await admin.auth().getUser(uid);
+        for (const info of authUser.providerData) {
+            const mapped = PROVIDER_TO_SIGNUP_METHOD[info.providerId];
+            if (mapped)
+                return mapped;
+        }
+    }
+    catch (error) {
+        console.error("❌ Could not resolve signup method:", error?.message || error);
+    }
+    return "unknown";
+}
+const SIGNUP_NOTIFICATION_RECIPIENT = "founder@invest-begin.com";
+/** Emails the founder whenever a new user profile document is created. */
+exports.notifyNewUserSignup = functions
+    .region("europe-west1")
+    .runWith({ secrets: [RESEND_API_KEY] })
+    .firestore.document("users/{userId}")
+    .onCreate(async (snap, context) => {
+    try {
+        const apiKey = RESEND_API_KEY.value();
+        if (!apiKey) {
+            console.error("❌ Missing RESEND_API_KEY secret; signup notification skipped.");
+            return;
+        }
+        const user = snap.data() || {};
+        const email = String(user.email || "(no email)");
+        const name = String(user.name || "(no name)");
+        let method = String(user.signupMethod || "");
+        if (!method) {
+            // The client may create the profile doc before it records the method
+            // (auth-state listener race), so fall back to the Auth provider.
+            method = await resolveSignupMethod(context.params.userId);
+            if (method !== "unknown") {
+                await snap.ref.set({ signupMethod: method }, { merge: true });
+            }
+        }
+        const language = String(user.preferredLanguage || "unknown");
+        const createdAt = String(user.createdAt || new Date().toISOString());
+        const resendRes = await (0, node_fetch_1.default)("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${apiKey}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                from: "AutoTrader Signups <assistant@invest-begin.com>",
+                to: [SIGNUP_NOTIFICATION_RECIPIENT],
+                subject: `[New signup] ${email} via ${method}`,
+                text: [
+                    "A new user just signed up.",
+                    "",
+                    `Email: ${email}`,
+                    `Name: ${name}`,
+                    `Signup method: ${method}`,
+                    `Language: ${language}`,
+                    `Created at: ${createdAt}`,
+                    `User ID: ${context.params.userId}`,
+                ].join("\n"),
+            }),
+        });
+        if (!resendRes.ok) {
+            console.error("❌ Signup notification failed:", await resendRes.text());
+        }
+    }
+    catch (error) {
+        // Never let a notification failure surface as a function error/retry.
+        console.error("❌ Signup notification error:", error?.message || error);
+    }
+});
 exports.sendContactMessage = functions
     .region("europe-west1")
     .runWith({ secrets: [RESEND_API_KEY] })
@@ -2869,4 +2952,249 @@ exports.tastytradeOAuthCallback = functions
         res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
     }
 });
+// ---------------------------------------------------------------------------
+// SnapTrade OAuth Apps — Connect flow (confidential client, PKCE + OIDC)
+// Authorization URL : https://dashboard.snaptrade.com/oauth/authorize
+// Token exchange    : https://api.snaptrade.com/oauth/token/
+// JWKS              : https://api.snaptrade.com/.well-known/jwks.json
+// ---------------------------------------------------------------------------
+const SNAPTRADE_OAUTH_STATE_COLLECTION = "snaptrade_oauth_states";
+// Server-only — no Firestore security rule should match this collection.
+// Doc id: `${uid}`.
+const SNAPTRADE_OAUTH_TOKENS_COLLECTION = "snaptrade_oauth_tokens";
+const SNAPTRADE_ISSUER = "https://api.snaptrade.com";
+const SNAPTRADE_TOKEN_URL = "https://api.snaptrade.com/oauth/token/";
+const SNAPTRADE_OAUTH_SCOPES = "openid email read";
+const snaptradeJwks = (0, jose_1.createRemoteJWKSet)(new URL("https://api.snaptrade.com/.well-known/jwks.json"));
+function resolveSnaptradeOAuthRedirectUri(host) {
+    return host.includes("localhost") || host.includes("127.0.0.1")
+        ? `http://${host}/api/snaptrade/oauth/callback`
+        : "https://invest-begin.com/api/snaptrade/oauth/callback";
+}
+function snaptradeBasicAuth(clientId, clientSecret) {
+    return `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`;
+}
+/**
+ * Starts the SnapTrade OAuth flow for the authenticated user.
+ * POST /api/snaptrade/oauth/start
+ * Returns { authorizeUrl } for the frontend to redirect the browser to.
+ */
+exports.snaptradeOAuthStart = functions
+    .region("europe-west1")
+    .runWith({ secrets: [SNAPTRADE_OAUTH_CLIENT_ID] })
+    .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send("");
+            return;
+        }
+        if (req.method !== "POST") {
+            res.status(405).json({ error: "Method not allowed" });
+            return;
+        }
+        try {
+            const decoded = await verifyBearerToken(req.headers.authorization);
+            const clientId = SNAPTRADE_OAUTH_CLIENT_ID.value().trim();
+            if (!clientId) {
+                res.status(500).json({ error: "SnapTrade OAuth is not configured" });
+                return;
+            }
+            const state = crypto.randomBytes(24).toString("hex");
+            const nonce = crypto.randomBytes(24).toString("hex");
+            const codeVerifier = crypto.randomBytes(48).toString("base64url");
+            const codeChallenge = crypto.createHash("sha256").update(codeVerifier).digest("base64url");
+            const redirectUri = resolveSnaptradeOAuthRedirectUri(String(req.headers.host || ""));
+            await admin.firestore()
+                .collection(SNAPTRADE_OAUTH_STATE_COLLECTION)
+                .doc(state)
+                .set({
+                uid: decoded.uid,
+                nonce,
+                codeVerifier,
+                redirectUri,
+                expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes
+            });
+            const authorizeUrl = new URL("https://dashboard.snaptrade.com/oauth/authorize");
+            authorizeUrl.searchParams.set("response_type", "code");
+            authorizeUrl.searchParams.set("client_id", clientId);
+            authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+            authorizeUrl.searchParams.set("scope", SNAPTRADE_OAUTH_SCOPES);
+            authorizeUrl.searchParams.set("state", state);
+            authorizeUrl.searchParams.set("nonce", nonce);
+            authorizeUrl.searchParams.set("code_challenge", codeChallenge);
+            authorizeUrl.searchParams.set("code_challenge_method", "S256");
+            res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
+        }
+        catch (error) {
+            const message = error?.message || "Failed to start SnapTrade OAuth";
+            if (message.includes("Authorization Bearer token")) {
+                res.status(401).json({ error: message });
+                return;
+            }
+            console.error("❌ snaptradeOAuthStart failed:", error);
+            res.status(500).json({ error: "Failed to start SnapTrade OAuth" });
+        }
+    });
+});
+/**
+ * Handles SnapTrade's OAuth2 redirect back from the authorize step.
+ * GET /api/snaptrade/oauth/callback?code=...&state=...
+ *
+ * Exchanges the code (PKCE, Basic client auth), verifies the id_token, stores
+ * tokens server-side only, records a lightweight connection record under
+ * users/{uid}/exchanges/, then redirects the browser back into the app.
+ */
+exports.snaptradeOAuthCallback = functions
+    .region("europe-west1")
+    .runWith({ secrets: [SNAPTRADE_OAUTH_CLIENT_ID, SNAPTRADE_OAUTH_CLIENT_SECRET] })
+    .https.onRequest(async (req, res) => {
+    const clientId = SNAPTRADE_OAUTH_CLIENT_ID.value().trim();
+    const clientSecret = SNAPTRADE_OAUTH_CLIENT_SECRET.value().trim();
+    const errorUrl = "https://invest-begin.com/exchanges?snaptrade_connect=error";
+    if (!clientId || !clientSecret) {
+        res.status(500).send("SnapTrade OAuth is not configured");
+        return;
+    }
+    const code = String(req.query.code || "");
+    const state = String(req.query.state || "");
+    const oauthError = String(req.query.error || "");
+    // Consume state first (single use), even when the provider reports an error.
+    let stateData;
+    if (state) {
+        const stateRef = admin.firestore().collection(SNAPTRADE_OAUTH_STATE_COLLECTION).doc(state);
+        const stateSnap = await stateRef.get();
+        if (stateSnap.exists) {
+            stateData = stateSnap.data();
+            await stateRef.delete();
+        }
+    }
+    if (oauthError) {
+        console.warn("⚠ SnapTrade OAuth authorize returned an error:", oauthError);
+        res.redirect(302, errorUrl);
+        return;
+    }
+    if (!code || !state) {
+        res.status(400).send("Missing required parameters");
+        return;
+    }
+    if (!stateData || Date.now() > stateData.expiresAt) {
+        res.status(401).send("Invalid or expired state");
+        return;
+    }
+    const uid = String(stateData.uid);
+    try {
+        const tokenRes = await (0, node_fetch_1.default)(SNAPTRADE_TOKEN_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: snaptradeBasicAuth(clientId, clientSecret),
+            },
+            body: new URLSearchParams({
+                grant_type: "authorization_code",
+                code,
+                code_verifier: String(stateData.codeVerifier),
+                redirect_uri: String(stateData.redirectUri),
+            }).toString(),
+        });
+        if (!tokenRes.ok) {
+            const text = await tokenRes.text();
+            console.error(`❌ SnapTrade OAuth token exchange failed (status ${tokenRes.status}):`, text);
+            res.redirect(302, errorUrl);
+            return;
+        }
+        const tokenData = await tokenRes.json();
+        const accessToken = tokenData.access_token;
+        const refreshToken = tokenData.refresh_token || "";
+        const expiresIn = Number(tokenData.expires_in || 3600);
+        const idToken = tokenData.id_token;
+        if (!accessToken || !idToken) {
+            console.error("❌ SnapTrade OAuth token response missing access_token or id_token");
+            res.redirect(302, errorUrl);
+            return;
+        }
+        // Verify the id_token (RS256 via JWKS; signature, iss, aud, exp) and the nonce.
+        const { payload } = await (0, jose_1.jwtVerify)(idToken, snaptradeJwks, {
+            issuer: SNAPTRADE_ISSUER,
+            audience: clientId,
+            algorithms: ["RS256"],
+        });
+        if (payload.nonce !== stateData.nonce || !payload.sub) {
+            console.error("❌ SnapTrade id_token nonce mismatch or missing sub");
+            res.redirect(302, errorUrl);
+            return;
+        }
+        // Persist tokens server-side only. The id_token is discarded.
+        await admin.firestore()
+            .collection(SNAPTRADE_OAUTH_TOKENS_COLLECTION)
+            .doc(uid)
+            .set({
+            uid,
+            sub: payload.sub,
+            accessToken,
+            refreshToken,
+            scope: String(tokenData.scope || SNAPTRADE_OAUTH_SCOPES),
+            accessTokenExpiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+            connectedAt: new Date().toISOString(),
+        });
+        // Lightweight, client-visible connection record — no secret material.
+        await admin.firestore()
+            .collection("users").doc(uid)
+            .collection("exchanges").doc("snaptrade")
+            .set({
+            exchangeId: "snaptrade",
+            label: "snaptrade",
+            apiKey: "",
+            secret: "",
+            authMethod: "oauth",
+            connectedAt: new Date().toISOString(),
+            status: "active",
+        }, { merge: true });
+        console.log(`✅ SnapTrade OAuth connected for uid=${uid}`);
+        res.redirect(302, "https://invest-begin.com/exchanges?snaptrade_connect=success");
+    }
+    catch (error) {
+        console.error("❌ snaptradeOAuthCallback failed:", error);
+        res.redirect(302, errorUrl);
+    }
+});
+/**
+ * Refreshes a user's SnapTrade access token (grant_type=refresh_token) and
+ * atomically replaces the stored tokens, since the refresh token may rotate.
+ * Not yet called by any endpoint — use before making SnapTrade API calls.
+ * Returns the current access token.
+ */
+async function refreshSnaptradeAccessToken(uid) {
+    const ref = admin.firestore().collection(SNAPTRADE_OAUTH_TOKENS_COLLECTION).doc(uid);
+    return admin.firestore().runTransaction(async (tx) => {
+        const snap = await tx.get(ref);
+        const data = snap.data();
+        if (!data?.refreshToken)
+            throw new Error("No SnapTrade refresh token stored");
+        const tokenRes = await (0, node_fetch_1.default)(SNAPTRADE_TOKEN_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: snaptradeBasicAuth(SNAPTRADE_OAUTH_CLIENT_ID.value().trim(), SNAPTRADE_OAUTH_CLIENT_SECRET.value().trim()),
+            },
+            body: new URLSearchParams({
+                grant_type: "refresh_token",
+                refresh_token: String(data.refreshToken),
+            }).toString(),
+        });
+        if (!tokenRes.ok) {
+            throw new Error(`SnapTrade token refresh failed (status ${tokenRes.status})`);
+        }
+        const t = await tokenRes.json();
+        if (!t.access_token)
+            throw new Error("SnapTrade refresh response had no access_token");
+        tx.update(ref, {
+            accessToken: t.access_token,
+            // Rotation: keep the old refresh token only if none was issued.
+            refreshToken: t.refresh_token || data.refreshToken,
+            accessTokenExpiresAt: new Date(Date.now() + Number(t.expires_in || 3600) * 1000).toISOString(),
+            ...(t.scope && { scope: String(t.scope) }),
+        });
+        return String(t.access_token);
+    });
+}
 //# sourceMappingURL=index.js.map

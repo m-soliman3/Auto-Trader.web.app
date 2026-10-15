@@ -550,6 +550,9 @@
     "connect": "ربط",
     "connectWithAlpacaOAuth": "الاتصال بـ Alpaca",
     "connectWithTastytradeOAuth": "الاتصال بـ tastytrade",
+    "connectWithSnaptrade": "الاتصال عبر SnapTrade",
+    "snaptradeConnecting": "جارٍ التحويل إلى SnapTrade…",
+    "snaptradeDisclosureBody": "بالسماح لـ Invest-Begin بالوصول إلى حسابك في SnapTrade، فإنك تمنحه صلاحية القراءة فقط لمعلومات حسابك لدى الوسيط المرتبط. تسجّل الدخول عبر صفحة SnapTrade نفسها، ولا يطّلع Invest-Begin على كلمة مرور حسابك لدى الوسيط.",
     "tastytradeOauthConnecting": "جارٍ التحويل إلى tastytrade…",
     "tastytradeOauthDisclosureBody": "بالسماح لـ Invest-Begin بالوصول إلى حسابك في tastytrade، فإنك تمنح Invest-Begin حق الوصول إلى معلومات حسابك وتفوّضه بتنفيذ المعاملات في حسابك وفقًا لتوجيهاتك. قبل التفويض،",
     "connectExchange": "ربط منصة تداول",
@@ -875,7 +878,9 @@
     "oauthConnectSuccess": "تم الاتصال بـ Alpaca بنجاح.",
     "oauthConnectError": "فشل الاتصال بـ Alpaca. يرجى المحاولة مرة أخرى.",
     "tastytradeConnectSuccess": "تم الاتصال بـ tastytrade بنجاح.",
-    "tastytradeConnectError": "فشل الاتصال بـ tastytrade. يرجى المحاولة مرة أخرى."
+    "tastytradeConnectError": "فشل الاتصال بـ tastytrade. يرجى المحاولة مرة أخرى.",
+    "snaptradeConnectSuccess": "تم الاتصال بـ SnapTrade بنجاح.",
+    "snaptradeConnectError": "فشل الاتصال بـ SnapTrade. يرجى المحاولة مرة أخرى."
   },
   "bots": {
     "confirmDeletion": "تأكيد الحذف",

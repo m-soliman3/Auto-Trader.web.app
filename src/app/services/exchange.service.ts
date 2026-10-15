@@ -335,6 +335,17 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     apiCredentialGuideUrl: 'https://developer.tastytrade.com/open-api-reference/authentication/',
   },
   {
+    id: 'snaptrade',
+    name: 'SnapTrade',
+    logo: '🔗',
+    color: '#4F46E5',
+    hasPassphrase: false,
+    category: 'stocks',
+    description: 'Connect many brokerages securely through SnapTrade. You log in at your broker; no API keys are shared with us.',
+    apiDocsUrl: 'https://docs.snaptrade.com/',
+    apiCredentialGuideUrl: 'https://docs.snaptrade.com/',
+  },
+  {
     id: 'schwab',
     name: 'Charles Schwab',
     logo: '🏢',
@@ -820,6 +831,31 @@ export class ExchangeService {
 
     if (!response?.authorizeUrl) {
       throw new Error('tastytrade did not return an authorization URL.');
+    }
+
+    window.location.href = response.authorizeUrl;
+  }
+
+  /**
+   * Starts the SnapTrade OAuth flow and navigates the browser to SnapTrade's
+   * authorize page. On approval SnapTrade redirects through our callback, which
+   * stores the connection and lands the user on /exchanges?snaptrade_connect=success.
+   */
+  async startSnaptradeConnect(): Promise<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('You must be logged in to connect SnapTrade.');
+    }
+    const idToken = await currentUser.getIdToken();
+
+    const response = await firstValueFrom(this.http.post<{ authorizeUrl: string }>(
+      '/api/snaptrade/oauth/start',
+      {},
+      { headers: { Authorization: `Bearer ${idToken}` } },
+    ));
+
+    if (!response?.authorizeUrl) {
+      throw new Error('SnapTrade did not return an authorization URL.');
     }
 
     window.location.href = response.authorizeUrl;
