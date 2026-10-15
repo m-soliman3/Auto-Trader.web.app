@@ -4,354 +4,11 @@
   padding: 0 1.5rem;
 }
 
-/* ── HERO ── */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  padding-top: 80px;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,209,122,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero .container {
-  position: relative;
-  z-index: 1;
-  padding: 4rem 1.5rem 2rem;
-  max-width: 850px;
-  text-align: left;
-}
-
 /* ── AD BANNERS ── */
 /* Positioning for `.ad-banner-skyscraper` and `.ad-widget-etoro` lives in the
    respective components (`:host` styles). Angular view encapsulation scopes this
    file to the parent, so rules here cannot style a child component's host element
    and the positioning silently breaks. */
-
-.hero-badge {
-  display: inline-block;
-  background: rgba(0,209,122,0.12);
-  color: var(--accent);
-  border: 1px solid rgba(0,209,122,0.3);
-  padding: 0.35rem 1rem;
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-}
-
-.hero-title {
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
-  margin: 0 0 1.5rem;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #00d17a 0%, #00a8ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-sub {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 600px;
-  margin-bottom: 2.5rem;
-  white-space: pre-line;
-}
-
-.hero-graph {
-  width: 100%;
-  max-width: 760px;
-  margin-bottom: 2.5rem;
-  padding: 1.6rem 1.25rem;
-  border: 1px solid color-mix(in oklab, var(--accent) 30%, var(--border));
-  border-radius: 20px;
-  background:
-    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 40%),
-    radial-gradient(circle at 90% 100%, color-mix(in srgb, #00a8ff 18%, transparent), transparent 45%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--surface) 92%, transparent),
-      color-mix(in srgb, var(--surface-raised) 86%, transparent)
-    );
-  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(4px);
-  animation: graphBreath 4.8s ease-in-out infinite;
-}
-
-.graph-inputs,
-.graph-outputs {
-  display: grid;
-  gap: 0.65rem;
-}
-
-.graph-inputs {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: min(700px, 100%);
-  margin: 0 auto;
-}
-
-.graph-outputs {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: min(560px, 100%);
-  margin: 0 auto;
-}
-
-.graph-node {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
-  border-radius: 14px;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--surface-raised) 90%, transparent),
-    color-mix(in srgb, var(--surface) 92%, transparent)
-  );
-  color: var(--text-primary);
-  text-align: center;
-  font-size: 0.92rem;
-  font-weight: 600;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: transform 0.2s ease, border-color 0.2s ease;
-  animation: nodeFloat 5.5s ease-in-out infinite;
-
-  &:hover {
-    transform: translateY(-2px);
-    border-color: rgba(0, 209, 122, 0.55);
-  }
-}
-
-.graph-inputs .graph-node:nth-child(1) { animation-delay: 0.05s; }
-.graph-inputs .graph-node:nth-child(2) { animation-delay: 0.25s; }
-.graph-inputs .graph-node:nth-child(3) { animation-delay: 0.45s; }
-.graph-outputs .graph-node:nth-child(1) { animation-delay: 0.2s; }
-.graph-outputs .graph-node:nth-child(2) { animation-delay: 0.4s; }
-
-.graph-connectors {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 0.55rem 0 0.7rem;
-  align-items: center;
-  width: min(700px, 100%);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.graph-link {
-  display: block;
-  width: 82px;
-  height: 2px;
-  border-radius: 2px;
-  background:
-    linear-gradient(90deg, rgba(0, 209, 122, 0.28), rgba(0, 168, 255, 0.28)),
-    linear-gradient(90deg, rgba(0, 209, 122, 0.95) 0%, rgba(0, 209, 122, 0) 28%, rgba(0, 168, 255, 0.95) 55%, rgba(0, 168, 255, 0) 85%);
-  transform-origin: center;
-  box-shadow: 0 0 10px rgba(0, 209, 122, 0.45);
-  background-size: 100% 100%, 220% 100%;
-  background-position: 0 0, 0 0;
-  animation: connectorFlow 2.3s linear infinite;
-  justify-self: center;
-}
-
-.graph-link-left { transform: rotate(23deg) scaleX(0.8); }
-.graph-link-mid {
-  width: 2px;
-  height: 22px;
-  transform: none;
-}
-.graph-link-right { transform: rotate(-23deg) scaleX(0.8); }
-
-.graph-core {
-  display: flex;
-  width: max-content;
-  margin: 0 auto;
-  border-color: var(--accent);
-  background: linear-gradient(180deg, rgba(0, 209, 122, 0.22), rgba(0, 209, 122, 0.12));
-  box-shadow: 0 12px 24px rgba(0, 209, 122, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  animation: corePulse 2.6s ease-in-out infinite;
-}
-
-.graph-connectors-output {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 0.75rem auto;
-  width: min(560px, 100%);
-}
-
-.graph-link-out-left { transform: rotate(-22deg) scaleX(0.95); }
-.graph-link-out-right { transform: rotate(22deg) scaleX(0.95); }
-
-.graph-output {
-  border-color: color-mix(in srgb, #00a8ff 45%, var(--border));
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--surface-raised) 94%, #00a8ff 6%),
-    color-mix(in srgb, var(--surface) 96%, #00a8ff 4%)
-  );
-}
-
-:host-context([data-theme='light']) {
-  .hero-graph {
-    box-shadow: 0 14px 28px rgba(15, 32, 52, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.78);
-  }
-
-  .graph-node {
-    box-shadow: 0 6px 14px rgba(15, 32, 52, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-
-  .graph-core {
-    box-shadow: 0 10px 20px color-mix(in srgb, var(--accent) 24%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  }
-
-  .hero-step-line {
-    color: var(--text-primary);
-  }
-
-  .hero-step-line:nth-child(4) {
-    color: var(--accent);
-  }
-}
-
-.hero-graph-steps {
-  max-width: 760px;
-  margin: 0 0 2rem;
-  display: grid;
-  gap: 0.45rem;
-}
-
-.hero-step-line {
-  margin: 0;
-  width: fit-content;
-  max-width: 100%;
-  color: var(--text-secondary);
-  font-size: 0.98rem;
-  line-height: 1.6;
-  padding: 0.2rem 0;
-  white-space: nowrap;
-  overflow: hidden;
-  opacity: 1;
-  width: 0;
-  animation: typeLoop 8s steps(var(--typing-ch, 30), end) infinite;
-}
-
-.hero-step-line:nth-child(1) {
-  justify-self: start;
-  --typing-ch: 28;
-  animation-delay: 0s;
-}
-
-.hero-step-line:nth-child(2) {
-  justify-self: end;
-  text-align: left;
-  --typing-ch: 18;
-  animation-delay: 2s;
-}
-
-.hero-step-line:nth-child(3) {
-  justify-self: start;
-  --typing-ch: 34;
-  animation-delay: 4s;
-}
-
-.hero-step-line:nth-child(4) {
-  justify-self: center;
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 1.14rem;
-  letter-spacing: 0.02em;
-  --typing-ch: 6;
-  animation-delay: 6s;
-}
-
-@keyframes typeLoop {
-  0% {
-    width: 0;
-    opacity: 0;
-  }
-  10% {
-    width: calc(var(--typing-ch, 30) * 1ch);
-    opacity: 1;
-  }
-  35% {
-    width: calc(var(--typing-ch, 30) * 1ch);
-    opacity: 1;
-  }
-  50% {
-    width: 0;
-    opacity: 0;
-  }
-  100% {
-    width: 0;
-    opacity: 0;
-  }
-}
-
-@keyframes connectorFlow {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 0 0, 220% 0; }
-}
-
-@keyframes corePulse {
-  0%, 100% {
-    box-shadow: 0 12px 24px rgba(0, 209, 122, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  }
-  50% {
-    box-shadow: 0 16px 30px rgba(0, 209, 122, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  }
-}
-
-@keyframes nodeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
-}
-
-@keyframes graphBreath {
-  0%, 100% {
-    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  }
-  50% {
-    box-shadow: 0 30px 48px rgba(0, 0, 0, 0.34), 0 0 28px rgba(0, 209, 122, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-graph,
-  .graph-node,
-  .graph-link,
-  .graph-core,
-  .hero-step-line {
-    animation: none !important;
-    transition: none !important;
-    clip-path: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-    width: auto !important;
-    border-right: none !important;
-  }
-}
-
-.hero-cta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin-bottom: 3rem;
-}
 
 .btn-accent {
   padding: 0.85rem 2rem;
@@ -390,7 +47,7 @@
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   text-align: center;
 }
@@ -403,7 +60,7 @@
 }
 
 .stat-value {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
   font-weight: 800;
   color: var(--accent);
   letter-spacing: -0.03em;
@@ -416,62 +73,195 @@
   letter-spacing: 0.05em;
 }
 
-/* ── PARTNER BROKERAGES MARQUEE ── */
-.partners-section {
-  padding: 2.5rem 0 2rem;
-  overflow: hidden;
-}
-
-.partners-tag {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.partners-marquee {
+/* ── BUILD YOUR AUTOMATION (STRATEGY + BROKER PICKER) ── */
+.build-section {
   position: relative;
-  width: 100%;
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  padding-top: calc(80px + 2.25rem);
+  padding-bottom: 2rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,209,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    margin-bottom: 1.75rem;
+
+    h1 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    }
+  }
 }
 
-.partners-track {
+.build-grid {
+  display: grid;
+  grid-template-columns: 1fr 200px 1fr;
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.build-column {
   display: flex;
-  gap: 2.5rem;
-  width: max-content;
-  animation: marqueeScroll 40s linear infinite;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
 }
 
-.partner-item {
-  display: inline-flex;
+.build-column-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.build-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.build-item {
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  white-space: nowrap;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    border-color: var(--accent);
+    background: rgba(0, 209, 122, 0.1);
+    color: var(--accent);
+    box-shadow: 0 8px 20px rgba(0, 209, 122, 0.15);
+  }
+}
+
+.build-item-icon {
+  font-size: 1.15rem;
+  line-height: 1;
   flex-shrink: 0;
 }
 
-.partner-logo {
-  font-size: 1.5rem;
-  line-height: 1;
+.build-item-name {
+  flex: 1;
+  min-width: 0;
 }
 
-.partner-name {
-  font-size: 1rem;
+.build-item-category {
+  font-size: 0.68rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 100px;
+  flex-shrink: 0;
+
+  &.category-crypto {
+    color: #F7931A;
+    background: rgba(247, 147, 26, 0.12);
+  }
+
+  &.category-stocks {
+    color: #00a8ff;
+    background: rgba(0, 168, 255, 0.12);
+  }
 }
 
-@keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* Center "linkage" connector: an abstract flowing line + pulsing badge rather
+   than measuring real DOM positions of the (dynamically selected) cards on
+   either side — robust across breakpoints, and SSR-safe since it's pure CSS. */
+.build-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 200px;
+  padding-top: 1.6rem;
+}
+
+.build-link-line {
+  width: 2px;
+  height: 24px;
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, rgba(0, 209, 122, 0.28), rgba(0, 168, 255, 0.28)),
+    linear-gradient(180deg, rgba(0, 209, 122, 0.95) 0%, rgba(0, 209, 122, 0) 28%, rgba(0, 168, 255, 0.95) 55%, rgba(0, 168, 255, 0) 85%);
+  background-size: 100% 100%, 100% 220%;
+  background-position: 0 0, 0 0;
+  animation: buildLinkFlow 2.3s linear infinite;
+}
+
+.build-link-cta {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  white-space: normal;
+  line-height: 1.3;
+  font-size: 0.85rem;
+  padding: 0.75rem 1rem;
+  animation: buildBadgePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes buildLinkFlow {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 0, 0 220%; }
+}
+
+@keyframes buildBadgePulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(0, 209, 122, 0); }
+  50% { box-shadow: 0 0 16px rgba(0, 209, 122, 0.35); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .partners-track {
+  .build-link-line,
+  .build-link-cta,
+  .build-item {
     animation: none !important;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+.build-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+@media (max-width: 860px) {
+  .build-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .build-link {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 1rem 0;
   }
 }
 
@@ -488,6 +278,7 @@
   text-align: center;
   margin-bottom: 3.5rem;
 
+  h1,
   h2 {
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 800;
@@ -511,6 +302,58 @@
   max-width: 560px;
   margin: 0.5rem auto 0;
   line-height: 1.7;
+}
+
+/* ── SUPPORTED BROKERS ── */
+.brokers-group-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 2.5rem 0 1rem;
+
+  &:first-of-type { margin-top: 0; }
+}
+
+.brokers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.broker-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: rgba(0,209,122,0.4);
+    transform: translateY(-2px);
+  }
+}
+
+.broker-card-logo {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.broker-card-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-primary);
 }
 
 /* ── FEATURES ── */
@@ -649,18 +492,18 @@
 }
 
 .steps-media {
+  align-self: start;
   border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
   border-radius: 18px;
   overflow: hidden;
-  background: #06080d;
-  min-height: 320px;
+  background: #ffffff;
+  aspect-ratio: 1.46;
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22);
 }
 
 .steps-video {
   width: 100%;
   height: 100%;
-  min-height: 320px;
   display: block;
   object-fit: cover;
 }
@@ -883,48 +726,15 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
   .steps-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
   .help-keywords { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .steps-media,
-  .steps-video {
-    min-height: 260px;
-  }
 }
 
 @media (max-width: 600px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: 1fr; }
   .help-keywords { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; text-align: center; }
-  .hero-graph { padding: 1.1rem 0.95rem; }
-  .graph-inputs,
-  .graph-outputs { grid-template-columns: 1fr; }
-  .graph-connectors,
-  .graph-connectors-output { grid-template-columns: 1fr; }
-  .graph-link,
-  .graph-link-left,
-  .graph-link-mid,
-  .graph-link-right,
-  .graph-link-out-left,
-  .graph-link-out-right {
-    width: 2px;
-    height: 14px;
-    margin: 0 auto;
-    transform: none;
-  }
-  .graph-node { font-size: 0.88rem; padding: 0.45rem 0.8rem; }
-  .hero-step-line {
-    justify-self: start !important;
-    text-align: left;
-    white-space: normal;
-    width: auto;
-    border-right: none;
-  }
-
-  .hero-step-line:nth-child(4) {
-    justify-self: center !important;
-    text-align: center;
-  }
 }

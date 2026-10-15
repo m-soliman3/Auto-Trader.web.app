@@ -335,6 +335,17 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     apiCredentialGuideUrl: 'https://developer.tastytrade.com/open-api-reference/authentication/',
   },
   {
+    id: 'snaptrade',
+    name: 'SnapTrade',
+    logo: '🔗',
+    color: '#4F46E5',
+    hasPassphrase: false,
+    category: 'stocks',
+    description: 'Connect many brokerages securely through SnapTrade. You log in at your broker; no API keys are shared with us.',
+    apiDocsUrl: 'https://docs.snaptrade.com/',
+    apiCredentialGuideUrl: 'https://docs.snaptrade.com/',
+  },
+  {
     id: 'schwab',
     name: 'Charles Schwab',
     logo: '🏢',
@@ -358,25 +369,25 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     apiCredentialGuideUrl: 'https://developer.schwab.com/get-started',
   },
   {
-    id: 'ig-group',
-    name: 'IG Group',
+    id: 'ig-markets',
+    name: 'IG Markets',
     logo: '🌐',
     color: '#0C3B6E',
     hasPassphrase: true,
     category: 'stocks',
-    description: 'CFDs, forex, stocks & indices. Use your IG API key, password as Secret, and username/identifier as Passphrase.',
+    description: 'Global CFDs, forex, stocks & indices trading via the IG Markets API. Use your IG API key, password as Secret, and username/identifier as Passphrase.',
     apiDocsUrl: 'https://labs.ig.com/rest-trading-api-reference',
     apiCredentialGuideUrl: 'https://labs.ig.com/gettingstarted',
   },
   {
-    id: 'ig-group-demo',
-    name: 'IG Group Demo',
+    id: 'ig-markets-demo',
+    name: 'IG Markets Demo',
     logo: '🌐',
     color: '#0C3B6E',
     hasPassphrase: true,
     isPaper: true,
     category: 'stocks',
-    description: 'Risk-free demo trading via IG Group. Use your IG demo account API key, password as Secret, and username as Passphrase.',
+    description: 'Risk-free demo trading via IG Markets. Use your IG demo account API key, password as Secret, and username as Passphrase.',
     apiDocsUrl: 'https://labs.ig.com/rest-trading-api-reference',
     apiCredentialGuideUrl: 'https://labs.ig.com/gettingstarted',
   },
@@ -794,6 +805,57 @@ export class ExchangeService {
 
     if (!response?.authorizeUrl) {
       throw new Error('Alpaca did not return an authorization URL.');
+    }
+
+    window.location.href = response.authorizeUrl;
+  }
+
+  /**
+   * Starts the "Connect with tastytrade" OAuth flow and navigates the browser
+   * to tastytrade's authorize page. On approval, tastytrade redirects back
+   * through our callback, which stores the connection and lands the user back
+   * on /exchanges?tastytrade_connect=success.
+   */
+  async startTastytradeConnect(): Promise<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('You must be logged in to connect tastytrade.');
+    }
+    const idToken = await currentUser.getIdToken();
+
+    const response = await firstValueFrom(this.http.post<{ authorizeUrl: string }>(
+      '/api/tastytrade/oauth/start',
+      {},
+      { headers: { Authorization: `Bearer ${idToken}` } },
+    ));
+
+    if (!response?.authorizeUrl) {
+      throw new Error('tastytrade did not return an authorization URL.');
+    }
+
+    window.location.href = response.authorizeUrl;
+  }
+
+  /**
+   * Starts the SnapTrade OAuth flow and navigates the browser to SnapTrade's
+   * authorize page. On approval SnapTrade redirects through our callback, which
+   * stores the connection and lands the user on /exchanges?snaptrade_connect=success.
+   */
+  async startSnaptradeConnect(): Promise<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('You must be logged in to connect SnapTrade.');
+    }
+    const idToken = await currentUser.getIdToken();
+
+    const response = await firstValueFrom(this.http.post<{ authorizeUrl: string }>(
+      '/api/snaptrade/oauth/start',
+      {},
+      { headers: { Authorization: `Bearer ${idToken}` } },
+    ));
+
+    if (!response?.authorizeUrl) {
+      throw new Error('SnapTrade did not return an authorization URL.');
     }
 
     window.location.href = response.authorizeUrl;

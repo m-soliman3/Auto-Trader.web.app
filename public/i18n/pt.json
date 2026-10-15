@@ -32,7 +32,7 @@
       "automation": "Automação de Trading"
     },
     "graph": {
-      "ariaLabel": "A estratégia de trading, a configuração do bot e a API da exchange ou corretora alimentam o núcleo de automação, que depois leva à execução de mercado e à monitorização com alertas",
+      "ariaLabel": "A configuração do bot e a API da exchange ou corretora alimentam o núcleo de automação, que depois leva à execução de mercado e à monitorização com alertas",
       "strategy": "Estratégia de Trading",
       "botConfig": "Configuração do Bot",
       "exchangeApi": "API da Exchange / Corretora",
@@ -49,8 +49,7 @@
     "stats": {
       "activeTraders": "Traders Ativos",
       "volumeTraded": "Volume Negociado",
-      "uptime": "Disponibilidade",
-      "avgReturn": "Retorno Mensal Méd."
+      "uptime": "Disponibilidade"
     },
     "featuresTag": "Funcionalidades",
     "featuresTitle": "Tudo o que precisa para operar em piloto automático",
@@ -100,7 +99,21 @@
     },
     "ctaTitle": "Pronto para operar em piloto automático?",
     "ctaDesc": "Junte-se a mais de 125.000 traders que automatizaram a sua estratégia com auto-Trading. Comece gratuitamente — sem cartão de crédito.",
-    "createFreeAccount": "Criar conta gratuita →"
+    "createFreeAccount": "Criar conta gratuita →",
+    "brokers": {
+      "categoryCrypto": "Cripto",
+      "categoryStocks": "Ações"
+    },
+    "build": {
+      "heroTeaser": "Construa sua automação",
+      "tag": "Construa sua automação",
+      "title": "Escolha uma estratégia. Conecte uma corretora. Pronto.",
+      "sub": "Qualquer estratégia se conecta a qualquer corretora — escolha as duas abaixo e veja exatamente como o AutoTrader automatizaria isso para você.",
+      "pickStrategy": "1. Escolha uma estratégia",
+      "connectBroker": "2. Conecte uma corretora",
+      "linkedLabel": "Automatizado",
+      "ctaButton": "Automatizar {{strategy}} na {{broker}}"
+    }
   },
   "login": {
     "welcomeBack": "Bem-vindo de volta",
@@ -155,7 +168,31 @@
     "signUpWithX": "Registar com X",
     "signUpWithFacebook": "Registar com Facebook",
     "alreadyHaveAccount": "Já tem conta?",
-    "logIn": "Iniciar sessão"
+    "logIn": "Iniciar sessão",
+    "context": {
+      "strategyBadge": "Sua estratégia",
+      "strategyLede": "Veja como automatizamos isso para você:",
+      "brokerBadge": "Sua corretora",
+      "brokerLede": "Veja como conectamos sua conta:",
+      "risk": "Risco",
+      "difficulty": "Dificuldade",
+      "timeframes": "Períodos",
+      "brokerAlpacaNote": "Depois de se cadastrar, conecte sua conta Alpaca com um clique via OAuth seguro, sem copiar nem colar chaves de API. O AutoTrader executa as ordens em seu nome assim que sua estratégia estiver ativa.",
+      "brokerApiNote": "Depois de se cadastrar, adicione suas chaves de API da {{broker}} em Exchanges. O AutoTrader as usa apenas para executar ordens em seu nome pela API da {{broker}}, nunca para sacar fundos.",
+      "comboBadge": "Sua automação",
+      "comboOn": "na",
+      "comboLede": "Veja como vamos automatizar isso para você:",
+      "comboDesc": "{{strategy}} será executada automaticamente, enviando ordens através da sua conexão com a {{broker}} assim que você se cadastrar.",
+      "buysWhen": "Compra quando",
+      "sellsWhen": "Vende quando",
+      "chartPrice": "Preço",
+      "chartBuy": "Compra",
+      "chartSell": "Venda",
+      "chartBar": "Vela",
+      "chartSignal": "Sinal",
+      "chartSignals": "Sinais deste exemplo",
+      "chartDisclaimer": "Exemplo ilustrativo — não são dados reais de mercado."
+    }
   },
   "contact": {
     "title": "Contacto",
@@ -870,11 +907,11 @@
     "title": "Termos de Serviço",
     "effectiveDate": "Data de entrada em vigor: 13 de março de 2026",
     "s1Title": "1. Aceitação dos Termos",
-    "s1Body": "Ao criar uma conta ou usar o auto-Trading, concorda com estes Termos de Serviço. Se não concordar, não utilize a plataforma.",
+    "s1Body": "Ao criar uma conta ou usar o Invest-Begin, concorda com estes Termos de Serviço. Se não concordar, não utilize a plataforma.",
     "s2Title": "2. Elegibilidade e responsabilidade da conta",
     "s2Body": "Deve ter capacidade legal para celebrar contratos na sua jurisdição. É responsável pela segurança da conta, chaves API e credenciais de corretora ou exchange ligadas.",
     "s3Title": "3. Âmbito da plataforma",
-    "s3Body": "O auto-Trading fornece ferramentas de software para automação de estratégias e fluxos de mercado. Não atuamos como sua corretora, exchange, custodiante ou consultor financeiro.",
+    "s3Body": "O Invest-Begin fornece ferramentas de software para automação de estratégias e fluxos de mercado. Não atuamos como sua corretora, exchange, custodiante ou consultor financeiro.",
     "s4Title": "4. Risco e decisões do utilizador",
     "s4Body": "O trading envolve risco substancial e pode resultar em perda parcial ou total do capital. É o único responsável por todas as configurações e decisões de trading.",
     "s5Title": "5. Sem aconselhamento de investimento",
@@ -886,7 +923,7 @@
     "s8Title": "8. Uso proibido",
     "s8Body": "Não pode usar a plataforma para atividade ilegal, acesso não autorizado, abuso de APIs, engenharia reversa ou comportamentos que comprometam a segurança.",
     "s9Title": "9. Limitação de responsabilidade",
-    "s9Body": "Na máxima extensão permitida por lei, o auto-Trading não é responsável por perdas indiretas ou consequenciais, incluindo perdas de trading, de dados ou interrupção de negócio.",
+    "s9Body": "Na máxima extensão permitida por lei, o Invest-Begin não é responsável por perdas indiretas ou consequenciais, incluindo perdas de trading, de dados ou interrupção de negócio.",
     "s10Title": "10. Rescisão",
     "s10Body": "Podemos suspender ou terminar o acesso por violação dos Termos ou por motivos de segurança. Pode deixar de usar o serviço a qualquer momento.",
     "s11Title": "11. Alterações a estes Termos",

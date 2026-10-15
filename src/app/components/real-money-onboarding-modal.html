@@ -304,10 +304,10 @@
 
           <!-- Step 1: exchange picker -->
           @if (exchangeStep() === 1) {
-            @if (realCryptoExchanges().length > 0) {
-              <div class="exchange-category-label">Crypto Exchanges</div>
+            @if (realStockExchanges().length > 0) {
+              <div class="exchange-category-label">Stock Brokers</div>
               <div class="exchange-grid">
-                @for (ex of realCryptoExchanges(); track ex.id) {
+                @for (ex of realStockExchanges(); track ex.id) {
                   <div class="exchange-tile-wrap">
                     <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
                       <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
@@ -323,10 +323,10 @@
                 }
               </div>
             }
-            @if (realStockExchanges().length > 0) {
-              <div class="exchange-category-label">Stock Brokers</div>
+            @if (realCryptoExchanges().length > 0) {
+              <div class="exchange-category-label">Crypto Exchanges</div>
               <div class="exchange-grid">
-                @for (ex of realStockExchanges(); track ex.id) {
+                @for (ex of realCryptoExchanges(); track ex.id) {
                   <div class="exchange-tile-wrap">
                     <button class="exchange-tile" type="button" (click)="selectExchange(ex)">
                       <span class="tile-logo" [style.color]="ex.color">{{ ex.logo }}</span>
@@ -374,45 +374,50 @@
                   <button type="button" class="primary-btn oauth-btn" (click)="connectAlpacaOAuth()" [disabled]="oauthConnecting()">
                     {{ oauthConnecting() ? 'Redirecting to Alpaca…' : 'Connect with Alpaca' }}
                   </button>
-                  <div class="oauth-divider"><span>or enter API keys manually</span></div>
+                  <button type="button" class="manual-entry-toggle" (click)="toggleManualEntry()" [attr.aria-expanded]="manualEntryExpanded()">
+                    <span>or enter API keys manually</span>
+                    <svg class="manual-entry-chevron" [class.expanded]="manualEntryExpanded()" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
                 </div>
               }
 
-              <div class="form-group">
-                <label for="ex-label">Account label</label>
-                <input id="ex-label" type="text" [(ngModel)]="exchangeLabel" placeholder="My Exchange" />
-              </div>
-              <div class="form-group">
-                <div class="api-key-label-row">
-                  <label for="ex-apikey">API Key</label>
-                  @if (selectedExchange()?.apiDocsUrl) {
-                    <a class="get-api-link" [href]="selectedExchange()?.apiDocsUrl" target="_blank" rel="noopener noreferrer">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                      Get API keys from {{ selectedExchange()?.name }}
-                    </a>
-                  }
-                </div>
-                <input id="ex-apikey" type="text" [(ngModel)]="exchangeApiKey" autocomplete="off" />
-              </div>
-              <div class="form-group">
-                <label for="ex-secret">API Secret</label>
-                <input id="ex-secret" type="password" [(ngModel)]="exchangeSecret" autocomplete="new-password" />
-              </div>
-              @if (selectedExchange()?.hasPassphrase) {
+              @if (!isAlpacaSelected() || manualEntryExpanded()) {
                 <div class="form-group">
-                  <label for="ex-passphrase">Passphrase</label>
-                  <input id="ex-passphrase" type="password" [(ngModel)]="exchangePassphrase" autocomplete="new-password" />
+                  <label for="ex-label">Account label</label>
+                  <input id="ex-label" type="text" [(ngModel)]="exchangeLabel" placeholder="My Exchange" />
                 </div>
-              }
+                <div class="form-group">
+                  <div class="api-key-label-row">
+                    <label for="ex-apikey">API Key</label>
+                    @if (selectedExchange()?.apiDocsUrl) {
+                      <a class="get-api-link" [href]="selectedExchange()?.apiDocsUrl" target="_blank" rel="noopener noreferrer">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Get API keys from {{ selectedExchange()?.name }}
+                      </a>
+                    }
+                  </div>
+                  <input id="ex-apikey" type="text" [(ngModel)]="exchangeApiKey" autocomplete="off" />
+                </div>
+                <div class="form-group">
+                  <label for="ex-secret">API Secret</label>
+                  <input id="ex-secret" type="password" [(ngModel)]="exchangeSecret" autocomplete="new-password" />
+                </div>
+                @if (selectedExchange()?.hasPassphrase) {
+                  <div class="form-group">
+                    <label for="ex-passphrase">Passphrase</label>
+                    <input id="ex-passphrase" type="password" [(ngModel)]="exchangePassphrase" autocomplete="new-password" />
+                  </div>
+                }
 
-              <button
-                class="primary-btn"
-                type="button"
-                [disabled]="exchangeSaving()"
-                (click)="saveExchange()"
-              >
-                {{ exchangeSaving() ? 'Connecting...' : 'Connect Exchange' }}
-              </button>
+                <button
+                  class="primary-btn"
+                  type="button"
+                  [disabled]="exchangeSaving()"
+                  (click)="saveExchange()"
+                >
+                  {{ exchangeSaving() ? 'Connecting...' : 'Connect Exchange' }}
+                </button>
+              }
             </div>
           }
         </section>

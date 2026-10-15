@@ -74,10 +74,18 @@ node_modules/
 # Chatbot backend build output (built by its Dockerfile)
 chatbot-backend/dist/
 
-# Terraform state (may contain secrets)
+# Terraform
+**/.terraform/*
+.terraform/
 *.tfstate
 *.tfstate.*
-.terraform/
+*.tfvars
+*.tfplan
+crash.log
+crash.*.log
 
-# One-off local admin scripts (read service-account keys)
-functions/new-users-*.js
+# Local admin scripts, user exports and service account keys (contain user PII / secrets)
+functions/new-users-since-*.js
+firebase-adminsdk*.json
+users*.json
+emails*.txt

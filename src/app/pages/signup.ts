@@ -1,23 +1,65 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
+import { STRATEGY_EXPLAINERS, StrategyExplainer } from '../services/strategy-explainer';
+import { SUPPORTED_EXCHANGES, Exchange } from '../services/exchange.service';
+import { StrategyChart } from '../components/strategy-chart';
+import { LocalizedLinks } from '../shared/localized-links';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, TranslateModule],
+  imports: [RouterLink, FormsModule, CommonModule, TranslateModule, StrategyChart],
   templateUrl: './signup.html',
   styleUrl: './signup.scss'
 })
-export class Signup {
+export class Signup extends LocalizedLinks {
   auth = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  /** Strategy template referenced by a `?strategy=<id>` query param, if any and known. */
+  contextStrategy: StrategyTemplate | null = null;
+  /** Broker/exchange referenced by a `?broker=<id>` query param, if any and known. */
+  contextBroker: Exchange | null = null;
+  /**
+   * Jargon-free explanation of the linked strategy plus its entry/exit chart.
+   * Null for a strategy with no explainer written yet — the panel just omits the
+   * block rather than showing a gap.
+   */
+  contextExplainer: StrategyExplainer | null = null;
 
   constructor() {
+    super();
     if (this.auth.isLoggedIn()) this.router.navigate(['/dashboard']);
+
+    const params = this.route.snapshot.queryParamMap;
+    const strategyId = params.get('strategy');
+    const brokerId = params.get('broker');
+    if (strategyId) {
+      this.contextStrategy = STRATEGY_TEMPLATES.find(t => t.id === strategyId) ?? null;
+      this.contextExplainer = STRATEGY_EXPLAINERS[strategyId] ?? null;
+    }
+    if (brokerId) {
+      this.contextBroker = SUPPORTED_EXCHANGES.find(e => e.id === brokerId) ?? null;
+    }
+  }
+
+  get hasContext(): boolean {
+    return !!this.contextStrategy || !!this.contextBroker;
+  }
+
+  /** True when both `?strategy=` and `?broker=` resolved — shows the single combined panel. */
+  get isCombinedContext(): boolean {
+    return !!this.contextStrategy && !!this.contextBroker;
+  }
+
+  get isAlpacaBroker(): boolean {
+    return this.contextBroker?.id === 'alpaca' || this.contextBroker?.id === 'alpaca-paper';
   }
 
   name          = '';
@@ -50,8 +92,7 @@ export class Signup {
     const err = await authenticate();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
-    this.router.navigate([dest]);
+    this.router.navigate(['/dashboard']);
   }
 
   async loginWithTwitter() {
@@ -59,8 +100,7 @@ export class Signup {
     const err = await this.auth.loginWithTwitter();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
-    this.router.navigate([dest]);
+    this.router.navigate(['/dashboard']);
   }
 
   async loginWithFacebook() {
@@ -68,8 +108,7 @@ export class Signup {
     const err = await this.auth.loginWithFacebook();
     this.socialLoading.set('');
     if (err) { this.error.set(err); return; }
-    const dest = this.auth.lastSigninWasNewUser() ? '/signup-guide' : '/dashboard';
-    this.router.navigate([dest]);
+    this.router.navigate(['/dashboard']);
   }
 
   onSubmit() {
@@ -104,7 +143,7 @@ export class Signup {
       if (err) {
         this.error.set(err);
       } else {
-        this.router.navigate(['/signup-guide']);
+        this.router.navigate(['/dashboard']);
       }
     }, 300);
   }

@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prebuild": "node scripts/generate-i18n-version.mjs",
     "build": "ng build",
-    "build:prod": "ng build",
+    "postbuild": "node scripts/verify-prerender.mjs",
+    "build:prod": "npm run build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy:prod": "npm run build:prod && firebase deploy --only hosting:prod",

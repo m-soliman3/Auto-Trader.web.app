@@ -13,6 +13,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 type AuthEventType = 'signup' | 'login';
+export type SignupMethod = 'email' | 'google' | 'microsoft' | 'facebook' | 'twitter';
 
 interface VisitorLocation {
   city?: string;
@@ -93,7 +94,12 @@ export class UsageAnalyticsService {
     });
   }
 
-  async recordAuthEvent(userId: string, type: AuthEventType, languageCode?: string): Promise<void> {
+  async recordAuthEvent(
+    userId: string,
+    type: AuthEventType,
+    languageCode?: string,
+    method?: SignupMethod,
+  ): Promise<void> {
     if (!userId) return;
 
     const summaryRef = this.summaryRef(userId);
@@ -103,10 +109,11 @@ export class UsageAnalyticsService {
     if (type === 'signup') {
       try {
         const payload: Record<string, unknown> = {
-          lastSignupContext: context,
+          lastSignupContext: method ? { ...context, method } : context,
           updatedAt: serverTimestamp(),
         };
         if (email) payload['email'] = email;
+        if (method) payload['signupMethod'] = method;
         await setDoc(summaryRef, payload, { merge: true });
       } catch (error) {
         console.error('failed to record signup analytics', error);

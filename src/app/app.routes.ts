@@ -15,6 +15,7 @@ import { StrategiesPage } from './pages/strategies';
 import { PortfolioManagementPage } from './pages/portfolio-management';
 import { BackendRunnerPage } from './pages/backend-runner';
 import { FeatureDetailPage } from './pages/features/feature-detail';
+import { VideoDetailPage } from './pages/videos/video-detail';
 import { BillingCheckoutPage } from './pages/billing-checkout';
 import { BillingManagePage } from './pages/billing-manage';
 import { CollectingDataPage } from './pages/collecting-data';
@@ -180,10 +181,22 @@ const coreRoutes: Routes = [
     data: { selfDescribed: true },
   },
   {
+    path: 'brokers/:slug',
+    loadComponent: () => import('./pages/brokers/broker-detail').then((m) => m.BrokerDetailPage),
+    title: 'pageTitle.broker',
+    data: { selfDescribed: true },
+  },
+  {
     path: 'knowledge-base',
     component: SitemapPage,
     title: 'pageTitle.sitemap',
     data: { description: 'metaDescription.knowledgeBase' },
+  },
+  {
+    path: 'videos/:slug',
+    component: VideoDetailPage,
+    title: 'pageTitle.video',
+    data: { selfDescribed: true },
   },
   {
     path: 'learn/:slug',

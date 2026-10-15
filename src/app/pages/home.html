@@ -1,5 +1,3 @@
-<!-- ───── HERO ───── -->
-<section class="hero">
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -11,48 +9,73 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KM2SGXWF"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <div class="hero-bg"></div>
+
+<!-- ───── BUILD YOUR AUTOMATION (STRATEGY + BROKER PICKER) ───── -->
+<section class="section build-section" id="build-automation">
   <div class="container">
-    <div class="hero-badge">{{ 'home.badge' | translate }}</div>
-    <h1 class="hero-title">
-      {{ 'home.heroTitle1' | translate }}<br />
-      <span class="gradient-text">{{ 'home.heroTitle2' | translate }}</span><br />
-      {{ 'home.heroTitle3' | translate }}
-    </h1>
-    <div class="hero-graph" role="img" [attr.aria-label]="t('home.graph.ariaLabel', 'Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts')">
-      <div class="graph-inputs">
-        <div class="graph-node">{{ t('home.graph.strategy', 'Trading Strategy') }}</div>
-        <div class="graph-node">{{ t('home.graph.botConfig', 'Bot Configuration') }}</div>
-        <div class="graph-node">{{ t('home.graph.exchangeApi', 'Exchange / Broker API') }}</div>
-      </div>
-      <div class="graph-connectors" aria-hidden="true">
-        <span class="graph-link graph-link-left"></span>
-        <span class="graph-link graph-link-mid"></span>
-        <span class="graph-link graph-link-right"></span>
-      </div>
-      <div class="graph-node graph-core">{{ t('home.graph.automationCore', 'Trading Automation Core') }}</div>
-      <div class="graph-connectors graph-connectors-output" aria-hidden="true">
-        <span class="graph-link graph-link-out-left"></span>
-        <span class="graph-link graph-link-out-right"></span>
-      </div>
-      <div class="graph-outputs">
-        <div class="graph-node graph-output">{{ t('home.graph.marketExecution', 'Market Execution') }}</div>
-        <div class="graph-node graph-output">{{ t('home.graph.monitoringAlerts', 'Monitoring and Alerts') }}</div>
-      </div>
+    <div class="section-header">
+      <p class="section-tag">{{ t('home.build.tag', 'Build Your Automation') }}</p>
+      <h1>{{ t('home.build.title', 'Pick a strategy. Connect a broker. Done.') }}</h1>
+      <p class="section-sub">{{ t('home.build.sub', 'Any strategy connects to any broker — choose both below and see exactly how AutoTrader would automate it for you.') }}</p>
     </div>
-    <div class="hero-graph-steps" [attr.aria-label]="t('home.graph.ariaLabel', 'Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts')">
-      <p class="hero-step-line">{{ t('home.graph.stepLine1', 'Select a trading strategy.') }}</p>
-      <p class="hero-step-line">{{ t('home.graph.stepLine2', 'Set up a bot.') }}</p>
-      <p class="hero-step-line">{{ t('home.graph.stepLine3', 'Connect your exchange or broker.') }}</p>
-      <p class="hero-step-line">{{ t('home.graph.stepLine4', 'Done!') }}</p>
-    </div>
-    <div class="hero-cta">
-      <a [routerLink]="ctaRouterLink()" [attr.href]="ctaHref()" class="btn-accent">{{ 'home.startFree' | translate }}</a>
-      <a href="#how-it-works" class="btn-outline">{{ 'home.seeHowItWorks' | translate }}</a>
+
+    <div class="build-grid">
+      <div class="build-column build-column-strategy">
+        <h3 class="build-column-title">{{ t('home.build.pickStrategy', '1. Pick a strategy') }}</h3>
+        <div class="build-list" role="list" [attr.aria-label]="t('home.build.pickStrategy', '1. Pick a strategy')">
+          @for (s of heroStrategies; track s.id) {
+            <button
+              type="button"
+              role="listitem"
+              class="build-item"
+              [class.active]="selectedStrategyId() === s.id"
+              (click)="selectStrategy(s.id)"
+            >
+              <span class="build-item-icon" aria-hidden="true">{{ s.icon }}</span>
+              <span class="build-item-name">{{ s.name }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="build-link">
+        <span class="build-link-line" aria-hidden="true"></span>
+        <a
+          [routerLink]="ctaRouterLink()"
+          [queryParams]="combinedQueryParams()"
+          [attr.href]="combinedHref()"
+          class="btn-accent build-cta build-link-cta"
+        >
+          <span aria-hidden="true">{{ selectedStrategy().icon }}</span>
+          {{ 'home.build.ctaButton' | translate:{ strategy: selectedStrategy().name, broker: selectedBroker().name } }}
+        </a>
+        <span class="build-link-line" aria-hidden="true"></span>
+      </div>
+
+      <div class="build-column build-column-broker">
+        <h3 class="build-column-title">{{ t('home.build.connectBroker', '2. Connect a broker') }}</h3>
+        <div class="build-list" role="list" [attr.aria-label]="t('home.build.connectBroker', '2. Connect a broker')">
+          @for (b of brokerShowcase; track b.id) {
+            <button
+              type="button"
+              role="listitem"
+              class="build-item"
+              [class.active]="selectedBrokerId() === b.id"
+              (click)="selectBroker(b.id)"
+            >
+              <span class="build-item-icon" aria-hidden="true">{{ b.logo }}</span>
+              <span class="build-item-name">{{ b.name }}</span>
+              <span class="build-item-category" [class.category-crypto]="b.category === 'crypto'" [class.category-stocks]="b.category === 'stocks'">
+                {{ b.category === 'crypto' ? t('home.brokers.categoryCrypto', 'Crypto') : t('home.brokers.categoryStocks', 'Stocks') }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
     </div>
   </div>
-
 </section>
+
 <!-- Side ad banners, both from >=1480px and top-aligned at 96px: AvaTrade left, eToro
      right. Positioned in the gutter outside the content column; see each component's
      :host styles. -->
@@ -71,30 +94,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- ───── PARTNER BROKERAGES ───── -->
-<section class="partners-section">
-  <div class="container">
-    <p class="section-tag partners-tag">{{ t('home.partners.tag', 'Partner Brokerages') }}</p>
-  </div>
-  <div class="partners-marquee" aria-label="Partner brokerages">
-    <div class="partners-track">
-      @for (b of partnerBrokerages; track b.name) {
-        <span class="partner-item">
-          <span class="partner-logo">{{ b.logo }}</span>
-          <span class="partner-name">{{ b.name }}</span>
-        </span>
-      }
-      <!-- duplicate set for seamless loop -->
-      @for (b of partnerBrokerages; track b.name) {
-        <span class="partner-item" aria-hidden="true">
-          <span class="partner-logo">{{ b.logo }}</span>
-          <span class="partner-name">{{ b.name }}</span>
-        </span>
-      }
-    </div>
-  </div>
-</section>
-
 <!-- ───── FEATURES ───── -->
 <section class="section" id="features">
   <div class="container">
@@ -105,7 +104,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="features-grid">
       @for (f of features; track f.titleKey) {
-        <a [routerLink]="['/', languageService.currentLang(), 'features', f.slug]" [attr.href]="localizedHref('features', f.slug)" class="feature-card feature-card-link">
+        <a [routerLink]="localizedLink('features', f.slug)" [attr.href]="localizedHref('features', f.slug)" class="feature-card feature-card-link">
           <div class="feature-icon">{{ f.icon }}</div>
           <h3>{{ f.titleKey | translate }}</h3>
           <p>{{ f.descKey | translate }}</p>
@@ -161,6 +160,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ───── SUPPORTED BROKERS ───── -->
+<section class="section" id="supported-brokers">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-tag">{{ 'home.supportedBrokers.tag' | translate }}</p>
+      <h2>{{ 'home.supportedBrokers.title' | translate }}</h2>
+      <p class="section-sub">{{ 'home.supportedBrokers.sub' | translate:{ count: supportedBrokerCount } }}</p>
+    </div>
+    @for (group of supportedBrokerGroups; track group.titleKey) {
+      <h3 class="brokers-group-title">{{ group.titleKey | translate }}</h3>
+      <ul class="brokers-grid">
+        @for (b of group.brokers; track b.id) {
+          <li>
+            <a [routerLink]="localizedLink('brokers', b.id)" [attr.href]="localizedHref('brokers', b.id)" class="broker-card">
+              <span class="broker-card-logo" aria-hidden="true">{{ b.logo }}</span>
+              <span class="broker-card-name">{{ b.name }}</span>
+              <span class="build-item-category" [class.category-crypto]="b.category === 'crypto'" [class.category-stocks]="b.category === 'stocks'">
+                {{ (b.category === 'crypto' ? 'home.brokers.categoryCrypto' : 'home.brokers.categoryStocks') | translate }}
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>
+
 <!-- ───── PRICING ───── -->
 <section class="section" id="pricing">
   <div class="container">
@@ -213,12 +239,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
         <div class="help-keywords" [attr.aria-label]="t('home.help.ariaLabel', 'Helpful AutoTrader topics')">
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'ai-signals']" [attr.href]="localizedHref('features', 'ai-signals')" class="help-keyword-link">{{ 'home.features.aiSignals.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'multi-exchange']" [attr.href]="localizedHref('features', 'multi-exchange')" class="help-keyword-link">{{ 'home.features.multiExchange.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'risk-management']" [attr.href]="localizedHref('features', 'risk-management')" class="help-keyword-link">{{ 'home.features.riskManagement.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'backtesting']" [attr.href]="localizedHref('features', 'backtesting')" class="help-keyword-link">{{ 'home.features.backtesting.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'smart-alerts']" [attr.href]="localizedHref('features', 'smart-alerts')" class="help-keyword-link">{{ 'home.features.smartAlerts.title' | translate }}</a>
-      <a [routerLink]="['/', languageService.currentLang(), 'features', 'no-code-builder']" [attr.href]="localizedHref('features', 'no-code-builder')" class="help-keyword-link">{{ 'home.features.noCode.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'ai-signals')" [attr.href]="localizedHref('features', 'ai-signals')" class="help-keyword-link">{{ 'home.features.aiSignals.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'multi-exchange')" [attr.href]="localizedHref('features', 'multi-exchange')" class="help-keyword-link">{{ 'home.features.multiExchange.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'risk-management')" [attr.href]="localizedHref('features', 'risk-management')" class="help-keyword-link">{{ 'home.features.riskManagement.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'backtesting')" [attr.href]="localizedHref('features', 'backtesting')" class="help-keyword-link">{{ 'home.features.backtesting.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'smart-alerts')" [attr.href]="localizedHref('features', 'smart-alerts')" class="help-keyword-link">{{ 'home.features.smartAlerts.title' | translate }}</a>
+      <a [routerLink]="localizedLink('features', 'no-code-builder')" [attr.href]="localizedHref('features', 'no-code-builder')" class="help-keyword-link">{{ 'home.features.noCode.title' | translate }}</a>
         </div>
   </div>
 </section>

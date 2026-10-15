@@ -10,9 +10,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KM2SGXWF"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <div class="auth-card">
+
+<ng-template #authFormTpl>
     <div class="auth-logo">
-      <a routerLink="/">
+      <a [routerLink]="localizedLink()" [attr.href]="localizedHref()">
         <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
           <rect width="32" height="32" rx="8" fill="#00d17a"/>
           <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -144,7 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="form-check">
         <input type="checkbox" id="agree" [(ngModel)]="agree" name="agree" />
         <label for="agree">
-          {{ 'signup.agreeTerms' | translate }} <a routerLink="/terms" target="_blank" rel="noopener">{{ 'signup.termsOfService' | translate }}</a> {{ 'signup.and' | translate }} <a routerLink="/privacy" target="_blank" rel="noopener">{{ 'signup.privacyPolicy' | translate }}</a>
+          {{ 'signup.agreeTerms' | translate }} <a [routerLink]="localizedLink('terms')" [attr.href]="localizedHref('terms')" target="_blank" rel="noopener">{{ 'signup.termsOfService' | translate }}</a> {{ 'signup.and' | translate }} <a [routerLink]="localizedLink('privacy')" [attr.href]="localizedHref('privacy')" target="_blank" rel="noopener">{{ 'signup.privacyPolicy' | translate }}</a>
         </label>
       </div>
 
@@ -154,6 +155,95 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </button>
     </form>
 
-    <p class="auth-alt">{{ 'signup.alreadyHaveAccount' | translate }} <a routerLink="/login">{{ 'signup.logIn' | translate }}</a></p>
+    <p class="auth-alt">{{ 'signup.alreadyHaveAccount' | translate }} <a [routerLink]="localizedLink('login')" [attr.href]="localizedHref('login')">{{ 'signup.logIn' | translate }}</a></p>
+</ng-template>
+
+<!-- Jargon-free strategy explainer + entry/exit chart, shared by the combined
+     and strategy-only panels below. -->
+<ng-template #strategyExplainerTpl>
+  @if (contextExplainer; as ex) {
+    <div class="context-explainer">
+      <h3 class="explainer-question">{{ ex.question }}</h3>
+      <p class="explainer-plain">{{ ex.plain }}</p>
+
+      <div class="explainer-rules">
+        <div class="explainer-rule">
+          <span class="rule-tag rule-tag-entry">{{ 'signup.context.buysWhen' | translate }}</span>
+          <p>{{ ex.entry }}</p>
+        </div>
+        <div class="explainer-rule">
+          <span class="rule-tag rule-tag-exit">{{ 'signup.context.sellsWhen' | translate }}</span>
+          <p>{{ ex.exit }}</p>
+        </div>
+      </div>
+
+      <app-strategy-chart [spec]="ex.chart" />
+    </div>
+  }
+</ng-template>
+
+@if (hasContext) {
+  <div class="auth-layout">
+    <div class="auth-context-panel">
+      @if (isCombinedContext) {
+        <span class="context-badge">{{ 'signup.context.comboBadge' | translate }}</span>
+        <div class="context-icon-row" aria-hidden="true">
+          <span class="context-icon context-icon-inline">{{ contextStrategy!.icon }}</span>
+          <span class="context-icon-link">→</span>
+          <span class="context-icon context-icon-inline">{{ contextBroker!.logo }}</span>
+        </div>
+        <h2 class="context-title">{{ contextStrategy!.name }} <span class="context-title-on">{{ 'signup.context.comboOn' | translate }}</span> {{ contextBroker!.name }}</h2>
+        <p class="context-lede">{{ 'signup.context.comboLede' | translate }}</p>
+        <p class="context-desc">{{ 'signup.context.comboDesc' | translate:{ strategy: contextStrategy!.name, broker: contextBroker!.name } }}</p>
+        <div class="context-meta">
+          <span class="context-pill">{{ 'signup.context.risk' | translate }}: {{ contextStrategy!.risk }}</span>
+          <span class="context-pill">{{ 'signup.context.difficulty' | translate }}: {{ contextStrategy!.difficulty }}</span>
+          <span class="context-pill">{{ 'signup.context.timeframes' | translate }}: {{ contextStrategy!.timeframes.join(', ') }}</span>
+        </div>
+        <ng-container *ngTemplateOutlet="strategyExplainerTpl"></ng-container>
+        <p class="context-desc context-desc-broker">
+          @if (isAlpacaBroker) {
+            {{ 'signup.context.brokerAlpacaNote' | translate }}
+          } @else {
+            {{ 'signup.context.brokerApiNote' | translate:{ broker: contextBroker!.name } }}
+          }
+        </p>
+      } @else if (contextStrategy) {
+        <span class="context-badge">{{ 'signup.context.strategyBadge' | translate }}</span>
+        <div class="context-icon" aria-hidden="true">{{ contextStrategy.icon }}</div>
+        <h2 class="context-title">{{ contextStrategy.name }}</h2>
+        <p class="context-lede">{{ 'signup.context.strategyLede' | translate }}</p>
+        <p class="context-desc">{{ contextStrategy.longDesc }}</p>
+        <div class="context-meta">
+          <span class="context-pill">{{ 'signup.context.risk' | translate }}: {{ contextStrategy.risk }}</span>
+          <span class="context-pill">{{ 'signup.context.difficulty' | translate }}: {{ contextStrategy.difficulty }}</span>
+          <span class="context-pill">{{ 'signup.context.timeframes' | translate }}: {{ contextStrategy.timeframes.join(', ') }}</span>
+        </div>
+        <ng-container *ngTemplateOutlet="strategyExplainerTpl"></ng-container>
+      } @else if (contextBroker) {
+        <span class="context-badge">{{ 'signup.context.brokerBadge' | translate }}</span>
+        <div class="context-icon" aria-hidden="true">{{ contextBroker.logo }}</div>
+        <h2 class="context-title">{{ contextBroker.name }}</h2>
+        <p class="context-lede">{{ 'signup.context.brokerLede' | translate }}</p>
+        @if (contextBroker.description) {
+          <p class="context-desc">{{ contextBroker.description }}</p>
+        }
+        <p class="context-desc">
+          @if (isAlpacaBroker) {
+            {{ 'signup.context.brokerAlpacaNote' | translate }}
+          } @else {
+            {{ 'signup.context.brokerApiNote' | translate:{ broker: contextBroker.name } }}
+          }
+        </p>
+      }
+    </div>
+    <div class="auth-card auth-card-context">
+      <ng-container *ngTemplateOutlet="authFormTpl"></ng-container>
+    </div>
   </div>
+} @else {
+  <div class="auth-card">
+    <ng-container *ngTemplateOutlet="authFormTpl"></ng-container>
+  </div>
+}
 </div>

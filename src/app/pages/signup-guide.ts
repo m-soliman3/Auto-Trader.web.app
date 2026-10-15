@@ -7,6 +7,7 @@ import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
 import { ExchangeService, SUPPORTED_EXCHANGES, ConnectedExchange } from '../services/exchange.service';
 import { SubscriptionService } from '../services/subscription.service';
+import { LocalizedLinks } from '../shared/localized-links';
 
 type StepId = 'welcome' | 'activeTrader' | 'noTraderChoice' | 'portfolioType' | 'info' | 'broker' | 'credentials';
 
@@ -17,7 +18,7 @@ type StepId = 'welcome' | 'activeTrader' | 'noTraderChoice' | 'portfolioType' | 
   templateUrl: './signup-guide.html',
   styleUrl: './signup-guide.scss',
 })
-export class SignupGuide {
+export class SignupGuide extends LocalizedLinks {
   private router          = inject(Router);
   private firestore       = inject(Firestore);
   private platformId      = inject(PLATFORM_ID);
@@ -91,6 +92,7 @@ export class SignupGuide {
   });
 
   constructor() {
+    super();
     // Wait for the translation file to load before rendering text.
     const probeKey = 'signupGuide.welcome.title';
     if (this.translate.instant(probeKey) !== probeKey) {

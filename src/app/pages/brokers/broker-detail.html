@@ -1,0 +1,265 @@
+@if (broker) {
+<!-- ── HERO ── -->
+<section class="bp-hero">
+  <div class="bp-hero-bg"></div>
+  <div class="bp-container">
+    <a [routerLink]="localizedLink()" [attr.href]="localizedHref() + '#supported-brokers'" fragment="supported-brokers" class="bp-breadcrumb">← {{ 'featureDetail.backToHome' | translate }}</a>
+    <div class="bp-hero-logo" aria-hidden="true" [style.border-color]="broker.color">{{ broker.logo }}</div>
+    <p class="bp-tag">{{ (broker.category === 'crypto' ? 'brokerDetail.tagCrypto' : 'brokerDetail.tagStocks') | translate }}</p>
+    <h1 class="bp-hero-title">{{ broker.name }}</h1>
+    <p class="bp-hero-tagline">{{ broker.tagline }}</p>
+    <div class="bp-hero-actions">
+      <a [routerLink]="ctaRouterLink()" [queryParams]="ctaQueryParams()" [attr.href]="ctaHref()" class="bp-btn-accent">{{ 'brokerDetail.startAutomating' | translate:{ name: broker.name } }} →</a>
+      <a [href]="broker.homepageUrl" target="_blank" rel="noopener noreferrer" class="bp-btn-outline">{{ 'brokerDetail.visitWebsite' | translate:{ name: broker.name } }} ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW + FACTS ── -->
+<section class="bp-section">
+  <div class="bp-container bp-two-col">
+    <div class="bp-overview">
+      <p class="bp-tag">{{ 'brokerDetail.overviewTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.aboutTitle' | translate:{ name: broker.name } }}</h2>
+      @for (para of broker.overviewParagraphs; track $index) {
+        <p class="bp-body-text">{{ para }}</p>
+      }
+    </div>
+
+    <aside class="bp-facts">
+      <h3>{{ 'brokerDetail.atAGlance' | translate }}</h3>
+      <dl>
+        <div class="bp-fact">
+          <dt>{{ 'brokerDetail.website' | translate }}</dt>
+          <dd><a [href]="broker.homepageUrl" target="_blank" rel="noopener noreferrer">{{ broker.homepageLabel }} ↗</a></dd>
+        </div>
+        <div class="bp-fact">
+          <dt>{{ 'brokerDetail.founded' | translate }}</dt>
+          <dd>{{ broker.founded }}</dd>
+        </div>
+        <div class="bp-fact">
+          <dt>{{ 'brokerDetail.headquarters' | translate }}</dt>
+          <dd>{{ broker.headquarters }}</dd>
+        </div>
+        <div class="bp-fact">
+          <dt>{{ 'brokerDetail.marketType' | translate }}</dt>
+          <dd>{{ (broker.category === 'crypto' ? 'home.brokers.categoryCrypto' : 'home.brokers.categoryStocks') | translate }}</dd>
+        </div>
+        <div class="bp-fact">
+          <dt>{{ 'brokerDetail.paperTrading' | translate }}</dt>
+          <dd>
+            @if (paperExchange) {
+              {{ 'brokerDetail.paperAvailable' | translate:{ paper: paperExchange.name } }}
+            } @else {
+              {{ 'brokerDetail.paperUnavailable' | translate }}
+            }
+          </dd>
+        </div>
+        <div class="bp-fact">
+          <dt>{{ 'brokerDetail.connection' | translate }}</dt>
+          <dd>{{ connectionLabel() }}</dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<!-- ── SUPPORTED MARKETS ── -->
+<section class="bp-section bp-section-alt">
+  <div class="bp-container">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.marketsTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.marketsTitle' | translate:{ name: broker.name } }}</h2>
+      <p class="bp-section-sub">{{ 'brokerDetail.marketsSub' | translate:{ name: broker.name } }}</p>
+    </div>
+
+    <div class="bp-markets">
+      <div class="bp-market-card bp-market-card-wide">
+        <h3>{{ 'brokerDetail.assetClassesTitle' | translate }}</h3>
+        <ul class="bp-chips">
+          @for (asset of broker.assetClasses; track asset) {
+            <li class="bp-chip">{{ 'brokerDetail.assetClasses.' + asset | translate }}</li>
+          }
+        </ul>
+      </div>
+
+      @if (broker.stockSymbols?.length) {
+        <div class="bp-market-card">
+          <h3><span aria-hidden="true">📈</span> {{ 'brokerDetail.popularStocks' | translate }}</h3>
+          <ul class="bp-symbols">
+            @for (symbol of broker.stockSymbols; track symbol) {
+              <li class="bp-symbol" dir="ltr">{{ symbol }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      @if (broker.cryptoSymbols?.length) {
+        <div class="bp-market-card">
+          <h3><span aria-hidden="true">🪙</span> {{ 'brokerDetail.popularCrypto' | translate }}</h3>
+          <ul class="bp-symbols">
+            @for (symbol of broker.cryptoSymbols; track symbol) {
+              <li class="bp-symbol" dir="ltr">{{ symbol }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      @if (broker.otherSymbols?.length) {
+        <div class="bp-market-card">
+          <h3><span aria-hidden="true">🌍</span> {{ 'brokerDetail.popularOther' | translate }}</h3>
+          <ul class="bp-symbols">
+            @for (symbol of broker.otherSymbols; track symbol) {
+              <li class="bp-symbol" dir="ltr">{{ symbol }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+    <p class="bp-note">{{ 'brokerDetail.symbolsNote' | translate }}</p>
+  </div>
+</section>
+
+<!-- ── FEES + AVAILABILITY ── -->
+<section class="bp-section">
+  <div class="bp-container">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.feesTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.feesTitle' | translate:{ name: broker.name } }}</h2>
+    </div>
+    <div class="bp-info-grid">
+      <div class="bp-info-card">
+        <h3>{{ 'brokerDetail.feesCardTitle' | translate }}</h3>
+        @for (para of broker.guide.feesParagraphs; track $index) {
+          <p class="bp-body-text">{{ para }}</p>
+        }
+      </div>
+      <div class="bp-info-card">
+        <h3>{{ 'brokerDetail.availabilityTitle' | translate }}</h3>
+        <p class="bp-body-text">{{ broker.guide.availability }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STRENGTHS + LIMITATIONS ── -->
+<section class="bp-section bp-section-alt">
+  <div class="bp-container">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.prosConsTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.prosConsTitle' | translate:{ name: broker.name } }}</h2>
+    </div>
+    <div class="bp-info-grid">
+      <div class="bp-info-card">
+        <h3><span aria-hidden="true">✓</span> {{ 'brokerDetail.strengthsTitle' | translate }}</h3>
+        <ul class="bp-list bp-list-pros">
+          @for (item of broker.guide.strengths; track $index) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </div>
+      <div class="bp-info-card">
+        <h3><span aria-hidden="true">!</span> {{ 'brokerDetail.limitationsTitle' | translate }}</h3>
+        <ul class="bp-list bp-list-cons">
+          @for (item of broker.guide.limitations; track $index) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW TO CONNECT ── -->
+<section class="bp-section">
+  <div class="bp-container">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.connectTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.connectTitle' | translate:{ name: broker.name } }}</h2>
+    </div>
+    <ol class="bp-steps">
+      @for (step of broker.guide.apiSetup; track $index) {
+        <li class="bp-step">
+          <span class="bp-step-num">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+          <p>{{ step }}</p>
+        </li>
+      }
+    </ol>
+    <div class="bp-resource-links">
+      @if (exchange?.apiCredentialGuideUrl) {
+        <a [href]="exchange!.apiCredentialGuideUrl" target="_blank" rel="noopener noreferrer" class="bp-resource-link">{{ 'brokerDetail.apiGuide' | translate:{ name: broker.name } }} ↗</a>
+      }
+      @if (exchange?.apiDocsUrl) {
+        <a [href]="exchange!.apiDocsUrl" target="_blank" rel="noopener noreferrer" class="bp-resource-link">{{ 'brokerDetail.apiDocs' | translate:{ name: broker.name } }} ↗</a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── STRATEGIES ── -->
+<section class="bp-section bp-section-alt">
+  <div class="bp-container">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.strategiesTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.strategiesTitle' | translate:{ name: broker.name } }}</h2>
+    </div>
+    <div class="bp-strategy-grid">
+      @for (strategy of broker.guide.strategies; track strategy.slug) {
+        <a [routerLink]="localizedLink('learn', strategy.slug)" [attr.href]="localizedHref('learn', strategy.slug)" class="bp-strategy-card">
+          <h3>{{ strategy.title }}</h3>
+          <p>{{ strategy.reason }}</p>
+          <span class="bp-strategy-more">{{ 'brokerDetail.readGuide' | translate }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="bp-section">
+  <div class="bp-container bp-faq-wrap">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.faqTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.faqTitle' | translate:{ name: broker.name } }}</h2>
+    </div>
+    <div class="bp-faq">
+      @for (faq of broker.guide.faqs; track $index) {
+        <div class="bp-faq-item">
+          <h3>{{ faq.question }}</h3>
+          <p>{{ faq.answer }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── OTHER BROKERS ── -->
+<section class="bp-section bp-section-alt">
+  <div class="bp-container">
+    <div class="bp-section-header">
+      <p class="bp-tag">{{ 'brokerDetail.otherTag' | translate }}</p>
+      <h2>{{ 'brokerDetail.otherTitle' | translate }}</h2>
+    </div>
+    <div class="bp-other-grid">
+      @for (item of otherBrokers; track item.slug) {
+        <a [routerLink]="localizedLink('brokers', item.slug)" [attr.href]="localizedHref('brokers', item.slug)" class="bp-other-card">
+          <span class="bp-other-logo" aria-hidden="true">{{ item.logo }}</span>
+          <span class="bp-other-name">{{ item.name }}</span>
+          <span class="bp-category" [class.category-crypto]="item.category === 'crypto'" [class.category-stocks]="item.category === 'stocks'">
+            {{ (item.category === 'crypto' ? 'home.brokers.categoryCrypto' : 'home.brokers.categoryStocks') | translate }}
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section class="bp-cta-banner">
+  <div class="bp-container bp-cta-inner">
+    <h2>{{ 'brokerDetail.ctaTitle' | translate:{ name: broker.name } }}</h2>
+    <p>{{ 'brokerDetail.ctaDesc' | translate:{ name: broker.name } }}</p>
+    <a [routerLink]="ctaRouterLink()" [queryParams]="ctaQueryParams()" [attr.href]="ctaHref()" class="bp-btn-accent">{{ 'featureDetail.createFreeAccount' | translate }} →</a>
+  </div>
+</section>
+}

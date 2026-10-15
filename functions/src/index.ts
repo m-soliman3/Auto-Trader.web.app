@@ -4,6 +4,7 @@ import fetch from "node-fetch";
 import * as crypto from "crypto";
 import cors from "cors";
 import Stripe from "stripe";
+import { createRemoteJWKSet, jwtVerify } from "jose";
 import { defineSecret } from "firebase-functions/params";
 
 interface PortfolioData {
@@ -109,6 +110,10 @@ function resolveMarketSession(exchangeId: string, symbol: string): { isOpen: boo
 // which provisions managed sandbox sub-accounts.
 const ALPACA_OAUTH_CLIENT_ID = defineSecret("ALPACA_OAUTH_CLIENT_ID");
 const ALPACA_OAUTH_CLIENT_SECRET = defineSecret("ALPACA_OAUTH_CLIENT_SECRET");
+const TASTYTRADE_CLIENT_ID = defineSecret("TASTYTRADE_CLIENT_ID");
+const TASTYTRADE_CLIENT_SECRET = defineSecret("TASTYTRADE_CLIENT_SECRET");
+const SNAPTRADE_OAUTH_CLIENT_ID = defineSecret("SNAPTRADE_OAUTH_CLIENT_ID");
+const SNAPTRADE_OAUTH_CLIENT_SECRET = defineSecret("SNAPTRADE_OAUTH_CLIENT_SECRET");
 
 async function fetchAlpacaPortfolio(
   apiKey: string,
@@ -943,6 +948,89 @@ async function getOrCreateStripeCustomer(decoded: admin.auth.DecodedIdToken): Pr
 
   return customer;
 }
+
+const PROVIDER_TO_SIGNUP_METHOD: Record<string, string> = {
+  "password": "email",
+  "google.com": "google",
+  "microsoft.com": "microsoft",
+  "facebook.com": "facebook",
+  "twitter.com": "twitter",
+};
+
+async function resolveSignupMethod(uid: string): Promise<string> {
+  try {
+    const authUser = await admin.auth().getUser(uid);
+    for (const info of authUser.providerData) {
+      const mapped = PROVIDER_TO_SIGNUP_METHOD[info.providerId];
+      if (mapped) return mapped;
+    }
+  } catch (error: any) {
+    console.error("❌ Could not resolve signup method:", error?.message || error);
+  }
+  return "unknown";
+}
+
+const SIGNUP_NOTIFICATION_RECIPIENT = "founder@invest-begin.com";
+
+/** Emails the founder whenever a new user profile document is created. */
+export const notifyNewUserSignup = functions
+  .region("europe-west1")
+  .runWith({ secrets: [RESEND_API_KEY] })
+  .firestore.document("users/{userId}")
+  .onCreate(async (snap, context) => {
+    try {
+      const apiKey = RESEND_API_KEY.value();
+      if (!apiKey) {
+        console.error("❌ Missing RESEND_API_KEY secret; signup notification skipped.");
+        return;
+      }
+
+      const user = snap.data() || {};
+      const email = String(user.email || "(no email)");
+      const name = String(user.name || "(no name)");
+      let method = String(user.signupMethod || "");
+      if (!method) {
+        // The client may create the profile doc before it records the method
+        // (auth-state listener race), so fall back to the Auth provider.
+        method = await resolveSignupMethod(context.params.userId);
+        if (method !== "unknown") {
+          await snap.ref.set({ signupMethod: method }, { merge: true });
+        }
+      }
+      const language = String(user.preferredLanguage || "unknown");
+      const createdAt = String(user.createdAt || new Date().toISOString());
+
+      const resendRes = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "AutoTrader Signups <assistant@invest-begin.com>",
+          to: [SIGNUP_NOTIFICATION_RECIPIENT],
+          subject: `[New signup] ${email} via ${method}`,
+          text: [
+            "A new user just signed up.",
+            "",
+            `Email: ${email}`,
+            `Name: ${name}`,
+            `Signup method: ${method}`,
+            `Language: ${language}`,
+            `Created at: ${createdAt}`,
+            `User ID: ${context.params.userId}`,
+          ].join("\n"),
+        }),
+      } as any);
+
+      if (!resendRes.ok) {
+        console.error("❌ Signup notification failed:", await resendRes.text());
+      }
+    } catch (error: any) {
+      // Never let a notification failure surface as a function error/retry.
+      console.error("❌ Signup notification error:", error?.message || error);
+    }
+  });
 
 export const sendContactMessage = functions
   .region("europe-west1")
@@ -2959,7 +3047,7 @@ export const alpacaOAuthStart = functions
         const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
         const env: "live" | "paper" = req.body?.env === "paper" ? "paper" : "live";
 
-        const clientId = ALPACA_OAUTH_CLIENT_ID.value();
+        const clientId = ALPACA_OAUTH_CLIENT_ID.value().trim();
         if (!clientId) {
           res.status(500).json({ error: "Alpaca OAuth is not configured" });
           return;
@@ -3010,8 +3098,8 @@ export const alpacaOAuthCallback = functions
   .region("europe-west1")
   .runWith({ secrets: [ALPACA_OAUTH_CLIENT_ID, ALPACA_OAUTH_CLIENT_SECRET] })
   .https.onRequest(async (req, res) => {
-    const clientId = ALPACA_OAUTH_CLIENT_ID.value();
-    const clientSecret = ALPACA_OAUTH_CLIENT_SECRET.value();
+    const clientId = ALPACA_OAUTH_CLIENT_ID.value().trim();
+    const clientSecret = ALPACA_OAUTH_CLIENT_SECRET.value().trim();
 
     if (!clientId || !clientSecret) {
       res.status(500).send("Alpaca OAuth is not configured");
@@ -3066,7 +3154,7 @@ export const alpacaOAuthCallback = functions
 
       if (!tokenRes.ok) {
         const text = await tokenRes.text();
-        console.error("❌ Alpaca OAuth token exchange failed:", text);
+        console.error(`❌ Alpaca OAuth token exchange failed (status ${tokenRes.status}):`, text);
         res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
         return;
       }
@@ -3115,3 +3203,459 @@ export const alpacaOAuthCallback = functions
       res.redirect(302, "https://invest-begin.com/exchanges?alpaca_connect=error");
     }
   });
+
+// ---------------------------------------------------------------------------
+// tastytrade OAuth — Connect flow
+// Authorization URL : https://my.tastytrade.com/auth.html
+// Token exchange    : https://api.tastyworks.com/oauth/token
+// ---------------------------------------------------------------------------
+
+const TASTYTRADE_OAUTH_STATE_COLLECTION  = "tastytrade_oauth_states";
+// Server-only — no Firestore security rule should match this collection.
+// Doc id: `${uid}`.
+const TASTYTRADE_OAUTH_TOKENS_COLLECTION = "tastytrade_oauth_tokens";
+
+function resolveTastytradeOAuthRedirectUri(host: string): string {
+  return host.includes("localhost") || host.includes("127.0.0.1")
+    ? `http://${host}/api/tastytrade/oauth/callback`
+    : "https://invest-begin.com/api/tastytrade/oauth/callback";
+}
+
+/**
+ * Starts the tastytrade OAuth flow for the authenticated user.
+ * POST /api/tastytrade/oauth/start
+ * Returns { authorizeUrl } for the frontend to redirect the browser to.
+ */
+export const tastytradeOAuthStart = functions
+  .region("europe-west1")
+  .runWith({ secrets: [TASTYTRADE_CLIENT_ID] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+      if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const clientId = TASTYTRADE_CLIENT_ID.value().trim();
+        if (!clientId) {
+          res.status(500).json({ error: "tastytrade OAuth is not configured" });
+          return;
+        }
+
+        const state = crypto.randomBytes(24).toString("hex");
+        const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+        await admin.firestore()
+          .collection(TASTYTRADE_OAUTH_STATE_COLLECTION)
+          .doc(state)
+          .set({ uid: decoded.uid, expiresAt });
+
+        const redirectUri = resolveTastytradeOAuthRedirectUri(String(req.headers.host || ""));
+
+        const authorizeUrl = new URL("https://my.tastytrade.com/auth.html");
+        authorizeUrl.searchParams.set("response_type", "code");
+        authorizeUrl.searchParams.set("client_id", clientId);
+        authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+        authorizeUrl.searchParams.set("scope", "read trade");
+        authorizeUrl.searchParams.set("state", state);
+
+        res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
+      } catch (error: any) {
+        const message = error?.message || "Failed to start tastytrade OAuth";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ tastytradeOAuthStart failed:", error);
+        res.status(500).json({ error: message });
+      }
+    });
+  });
+
+/**
+ * Handles tastytrade's OAuth2 redirect back from the authorize step.
+ * GET /api/tastytrade/oauth/callback?code=...&state=...
+ *
+ * Exchanges the code for an access token, stores it server-side only,
+ * records a lightweight connection record under users/{uid}/exchanges/,
+ * then redirects the browser back into the app.
+ */
+export const tastytradeOAuthCallback = functions
+  .region("europe-west1")
+  .runWith({ secrets: [TASTYTRADE_CLIENT_ID, TASTYTRADE_CLIENT_SECRET] })
+  .https.onRequest(async (req, res) => {
+    const clientId     = TASTYTRADE_CLIENT_ID.value().trim();
+    const clientSecret = TASTYTRADE_CLIENT_SECRET.value().trim();
+
+    if (!clientId || !clientSecret) {
+      res.status(500).send("tastytrade OAuth is not configured");
+      return;
+    }
+
+    const code       = String(req.query.code  || "");
+    const state      = String(req.query.state || "");
+    const oauthError = String(req.query.error || "");
+
+    if (oauthError) {
+      console.warn("⚠ tastytrade OAuth authorize returned an error:", oauthError);
+      res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+      return;
+    }
+    if (!code || !state) {
+      res.status(400).send("Missing required parameters");
+      return;
+    }
+
+    // Verify one-time state and recover which user started this flow.
+    const stateRef  = admin.firestore().collection(TASTYTRADE_OAUTH_STATE_COLLECTION).doc(state);
+    const stateSnap = await stateRef.get();
+    if (!stateSnap.exists) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+    const stateData = stateSnap.data()!;
+    await stateRef.delete(); // consumed — one-time use only
+
+    if (Date.now() > stateData.expiresAt) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+
+    const uid = String(stateData.uid);
+
+    try {
+      const redirectUri = resolveTastytradeOAuthRedirectUri(String(req.headers.host || ""));
+      const tokenRes = await fetch("https://api.tastyworks.com/oauth/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type:    "authorization_code",
+          code,
+          client_id:     clientId,
+          client_secret: clientSecret,
+          redirect_uri:  redirectUri,
+        }).toString(),
+      } as any);
+
+      if (!tokenRes.ok) {
+        const text = await tokenRes.text();
+        console.error(`❌ tastytrade OAuth token exchange failed (status ${tokenRes.status}):`, text);
+        res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+        return;
+      }
+
+      const tokenData: any = await tokenRes.json();
+      const accessToken: string  = tokenData.access_token;
+      const refreshToken: string = tokenData.refresh_token || "";
+      const expiresIn: number    = Number(tokenData.expires_in || 900);
+
+      if (!accessToken) {
+        console.error("❌ tastytrade OAuth token response had no access_token");
+        res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+        return;
+      }
+
+      // Persist tokens server-side only (access token valid 15 min; refresh never expires).
+      await admin.firestore()
+        .collection(TASTYTRADE_OAUTH_TOKENS_COLLECTION)
+        .doc(uid)
+        .set({
+          uid,
+          accessToken,
+          refreshToken,
+          accessTokenExpiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+          connectedAt: new Date().toISOString(),
+        });
+
+      // Lightweight, client-visible connection record — no secret material.
+      await admin.firestore()
+        .collection("users").doc(uid)
+        .collection("exchanges").doc("tastytrade")
+        .set(
+          {
+            exchangeId:  "tastytrade",
+            label:       "tastytrade",
+            apiKey:      "",
+            secret:      "",
+            authMethod:  "oauth",
+            connectedAt: new Date().toISOString(),
+            status:      "active",
+          },
+          { merge: true }
+        );
+
+      console.log(`✅ tastytrade OAuth connected for uid=${uid}`);
+      res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=success");
+    } catch (error: any) {
+      console.error("❌ tastytradeOAuthCallback failed:", error);
+      res.redirect(302, "https://invest-begin.com/exchanges?tastytrade_connect=error");
+    }
+  });
+
+// ---------------------------------------------------------------------------
+// SnapTrade OAuth Apps — Connect flow (confidential client, PKCE + OIDC)
+// Authorization URL : https://dashboard.snaptrade.com/oauth/authorize
+// Token exchange    : https://api.snaptrade.com/oauth/token/
+// JWKS              : https://api.snaptrade.com/.well-known/jwks.json
+// ---------------------------------------------------------------------------
+
+const SNAPTRADE_OAUTH_STATE_COLLECTION  = "snaptrade_oauth_states";
+// Server-only — no Firestore security rule should match this collection.
+// Doc id: `${uid}`.
+const SNAPTRADE_OAUTH_TOKENS_COLLECTION = "snaptrade_oauth_tokens";
+const SNAPTRADE_ISSUER = "https://api.snaptrade.com";
+const SNAPTRADE_TOKEN_URL = "https://api.snaptrade.com/oauth/token/";
+const SNAPTRADE_OAUTH_SCOPES = "openid email read";
+const snaptradeJwks = createRemoteJWKSet(new URL("https://api.snaptrade.com/.well-known/jwks.json"));
+
+function resolveSnaptradeOAuthRedirectUri(host: string): string {
+  return host.includes("localhost") || host.includes("127.0.0.1")
+    ? `http://${host}/api/snaptrade/oauth/callback`
+    : "https://invest-begin.com/api/snaptrade/oauth/callback";
+}
+
+function snaptradeBasicAuth(clientId: string, clientSecret: string): string {
+  return `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`;
+}
+
+/**
+ * Starts the SnapTrade OAuth flow for the authenticated user.
+ * POST /api/snaptrade/oauth/start
+ * Returns { authorizeUrl } for the frontend to redirect the browser to.
+ */
+export const snaptradeOAuthStart = functions
+  .region("europe-west1")
+  .runWith({ secrets: [SNAPTRADE_OAUTH_CLIENT_ID] })
+  .https.onRequest((req, res) => {
+    corsHandler(req, res, async () => {
+      if (req.method === "OPTIONS") { res.status(204).send(""); return; }
+      if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
+
+      try {
+        const decoded = await verifyBearerToken(req.headers.authorization as string | undefined);
+        const clientId = SNAPTRADE_OAUTH_CLIENT_ID.value().trim();
+        if (!clientId) {
+          res.status(500).json({ error: "SnapTrade OAuth is not configured" });
+          return;
+        }
+
+        const state = crypto.randomBytes(24).toString("hex");
+        const nonce = crypto.randomBytes(24).toString("hex");
+        const codeVerifier = crypto.randomBytes(48).toString("base64url");
+        const codeChallenge = crypto.createHash("sha256").update(codeVerifier).digest("base64url");
+        const redirectUri = resolveSnaptradeOAuthRedirectUri(String(req.headers.host || ""));
+
+        await admin.firestore()
+          .collection(SNAPTRADE_OAUTH_STATE_COLLECTION)
+          .doc(state)
+          .set({
+            uid: decoded.uid,
+            nonce,
+            codeVerifier,
+            redirectUri,
+            expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes
+          });
+
+        const authorizeUrl = new URL("https://dashboard.snaptrade.com/oauth/authorize");
+        authorizeUrl.searchParams.set("response_type", "code");
+        authorizeUrl.searchParams.set("client_id", clientId);
+        authorizeUrl.searchParams.set("redirect_uri", redirectUri);
+        authorizeUrl.searchParams.set("scope", SNAPTRADE_OAUTH_SCOPES);
+        authorizeUrl.searchParams.set("state", state);
+        authorizeUrl.searchParams.set("nonce", nonce);
+        authorizeUrl.searchParams.set("code_challenge", codeChallenge);
+        authorizeUrl.searchParams.set("code_challenge_method", "S256");
+
+        res.status(200).json({ authorizeUrl: authorizeUrl.toString() });
+      } catch (error: any) {
+        const message = error?.message || "Failed to start SnapTrade OAuth";
+        if (message.includes("Authorization Bearer token")) {
+          res.status(401).json({ error: message });
+          return;
+        }
+        console.error("❌ snaptradeOAuthStart failed:", error);
+        res.status(500).json({ error: "Failed to start SnapTrade OAuth" });
+      }
+    });
+  });
+
+/**
+ * Handles SnapTrade's OAuth2 redirect back from the authorize step.
+ * GET /api/snaptrade/oauth/callback?code=...&state=...
+ *
+ * Exchanges the code (PKCE, Basic client auth), verifies the id_token, stores
+ * tokens server-side only, records a lightweight connection record under
+ * users/{uid}/exchanges/, then redirects the browser back into the app.
+ */
+export const snaptradeOAuthCallback = functions
+  .region("europe-west1")
+  .runWith({ secrets: [SNAPTRADE_OAUTH_CLIENT_ID, SNAPTRADE_OAUTH_CLIENT_SECRET] })
+  .https.onRequest(async (req, res) => {
+    const clientId     = SNAPTRADE_OAUTH_CLIENT_ID.value().trim();
+    const clientSecret = SNAPTRADE_OAUTH_CLIENT_SECRET.value().trim();
+    const errorUrl = "https://invest-begin.com/exchanges?snaptrade_connect=error";
+
+    if (!clientId || !clientSecret) {
+      res.status(500).send("SnapTrade OAuth is not configured");
+      return;
+    }
+
+    const code       = String(req.query.code  || "");
+    const state      = String(req.query.state || "");
+    const oauthError = String(req.query.error || "");
+
+    // Consume state first (single use), even when the provider reports an error.
+    let stateData: FirebaseFirestore.DocumentData | undefined;
+    if (state) {
+      const stateRef  = admin.firestore().collection(SNAPTRADE_OAUTH_STATE_COLLECTION).doc(state);
+      const stateSnap = await stateRef.get();
+      if (stateSnap.exists) {
+        stateData = stateSnap.data();
+        await stateRef.delete();
+      }
+    }
+
+    if (oauthError) {
+      console.warn("⚠ SnapTrade OAuth authorize returned an error:", oauthError);
+      res.redirect(302, errorUrl);
+      return;
+    }
+    if (!code || !state) {
+      res.status(400).send("Missing required parameters");
+      return;
+    }
+    if (!stateData || Date.now() > stateData.expiresAt) {
+      res.status(401).send("Invalid or expired state");
+      return;
+    }
+
+    const uid = String(stateData.uid);
+
+    try {
+      const tokenRes = await fetch(SNAPTRADE_TOKEN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: snaptradeBasicAuth(clientId, clientSecret),
+        },
+        body: new URLSearchParams({
+          grant_type:    "authorization_code",
+          code,
+          code_verifier: String(stateData.codeVerifier),
+          redirect_uri:  String(stateData.redirectUri),
+        }).toString(),
+      } as any);
+
+      if (!tokenRes.ok) {
+        const text = await tokenRes.text();
+        console.error(`❌ SnapTrade OAuth token exchange failed (status ${tokenRes.status}):`, text);
+        res.redirect(302, errorUrl);
+        return;
+      }
+
+      const tokenData: any = await tokenRes.json();
+      const accessToken: string  = tokenData.access_token;
+      const refreshToken: string = tokenData.refresh_token || "";
+      const expiresIn: number    = Number(tokenData.expires_in || 3600);
+      const idToken: string      = tokenData.id_token;
+
+      if (!accessToken || !idToken) {
+        console.error("❌ SnapTrade OAuth token response missing access_token or id_token");
+        res.redirect(302, errorUrl);
+        return;
+      }
+
+      // Verify the id_token (RS256 via JWKS; signature, iss, aud, exp) and the nonce.
+      const { payload } = await jwtVerify(idToken, snaptradeJwks, {
+        issuer: SNAPTRADE_ISSUER,
+        audience: clientId,
+        algorithms: ["RS256"],
+      });
+      if (payload.nonce !== stateData.nonce || !payload.sub) {
+        console.error("❌ SnapTrade id_token nonce mismatch or missing sub");
+        res.redirect(302, errorUrl);
+        return;
+      }
+
+      // Persist tokens server-side only. The id_token is discarded.
+      await admin.firestore()
+        .collection(SNAPTRADE_OAUTH_TOKENS_COLLECTION)
+        .doc(uid)
+        .set({
+          uid,
+          sub: payload.sub,
+          accessToken,
+          refreshToken,
+          scope: String(tokenData.scope || SNAPTRADE_OAUTH_SCOPES),
+          accessTokenExpiresAt: new Date(Date.now() + expiresIn * 1000).toISOString(),
+          connectedAt: new Date().toISOString(),
+        });
+
+      // Lightweight, client-visible connection record — no secret material.
+      await admin.firestore()
+        .collection("users").doc(uid)
+        .collection("exchanges").doc("snaptrade")
+        .set(
+          {
+            exchangeId:  "snaptrade",
+            label:       "snaptrade",
+            apiKey:      "",
+            secret:      "",
+            authMethod:  "oauth",
+            connectedAt: new Date().toISOString(),
+            status:      "active",
+          },
+          { merge: true }
+        );
+
+      console.log(`✅ SnapTrade OAuth connected for uid=${uid}`);
+      res.redirect(302, "https://invest-begin.com/exchanges?snaptrade_connect=success");
+    } catch (error: any) {
+      console.error("❌ snaptradeOAuthCallback failed:", error);
+      res.redirect(302, errorUrl);
+    }
+  });
+
+/**
+ * Refreshes a user's SnapTrade access token (grant_type=refresh_token) and
+ * atomically replaces the stored tokens, since the refresh token may rotate.
+ * Not yet called by any endpoint — use before making SnapTrade API calls.
+ * Returns the current access token.
+ */
+export async function refreshSnaptradeAccessToken(uid: string): Promise<string> {
+  const ref = admin.firestore().collection(SNAPTRADE_OAUTH_TOKENS_COLLECTION).doc(uid);
+  return admin.firestore().runTransaction(async (tx) => {
+    const snap = await tx.get(ref);
+    const data = snap.data();
+    if (!data?.refreshToken) throw new Error("No SnapTrade refresh token stored");
+
+    const tokenRes = await fetch(SNAPTRADE_TOKEN_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: snaptradeBasicAuth(
+          SNAPTRADE_OAUTH_CLIENT_ID.value().trim(),
+          SNAPTRADE_OAUTH_CLIENT_SECRET.value().trim(),
+        ),
+      },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: String(data.refreshToken),
+      }).toString(),
+    } as any);
+    if (!tokenRes.ok) {
+      throw new Error(`SnapTrade token refresh failed (status ${tokenRes.status})`);
+    }
+    const t: any = await tokenRes.json();
+    if (!t.access_token) throw new Error("SnapTrade refresh response had no access_token");
+
+    tx.update(ref, {
+      accessToken: t.access_token,
+      // Rotation: keep the old refresh token only if none was issued.
+      refreshToken: t.refresh_token || data.refreshToken,
+      accessTokenExpiresAt: new Date(Date.now() + Number(t.expires_in || 3600) * 1000).toISOString(),
+      ...(t.scope && { scope: String(t.scope) }),
+    });
+    return String(t.access_token);
+  });
+}

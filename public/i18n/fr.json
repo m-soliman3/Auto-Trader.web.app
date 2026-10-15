@@ -32,7 +32,7 @@
       "automation": "Automatisation du Trading"
     },
     "graph": {
-      "ariaLabel": "La stratégie de trading, la configuration du bot et l'API de l'exchange ou du broker alimentent le noyau d'automatisation, puis mènent à l'exécution de marché et au monitoring avec alertes",
+      "ariaLabel": "La configuration du bot et l'API de l'exchange ou du broker alimentent le noyau d'automatisation, puis mènent à l'exécution de marché et au monitoring avec alertes",
       "strategy": "Stratégie de Trading",
       "botConfig": "Configuration du Bot",
       "exchangeApi": "API Exchange / Broker",
@@ -49,8 +49,7 @@
     "stats": {
       "activeTraders": "Traders Actifs",
       "volumeTraded": "Volume Échangé",
-      "uptime": "Disponibilité",
-      "avgReturn": "Rendement Mensuel Moy."
+      "uptime": "Disponibilité"
     },
     "featuresTag": "Fonctionnalités",
     "featuresTitle": "Tout ce dont vous avez besoin pour trader en pilote automatique",
@@ -100,7 +99,21 @@
     },
     "ctaTitle": "Prêt à trader en pilote automatique ?",
     "ctaDesc": "Rejoignez plus de 125 000 traders qui ont automatisé leur stratégie avec auto-Trading. Commencez gratuitement — sans carte de crédit.",
-    "createFreeAccount": "Créer un compte gratuit →"
+    "createFreeAccount": "Créer un compte gratuit →",
+    "brokers": {
+      "categoryCrypto": "Crypto",
+      "categoryStocks": "Actions"
+    },
+    "build": {
+      "heroTeaser": "Construisez votre automatisation",
+      "tag": "Construisez votre automatisation",
+      "title": "Choisissez une stratégie. Connectez un broker. C'est fait.",
+      "sub": "N'importe quelle stratégie se connecte à n'importe quel broker — choisissez les deux ci-dessous et voyez exactement comment AutoTrader l'automatiserait pour vous.",
+      "pickStrategy": "1. Choisissez une stratégie",
+      "connectBroker": "2. Connectez un broker",
+      "linkedLabel": "Automatisé",
+      "ctaButton": "Automatiser {{strategy}} sur {{broker}}"
+    }
   },
   "login": {
     "welcomeBack": "Bon retour",
@@ -155,7 +168,31 @@
     "signUpWithX": "S'inscrire avec X",
     "signUpWithFacebook": "S'inscrire avec Facebook",
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
-    "logIn": "Se connecter"
+    "logIn": "Se connecter",
+    "context": {
+      "strategyBadge": "Votre stratégie",
+      "strategyLede": "Voici comment nous l'automatisons pour vous :",
+      "brokerBadge": "Votre broker",
+      "brokerLede": "Voici comment nous connectons votre compte :",
+      "risk": "Risque",
+      "difficulty": "Difficulté",
+      "timeframes": "Unités de temps",
+      "brokerAlpacaNote": "Une fois inscrit, connectez votre compte Alpaca en un clic via OAuth sécurisé, sans copier ni coller de clés API. AutoTrader place les ordres en votre nom dès que votre stratégie est active.",
+      "brokerApiNote": "Après votre inscription, ajoutez vos clés API {{broker}} dans Exchanges. AutoTrader les utilise uniquement pour passer des ordres en votre nom via l'API de {{broker}}, jamais pour retirer des fonds.",
+      "comboBadge": "Votre automatisation",
+      "comboOn": "sur",
+      "comboLede": "Voici comment nous allons automatiser cela pour vous :",
+      "comboDesc": "{{strategy}} s'exécutera automatiquement, en passant des ordres via votre connexion {{broker}} dès votre inscription.",
+      "buysWhen": "Achète quand",
+      "sellsWhen": "Vend quand",
+      "chartPrice": "Prix",
+      "chartBuy": "Achat",
+      "chartSell": "Vente",
+      "chartBar": "Bougie",
+      "chartSignal": "Signal",
+      "chartSignals": "Signaux de cet exemple",
+      "chartDisclaimer": "Exemple illustratif — données de marché non réelles."
+    }
   },
   "contact": {
     "title": "Nous contacter",
@@ -870,11 +907,11 @@
     "title": "Conditions d’utilisation",
     "effectiveDate": "Date d’effet : 13 mars 2026",
     "s1Title": "1. Acceptation des conditions",
-    "s1Body": "En créant un compte ou en utilisant auto-Trading, vous acceptez ces Conditions d’utilisation. Si vous n’êtes pas d’accord, n’utilisez pas la plateforme.",
+    "s1Body": "En créant un compte ou en utilisant Invest-Begin, vous acceptez ces Conditions d’utilisation. Si vous n’êtes pas d’accord, n’utilisez pas la plateforme.",
     "s2Title": "2. Éligibilité et responsabilité du compte",
     "s2Body": "Vous devez être légalement en mesure de conclure des contrats dans votre juridiction. Vous êtes responsable de la sécurité du compte, des clés API et des identifiants de bourse ou courtier connectés.",
     "s3Title": "3. Portée de la plateforme",
-    "s3Body": "auto-Trading fournit des outils logiciels pour l’automatisation de stratégies et les workflows de marché. Nous n’agissons pas en tant que courtier, bourse, dépositaire ou conseiller financier.",
+    "s3Body": "Invest-Begin fournit des outils logiciels pour l’automatisation de stratégies et les workflows de marché. Nous n’agissons pas en tant que courtier, bourse, dépositaire ou conseiller financier.",
     "s4Title": "4. Risque et décisions de l’utilisateur",
     "s4Body": "Le trading comporte des risques importants et peut entraîner une perte partielle ou totale du capital. Vous êtes seul responsable de toutes les configurations et décisions de trading.",
     "s5Title": "5. Pas de conseil en investissement",
@@ -886,7 +923,7 @@
     "s8Title": "8. Utilisation interdite",
     "s8Body": "Vous ne pouvez pas utiliser la plateforme pour des activités illégales, des accès non autorisés, l’abus d’API, l’ingénierie inverse ou des comportements compromettant la sécurité.",
     "s9Title": "9. Limitation de responsabilité",
-    "s9Body": "Dans la mesure maximale autorisée par la loi, auto-Trading n’est pas responsable des pertes indirectes ou consécutives, y compris pertes de trading, de données ou interruption d’activité.",
+    "s9Body": "Dans la mesure maximale autorisée par la loi, Invest-Begin n’est pas responsable des pertes indirectes ou consécutives, y compris pertes de trading, de données ou interruption d’activité.",
     "s10Title": "10. Résiliation",
     "s10Body": "Nous pouvons suspendre ou résilier l’accès en cas de violation des conditions ou pour des raisons de sécurité. Vous pouvez cesser d’utiliser le service à tout moment.",
     "s11Title": "11. Modifications des présentes conditions",

@@ -1,9 +1,11 @@
 <nav class="navbar" [class.scrolled]="scrolled()">
   <div class="nav-container">
     <a class="logo" [routerLink]="auth.isLoggedIn() ? dashboardLink() : homeLink()" (click)="onLogoClick($event)">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <rect width="32" height="32" rx="8" fill="#00d17a"/>
-        <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <svg width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="Invest-Begin">
+        <rect width="32" height="32" rx="8" fill="var(--logo-tile)"/>
+        <rect x="5.85" y="17" width="3.5" height="9.6" rx="1.75" fill="#ff4d6a" transform="rotate(20 7.6 21.8)"/>
+        <rect x="14.25" y="11.8" width="3.5" height="9.6" rx="1.75" fill="#19e88d" transform="rotate(20 16 16.6)"/>
+        <rect x="22.65" y="6.6" width="3.5" height="9.6" rx="1.75" fill="#19e88d" transform="rotate(20 24.4 11.4)"/>
       </svg>
       <span>auto-Trading</span>
     </a>
@@ -13,6 +15,8 @@
         <li><a [routerLink]="homeLink()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="onHomeClick($event)">{{ 'nav.home' | translate }}</a></li>
         <li><a [routerLink]="homeLink()" fragment="features" (click)="onSectionClick('features', $event)">{{ 'nav.features' | translate }}</a></li>
         <li><a [routerLink]="homeLink()" fragment="how-it-works" (click)="onSectionClick('how-it-works', $event)">{{ 'nav.howItWorks' | translate }}</a></li>
+        <li><a [routerLink]="homeLink()" fragment="supported-brokers" (click)="onSectionClick('supported-brokers', $event)">{{ 'nav.brokers' | translate }}</a></li>
+        <li><a [routerLink]="homeLink()" fragment="pricing" (click)="onSectionClick('pricing', $event)">{{ 'nav.pricing' | translate }}</a></li>
         <li class="mobile-only"><a [routerLink]="localizedLink('login')" (click)="closeMenu()">{{ 'nav.logIn' | translate }}</a></li>
         <li class="mobile-only"><a [routerLink]="localizedLink('signup')" class="btn-primary" (click)="closeMenu()">{{ 'nav.getStarted' | translate }}</a></li>
       } @else {
@@ -24,7 +28,8 @@
 
     <div class="nav-actions">
       @if (showAccountModeSwitch()) {
-        <div class="account-mode-toggle" role="group" [attr.aria-label]="'nav.accountMode' | translate" [class.onboarding-active]="realMoneyOnboarding.needsOnboarding()">
+        <!-- TODO(onboarding): re-add [class.onboarding-active]="realMoneyOnboarding.needsOnboarding()" below to re-enable the onboarding highlight. -->
+        <div class="account-mode-toggle" role="group" [attr.aria-label]="'nav.accountMode' | translate">
           <button
             class="mode-btn"
             [class.active]="accountMode.mode() === 'real'"

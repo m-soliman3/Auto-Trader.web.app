@@ -1,10 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../services/language.service';
+import { LocalizedLinks } from '../shared/localized-links';
 import { SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
 import { AdBannerSkyscraper } from '../components/ad-banner-skyscraper';
 import { AdWidgetEtoro } from '../components/ad-widget-etoro';
 
@@ -15,12 +16,11 @@ import { AdWidgetEtoro } from '../components/ad-widget-etoro';
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home implements AfterViewInit, OnDestroy {
+export class Home extends LocalizedLinks implements AfterViewInit, OnDestroy {
   private auth   = inject(AuthService);
   private translate = inject(TranslateService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
-  languageService = inject(LanguageService);
 
   @ViewChild('howItWorksSection') howItWorksSection?: ElementRef<HTMLElement>;
   @ViewChild('howItWorksVideo') howItWorksVideo?: ElementRef<HTMLVideoElement>;
@@ -35,16 +35,12 @@ export class Home implements AfterViewInit, OnDestroy {
     return !value || value === key ? fallback : value;
   }
 
-  localizedHref(...segments: string[]): string {
-    return `/${[this.languageService.currentLang(), ...segments].join('/')}`;
-  }
-
   ctaRouterLink(): string[] {
-    return ['/', this.auth.isLoggedIn() ? 'dashboard' : 'signup'];
+    return this.localizedLink(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
   }
 
   ctaHref(): string {
-    return this.auth.isLoggedIn() ? '/dashboard' : '/signup';
+    return this.localizedHref(this.auth.isLoggedIn() ? 'dashboard' : 'signup');
   }
 
   pricingCtaRouterLink(): string[] {
@@ -56,14 +52,15 @@ export class Home implements AfterViewInit, OnDestroy {
   }
 
   pricingCtaHref(planId: string): string {
-    return this.auth.isLoggedIn() ? '/dashboard' : `/signup?plan=${planId}`;
+    return this.auth.isLoggedIn()
+      ? this.localizedHref('dashboard')
+      : `${this.localizedHref('signup')}?plan=${planId}`;
   }
 
   stats = [
     { value: '50+', labelKey: 'home.stats.activeTraders' },
     { value: '$2,969,028', labelKey: 'home.stats.volumeTraded' },
     { value: '99.9%', labelKey: 'home.stats.uptime' },
-    { value: '10%', labelKey: 'home.stats.avgReturn' },
   ];
 
   features = [
@@ -80,19 +77,19 @@ export class Home implements AfterViewInit, OnDestroy {
       num: '01',
       titleKey: 'home.steps.step1.title',
       descKey: 'home.steps.step1.desc',
-      videoSrc: '/videos/Connect Exchange - 08.06.2026.mov',
+      videoSrc: '/videos/Connect Exchange - 30.09.2026.mp4',
     },
     {
       num: '02',
       titleKey: 'home.steps.step2.title',
       descKey: 'home.steps.step2.desc',
-      videoSrc: '/videos/Bot Created 08.06.2026.mov',
+      videoSrc: '/videos/Create Strategy - 30.09.2026.mp4',
     },
     {
       num: '03',
       titleKey: 'home.steps.step3.title',
       descKey: 'home.steps.step3.desc',
-      videoSrc: '/videos/Strategy created 08.06.2026.mov',
+      videoSrc: '/videos/Let It Work For You - 30.09.2026.mp4',
     },
   ];
 
@@ -145,10 +142,71 @@ export class Home implements AfterViewInit, OnDestroy {
     },
   ];
 
-  /** Unique (non-paper/testnet/sandbox/demo) exchanges & brokers for the marquee. */
-  partnerBrokerages = SUPPORTED_EXCHANGES
+  /** Curated, representative strategy ids offered in the "build your automation" picker. */
+  private static readonly HERO_STRATEGY_IDS = [
+    'ema-crossover',
+    'macd-trend',
+    'rsi-reversal',
+    'bollinger-bounce',
+    'vwap-reversion',
+    'breakout',
+  ];
+
+  heroStrategies: StrategyTemplate[] = Home.HERO_STRATEGY_IDS
+    .map(id => STRATEGY_TEMPLATES.find(t => t.id === id))
+    .filter((t): t is StrategyTemplate => !!t);
+
+  /** Unique (non-paper/testnet/sandbox/demo) exchanges & brokers for the "build your automation" picker, stocks first. */
+  brokerShowcase = SUPPORTED_EXCHANGES
     .filter(e => !e.isPaper)
-    .map(e => ({ name: e.name, logo: e.logo, color: e.color }));
+    .map(e => ({ id: e.id, name: e.name, logo: e.logo, color: e.color, category: e.category }))
+    .sort((a, b) => (a.category === b.category ? 0 : a.category === 'stocks' ? -1 : 1));
+
+  /** Every live broker has a `/brokers/:slug` page (see `BROKER_PAGES`), grouped for the "Supported Brokers" section. */
+  private readonly supportedBrokers = SUPPORTED_EXCHANGES.filter(e => !e.isPaper);
+
+  readonly supportedBrokerGroups = [
+    {
+      titleKey: 'home.supportedBrokers.stocksTitle',
+      brokers: this.supportedBrokers.filter(e => e.category === 'stocks'),
+    },
+    {
+      titleKey: 'home.supportedBrokers.cryptoTitle',
+      brokers: this.supportedBrokers.filter(e => e.category === 'crypto'),
+    },
+  ];
+
+  readonly supportedBrokerCount = this.supportedBrokers.length;
+
+  /** Single-select state for the "build your automation" section (strategy + broker picked together). */
+  readonly selectedStrategyId = signal<string>('ema-crossover');
+  readonly selectedBrokerId = signal<string>('alpaca');
+
+  readonly selectedStrategy = computed(() =>
+    this.heroStrategies.find(s => s.id === this.selectedStrategyId()) ?? this.heroStrategies[0]
+  );
+
+  readonly selectedBroker = computed(() =>
+    this.brokerShowcase.find(b => b.id === this.selectedBrokerId()) ?? this.brokerShowcase[0]
+  );
+
+  selectStrategy(id: string): void {
+    this.selectedStrategyId.set(id);
+  }
+
+  selectBroker(id: string): void {
+    this.selectedBrokerId.set(id);
+  }
+
+  combinedQueryParams(): Record<string, string> {
+    return { strategy: this.selectedStrategyId(), broker: this.selectedBrokerId() };
+  }
+
+  combinedHref(): string {
+    return this.auth.isLoggedIn()
+      ? this.localizedHref('dashboard')
+      : `${this.localizedHref('signup')}?strategy=${this.selectedStrategyId()}&broker=${this.selectedBrokerId()}`;
+  }
 
   activeStepVideoSrc(): string {
     return this.steps[this.activeStepIndex()]?.videoSrc ?? '';

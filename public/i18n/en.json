@@ -3,6 +3,7 @@
     "home": "Home",
     "features": "Features",
     "howItWorks": "How It Works",
+    "pricing": "Pricing",
     "logIn": "Log In",
     "getStarted": "Get Started",
     "dashboard": "Dashboard",
@@ -16,7 +17,8 @@
     "closeMenu": "Close navigation menu",
     "openUserMenu": "Open user menu",
     "closeUserMenu": "Close user menu",
-    "accountMode": "Account mode"
+    "accountMode": "Account mode",
+    "brokers": "Brokers"
   },
   "home": {
     "badge": "🚀 Now live — AI v3 signals engine",
@@ -32,7 +34,7 @@
       "automation": "Trading Automation"
     },
     "graph": {
-      "ariaLabel": "Trading strategy, bot configuration, and exchange or broker API feed into trading automation, then into market execution and monitoring alerts",
+      "ariaLabel": "Bot configuration and exchange or broker API feed into the trading automation core, then into market execution and monitoring alerts",
       "strategy": "Trading Strategy",
       "botConfig": "Bot Configuration",
       "exchangeApi": "Exchange / Broker API",
@@ -49,8 +51,7 @@
     "stats": {
       "activeTraders": "Active Traders",
       "volumeTraded": "Volume Traded",
-      "uptime": "Uptime",
-      "avgReturn": "Avg. Monthly Return"
+      "uptime": "Uptime"
     },
     "featuresTag": "Features",
     "featuresTitle": "Everything you need to trade on autopilot",
@@ -144,7 +145,33 @@
     },
     "ctaTitle": "Ready to trade on autopilot?",
     "ctaDesc": "Join 125,000+ traders who have automated their strategy with auto-Trading. Start free — no credit card required.",
-    "createFreeAccount": "Create Free Account →"
+    "createFreeAccount": "Create Free Account →",
+    "brokers": {
+      "categoryCrypto": "Crypto",
+      "categoryStocks": "Stocks"
+    },
+    "build": {
+      "heroTeaser": "Build your automation",
+      "tag": "Build Your Automation",
+      "title": "Pick a strategy. Connect a broker. Done.",
+      "sub": "Any strategy connects to any broker — choose both below and see exactly how AutoTrader would automate it for you.",
+      "pickStrategy": "1. Pick a strategy",
+      "connectBroker": "2. Connect a broker",
+      "linkedLabel": "Automated",
+      "ctaButton": "Automate {{strategy}} on {{broker}}"
+    },
+    "help": {
+      "title": "How can AutoTrader Help you",
+      "sub": "Explore key areas where AutoTrader supports planning, automation, and execution across your workflow.",
+      "ariaLabel": "Helpful AutoTrader topics"
+    },
+    "supportedBrokers": {
+      "tag": "Integrations",
+      "title": "Supported Brokers",
+      "sub": "AutoTrader connects to {{count}} stock brokers and crypto exchanges. Pick one to see what you can trade there and how to connect it.",
+      "stocksTitle": "Stock brokers",
+      "cryptoTitle": "Crypto exchanges"
+    }
   },
   "login": {
     "welcomeBack": "Welcome back",
@@ -199,7 +226,31 @@
     "signUpWithX": "Sign up with X",
     "signUpWithFacebook": "Sign up with Facebook",
     "alreadyHaveAccount": "Already have an account?",
-    "logIn": "Log in"
+    "logIn": "Log in",
+    "context": {
+      "strategyBadge": "Your strategy",
+      "strategyLede": "Here's how we automate this for you:",
+      "brokerBadge": "Your broker",
+      "brokerLede": "Here's how we connect your account:",
+      "risk": "Risk",
+      "difficulty": "Difficulty",
+      "timeframes": "Timeframes",
+      "brokerAlpacaNote": "Once you sign up, connect your Alpaca account in one click via secure OAuth — no API keys to copy or paste. AutoTrader places trades on your behalf the moment your strategy goes live.",
+      "brokerApiNote": "After you sign up, add your {{broker}} API keys under Exchanges. AutoTrader uses them only to place trades on your behalf via {{broker}}'s API — never to withdraw funds.",
+      "comboBadge": "Your automation",
+      "comboOn": "on",
+      "comboLede": "Here's how we'll automate this for you:",
+      "comboDesc": "{{strategy}} will run automatically, placing trades through your {{broker}} connection once you sign up.",
+      "buysWhen": "Buys when",
+      "sellsWhen": "Sells when",
+      "chartPrice": "Price",
+      "chartBuy": "Buy",
+      "chartSell": "Sell",
+      "chartBar": "Bar",
+      "chartSignal": "Signal",
+      "chartSignals": "Signals in this example",
+      "chartDisclaimer": "Illustrative example — not live market data."
+    }
   },
   "contact": {
     "title": "Get in touch",
@@ -498,6 +549,12 @@
     "chooseExchange": "Choose the exchange you want to connect",
     "connect": "Connect",
     "connectWithAlpacaOAuth": "Connect with Alpaca",
+    "connectWithTastytradeOAuth": "Connect with tastytrade",
+    "connectWithSnaptrade": "Connect with SnapTrade",
+    "snaptradeConnecting": "Redirecting to SnapTrade…",
+    "snaptradeDisclosureBody": "By allowing Invest-Begin to access your SnapTrade account, you grant read-only access to your linked brokerage account information. You sign in on SnapTrade's own page; Invest-Begin never sees your brokerage password.",
+    "tastytradeOauthConnecting": "Redirecting to tastytrade…",
+    "tastytradeOauthDisclosureBody": "By allowing Invest-Begin to access your tastytrade account, you are granting Invest-Begin access to your account information and authorization to place transactions in your account at your direction. Before authorizing,",
     "connectExchange": "Connect Exchange",
     "connecting": "Connecting…",
     "cryptoExchanges": "Crypto Exchanges",
@@ -704,6 +761,17 @@
     "whatIs": "What is",
     "whyTradersLove": "Why traders love"
   },
+  "videoDetail": {
+    "videoGuide": "Video Guide",
+    "whatThisCovers": "What you'll see in",
+    "behindTheScenes": "Behind the Scenes",
+    "keyTakeaways": "Key Takeaways",
+    "whatYoullLearn": "What You'll Learn",
+    "continueWatching": "Continue Watching",
+    "watchNext": "Watch Next",
+    "ctaTitle": "Ready to automate your own trading?",
+    "ctaDesc": "Join 125,000+ traders who automate their strategy with auto-Trading. Start free — no credit card required."
+  },
   "tradeDetails": {
     "action": "Action",
     "back": "Back",
@@ -762,7 +830,9 @@
     "noExecutions": "No Executions",
     "disabledMessage": "Backend monitor is disabled. Set tradingBackendBaseUrl in environment.",
     "signInMessage": "Sign in to view backend runner status.",
-    "unableToLoad": "Unable to load backend runner status right now."
+    "unableToLoad": "Unable to load backend runner status right now.",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing..."
   },
   "portfolioManagement": {
     "title": "Portfolio Management",
@@ -806,7 +876,11 @@
     "typeDisconnectToConfirmError": "Please type \"disconnect this Exchange\" to confirm",
     "successConnected": "Your exchange is connected successfully.",
     "oauthConnectSuccess": "Alpaca connected successfully.",
-    "oauthConnectError": "Alpaca connection failed. Please try again."
+    "oauthConnectError": "Alpaca connection failed. Please try again.",
+    "tastytradeConnectSuccess": "tastytrade connected successfully.",
+    "tastytradeConnectError": "tastytrade connection failed. Please try again.",
+    "snaptradeConnectSuccess": "SnapTrade connected successfully.",
+    "snaptradeConnectError": "SnapTrade connection failed. Please try again."
   },
   "bots": {
     "confirmDeletion": "Confirm Deletion",
@@ -888,7 +962,8 @@
     "errorTimeframe": "Please select a timeframe.",
     "errorInvestment": "Please enter a valid investment amount greater than 0.",
     "errorStrategyName": "Please enter a strategy name.",
-    "errorCreate": "Unable to create strategy. Please try again."
+    "errorCreate": "Unable to create strategy. Please try again.",
+    "createNew": "Create New Strategy"
   },
   "legal": {
     "home": "Home",
@@ -914,11 +989,11 @@
     "title": "Terms of Service",
     "effectiveDate": "Effective date: 13 March 2026",
     "s1Title": "1. Acceptance of Terms",
-    "s1Body": "By creating an account or using auto-Trading, you agree to these Terms of Service. If you do not agree, do not use the platform.",
+    "s1Body": "By creating an account or using Invest-Begin, you agree to these Terms of Service. If you do not agree, do not use the platform.",
     "s2Title": "2. Eligibility and Account Responsibility",
     "s2Body": "You must be legally able to enter contracts in your jurisdiction. You are responsible for account security, API keys, and connected exchange or broker credentials.",
     "s3Title": "3. Platform Scope",
-    "s3Body": "auto-Trading provides software tools for strategy automation and market workflows. We do not act as your broker, exchange, custodian, or financial adviser.",
+    "s3Body": "Invest-Begin provides software tools for strategy automation and market workflows. We do not act as your broker, exchange, custodian, or financial adviser.",
     "s4Title": "4. Risk and User Decisions",
     "s4Body": "Trading involves substantial risk and can result in partial or total loss of capital. You are solely responsible for all configuration and trading decisions.",
     "s5Title": "5. No Investment Advice",
@@ -930,7 +1005,7 @@
     "s8Title": "8. Prohibited Use",
     "s8Body": "You may not use the platform for unlawful activity, unauthorized access, abuse of APIs, reverse engineering, or security-compromising behavior.",
     "s9Title": "9. Limitation of Liability",
-    "s9Body": "To the maximum extent permitted by law, auto-Trading is not liable for indirect or consequential losses, including trading losses, data loss, or business interruption.",
+    "s9Body": "To the maximum extent permitted by law, Invest-Begin is not liable for indirect or consequential losses, including trading losses, data loss, or business interruption.",
     "s10Title": "10. Termination",
     "s10Body": "We may suspend or terminate access for Terms violations or security reasons. You may stop using the service at any time.",
     "s11Title": "11. Changes to These Terms",
@@ -1271,7 +1346,9 @@
     "privacyPolicyLink": "Privacy Policy",
     "moreInfoText": "For more information, please review our",
     "declineAll": "Decline All",
-    "acceptAll": "Accept All"
+    "acceptAll": "Accept All",
+    "expandDetails": "Show consent details",
+    "collapseDetails": "Hide consent details"
   },
   "featurePages": {
     "ai-signals": {
@@ -1573,6 +1650,89 @@
       ]
     }
   },
+  "videoPages": {
+    "connect-exchange": {
+      "title": "Connect Your Exchange",
+      "tagline": "Link your exchange account safely — in under two minutes.",
+      "metaTitle": "How to Connect Your Exchange — Video Guide | Invest-Begin",
+      "metaDescription": "Watch a step-by-step video showing exactly how to connect your exchange account to auto-Trading with encrypted API keys — no withdrawal access required.",
+      "heroDescription": "This short walkthrough shows the exact steps to link your exchange account to auto-Trading using read-and-trade API keys, so your bots can start trading in minutes.",
+      "overview": "Connecting an exchange is the first step to automating any strategy, and it is also the step traders are most cautious about — rightly so, since it involves handing over API access to your trading account. This video shows the entire process on screen, from start to finish, so you know exactly what to expect before you do it yourself.\n\nauto-Trading supports more than 30 spot and derivatives exchanges, including Binance, Coinbase Advanced Trade, Kraken, Bybit, OKX, and KuCoin, all through a single unified connection flow. In the video you will see the three steps required: generating a read-and-trade API key in your exchange account settings, pasting it into auto-Trading's secure vault, and running a one-click connection test that confirms the link is live before any bot touches it.",
+      "howItWorks": "Your API keys are encrypted at rest with AES-256 inside an isolated key-management vault and are never requested with withdrawal permissions — the video highlights exactly where that permission toggle lives on the exchange side so you can double-check it yourself. Once connected, auto-Trading opens a persistent, authenticated session with the exchange's WebSocket feed, which is how your dashboard shows live prices and order status the moment you finish the steps shown here.",
+      "highlights": [
+        {
+          "title": "Bank-grade key encryption",
+          "description": "API keys are encrypted with AES-256 and stored in an isolated vault — never shared, never logged in plain text."
+        },
+        {
+          "title": "No withdrawal access, ever",
+          "description": "Only read-and-trade permissions are requested. Your funds stay under your control on the exchange at all times."
+        },
+        {
+          "title": "Live in three steps",
+          "description": "Generate a key, paste it into the vault, run the connection test — the whole flow takes under two minutes."
+        },
+        {
+          "title": "30+ exchanges supported",
+          "description": "Binance, Coinbase, Kraken, Bybit, OKX, KuCoin, and many more — all through one connection flow."
+        }
+      ]
+    },
+    "create-strategy": {
+      "title": "Create Your First Strategy",
+      "tagline": "Build an automated trading strategy without writing a line of code.",
+      "metaTitle": "How to Create a Trading Strategy — Video Guide | Invest-Begin",
+      "metaDescription": "Watch how to build a fully automated trading strategy in the no-code builder — combine indicators, entry conditions, and risk rules visually, then deploy in one click.",
+      "heroDescription": "See exactly how to drag, connect, and configure blocks in the no-code strategy builder to launch a working bot — no programming experience required.",
+      "overview": "Once your exchange is connected, the next step is giving auto-Trading something to execute: a strategy. This video walks through building one from scratch in the visual, drag-and-drop strategy builder, the same tool used by beginners and experienced traders alike.\n\nYou will see blocks being dragged from the side panel onto the canvas and wired together to define a flow of logic: a market-data input, a technical indicator such as RSI or a moving average, a condition block that checks when that indicator crosses a threshold, and an action block that opens or closes a position. The indicator library used in the video is pulled from more than 80 built-in options, covering trend, momentum, volatility, and volume indicators, so the same canvas works for almost any style of strategy.",
+      "howItWorks": "Behind the canvas shown in the video, every block becomes a node in a directed acyclic graph, and every connection defines a data dependency. When the strategy runs, the engine evaluates that graph in order for each new market bar, so upstream indicator calculations always finish before the downstream conditions and actions that depend on them are evaluated. That is what makes it possible to paper-trade the exact strategy built in this video first, then flip it to live trading with the single click shown at the end.",
+      "highlights": [
+        {
+          "title": "True drag-and-drop",
+          "description": "Build the entire strategy shown in the video with clicks and drags — no coding required at any step."
+        },
+        {
+          "title": "80+ built-in indicators",
+          "description": "RSI, MACD, Bollinger Bands, VWAP, Ichimoku, and dozens more, ready to drop onto the canvas."
+        },
+        {
+          "title": "Paper-trade before going live",
+          "description": "Validate the strategy from this video against real market data with virtual funds first."
+        },
+        {
+          "title": "One-click deployment",
+          "description": "Go from the finished canvas to live trading in a single click — no code changes needed."
+        }
+      ]
+    },
+    "let-it-work-for-you": {
+      "title": "Let It Work For You",
+      "tagline": "Automated trading, monitored and protected around the clock.",
+      "metaTitle": "Let It Work For You — Automated Trading Video Guide | Invest-Begin",
+      "metaDescription": "Watch how auto-Trading monitors markets, executes trades, and enforces risk controls automatically once your bot is live — so you can let it work for you.",
+      "heroDescription": "Once your strategy is live, this is what happens next: round-the-clock monitoring, automatic execution, and built-in risk controls running quietly in the background.",
+      "overview": "With an exchange connected and a strategy built, this final video shows what day-to-day automated trading actually looks like once you step back. The dashboard keeps watching every connected exchange for the conditions your strategy defines, places and manages orders the moment those conditions are met, and reconciles every fill against the exchange's own records so the numbers you see are always accurate.\n\nYou will also see the risk controls that run underneath every trade: stop-loss and take-profit levels, position-sizing limits, and portfolio-level drawdown circuit-breakers that can automatically pause a bot if losses exceed a threshold you set. None of this requires you to be watching a screen — alerts arrive by push notification, email, or Telegram the moment something worth knowing happens.",
+      "howItWorks": "Every order you see submitted in the video first passes through the risk engine, which checks it against your active position-size limits, portfolio exposure, and drawdown thresholds before it ever reaches the exchange. Stop-loss and take-profit orders are submitted alongside the entry automatically, and the performance dashboard shown at the end aggregates P&L across every connected exchange in real time, so a bot genuinely can run unattended while still being fully auditable.",
+      "highlights": [
+        {
+          "title": "Built-in risk controls",
+          "description": "Stop-loss, take-profit, and portfolio drawdown limits are enforced automatically on every trade."
+        },
+        {
+          "title": "Real-time alerts",
+          "description": "Push, email, or Telegram notifications the moment a trade fills or a risk limit is hit."
+        },
+        {
+          "title": "Live performance dashboard",
+          "description": "Track P&L, win rate, and open positions across every connected exchange in one place."
+        },
+        {
+          "title": "Runs while you sleep",
+          "description": "Bots trade 24/7 once deployed — no manual intervention needed to keep them working."
+        }
+      ]
+    }
+  },
   "pageTitle": {
     "home": "Invest-Begin - Smart strategies & auto execution",
     "login": "Login — Invest-Begin | Access Your Automated Trading Platform",
@@ -1597,7 +1757,9 @@
     "feature": "Feature — Invest-Begin",
     "sitemap": "Knowledge Base — Invest-Begin | Full Page Directory",
     "learn": "Learn Trading — Invest-Begin",
-    "status": "System Status — Invest-Begin | Service Health Dashboard"
+    "status": "System Status — Invest-Begin | Service Health Dashboard",
+    "broker": "Supported Broker — Invest-Begin",
+    "video": "Video Guide — Invest-Begin"
   },
   "metaDescription": {
     "default": "Invest-Begin connects to 30+ exchanges and runs your trading bots 24/7 — powered by AI signals, risk management, and zero emotion.",
@@ -3158,6 +3320,7 @@
   "learnDetail": {
     "backToHome": "← Back to Home",
     "tradingStrategy": "Trading Strategy",
+    "blogPost": "Blog Post",
     "tradingSignalIndicator": "Trading Signal / Indicator",
     "startAutomatingFree": "Start Automating Free →",
     "wantToAutomate": "Want to automate this strategy?",
@@ -3247,5 +3410,101 @@
         "desc": "Chatbot and AI-powered trading guidance."
       }
     }
+  },
+  "sitemap": {
+    "backToHome": "← Back to Home",
+    "title": "Knowledge Base",
+    "subtitle": "A complete directory of every page on auto-Trading — use it to explore the platform, learn trading strategies, or jump to a specific section.",
+    "mainPages": "Main Pages",
+    "home": "Home",
+    "homeDesc": "Platform overview, features, and get-started guide.",
+    "login": "Login",
+    "loginDesc": "Sign in to your auto-Trading account.",
+    "signup": "Sign Up",
+    "signupDesc": "Create a free account and start automating.",
+    "contact": "Contact",
+    "contactDesc": "Get in touch with the auto-Trading team.",
+    "platformFeatures": "Platform Features",
+    "videoGuides": "Video Guides",
+    "videoGuidesDesc": "Watch exactly how to connect an exchange, build a strategy, and let auto-Trading run it for you — step by step.",
+    "legal": "Legal & Policies",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "disclaimer": "Risk Disclaimer",
+    "collectingData": "Collecting Data",
+    "blogPosts": "Blog Posts",
+    "blogPostsDesc": "In-depth articles on recent stock market trends, macro events, and trading insights — updated regularly.",
+    "strategies": "Trading Strategies — Learn Hub",
+    "strategiesDesc": "Educational guides to 35 professional trading strategies. Fully automated with auto-Trading.",
+    "signals": "Trading Signals & Indicators — Learn Hub",
+    "signalsDesc": "In-depth guides to 35 technical indicators used to generate trading signals."
+  },
+  "brokerDetail": {
+    "tagStocks": "Supported stock broker",
+    "tagCrypto": "Supported crypto exchange",
+    "startAutomating": "Automate {{name}} for free",
+    "visitWebsite": "Visit {{name}}",
+    "overviewTag": "Overview",
+    "aboutTitle": "About {{name}}",
+    "atAGlance": "At a glance",
+    "website": "Official website",
+    "founded": "Founded",
+    "headquarters": "Headquarters",
+    "marketType": "Market type",
+    "paperTrading": "Paper trading",
+    "paperAvailable": "Yes — {{paper}}",
+    "paperUnavailable": "Live trading only",
+    "connection": "Connection",
+    "connectionOAuth": "One-click OAuth or API keys",
+    "connectionGateway": "IB Gateway or TWS running locally",
+    "connectionPassphrase": "API key, secret & passphrase",
+    "connectionKeys": "API key & secret",
+    "marketsTag": "Supported markets",
+    "marketsTitle": "What you can trade on {{name}}",
+    "marketsSub": "The asset classes {{name}} offers, and popular symbols you can automate with AutoTrader.",
+    "assetClassesTitle": "Asset classes offered",
+    "popularStocks": "Popular stocks & ETFs",
+    "popularCrypto": "Popular crypto markets",
+    "popularOther": "Forex, indices & commodities",
+    "symbolsNote": "Symbols shown are examples. Exact availability depends on your country, account type and the broker's current listings.",
+    "connectTag": "Get started",
+    "connectTitle": "How to connect {{name}} to AutoTrader",
+    "apiGuide": "How to create {{name}} API keys",
+    "apiDocs": "{{name}} API documentation",
+    "otherTag": "More integrations",
+    "otherTitle": "Other supported brokers & exchanges",
+    "ctaTitle": "Ready to automate {{name}}?",
+    "ctaDesc": "Create a free account, connect {{name}} and launch your first strategy in minutes.",
+    "assetClasses": {
+      "spotCrypto": "Spot crypto",
+      "cryptoMargin": "Crypto margin",
+      "cryptoPerpetuals": "Perpetual futures",
+      "cryptoFutures": "Crypto futures",
+      "cryptoOptions": "Crypto options",
+      "usStocks": "US stocks",
+      "globalStocks": "International stocks",
+      "etfs": "ETFs",
+      "options": "Options",
+      "futures": "Futures",
+      "forex": "Forex",
+      "indices": "Indices",
+      "commodities": "Commodities",
+      "bonds": "Bonds",
+      "mutualFunds": "Mutual funds",
+      "cfds": "CFDs"
+    },
+    "feesTag": "Fees & accounts",
+    "feesTitle": "Trading {{name}}: costs and where it's available",
+    "feesCardTitle": "Fees and account types",
+    "availabilityTitle": "Availability and regulation",
+    "prosConsTag": "For automated trading",
+    "prosConsTitle": "Automating {{name}}: strengths and limitations",
+    "strengthsTitle": "Strengths",
+    "limitationsTitle": "Limitations",
+    "strategiesTag": "Strategy ideas",
+    "strategiesTitle": "Strategies that suit {{name}}",
+    "readGuide": "Read the strategy guide →",
+    "faqTag": "FAQ",
+    "faqTitle": "{{name}} automation: frequently asked questions"
   }
 }

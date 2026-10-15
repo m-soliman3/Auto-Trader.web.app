@@ -14,7 +14,19 @@
         { "source": "/disclaimer", "destination": "/en/disclaimer", "type": 301 },
         { "source": "/collecting-data", "destination": "/en/collecting-data", "type": 301 },
         { "source": "/contact", "destination": "/en/contact", "type": 301 },
-        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 }
+        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 },
+        { "source": "/login", "destination": "/en/login", "type": 301 },
+        { "source": "/signup", "destination": "/en/signup", "type": 301 },
+        { "source": "/signup-guide", "destination": "/en/signup-guide", "type": 301 },
+        { "source": "/system-health", "destination": "/en/system-health", "type": 301 },
+        { "source": "/sitemap", "destination": "/en/sitemap", "type": 301 },
+        { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
+        { "source": "/brokers/:slug", "destination": "/en/brokers/:slug", "type": 301 },
+        { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
+        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 },
+        { "source": "/videos/connect-exchange", "destination": "/en/videos/connect-exchange", "type": 301 },
+        { "source": "/videos/create-strategy", "destination": "/en/videos/create-strategy", "type": 301 },
+        { "source": "/videos/let-it-work-for-you", "destination": "/en/videos/let-it-work-for-you", "type": 301 }
       ],
       "rewrites": [
         {
@@ -168,6 +180,34 @@
           "source": "/api/alpaca/oauth/callback",
           "function": {
             "functionId": "alpacaOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/tastytrade/oauth/start",
+          "function": {
+            "functionId": "tastytradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/tastytrade/oauth/callback",
+          "function": {
+            "functionId": "tastytradeOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/start",
+          "function": {
+            "functionId": "snaptradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/callback",
+          "function": {
+            "functionId": "snaptradeOAuthCallback",
             "region": "europe-west1"
           }
         },
@@ -221,8 +261,13 @@
         {
           "source": "/i18n/**",
           "headers": [
-            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
-            { "key": "Pragma", "value": "no-cache" }
+            { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          ]
+        },
+        {
+          "regex": "^/(de|es|fr|pt)(/.*)?$",
+          "headers": [
+            { "key": "X-Robots-Tag", "value": "noindex, follow" }
           ]
         }
       ]
@@ -241,7 +286,19 @@
         { "source": "/disclaimer", "destination": "/en/disclaimer", "type": 301 },
         { "source": "/collecting-data", "destination": "/en/collecting-data", "type": 301 },
         { "source": "/contact", "destination": "/en/contact", "type": 301 },
-        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 }
+        { "source": "/knowledge-base", "destination": "/en/knowledge-base", "type": 301 },
+        { "source": "/login", "destination": "/en/login", "type": 301 },
+        { "source": "/signup", "destination": "/en/signup", "type": 301 },
+        { "source": "/signup-guide", "destination": "/en/signup-guide", "type": 301 },
+        { "source": "/system-health", "destination": "/en/system-health", "type": 301 },
+        { "source": "/sitemap", "destination": "/en/sitemap", "type": 301 },
+        { "source": "/features/:slug", "destination": "/en/features/:slug", "type": 301 },
+        { "source": "/brokers/:slug", "destination": "/en/brokers/:slug", "type": 301 },
+        { "source": "/learn/:slug", "destination": "/en/learn/:slug", "type": 301 },
+        { "source": "/blog/:slug", "destination": "/en/blog/:slug", "type": 301 },
+        { "source": "/videos/connect-exchange", "destination": "/en/videos/connect-exchange", "type": 301 },
+        { "source": "/videos/create-strategy", "destination": "/en/videos/create-strategy", "type": 301 },
+        { "source": "/videos/let-it-work-for-you", "destination": "/en/videos/let-it-work-for-you", "type": 301 }
       ],
       "rewrites": [
         {
@@ -399,6 +456,34 @@
           }
         },
         {
+          "source": "/api/tastytrade/oauth/start",
+          "function": {
+            "functionId": "tastytradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/tastytrade/oauth/callback",
+          "function": {
+            "functionId": "tastytradeOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/start",
+          "function": {
+            "functionId": "snaptradeOAuthStart",
+            "region": "europe-west1"
+          }
+        },
+        {
+          "source": "/api/snaptrade/oauth/callback",
+          "function": {
+            "functionId": "snaptradeOAuthCallback",
+            "region": "europe-west1"
+          }
+        },
+        {
           "source": "/v1/chat",
           "run": {
             "serviceId": "auto-trader-chatbot-backend",
@@ -434,8 +519,13 @@
         {
           "source": "/i18n/**",
           "headers": [
-            { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
-            { "key": "Pragma", "value": "no-cache" }
+            { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          ]
+        },
+        {
+          "regex": "^/(de|es|fr|pt)(/.*)?$",
+          "headers": [
+            { "key": "X-Robots-Tag", "value": "noindex, follow" }
           ]
         }
       ]

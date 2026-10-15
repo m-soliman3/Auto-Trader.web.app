@@ -10,6 +10,24 @@
   --text-secondary: #8b95a9;
   --text-muted:     #5a6278;
   --accent:         #00d17a;
+  /* Logo tile is a soft grey offset from --surface (the navbar ground) in both
+     themes, so the tile always reads as a tile. Matching --bg or --surface made
+     it disappear. Dark is a near-neutral grey rather than near-black. */
+  --logo-tile:      #383d44;
+
+  /* Data-viz slots for the strategy charts. Series 1 and 2 were validated as a
+     pair against this surface (#161a24) for colour-vision separation and 3:1
+     contrast; a third series means re-running that check, not eyeballing a hue.
+     Entry/exit are the reserved status green/red and are deliberately NOT themed
+     — they are paired with a triangle and a word wherever they appear. */
+  --chart-series-1: #3987e5;
+  --chart-series-2: #d95926;
+  --chart-price:    #8b95a9;
+  --chart-entry:    #0ca30c;
+  --chart-exit:     #d03b3b;
+  --chart-grid:     rgba(255,255,255,0.10);
+  /* A band fill that reads as a tint on white turns muddy on the dark surface. */
+  --chart-band-opacity: 0.10;
 }
 
 /* === Light theme === */
@@ -22,6 +40,16 @@
   --text-secondary: #4a5468;
   --text-muted:     #9aa0b2;
   --accent:         #00a85a;
+  --logo-tile:      #e2e7f0;
+
+  /* Re-picked for the light surface (#ffffff), not flipped from the dark steps. */
+  --chart-series-1: #2a78d6;
+  --chart-series-2: #eb6834;
+  --chart-price:    #6f7a8d;
+  --chart-entry:    #0ca30c;
+  --chart-exit:     #d03b3b;
+  --chart-grid:     rgba(0,0,0,0.10);
+  --chart-band-opacity: 0.16;
 }
 
 /* === Paper/Demo mode overrides (dark) === */
