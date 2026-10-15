@@ -78,3 +78,6 @@ chatbot-backend/dist/
 *.tfstate
 *.tfstate.*
 .terraform/
+
+# One-off local admin scripts (read service-account keys)
+functions/new-users-*.js
