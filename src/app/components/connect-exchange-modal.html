@@ -156,7 +156,23 @@
         </div>
       }
 
-      @if (!isAlpacaSelected() && !isTastytradeSelected() || manualEntryExpanded()) {
+      @if (isSnaptradeSelected()) {
+        <div class="oauth-connect-block">
+          <div class="oauth-disclosure">
+            <h4 class="oauth-disclosure-title">{{ 'connectExchange.oauthDisclosureTitle' | translate }}</h4>
+            <p class="oauth-disclosure-body">{{ 'connectExchange.snaptradeDisclosureBody' | translate }}</p>
+          </div>
+          <button type="button" class="btn-oauth-connect" (click)="connectSnaptrade()" [disabled]="oauthConnecting()">
+            @if (oauthConnecting()) {
+              <span class="spinner"></span> {{ 'connectExchange.snaptradeConnecting' | translate }}
+            } @else {
+              {{ 'connectExchange.connectWithSnaptrade' | translate }}
+            }
+          </button>
+        </div>
+      }
+
+      @if (!isAlpacaSelected() && !isTastytradeSelected() && !isSnaptradeSelected() || manualEntryExpanded()) {
         <div class="form-group">
           <label for="label">{{ 'connectExchange.accountLabel' | translate }}</label>
           <input id="label" type="text" [(ngModel)]="label" name="label" [placeholder]="'connectExchange.accountLabelPlaceholder' | translate" />

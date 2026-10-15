@@ -51,6 +51,7 @@ export class ConnectExchangeModal {
   });
 
   isTastytradeSelected = computed(() => this.selected()?.id === 'tastytrade');
+  isSnaptradeSelected = computed(() => this.selected()?.id === 'snaptrade');
 
   // Form fields
   label = '';
@@ -195,6 +196,33 @@ export class ConnectExchangeModal {
     } catch (err: any) {
       this.oauthConnecting.set(false);
       this.error.set(err?.message || 'Failed to start the tastytrade connection. Please try again.');
+    }
+  }
+
+  /**
+   * "Connect with SnapTrade" via OAuth — navigates the browser to SnapTrade's
+   * authorize page; on approval the user lands back on /exchanges already connected.
+   */
+  async connectSnaptrade(): Promise<void> {
+    if (!this.authService.currentUser()) {
+      this.error.set('You must be logged in to connect an exchange.');
+      return;
+    }
+
+    try {
+      this.subscription.assertCanCreate('exchange', this.exchangeService.connections().length);
+    } catch (err: any) {
+      this.error.set(err?.message || 'You reached your plan limit for exchange connections.');
+      return;
+    }
+
+    this.error.set('');
+    this.oauthConnecting.set(true);
+    try {
+      await this.exchangeService.startSnaptradeConnect();
+    } catch (err: any) {
+      this.oauthConnecting.set(false);
+      this.error.set(err?.message || 'Failed to start the SnapTrade connection. Please try again.');
     }
   }
 
