@@ -64,3 +64,17 @@ public/images/products/
 # Backend build output
 backend/dist/
 /functions/node_modules
+
+# Dependencies in any sub-project (backend, chatbot-backend, ...)
+node_modules/
+
+# Local Google Cloud SDK install
+/GCloud/
+
+# Chatbot backend build output (built by its Dockerfile)
+chatbot-backend/dist/
+
+# Terraform state (may contain secrets)
+*.tfstate
+*.tfstate.*
+.terraform/
