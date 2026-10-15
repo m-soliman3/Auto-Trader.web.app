@@ -63,3 +63,4 @@ public/images/products/
 
 # Backend build output
 backend/dist/
+/functions/node_modules
