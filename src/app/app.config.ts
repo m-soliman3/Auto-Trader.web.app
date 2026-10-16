@@ -1,15 +1,13 @@
-import { ApplicationConfig, importProvidersFrom, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, TitleStrategy } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
-import { provideAppCheck, initializeAppCheck, ReCaptchaEnterpriseProvider } from '@angular/fire/app-check';
 import { TranslateModule, provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-import { firebaseConfig, environment } from '../environments/environment';
+import { firebaseConfig } from '../environments/environment';
 import { I18N_VERSION } from '../environments/i18n-version';
 import { routes } from './app.routes';
 import { TranslatedTitleStrategy } from './services/translated-title.strategy';
@@ -22,16 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
-    provideAppCheck(() => {
-      // reCAPTCHA Enterprise needs `document`, which doesn't exist during SSR/prerendering.
-      if (!isPlatformBrowser(inject(PLATFORM_ID))) {
-        return undefined as unknown as ReturnType<typeof initializeAppCheck>;
-      }
-      return initializeAppCheck(getApp(), {
-        provider: new ReCaptchaEnterpriseProvider(environment.recaptchaEnterpriseSiteKey),
-        isTokenAutoRefreshEnabled: true,
-      });
-    }),
     ...provideTranslateService({ fallbackLang: 'en' }),
     // The version query pins each request to the current bundle contents, so the
     // translations can be served from cache for a year instead of re-downloaded on
