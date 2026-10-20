@@ -543,6 +543,116 @@ export async function placeKrakenOrder(input: {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// Robinhood Crypto Trading API — real only (US, USD pairs)
+// apiKey = API key (rh-api-…), apiSecret = base64 Ed25519 private key
+// Docs: https://docs.robinhood.com/crypto/trading/
+// ─────────────────────────────────────────────────────────────────
+const ROBINHOOD_CRYPTO_BASE_URL = "https://trading.robinhood.com";
+
+/** BTC/USD, BTC-USD or BTCUSD → BTC-USD. Robinhood only quotes in USD. */
+export function toRobinhoodCryptoSymbol(symbol: string): string {
+  const upper = String(symbol || "").toUpperCase().trim();
+  const [base, quote] = /[/-]/.test(upper)
+    ? upper.split(/[/-]/)
+    : upper.endsWith("USD") ? [upper.slice(0, -3), "USD"] : [upper, ""];
+  if (!base || quote !== "USD") {
+    throw new Error(`Robinhood Crypto only trades USD pairs (e.g. BTC/USD); got "${symbol}".`);
+  }
+  return `${base}-USD`;
+}
+
+async function robinhoodCryptoRequest(
+  apiKey: string,
+  privateKeyBase64: string,
+  method: "GET" | "POST",
+  path: string,
+  body = "",
+): Promise<any> {
+  const seed = Buffer.from(privateKeyBase64, "base64");
+  if (seed.length !== 32) throw new Error("Robinhood Crypto private key must be a base64-encoded 32-byte Ed25519 key");
+  const privateKey = crypto.createPrivateKey({
+    key: Buffer.concat([Buffer.from("302e020100300506032b657004220420", "hex"), seed]),
+    format: "der",
+    type: "pkcs8",
+  });
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  // Signed message: api key + timestamp + path (with query) + method + raw body.
+  const signature = crypto.sign(null, Buffer.from(`${apiKey}${timestamp}${path}${method}${body}`), privateKey).toString("base64");
+
+  const response = await fetch(`${ROBINHOOD_CRYPTO_BASE_URL}${path}` as any, {
+    method,
+    headers: {
+      "x-api-key": apiKey,
+      "x-signature": signature,
+      "x-timestamp": timestamp,
+      ...(body ? { "Content-Type": "application/json; charset=utf-8" } : {}),
+    },
+    ...(body ? { body } : {}),
+  } as any);
+
+  const payloadText = await response.text();
+  let payload: any = {};
+  try {
+    payload = payloadText ? JSON.parse(payloadText) : {};
+  } catch {
+    // Auth failures come back as plain text.
+  }
+  if (!response.ok) {
+    const detail = Array.isArray(payload?.errors)
+      ? payload.errors.map((e: any) => e?.detail || JSON.stringify(e)).join("; ")
+      : payloadText;
+    throw new Error(`Robinhood Crypto error ${response.status}: ${detail}`);
+  }
+  return payload;
+}
+
+export async function placeRobinhoodCryptoOrder(input: {
+  apiKey: string;
+  apiSecret: string;
+  symbol: string;
+  side: "buy" | "sell";
+  investment: number;
+}): Promise<{ orderId: string; raw: any }> {
+  const symbol = toRobinhoodCryptoSymbol(input.symbol);
+  const query = `?symbol=${encodeURIComponent(symbol)}`;
+
+  const pairs = await robinhoodCryptoRequest(input.apiKey, input.apiSecret, "GET", `/api/v1/crypto/trading/trading_pairs/${query}`);
+  const pair = Array.isArray(pairs?.results) ? pairs.results[0] : null;
+  const status = String(pair?.status || "").toLowerCase();
+  if (!pair || !(status === "tradable" || (status === "sellonly" && input.side === "sell"))) {
+    throw new Error(`Robinhood Crypto: ${symbol} is not tradable (${status || "unknown pair"}).`);
+  }
+
+  // Market orders take a base-asset quantity, so convert the USD investment
+  // using the side's spread-inclusive price.
+  const quotes = await robinhoodCryptoRequest(input.apiKey, input.apiSecret, "GET", `/api/v1/crypto/marketdata/best_bid_ask/${query}`);
+  const quote = Array.isArray(quotes?.results) ? quotes.results[0] : null;
+  const price = Number(input.side === "buy" ? quote?.ask_inclusive_of_buy_spread : quote?.bid_inclusive_of_sell_spread);
+  if (!Number.isFinite(price) || price <= 0) throw new Error(`Robinhood Crypto: invalid market price for ${symbol}`);
+
+  const increment = String(pair.asset_increment || "0.00000001");
+  const decimals = increment.includes(".") ? increment.split(".")[1].replace(/0+$/, "").length : 0;
+  const step = Number(increment);
+  const rawQuantity = Number(input.investment) / price;
+  // Round down to the pair's quantity increment (integer maths avoids float drift).
+  const quantity = step > 0 ? Math.floor(Math.round(rawQuantity / step * 1e6) / 1e6) * step : rawQuantity;
+  const minSize = Number(pair.min_order_size || 0);
+  if (!(quantity > 0) || quantity < minSize) {
+    throw new Error(`Robinhood Crypto: $${input.investment} is below the minimum order size for ${symbol} (${pair.min_order_size}).`);
+  }
+
+  const body = JSON.stringify({
+    client_order_id: crypto.randomUUID(),
+    side: input.side,
+    type: "market",
+    symbol,
+    market_order_config: { asset_quantity: quantity.toFixed(decimals) },
+  });
+  const order = await robinhoodCryptoRequest(input.apiKey, input.apiSecret, "POST", "/api/v1/crypto/trading/orders/", body);
+  return { orderId: String(order?.id || "robinhood-crypto-order"), raw: order };
+}
+
+// ─────────────────────────────────────────────────────────────────
 // OKX V5 — real & demo (simulated trading)
 // apiKey = API Key, apiSecret = Secret Key, passphrase = Passphrase
 // ─────────────────────────────────────────────────────────────────

@@ -128,6 +128,17 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     apiCredentialGuideUrl: 'https://support.kraken.com/hc/en-us/articles/360000919966-How-to-generate-an-API-key-pair',
   },
   {
+    id: 'robinhood-crypto',
+    name: 'Robinhood Crypto',
+    logo: '🪶',
+    color: '#00C805',
+    hasPassphrase: false,
+    category: 'crypto',
+    description: 'US crypto trading via the Robinhood Crypto Trading API (USD pairs). Use your API key as API Key and your base64 private key as Secret.',
+    apiDocsUrl: 'https://docs.robinhood.com/crypto/trading/',
+    apiCredentialGuideUrl: 'https://robinhood.com/account/crypto',
+  },
+  {
     id: 'bybit',
     name: 'Bybit',
     logo: '⚡',

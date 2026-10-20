@@ -6,6 +6,7 @@ import {
   placeBinanceOrder,
   placeBybitOrder,
   placeKrakenOrder,
+  placeRobinhoodCryptoOrder,
   placeOkxOrder,
   placeKucoinOrder,
   placeMexcOrder,
@@ -63,6 +64,7 @@ function normalizeExecutionMetrics(rawOrder: any, fallbackInvestment: number): {
 
   let shareQuantity = [
     raw["filled_qty"],
+    raw["filled_asset_quantity"],
     raw["qty"],
     raw["executedQty"],
     raw["origQty"],
@@ -204,6 +206,8 @@ export async function executeStrategyOrder(uid: string, strategyId: string, side
     orderResult = await placeBybitOrder({ exchangeId, apiKey, apiSecret, symbol, side, investment });
   } else if (exchangeId === "kraken") {
     orderResult = await placeKrakenOrder({ apiKey, apiSecret, symbol, side, investment });
+  } else if (exchangeId === "robinhood-crypto") {
+    orderResult = await placeRobinhoodCryptoOrder({ apiKey, apiSecret, symbol, side, investment });
   } else if (exchangeId === "okx" || exchangeId === "okx-demo") {
     if (!passphrase) throw new Error("OKX requires a passphrase — please reconnect the exchange and provide it.");
     orderResult = await placeOkxOrder({ exchangeId, apiKey, apiSecret, passphrase, symbol, side, investment });
