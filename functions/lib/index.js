@@ -92,7 +92,7 @@ function getUsEasternClockParts(now) {
  */
 function resolveMarketSession(exchangeId, symbol) {
     const normalized = String(exchangeId || "").toLowerCase();
-    if (normalized === "binance") {
+    if (normalized === "binance" || normalized === "robinhood-crypto") {
         return { isOpen: true, reason: "Crypto market is 24/7." };
     }
     if (normalized === "alpaca" || normalized === "alpaca-paper") {
@@ -186,6 +186,82 @@ async function fetchAlpacaPortfolio(apiKey, apiSecret, isPaper) {
         portfolioValue: Number.parseFloat(data.equity || data.portfolio_value || "0"),
         unrealizedPnl: Number.parseFloat(data.unrealized_pl || "0"),
         pnlPercentage: Number.parseFloat(data.unrealized_plpc || "0") * 100,
+        updatedAt: new Date().toISOString(),
+        openPositions,
+    };
+}
+// ---------------------------------------------------------------------------
+// Robinhood Crypto Trading API — https://docs.robinhood.com/crypto/trading/
+// apiKey = API key (rh-api-…), apiSecret = base64 Ed25519 private key (seed)
+// ---------------------------------------------------------------------------
+const ROBINHOOD_CRYPTO_BASE_URL = "https://trading.robinhood.com";
+/**
+ * Signed request to the Robinhood Crypto API. The signature is Ed25519 over
+ * `${apiKey}${timestamp}${path}${method}${body}`; path includes the query string.
+ */
+async function robinhoodCryptoRequest(apiKey, privateKeyBase64, path) {
+    const seed = Buffer.from(privateKeyBase64, "base64");
+    if (seed.length !== 32) {
+        throw new functions.https.HttpsError("unauthenticated", "Robinhood Crypto private key must be a base64-encoded 32-byte Ed25519 key");
+    }
+    const privateKey = crypto.createPrivateKey({
+        key: Buffer.concat([Buffer.from("302e020100300506032b657004220420", "hex"), seed]),
+        format: "der",
+        type: "pkcs8",
+    });
+    const timestamp = Math.floor(Date.now() / 1000).toString();
+    const signature = crypto.sign(null, Buffer.from(`${apiKey}${timestamp}${path}GET`), privateKey).toString("base64");
+    const response = await (0, node_fetch_1.default)(`${ROBINHOOD_CRYPTO_BASE_URL}${path}`, {
+        headers: { "x-api-key": apiKey, "x-signature": signature, "x-timestamp": timestamp },
+    });
+    if (!response.ok) {
+        const text = await response.text();
+        console.error("❌ Robinhood Crypto error:", response.status, text);
+        const code = response.status === 401 || response.status === 403 ? "unauthenticated" : "internal";
+        throw new functions.https.HttpsError(code, `Robinhood Crypto API error ${response.status}: ${text}`);
+    }
+    return response.json();
+}
+async function fetchRobinhoodCryptoPortfolio(apiKey, privateKeyBase64) {
+    const account = await robinhoodCryptoRequest(apiKey, privateKeyBase64, "/api/v1/crypto/trading/accounts/");
+    const holdingsPayload = await robinhoodCryptoRequest(apiKey, privateKeyBase64, "/api/v1/crypto/trading/holdings/");
+    const holdings = (Array.isArray(holdingsPayload?.results) ? holdingsPayload.results : [])
+        .map((h) => ({ assetCode: String(h.asset_code || "").toUpperCase(), quantity: Number(h.total_quantity || 0) }))
+        .filter((h) => h.assetCode && h.quantity > 0);
+    const prices = new Map();
+    if (holdings.length > 0) {
+        const query = holdings.map((h) => `symbol=${encodeURIComponent(`${h.assetCode}-USD`)}`).join("&");
+        const quotes = await robinhoodCryptoRequest(apiKey, privateKeyBase64, `/api/v1/crypto/marketdata/best_bid_ask/?${query}`);
+        for (const q of Array.isArray(quotes?.results) ? quotes.results : []) {
+            const price = Number(q.price);
+            if (q.symbol && Number.isFinite(price))
+                prices.set(String(q.symbol).toUpperCase(), price);
+        }
+    }
+    const session = resolveMarketSession("robinhood-crypto", "");
+    const openPositions = holdings.map((h) => {
+        const symbol = `${h.assetCode}/USD`;
+        const currentPrice = prices.get(`${h.assetCode}-USD`) ?? null;
+        return {
+            symbol,
+            quantity: h.quantity,
+            marketValue: currentPrice === null ? 0 : h.quantity * currentPrice,
+            // The API exposes no cost basis, so P&L is unknown.
+            unrealizedPnl: null,
+            pnlPercentage: null,
+            entryPrice: null,
+            currentPrice,
+            side: "long",
+            marketOpen: session.isOpen,
+            marketStatusReason: session.reason,
+        };
+    });
+    const cash = Number(account?.buying_power || 0);
+    const holdingsValue = openPositions.reduce((sum, p) => sum + p.marketValue, 0);
+    return {
+        portfolioValue: (Number.isFinite(cash) ? cash : 0) + holdingsValue,
+        unrealizedPnl: null,
+        pnlPercentage: null,
         updatedAt: new Date().toISOString(),
         openPositions,
     };
@@ -358,6 +434,10 @@ async function resolvePortfolio(exchangeId, apiKey, apiSecretFromClient) {
         const isPaper = exchangeId === "alpaca-paper";
         console.log(`Fetching Alpaca portfolio (paper=${isPaper})...`);
         return fetchAlpacaPortfolio(sanitizedApiKey, sanitizedApiSecret, isPaper);
+    }
+    if (exchangeId === "robinhood-crypto") {
+        console.log("Fetching Robinhood Crypto portfolio...");
+        return fetchRobinhoodCryptoPortfolio(sanitizedApiKey, sanitizedApiSecret);
     }
     console.error(`Unsupported exchange: ${exchangeId}`);
     throw new functions.https.HttpsError("not-found", `Exchange not yet supported: ${exchangeId}`);

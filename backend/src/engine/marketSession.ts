@@ -31,6 +31,7 @@ export function marketSessionForExchange(exchangeId: string, symbol: string, now
   const cryptoExchanges = [
     "binance", "coinbase",
     "kraken",
+    "robinhood-crypto",
     "bybit", "bybit-testnet",
     "okx", "okx-demo",
     "kucoin", "kucoin-sandbox",
