@@ -104,12 +104,16 @@ section[id] { scroll-margin-top: 80px; }
    as a custom property while it is on screen; the footer adds it to its own
    bottom padding. Scoped to :has() so the space disappears once the visitor
    accepts or declines and the bar is removed from the DOM, rather than leaving a
-   permanent gap for everyone who has already chosen. Heights mirror .consent-bar. */
-body:has(.consent-overlay) { --consent-bar-height: 48px; }
+   permanent gap for everyone who has already chosen. Heights approximate .consent-bar,
+   which now wraps its description, so they are estimates. */
+body:has(.consent-overlay) { --consent-bar-height: 96px; }
 
 @media (max-width: 640px) {
-  body:has(.consent-overlay) { --consent-bar-height: 52px; }
+  body:has(.consent-overlay) { --consent-bar-height: 200px; }
 }
+
+/* The consent backdrop covers the page until the visitor chooses; stop it scrolling underneath. */
+html:has(.consent-backdrop) { overflow: hidden; }
 
 /* The risk banner measures itself and sets --risk-banner-height inline on <html>
    once the app hydrates (see components/risk-banner.ts). Until then the
