@@ -1020,7 +1020,7 @@
   },
   "disclaimer": {
     "title": "Disclaimer",
-    "effectiveDate": "Effective date: 13 March 2026",
+    "effectiveDate": "Effective date: 28 October 2026",
     "s1Title": "1. Platform Use and Responsibility",
     "s1Body": "auto-Trading is a live software platform designed for real users. You are solely responsible for how you configure and use strategies, indicators, automation rules, and account-level risk controls.",
     "s2Title": "2. Not Financial Advice",
@@ -1028,7 +1028,7 @@
     "s3Title": "3. No Guarantee of Results",
     "s3Body": "Past performance does not guarantee future results. Backtests, simulations, and hypothetical outcomes may differ substantially from live trading.",
     "s4Title": "4. Trading Risk Warning",
-    "s4Body": "Trading digital assets, equities, forex, and derivatives is high risk and may not be suitable for all users. You can lose some or all capital.",
+    "s4Body": "Trading digital assets, equities, forex, and derivatives is high risk and may not be suitable for all users. You can lose some or all of your capital: a U.S. Senate investigation (Senate Report 106-364, July 2000) found that more than 75% of day traders did. Disciplined, rule-based automated trading can improve your odds compared with emotional, impulsive trading, but it does not guarantee a profit.",
     "s5Title": "5. Third-Party Services",
     "s5Body": "The platform depends on external exchanges, brokers, data feeds, and APIs. We are not responsible for third-party outages, delays, or policy changes.",
     "s6Title": "6. Execution and Connectivity",
