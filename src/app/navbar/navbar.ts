@@ -13,13 +13,14 @@ import { TranslateModule } from '@ngx-translate/core';
 // TODO(onboarding): disabled for now — uncomment to re-enable the new-user onboarding modals.
 // import { RealMoneyOnboardingService } from '../services/real-money-onboarding.service';
 import { TourService } from '../services/tour.service';
+import { RiskBanner } from '../components/risk-banner';
 
 @Component({
   selector: 'app-navbar',
   host: {
     '(window:scroll)': 'onScroll()'
   },
-  imports: [RouterLink, RouterLinkActive, CommonModule, TranslateModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, TranslateModule, RiskBanner],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss'
 })

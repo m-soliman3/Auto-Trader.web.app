@@ -9,15 +9,22 @@ import { LocalizedLinks } from '../shared/localized-links';
   standalone: true,
   imports: [CommonModule, RouterLink, TranslateModule],
   template: `
-    <div class="consent-overlay" *ngIf="showBanner" [class.is-expanded]="isExpanded">
-      <!-- Collapsed single-line bar -->
+    <!-- Blocks the page until the visitor accepts or declines; styles.scss also locks scrolling. -->
+    <div class="consent-backdrop" *ngIf="showBanner" aria-hidden="true"></div>
+
+    <div class="consent-overlay" *ngIf="showBanner" [class.is-expanded]="isExpanded"
+         role="dialog" aria-modal="true" [attr.aria-label]="'consent.title' | translate">
+      <!-- Collapsed bar -->
       <div class="consent-bar" *ngIf="!isExpanded">
-        <span class="consent-bar-text">{{ 'consent.title' | translate }}</span>
+        <div class="consent-bar-copy">
+          <strong class="consent-bar-title">{{ 'consent.title' | translate }}</strong>
+          <span class="consent-bar-text">{{ 'consent.description' | translate }}</span>
+        </div>
         <div class="consent-bar-actions">
-          <button class="consent-btn consent-btn-decline consent-btn-sm" (click)="handleDecline()">
+          <button class="consent-btn consent-btn-decline" (click)="handleDecline()">
             {{ 'consent.declineAll' | translate }}
           </button>
-          <button class="consent-btn consent-btn-accept consent-btn-sm" (click)="handleAccept()">
+          <button class="consent-btn consent-btn-accept" (click)="handleAccept()">
             {{ 'consent.acceptAll' | translate }}
           </button>
           <button class="consent-expand-btn" (click)="toggleExpand()" [attr.aria-label]="'consent.expandDetails' | translate">
@@ -85,44 +92,68 @@ import { LocalizedLinks } from '../shared/localized-links';
     </div>
   `,
   styles: [`
+    /* Both sit above the fixed navbar (z-index 10000) so nothing on the page stays clickable. */
+    .consent-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      background: rgba(5, 7, 12, 0.6);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      animation: fadeIn 0.3s ease-out;
+    }
+
     .consent-overlay {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 9999;
+      z-index: 10002;
       animation: slideUp 0.3s ease-out;
     }
 
-    /* ── Collapsed single-line bar ── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ── Collapsed bar ── */
     .consent-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 0 20px;
-      height: 48px;
+      gap: 24px;
+      padding: 20px max(24px, calc((100% - 1200px) / 2));
       background: var(--surface, #161a24);
-      border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
-      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+      border-top: 3px solid var(--accent, #00d17a);
+      box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5);
+      color: var(--text-primary, #f0f2f7);
+    }
+
+    .consent-bar-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .consent-bar-title {
+      font-size: 17px;
+      font-weight: 700;
       color: var(--text-primary, #f0f2f7);
     }
 
     .consent-bar-text {
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.5;
       color: var(--text-secondary, #8b95a9);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 1;
-      min-width: 0;
     }
 
     .consent-bar-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-shrink: 0;
     }
 
@@ -291,10 +322,11 @@ import { LocalizedLinks } from '../shared/localized-links';
       letter-spacing: 0.5px;
     }
 
+    /* Declining has to be as easy to see as accepting, so this is outlined, not muted. */
     .consent-btn-decline {
       background: transparent;
-      border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
-      color: var(--text-secondary, #8b95a9);
+      border: 1px solid var(--text-secondary, #8b95a9);
+      color: var(--text-primary, #f0f2f7);
     }
 
     .consent-btn-decline:hover {
@@ -322,12 +354,22 @@ import { LocalizedLinks } from '../shared/localized-links';
 
     @media (max-width: 640px) {
       .consent-bar {
-        padding: 0 12px;
-        height: 52px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 16px;
+      }
+
+      .consent-bar-title {
+        font-size: 16px;
       }
 
       .consent-bar-text {
-        display: none;
+        font-size: 13px;
+      }
+
+      .consent-bar-actions .consent-btn {
+        flex: 1;
       }
 
       .consent-content {

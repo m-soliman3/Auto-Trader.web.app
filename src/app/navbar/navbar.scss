@@ -4,20 +4,23 @@
   left: 0;
   right: 0;
   z-index: 10000;
-  padding: 1rem 0;
   transition: all 0.3s ease;
 
   &.scrolled {
     background: var(--surface);
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.3);
-    padding: 0.75rem 0;
+
+    .nav-container { padding-block: 0.75rem; }
   }
 }
 
+/* Vertical padding sits here rather than on .navbar so the risk banner above it
+   can run edge to edge at the very top. */
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 1rem 1.5rem;
+  transition: padding 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,7 +37,20 @@
   color: var(--text-primary);
   letter-spacing: -0.02em;
 
-  span { color: var(--accent); }
+  .logo-mark { display: block; height: 36px; width: auto; }
+
+  // The mark's navy strokes disappear on the dark navbar, so give it a light tile there.
+  :host-context([data-theme="dark"]) & .logo-mark {
+    background: #f0f2f7;
+    border-radius: 8px;
+    padding: 3px;
+  }
+
+  .logo-name {
+    color: var(--text-primary);
+
+    span { color: var(--accent); }
+  }
 }
 
 .nav-links {

@@ -42,7 +42,7 @@ describe('App', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('auto-Trading');
+    expect(compiled.textContent).toContain('invest Begin');
   });
 
   it('should hide account mode switch when logged out', async () => {
