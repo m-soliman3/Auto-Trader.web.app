@@ -6,6 +6,7 @@ import { Navbar } from './navbar';
 import { AuthService, User } from '../services/auth.service';
 import { ThemeService } from '../services/theme.service';
 import { AccountMode, AccountModeService } from '../services/account-mode.service';
+import { TourService } from '../services/tour.service';
 
 @Component({ template: '', standalone: true })
 class DummyPage {}
@@ -59,6 +60,8 @@ describe('Navbar interactions', () => {
         { provide: AuthService, useClass: MockAuthService },
         { provide: ThemeService, useClass: MockThemeService },
         { provide: AccountModeService, useClass: MockAccountModeService },
+        // The real TourService pulls in onboarding -> ExchangeService -> Auth/Firestore.
+        { provide: TourService, useValue: { start() {} } },
       ],
     }).compileComponents();
   });

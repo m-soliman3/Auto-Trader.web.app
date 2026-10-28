@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LocalizedLinks } from '../shared/localized-links';
-import { SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { LISTED_EXCHANGES } from '../services/exchange.service';
 import { STRATEGY_TEMPLATES, StrategyTemplate } from '../services/strategy.service';
 import { AdBannerSkyscraper } from '../components/ad-banner-skyscraper';
 import { AdWidgetEtoro } from '../components/ad-widget-etoro';
@@ -157,13 +157,13 @@ export class Home extends LocalizedLinks implements AfterViewInit, OnDestroy {
     .filter((t): t is StrategyTemplate => !!t);
 
   /** Unique (non-paper/testnet/sandbox/demo) exchanges & brokers for the "build your automation" picker, stocks first. */
-  brokerShowcase = SUPPORTED_EXCHANGES
+  brokerShowcase = LISTED_EXCHANGES
     .filter(e => !e.isPaper)
     .map(e => ({ id: e.id, name: e.name, logo: e.logo, color: e.color, category: e.category }))
     .sort((a, b) => (a.category === b.category ? 0 : a.category === 'stocks' ? -1 : 1));
 
   /** Every live broker has a `/brokers/:slug` page (see `BROKER_PAGES`), grouped for the "Supported Brokers" section. */
-  private readonly supportedBrokers = SUPPORTED_EXCHANGES.filter(e => !e.isPaper);
+  private readonly supportedBrokers = LISTED_EXCHANGES.filter(e => !e.isPaper);
 
   readonly supportedBrokerGroups = [
     {

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { AuthService } from '../services/auth.service';
-import { ExchangeService, SUPPORTED_EXCHANGES, ConnectedExchange } from '../services/exchange.service';
+import { ExchangeService, SUPPORTED_EXCHANGES, LISTED_EXCHANGES, ConnectedExchange } from '../services/exchange.service';
 import { SubscriptionService } from '../services/subscription.service';
 import { LocalizedLinks } from '../shared/localized-links';
 
@@ -71,11 +71,11 @@ export class SignupGuide extends LocalizedLinks {
     const step = this.currentStep();
     // No-path broker step: show all real (non-paper) exchanges
     if (step === 'broker' && this.isActiveTrader() === 'no') {
-      return SUPPORTED_EXCHANGES.filter(e => !e.isPaper);
+      return LISTED_EXCHANGES.filter(e => !e.isPaper);
     }
     const type = this.portfolioType();
     if (!type) return [];
-    return SUPPORTED_EXCHANGES.filter(e => e.category === type && !e.isPaper);
+    return LISTED_EXCHANGES.filter(e => e.category === type && !e.isPaper);
   });
 
   filteredExchanges = computed(() => {

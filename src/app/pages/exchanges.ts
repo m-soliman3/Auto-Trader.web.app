@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AccountModeService } from '../services/account-mode.service';
-import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { ExchangeService, SUPPORTED_EXCHANGES, LISTED_EXCHANGES } from '../services/exchange.service';
 import { ConnectExchangeModal } from '../components/connect-exchange-modal';
 import { StrategyService } from '../services/strategy.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -323,7 +323,7 @@ export class ExchangesPage {
   });
   readonly supportedVisible = computed(() => {
     const showPaper = this.accountMode.mode() === 'paper';
-    return SUPPORTED_EXCHANGES.filter((exchange) => (exchange.isPaper ?? false) === showPaper);
+    return LISTED_EXCHANGES.filter((exchange) => (exchange.isPaper ?? false) === showPaper);
   });
 
   readonly canConfirmDisconnect = computed(() => {

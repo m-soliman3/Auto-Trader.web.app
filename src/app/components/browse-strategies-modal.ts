@@ -2,7 +2,7 @@ import { Component, inject, output, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StrategyService, StrategyTemplate } from '../services/strategy.service';
-import { ExchangeService, SUPPORTED_EXCHANGES } from '../services/exchange.service';
+import { ExchangeService, SUPPORTED_EXCHANGES, LISTED_EXCHANGES } from '../services/exchange.service';
 import { AccountModeService } from '../services/account-mode.service';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -58,7 +58,7 @@ export class BrowseStrategiesModal {
     const activeExchangeIds = this.exchangeService.connectionsByMode(mode).map(connection => connection.exchangeId);
     const sourceExchanges = activeExchangeIds.length > 0
       ? SUPPORTED_EXCHANGES.filter(exchange => activeExchangeIds.includes(exchange.id))
-      : SUPPORTED_EXCHANGES.filter(exchange => (exchange.isPaper ?? false) === (mode === 'paper'));
+      : LISTED_EXCHANGES.filter(exchange => (exchange.isPaper ?? false) === (mode === 'paper'));
 
     const marketSet = new Set<string>();
     for (const exchange of sourceExchanges) {
