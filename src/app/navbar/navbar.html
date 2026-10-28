@@ -1,4 +1,5 @@
 <nav class="navbar" [class.scrolled]="scrolled()">
+  <app-risk-banner [collapsed]="scrolled()" />
   <div class="nav-container">
     <a class="logo" [routerLink]="auth.isLoggedIn() ? dashboardLink() : homeLink()" (click)="onLogoClick($event)">
       <svg width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="Invest-Begin">

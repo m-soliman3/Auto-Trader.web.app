@@ -111,6 +111,21 @@ body:has(.consent-overlay) { --consent-bar-height: 48px; }
   body:has(.consent-overlay) { --consent-bar-height: 52px; }
 }
 
+/* The risk banner measures itself and sets --risk-banner-height inline on <html>
+   once the app hydrates (see components/risk-banner.ts). Until then the
+   prerendered page needs an estimate, or the fixed navbar would cover the top of
+   every page. The inline value overrides these as soon as it is set. Estimates
+   are one / two / three wrapped lines of banner text. */
+html:has(.risk-banner) { --risk-banner-height: 34px; }
+
+@media (max-width: 1100px) {
+  html:has(.risk-banner) { --risk-banner-height: 53px; }
+}
+
+@media (max-width: 640px) {
+  html:has(.risk-banner) { --risk-banner-height: 70px; }
+}
+
 /* The chat launcher is `position: fixed` in the bottom-right corner — the same
    corner the footer puts its links row in. Reserve room for it horizontally on
    desktop, where the footer is one wide row and the links can simply sit further

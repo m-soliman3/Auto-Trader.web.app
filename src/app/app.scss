@@ -13,4 +13,6 @@ app-site-footer.blurred-for-onboarding {
 
 .app-main {
 	flex: 1;
+	// Room for the risk banner in the navbar's top row; see components/risk-banner.ts.
+	padding-top: var(--risk-banner-height, 0px);
 }

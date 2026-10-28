@@ -1013,6 +1013,11 @@
     "s12Title": "12. Changes to These Terms",
     "s12Body": "We may update these Terms periodically. Continued use after updates means you accept the revised Terms."
   },
+  "riskBanner": {
+    "label": "Risk notice",
+    "text": "Automated trading doesn't guarantee profits, and you're responsible for your own trades. A disciplined strategy can improve your odds over emotional trading, but losses are always possible.",
+    "link": "Read the terms"
+  },
   "disclaimer": {
     "title": "Disclaimer",
     "effectiveDate": "Effective date: 13 March 2026",
