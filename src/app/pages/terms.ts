@@ -26,13 +26,15 @@ import { LocalizedLinks } from '../shared/localized-links';
         <section><h2>{{ 'terms.s2Title' | translate }}</h2><p>{{ 'terms.s2Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s3Title' | translate }}</h2><p>{{ 'terms.s3Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s4Title' | translate }}</h2><p>{{ 'terms.s4Body' | translate }}</p></section>
-        <section><h2>{{ 'terms.s5Title' | translate }}</h2><p>{{ 'terms.s5Body' | translate }}</p></section>
+        <!-- Linked from the site-wide risk banner (components/risk-banner.ts); keep the id. -->
+        <section id="automated-trading"><h2>{{ 'terms.s5Title' | translate }}</h2><p>{{ 'terms.s5Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s6Title' | translate }}</h2><p>{{ 'terms.s6Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s7Title' | translate }}</h2><p>{{ 'terms.s7Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s8Title' | translate }}</h2><p>{{ 'terms.s8Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s9Title' | translate }}</h2><p>{{ 'terms.s9Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s10Title' | translate }}</h2><p>{{ 'terms.s10Body' | translate }}</p></section>
         <section><h2>{{ 'terms.s11Title' | translate }}</h2><p>{{ 'terms.s11Body' | translate }}</p></section>
+        <section><h2>{{ 'terms.s12Title' | translate }}</h2><p>{{ 'terms.s12Body' | translate }}</p></section>
       </div>
     </div>
   `,
