@@ -2,9 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { computed, signal } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
 import { provideTranslateService } from '@ngx-translate/core';
 import { App } from './app';
 import { AuthService, User } from './services/auth.service';
+import { UsageAnalyticsService } from './services/usage-analytics.service';
 
 class MockAuthService {
   private readonly user = signal<User | null>(null);
@@ -23,10 +25,15 @@ describe('App', () => {
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [
-        provideRouter([]),
+        // LanguageService redirects to the locale prefix (/en) on boot; let any URL match.
+        provideRouter([{ path: '**', children: [] }]),
         ...provideTranslateService({ fallbackLang: 'en' }),
         { provide: Auth, useValue: { currentUser: null } },
+        // Several services the shell pulls in (tour, onboarding, exchanges) inject Firestore.
+        { provide: Firestore, useValue: {} },
         { provide: AuthService, useClass: MockAuthService },
+        // App injects this eagerly at boot, and it writes visits to Firestore on navigation.
+        { provide: UsageAnalyticsService, useValue: {} },
       ],
     }).compileComponents();
   });
