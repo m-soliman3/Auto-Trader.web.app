@@ -19,6 +19,12 @@ export interface Exchange {
   apiDocsUrl?: string;
   apiCredentialGuideUrl?: string;
   category: 'crypto' | 'stocks';
+  /**
+   * Not offered on the site: left out of every picker, list and broker page
+   * (see LISTED_EXCHANGES), but kept here so existing connections still resolve
+   * their name and logo. The backend integration is untouched.
+   */
+  hidden?: boolean;
 }
 
 export interface ConnectedExchange {
@@ -134,6 +140,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     color: '#00C805',
     hasPassphrase: false,
     category: 'crypto',
+    hidden: true,
     description: 'US crypto trading via the Robinhood Crypto Trading API (USD pairs). Use your API key as API Key and your base64 private key as Secret.',
     apiDocsUrl: 'https://docs.robinhood.com/crypto/trading/',
     apiCredentialGuideUrl: 'https://robinhood.com/account/crypto',
@@ -352,6 +359,7 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     color: '#4F46E5',
     hasPassphrase: false,
     category: 'stocks',
+    hidden: true,
     description: 'Connect many brokerages securely through SnapTrade. You log in at your broker; no API keys are shared with us.',
     apiDocsUrl: 'https://docs.snaptrade.com/',
     apiCredentialGuideUrl: 'https://docs.snaptrade.com/',
@@ -403,6 +411,9 @@ export const SUPPORTED_EXCHANGES: Exchange[] = [
     apiCredentialGuideUrl: 'https://labs.ig.com/gettingstarted',
   },
 ];
+
+/** The exchanges users can see and connect. Use SUPPORTED_EXCHANGES only to look one up by id. */
+export const LISTED_EXCHANGES: Exchange[] = SUPPORTED_EXCHANGES.filter((exchange) => !exchange.hidden);
 
 @Injectable({ providedIn: 'root' })
 export class ExchangeService {

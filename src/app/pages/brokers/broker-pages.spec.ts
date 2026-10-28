@@ -1,10 +1,10 @@
-import { SUPPORTED_EXCHANGES } from '../../services/exchange.service';
+import { LISTED_EXCHANGES } from '../../services/exchange.service';
 import { LEARN_PAGES } from '../learn/learn-detail';
 import { BROKER_GUIDES } from './broker-guides';
 import { BROKER_PAGES, brokerExchange } from './broker-pages';
 
 describe('broker pages', () => {
-  const liveIds = SUPPORTED_EXCHANGES.filter((e) => !e.isPaper).map((e) => e.id);
+  const liveIds = LISTED_EXCHANGES.filter((e) => !e.isPaper).map((e) => e.id);
   const pageSlugs = BROKER_PAGES.map((p) => p.slug);
 
   it('has exactly one page per live exchange', () => {

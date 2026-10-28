@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
-import { ExchangeService, SUPPORTED_EXCHANGES, Exchange, ConnectedExchange } from '../services/exchange.service';
+import { ExchangeService, LISTED_EXCHANGES, Exchange, ConnectedExchange } from '../services/exchange.service';
 import { TourService } from '../services/tour.service';
 
 const DEMO_PRESET_AMOUNTS = [1_000, 10_000, 50_000] as const;
@@ -40,10 +40,10 @@ export class PaperMoneyOnboardingModal implements OnDestroy {
 
   /** All paper exchanges available for manual connection. */
   readonly paperCryptoExchanges = computed(() =>
-    SUPPORTED_EXCHANGES.filter((e) => e.category === 'crypto' && e.isPaper === true),
+    LISTED_EXCHANGES.filter((e) => e.category === 'crypto' && e.isPaper === true),
   );
   readonly paperStockExchanges = computed(() =>
-    SUPPORTED_EXCHANGES.filter((e) => e.category === 'stocks' && e.isPaper === true),
+    LISTED_EXCHANGES.filter((e) => e.category === 'stocks' && e.isPaper === true),
   );
 
   // ── Tab state ─────────────────────────────────────────────────────────────

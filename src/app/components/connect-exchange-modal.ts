@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
   ExchangeService,
-  SUPPORTED_EXCHANGES,
+  LISTED_EXCHANGES,
   Exchange,
   ConnectedExchange,
 } from '../services/exchange.service';
@@ -28,15 +28,15 @@ export class ConnectExchangeModal {
   closed = output<void>();
   connected = output<ConnectedExchange>();
 
-  exchanges = SUPPORTED_EXCHANGES;
+  exchanges = LISTED_EXCHANGES;
 
   cryptoExchanges = computed(() => {
     const paper = this.accountMode.mode() === 'paper';
-    return SUPPORTED_EXCHANGES.filter(exchange => exchange.category === 'crypto' && (exchange.isPaper ?? false) === paper);
+    return LISTED_EXCHANGES.filter(exchange => exchange.category === 'crypto' && (exchange.isPaper ?? false) === paper);
   });
   stockExchanges = computed(() => {
     const paper = this.accountMode.mode() === 'paper';
-    return SUPPORTED_EXCHANGES.filter(exchange => exchange.category === 'stocks' && (exchange.isPaper ?? false) === paper);
+    return LISTED_EXCHANGES.filter(exchange => exchange.category === 'stocks' && (exchange.isPaper ?? false) === paper);
   });
   step = signal<1 | 2>(1);
   selected = signal<Exchange | null>(null);

@@ -24,7 +24,7 @@ import { environment } from '../../environments/environment';
 import { AuthService } from '../services/auth.service';
 import {
   ExchangeService,
-  SUPPORTED_EXCHANGES,
+  LISTED_EXCHANGES,
   Exchange,
   ConnectedExchange,
 } from '../services/exchange.service';
@@ -121,10 +121,10 @@ export class RealMoneyOnboardingModal implements AfterViewInit, OnDestroy {
 
   /** All real (non-paper) exchanges for selection. */
   readonly realCryptoExchanges = computed(() =>
-    SUPPORTED_EXCHANGES.filter((e) => e.category === 'crypto' && !e.isPaper),
+    LISTED_EXCHANGES.filter((e) => e.category === 'crypto' && !e.isPaper),
   );
   readonly realStockExchanges = computed(() =>
-    SUPPORTED_EXCHANGES.filter((e) => e.category === 'stocks' && !e.isPaper),
+    LISTED_EXCHANGES.filter((e) => e.category === 'stocks' && !e.isPaper),
   );
 
   // ── Tab state ────────────────────────────────────────────────────────────
