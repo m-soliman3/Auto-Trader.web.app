@@ -37,7 +37,20 @@
   color: var(--text-primary);
   letter-spacing: -0.02em;
 
-  span { color: var(--accent); }
+  .logo-mark { display: block; height: 36px; width: auto; }
+
+  // The mark's navy strokes disappear on the dark navbar, so give it a light tile there.
+  :host-context([data-theme="dark"]) & .logo-mark {
+    background: #f0f2f7;
+    border-radius: 8px;
+    padding: 3px;
+  }
+
+  .logo-name {
+    color: var(--text-primary);
+
+    span { color: var(--accent); }
+  }
 }
 
 .nav-links {

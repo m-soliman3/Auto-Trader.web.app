@@ -12,11 +12,8 @@ import { LanguageService } from '../services/language.service';
     <footer class="site-footer" aria-label="Site footer">
       <div class="footer-container">
         <div class="footer-brand">
-          <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <rect width="32" height="32" rx="8" fill="#00d17a"/>
-            <polyline points="4,22 10,14 16,18 22,8 28,12" stroke="#0d0f14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-          <span>auto-Trading</span>
+          <img src="/images/logo.png" width="28" height="28" alt="" />
+          <span>invest <span class="footer-brand-accent">Begin</span></span>
         </div>
 
         <p class="footer-copy">{{ 'footer.copyright' | translate }}</p>
@@ -58,6 +55,10 @@ import { LanguageService } from '../services/language.service';
         font-weight: 700;
         font-size: 1rem;
         color: var(--text-primary);
+      }
+
+      .footer-brand-accent {
+        color: var(--accent);
       }
 
       .footer-copy {

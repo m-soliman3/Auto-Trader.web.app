@@ -217,8 +217,8 @@ export class StructuredDataService {
       logo: {
         '@type': 'ImageObject',
         '@id': LOGO_ID,
-        url: `${SITE_URL}/images/logo.svg`,
-        contentUrl: `${SITE_URL}/images/logo.svg`,
+        url: `${SITE_URL}/images/logo.png`,
+        contentUrl: `${SITE_URL}/images/logo.png`,
         width: 512,
         height: 512,
         caption: SITE_NAME,
