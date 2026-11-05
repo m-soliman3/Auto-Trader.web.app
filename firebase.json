@@ -3,6 +3,7 @@
     {
       "target": "prod",
       "public": "dist/auto-trading/browser",
+      "trailingSlash": false,
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -275,6 +276,7 @@
     {
       "target": "staging",
       "public": "dist/auto-trading/browser",
+      "trailingSlash": false,
       "ignore": [
         "firebase.json",
         "**/.*",
